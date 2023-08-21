@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(KqlScriptConverter))]
-    public partial class KqlScript : IUtf8JsonSerializable
+    public partial class KqlScript : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Content))
+            if (Core.Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteObjectValue(Content);
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<KqlScriptContent> content = default;
+            Core.Optional<KqlScriptContent> content = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"u8))

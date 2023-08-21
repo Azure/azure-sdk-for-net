@@ -18,9 +18,9 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> lastModified = default;
-            Optional<string> eTag = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> lastModified = default;
+            Core.Optional<string> eTag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

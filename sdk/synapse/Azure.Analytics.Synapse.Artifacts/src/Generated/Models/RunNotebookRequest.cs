@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of RunNotebookRequest. </summary>
         public RunNotebookRequest()
         {
-            Parameters = new ChangeTrackingDictionary<string, RunNotebookParameter>();
+            Parameters = new Core.ChangeTrackingDictionary<string, RunNotebookParameter>();
         }
 
         /// <summary> Notebook name. </summary>

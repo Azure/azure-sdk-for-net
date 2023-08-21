@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    internal partial class UnknownTarget : IUtf8JsonSerializable
+    internal partial class UnknownTarget : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Attributes))
+            if (Core.Optional.IsCollectionDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> attributes = default;
+            Core.Optional<IDictionary<string, string>> attributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("attributes"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new UnknownTarget(Optional.ToDictionary(attributes));
+            return new UnknownTarget(Core.Optional.ToDictionary(attributes));
         }
     }
 }

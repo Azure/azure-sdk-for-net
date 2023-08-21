@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AbnormalTimePeriod. </summary>
         public AbnormalTimePeriod()
         {
-            Events = new ChangeTrackingList<DetectorAbnormalTimePeriod>();
-            Solutions = new ChangeTrackingList<DiagnosticSolution>();
+            Events = new Core.ChangeTrackingList<DetectorAbnormalTimePeriod>();
+            Solutions = new Core.ChangeTrackingList<DiagnosticSolution>();
         }
 
         /// <summary> Initializes a new instance of AbnormalTimePeriod. </summary>

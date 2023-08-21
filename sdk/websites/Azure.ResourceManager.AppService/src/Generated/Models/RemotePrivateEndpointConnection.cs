@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of RemotePrivateEndpointConnection. </summary>
         public RemotePrivateEndpointConnection()
         {
-            IPAddresses = new ChangeTrackingList<IPAddress>();
+            IPAddresses = new Core.ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of RemotePrivateEndpointConnection. </summary>

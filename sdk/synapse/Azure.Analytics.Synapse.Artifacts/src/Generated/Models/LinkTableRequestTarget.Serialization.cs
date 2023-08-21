@@ -13,27 +13,27 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkTableRequestTargetConverter))]
-    public partial class LinkTableRequestTarget : IUtf8JsonSerializable
+    public partial class LinkTableRequestTarget : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TableName))
+            if (Core.Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (Optional.IsDefined(SchemaName))
+            if (Core.Optional.IsDefined(SchemaName))
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
-            if (Optional.IsDefined(DistributionOptions))
+            if (Core.Optional.IsDefined(DistributionOptions))
             {
                 writer.WritePropertyName("distributionOptions"u8);
                 writer.WriteObjectValue(DistributionOptions);
             }
-            if (Optional.IsDefined(StructureOptions))
+            if (Core.Optional.IsDefined(StructureOptions))
             {
                 writer.WritePropertyName("structureOptions"u8);
                 writer.WriteObjectValue(StructureOptions);
@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> tableName = default;
-            Optional<string> schemaName = default;
-            Optional<LinkTableRequestTargetDistributionOptions> distributionOptions = default;
-            Optional<LinkTableRequestTargetStructureOptions> structureOptions = default;
+            Core.Optional<string> tableName = default;
+            Core.Optional<string> schemaName = default;
+            Core.Optional<LinkTableRequestTargetDistributionOptions> distributionOptions = default;
+            Core.Optional<LinkTableRequestTargetStructureOptions> structureOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tableName"u8))

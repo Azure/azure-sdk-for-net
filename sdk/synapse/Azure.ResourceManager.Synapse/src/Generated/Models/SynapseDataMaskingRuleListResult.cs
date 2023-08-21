@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseDataMaskingRuleListResult. </summary>
         internal SynapseDataMaskingRuleListResult()
         {
-            Value = new ChangeTrackingList<SynapseDataMaskingRuleData>();
+            Value = new Core.ChangeTrackingList<SynapseDataMaskingRuleData>();
         }
 
         /// <summary> Initializes a new instance of SynapseDataMaskingRuleListResult. </summary>

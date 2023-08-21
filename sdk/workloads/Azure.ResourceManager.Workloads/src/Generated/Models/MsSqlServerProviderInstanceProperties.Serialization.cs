@@ -11,47 +11,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class MsSqlServerProviderInstanceProperties : IUtf8JsonSerializable
+    public partial class MsSqlServerProviderInstanceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hostname))
+            if (Core.Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Optional.IsDefined(DBPort))
+            if (Core.Optional.IsDefined(DBPort))
             {
                 writer.WritePropertyName("dbPort"u8);
                 writer.WriteStringValue(DBPort);
             }
-            if (Optional.IsDefined(DBUsername))
+            if (Core.Optional.IsDefined(DBUsername))
             {
                 writer.WritePropertyName("dbUsername"u8);
                 writer.WriteStringValue(DBUsername);
             }
-            if (Optional.IsDefined(DBPassword))
+            if (Core.Optional.IsDefined(DBPassword))
             {
                 writer.WritePropertyName("dbPassword"u8);
                 writer.WriteStringValue(DBPassword);
             }
-            if (Optional.IsDefined(DBPasswordUri))
+            if (Core.Optional.IsDefined(DBPasswordUri))
             {
                 writer.WritePropertyName("dbPasswordUri"u8);
                 writer.WriteStringValue(DBPasswordUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SapSid))
+            if (Core.Optional.IsDefined(SapSid))
             {
                 writer.WritePropertyName("sapSid"u8);
                 writer.WriteStringValue(SapSid);
             }
-            if (Optional.IsDefined(SslPreference))
+            if (Core.Optional.IsDefined(SslPreference))
             {
                 writer.WritePropertyName("sslPreference"u8);
                 writer.WriteStringValue(SslPreference.Value.ToString());
             }
-            if (Optional.IsDefined(SslCertificateUri))
+            if (Core.Optional.IsDefined(SslCertificateUri))
             {
                 writer.WritePropertyName("sslCertificateUri"u8);
                 writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> hostname = default;
-            Optional<string> dbPort = default;
-            Optional<string> dbUsername = default;
-            Optional<string> dbPassword = default;
-            Optional<Uri> dbPasswordUri = default;
-            Optional<string> sapSid = default;
-            Optional<SapSslPreference> sslPreference = default;
-            Optional<Uri> sslCertificateUri = default;
+            Core.Optional<string> hostname = default;
+            Core.Optional<string> dbPort = default;
+            Core.Optional<string> dbUsername = default;
+            Core.Optional<string> dbPassword = default;
+            Core.Optional<Uri> dbPasswordUri = default;
+            Core.Optional<string> sapSid = default;
+            Core.Optional<SapSslPreference> sslPreference = default;
+            Core.Optional<Uri> sslCertificateUri = default;
             string providerType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new MsSqlServerProviderInstanceProperties(providerType, hostname.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value);
+            return new MsSqlServerProviderInstanceProperties(providerType, hostname.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value, Core.Optional.ToNullable(sslPreference), sslCertificateUri.Value);
         }
     }
 }

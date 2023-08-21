@@ -32,8 +32,8 @@ namespace Azure.AI.TextAnalytics.Legacy
             ConfidenceScores = confidenceScores;
             Offset = offset;
             Length = length;
-            Targets = new ChangeTrackingList<SentenceTarget>();
-            Assessments = new ChangeTrackingList<SentenceAssessment>();
+            Targets = new Core.ChangeTrackingList<SentenceTarget>();
+            Assessments = new Core.ChangeTrackingList<SentenceAssessment>();
         }
 
         /// <summary> Initializes a new instance of SentenceSentiment. </summary>

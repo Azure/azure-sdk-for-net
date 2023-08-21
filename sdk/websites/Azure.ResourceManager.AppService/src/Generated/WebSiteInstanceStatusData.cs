@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of WebSiteInstanceStatusData. </summary>
         public WebSiteInstanceStatusData()
         {
-            Containers = new ChangeTrackingDictionary<string, ContainerInfo>();
+            Containers = new Core.ChangeTrackingDictionary<string, ContainerInfo>();
         }
 
         /// <summary> Initializes a new instance of WebSiteInstanceStatusData. </summary>

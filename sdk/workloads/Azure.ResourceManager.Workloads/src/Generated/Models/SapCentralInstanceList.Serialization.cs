@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SapCentralServerInstanceData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SapCentralServerInstanceData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SapCentralInstanceList(Optional.ToList(value), nextLink.Value);
+            return new SapCentralInstanceList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

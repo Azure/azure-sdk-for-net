@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<ImmutabilityPolicyUpdateType> update = default;
-            Optional<int> immutabilityPeriodSinceCreationInDays = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> objectIdentifier = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> upn = default;
-            Optional<bool> allowProtectedAppendWrites = default;
-            Optional<bool> allowProtectedAppendWritesAll = default;
+            Core.Optional<ImmutabilityPolicyUpdateType> update = default;
+            Core.Optional<int> immutabilityPeriodSinceCreationInDays = default;
+            Core.Optional<DateTimeOffset> timestamp = default;
+            Core.Optional<string> objectIdentifier = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<string> upn = default;
+            Core.Optional<bool> allowProtectedAppendWrites = default;
+            Core.Optional<bool> allowProtectedAppendWritesAll = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("update"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new UpdateHistoryEntry(Optional.ToNullable(update), Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(timestamp), objectIdentifier.Value, Optional.ToNullable(tenantId), upn.Value, Optional.ToNullable(allowProtectedAppendWrites), Optional.ToNullable(allowProtectedAppendWritesAll));
+            return new UpdateHistoryEntry(Core.Optional.ToNullable(update), Core.Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Core.Optional.ToNullable(timestamp), objectIdentifier.Value, Core.Optional.ToNullable(tenantId), upn.Value, Core.Optional.ToNullable(allowProtectedAppendWrites), Core.Optional.ToNullable(allowProtectedAppendWritesAll));
         }
     }
 }

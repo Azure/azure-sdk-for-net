@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DefaultAuthorizationPolicy : IUtf8JsonSerializable
+    public partial class DefaultAuthorizationPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowedPrincipals))
+            if (Core.Optional.IsDefined(AllowedPrincipals))
             {
                 writer.WritePropertyName("allowedPrincipals"u8);
                 writer.WriteObjectValue(AllowedPrincipals);
             }
-            if (Optional.IsCollectionDefined(AllowedApplications))
+            if (Core.Optional.IsCollectionDefined(AllowedApplications))
             {
                 writer.WritePropertyName("allowedApplications"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<AppServiceAadAllowedPrincipals> allowedPrincipals = default;
-            Optional<IList<string>> allowedApplications = default;
+            Core.Optional<AppServiceAadAllowedPrincipals> allowedPrincipals = default;
+            Core.Optional<IList<string>> allowedApplications = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedPrincipals"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DefaultAuthorizationPolicy(allowedPrincipals.Value, Optional.ToList(allowedApplications));
+            return new DefaultAuthorizationPolicy(allowedPrincipals.Value, Core.Optional.ToList(allowedApplications));
         }
     }
 }

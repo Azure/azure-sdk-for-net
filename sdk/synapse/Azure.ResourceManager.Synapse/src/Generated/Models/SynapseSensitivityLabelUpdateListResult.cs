@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseSensitivityLabelUpdateListResult. </summary>
         public SynapseSensitivityLabelUpdateListResult()
         {
-            Operations = new ChangeTrackingList<SynapseSensitivityLabelUpdate>();
+            Operations = new Core.ChangeTrackingList<SynapseSensitivityLabelUpdate>();
         }
 
         /// <summary> Gets the operations. </summary>

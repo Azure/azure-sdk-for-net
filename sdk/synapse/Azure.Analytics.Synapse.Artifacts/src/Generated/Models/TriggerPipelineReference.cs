@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of TriggerPipelineReference. </summary>
         public TriggerPipelineReference()
         {
-            Parameters = new ChangeTrackingDictionary<string, object>();
+            Parameters = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of TriggerPipelineReference. </summary>

@@ -29,7 +29,7 @@ namespace Azure.Data.Tables.Models
             {
                 return null;
             }
-            Optional<string> message = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Message"u8))

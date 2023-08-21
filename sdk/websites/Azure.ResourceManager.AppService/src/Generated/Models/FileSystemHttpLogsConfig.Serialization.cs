@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class FileSystemHttpLogsConfig : IUtf8JsonSerializable
+    public partial class FileSystemHttpLogsConfig : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RetentionInMb))
+            if (Core.Optional.IsDefined(RetentionInMb))
             {
                 writer.WritePropertyName("retentionInMb"u8);
                 writer.WriteNumberValue(RetentionInMb.Value);
             }
-            if (Optional.IsDefined(RetentionInDays))
+            if (Core.Optional.IsDefined(RetentionInDays))
             {
                 writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<int> retentionInMb = default;
-            Optional<int> retentionInDays = default;
-            Optional<bool> enabled = default;
+            Core.Optional<int> retentionInMb = default;
+            Core.Optional<int> retentionInDays = default;
+            Core.Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("retentionInMb"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new FileSystemHttpLogsConfig(Optional.ToNullable(retentionInMb), Optional.ToNullable(retentionInDays), Optional.ToNullable(enabled));
+            return new FileSystemHttpLogsConfig(Core.Optional.ToNullable(retentionInMb), Core.Optional.ToNullable(retentionInDays), Core.Optional.ToNullable(enabled));
         }
     }
 }

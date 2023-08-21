@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
         /// <summary> Initializes a new instance of VoiceServicesTestLinePatch. </summary>
         public VoiceServicesTestLinePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Resource tags. </summary>

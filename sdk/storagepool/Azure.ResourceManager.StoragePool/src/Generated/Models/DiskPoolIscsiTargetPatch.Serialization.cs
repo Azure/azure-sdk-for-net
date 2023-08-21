@@ -12,17 +12,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
-    public partial class DiskPoolIscsiTargetPatch : IUtf8JsonSerializable
+    public partial class DiskPoolIscsiTargetPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedBy))
+            if (Core.Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Optional.IsCollectionDefined(ManagedByExtended))
+            if (Core.Optional.IsCollectionDefined(ManagedByExtended))
             {
                 writer.WritePropertyName("managedByExtended"u8);
                 writer.WriteStartArray();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(StaticAcls))
+            if (Core.Optional.IsCollectionDefined(StaticAcls))
             {
                 writer.WritePropertyName("staticAcls"u8);
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Luns))
+            if (Core.Optional.IsCollectionDefined(Luns))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<string> managedBy = default;
-            Optional<IList<string>> managedByExtended = default;
+            Core.Optional<string> managedBy = default;
+            Core.Optional<IList<string>> managedByExtended = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<DiskPoolIscsiTargetPortalGroupAcl>> staticAcls = default;
-            Optional<IList<ManagedDiskIscsiLun>> luns = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IList<DiskPoolIscsiTargetPortalGroupAcl>> staticAcls = default;
+            Core.Optional<IList<ManagedDiskIscsiLun>> luns = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     continue;
                 }
             }
-            return new DiskPoolIscsiTargetPatch(id, name, type, systemData.Value, managedBy.Value, Optional.ToList(managedByExtended), Optional.ToList(staticAcls), Optional.ToList(luns));
+            return new DiskPoolIscsiTargetPatch(id, name, type, systemData.Value, managedBy.Value, Core.Optional.ToList(managedByExtended), Core.Optional.ToList(staticAcls), Core.Optional.ToList(luns));
         }
     }
 }

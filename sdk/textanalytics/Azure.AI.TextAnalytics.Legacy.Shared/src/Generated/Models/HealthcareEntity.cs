@@ -26,7 +26,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         {
             Argument.AssertNotNull(text, nameof(text));
 
-            Links = new ChangeTrackingList<HealthcareEntityLink>();
+            Links = new Core.ChangeTrackingList<HealthcareEntityLink>();
         }
 
         /// <summary> Initializes a new instance of HealthcareEntity. </summary>

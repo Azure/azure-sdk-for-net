@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of WebAppLoginInfo. </summary>
         public WebAppLoginInfo()
         {
-            AllowedExternalRedirectUrls = new ChangeTrackingList<string>();
+            AllowedExternalRedirectUrls = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of WebAppLoginInfo. </summary>

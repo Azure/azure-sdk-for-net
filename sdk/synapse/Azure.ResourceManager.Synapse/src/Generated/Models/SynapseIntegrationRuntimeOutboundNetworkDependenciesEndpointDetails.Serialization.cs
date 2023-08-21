@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<int> port = default;
+            Core.Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(Optional.ToNullable(port));
+            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(Core.Optional.ToNullable(port));
         }
     }
 }

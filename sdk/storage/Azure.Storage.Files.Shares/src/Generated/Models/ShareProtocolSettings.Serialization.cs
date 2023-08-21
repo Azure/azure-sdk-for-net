@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareProtocolSettings : IXmlSerializable
+    public partial class ShareProtocolSettings : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "ProtocolSettings");
-            if (Optional.IsDefined(Smb))
+            if (Core.Optional.IsDefined(Smb))
             {
                 writer.WriteObjectValue(Smb, "SMB");
             }

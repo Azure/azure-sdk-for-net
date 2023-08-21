@@ -16,8 +16,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of HierarchiesRequestBatchGetDelete. </summary>
         public HierarchiesRequestBatchGetDelete()
         {
-            HierarchyIds = new ChangeTrackingList<string>();
-            Names = new ChangeTrackingList<string>();
+            HierarchyIds = new Core.ChangeTrackingList<string>();
+            Names = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> List of hierarchy IDs. </summary>

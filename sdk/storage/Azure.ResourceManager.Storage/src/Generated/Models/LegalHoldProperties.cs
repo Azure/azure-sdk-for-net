@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of LegalHoldProperties. </summary>
         internal LegalHoldProperties()
         {
-            Tags = new ChangeTrackingList<LegalHoldTag>();
+            Tags = new Core.ChangeTrackingList<LegalHoldTag>();
         }
 
         /// <summary> Initializes a new instance of LegalHoldProperties. </summary>

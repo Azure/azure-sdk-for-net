@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<DateTimeOffset> tieredFilesMostRecentAccessTimestamp = default;
+            Core.Optional<DateTimeOffset> lastUpdatedTimestamp = default;
+            Core.Optional<DateTimeOffset> tieredFilesMostRecentAccessTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimestamp"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new CloudTieringDatePolicyStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(tieredFilesMostRecentAccessTimestamp));
+            return new CloudTieringDatePolicyStatus(Core.Optional.ToNullable(lastUpdatedTimestamp), Core.Optional.ToNullable(tieredFilesMostRecentAccessTimestamp));
         }
     }
 }

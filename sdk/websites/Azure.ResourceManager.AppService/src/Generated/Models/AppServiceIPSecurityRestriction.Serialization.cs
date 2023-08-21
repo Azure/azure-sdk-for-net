@@ -11,62 +11,62 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceIPSecurityRestriction : IUtf8JsonSerializable
+    public partial class AppServiceIPSecurityRestriction : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPAddressOrCidr))
+            if (Core.Optional.IsDefined(IPAddressOrCidr))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddressOrCidr);
             }
-            if (Optional.IsDefined(SubnetMask))
+            if (Core.Optional.IsDefined(SubnetMask))
             {
                 writer.WritePropertyName("subnetMask"u8);
                 writer.WriteStringValue(SubnetMask);
             }
-            if (Optional.IsDefined(VnetSubnetResourceId))
+            if (Core.Optional.IsDefined(VnetSubnetResourceId))
             {
                 writer.WritePropertyName("vnetSubnetResourceId"u8);
                 writer.WriteStringValue(VnetSubnetResourceId);
             }
-            if (Optional.IsDefined(VnetTrafficTag))
+            if (Core.Optional.IsDefined(VnetTrafficTag))
             {
                 writer.WritePropertyName("vnetTrafficTag"u8);
                 writer.WriteNumberValue(VnetTrafficTag.Value);
             }
-            if (Optional.IsDefined(SubnetTrafficTag))
+            if (Core.Optional.IsDefined(SubnetTrafficTag))
             {
                 writer.WritePropertyName("subnetTrafficTag"u8);
                 writer.WriteNumberValue(SubnetTrafficTag.Value);
             }
-            if (Optional.IsDefined(Action))
+            if (Core.Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
-            if (Optional.IsDefined(Tag))
+            if (Core.Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag.Value.ToString());
             }
-            if (Optional.IsDefined(Priority))
+            if (Core.Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (Core.Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
@@ -96,17 +96,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> ipAddress = default;
-            Optional<string> subnetMask = default;
-            Optional<ResourceIdentifier> vnetSubnetResourceId = default;
-            Optional<int> vnetTrafficTag = default;
-            Optional<int> subnetTrafficTag = default;
-            Optional<string> action = default;
-            Optional<AppServiceIPFilterTag> tag = default;
-            Optional<int> priority = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, IList<string>>> headers = default;
+            Core.Optional<string> ipAddress = default;
+            Core.Optional<string> subnetMask = default;
+            Core.Optional<ResourceIdentifier> vnetSubnetResourceId = default;
+            Core.Optional<int> vnetTrafficTag = default;
+            Core.Optional<int> subnetTrafficTag = default;
+            Core.Optional<string> action = default;
+            Core.Optional<AppServiceIPFilterTag> tag = default;
+            Core.Optional<int> priority = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IDictionary<string, IList<string>>> headers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceIPSecurityRestriction(ipAddress.Value, subnetMask.Value, vnetSubnetResourceId.Value, Optional.ToNullable(vnetTrafficTag), Optional.ToNullable(subnetTrafficTag), action.Value, Optional.ToNullable(tag), Optional.ToNullable(priority), name.Value, description.Value, Optional.ToDictionary(headers));
+            return new AppServiceIPSecurityRestriction(ipAddress.Value, subnetMask.Value, vnetSubnetResourceId.Value, Core.Optional.ToNullable(vnetTrafficTag), Core.Optional.ToNullable(subnetTrafficTag), action.Value, Core.Optional.ToNullable(tag), Core.Optional.ToNullable(priority), name.Value, description.Value, Core.Optional.ToDictionary(headers));
         }
     }
 }

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class IotHubDeviceConnection : IUtf8JsonSerializable
+    public partial class IotHubDeviceConnection : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("deviceId"u8);
             writer.WriteStringValue(DeviceId);
-            if (Optional.IsDefined(Credentials))
+            if (Core.Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
@@ -32,7 +32,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string deviceId = default;
-            Optional<CredentialsBase> credentials = default;
+            Core.Optional<CredentialsBase> credentials = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))

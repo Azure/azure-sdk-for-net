@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<QueueServiceData>> value = default;
+            Core.Optional<IReadOnlyList<QueueServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ListQueueServices(Optional.ToList(value));
+            return new ListQueueServices(Core.Optional.ToList(value));
         }
     }
 }

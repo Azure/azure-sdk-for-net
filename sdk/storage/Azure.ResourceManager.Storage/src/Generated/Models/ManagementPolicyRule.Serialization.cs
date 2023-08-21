@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ManagementPolicyRule : IUtf8JsonSerializable
+    public partial class ManagementPolicyRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
+            Core.Optional<bool> enabled = default;
             string name = default;
             ManagementPolicyRuleType type = default;
             ManagementPolicyDefinition definition = default;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ManagementPolicyRule(Optional.ToNullable(enabled), name, type, definition);
+            return new ManagementPolicyRule(Core.Optional.ToNullable(enabled), name, type, definition);
         }
     }
 }

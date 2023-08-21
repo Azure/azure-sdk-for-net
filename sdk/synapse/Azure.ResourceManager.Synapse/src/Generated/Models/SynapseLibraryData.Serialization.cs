@@ -13,34 +13,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseLibraryData : IUtf8JsonSerializable
+    public partial class SynapseLibraryData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NamePropertiesName))
+            if (Core.Optional.IsDefined(NamePropertiesName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamePropertiesName);
             }
-            if (Optional.IsDefined(Path))
+            if (Core.Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(ContainerName))
+            if (Core.Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (Optional.IsDefined(UploadedOn))
+            if (Core.Optional.IsDefined(UploadedOn))
             {
                 writer.WritePropertyName("uploadedTimestamp"u8);
                 writer.WriteStringValue(UploadedOn.Value, "O");
             }
-            if (Optional.IsDefined(TypePropertiesType))
+            if (Core.Optional.IsDefined(TypePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypePropertiesType);
@@ -55,18 +55,18 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> name0 = default;
-            Optional<string> path = default;
-            Optional<string> containerName = default;
-            Optional<DateTimeOffset> uploadedTimestamp = default;
-            Optional<string> type0 = default;
-            Optional<string> provisioningStatus = default;
-            Optional<string> creatorId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> name0 = default;
+            Core.Optional<string> path = default;
+            Core.Optional<string> containerName = default;
+            Core.Optional<DateTimeOffset> uploadedTimestamp = default;
+            Core.Optional<string> type0 = default;
+            Core.Optional<string> provisioningStatus = default;
+            Core.Optional<string> creatorId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseLibraryData(id, name, type, systemData.Value, name0.Value, path.Value, containerName.Value, Optional.ToNullable(uploadedTimestamp), type0.Value, provisioningStatus.Value, creatorId.Value, Optional.ToNullable(etag));
+            return new SynapseLibraryData(id, name, type, systemData.Value, name0.Value, path.Value, containerName.Value, Core.Optional.ToNullable(uploadedTimestamp), type0.Value, provisioningStatus.Value, creatorId.Value, Core.Optional.ToNullable(etag));
         }
     }
 }

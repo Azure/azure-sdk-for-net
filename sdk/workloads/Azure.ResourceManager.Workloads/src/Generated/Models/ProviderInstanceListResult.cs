@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of ProviderInstanceListResult. </summary>
         internal ProviderInstanceListResult()
         {
-            Value = new ChangeTrackingList<SapProviderInstanceData>();
+            Value = new Core.ChangeTrackingList<SapProviderInstanceData>();
         }
 
         /// <summary> Initializes a new instance of ProviderInstanceListResult. </summary>

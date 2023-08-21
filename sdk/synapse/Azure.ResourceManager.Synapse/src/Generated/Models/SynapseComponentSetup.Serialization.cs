@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseComponentSetup : IUtf8JsonSerializable
+    public partial class SynapseComponentSetup : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             writer.WritePropertyName("componentName"u8);
             writer.WriteStringValue(ComponentName);
-            if (Optional.IsDefined(LicenseKey))
+            if (Core.Optional.IsDefined(LicenseKey))
             {
                 writer.WritePropertyName("licenseKey"u8);
                 writer.WriteObjectValue(LicenseKey);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             string type = default;
             string componentName = default;
-            Optional<SynapseSecretBase> licenseKey = default;
+            Core.Optional<SynapseSecretBase> licenseKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

@@ -13,9 +13,9 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(NotebookResourceConverter))]
-    public partial class NotebookResource : IUtf8JsonSerializable
+    public partial class NotebookResource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -31,10 +31,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            Core.Optional<string> id = default;
             string name = default;
-            Optional<string> type = default;
-            Optional<string> etag = default;
+            Core.Optional<string> type = default;
+            Core.Optional<string> etag = default;
             Notebook properties = default;
             foreach (var property in element.EnumerateObject())
             {

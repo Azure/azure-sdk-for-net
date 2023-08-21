@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<long> totalRecallErrorsCount = default;
-            Optional<IReadOnlyList<ServerEndpointRecallError>> recallErrors = default;
+            Core.Optional<DateTimeOffset> lastUpdatedTimestamp = default;
+            Core.Optional<long> totalRecallErrorsCount = default;
+            Core.Optional<IReadOnlyList<ServerEndpointRecallError>> recallErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimestamp"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new ServerEndpointRecallStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(totalRecallErrorsCount), Optional.ToList(recallErrors));
+            return new ServerEndpointRecallStatus(Core.Optional.ToNullable(lastUpdatedTimestamp), Core.Optional.ToNullable(totalRecallErrorsCount), Core.Optional.ToList(recallErrors));
         }
     }
 }

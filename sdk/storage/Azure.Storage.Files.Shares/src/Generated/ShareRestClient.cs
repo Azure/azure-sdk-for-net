@@ -90,7 +90,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="enabledProtocols"> Protocols to enable on the share. </param>
         /// <param name="rootSquash"> Root squash to set on the share.  Only valid for NFS shares. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ShareCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -98,7 +98,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -112,7 +112,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="enabledProtocols"> Protocols to enable on the share. </param>
         /// <param name="rootSquash"> Root squash to set on the share.  Only valid for NFS shares. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ShareCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash);
             _pipeline.Send(message, cancellationToken);
@@ -120,7 +120,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -157,7 +157,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareGetPropertiesHeaders>> GetPropertiesAsync(string sharesnapshot = null, int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ShareGetPropertiesHeaders>> GetPropertiesAsync(string sharesnapshot = null, int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(sharesnapshot, timeout, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -165,7 +165,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -176,7 +176,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareGetPropertiesHeaders> GetProperties(string sharesnapshot = null, int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ShareGetPropertiesHeaders> GetProperties(string sharesnapshot = null, int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(sharesnapshot, timeout, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
@@ -184,7 +184,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -226,7 +226,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="deleteSnapshots"> Specifies the option include to delete the base share and all of its snapshots. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareDeleteHeaders>> DeleteAsync(string sharesnapshot = null, int? timeout = null, DeleteSnapshotsOptionType? deleteSnapshots = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ShareDeleteHeaders>> DeleteAsync(string sharesnapshot = null, int? timeout = null, DeleteSnapshotsOptionType? deleteSnapshots = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteRequest(sharesnapshot, timeout, deleteSnapshots, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -234,7 +234,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -246,7 +246,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="deleteSnapshots"> Specifies the option include to delete the base share and all of its snapshots. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareDeleteHeaders> Delete(string sharesnapshot = null, int? timeout = null, DeleteSnapshotsOptionType? deleteSnapshots = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ShareDeleteHeaders> Delete(string sharesnapshot = null, int? timeout = null, DeleteSnapshotsOptionType? deleteSnapshots = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteRequest(sharesnapshot, timeout, deleteSnapshots, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
@@ -254,7 +254,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -298,7 +298,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareAcquireLeaseHeaders>> AcquireLeaseAsync(int? timeout = null, int? duration = null, string proposedLeaseId = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ShareAcquireLeaseHeaders>> AcquireLeaseAsync(int? timeout = null, int? duration = null, string proposedLeaseId = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAcquireLeaseRequest(timeout, duration, proposedLeaseId, sharesnapshot);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -306,7 +306,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -318,7 +318,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareAcquireLeaseHeaders> AcquireLease(int? timeout = null, int? duration = null, string proposedLeaseId = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ShareAcquireLeaseHeaders> AcquireLease(int? timeout = null, int? duration = null, string proposedLeaseId = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAcquireLeaseRequest(timeout, duration, proposedLeaseId, sharesnapshot);
             _pipeline.Send(message, cancellationToken);
@@ -326,7 +326,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -363,7 +363,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ShareReleaseLeaseHeaders>> ReleaseLeaseAsync(string leaseId, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ShareReleaseLeaseHeaders>> ReleaseLeaseAsync(string leaseId, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
         {
             if (leaseId == null)
             {
@@ -376,7 +376,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -388,7 +388,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public ResponseWithHeaders<ShareReleaseLeaseHeaders> ReleaseLease(string leaseId, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ShareReleaseLeaseHeaders> ReleaseLease(string leaseId, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
         {
             if (leaseId == null)
             {
@@ -401,7 +401,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -443,7 +443,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ShareChangeLeaseHeaders>> ChangeLeaseAsync(string leaseId, int? timeout = null, string proposedLeaseId = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ShareChangeLeaseHeaders>> ChangeLeaseAsync(string leaseId, int? timeout = null, string proposedLeaseId = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
         {
             if (leaseId == null)
             {
@@ -456,7 +456,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -469,7 +469,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public ResponseWithHeaders<ShareChangeLeaseHeaders> ChangeLease(string leaseId, int? timeout = null, string proposedLeaseId = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ShareChangeLeaseHeaders> ChangeLease(string leaseId, int? timeout = null, string proposedLeaseId = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
         {
             if (leaseId == null)
             {
@@ -482,7 +482,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -519,7 +519,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ShareRenewLeaseHeaders>> RenewLeaseAsync(string leaseId, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ShareRenewLeaseHeaders>> RenewLeaseAsync(string leaseId, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
         {
             if (leaseId == null)
             {
@@ -532,7 +532,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -544,7 +544,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public ResponseWithHeaders<ShareRenewLeaseHeaders> RenewLease(string leaseId, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ShareRenewLeaseHeaders> RenewLease(string leaseId, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
         {
             if (leaseId == null)
             {
@@ -557,7 +557,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -601,7 +601,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareBreakLeaseHeaders>> BreakLeaseAsync(int? timeout = null, int? breakPeriod = null, string sharesnapshot = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ShareBreakLeaseHeaders>> BreakLeaseAsync(int? timeout = null, int? breakPeriod = null, string sharesnapshot = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateBreakLeaseRequest(timeout, breakPeriod, sharesnapshot, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -609,7 +609,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -621,7 +621,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareBreakLeaseHeaders> BreakLease(int? timeout = null, int? breakPeriod = null, string sharesnapshot = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ShareBreakLeaseHeaders> BreakLease(int? timeout = null, int? breakPeriod = null, string sharesnapshot = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateBreakLeaseRequest(timeout, breakPeriod, sharesnapshot, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
@@ -629,7 +629,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -662,7 +662,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareCreateSnapshotHeaders>> CreateSnapshotAsync(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ShareCreateSnapshotHeaders>> CreateSnapshotAsync(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateSnapshotRequest(timeout, metadata);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -670,7 +670,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -680,7 +680,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareCreateSnapshotHeaders> CreateSnapshot(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ShareCreateSnapshotHeaders> CreateSnapshot(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateSnapshotRequest(timeout, metadata);
             _pipeline.Send(message, cancellationToken);
@@ -688,7 +688,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -715,7 +715,7 @@ namespace Azure.Storage.Files.Shares
             }
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sharePermission);
             request.Content = content;
             return message;
@@ -726,7 +726,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharePermission"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ShareCreatePermissionHeaders>> CreatePermissionAsync(SharePermission sharePermission, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ShareCreatePermissionHeaders>> CreatePermissionAsync(SharePermission sharePermission, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (sharePermission == null)
             {
@@ -739,7 +739,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -750,7 +750,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharePermission"/> is null. </exception>
-        public ResponseWithHeaders<ShareCreatePermissionHeaders> CreatePermission(SharePermission sharePermission, int? timeout = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ShareCreatePermissionHeaders> CreatePermission(SharePermission sharePermission, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (sharePermission == null)
             {
@@ -763,7 +763,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -798,7 +798,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePermissionKey"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SharePermission, ShareGetPermissionHeaders>> GetPermissionAsync(string filePermissionKey, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<SharePermission, ShareGetPermissionHeaders>> GetPermissionAsync(string filePermissionKey, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (filePermissionKey == null)
             {
@@ -815,7 +815,7 @@ namespace Azure.Storage.Files.Shares
                         SharePermission value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = SharePermission.DeserializeSharePermission(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -827,7 +827,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePermissionKey"/> is null. </exception>
-        public ResponseWithHeaders<SharePermission, ShareGetPermissionHeaders> GetPermission(string filePermissionKey, int? timeout = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<SharePermission, ShareGetPermissionHeaders> GetPermission(string filePermissionKey, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (filePermissionKey == null)
             {
@@ -844,7 +844,7 @@ namespace Azure.Storage.Files.Shares
                         SharePermission value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = SharePermission.DeserializeSharePermission(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -893,7 +893,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="rootSquash"> Root squash to set on the share.  Only valid for NFS shares. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareSetPropertiesHeaders>> SetPropertiesAsync(int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ShareSetPropertiesHeaders>> SetPropertiesAsync(int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetPropertiesRequest(timeout, quota, accessTier, rootSquash, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -901,7 +901,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -914,7 +914,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="rootSquash"> Root squash to set on the share.  Only valid for NFS shares. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareSetPropertiesHeaders> SetProperties(int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ShareSetPropertiesHeaders> SetProperties(int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetPropertiesRequest(timeout, quota, accessTier, rootSquash, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
@@ -922,7 +922,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -960,7 +960,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareSetMetadataHeaders>> SetMetadataAsync(int? timeout = null, IDictionary<string, string> metadata = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ShareSetMetadataHeaders>> SetMetadataAsync(int? timeout = null, IDictionary<string, string> metadata = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetMetadataRequest(timeout, metadata, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -968,7 +968,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -979,7 +979,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareSetMetadataHeaders> SetMetadata(int? timeout = null, IDictionary<string, string> metadata = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ShareSetMetadataHeaders> SetMetadata(int? timeout = null, IDictionary<string, string> metadata = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetMetadataRequest(timeout, metadata, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
@@ -987,7 +987,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1020,7 +1020,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<IReadOnlyList<ShareSignedIdentifier>, ShareGetAccessPolicyHeaders>> GetAccessPolicyAsync(int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<IReadOnlyList<ShareSignedIdentifier>, ShareGetAccessPolicyHeaders>> GetAccessPolicyAsync(int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAccessPolicyRequest(timeout, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1040,7 +1040,7 @@ namespace Azure.Storage.Files.Shares
                             }
                             value = array;
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1051,7 +1051,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<IReadOnlyList<ShareSignedIdentifier>, ShareGetAccessPolicyHeaders> GetAccessPolicy(int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<IReadOnlyList<ShareSignedIdentifier>, ShareGetAccessPolicyHeaders> GetAccessPolicy(int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAccessPolicyRequest(timeout, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
@@ -1071,7 +1071,7 @@ namespace Azure.Storage.Files.Shares
                             }
                             value = array;
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1101,7 +1101,7 @@ namespace Azure.Storage.Files.Shares
             if (shareAcl != null)
             {
                 request.Headers.Add("Content-Type", "application/xml");
-                var content = new XmlWriterContent();
+                var content = new Core.XmlWriterContent();
                 content.XmlWriter.WriteStartElement("SignedIdentifiers");
                 foreach (var item in shareAcl)
                 {
@@ -1118,7 +1118,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="shareAcl"> The ACL for the share. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareSetAccessPolicyHeaders>> SetAccessPolicyAsync(int? timeout = null, IEnumerable<ShareSignedIdentifier> shareAcl = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ShareSetAccessPolicyHeaders>> SetAccessPolicyAsync(int? timeout = null, IEnumerable<ShareSignedIdentifier> shareAcl = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetAccessPolicyRequest(timeout, shareAcl, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1126,7 +1126,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1137,7 +1137,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="shareAcl"> The ACL for the share. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareSetAccessPolicyHeaders> SetAccessPolicy(int? timeout = null, IEnumerable<ShareSignedIdentifier> shareAcl = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ShareSetAccessPolicyHeaders> SetAccessPolicy(int? timeout = null, IEnumerable<ShareSignedIdentifier> shareAcl = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetAccessPolicyRequest(timeout, shareAcl, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
@@ -1145,7 +1145,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1178,7 +1178,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareStatistics, ShareGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ShareStatistics, ShareGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetStatisticsRequest(timeout, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1193,7 +1193,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             value = ShareStatistics.DeserializeShareStatistics(shareStatsElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1204,7 +1204,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareStatistics, ShareGetStatisticsHeaders> GetStatistics(int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ShareStatistics, ShareGetStatisticsHeaders> GetStatistics(int? timeout = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetStatisticsRequest(timeout, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
@@ -1219,7 +1219,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             value = ShareStatistics.DeserializeShareStatistics(shareStatsElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1258,7 +1258,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="deletedShareName"> Specifies the name of the previously-deleted share. </param>
         /// <param name="deletedShareVersion"> Specifies the version of the previously-deleted share. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareRestoreHeaders>> RestoreAsync(int? timeout = null, string deletedShareName = null, string deletedShareVersion = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ShareRestoreHeaders>> RestoreAsync(int? timeout = null, string deletedShareName = null, string deletedShareVersion = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateRestoreRequest(timeout, deletedShareName, deletedShareVersion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1266,7 +1266,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1277,7 +1277,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="deletedShareName"> Specifies the name of the previously-deleted share. </param>
         /// <param name="deletedShareVersion"> Specifies the version of the previously-deleted share. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareRestoreHeaders> Restore(int? timeout = null, string deletedShareName = null, string deletedShareVersion = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ShareRestoreHeaders> Restore(int? timeout = null, string deletedShareName = null, string deletedShareVersion = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateRestoreRequest(timeout, deletedShareName, deletedShareVersion);
             _pipeline.Send(message, cancellationToken);
@@ -1285,7 +1285,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

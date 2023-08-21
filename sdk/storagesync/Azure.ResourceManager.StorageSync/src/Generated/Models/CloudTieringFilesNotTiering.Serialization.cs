@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<long> totalFileCount = default;
-            Optional<IReadOnlyList<FilesNotTieringError>> errors = default;
+            Core.Optional<DateTimeOffset> lastUpdatedTimestamp = default;
+            Core.Optional<long> totalFileCount = default;
+            Core.Optional<IReadOnlyList<FilesNotTieringError>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimestamp"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new CloudTieringFilesNotTiering(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(totalFileCount), Optional.ToList(errors));
+            return new CloudTieringFilesNotTiering(Core.Optional.ToNullable(lastUpdatedTimestamp), Core.Optional.ToNullable(totalFileCount), Core.Optional.ToList(errors));
         }
     }
 }

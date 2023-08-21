@@ -17,11 +17,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="id"> The session Id. </param>
         internal SparkBatchJob(int id)
         {
-            Errors = new ChangeTrackingList<SparkServiceError>();
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Errors = new Core.ChangeTrackingList<SparkServiceError>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
             Id = id;
-            AppInfo = new ChangeTrackingDictionary<string, string>();
-            LogLines = new ChangeTrackingList<string>();
+            AppInfo = new Core.ChangeTrackingDictionary<string, string>();
+            LogLines = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SparkBatchJob. </summary>

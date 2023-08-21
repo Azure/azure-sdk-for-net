@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="status"></param>
         internal HealthcareJobState(DateTimeOffset createdDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, State status) : base(createdDateTime, jobId, lastUpdateDateTime, status)
         {
-            Errors = new ChangeTrackingList<TextAnalyticsError>();
+            Errors = new Core.ChangeTrackingList<TextAnalyticsError>();
         }
 
         /// <summary> Initializes a new instance of HealthcareJobState. </summary>

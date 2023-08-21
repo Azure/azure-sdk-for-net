@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseAadOnlyAuthenticationListResult. </summary>
         internal SynapseAadOnlyAuthenticationListResult()
         {
-            Value = new ChangeTrackingList<SynapseAadOnlyAuthenticationData>();
+            Value = new Core.ChangeTrackingList<SynapseAadOnlyAuthenticationData>();
         }
 
         /// <summary> Initializes a new instance of SynapseAadOnlyAuthenticationListResult. </summary>

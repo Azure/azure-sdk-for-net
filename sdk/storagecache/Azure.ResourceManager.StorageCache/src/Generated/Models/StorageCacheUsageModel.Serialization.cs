@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<StorageCacheUsageModelDisplay> display = default;
-            Optional<string> modelName = default;
-            Optional<string> targetType = default;
+            Core.Optional<StorageCacheUsageModelDisplay> display = default;
+            Core.Optional<string> modelName = default;
+            Core.Optional<string> targetType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("display"u8))

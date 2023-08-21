@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageSshPublicKey>> sshAuthorizedKeys = default;
-            Optional<string> sharedKey = default;
+            Core.Optional<IReadOnlyList<StorageSshPublicKey>> sshAuthorizedKeys = default;
+            Core.Optional<string> sharedKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sshAuthorizedKeys"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new LocalUserKeys(Optional.ToList(sshAuthorizedKeys), sharedKey.Value);
+            return new LocalUserKeys(Core.Optional.ToList(sshAuthorizedKeys), sharedKey.Value);
         }
     }
 }

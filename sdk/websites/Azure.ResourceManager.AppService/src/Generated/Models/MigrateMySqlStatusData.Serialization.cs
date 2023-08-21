@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class MigrateMySqlStatusData : IUtf8JsonSerializable
+    public partial class MigrateMySqlStatusData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AppServiceOperationStatus> migrationOperationStatus = default;
-            Optional<string> operationId = default;
-            Optional<bool> localMySqlEnabled = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<AppServiceOperationStatus> migrationOperationStatus = default;
+            Core.Optional<string> operationId = default;
+            Core.Optional<bool> localMySqlEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new MigrateMySqlStatusData(id, name, type, systemData.Value, Optional.ToNullable(migrationOperationStatus), operationId.Value, Optional.ToNullable(localMySqlEnabled), kind.Value);
+            return new MigrateMySqlStatusData(id, name, type, systemData.Value, Core.Optional.ToNullable(migrationOperationStatus), operationId.Value, Core.Optional.ToNullable(localMySqlEnabled), kind.Value);
         }
     }
 }

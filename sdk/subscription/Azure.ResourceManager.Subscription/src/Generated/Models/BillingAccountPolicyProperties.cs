@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <summary> Initializes a new instance of BillingAccountPolicyProperties. </summary>
         internal BillingAccountPolicyProperties()
         {
-            ServiceTenants = new ChangeTrackingList<ServiceTenant>();
+            ServiceTenants = new Core.ChangeTrackingList<ServiceTenant>();
         }
 
         /// <summary> Initializes a new instance of BillingAccountPolicyProperties. </summary>

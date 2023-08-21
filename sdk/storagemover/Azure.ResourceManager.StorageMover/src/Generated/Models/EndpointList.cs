@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <summary> Initializes a new instance of EndpointList. </summary>
         internal EndpointList()
         {
-            Value = new ChangeTrackingList<StorageMoverEndpointData>();
+            Value = new Core.ChangeTrackingList<StorageMoverEndpointData>();
         }
 
         /// <summary> Initializes a new instance of EndpointList. </summary>

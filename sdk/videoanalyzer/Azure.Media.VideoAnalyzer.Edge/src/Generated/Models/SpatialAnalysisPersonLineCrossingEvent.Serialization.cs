@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SpatialAnalysisPersonLineCrossingEvent : IUtf8JsonSerializable
+    public partial class SpatialAnalysisPersonLineCrossingEvent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Threshold))
+            if (Core.Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteStringValue(Threshold);
             }
-            if (Optional.IsDefined(Focus))
+            if (Core.Optional.IsDefined(Focus))
             {
                 writer.WritePropertyName("focus"u8);
                 writer.WriteStringValue(Focus.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> threshold = default;
-            Optional<SpatialAnalysisOperationFocus> focus = default;
+            Core.Optional<string> threshold = default;
+            Core.Optional<SpatialAnalysisOperationFocus> focus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("threshold"u8))
@@ -53,7 +53,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonLineCrossingEvent(threshold.Value, Optional.ToNullable(focus));
+            return new SpatialAnalysisPersonLineCrossingEvent(threshold.Value, Core.Optional.ToNullable(focus));
         }
     }
 }

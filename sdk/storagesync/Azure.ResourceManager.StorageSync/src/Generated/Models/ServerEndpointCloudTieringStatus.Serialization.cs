@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<ServerEndpointHealthState> health = default;
-            Optional<DateTimeOffset> healthLastUpdatedTimestamp = default;
-            Optional<int> lastCloudTieringResult = default;
-            Optional<DateTimeOffset> lastSuccessTimestamp = default;
-            Optional<CloudTieringSpaceSavings> spaceSavings = default;
-            Optional<CloudTieringCachePerformance> cachePerformance = default;
-            Optional<CloudTieringFilesNotTiering> filesNotTiering = default;
-            Optional<CloudTieringVolumeFreeSpacePolicyStatus> volumeFreeSpacePolicyStatus = default;
-            Optional<CloudTieringDatePolicyStatus> datePolicyStatus = default;
-            Optional<CloudTieringLowDiskMode> lowDiskMode = default;
+            Core.Optional<DateTimeOffset> lastUpdatedTimestamp = default;
+            Core.Optional<ServerEndpointHealthState> health = default;
+            Core.Optional<DateTimeOffset> healthLastUpdatedTimestamp = default;
+            Core.Optional<int> lastCloudTieringResult = default;
+            Core.Optional<DateTimeOffset> lastSuccessTimestamp = default;
+            Core.Optional<CloudTieringSpaceSavings> spaceSavings = default;
+            Core.Optional<CloudTieringCachePerformance> cachePerformance = default;
+            Core.Optional<CloudTieringFilesNotTiering> filesNotTiering = default;
+            Core.Optional<CloudTieringVolumeFreeSpacePolicyStatus> volumeFreeSpacePolicyStatus = default;
+            Core.Optional<CloudTieringDatePolicyStatus> datePolicyStatus = default;
+            Core.Optional<CloudTieringLowDiskMode> lowDiskMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimestamp"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new ServerEndpointCloudTieringStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(health), Optional.ToNullable(healthLastUpdatedTimestamp), Optional.ToNullable(lastCloudTieringResult), Optional.ToNullable(lastSuccessTimestamp), spaceSavings.Value, cachePerformance.Value, filesNotTiering.Value, volumeFreeSpacePolicyStatus.Value, datePolicyStatus.Value, lowDiskMode.Value);
+            return new ServerEndpointCloudTieringStatus(Core.Optional.ToNullable(lastUpdatedTimestamp), Core.Optional.ToNullable(health), Core.Optional.ToNullable(healthLastUpdatedTimestamp), Core.Optional.ToNullable(lastCloudTieringResult), Core.Optional.ToNullable(lastSuccessTimestamp), spaceSavings.Value, cachePerformance.Value, filesNotTiering.Value, volumeFreeSpacePolicyStatus.Value, datePolicyStatus.Value, lowDiskMode.Value);
         }
     }
 }

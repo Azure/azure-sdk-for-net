@@ -14,49 +14,49 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AmazonRdsForOracleSourceConverter))]
-    public partial class AmazonRdsForOracleSource : IUtf8JsonSerializable
+    public partial class AmazonRdsForOracleSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OracleReaderQuery))
+            if (Core.Optional.IsDefined(OracleReaderQuery))
             {
                 writer.WritePropertyName("oracleReaderQuery"u8);
                 writer.WriteObjectValue(OracleReaderQuery);
             }
-            if (Optional.IsDefined(QueryTimeout))
+            if (Core.Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 writer.WriteObjectValue(QueryTimeout);
             }
-            if (Optional.IsDefined(PartitionOption))
+            if (Core.Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
                 writer.WriteObjectValue(PartitionOption);
             }
-            if (Optional.IsDefined(PartitionSettings))
+            if (Core.Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
                 writer.WriteObjectValue(PartitionSettings);
             }
-            if (Optional.IsDefined(AdditionalColumns))
+            if (Core.Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
                 writer.WriteObjectValue(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(SourceRetryCount))
+            if (Core.Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 writer.WriteObjectValue(SourceRetryCount);
             }
-            if (Optional.IsDefined(SourceRetryWait))
+            if (Core.Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 writer.WriteObjectValue(SourceRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (Core.Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -75,15 +75,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> oracleReaderQuery = default;
-            Optional<object> queryTimeout = default;
-            Optional<object> partitionOption = default;
-            Optional<AmazonRdsForOraclePartitionSettings> partitionSettings = default;
-            Optional<object> additionalColumns = default;
+            Core.Optional<object> oracleReaderQuery = default;
+            Core.Optional<object> queryTimeout = default;
+            Core.Optional<object> partitionOption = default;
+            Core.Optional<AmazonRdsForOraclePartitionSettings> partitionSettings = default;
+            Core.Optional<object> additionalColumns = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            Core.Optional<object> sourceRetryCount = default;
+            Core.Optional<object> sourceRetryWait = default;
+            Core.Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

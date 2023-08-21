@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AppServiceVirtualNetworkGatewayData : IUtf8JsonSerializable
+    public partial class AppServiceVirtualNetworkGatewayData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(VnetName))
+            if (Core.Optional.IsDefined(VnetName))
             {
                 writer.WritePropertyName("vnetName"u8);
                 writer.WriteStringValue(VnetName);
             }
-            if (Optional.IsDefined(VpnPackageUri))
+            if (Core.Optional.IsDefined(VpnPackageUri))
             {
                 writer.WritePropertyName("vpnPackageUri"u8);
                 writer.WriteStringValue(VpnPackageUri.AbsoluteUri);
@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> vnetName = default;
-            Optional<Uri> vpnPackageUri = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> vnetName = default;
+            Core.Optional<Uri> vpnPackageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))

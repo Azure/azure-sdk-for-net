@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StaticSiteTemplate : IUtf8JsonSerializable
+    public partial class StaticSiteTemplate : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TemplateRepositoryUri))
+            if (Core.Optional.IsDefined(TemplateRepositoryUri))
             {
                 writer.WritePropertyName("templateRepositoryUrl"u8);
                 writer.WriteStringValue(TemplateRepositoryUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Owner))
+            if (Core.Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
-            if (Optional.IsDefined(RepositoryName))
+            if (Core.Optional.IsDefined(RepositoryName))
             {
                 writer.WritePropertyName("repositoryName"u8);
                 writer.WriteStringValue(RepositoryName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(IsPrivate))
+            if (Core.Optional.IsDefined(IsPrivate))
             {
                 writer.WritePropertyName("isPrivate"u8);
                 writer.WriteBooleanValue(IsPrivate.Value);
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<Uri> templateRepositoryUrl = default;
-            Optional<string> owner = default;
-            Optional<string> repositoryName = default;
-            Optional<string> description = default;
-            Optional<bool> isPrivate = default;
+            Core.Optional<Uri> templateRepositoryUrl = default;
+            Core.Optional<string> owner = default;
+            Core.Optional<string> repositoryName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<bool> isPrivate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("templateRepositoryUrl"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSiteTemplate(templateRepositoryUrl.Value, owner.Value, repositoryName.Value, description.Value, Optional.ToNullable(isPrivate));
+            return new StaticSiteTemplate(templateRepositoryUrl.Value, owner.Value, repositoryName.Value, description.Value, Core.Optional.ToNullable(isPrivate));
         }
     }
 }

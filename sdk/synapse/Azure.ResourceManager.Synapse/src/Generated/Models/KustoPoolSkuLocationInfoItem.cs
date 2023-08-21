@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Synapse.Models
         internal KustoPoolSkuLocationInfoItem(AzureLocation location)
         {
             Location = location;
-            Zones = new ChangeTrackingList<string>();
+            Zones = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of KustoPoolSkuLocationInfoItem. </summary>

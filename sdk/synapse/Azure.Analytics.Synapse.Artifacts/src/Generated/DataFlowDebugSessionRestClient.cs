@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
             return message;
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="request"> Data flow debug session definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DataFlowDebugSessionCreateDataFlowDebugSessionHeaders>> CreateDataFlowDebugSessionAsync(CreateDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<DataFlowDebugSessionCreateDataFlowDebugSessionHeaders>> CreateDataFlowDebugSessionAsync(CreateDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="request"> Data flow debug session definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public ResponseWithHeaders<DataFlowDebugSessionCreateDataFlowDebugSessionHeaders> CreateDataFlowDebugSession(CreateDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<DataFlowDebugSessionCreateDataFlowDebugSessionHeaders> CreateDataFlowDebugSession(CreateDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -96,7 +96,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -168,7 +168,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
             return message;
@@ -240,7 +240,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
             return message;
@@ -302,7 +302,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
             return message;
@@ -312,7 +312,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="request"> Data flow debug command definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DataFlowDebugSessionExecuteCommandHeaders>> ExecuteCommandAsync(DataFlowDebugCommandRequest request, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<DataFlowDebugSessionExecuteCommandHeaders>> ExecuteCommandAsync(DataFlowDebugCommandRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -326,7 +326,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -336,7 +336,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="request"> Data flow debug command definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public ResponseWithHeaders<DataFlowDebugSessionExecuteCommandHeaders> ExecuteCommand(DataFlowDebugCommandRequest request, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<DataFlowDebugSessionExecuteCommandHeaders> ExecuteCommand(DataFlowDebugCommandRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -350,7 +350,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

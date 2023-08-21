@@ -21,10 +21,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<LinkTableRequestSource> source = default;
-            Optional<LinkTableRequestTarget> target = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<LinkTableRequestSource> source = default;
+            Core.Optional<LinkTableRequestTarget> target = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

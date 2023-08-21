@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <summary> Initializes a new instance of StreamingJobOutputData. </summary>
         public StreamingJobOutputData()
         {
-            LastOutputEventTimestamps = new ChangeTrackingList<LastOutputEventTimestamp>();
+            LastOutputEventTimestamps = new Core.ChangeTrackingList<LastOutputEventTimestamp>();
         }
 
         /// <summary> Initializes a new instance of StreamingJobOutputData. </summary>

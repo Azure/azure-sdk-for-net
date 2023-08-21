@@ -16,8 +16,8 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Initializes a new instance of ShareFileRangeList. </summary>
         internal ShareFileRangeList()
         {
-            Ranges = new ChangeTrackingList<FileRange>();
-            ClearRanges = new ChangeTrackingList<ClearRange>();
+            Ranges = new Core.ChangeTrackingList<FileRange>();
+            ClearRanges = new Core.ChangeTrackingList<ClearRange>();
         }
 
         /// <summary> Initializes a new instance of ShareFileRangeList. </summary>

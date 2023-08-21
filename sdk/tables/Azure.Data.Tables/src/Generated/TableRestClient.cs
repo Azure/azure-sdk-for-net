@@ -80,7 +80,7 @@ namespace Azure.Data.Tables
         /// <param name="nextTableName"> A table query continuation token from a previous call. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<TableQueryResponse, TableQueryHeaders>> QueryAsync(string nextTableName = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<TableQueryResponse, TableQueryHeaders>> QueryAsync(string nextTableName = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateQueryRequest(nextTableName, queryOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -92,7 +92,7 @@ namespace Azure.Data.Tables
                         TableQueryResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = TableQueryResponse.DeserializeTableQueryResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -103,7 +103,7 @@ namespace Azure.Data.Tables
         /// <param name="nextTableName"> A table query continuation token from a previous call. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<TableQueryResponse, TableQueryHeaders> Query(string nextTableName = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<TableQueryResponse, TableQueryHeaders> Query(string nextTableName = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateQueryRequest(nextTableName, queryOptions);
             _pipeline.Send(message, cancellationToken);
@@ -115,7 +115,7 @@ namespace Azure.Data.Tables
                         TableQueryResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = TableQueryResponse.DeserializeTableQueryResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -143,7 +143,7 @@ namespace Azure.Data.Tables
             }
             request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             request.Headers.Add("Content-Type", "application/json;odata=nometadata");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(tableProperties);
             request.Content = content;
             return message;
@@ -155,7 +155,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableProperties"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TableResponse, TableCreateHeaders>> CreateAsync(TableProperties tableProperties, ResponseFormat? responsePreference = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<TableResponse, TableCreateHeaders>> CreateAsync(TableProperties tableProperties, ResponseFormat? responsePreference = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (tableProperties == null)
             {
@@ -172,10 +172,10 @@ namespace Azure.Data.Tables
                         TableResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = TableResponse.DeserializeTableResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:
-                    return ResponseWithHeaders.FromValue((TableResponse)null, headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue<TableResponse, TableCreateHeaders>((TableResponse)null, headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -187,7 +187,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableProperties"/> is null. </exception>
-        public ResponseWithHeaders<TableResponse, TableCreateHeaders> Create(TableProperties tableProperties, ResponseFormat? responsePreference = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<TableResponse, TableCreateHeaders> Create(TableProperties tableProperties, ResponseFormat? responsePreference = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (tableProperties == null)
             {
@@ -204,10 +204,10 @@ namespace Azure.Data.Tables
                         TableResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = TableResponse.DeserializeTableResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:
-                    return ResponseWithHeaders.FromValue((TableResponse)null, headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue<TableResponse, TableCreateHeaders>((TableResponse)null, headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -328,7 +328,7 @@ namespace Azure.Data.Tables
         /// <param name="table"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TableDeleteHeaders>> DeleteAsync(string table, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<TableDeleteHeaders>> DeleteAsync(string table, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -341,7 +341,7 @@ namespace Azure.Data.Tables
             switch (message.Response.Status)
             {
                 case 204:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -351,7 +351,7 @@ namespace Azure.Data.Tables
         /// <param name="table"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public ResponseWithHeaders<TableDeleteHeaders> Delete(string table, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<TableDeleteHeaders> Delete(string table, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -364,7 +364,7 @@ namespace Azure.Data.Tables
             switch (message.Response.Status)
             {
                 case 204:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -507,7 +507,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TableEntityQueryResponse, TableQueryEntitiesHeaders>> QueryEntitiesAsync(string table, int? timeout = null, string nextPartitionKey = null, string nextRowKey = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<TableEntityQueryResponse, TableQueryEntitiesHeaders>> QueryEntitiesAsync(string table, int? timeout = null, string nextPartitionKey = null, string nextRowKey = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -524,7 +524,7 @@ namespace Azure.Data.Tables
                         TableEntityQueryResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -539,7 +539,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public ResponseWithHeaders<TableEntityQueryResponse, TableQueryEntitiesHeaders> QueryEntities(string table, int? timeout = null, string nextPartitionKey = null, string nextRowKey = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<TableEntityQueryResponse, TableQueryEntitiesHeaders> QueryEntities(string table, int? timeout = null, string nextPartitionKey = null, string nextRowKey = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -556,7 +556,7 @@ namespace Azure.Data.Tables
                         TableEntityQueryResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -608,7 +608,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntityWithPartitionAndRowKeyHeaders>> QueryEntityWithPartitionAndRowKeyAsync(string table, string partitionKey, string rowKey, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntityWithPartitionAndRowKeyHeaders>> QueryEntityWithPartitionAndRowKeyAsync(string table, string partitionKey, string rowKey, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -645,7 +645,7 @@ namespace Azure.Data.Tables
                             }
                         }
                         value = dictionary;
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -660,7 +660,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntityWithPartitionAndRowKeyHeaders> QueryEntityWithPartitionAndRowKey(string table, string partitionKey, string rowKey, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntityWithPartitionAndRowKeyHeaders> QueryEntityWithPartitionAndRowKey(string table, string partitionKey, string rowKey, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -697,7 +697,7 @@ namespace Azure.Data.Tables
                             }
                         }
                         value = dictionary;
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -774,7 +774,7 @@ namespace Azure.Data.Tables
             if (tableEntityProperties != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
+                var content = new Core.Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartObject();
                 foreach (var item in tableEntityProperties)
                 {
@@ -802,7 +802,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TableUpdateEntityHeaders>> UpdateEntityAsync(string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<TableUpdateEntityHeaders>> UpdateEntityAsync(string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -823,7 +823,7 @@ namespace Azure.Data.Tables
             switch (message.Response.Status)
             {
                 case 204:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -839,7 +839,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
-        public ResponseWithHeaders<TableUpdateEntityHeaders> UpdateEntity(string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<TableUpdateEntityHeaders> UpdateEntity(string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -860,7 +860,7 @@ namespace Azure.Data.Tables
             switch (message.Response.Status)
             {
                 case 204:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -899,7 +899,7 @@ namespace Azure.Data.Tables
             if (tableEntityProperties != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
+                var content = new Core.Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartObject();
                 foreach (var item in tableEntityProperties)
                 {
@@ -927,7 +927,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TableMergeEntityHeaders>> MergeEntityAsync(string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<TableMergeEntityHeaders>> MergeEntityAsync(string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -948,7 +948,7 @@ namespace Azure.Data.Tables
             switch (message.Response.Status)
             {
                 case 204:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -964,7 +964,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
-        public ResponseWithHeaders<TableMergeEntityHeaders> MergeEntity(string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<TableMergeEntityHeaders> MergeEntity(string table, string partitionKey, string rowKey, int? timeout = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -985,7 +985,7 @@ namespace Azure.Data.Tables
             switch (message.Response.Status)
             {
                 case 204:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1030,7 +1030,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, <paramref name="rowKey"/> or <paramref name="ifMatch"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TableDeleteEntityHeaders>> DeleteEntityAsync(string table, string partitionKey, string rowKey, string ifMatch, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<TableDeleteEntityHeaders>> DeleteEntityAsync(string table, string partitionKey, string rowKey, string ifMatch, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -1055,7 +1055,7 @@ namespace Azure.Data.Tables
             switch (message.Response.Status)
             {
                 case 204:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1070,7 +1070,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, <paramref name="rowKey"/> or <paramref name="ifMatch"/> is null. </exception>
-        public ResponseWithHeaders<TableDeleteEntityHeaders> DeleteEntity(string table, string partitionKey, string rowKey, string ifMatch, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<TableDeleteEntityHeaders> DeleteEntity(string table, string partitionKey, string rowKey, string ifMatch, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -1095,7 +1095,7 @@ namespace Azure.Data.Tables
             switch (message.Response.Status)
             {
                 case 204:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1129,7 +1129,7 @@ namespace Azure.Data.Tables
             if (tableEntityProperties != null)
             {
                 request.Headers.Add("Content-Type", "application/json;odata=nometadata");
-                var content = new Utf8JsonRequestContent();
+                var content = new Core.Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartObject();
                 foreach (var item in tableEntityProperties)
                 {
@@ -1155,7 +1155,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableInsertEntityHeaders>> InsertEntityAsync(string table, int? timeout = null, ResponseFormat? responsePreference = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableInsertEntityHeaders>> InsertEntityAsync(string table, int? timeout = null, ResponseFormat? responsePreference = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -1184,10 +1184,10 @@ namespace Azure.Data.Tables
                             }
                         }
                         value = dictionary;
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:
-                    return ResponseWithHeaders.FromValue((IReadOnlyDictionary<string, object>)null, headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue<IReadOnlyDictionary<string, object>, TableInsertEntityHeaders>((IReadOnlyDictionary<string, object>)null, headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1201,7 +1201,7 @@ namespace Azure.Data.Tables
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableInsertEntityHeaders> InsertEntity(string table, int? timeout = null, ResponseFormat? responsePreference = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableInsertEntityHeaders> InsertEntity(string table, int? timeout = null, ResponseFormat? responsePreference = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -1230,10 +1230,10 @@ namespace Azure.Data.Tables
                             }
                         }
                         value = dictionary;
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:
-                    return ResponseWithHeaders.FromValue((IReadOnlyDictionary<string, object>)null, headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue<IReadOnlyDictionary<string, object>, TableInsertEntityHeaders>((IReadOnlyDictionary<string, object>)null, headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1264,7 +1264,7 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyList<TableSignedIdentifier>, TableGetAccessPolicyHeaders>> GetAccessPolicyAsync(string table, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<IReadOnlyList<TableSignedIdentifier>, TableGetAccessPolicyHeaders>> GetAccessPolicyAsync(string table, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -1289,7 +1289,7 @@ namespace Azure.Data.Tables
                             }
                             value = array;
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1301,7 +1301,7 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyList<TableSignedIdentifier>, TableGetAccessPolicyHeaders> GetAccessPolicy(string table, int? timeout = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<IReadOnlyList<TableSignedIdentifier>, TableGetAccessPolicyHeaders> GetAccessPolicy(string table, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -1326,7 +1326,7 @@ namespace Azure.Data.Tables
                             }
                             value = array;
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1353,7 +1353,7 @@ namespace Azure.Data.Tables
             if (tableAcl != null)
             {
                 request.Headers.Add("Content-Type", "application/xml");
-                var content = new XmlWriterContent();
+                var content = new Core.XmlWriterContent();
                 content.XmlWriter.WriteStartElement("SignedIdentifiers");
                 foreach (var item in tableAcl)
                 {
@@ -1371,7 +1371,7 @@ namespace Azure.Data.Tables
         /// <param name="tableAcl"> The acls for the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TableSetAccessPolicyHeaders>> SetAccessPolicyAsync(string table, int? timeout = null, IEnumerable<TableSignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<TableSetAccessPolicyHeaders>> SetAccessPolicyAsync(string table, int? timeout = null, IEnumerable<TableSignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -1384,7 +1384,7 @@ namespace Azure.Data.Tables
             switch (message.Response.Status)
             {
                 case 204:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1396,7 +1396,7 @@ namespace Azure.Data.Tables
         /// <param name="tableAcl"> The acls for the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
-        public ResponseWithHeaders<TableSetAccessPolicyHeaders> SetAccessPolicy(string table, int? timeout = null, IEnumerable<TableSignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<TableSetAccessPolicyHeaders> SetAccessPolicy(string table, int? timeout = null, IEnumerable<TableSignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -1409,7 +1409,7 @@ namespace Azure.Data.Tables
             switch (message.Response.Status)
             {
                 case 204:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

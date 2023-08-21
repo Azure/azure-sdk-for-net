@@ -13,32 +13,32 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ScriptActivityParameterConverter))]
-    public partial class ScriptActivityParameter : IUtf8JsonSerializable
+    public partial class ScriptActivityParameter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Core.Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(Value);
             }
-            if (Optional.IsDefined(Direction))
+            if (Core.Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (Optional.IsDefined(Size))
+            if (Core.Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
@@ -52,11 +52,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> name = default;
-            Optional<ScriptActivityParameterType> type = default;
-            Optional<object> value = default;
-            Optional<ScriptActivityParameterDirection> direction = default;
-            Optional<int> size = default;
+            Core.Optional<object> name = default;
+            Core.Optional<ScriptActivityParameterType> type = default;
+            Core.Optional<object> value = default;
+            Core.Optional<ScriptActivityParameterDirection> direction = default;
+            Core.Optional<int> size = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -105,7 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ScriptActivityParameter(name.Value, Optional.ToNullable(type), value.Value, Optional.ToNullable(direction), Optional.ToNullable(size));
+            return new ScriptActivityParameter(name.Value, Core.Optional.ToNullable(type), value.Value, Core.Optional.ToNullable(direction), Core.Optional.ToNullable(size));
         }
 
         internal partial class ScriptActivityParameterConverter : JsonConverter<ScriptActivityParameter>

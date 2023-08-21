@@ -14,36 +14,36 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SparkJobDefinitionConverter))]
-    public partial class SparkJobDefinition : IUtf8JsonSerializable
+    public partial class SparkJobDefinition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("targetBigDataPool"u8);
             writer.WriteObjectValue(TargetBigDataPool);
-            if (Optional.IsDefined(TargetSparkConfiguration))
+            if (Core.Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
                 writer.WriteObjectValue(TargetSparkConfiguration);
             }
-            if (Optional.IsDefined(RequiredSparkVersion))
+            if (Core.Optional.IsDefined(RequiredSparkVersion))
             {
                 writer.WritePropertyName("requiredSparkVersion"u8);
                 writer.WriteStringValue(RequiredSparkVersion);
             }
-            if (Optional.IsDefined(Language))
+            if (Core.Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
             writer.WritePropertyName("jobProperties"u8);
             writer.WriteObjectValue(JobProperties);
-            if (Optional.IsDefined(Folder))
+            if (Core.Optional.IsDefined(Folder))
             {
                 if (Folder != null)
                 {
@@ -69,13 +69,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            Core.Optional<string> description = default;
             BigDataPoolReference targetBigDataPool = default;
-            Optional<SparkConfigurationReference> targetSparkConfiguration = default;
-            Optional<string> requiredSparkVersion = default;
-            Optional<string> language = default;
+            Core.Optional<SparkConfigurationReference> targetSparkConfiguration = default;
+            Core.Optional<string> requiredSparkVersion = default;
+            Core.Optional<string> language = default;
             SparkJobProperties jobProperties = default;
-            Optional<SparkJobDefinitionFolder> folder = default;
+            Core.Optional<SparkJobDefinitionFolder> folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

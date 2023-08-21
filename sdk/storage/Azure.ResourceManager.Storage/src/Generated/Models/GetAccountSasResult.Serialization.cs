@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<string> accountSasToken = default;
+            Core.Optional<string> accountSasToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountSasToken"u8))

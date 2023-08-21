@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         internal SparkStatementCollection(int total)
         {
             Total = total;
-            Statements = new ChangeTrackingList<SparkStatement>();
+            Statements = new Core.ChangeTrackingList<SparkStatement>();
         }
 
         /// <summary> Initializes a new instance of SparkStatementCollection. </summary>

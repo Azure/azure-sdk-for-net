@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class CognitiveServicesVisionProcessor : IUtf8JsonSerializable
+    public partial class CognitiveServicesVisionProcessor : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
             writer.WriteObjectValue(Endpoint);
-            if (Optional.IsDefined(Image))
+            if (Core.Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteObjectValue(Image);
             }
-            if (Optional.IsDefined(SamplingOptions))
+            if (Core.Optional.IsDefined(SamplingOptions))
             {
                 writer.WritePropertyName("samplingOptions"u8);
                 writer.WriteObjectValue(SamplingOptions);
@@ -51,8 +51,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             EndpointBase endpoint = default;
-            Optional<ImageProperties> image = default;
-            Optional<SamplingOptions> samplingOptions = default;
+            Core.Optional<ImageProperties> image = default;
+            Core.Optional<SamplingOptions> samplingOptions = default;
             SpatialAnalysisOperationBase operation = default;
             string type = default;
             string name = default;

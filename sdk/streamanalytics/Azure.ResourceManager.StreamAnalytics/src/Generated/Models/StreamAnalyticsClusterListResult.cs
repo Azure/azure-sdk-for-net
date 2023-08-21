@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of StreamAnalyticsClusterListResult. </summary>
         internal StreamAnalyticsClusterListResult()
         {
-            Value = new ChangeTrackingList<StreamAnalyticsClusterData>();
+            Value = new Core.ChangeTrackingList<StreamAnalyticsClusterData>();
         }
 
         /// <summary> Initializes a new instance of StreamAnalyticsClusterListResult. </summary>

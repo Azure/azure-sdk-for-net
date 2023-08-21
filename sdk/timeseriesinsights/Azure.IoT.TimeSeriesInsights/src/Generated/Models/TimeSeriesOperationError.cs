@@ -16,8 +16,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of TimeSeriesOperationError. </summary>
         internal TimeSeriesOperationError()
         {
-            Details = new ChangeTrackingList<TimeSeriesOperationErrorDetails>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            Details = new Core.ChangeTrackingList<TimeSeriesOperationErrorDetails>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of TimeSeriesOperationError. </summary>

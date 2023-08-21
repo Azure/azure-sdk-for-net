@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class InterpolationBoundary : IUtf8JsonSerializable
+    public partial class InterpolationBoundary : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Span))
+            if (Core.Optional.IsDefined(Span))
             {
                 writer.WritePropertyName("span"u8);
                 writer.WriteStringValue(Span.Value, "P");
@@ -30,7 +30,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<TimeSpan> span = default;
+            Core.Optional<TimeSpan> span = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("span"u8))
@@ -43,7 +43,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new InterpolationBoundary(Optional.ToNullable(span));
+            return new InterpolationBoundary(Core.Optional.ToNullable(span));
         }
     }
 }

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class SearchInstancesRequest : IUtf8JsonSerializable
+    internal partial class SearchInstancesRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("searchString"u8);
             writer.WriteStringValue(SearchString);
-            if (Optional.IsCollectionDefined(Path))
+            if (Core.Optional.IsCollectionDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStartArray();
@@ -27,12 +27,12 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Instances))
+            if (Core.Optional.IsDefined(Instances))
             {
                 writer.WritePropertyName("instances"u8);
                 writer.WriteObjectValue(Instances);
             }
-            if (Optional.IsDefined(Hierarchies))
+            if (Core.Optional.IsDefined(Hierarchies))
             {
                 writer.WritePropertyName("hierarchies"u8);
                 writer.WriteObjectValue(Hierarchies);

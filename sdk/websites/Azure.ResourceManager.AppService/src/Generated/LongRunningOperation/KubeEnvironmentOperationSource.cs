@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class KubeEnvironmentOperationSource : IOperationSource<KubeEnvironmentResource>
+    internal class KubeEnvironmentOperationSource : Core.IOperationSource<KubeEnvironmentResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppService
             _client = client;
         }
 
-        KubeEnvironmentResource IOperationSource<KubeEnvironmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        KubeEnvironmentResource Core.IOperationSource<KubeEnvironmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = KubeEnvironmentData.DeserializeKubeEnvironmentData(document.RootElement);
             return new KubeEnvironmentResource(_client, data);
         }
 
-        async ValueTask<KubeEnvironmentResource> IOperationSource<KubeEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<KubeEnvironmentResource> Core.IOperationSource<KubeEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = KubeEnvironmentData.DeserializeKubeEnvironmentData(document.RootElement);

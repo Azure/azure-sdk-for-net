@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseSsisObjectMetadataListResult. </summary>
         internal SynapseSsisObjectMetadataListResult()
         {
-            Value = new ChangeTrackingList<SynapseSsisObjectMetadata>();
+            Value = new Core.ChangeTrackingList<SynapseSsisObjectMetadata>();
         }
 
         /// <summary> Initializes a new instance of SynapseSsisObjectMetadataListResult. </summary>

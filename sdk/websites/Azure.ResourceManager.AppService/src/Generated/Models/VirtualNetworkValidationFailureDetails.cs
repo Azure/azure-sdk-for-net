@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of VirtualNetworkValidationFailureDetails. </summary>
         public VirtualNetworkValidationFailureDetails()
         {
-            FailedTests = new ChangeTrackingList<VirtualNetworkValidationTestFailure>();
-            Warnings = new ChangeTrackingList<VirtualNetworkValidationTestFailure>();
+            FailedTests = new Core.ChangeTrackingList<VirtualNetworkValidationTestFailure>();
+            Warnings = new Core.ChangeTrackingList<VirtualNetworkValidationTestFailure>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkValidationFailureDetails. </summary>

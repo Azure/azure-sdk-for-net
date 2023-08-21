@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class UpstreamAuthSettings : IUtf8JsonSerializable
+    public partial class UpstreamAuthSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthType))
+            if (Core.Optional.IsDefined(AuthType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AuthType.Value.ToString());
             }
-            if (Optional.IsDefined(ManagedIdentity))
+            if (Core.Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("managedIdentity"u8);
                 writer.WriteObjectValue(ManagedIdentity);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<UpstreamAuthType> type = default;
-            Optional<ManagedIdentitySettings> managedIdentity = default;
+            Core.Optional<UpstreamAuthType> type = default;
+            Core.Optional<ManagedIdentitySettings> managedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new UpstreamAuthSettings(Optional.ToNullable(type), managedIdentity.Value);
+            return new UpstreamAuthSettings(Core.Optional.ToNullable(type), managedIdentity.Value);
         }
     }
 }

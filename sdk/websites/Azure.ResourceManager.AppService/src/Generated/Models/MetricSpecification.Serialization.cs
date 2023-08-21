@@ -19,23 +19,23 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> displayDescription = default;
-            Optional<string> unit = default;
-            Optional<string> aggregationType = default;
-            Optional<bool> supportsInstanceLevelAggregation = default;
-            Optional<bool> enableRegionalMdmAccount = default;
-            Optional<string> sourceMdmAccount = default;
-            Optional<string> sourceMdmNamespace = default;
-            Optional<string> metricFilterPattern = default;
-            Optional<bool> fillGapWithZero = default;
-            Optional<bool> isInternal = default;
-            Optional<IReadOnlyList<MetricDimension>> dimensions = default;
-            Optional<string> category = default;
-            Optional<IReadOnlyList<MetricAvailability>> availabilities = default;
-            Optional<IReadOnlyList<string>> supportedTimeGrainTypes = default;
-            Optional<IReadOnlyList<string>> supportedAggregationTypes = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> displayDescription = default;
+            Core.Optional<string> unit = default;
+            Core.Optional<string> aggregationType = default;
+            Core.Optional<bool> supportsInstanceLevelAggregation = default;
+            Core.Optional<bool> enableRegionalMdmAccount = default;
+            Core.Optional<string> sourceMdmAccount = default;
+            Core.Optional<string> sourceMdmNamespace = default;
+            Core.Optional<string> metricFilterPattern = default;
+            Core.Optional<bool> fillGapWithZero = default;
+            Core.Optional<bool> isInternal = default;
+            Core.Optional<IReadOnlyList<MetricDimension>> dimensions = default;
+            Core.Optional<string> category = default;
+            Core.Optional<IReadOnlyList<MetricAvailability>> availabilities = default;
+            Core.Optional<IReadOnlyList<string>> supportedTimeGrainTypes = default;
+            Core.Optional<IReadOnlyList<string>> supportedAggregationTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new MetricSpecification(name.Value, displayName.Value, displayDescription.Value, unit.Value, aggregationType.Value, Optional.ToNullable(supportsInstanceLevelAggregation), Optional.ToNullable(enableRegionalMdmAccount), sourceMdmAccount.Value, sourceMdmNamespace.Value, metricFilterPattern.Value, Optional.ToNullable(fillGapWithZero), Optional.ToNullable(isInternal), Optional.ToList(dimensions), category.Value, Optional.ToList(availabilities), Optional.ToList(supportedTimeGrainTypes), Optional.ToList(supportedAggregationTypes));
+            return new MetricSpecification(name.Value, displayName.Value, displayDescription.Value, unit.Value, aggregationType.Value, Core.Optional.ToNullable(supportsInstanceLevelAggregation), Core.Optional.ToNullable(enableRegionalMdmAccount), sourceMdmAccount.Value, sourceMdmNamespace.Value, metricFilterPattern.Value, Core.Optional.ToNullable(fillGapWithZero), Core.Optional.ToNullable(isInternal), Core.Optional.ToList(dimensions), category.Value, Core.Optional.ToList(availabilities), Core.Optional.ToList(supportedTimeGrainTypes), Core.Optional.ToList(supportedAggregationTypes));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Initializes a new instance of CloudEndpointArray. </summary>
         internal CloudEndpointArray()
         {
-            Value = new ChangeTrackingList<CloudEndpointData>();
+            Value = new Core.ChangeTrackingList<CloudEndpointData>();
         }
 
         /// <summary> Initializes a new instance of CloudEndpointArray. </summary>

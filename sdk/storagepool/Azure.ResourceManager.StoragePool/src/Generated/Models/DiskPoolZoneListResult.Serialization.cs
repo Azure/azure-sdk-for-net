@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DiskPoolZoneInfo>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DiskPoolZoneInfo>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     continue;
                 }
             }
-            return new DiskPoolZoneListResult(Optional.ToList(value), nextLink.Value);
+            return new DiskPoolZoneListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

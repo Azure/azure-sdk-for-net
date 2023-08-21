@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseAttachedDatabaseConfigurationListResult. </summary>
         internal SynapseAttachedDatabaseConfigurationListResult()
         {
-            Value = new ChangeTrackingList<SynapseAttachedDatabaseConfigurationData>();
+            Value = new Core.ChangeTrackingList<SynapseAttachedDatabaseConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of SynapseAttachedDatabaseConfigurationListResult. </summary>

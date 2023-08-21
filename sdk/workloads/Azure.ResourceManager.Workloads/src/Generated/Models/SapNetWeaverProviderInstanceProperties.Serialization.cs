@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapNetWeaverProviderInstanceProperties : IUtf8JsonSerializable
+    public partial class SapNetWeaverProviderInstanceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SapSid))
+            if (Core.Optional.IsDefined(SapSid))
             {
                 writer.WritePropertyName("sapSid"u8);
                 writer.WriteStringValue(SapSid);
             }
-            if (Optional.IsDefined(SapHostname))
+            if (Core.Optional.IsDefined(SapHostname))
             {
                 writer.WritePropertyName("sapHostname"u8);
                 writer.WriteStringValue(SapHostname);
             }
-            if (Optional.IsDefined(SapInstanceNr))
+            if (Core.Optional.IsDefined(SapInstanceNr))
             {
                 writer.WritePropertyName("sapInstanceNr"u8);
                 writer.WriteStringValue(SapInstanceNr);
             }
-            if (Optional.IsCollectionDefined(SapHostFileEntries))
+            if (Core.Optional.IsCollectionDefined(SapHostFileEntries))
             {
                 writer.WritePropertyName("sapHostFileEntries"u8);
                 writer.WriteStartArray();
@@ -42,37 +42,37 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SapUsername))
+            if (Core.Optional.IsDefined(SapUsername))
             {
                 writer.WritePropertyName("sapUsername"u8);
                 writer.WriteStringValue(SapUsername);
             }
-            if (Optional.IsDefined(SapPassword))
+            if (Core.Optional.IsDefined(SapPassword))
             {
                 writer.WritePropertyName("sapPassword"u8);
                 writer.WriteStringValue(SapPassword);
             }
-            if (Optional.IsDefined(SapPasswordUri))
+            if (Core.Optional.IsDefined(SapPasswordUri))
             {
                 writer.WritePropertyName("sapPasswordUri"u8);
                 writer.WriteStringValue(SapPasswordUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SapClientId))
+            if (Core.Optional.IsDefined(SapClientId))
             {
                 writer.WritePropertyName("sapClientId"u8);
                 writer.WriteStringValue(SapClientId);
             }
-            if (Optional.IsDefined(SapPortNumber))
+            if (Core.Optional.IsDefined(SapPortNumber))
             {
                 writer.WritePropertyName("sapPortNumber"u8);
                 writer.WriteStringValue(SapPortNumber);
             }
-            if (Optional.IsDefined(SslCertificateUri))
+            if (Core.Optional.IsDefined(SslCertificateUri))
             {
                 writer.WritePropertyName("sslCertificateUri"u8);
                 writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SslPreference))
+            if (Core.Optional.IsDefined(SslPreference))
             {
                 writer.WritePropertyName("sslPreference"u8);
                 writer.WriteStringValue(SslPreference.Value.ToString());
@@ -88,17 +88,17 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> sapSid = default;
-            Optional<string> sapHostname = default;
-            Optional<string> sapInstanceNr = default;
-            Optional<IList<string>> sapHostFileEntries = default;
-            Optional<string> sapUsername = default;
-            Optional<string> sapPassword = default;
-            Optional<Uri> sapPasswordUri = default;
-            Optional<string> sapClientId = default;
-            Optional<string> sapPortNumber = default;
-            Optional<Uri> sslCertificateUri = default;
-            Optional<SapSslPreference> sslPreference = default;
+            Core.Optional<string> sapSid = default;
+            Core.Optional<string> sapHostname = default;
+            Core.Optional<string> sapInstanceNr = default;
+            Core.Optional<IList<string>> sapHostFileEntries = default;
+            Core.Optional<string> sapUsername = default;
+            Core.Optional<string> sapPassword = default;
+            Core.Optional<Uri> sapPasswordUri = default;
+            Core.Optional<string> sapClientId = default;
+            Core.Optional<string> sapPortNumber = default;
+            Core.Optional<Uri> sslCertificateUri = default;
+            Core.Optional<SapSslPreference> sslPreference = default;
             string providerType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SapNetWeaverProviderInstanceProperties(providerType, sapSid.Value, sapHostname.Value, sapInstanceNr.Value, Optional.ToList(sapHostFileEntries), sapUsername.Value, sapPassword.Value, sapPasswordUri.Value, sapClientId.Value, sapPortNumber.Value, sslCertificateUri.Value, Optional.ToNullable(sslPreference));
+            return new SapNetWeaverProviderInstanceProperties(providerType, sapSid.Value, sapHostname.Value, sapInstanceNr.Value, Core.Optional.ToList(sapHostFileEntries), sapUsername.Value, sapPassword.Value, sapPasswordUri.Value, sapClientId.Value, sapPortNumber.Value, sslCertificateUri.Value, Core.Optional.ToNullable(sslPreference));
         }
     }
 }

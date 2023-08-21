@@ -24,8 +24,8 @@ namespace Azure.AI.TextAnalytics.Models
 
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<Error>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            Details = new Core.ChangeTrackingList<Error>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of Error. </summary>

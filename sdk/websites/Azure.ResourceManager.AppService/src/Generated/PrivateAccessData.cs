@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of PrivateAccessData. </summary>
         public PrivateAccessData()
         {
-            VirtualNetworks = new ChangeTrackingList<PrivateAccessVirtualNetwork>();
+            VirtualNetworks = new Core.ChangeTrackingList<PrivateAccessVirtualNetwork>();
         }
 
         /// <summary> Initializes a new instance of PrivateAccessData. </summary>

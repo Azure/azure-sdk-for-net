@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(PurviewConfigurationConverter))]
-    public partial class PurviewConfiguration : IUtf8JsonSerializable
+    public partial class PurviewConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PurviewResourceId))
+            if (Core.Optional.IsDefined(PurviewResourceId))
             {
                 writer.WritePropertyName("purviewResourceId"u8);
                 writer.WriteStringValue(PurviewResourceId);
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> purviewResourceId = default;
+            Core.Optional<string> purviewResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("purviewResourceId"u8))

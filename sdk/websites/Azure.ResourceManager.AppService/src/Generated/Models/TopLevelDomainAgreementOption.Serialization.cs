@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class TopLevelDomainAgreementOption : IUtf8JsonSerializable
+    public partial class TopLevelDomainAgreementOption : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IncludePrivacy))
+            if (Core.Optional.IsDefined(IncludePrivacy))
             {
                 writer.WritePropertyName("includePrivacy"u8);
                 writer.WriteBooleanValue(IncludePrivacy.Value);
             }
-            if (Optional.IsDefined(IsForTransfer))
+            if (Core.Optional.IsDefined(IsForTransfer))
             {
                 writer.WritePropertyName("forTransfer"u8);
                 writer.WriteBooleanValue(IsForTransfer.Value);

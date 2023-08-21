@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapOSProfile : IUtf8JsonSerializable
+    public partial class SapOSProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdminUsername))
+            if (Core.Optional.IsDefined(AdminUsername))
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (Optional.IsDefined(AdminPassword))
+            if (Core.Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (Optional.IsDefined(OSConfiguration))
+            if (Core.Optional.IsDefined(OSConfiguration))
             {
                 writer.WritePropertyName("osConfiguration"u8);
                 writer.WriteObjectValue(OSConfiguration);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> adminUsername = default;
-            Optional<string> adminPassword = default;
-            Optional<SapOSConfiguration> osConfiguration = default;
+            Core.Optional<string> adminUsername = default;
+            Core.Optional<string> adminPassword = default;
+            Core.Optional<SapOSConfiguration> osConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminUsername"u8))

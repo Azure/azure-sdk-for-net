@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class DeploymentConfiguration : IUtf8JsonSerializable
+    public partial class DeploymentConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppLocation))
+            if (Core.Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation.Value);
             }
-            if (Optional.IsDefined(InfrastructureConfiguration))
+            if (Core.Optional.IsDefined(InfrastructureConfiguration))
             {
                 writer.WritePropertyName("infrastructureConfiguration"u8);
                 writer.WriteObjectValue(InfrastructureConfiguration);
             }
-            if (Optional.IsDefined(SoftwareConfiguration))
+            if (Core.Optional.IsDefined(SoftwareConfiguration))
             {
                 writer.WritePropertyName("softwareConfiguration"u8);
                 writer.WriteObjectValue(SoftwareConfiguration);
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<AzureLocation> appLocation = default;
-            Optional<InfrastructureConfiguration> infrastructureConfiguration = default;
-            Optional<SapSoftwareConfiguration> softwareConfiguration = default;
+            Core.Optional<AzureLocation> appLocation = default;
+            Core.Optional<InfrastructureConfiguration> infrastructureConfiguration = default;
+            Core.Optional<SapSoftwareConfiguration> softwareConfiguration = default;
             SapConfigurationType configurationType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new DeploymentConfiguration(configurationType, Optional.ToNullable(appLocation), infrastructureConfiguration.Value, softwareConfiguration.Value);
+            return new DeploymentConfiguration(configurationType, Core.Optional.ToNullable(appLocation), infrastructureConfiguration.Value, softwareConfiguration.Value);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Models
             Offset = offset;
             Length = length;
             ConfidenceScore = confidenceScore;
-            Links = new ChangeTrackingList<EntityDataSource>();
+            Links = new Core.ChangeTrackingList<EntityDataSource>();
         }
 
         /// <summary> Initializes a new instance of HealthcareEntityInternal. </summary>

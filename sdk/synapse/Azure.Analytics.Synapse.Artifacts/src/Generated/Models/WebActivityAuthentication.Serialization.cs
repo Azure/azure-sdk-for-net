@@ -13,39 +13,39 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(WebActivityAuthenticationConverter))]
-    public partial class WebActivityAuthentication : IUtf8JsonSerializable
+    public partial class WebActivityAuthentication : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Pfx))
+            if (Core.Optional.IsDefined(Pfx))
             {
                 writer.WritePropertyName("pfx"u8);
                 writer.WriteObjectValue(Pfx);
             }
-            if (Optional.IsDefined(Username))
+            if (Core.Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
-            if (Optional.IsDefined(Resource))
+            if (Core.Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteObjectValue(Resource);
             }
-            if (Optional.IsDefined(UserTenant))
+            if (Core.Optional.IsDefined(UserTenant))
             {
                 writer.WritePropertyName("userTenant"u8);
                 writer.WriteObjectValue(UserTenant);
             }
-            if (Optional.IsDefined(Credential))
+            if (Core.Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
@@ -60,12 +60,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<SecretBase> pfx = default;
-            Optional<string> username = default;
-            Optional<SecretBase> password = default;
-            Optional<object> resource = default;
-            Optional<object> userTenant = default;
-            Optional<CredentialReference> credential = default;
+            Core.Optional<SecretBase> pfx = default;
+            Core.Optional<string> username = default;
+            Core.Optional<SecretBase> password = default;
+            Core.Optional<object> resource = default;
+            Core.Optional<object> userTenant = default;
+            Core.Optional<CredentialReference> credential = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

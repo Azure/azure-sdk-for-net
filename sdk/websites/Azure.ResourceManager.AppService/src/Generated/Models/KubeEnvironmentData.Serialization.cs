@@ -14,22 +14,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class KubeEnvironmentData : IUtf8JsonSerializable
+    public partial class KubeEnvironmentData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (Core.Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,27 +44,27 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsInternalLoadBalancerEnabled))
+            if (Core.Optional.IsDefined(IsInternalLoadBalancerEnabled))
             {
                 writer.WritePropertyName("internalLoadBalancerEnabled"u8);
                 writer.WriteBooleanValue(IsInternalLoadBalancerEnabled.Value);
             }
-            if (Optional.IsDefined(StaticIP))
+            if (Core.Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIp"u8);
                 writer.WriteStringValue(StaticIP);
             }
-            if (Optional.IsDefined(ArcConfiguration))
+            if (Core.Optional.IsDefined(ArcConfiguration))
             {
                 writer.WritePropertyName("arcConfiguration"u8);
                 writer.WriteObjectValue(ArcConfiguration);
             }
-            if (Optional.IsDefined(AppLogsConfiguration))
+            if (Core.Optional.IsDefined(AppLogsConfiguration))
             {
                 writer.WritePropertyName("appLogsConfiguration"u8);
                 writer.WriteObjectValue(AppLogsConfiguration);
             }
-            if (Optional.IsDefined(AksResourceId))
+            if (Core.Optional.IsDefined(AksResourceId))
             {
                 writer.WritePropertyName("aksResourceID"u8);
                 writer.WriteStringValue(AksResourceId);
@@ -79,22 +79,22 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ExtendedLocation> extendedLocation = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KubeEnvironmentProvisioningState> provisioningState = default;
-            Optional<string> deploymentErrors = default;
-            Optional<bool> internalLoadBalancerEnabled = default;
-            Optional<string> defaultDomain = default;
-            Optional<string> staticIP = default;
-            Optional<ArcConfiguration> arcConfiguration = default;
-            Optional<AppLogsConfiguration> appLogsConfiguration = default;
-            Optional<ResourceIdentifier> aksResourceId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<KubeEnvironmentProvisioningState> provisioningState = default;
+            Core.Optional<string> deploymentErrors = default;
+            Core.Optional<bool> internalLoadBalancerEnabled = default;
+            Core.Optional<string> defaultDomain = default;
+            Core.Optional<string> staticIP = default;
+            Core.Optional<ArcConfiguration> arcConfiguration = default;
+            Core.Optional<AppLogsConfiguration> appLogsConfiguration = default;
+            Core.Optional<ResourceIdentifier> aksResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new KubeEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToNullable(provisioningState), deploymentErrors.Value, Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIP.Value, arcConfiguration.Value, appLogsConfiguration.Value, aksResourceId.Value, kind.Value);
+            return new KubeEnvironmentData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, Core.Optional.ToNullable(provisioningState), deploymentErrors.Value, Core.Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIP.Value, arcConfiguration.Value, appLogsConfiguration.Value, aksResourceId.Value, kind.Value);
         }
     }
 }

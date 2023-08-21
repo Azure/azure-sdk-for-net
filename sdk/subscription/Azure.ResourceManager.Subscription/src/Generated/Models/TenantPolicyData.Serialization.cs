@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Subscription
             {
                 return null;
             }
-            Optional<TenantPolicyProperties> properties = default;
+            Core.Optional<TenantPolicyProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

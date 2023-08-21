@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class PrometheusOSProviderInstanceProperties : IUtf8JsonSerializable
+    public partial class PrometheusOSProviderInstanceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrometheusUri))
+            if (Core.Optional.IsDefined(PrometheusUri))
             {
                 writer.WritePropertyName("prometheusUrl"u8);
                 writer.WriteStringValue(PrometheusUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SslPreference))
+            if (Core.Optional.IsDefined(SslPreference))
             {
                 writer.WritePropertyName("sslPreference"u8);
                 writer.WriteStringValue(SslPreference.Value.ToString());
             }
-            if (Optional.IsDefined(SslCertificateUri))
+            if (Core.Optional.IsDefined(SslCertificateUri))
             {
                 writer.WritePropertyName("sslCertificateUri"u8);
                 writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SapSid))
+            if (Core.Optional.IsDefined(SapSid))
             {
                 writer.WritePropertyName("sapSid"u8);
                 writer.WriteStringValue(SapSid);
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<Uri> prometheusUrl = default;
-            Optional<SapSslPreference> sslPreference = default;
-            Optional<Uri> sslCertificateUri = default;
-            Optional<string> sapSid = default;
+            Core.Optional<Uri> prometheusUrl = default;
+            Core.Optional<SapSslPreference> sslPreference = default;
+            Core.Optional<Uri> sslCertificateUri = default;
+            Core.Optional<string> sapSid = default;
             string providerType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new PrometheusOSProviderInstanceProperties(providerType, prometheusUrl.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value, sapSid.Value);
+            return new PrometheusOSProviderInstanceProperties(providerType, prometheusUrl.Value, Core.Optional.ToNullable(sslPreference), sslCertificateUri.Value, sapSid.Value);
         }
     }
 }

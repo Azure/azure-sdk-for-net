@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SpatialAnalysisPersonDistanceEvent : IUtf8JsonSerializable
+    public partial class SpatialAnalysisPersonDistanceEvent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Trigger))
+            if (Core.Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
                 writer.WriteStringValue(Trigger.Value.ToString());
             }
-            if (Optional.IsDefined(OutputFrequency))
+            if (Core.Optional.IsDefined(OutputFrequency))
             {
                 writer.WritePropertyName("outputFrequency"u8);
                 writer.WriteStringValue(OutputFrequency);
             }
-            if (Optional.IsDefined(MinimumDistanceThreshold))
+            if (Core.Optional.IsDefined(MinimumDistanceThreshold))
             {
                 writer.WritePropertyName("minimumDistanceThreshold"u8);
                 writer.WriteStringValue(MinimumDistanceThreshold);
             }
-            if (Optional.IsDefined(MaximumDistanceThreshold))
+            if (Core.Optional.IsDefined(MaximumDistanceThreshold))
             {
                 writer.WritePropertyName("maximumDistanceThreshold"u8);
                 writer.WriteStringValue(MaximumDistanceThreshold);
             }
-            if (Optional.IsDefined(Threshold))
+            if (Core.Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteStringValue(Threshold);
             }
-            if (Optional.IsDefined(Focus))
+            if (Core.Optional.IsDefined(Focus))
             {
                 writer.WritePropertyName("focus"u8);
                 writer.WriteStringValue(Focus.Value.ToString());
@@ -54,12 +54,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<SpatialAnalysisPersonDistanceEventTrigger> trigger = default;
-            Optional<string> outputFrequency = default;
-            Optional<string> minimumDistanceThreshold = default;
-            Optional<string> maximumDistanceThreshold = default;
-            Optional<string> threshold = default;
-            Optional<SpatialAnalysisOperationFocus> focus = default;
+            Core.Optional<SpatialAnalysisPersonDistanceEventTrigger> trigger = default;
+            Core.Optional<string> outputFrequency = default;
+            Core.Optional<string> minimumDistanceThreshold = default;
+            Core.Optional<string> maximumDistanceThreshold = default;
+            Core.Optional<string> threshold = default;
+            Core.Optional<SpatialAnalysisOperationFocus> focus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trigger"u8))
@@ -101,7 +101,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonDistanceEvent(threshold.Value, Optional.ToNullable(focus), Optional.ToNullable(trigger), outputFrequency.Value, minimumDistanceThreshold.Value, maximumDistanceThreshold.Value);
+            return new SpatialAnalysisPersonDistanceEvent(threshold.Value, Core.Optional.ToNullable(focus), Core.Optional.ToNullable(trigger), outputFrequency.Value, minimumDistanceThreshold.Value, maximumDistanceThreshold.Value);
         }
     }
 }

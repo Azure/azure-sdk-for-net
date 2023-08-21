@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<string>> siteNames = default;
-            Optional<string> azureResourceName = default;
-            Optional<AppServiceResourceType> azureResourceType = default;
-            Optional<CustomHostNameDnsRecordType> customHostNameDnsRecordType = default;
-            Optional<AppServiceHostNameType> hostNameType = default;
+            Core.Optional<string> name = default;
+            Core.Optional<IReadOnlyList<string>> siteNames = default;
+            Core.Optional<string> azureResourceName = default;
+            Core.Optional<AppServiceResourceType> azureResourceType = default;
+            Core.Optional<CustomHostNameDnsRecordType> customHostNameDnsRecordType = default;
+            Core.Optional<AppServiceHostNameType> hostNameType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceHostName(name.Value, Optional.ToList(siteNames), azureResourceName.Value, Optional.ToNullable(azureResourceType), Optional.ToNullable(customHostNameDnsRecordType), Optional.ToNullable(hostNameType));
+            return new AppServiceHostName(name.Value, Core.Optional.ToList(siteNames), azureResourceName.Value, Core.Optional.ToNullable(azureResourceType), Core.Optional.ToNullable(customHostNameDnsRecordType), Core.Optional.ToNullable(hostNameType));
         }
     }
 }

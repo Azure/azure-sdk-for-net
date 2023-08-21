@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Initializes a new instance of SyncGroupArray. </summary>
         internal SyncGroupArray()
         {
-            Value = new ChangeTrackingList<StorageSyncGroupData>();
+            Value = new Core.ChangeTrackingList<StorageSyncGroupData>();
         }
 
         /// <summary> Initializes a new instance of SyncGroupArray. </summary>

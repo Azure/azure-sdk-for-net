@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
             JobId = jobId;
             LastUpdatedDateTime = lastUpdatedDateTime;
             Status = status;
-            Errors = new ChangeTrackingList<Error>();
+            Errors = new Core.ChangeTrackingList<Error>();
         }
 
         /// <summary> Initializes a new instance of JobState. </summary>

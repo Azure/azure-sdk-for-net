@@ -11,34 +11,34 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class ReferenceInputProperties : IUtf8JsonSerializable
+    public partial class ReferenceInputProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Datasource))
+            if (Core.Optional.IsDefined(Datasource))
             {
                 writer.WritePropertyName("datasource"u8);
                 writer.WriteObjectValue(Datasource);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(InputPropertiesType);
-            if (Optional.IsDefined(Serialization))
+            if (Core.Optional.IsDefined(Serialization))
             {
                 writer.WritePropertyName("serialization"u8);
                 writer.WriteObjectValue(Serialization);
             }
-            if (Optional.IsDefined(Compression))
+            if (Core.Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
                 writer.WriteObjectValue(Compression);
             }
-            if (Optional.IsDefined(PartitionKey))
+            if (Core.Optional.IsDefined(PartitionKey))
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteStringValue(PartitionKey);
             }
-            if (Optional.IsDefined(WatermarkSettings))
+            if (Core.Optional.IsDefined(WatermarkSettings))
             {
                 writer.WritePropertyName("watermarkSettings"u8);
                 writer.WriteObjectValue(WatermarkSettings);
@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<ReferenceInputDataSource> datasource = default;
+            Core.Optional<ReferenceInputDataSource> datasource = default;
             string type = default;
-            Optional<StreamAnalyticsDataSerialization> serialization = default;
-            Optional<StreamingJobDiagnostics> diagnostics = default;
-            Optional<ETag> etag = default;
-            Optional<StreamingCompression> compression = default;
-            Optional<string> partitionKey = default;
-            Optional<StreamingJobInputWatermarkProperties> watermarkSettings = default;
+            Core.Optional<StreamAnalyticsDataSerialization> serialization = default;
+            Core.Optional<StreamingJobDiagnostics> diagnostics = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<StreamingCompression> compression = default;
+            Core.Optional<string> partitionKey = default;
+            Core.Optional<StreamingJobInputWatermarkProperties> watermarkSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datasource"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new ReferenceInputProperties(type, serialization.Value, diagnostics.Value, Optional.ToNullable(etag), compression.Value, partitionKey.Value, watermarkSettings.Value, datasource.Value);
+            return new ReferenceInputProperties(type, serialization.Value, diagnostics.Value, Core.Optional.ToNullable(etag), compression.Value, partitionKey.Value, watermarkSettings.Value, datasource.Value);
         }
     }
 }

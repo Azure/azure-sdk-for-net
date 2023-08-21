@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceIPSecurityRestriction. </summary>
         public AppServiceIPSecurityRestriction()
         {
-            Headers = new ChangeTrackingDictionary<string, IList<string>>();
+            Headers = new Core.ChangeTrackingDictionary<string, IList<string>>();
         }
 
         /// <summary> Initializes a new instance of AppServiceIPSecurityRestriction. </summary>

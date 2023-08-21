@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DetectorDataSource : IUtf8JsonSerializable
+    public partial class DetectorDataSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Instructions))
+            if (Core.Optional.IsCollectionDefined(Instructions))
             {
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DataSourceUri))
+            if (Core.Optional.IsCollectionDefined(DataSourceUri))
             {
                 writer.WritePropertyName("dataSourceUri"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<string>> instructions = default;
-            Optional<IList<AppServiceNameValuePair>> dataSourceUri = default;
+            Core.Optional<IList<string>> instructions = default;
+            Core.Optional<IList<AppServiceNameValuePair>> dataSourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instructions"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DetectorDataSource(Optional.ToList(instructions), Optional.ToList(dataSourceUri));
+            return new DetectorDataSource(Core.Optional.ToList(instructions), Core.Optional.ToList(dataSourceUri));
         }
     }
 }

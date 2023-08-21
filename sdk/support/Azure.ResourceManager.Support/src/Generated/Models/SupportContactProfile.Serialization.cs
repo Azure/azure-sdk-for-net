@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    public partial class SupportContactProfile : IUtf8JsonSerializable
+    public partial class SupportContactProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("firstName"u8);
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Support.Models
             writer.WriteStringValue(PreferredContactMethod.ToString());
             writer.WritePropertyName("primaryEmailAddress"u8);
             writer.WriteStringValue(PrimaryEmailAddress);
-            if (Optional.IsCollectionDefined(AdditionalEmailAddresses))
+            if (Core.Optional.IsCollectionDefined(AdditionalEmailAddresses))
             {
                 writer.WritePropertyName("additionalEmailAddresses"u8);
                 writer.WriteStartArray();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PhoneNumber))
+            if (Core.Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Support.Models
             string lastName = default;
             PreferredContactMethod preferredContactMethod = default;
             string primaryEmailAddress = default;
-            Optional<IList<string>> additionalEmailAddresses = default;
-            Optional<string> phoneNumber = default;
+            Core.Optional<IList<string>> additionalEmailAddresses = default;
+            Core.Optional<string> phoneNumber = default;
             string preferredTimeZone = default;
             string country = default;
             string preferredSupportLanguage = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Support.Models
                     continue;
                 }
             }
-            return new SupportContactProfile(firstName, lastName, preferredContactMethod, primaryEmailAddress, Optional.ToList(additionalEmailAddresses), phoneNumber.Value, preferredTimeZone, country, preferredSupportLanguage);
+            return new SupportContactProfile(firstName, lastName, preferredContactMethod, primaryEmailAddress, Core.Optional.ToList(additionalEmailAddresses), phoneNumber.Value, preferredTimeZone, country, preferredSupportLanguage);
         }
     }
 }

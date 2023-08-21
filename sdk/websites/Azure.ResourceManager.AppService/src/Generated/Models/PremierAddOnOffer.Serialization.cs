@@ -12,64 +12,64 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class PremierAddOnOffer : IUtf8JsonSerializable
+    public partial class PremierAddOnOffer : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Optional.IsDefined(Product))
+            if (Core.Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (Optional.IsDefined(Vendor))
+            if (Core.Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (Optional.IsDefined(IsPromoCodeRequired))
+            if (Core.Optional.IsDefined(IsPromoCodeRequired))
             {
                 writer.WritePropertyName("promoCodeRequired"u8);
                 writer.WriteBooleanValue(IsPromoCodeRequired.Value);
             }
-            if (Optional.IsDefined(Quota))
+            if (Core.Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
                 writer.WriteNumberValue(Quota.Value);
             }
-            if (Optional.IsDefined(WebHostingPlanRestrictions))
+            if (Core.Optional.IsDefined(WebHostingPlanRestrictions))
             {
                 writer.WritePropertyName("webHostingPlanRestrictions"u8);
                 writer.WriteStringValue(WebHostingPlanRestrictions.Value.ToSerialString());
             }
-            if (Optional.IsDefined(PrivacyPolicyUri))
+            if (Core.Optional.IsDefined(PrivacyPolicyUri))
             {
                 writer.WritePropertyName("privacyPolicyUrl"u8);
                 writer.WriteStringValue(PrivacyPolicyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(LegalTermsUri))
+            if (Core.Optional.IsDefined(LegalTermsUri))
             {
                 writer.WritePropertyName("legalTermsUrl"u8);
                 writer.WriteStringValue(LegalTermsUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(MarketplacePublisher))
+            if (Core.Optional.IsDefined(MarketplacePublisher))
             {
                 writer.WritePropertyName("marketplacePublisher"u8);
                 writer.WriteStringValue(MarketplacePublisher);
             }
-            if (Optional.IsDefined(MarketplaceOffer))
+            if (Core.Optional.IsDefined(MarketplaceOffer))
             {
                 writer.WritePropertyName("marketplaceOffer"u8);
                 writer.WriteStringValue(MarketplaceOffer);
@@ -84,21 +84,21 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> sku = default;
-            Optional<string> product = default;
-            Optional<string> vendor = default;
-            Optional<bool> promoCodeRequired = default;
-            Optional<int> quota = default;
-            Optional<AppServicePlanRestriction> webHostingPlanRestrictions = default;
-            Optional<Uri> privacyPolicyUrl = default;
-            Optional<Uri> legalTermsUrl = default;
-            Optional<string> marketplacePublisher = default;
-            Optional<string> marketplaceOffer = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> sku = default;
+            Core.Optional<string> product = default;
+            Core.Optional<string> vendor = default;
+            Core.Optional<bool> promoCodeRequired = default;
+            Core.Optional<int> quota = default;
+            Core.Optional<AppServicePlanRestriction> webHostingPlanRestrictions = default;
+            Core.Optional<Uri> privacyPolicyUrl = default;
+            Core.Optional<Uri> legalTermsUrl = default;
+            Core.Optional<string> marketplacePublisher = default;
+            Core.Optional<string> marketplaceOffer = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new PremierAddOnOffer(id, name, type, systemData.Value, sku.Value, product.Value, vendor.Value, Optional.ToNullable(promoCodeRequired), Optional.ToNullable(quota), Optional.ToNullable(webHostingPlanRestrictions), privacyPolicyUrl.Value, legalTermsUrl.Value, marketplacePublisher.Value, marketplaceOffer.Value, kind.Value);
+            return new PremierAddOnOffer(id, name, type, systemData.Value, sku.Value, product.Value, vendor.Value, Core.Optional.ToNullable(promoCodeRequired), Core.Optional.ToNullable(quota), Core.Optional.ToNullable(webHostingPlanRestrictions), privacyPolicyUrl.Value, legalTermsUrl.Value, marketplacePublisher.Value, marketplaceOffer.Value, kind.Value);
         }
     }
 }

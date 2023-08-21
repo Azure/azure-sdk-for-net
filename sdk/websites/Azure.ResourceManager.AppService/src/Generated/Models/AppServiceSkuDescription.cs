@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceSkuDescription. </summary>
         public AppServiceSkuDescription()
         {
-            Locations = new ChangeTrackingList<AzureLocation>();
-            Capabilities = new ChangeTrackingList<AppServiceSkuCapability>();
+            Locations = new Core.ChangeTrackingList<AzureLocation>();
+            Capabilities = new Core.ChangeTrackingList<AppServiceSkuCapability>();
         }
 
         /// <summary> Initializes a new instance of AppServiceSkuDescription. </summary>

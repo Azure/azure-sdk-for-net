@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    public partial class SupportContactProfileContent : IUtf8JsonSerializable
+    public partial class SupportContactProfileContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FirstName))
+            if (Core.Optional.IsDefined(FirstName))
             {
                 writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
-            if (Optional.IsDefined(LastName))
+            if (Core.Optional.IsDefined(LastName))
             {
                 writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
-            if (Optional.IsDefined(PreferredContactMethod))
+            if (Core.Optional.IsDefined(PreferredContactMethod))
             {
                 writer.WritePropertyName("preferredContactMethod"u8);
                 writer.WriteStringValue(PreferredContactMethod.Value.ToString());
             }
-            if (Optional.IsDefined(PrimaryEmailAddress))
+            if (Core.Optional.IsDefined(PrimaryEmailAddress))
             {
                 writer.WritePropertyName("primaryEmailAddress"u8);
                 writer.WriteStringValue(PrimaryEmailAddress);
             }
-            if (Optional.IsCollectionDefined(AdditionalEmailAddresses))
+            if (Core.Optional.IsCollectionDefined(AdditionalEmailAddresses))
             {
                 writer.WritePropertyName("additionalEmailAddresses"u8);
                 writer.WriteStartArray();
@@ -45,22 +45,22 @@ namespace Azure.ResourceManager.Support.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PhoneNumber))
+            if (Core.Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
             }
-            if (Optional.IsDefined(PreferredTimeZone))
+            if (Core.Optional.IsDefined(PreferredTimeZone))
             {
                 writer.WritePropertyName("preferredTimeZone"u8);
                 writer.WriteStringValue(PreferredTimeZone);
             }
-            if (Optional.IsDefined(Country))
+            if (Core.Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (Optional.IsDefined(PreferredSupportLanguage))
+            if (Core.Optional.IsDefined(PreferredSupportLanguage))
             {
                 writer.WritePropertyName("preferredSupportLanguage"u8);
                 writer.WriteStringValue(PreferredSupportLanguage);

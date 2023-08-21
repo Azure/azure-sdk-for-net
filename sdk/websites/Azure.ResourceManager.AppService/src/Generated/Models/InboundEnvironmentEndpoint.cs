@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of InboundEnvironmentEndpoint. </summary>
         internal InboundEnvironmentEndpoint()
         {
-            Endpoints = new ChangeTrackingList<string>();
-            Ports = new ChangeTrackingList<string>();
+            Endpoints = new Core.ChangeTrackingList<string>();
+            Ports = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of InboundEnvironmentEndpoint. </summary>

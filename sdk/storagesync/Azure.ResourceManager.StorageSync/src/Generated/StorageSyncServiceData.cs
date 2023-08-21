@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="location"> The location. </param>
         public StorageSyncServiceData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<StorageSyncPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<StorageSyncPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of StorageSyncServiceData. </summary>

@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteConfigurationSnapshotInfo : IUtf8JsonSerializable
+    public partial class SiteConfigurationSnapshotInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> time = default;
-            Optional<int> snapshotId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> time = default;
+            Core.Optional<int> snapshotId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new SiteConfigurationSnapshotInfo(id, name, type, systemData.Value, Optional.ToNullable(time), Optional.ToNullable(snapshotId), kind.Value);
+            return new SiteConfigurationSnapshotInfo(id, name, type, systemData.Value, Core.Optional.ToNullable(time), Core.Optional.ToNullable(snapshotId), kind.Value);
         }
     }
 }

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<IReadOnlyList<OutboundEndpointDependency>> endpoints = default;
+            Core.Optional<string> category = default;
+            Core.Optional<IReadOnlyList<OutboundEndpointDependency>> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     continue;
                 }
             }
-            return new StoragePoolOutboundEnvironment(category.Value, Optional.ToList(endpoints));
+            return new StoragePoolOutboundEnvironment(category.Value, Core.Optional.ToList(endpoints));
         }
     }
 }

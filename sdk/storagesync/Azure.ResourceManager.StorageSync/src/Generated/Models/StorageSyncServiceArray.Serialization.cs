@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageSyncServiceData>> value = default;
+            Core.Optional<IReadOnlyList<StorageSyncServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new StorageSyncServiceArray(Optional.ToList(value));
+            return new StorageSyncServiceArray(Core.Optional.ToList(value));
         }
     }
 }

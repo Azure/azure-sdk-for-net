@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         {
             From = @from;
             Total = total;
-            Sessions = new ChangeTrackingList<SparkBatchJob>();
+            Sessions = new Core.ChangeTrackingList<SparkBatchJob>();
         }
 
         /// <summary> Initializes a new instance of SparkBatchJobCollection. </summary>

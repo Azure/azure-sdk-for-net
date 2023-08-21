@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of BigDataPoolResourceInfoListResult. </summary>
         internal BigDataPoolResourceInfoListResult()
         {
-            Value = new ChangeTrackingList<BigDataPoolResourceInfo>();
+            Value = new Core.ChangeTrackingList<BigDataPoolResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of BigDataPoolResourceInfoListResult. </summary>

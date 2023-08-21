@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> monitorName = default;
-            Optional<string> monitorType = default;
-            Optional<string> monitoredObject = default;
-            Optional<string> evaluationTimestamp = default;
-            Optional<string> currentStateFirstObservedTimestamp = default;
-            Optional<HealthState> previousMonitorState = default;
-            Optional<HealthState> currentMonitorState = default;
-            Optional<BinaryData> evidence = default;
-            Optional<BinaryData> monitorConfiguration = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> monitorName = default;
+            Core.Optional<string> monitorType = default;
+            Core.Optional<string> monitoredObject = default;
+            Core.Optional<string> evaluationTimestamp = default;
+            Core.Optional<string> currentStateFirstObservedTimestamp = default;
+            Core.Optional<HealthState> previousMonitorState = default;
+            Core.Optional<HealthState> currentMonitorState = default;
+            Core.Optional<BinaryData> evidence = default;
+            Core.Optional<BinaryData> monitorConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                     continue;
                 }
             }
-            return new HealthMonitorStateChangeData(id, name, type, systemData.Value, monitorName.Value, monitorType.Value, monitoredObject.Value, evaluationTimestamp.Value, currentStateFirstObservedTimestamp.Value, Optional.ToNullable(previousMonitorState), Optional.ToNullable(currentMonitorState), evidence.Value, monitorConfiguration.Value);
+            return new HealthMonitorStateChangeData(id, name, type, systemData.Value, monitorName.Value, monitorType.Value, monitoredObject.Value, evaluationTimestamp.Value, currentStateFirstObservedTimestamp.Value, Core.Optional.ToNullable(previousMonitorState), Core.Optional.ToNullable(currentMonitorState), evidence.Value, monitorConfiguration.Value);
         }
     }
 }

@@ -20,9 +20,9 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             {
                 return null;
             }
-            Optional<KeyPhraseResult> results = default;
+            Core.Optional<KeyPhraseResult> results = default;
             DateTimeOffset lastUpdateDateTime = default;
-            Optional<string> taskName = default;
+            Core.Optional<string> taskName = default;
             State status = default;
             foreach (var property in element.EnumerateObject())
             {

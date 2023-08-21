@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetAllRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetAllNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, KqlScriptResource.DeserializeKqlScriptResource, _clientDiagnostics, _pipeline, "KqlScriptsClient.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, KqlScriptResource.DeserializeKqlScriptResource, _clientDiagnostics, _pipeline, "KqlScriptsClient.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Get all KQL scripts. </summary>
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetAllRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetAllNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, KqlScriptResource.DeserializeKqlScriptResource, _clientDiagnostics, _pipeline, "KqlScriptsClient.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, KqlScriptResource.DeserializeKqlScriptResource, _clientDiagnostics, _pipeline, "KqlScriptsClient.GetAll", "value", "nextLink", cancellationToken);
         }
     }
 }

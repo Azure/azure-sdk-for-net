@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <summary> Initializes a new instance of HealthcareLinkingProperties. </summary>
         internal HealthcareLinkingProperties()
         {
-            Links = new ChangeTrackingList<HealthcareEntityLink>();
+            Links = new Core.ChangeTrackingList<HealthcareEntityLink>();
         }
 
         /// <summary> Initializes a new instance of HealthcareLinkingProperties. </summary>

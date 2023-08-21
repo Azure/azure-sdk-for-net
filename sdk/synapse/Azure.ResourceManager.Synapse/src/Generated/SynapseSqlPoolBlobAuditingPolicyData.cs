@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Synapse
         /// <summary> Initializes a new instance of SynapseSqlPoolBlobAuditingPolicyData. </summary>
         public SynapseSqlPoolBlobAuditingPolicyData()
         {
-            AuditActionsAndGroups = new ChangeTrackingList<string>();
+            AuditActionsAndGroups = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SynapseSqlPoolBlobAuditingPolicyData. </summary>

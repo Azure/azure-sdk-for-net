@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of ObjectReplicationPolicyData. </summary>
         public ObjectReplicationPolicyData()
         {
-            Rules = new ChangeTrackingList<ObjectReplicationPolicyRule>();
+            Rules = new Core.ChangeTrackingList<ObjectReplicationPolicyRule>();
         }
 
         /// <summary> Initializes a new instance of ObjectReplicationPolicyData. </summary>

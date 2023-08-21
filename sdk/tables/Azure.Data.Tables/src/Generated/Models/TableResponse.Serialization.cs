@@ -18,11 +18,11 @@ namespace Azure.Data.Tables.Models
             {
                 return null;
             }
-            Optional<string> odataMetadata = default;
-            Optional<string> tableName = default;
-            Optional<string> odataType = default;
-            Optional<string> odataId = default;
-            Optional<string> odataEditLink = default;
+            Core.Optional<string> odataMetadata = default;
+            Core.Optional<string> tableName = default;
+            Core.Optional<string> odataType = default;
+            Core.Optional<string> odataId = default;
+            Core.Optional<string> odataEditLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("odata.metadata"u8))

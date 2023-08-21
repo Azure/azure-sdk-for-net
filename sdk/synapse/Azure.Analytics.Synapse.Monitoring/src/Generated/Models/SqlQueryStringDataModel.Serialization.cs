@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             {
                 return null;
             }
-            Optional<string> query = default;
+            Core.Optional<string> query = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("query"u8))

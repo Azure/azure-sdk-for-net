@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(StoredProcedureParameterConverter))]
-    public partial class StoredProcedureParameter : IUtf8JsonSerializable
+    public partial class StoredProcedureParameter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 if (Value != null)
                 {
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     writer.WriteNull("value");
                 }
             }
-            if (Optional.IsDefined(Type))
+            if (Core.Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
@@ -44,8 +44,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> value = default;
-            Optional<StoredProcedureParameterType> type = default;
+            Core.Optional<object> value = default;
+            Core.Optional<StoredProcedureParameterType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new StoredProcedureParameter(value.Value, Optional.ToNullable(type));
+            return new StoredProcedureParameter(value.Value, Core.Optional.ToNullable(type));
         }
 
         internal partial class StoredProcedureParameterConverter : JsonConverter<StoredProcedureParameter>

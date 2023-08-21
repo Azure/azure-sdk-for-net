@@ -18,7 +18,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<Availability> availability = default;
+            Core.Optional<Availability> availability = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availability"u8))

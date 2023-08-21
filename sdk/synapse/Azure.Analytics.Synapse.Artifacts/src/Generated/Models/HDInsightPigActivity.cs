@@ -21,8 +21,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            StorageLinkedServices = new ChangeTrackingList<LinkedServiceReference>();
-            Defines = new ChangeTrackingDictionary<string, object>();
+            StorageLinkedServices = new Core.ChangeTrackingList<LinkedServiceReference>();
+            Defines = new Core.ChangeTrackingDictionary<string, object>();
             Type = "HDInsightPig";
         }
 

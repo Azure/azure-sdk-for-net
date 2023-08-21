@@ -14,17 +14,17 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseSqlPoolData : IUtf8JsonSerializable
+    public partial class SynapseSqlPoolData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.Synapse
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxSizeBytes))
+            if (Core.Optional.IsDefined(MaxSizeBytes))
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
-            if (Optional.IsDefined(Collation))
+            if (Core.Optional.IsDefined(Collation))
             {
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (Optional.IsDefined(SourceDatabaseId))
+            if (Core.Optional.IsDefined(SourceDatabaseId))
             {
                 writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (Optional.IsDefined(RecoverableDatabaseId))
+            if (Core.Optional.IsDefined(RecoverableDatabaseId))
             {
                 writer.WritePropertyName("recoverableDatabaseId"u8);
                 writer.WriteStringValue(RecoverableDatabaseId);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(RestorePointInTime))
+            if (Core.Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (Optional.IsDefined(CreateMode))
+            if (Core.Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Optional.IsDefined(StorageAccountType))
+            if (Core.Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (Optional.IsDefined(SourceDatabaseDeletionOn))
+            if (Core.Optional.IsDefined(SourceDatabaseDeletionOn))
             {
                 writer.WritePropertyName("sourceDatabaseDeletionDate"u8);
                 writer.WriteStringValue(SourceDatabaseDeletionOn.Value, "O");
@@ -94,24 +94,24 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<SynapseSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<SynapseSku> sku = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> maxSizeBytes = default;
-            Optional<string> collation = default;
-            Optional<string> sourceDatabaseId = default;
-            Optional<string> recoverableDatabaseId = default;
-            Optional<string> provisioningState = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> restorePointInTime = default;
-            Optional<SqlPoolCreateMode> createMode = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<SqlPoolStorageAccountType> storageAccountType = default;
-            Optional<DateTimeOffset> sourceDatabaseDeletionDate = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<long> maxSizeBytes = default;
+            Core.Optional<string> collation = default;
+            Core.Optional<string> sourceDatabaseId = default;
+            Core.Optional<string> recoverableDatabaseId = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<string> status = default;
+            Core.Optional<DateTimeOffset> restorePointInTime = default;
+            Core.Optional<SqlPoolCreateMode> createMode = default;
+            Core.Optional<DateTimeOffset> creationDate = default;
+            Core.Optional<SqlPoolStorageAccountType> storageAccountType = default;
+            Core.Optional<DateTimeOffset> sourceDatabaseDeletionDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseSqlPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(createMode), Optional.ToNullable(creationDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(sourceDatabaseDeletionDate));
+            return new SynapseSqlPoolData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, Core.Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, Core.Optional.ToNullable(restorePointInTime), Core.Optional.ToNullable(createMode), Core.Optional.ToNullable(creationDate), Core.Optional.ToNullable(storageAccountType), Core.Optional.ToNullable(sourceDatabaseDeletionDate));
         }
     }
 }

@@ -21,10 +21,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            StorageLinkedServices = new ChangeTrackingList<LinkedServiceReference>();
-            Arguments = new ChangeTrackingList<object>();
-            Defines = new ChangeTrackingDictionary<string, object>();
-            Variables = new ChangeTrackingList<object>();
+            StorageLinkedServices = new Core.ChangeTrackingList<LinkedServiceReference>();
+            Arguments = new Core.ChangeTrackingList<object>();
+            Defines = new Core.ChangeTrackingDictionary<string, object>();
+            Variables = new Core.ChangeTrackingList<object>();
             Type = "HDInsightHive";
         }
 

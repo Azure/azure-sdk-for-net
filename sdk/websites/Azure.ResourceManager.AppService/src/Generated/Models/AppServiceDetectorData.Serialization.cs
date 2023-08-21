@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AppServiceDetectorData : IUtf8JsonSerializable
+    public partial class AppServiceDetectorData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Metadata))
+            if (Core.Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (Optional.IsCollectionDefined(Dataset))
+            if (Core.Optional.IsCollectionDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteStartArray();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (Optional.IsCollectionDefined(DataProvidersMetadata))
+            if (Core.Optional.IsCollectionDefined(DataProvidersMetadata))
             {
                 writer.WritePropertyName("dataProvidersMetadata"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SuggestedUtterances))
+            if (Core.Optional.IsDefined(SuggestedUtterances))
             {
                 writer.WritePropertyName("suggestedUtterances"u8);
                 writer.WriteObjectValue(SuggestedUtterances);
@@ -70,16 +70,16 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DetectorInfo> metadata = default;
-            Optional<IList<DiagnosticDataset>> dataset = default;
-            Optional<AppServiceStatusInfo> status = default;
-            Optional<IList<DataProviderMetadata>> dataProvidersMetadata = default;
-            Optional<QueryUtterancesResults> suggestedUtterances = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DetectorInfo> metadata = default;
+            Core.Optional<IList<DiagnosticDataset>> dataset = default;
+            Core.Optional<AppServiceStatusInfo> status = default;
+            Core.Optional<IList<DataProviderMetadata>> dataProvidersMetadata = default;
+            Core.Optional<QueryUtterancesResults> suggestedUtterances = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new AppServiceDetectorData(id, name, type, systemData.Value, metadata.Value, Optional.ToList(dataset), status.Value, Optional.ToList(dataProvidersMetadata), suggestedUtterances.Value, kind.Value);
+            return new AppServiceDetectorData(id, name, type, systemData.Value, metadata.Value, Core.Optional.ToList(dataset), status.Value, Core.Optional.ToList(dataProvidersMetadata), suggestedUtterances.Value, kind.Value);
         }
     }
 }

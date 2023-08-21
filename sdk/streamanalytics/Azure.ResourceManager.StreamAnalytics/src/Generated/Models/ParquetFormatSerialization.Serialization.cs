@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class ParquetFormatSerialization : IUtf8JsonSerializable
+    public partial class ParquetFormatSerialization : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<BinaryData> properties = default;
+            Core.Optional<BinaryData> properties = default;
             EventSerializationType type = default;
             foreach (var property in element.EnumerateObject())
             {

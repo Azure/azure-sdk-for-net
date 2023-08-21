@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class LogAnalyticsConfiguration : IUtf8JsonSerializable
+    public partial class LogAnalyticsConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomerId))
+            if (Core.Optional.IsDefined(CustomerId))
             {
                 writer.WritePropertyName("customerId"u8);
                 writer.WriteStringValue(CustomerId);
             }
-            if (Optional.IsDefined(SharedKey))
+            if (Core.Optional.IsDefined(SharedKey))
             {
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> customerId = default;
-            Optional<string> sharedKey = default;
+            Core.Optional<string> customerId = default;
+            Core.Optional<string> sharedKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customerId"u8))

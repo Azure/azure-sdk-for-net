@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<string> firstKey = default;
-            Optional<string> secondKey = default;
+            Core.Optional<string> firstKey = default;
+            Core.Optional<string> secondKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstKey"u8))

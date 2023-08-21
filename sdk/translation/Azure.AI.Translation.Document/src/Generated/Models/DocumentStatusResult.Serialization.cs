@@ -19,16 +19,16 @@ namespace Azure.AI.Translation.Document
             {
                 return null;
             }
-            Optional<Uri> path = default;
+            Core.Optional<Uri> path = default;
             Uri sourcePath = default;
             DateTimeOffset createdDateTimeUtc = default;
             DateTimeOffset lastActionDateTimeUtc = default;
             DocumentTranslationStatus status = default;
             string to = default;
-            Optional<JsonElement> error = default;
+            Core.Optional<JsonElement> error = default;
             float progress = default;
             string id = default;
-            Optional<long> characterCharged = default;
+            Core.Optional<long> characterCharged = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))

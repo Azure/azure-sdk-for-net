@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of KustoPoolListResult. </summary>
         internal KustoPoolListResult()
         {
-            Value = new ChangeTrackingList<SynapseKustoPoolData>();
+            Value = new Core.ChangeTrackingList<SynapseKustoPoolData>();
         }
 
         /// <summary> Initializes a new instance of KustoPoolListResult. </summary>

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class BlobInventoryPolicyDefinition : IUtf8JsonSerializable
+    public partial class BlobInventoryPolicyDefinition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Filters))
+            if (Core.Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<BlobInventoryPolicyFilter> filters = default;
+            Core.Optional<BlobInventoryPolicyFilter> filters = default;
             BlobInventoryPolicyFormat format = default;
             BlobInventoryPolicySchedule schedule = default;
             BlobInventoryPolicyObjectType objectType = default;

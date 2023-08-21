@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<long> zoneA = default;
-            Optional<long> zoneB = default;
+            Core.Optional<long> zoneA = default;
+            Core.Optional<long> zoneB = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zoneA"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SapAvailabilityZonePair(Optional.ToNullable(zoneA), Optional.ToNullable(zoneB));
+            return new SapAvailabilityZonePair(Core.Optional.ToNullable(zoneA), Core.Optional.ToNullable(zoneB));
         }
     }
 }

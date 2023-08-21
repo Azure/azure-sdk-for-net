@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of StreamAnalyticsSubscriptionQuotasListResult. </summary>
         internal StreamAnalyticsSubscriptionQuotasListResult()
         {
-            Value = new ChangeTrackingList<StreamAnalyticsSubscriptionQuota>();
+            Value = new Core.ChangeTrackingList<StreamAnalyticsSubscriptionQuota>();
         }
 
         /// <summary> Initializes a new instance of StreamAnalyticsSubscriptionQuotasListResult. </summary>

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> Initializes a new instance of DiskPoolPatch. </summary>
         public DiskPoolPatch()
         {
-            ManagedByExtended = new ChangeTrackingList<string>();
-            Tags = new ChangeTrackingDictionary<string, string>();
-            Disks = new ChangeTrackingList<WritableSubResource>();
+            ManagedByExtended = new Core.ChangeTrackingList<string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Disks = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Azure resource id. Indicates if this resource is managed by another Azure resource. </summary>

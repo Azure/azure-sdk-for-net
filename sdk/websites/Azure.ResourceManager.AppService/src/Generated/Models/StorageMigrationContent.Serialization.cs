@@ -11,34 +11,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StorageMigrationContent : IUtf8JsonSerializable
+    public partial class StorageMigrationContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzurefilesConnectionString))
+            if (Core.Optional.IsDefined(AzurefilesConnectionString))
             {
                 writer.WritePropertyName("azurefilesConnectionString"u8);
                 writer.WriteStringValue(AzurefilesConnectionString);
             }
-            if (Optional.IsDefined(AzurefilesShare))
+            if (Core.Optional.IsDefined(AzurefilesShare))
             {
                 writer.WritePropertyName("azurefilesShare"u8);
                 writer.WriteStringValue(AzurefilesShare);
             }
-            if (Optional.IsDefined(SwitchSiteAfterMigration))
+            if (Core.Optional.IsDefined(SwitchSiteAfterMigration))
             {
                 writer.WritePropertyName("switchSiteAfterMigration"u8);
                 writer.WriteBooleanValue(SwitchSiteAfterMigration.Value);
             }
-            if (Optional.IsDefined(BlockWriteAccessToSite))
+            if (Core.Optional.IsDefined(BlockWriteAccessToSite))
             {
                 writer.WritePropertyName("blockWriteAccessToSite"u8);
                 writer.WriteBooleanValue(BlockWriteAccessToSite.Value);
@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> azurefilesConnectionString = default;
-            Optional<string> azurefilesShare = default;
-            Optional<bool> switchSiteAfterMigration = default;
-            Optional<bool> blockWriteAccessToSite = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> azurefilesConnectionString = default;
+            Core.Optional<string> azurefilesShare = default;
+            Core.Optional<bool> switchSiteAfterMigration = default;
+            Core.Optional<bool> blockWriteAccessToSite = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StorageMigrationContent(id, name, type, systemData.Value, azurefilesConnectionString.Value, azurefilesShare.Value, Optional.ToNullable(switchSiteAfterMigration), Optional.ToNullable(blockWriteAccessToSite), kind.Value);
+            return new StorageMigrationContent(id, name, type, systemData.Value, azurefilesConnectionString.Value, azurefilesShare.Value, Core.Optional.ToNullable(switchSiteAfterMigration), Core.Optional.ToNullable(blockWriteAccessToSite), kind.Value);
         }
     }
 }

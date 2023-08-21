@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceHostName. </summary>
         internal AppServiceHostName()
         {
-            SiteNames = new ChangeTrackingList<string>();
+            SiteNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppServiceHostName. </summary>

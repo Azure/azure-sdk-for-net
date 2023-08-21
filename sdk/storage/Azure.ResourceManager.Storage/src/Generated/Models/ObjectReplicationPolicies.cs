@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of ObjectReplicationPolicies. </summary>
         internal ObjectReplicationPolicies()
         {
-            Value = new ChangeTrackingList<ObjectReplicationPolicyData>();
+            Value = new Core.ChangeTrackingList<ObjectReplicationPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ObjectReplicationPolicies. </summary>

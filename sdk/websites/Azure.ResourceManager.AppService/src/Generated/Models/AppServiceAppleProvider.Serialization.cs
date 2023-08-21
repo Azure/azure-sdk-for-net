@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceAppleProvider : IUtf8JsonSerializable
+    public partial class AppServiceAppleProvider : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Registration))
+            if (Core.Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
             }
-            if (Optional.IsDefined(Login))
+            if (Core.Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<AppServiceAppleRegistration> registration = default;
-            Optional<LoginScopes> login = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<AppServiceAppleRegistration> registration = default;
+            Core.Optional<LoginScopes> login = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceAppleProvider(Optional.ToNullable(enabled), registration.Value, login.Value);
+            return new AppServiceAppleProvider(Core.Optional.ToNullable(enabled), registration.Value, login.Value);
         }
     }
 }

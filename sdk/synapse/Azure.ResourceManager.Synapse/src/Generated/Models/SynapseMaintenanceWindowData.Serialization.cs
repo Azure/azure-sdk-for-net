@@ -13,14 +13,14 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseMaintenanceWindowData : IUtf8JsonSerializable
+    public partial class SynapseMaintenanceWindowData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TimeRanges))
+            if (Core.Optional.IsCollectionDefined(TimeRanges))
             {
                 writer.WritePropertyName("timeRanges"u8);
                 writer.WriteStartArray();
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<SynapseMaintenanceWindowTimeRange>> timeRanges = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IList<SynapseMaintenanceWindowTimeRange>> timeRanges = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseMaintenanceWindowData(id, name, type, systemData.Value, Optional.ToList(timeRanges));
+            return new SynapseMaintenanceWindowData(id, name, type, systemData.Value, Core.Optional.ToList(timeRanges));
         }
     }
 }

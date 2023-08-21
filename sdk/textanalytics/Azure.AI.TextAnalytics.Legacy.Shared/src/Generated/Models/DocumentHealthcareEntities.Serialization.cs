@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             IReadOnlyList<HealthcareEntity> entities = default;
             IReadOnlyList<HealthcareRelation> relations = default;
             IReadOnlyList<TextAnalyticsWarning> warnings = default;
-            Optional<DocumentStatistics> statistics = default;
+            Core.Optional<DocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

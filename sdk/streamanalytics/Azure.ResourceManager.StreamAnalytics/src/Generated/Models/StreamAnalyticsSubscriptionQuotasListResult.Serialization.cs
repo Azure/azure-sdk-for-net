@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamAnalyticsSubscriptionQuota>> value = default;
+            Core.Optional<IReadOnlyList<StreamAnalyticsSubscriptionQuota>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamAnalyticsSubscriptionQuotasListResult(Optional.ToList(value));
+            return new StreamAnalyticsSubscriptionQuotasListResult(Core.Optional.ToList(value));
         }
     }
 }

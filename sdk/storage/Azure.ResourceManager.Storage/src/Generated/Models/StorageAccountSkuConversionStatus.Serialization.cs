@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountSkuConversionStatus : IUtf8JsonSerializable
+    public partial class StorageAccountSkuConversionStatus : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetSkuName))
+            if (Core.Optional.IsDefined(TargetSkuName))
             {
                 writer.WritePropertyName("targetSkuName"u8);
                 writer.WriteStringValue(TargetSkuName.Value.ToString());
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<StorageAccountSkuConversionState> skuConversionStatus = default;
-            Optional<StorageSkuName> targetSkuName = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            Core.Optional<StorageAccountSkuConversionState> skuConversionStatus = default;
+            Core.Optional<StorageSkuName> targetSkuName = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("skuConversionStatus"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StorageAccountSkuConversionStatus(Optional.ToNullable(skuConversionStatus), Optional.ToNullable(targetSkuName), Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+            return new StorageAccountSkuConversionStatus(Core.Optional.ToNullable(skuConversionStatus), Core.Optional.ToNullable(targetSkuName), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime));
         }
     }
 }

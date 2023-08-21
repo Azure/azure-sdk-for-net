@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseMaintenanceWindowTimeRange : IUtf8JsonSerializable
+    public partial class SynapseMaintenanceWindowTimeRange : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DayOfWeek))
+            if (Core.Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToString());
             }
-            if (Optional.IsDefined(StartOn))
+            if (Core.Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "T");
             }
-            if (Optional.IsDefined(Duration))
+            if (Core.Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<SynapseDayOfWeek> dayOfWeek = default;
-            Optional<TimeSpan> startTime = default;
-            Optional<TimeSpan> duration = default;
+            Core.Optional<SynapseDayOfWeek> dayOfWeek = default;
+            Core.Optional<TimeSpan> startTime = default;
+            Core.Optional<TimeSpan> duration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dayOfWeek"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseMaintenanceWindowTimeRange(Optional.ToNullable(dayOfWeek), Optional.ToNullable(startTime), Optional.ToNullable(duration));
+            return new SynapseMaintenanceWindowTimeRange(Core.Optional.ToNullable(dayOfWeek), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(duration));
         }
     }
 }

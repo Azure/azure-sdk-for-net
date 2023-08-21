@@ -14,24 +14,24 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureDatabricksLinkedServiceConverter))]
-    public partial class AzureDatabricksLinkedService : IUtf8JsonSerializable
+    public partial class AzureDatabricksLinkedService : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(ConnectVia))
+            if (Core.Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (Core.Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -61,47 +61,47 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("domain"u8);
             writer.WriteObjectValue(Domain);
-            if (Optional.IsDefined(AccessToken))
+            if (Core.Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
                 writer.WriteObjectValue(AccessToken);
             }
-            if (Optional.IsDefined(Authentication))
+            if (Core.Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (Optional.IsDefined(WorkspaceResourceId))
+            if (Core.Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteObjectValue(WorkspaceResourceId);
             }
-            if (Optional.IsDefined(ExistingClusterId))
+            if (Core.Optional.IsDefined(ExistingClusterId))
             {
                 writer.WritePropertyName("existingClusterId"u8);
                 writer.WriteObjectValue(ExistingClusterId);
             }
-            if (Optional.IsDefined(InstancePoolId))
+            if (Core.Optional.IsDefined(InstancePoolId))
             {
                 writer.WritePropertyName("instancePoolId"u8);
                 writer.WriteObjectValue(InstancePoolId);
             }
-            if (Optional.IsDefined(NewClusterVersion))
+            if (Core.Optional.IsDefined(NewClusterVersion))
             {
                 writer.WritePropertyName("newClusterVersion"u8);
                 writer.WriteObjectValue(NewClusterVersion);
             }
-            if (Optional.IsDefined(NewClusterNumOfWorker))
+            if (Core.Optional.IsDefined(NewClusterNumOfWorker))
             {
                 writer.WritePropertyName("newClusterNumOfWorker"u8);
                 writer.WriteObjectValue(NewClusterNumOfWorker);
             }
-            if (Optional.IsDefined(NewClusterNodeType))
+            if (Core.Optional.IsDefined(NewClusterNodeType))
             {
                 writer.WritePropertyName("newClusterNodeType"u8);
                 writer.WriteObjectValue(NewClusterNodeType);
             }
-            if (Optional.IsCollectionDefined(NewClusterSparkConf))
+            if (Core.Optional.IsCollectionDefined(NewClusterSparkConf))
             {
                 writer.WritePropertyName("newClusterSparkConf"u8);
                 writer.WriteStartObject();
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(NewClusterSparkEnvVars))
+            if (Core.Optional.IsCollectionDefined(NewClusterSparkEnvVars))
             {
                 writer.WritePropertyName("newClusterSparkEnvVars"u8);
                 writer.WriteStartObject();
@@ -133,7 +133,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(NewClusterCustomTags))
+            if (Core.Optional.IsCollectionDefined(NewClusterCustomTags))
             {
                 writer.WritePropertyName("newClusterCustomTags"u8);
                 writer.WriteStartObject();
@@ -149,37 +149,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(NewClusterLogDestination))
+            if (Core.Optional.IsDefined(NewClusterLogDestination))
             {
                 writer.WritePropertyName("newClusterLogDestination"u8);
                 writer.WriteObjectValue(NewClusterLogDestination);
             }
-            if (Optional.IsDefined(NewClusterDriverNodeType))
+            if (Core.Optional.IsDefined(NewClusterDriverNodeType))
             {
                 writer.WritePropertyName("newClusterDriverNodeType"u8);
                 writer.WriteObjectValue(NewClusterDriverNodeType);
             }
-            if (Optional.IsDefined(NewClusterInitScripts))
+            if (Core.Optional.IsDefined(NewClusterInitScripts))
             {
                 writer.WritePropertyName("newClusterInitScripts"u8);
                 writer.WriteObjectValue(NewClusterInitScripts);
             }
-            if (Optional.IsDefined(NewClusterEnableElasticDisk))
+            if (Core.Optional.IsDefined(NewClusterEnableElasticDisk))
             {
                 writer.WritePropertyName("newClusterEnableElasticDisk"u8);
                 writer.WriteObjectValue(NewClusterEnableElasticDisk);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (Core.Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);
             }
-            if (Optional.IsDefined(PolicyId))
+            if (Core.Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteObjectValue(PolicyId);
             }
-            if (Optional.IsDefined(Credential))
+            if (Core.Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
@@ -200,29 +200,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            Core.Optional<IntegrationRuntimeReference> connectVia = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Core.Optional<IList<object>> annotations = default;
             object domain = default;
-            Optional<SecretBase> accessToken = default;
-            Optional<object> authentication = default;
-            Optional<object> workspaceResourceId = default;
-            Optional<object> existingClusterId = default;
-            Optional<object> instancePoolId = default;
-            Optional<object> newClusterVersion = default;
-            Optional<object> newClusterNumOfWorker = default;
-            Optional<object> newClusterNodeType = default;
-            Optional<IDictionary<string, object>> newClusterSparkConf = default;
-            Optional<IDictionary<string, object>> newClusterSparkEnvVars = default;
-            Optional<IDictionary<string, object>> newClusterCustomTags = default;
-            Optional<object> newClusterLogDestination = default;
-            Optional<object> newClusterDriverNodeType = default;
-            Optional<object> newClusterInitScripts = default;
-            Optional<object> newClusterEnableElasticDisk = default;
-            Optional<object> encryptedCredential = default;
-            Optional<object> policyId = default;
-            Optional<CredentialReference> credential = default;
+            Core.Optional<SecretBase> accessToken = default;
+            Core.Optional<object> authentication = default;
+            Core.Optional<object> workspaceResourceId = default;
+            Core.Optional<object> existingClusterId = default;
+            Core.Optional<object> instancePoolId = default;
+            Core.Optional<object> newClusterVersion = default;
+            Core.Optional<object> newClusterNumOfWorker = default;
+            Core.Optional<object> newClusterNodeType = default;
+            Core.Optional<IDictionary<string, object>> newClusterSparkConf = default;
+            Core.Optional<IDictionary<string, object>> newClusterSparkEnvVars = default;
+            Core.Optional<IDictionary<string, object>> newClusterCustomTags = default;
+            Core.Optional<object> newClusterLogDestination = default;
+            Core.Optional<object> newClusterDriverNodeType = default;
+            Core.Optional<object> newClusterInitScripts = default;
+            Core.Optional<object> newClusterEnableElasticDisk = default;
+            Core.Optional<object> encryptedCredential = default;
+            Core.Optional<object> policyId = default;
+            Core.Optional<CredentialReference> credential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -499,7 +499,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDatabricksLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, domain, accessToken.Value, authentication.Value, workspaceResourceId.Value, existingClusterId.Value, instancePoolId.Value, newClusterVersion.Value, newClusterNumOfWorker.Value, newClusterNodeType.Value, Optional.ToDictionary(newClusterSparkConf), Optional.ToDictionary(newClusterSparkEnvVars), Optional.ToDictionary(newClusterCustomTags), newClusterLogDestination.Value, newClusterDriverNodeType.Value, newClusterInitScripts.Value, newClusterEnableElasticDisk.Value, encryptedCredential.Value, policyId.Value, credential.Value);
+            return new AzureDatabricksLinkedService(type, connectVia.Value, description.Value, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(annotations), additionalProperties, domain, accessToken.Value, authentication.Value, workspaceResourceId.Value, existingClusterId.Value, instancePoolId.Value, newClusterVersion.Value, newClusterNumOfWorker.Value, newClusterNodeType.Value, Core.Optional.ToDictionary(newClusterSparkConf), Core.Optional.ToDictionary(newClusterSparkEnvVars), Core.Optional.ToDictionary(newClusterCustomTags), newClusterLogDestination.Value, newClusterDriverNodeType.Value, newClusterInitScripts.Value, newClusterEnableElasticDisk.Value, encryptedCredential.Value, policyId.Value, credential.Value);
         }
 
         internal partial class AzureDatabricksLinkedServiceConverter : JsonConverter<AzureDatabricksLinkedService>

@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountEncryption : IUtf8JsonSerializable
+    public partial class StorageAccountEncryption : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Services))
+            if (Core.Optional.IsDefined(Services))
             {
                 writer.WritePropertyName("services"u8);
                 writer.WriteObjectValue(Services);
             }
-            if (Optional.IsDefined(KeySource))
+            if (Core.Optional.IsDefined(KeySource))
             {
                 writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToString());
             }
-            if (Optional.IsDefined(RequireInfrastructureEncryption))
+            if (Core.Optional.IsDefined(RequireInfrastructureEncryption))
             {
                 writer.WritePropertyName("requireInfrastructureEncryption"u8);
                 writer.WriteBooleanValue(RequireInfrastructureEncryption.Value);
             }
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (Core.Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyvaultproperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Optional.IsDefined(EncryptionIdentity))
+            if (Core.Optional.IsDefined(EncryptionIdentity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(EncryptionIdentity);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<StorageAccountEncryptionServices> services = default;
-            Optional<StorageAccountKeySource> keySource = default;
-            Optional<bool> requireInfrastructureEncryption = default;
-            Optional<StorageAccountKeyVaultProperties> keyvaultproperties = default;
-            Optional<StorageAccountEncryptionIdentity> identity = default;
+            Core.Optional<StorageAccountEncryptionServices> services = default;
+            Core.Optional<StorageAccountKeySource> keySource = default;
+            Core.Optional<bool> requireInfrastructureEncryption = default;
+            Core.Optional<StorageAccountKeyVaultProperties> keyvaultproperties = default;
+            Core.Optional<StorageAccountEncryptionIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("services"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StorageAccountEncryption(services.Value, Optional.ToNullable(keySource), Optional.ToNullable(requireInfrastructureEncryption), keyvaultproperties.Value, identity.Value);
+            return new StorageAccountEncryption(services.Value, Core.Optional.ToNullable(keySource), Core.Optional.ToNullable(requireInfrastructureEncryption), keyvaultproperties.Value, identity.Value);
         }
     }
 }

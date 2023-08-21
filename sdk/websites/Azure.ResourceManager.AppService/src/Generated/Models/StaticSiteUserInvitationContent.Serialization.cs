@@ -11,39 +11,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StaticSiteUserInvitationContent : IUtf8JsonSerializable
+    public partial class StaticSiteUserInvitationContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Domain))
+            if (Core.Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (Optional.IsDefined(Provider))
+            if (Core.Optional.IsDefined(Provider))
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (Optional.IsDefined(UserDetails))
+            if (Core.Optional.IsDefined(UserDetails))
             {
                 writer.WritePropertyName("userDetails"u8);
                 writer.WriteStringValue(UserDetails);
             }
-            if (Optional.IsDefined(Roles))
+            if (Core.Optional.IsDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStringValue(Roles);
             }
-            if (Optional.IsDefined(NumHoursToExpiration))
+            if (Core.Optional.IsDefined(NumHoursToExpiration))
             {
                 writer.WritePropertyName("numHoursToExpiration"u8);
                 writer.WriteNumberValue(NumHoursToExpiration.Value);
@@ -58,16 +58,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> domain = default;
-            Optional<string> provider = default;
-            Optional<string> userDetails = default;
-            Optional<string> roles = default;
-            Optional<int> numHoursToExpiration = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> domain = default;
+            Core.Optional<string> provider = default;
+            Core.Optional<string> userDetails = default;
+            Core.Optional<string> roles = default;
+            Core.Optional<int> numHoursToExpiration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSiteUserInvitationContent(id, name, type, systemData.Value, domain.Value, provider.Value, userDetails.Value, roles.Value, Optional.ToNullable(numHoursToExpiration), kind.Value);
+            return new StaticSiteUserInvitationContent(id, name, type, systemData.Value, domain.Value, provider.Value, userDetails.Value, roles.Value, Core.Optional.ToNullable(numHoursToExpiration), kind.Value);
         }
     }
 }

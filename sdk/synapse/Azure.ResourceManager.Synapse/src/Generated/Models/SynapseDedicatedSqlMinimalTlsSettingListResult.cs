@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseDedicatedSqlMinimalTlsSettingListResult. </summary>
         internal SynapseDedicatedSqlMinimalTlsSettingListResult()
         {
-            Value = new ChangeTrackingList<SynapseDedicatedSqlMinimalTlsSettingData>();
+            Value = new Core.ChangeTrackingList<SynapseDedicatedSqlMinimalTlsSettingData>();
         }
 
         /// <summary> Initializes a new instance of SynapseDedicatedSqlMinimalTlsSettingListResult. </summary>

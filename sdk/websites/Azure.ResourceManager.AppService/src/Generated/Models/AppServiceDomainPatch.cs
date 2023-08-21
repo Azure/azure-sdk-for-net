@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceDomainPatch. </summary>
         public AppServiceDomainPatch()
         {
-            NameServers = new ChangeTrackingList<string>();
-            ManagedHostNames = new ChangeTrackingList<AppServiceHostName>();
-            DomainNotRenewableReasons = new ChangeTrackingList<DomainNotRenewableReason>();
+            NameServers = new Core.ChangeTrackingList<string>();
+            ManagedHostNames = new Core.ChangeTrackingList<AppServiceHostName>();
+            DomainNotRenewableReasons = new Core.ChangeTrackingList<DomainNotRenewableReason>();
         }
 
         /// <summary> Initializes a new instance of AppServiceDomainPatch. </summary>

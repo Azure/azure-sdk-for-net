@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of PrivateEndpointConnectionList. </summary>
         internal PrivateEndpointConnectionList()
         {
-            Value = new ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionList. </summary>

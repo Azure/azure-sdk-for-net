@@ -24,8 +24,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(pythonFile, nameof(pythonFile));
 
             PythonFile = pythonFile;
-            Parameters = new ChangeTrackingList<object>();
-            Libraries = new ChangeTrackingList<IDictionary<string, object>>();
+            Parameters = new Core.ChangeTrackingList<object>();
+            Libraries = new Core.ChangeTrackingList<IDictionary<string, object>>();
             Type = "DatabricksSparkPython";
         }
 

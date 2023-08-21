@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = await _streamAnalyticsClusterClustersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation(_streamAnalyticsClusterClustersClientDiagnostics, Pipeline, _streamAnalyticsClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation(_streamAnalyticsClusterClustersClientDiagnostics, Pipeline, _streamAnalyticsClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = _streamAnalyticsClusterClustersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation(_streamAnalyticsClusterClustersClientDiagnostics, Pipeline, _streamAnalyticsClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation(_streamAnalyticsClusterClustersClientDiagnostics, Pipeline, _streamAnalyticsClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = await _streamAnalyticsClusterClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsClusterResource>(new StreamAnalyticsClusterOperationSource(Client), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, _streamAnalyticsClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsClusterResource>(new StreamAnalyticsClusterOperationSource(Client), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, _streamAnalyticsClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = _streamAnalyticsClusterClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsClusterResource>(new StreamAnalyticsClusterOperationSource(Client), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, _streamAnalyticsClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsClusterResource>(new StreamAnalyticsClusterOperationSource(Client), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, _streamAnalyticsClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsClusterClustersRestClient.CreateListStreamingJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsClusterClustersRestClient.CreateListStreamingJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StreamAnalyticsClusterJob.DeserializeStreamAnalyticsClusterJob, _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterResource.GetStreamingJobs", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StreamAnalyticsClusterJob.DeserializeStreamAnalyticsClusterJob, _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterResource.GetStreamingJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsClusterClustersRestClient.CreateListStreamingJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsClusterClustersRestClient.CreateListStreamingJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StreamAnalyticsClusterJob.DeserializeStreamAnalyticsClusterJob, _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterResource.GetStreamingJobs", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StreamAnalyticsClusterJob.DeserializeStreamAnalyticsClusterJob, _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterResource.GetStreamingJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

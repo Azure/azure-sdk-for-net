@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageTargetSpaceAllocation : IUtf8JsonSerializable
+    public partial class StorageTargetSpaceAllocation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(AllocationPercentage))
+            if (Core.Optional.IsDefined(AllocationPercentage))
             {
                 writer.WritePropertyName("allocationPercentage"u8);
                 writer.WriteNumberValue(AllocationPercentage.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> allocationPercentage = default;
+            Core.Optional<string> name = default;
+            Core.Optional<int> allocationPercentage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new StorageTargetSpaceAllocation(name.Value, Optional.ToNullable(allocationPercentage));
+            return new StorageTargetSpaceAllocation(name.Value, Core.Optional.ToNullable(allocationPercentage));
         }
     }
 }

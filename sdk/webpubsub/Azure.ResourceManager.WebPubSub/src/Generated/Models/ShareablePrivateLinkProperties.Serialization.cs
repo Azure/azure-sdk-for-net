@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class ShareablePrivateLinkProperties : IUtf8JsonSerializable
+    public partial class ShareablePrivateLinkProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(GroupId))
+            if (Core.Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsDefined(ShareablePrivateLinkPropertiesType))
+            if (Core.Optional.IsDefined(ShareablePrivateLinkPropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ShareablePrivateLinkPropertiesType);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> groupId = default;
-            Optional<string> type = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> groupId = default;
+            Core.Optional<string> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))

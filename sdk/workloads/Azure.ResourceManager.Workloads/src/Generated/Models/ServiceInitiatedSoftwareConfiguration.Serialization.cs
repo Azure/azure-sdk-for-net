@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ServiceInitiatedSoftwareConfiguration : IUtf8JsonSerializable
+    public partial class ServiceInitiatedSoftwareConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("bomUrl"u8);
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStringValue(SapFqdn);
             writer.WritePropertyName("sshPrivateKey"u8);
             writer.WriteStringValue(SshPrivateKey);
-            if (Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
+            if (Core.Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
             {
                 writer.WritePropertyName("highAvailabilitySoftwareConfiguration"u8);
                 writer.WriteObjectValue(HighAvailabilitySoftwareConfiguration);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Workloads.Models
             string sapBitsStorageAccountId = default;
             string sapFqdn = default;
             string sshPrivateKey = default;
-            Optional<HighAvailabilitySoftwareConfiguration> highAvailabilitySoftwareConfiguration = default;
+            Core.Optional<HighAvailabilitySoftwareConfiguration> highAvailabilitySoftwareConfiguration = default;
             SapSoftwareInstallationType softwareInstallationType = default;
             foreach (var property in element.EnumerateObject())
             {

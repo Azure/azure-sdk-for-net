@@ -13,34 +13,34 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataFlowSourceConverter))]
-    public partial class DataFlowSource : IUtf8JsonSerializable
+    public partial class DataFlowSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SchemaLinkedService))
+            if (Core.Optional.IsDefined(SchemaLinkedService))
             {
                 writer.WritePropertyName("schemaLinkedService"u8);
                 writer.WriteObjectValue(SchemaLinkedService);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Dataset))
+            if (Core.Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteObjectValue(Dataset);
             }
-            if (Optional.IsDefined(LinkedService))
+            if (Core.Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
                 writer.WriteObjectValue(LinkedService);
             }
-            if (Optional.IsDefined(Flowlet))
+            if (Core.Optional.IsDefined(Flowlet))
             {
                 writer.WritePropertyName("flowlet"u8);
                 writer.WriteObjectValue(Flowlet);
@@ -54,12 +54,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> schemaLinkedService = default;
+            Core.Optional<LinkedServiceReference> schemaLinkedService = default;
             string name = default;
-            Optional<string> description = default;
-            Optional<DatasetReference> dataset = default;
-            Optional<LinkedServiceReference> linkedService = default;
-            Optional<DataFlowReference> flowlet = default;
+            Core.Optional<string> description = default;
+            Core.Optional<DatasetReference> dataset = default;
+            Core.Optional<LinkedServiceReference> linkedService = default;
+            Core.Optional<DataFlowReference> flowlet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaLinkedService"u8))

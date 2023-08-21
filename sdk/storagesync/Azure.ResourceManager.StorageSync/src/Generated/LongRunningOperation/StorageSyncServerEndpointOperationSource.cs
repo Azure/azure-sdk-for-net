@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    internal class StorageSyncServerEndpointOperationSource : IOperationSource<StorageSyncServerEndpointResource>
+    internal class StorageSyncServerEndpointOperationSource : Core.IOperationSource<StorageSyncServerEndpointResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.StorageSync
             _client = client;
         }
 
-        StorageSyncServerEndpointResource IOperationSource<StorageSyncServerEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        StorageSyncServerEndpointResource Core.IOperationSource<StorageSyncServerEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StorageSyncServerEndpointData.DeserializeStorageSyncServerEndpointData(document.RootElement);
             return new StorageSyncServerEndpointResource(_client, data);
         }
 
-        async ValueTask<StorageSyncServerEndpointResource> IOperationSource<StorageSyncServerEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StorageSyncServerEndpointResource> Core.IOperationSource<StorageSyncServerEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StorageSyncServerEndpointData.DeserializeStorageSyncServerEndpointData(document.RootElement);

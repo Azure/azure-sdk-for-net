@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of QuotaTicketDetails. </summary>
         public QuotaTicketDetails()
         {
-            QuotaChangeRequests = new ChangeTrackingList<SupportQuotaChangeContent>();
+            QuotaChangeRequests = new Core.ChangeTrackingList<SupportQuotaChangeContent>();
         }
 
         /// <summary> Initializes a new instance of QuotaTicketDetails. </summary>

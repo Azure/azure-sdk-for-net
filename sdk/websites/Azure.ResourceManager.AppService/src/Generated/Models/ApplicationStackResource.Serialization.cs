@@ -12,34 +12,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ApplicationStackResource : IUtf8JsonSerializable
+    public partial class ApplicationStackResource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StackName))
+            if (Core.Optional.IsDefined(StackName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(StackName);
             }
-            if (Optional.IsDefined(Display))
+            if (Core.Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
                 writer.WriteStringValue(Display);
             }
-            if (Optional.IsDefined(Dependency))
+            if (Core.Optional.IsDefined(Dependency))
             {
                 writer.WritePropertyName("dependency"u8);
                 writer.WriteStringValue(Dependency);
             }
-            if (Optional.IsCollectionDefined(MajorVersions))
+            if (Core.Optional.IsCollectionDefined(MajorVersions))
             {
                 writer.WritePropertyName("majorVersions"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Frameworks))
+            if (Core.Optional.IsCollectionDefined(Frameworks))
             {
                 writer.WritePropertyName("frameworks"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IsDeprecated))
+            if (Core.Optional.IsCollectionDefined(IsDeprecated))
             {
                 writer.WritePropertyName("isDeprecated"u8);
                 writer.WriteStartArray();
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> name0 = default;
-            Optional<string> display = default;
-            Optional<string> dependency = default;
-            Optional<IList<StackMajorVersion>> majorVersions = default;
-            Optional<IList<ApplicationStack>> frameworks = default;
-            Optional<IList<ApplicationStack>> isDeprecated = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> name0 = default;
+            Core.Optional<string> display = default;
+            Core.Optional<string> dependency = default;
+            Core.Optional<IList<StackMajorVersion>> majorVersions = default;
+            Core.Optional<IList<ApplicationStack>> frameworks = default;
+            Core.Optional<IList<ApplicationStack>> isDeprecated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ApplicationStackResource(id, name, type, systemData.Value, name0.Value, display.Value, dependency.Value, Optional.ToList(majorVersions), Optional.ToList(frameworks), Optional.ToList(isDeprecated), kind.Value);
+            return new ApplicationStackResource(id, name, type, systemData.Value, name0.Value, display.Value, dependency.Value, Core.Optional.ToList(majorVersions), Core.Optional.ToList(frameworks), Core.Optional.ToList(isDeprecated), kind.Value);
         }
     }
 }

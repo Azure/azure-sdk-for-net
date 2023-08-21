@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(RunFilterParametersConverter))]
-    public partial class RunFilterParameters : IUtf8JsonSerializable
+    public partial class RunFilterParameters : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContinuationToken))
+            if (Core.Optional.IsDefined(ContinuationToken))
             {
                 writer.WritePropertyName("continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(LastUpdatedAfter, "O");
             writer.WritePropertyName("lastUpdatedBefore"u8);
             writer.WriteStringValue(LastUpdatedBefore, "O");
-            if (Optional.IsCollectionDefined(Filters))
+            if (Core.Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OrderBy))
+            if (Core.Optional.IsCollectionDefined(OrderBy))
             {
                 writer.WritePropertyName("orderBy"u8);
                 writer.WriteStartArray();

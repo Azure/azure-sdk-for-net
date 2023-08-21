@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of AppServiceWorkerPoolData. </summary>
         public AppServiceWorkerPoolData()
         {
-            InstanceNames = new ChangeTrackingList<string>();
+            InstanceNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppServiceWorkerPoolData. </summary>

@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             SqlPool = sqlPool;
             StoredProcedureName = storedProcedureName;
-            StoredProcedureParameters = new ChangeTrackingDictionary<string, StoredProcedureParameter>();
+            StoredProcedureParameters = new Core.ChangeTrackingDictionary<string, StoredProcedureParameter>();
             Type = "SqlPoolStoredProcedure";
         }
 

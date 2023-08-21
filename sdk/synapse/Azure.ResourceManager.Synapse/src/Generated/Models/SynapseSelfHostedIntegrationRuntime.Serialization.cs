@@ -12,21 +12,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseSelfHostedIntegrationRuntime : IUtf8JsonSerializable
+    public partial class SynapseSelfHostedIntegrationRuntime : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedInfo))
+            if (Core.Optional.IsDefined(LinkedInfo))
             {
                 writer.WritePropertyName("linkedInfo"u8);
                 writer.WriteObjectValue(LinkedInfo);
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             IntegrationRuntimeType type = default;
-            Optional<string> description = default;
-            Optional<SynapseLinkedIntegrationRuntimeType> linkedInfo = default;
+            Core.Optional<string> description = default;
+            Core.Optional<SynapseLinkedIntegrationRuntimeType> linkedInfo = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

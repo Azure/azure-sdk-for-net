@@ -11,12 +11,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SlotDifference : IUtf8JsonSerializable
+    public partial class SlotDifference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -33,18 +33,18 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> level = default;
-            Optional<string> settingType = default;
-            Optional<string> diffRule = default;
-            Optional<string> settingName = default;
-            Optional<string> valueInCurrentSlot = default;
-            Optional<string> valueInTargetSlot = default;
-            Optional<string> description = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> level = default;
+            Core.Optional<string> settingType = default;
+            Core.Optional<string> diffRule = default;
+            Core.Optional<string> settingName = default;
+            Core.Optional<string> valueInCurrentSlot = default;
+            Core.Optional<string> valueInTargetSlot = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))

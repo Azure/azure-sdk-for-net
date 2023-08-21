@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class LiveTraceConfiguration : IUtf8JsonSerializable
+    public partial class LiveTraceConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Core.Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled);
             }
-            if (Optional.IsCollectionDefined(Categories))
+            if (Core.Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<string> enabled = default;
-            Optional<IList<LiveTraceCategory>> categories = default;
+            Core.Optional<string> enabled = default;
+            Core.Optional<IList<LiveTraceCategory>> categories = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new LiveTraceConfiguration(enabled.Value, Optional.ToList(categories));
+            return new LiveTraceConfiguration(enabled.Value, Core.Optional.ToList(categories));
         }
     }
 }

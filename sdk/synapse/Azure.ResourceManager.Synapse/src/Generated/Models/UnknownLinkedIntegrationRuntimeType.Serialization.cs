@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    internal partial class UnknownLinkedIntegrationRuntimeType : IUtf8JsonSerializable
+    internal partial class UnknownLinkedIntegrationRuntimeType : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("authorizationType"u8);

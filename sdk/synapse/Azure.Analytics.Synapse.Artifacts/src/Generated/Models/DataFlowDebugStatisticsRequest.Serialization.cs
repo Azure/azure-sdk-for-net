@@ -14,27 +14,27 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataFlowDebugStatisticsRequestConverter))]
-    public partial class DataFlowDebugStatisticsRequest : IUtf8JsonSerializable
+    public partial class DataFlowDebugStatisticsRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SessionId))
+            if (Core.Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId);
             }
-            if (Optional.IsDefined(DataFlowName))
+            if (Core.Optional.IsDefined(DataFlowName))
             {
                 writer.WritePropertyName("dataFlowName"u8);
                 writer.WriteStringValue(DataFlowName);
             }
-            if (Optional.IsDefined(StreamName))
+            if (Core.Optional.IsDefined(StreamName))
             {
                 writer.WritePropertyName("streamName"u8);
                 writer.WriteStringValue(StreamName);
             }
-            if (Optional.IsCollectionDefined(Columns))
+            if (Core.Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -53,10 +53,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> sessionId = default;
-            Optional<string> dataFlowName = default;
-            Optional<string> streamName = default;
-            Optional<IList<string>> columns = default;
+            Core.Optional<string> sessionId = default;
+            Core.Optional<string> dataFlowName = default;
+            Core.Optional<string> streamName = default;
+            Core.Optional<IList<string>> columns = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionId"u8))
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowDebugStatisticsRequest(sessionId.Value, dataFlowName.Value, streamName.Value, Optional.ToList(columns));
+            return new DataFlowDebugStatisticsRequest(sessionId.Value, dataFlowName.Value, streamName.Value, Core.Optional.ToList(columns));
         }
 
         internal partial class DataFlowDebugStatisticsRequestConverter : JsonConverter<DataFlowDebugStatisticsRequest>

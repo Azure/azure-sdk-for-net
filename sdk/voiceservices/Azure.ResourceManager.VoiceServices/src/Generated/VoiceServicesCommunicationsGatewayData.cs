@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="location"> The location. </param>
         public VoiceServicesCommunicationsGatewayData(AzureLocation location) : base(location)
         {
-            ServiceLocations = new ChangeTrackingList<VoiceServicesServiceRegionProperties>();
-            Codecs = new ChangeTrackingList<VoiceServicesTeamsCodec>();
-            Platforms = new ChangeTrackingList<VoiceServicesCommunicationsPlatform>();
-            EmergencyDialStrings = new ChangeTrackingList<string>();
+            ServiceLocations = new Core.ChangeTrackingList<VoiceServicesServiceRegionProperties>();
+            Codecs = new Core.ChangeTrackingList<VoiceServicesTeamsCodec>();
+            Platforms = new Core.ChangeTrackingList<VoiceServicesCommunicationsPlatform>();
+            EmergencyDialStrings = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VoiceServicesCommunicationsGatewayData. </summary>

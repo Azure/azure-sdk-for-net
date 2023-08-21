@@ -13,9 +13,9 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseRestorePointData : IUtf8JsonSerializable
+    public partial class SynapseRestorePointData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SynapseRestorePointType> restorePointType = default;
-            Optional<DateTimeOffset> earliestRestoreDate = default;
-            Optional<DateTimeOffset> restorePointCreationDate = default;
-            Optional<string> restorePointLabel = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<SynapseRestorePointType> restorePointType = default;
+            Core.Optional<DateTimeOffset> earliestRestoreDate = default;
+            Core.Optional<DateTimeOffset> restorePointCreationDate = default;
+            Core.Optional<string> restorePointLabel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseRestorePointData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(restorePointType), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(restorePointCreationDate), restorePointLabel.Value);
+            return new SynapseRestorePointData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(restorePointType), Core.Optional.ToNullable(earliestRestoreDate), Core.Optional.ToNullable(restorePointCreationDate), restorePointLabel.Value);
         }
     }
 }

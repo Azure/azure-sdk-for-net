@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseDataConnectionValidationResult>> value = default;
+            Core.Optional<IReadOnlyList<SynapseDataConnectionValidationResult>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseDataConnectionValidationListResult(Optional.ToList(value));
+            return new SynapseDataConnectionValidationListResult(Core.Optional.ToList(value));
         }
     }
 }

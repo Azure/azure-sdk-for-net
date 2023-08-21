@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Support
             try
             {
                 var response = await _supportTicketCommunicationCommunicationsRestClient.CreateAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SupportArmOperation<SupportTicketCommunicationResource>(new SupportTicketCommunicationOperationSource(Client), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, _supportTicketCommunicationCommunicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SupportArmOperation<SupportTicketCommunicationResource>(new SupportTicketCommunicationOperationSource(Client), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, _supportTicketCommunicationCommunicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Support
             try
             {
                 var response = _supportTicketCommunicationCommunicationsRestClient.Create(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SupportArmOperation<SupportTicketCommunicationResource>(new SupportTicketCommunicationOperationSource(Client), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, _supportTicketCommunicationCommunicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SupportArmOperation<SupportTicketCommunicationResource>(new SupportTicketCommunicationOperationSource(Client), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, _supportTicketCommunicationCommunicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

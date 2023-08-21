@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of MachineLearningStudioInputs. </summary>
         public MachineLearningStudioInputs()
         {
-            ColumnNames = new ChangeTrackingList<MachineLearningStudioInputColumn>();
+            ColumnNames = new Core.ChangeTrackingList<MachineLearningStudioInputColumn>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningStudioInputs. </summary>

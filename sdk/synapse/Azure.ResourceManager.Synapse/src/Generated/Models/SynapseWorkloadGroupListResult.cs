@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseWorkloadGroupListResult. </summary>
         internal SynapseWorkloadGroupListResult()
         {
-            Value = new ChangeTrackingList<SynapseWorkloadGroupData>();
+            Value = new Core.ChangeTrackingList<SynapseWorkloadGroupData>();
         }
 
         /// <summary> Initializes a new instance of SynapseWorkloadGroupListResult. </summary>

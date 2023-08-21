@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseKustoPoolPatch : IUtf8JsonSerializable
+    public partial class SynapseKustoPoolPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -29,29 +29,29 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OptimizedAutoscale))
+            if (Core.Optional.IsDefined(OptimizedAutoscale))
             {
                 writer.WritePropertyName("optimizedAutoscale"u8);
                 writer.WriteObjectValue(OptimizedAutoscale);
             }
-            if (Optional.IsDefined(EnableStreamingIngest))
+            if (Core.Optional.IsDefined(EnableStreamingIngest))
             {
                 writer.WritePropertyName("enableStreamingIngest"u8);
                 writer.WriteBooleanValue(EnableStreamingIngest.Value);
             }
-            if (Optional.IsDefined(EnablePurge))
+            if (Core.Optional.IsDefined(EnablePurge))
             {
                 writer.WritePropertyName("enablePurge"u8);
                 writer.WriteBooleanValue(EnablePurge.Value);
             }
-            if (Optional.IsDefined(WorkspaceUid))
+            if (Core.Optional.IsDefined(WorkspaceUid))
             {
                 writer.WritePropertyName("workspaceUID"u8);
                 writer.WriteStringValue(WorkspaceUid.Value);
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<SynapseDataSourceSku> sku = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<SynapseDataSourceSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KustoPoolState> state = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
-            Optional<Uri> uri = default;
-            Optional<Uri> dataIngestionUri = default;
-            Optional<string> stateReason = default;
-            Optional<SynapseOptimizedAutoscale> optimizedAutoscale = default;
-            Optional<bool> enableStreamingIngest = default;
-            Optional<bool> enablePurge = default;
-            Optional<SynapseLanguageExtensionsList> languageExtensions = default;
-            Optional<Guid> workspaceUID = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<KustoPoolState> state = default;
+            Core.Optional<ResourceProvisioningState> provisioningState = default;
+            Core.Optional<Uri> uri = default;
+            Core.Optional<Uri> dataIngestionUri = default;
+            Core.Optional<string> stateReason = default;
+            Core.Optional<SynapseOptimizedAutoscale> optimizedAutoscale = default;
+            Core.Optional<bool> enableStreamingIngest = default;
+            Core.Optional<bool> enablePurge = default;
+            Core.Optional<SynapseLanguageExtensionsList> languageExtensions = default;
+            Core.Optional<Guid> workspaceUID = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseKustoPoolPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(state), Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, optimizedAutoscale.Value, Optional.ToNullable(enableStreamingIngest), Optional.ToNullable(enablePurge), languageExtensions.Value, Optional.ToNullable(workspaceUID));
+            return new SynapseKustoPoolPatch(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), sku.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, optimizedAutoscale.Value, Core.Optional.ToNullable(enableStreamingIngest), Core.Optional.ToNullable(enablePurge), languageExtensions.Value, Core.Optional.ToNullable(workspaceUID));
         }
     }
 }

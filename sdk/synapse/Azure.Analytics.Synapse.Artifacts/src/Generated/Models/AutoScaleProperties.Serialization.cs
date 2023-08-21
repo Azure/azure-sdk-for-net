@@ -13,22 +13,22 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AutoScalePropertiesConverter))]
-    public partial class AutoScaleProperties : IUtf8JsonSerializable
+    public partial class AutoScaleProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinNodeCount))
+            if (Core.Optional.IsDefined(MinNodeCount))
             {
                 writer.WritePropertyName("minNodeCount"u8);
                 writer.WriteNumberValue(MinNodeCount.Value);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Core.Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(MaxNodeCount))
+            if (Core.Optional.IsDefined(MaxNodeCount))
             {
                 writer.WritePropertyName("maxNodeCount"u8);
                 writer.WriteNumberValue(MaxNodeCount.Value);
@@ -42,9 +42,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<int> minNodeCount = default;
-            Optional<bool> enabled = default;
-            Optional<int> maxNodeCount = default;
+            Core.Optional<int> minNodeCount = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<int> maxNodeCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minNodeCount"u8))
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new AutoScaleProperties(Optional.ToNullable(minNodeCount), Optional.ToNullable(enabled), Optional.ToNullable(maxNodeCount));
+            return new AutoScaleProperties(Core.Optional.ToNullable(minNodeCount), Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(maxNodeCount));
         }
 
         internal partial class AutoScalePropertiesConverter : JsonConverter<AutoScaleProperties>

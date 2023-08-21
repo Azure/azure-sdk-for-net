@@ -11,31 +11,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class EMachineLearningStudioFunctionBinding : IUtf8JsonSerializable
+    public partial class EMachineLearningStudioFunctionBinding : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FunctionBindingType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Endpoint))
+            if (Core.Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (Optional.IsDefined(ApiKey))
+            if (Core.Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(Inputs))
+            if (Core.Optional.IsDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteObjectValue(Inputs);
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (Core.Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BatchSize))
+            if (Core.Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> endpoint = default;
-            Optional<string> apiKey = default;
-            Optional<MachineLearningStudioInputs> inputs = default;
-            Optional<IList<MachineLearningStudioOutputColumn>> outputs = default;
-            Optional<int> batchSize = default;
+            Core.Optional<string> endpoint = default;
+            Core.Optional<string> apiKey = default;
+            Core.Optional<MachineLearningStudioInputs> inputs = default;
+            Core.Optional<IList<MachineLearningStudioOutputColumn>> outputs = default;
+            Core.Optional<int> batchSize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new EMachineLearningStudioFunctionBinding(type, endpoint.Value, apiKey.Value, inputs.Value, Optional.ToList(outputs), Optional.ToNullable(batchSize));
+            return new EMachineLearningStudioFunctionBinding(type, endpoint.Value, apiKey.Value, inputs.Value, Core.Optional.ToList(outputs), Core.Optional.ToNullable(batchSize));
         }
     }
 }

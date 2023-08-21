@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> Initializes a new instance of DiskPoolZoneListResult. </summary>
         internal DiskPoolZoneListResult()
         {
-            Value = new ChangeTrackingList<DiskPoolZoneInfo>();
+            Value = new Core.ChangeTrackingList<DiskPoolZoneInfo>();
         }
 
         /// <summary> Initializes a new instance of DiskPoolZoneListResult. </summary>

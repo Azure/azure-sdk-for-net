@@ -16,8 +16,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeSsisProperties. </summary>
         public IntegrationRuntimeSsisProperties()
         {
-            ExpressCustomSetupProperties = new ChangeTrackingList<CustomSetupBase>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            ExpressCustomSetupProperties = new Core.ChangeTrackingList<CustomSetupBase>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeSsisProperties. </summary>

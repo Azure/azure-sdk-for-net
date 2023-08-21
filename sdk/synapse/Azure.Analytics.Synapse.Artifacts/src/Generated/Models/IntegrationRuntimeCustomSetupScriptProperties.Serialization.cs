@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(IntegrationRuntimeCustomSetupScriptPropertiesConverter))]
-    public partial class IntegrationRuntimeCustomSetupScriptProperties : IUtf8JsonSerializable
+    public partial class IntegrationRuntimeCustomSetupScriptProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BlobContainerUri))
+            if (Core.Optional.IsDefined(BlobContainerUri))
             {
                 writer.WritePropertyName("blobContainerUri"u8);
                 writer.WriteStringValue(BlobContainerUri);
             }
-            if (Optional.IsDefined(SasToken))
+            if (Core.Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
                 writer.WriteObjectValue(SasToken);
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> blobContainerUri = default;
-            Optional<SecureString> sasToken = default;
+            Core.Optional<string> blobContainerUri = default;
+            Core.Optional<SecureString> sasToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobContainerUri"u8))

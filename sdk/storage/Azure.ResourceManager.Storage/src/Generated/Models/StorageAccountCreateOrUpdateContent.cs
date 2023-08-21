@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             Sku = sku;
             Kind = kind;
             Location = location;
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Required. Gets or sets the SKU name. </summary>

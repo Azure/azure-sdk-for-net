@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class DeletedAccountData : IUtf8JsonSerializable
+    public partial class DeletedAccountData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> restoreReference = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> deletionTime = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> storageAccountResourceId = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<string> restoreReference = default;
+            Core.Optional<DateTimeOffset> creationTime = default;
+            Core.Optional<DateTimeOffset> deletionTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new DeletedAccountData(id, name, type, systemData.Value, storageAccountResourceId.Value, Optional.ToNullable(location), restoreReference.Value, Optional.ToNullable(creationTime), Optional.ToNullable(deletionTime));
+            return new DeletedAccountData(id, name, type, systemData.Value, storageAccountResourceId.Value, Core.Optional.ToNullable(location), restoreReference.Value, Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(deletionTime));
         }
     }
 }

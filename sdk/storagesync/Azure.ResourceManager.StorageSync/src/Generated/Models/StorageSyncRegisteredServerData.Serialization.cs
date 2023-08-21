@@ -13,14 +13,14 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    public partial class StorageSyncRegisteredServerData : IUtf8JsonSerializable
+    public partial class StorageSyncRegisteredServerData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerCertificate))
+            if (Core.Optional.IsDefined(ServerCertificate))
             {
                 writer.WritePropertyName("serverCertificate"u8);
 #if NET6_0_OR_GREATER
@@ -29,97 +29,97 @@ namespace Azure.ResourceManager.StorageSync
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(ServerCertificate.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(AgentVersion))
+            if (Core.Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Optional.IsDefined(ServerOSVersion))
+            if (Core.Optional.IsDefined(ServerOSVersion))
             {
                 writer.WritePropertyName("serverOSVersion"u8);
                 writer.WriteStringValue(ServerOSVersion);
             }
-            if (Optional.IsDefined(ServerManagementErrorCode))
+            if (Core.Optional.IsDefined(ServerManagementErrorCode))
             {
                 writer.WritePropertyName("serverManagementErrorCode"u8);
                 writer.WriteNumberValue(ServerManagementErrorCode.Value);
             }
-            if (Optional.IsDefined(LastHeartbeat))
+            if (Core.Optional.IsDefined(LastHeartbeat))
             {
                 writer.WritePropertyName("lastHeartBeat"u8);
                 writer.WriteStringValue(LastHeartbeat);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(ServerRole))
+            if (Core.Optional.IsDefined(ServerRole))
             {
                 writer.WritePropertyName("serverRole"u8);
                 writer.WriteStringValue(ServerRole);
             }
-            if (Optional.IsDefined(ClusterId))
+            if (Core.Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId.Value);
             }
-            if (Optional.IsDefined(ClusterName))
+            if (Core.Optional.IsDefined(ClusterName))
             {
                 writer.WritePropertyName("clusterName"u8);
                 writer.WriteStringValue(ClusterName);
             }
-            if (Optional.IsDefined(ServerId))
+            if (Core.Optional.IsDefined(ServerId))
             {
                 writer.WritePropertyName("serverId"u8);
                 writer.WriteStringValue(ServerId.Value);
             }
-            if (Optional.IsDefined(StorageSyncServiceUid))
+            if (Core.Optional.IsDefined(StorageSyncServiceUid))
             {
                 writer.WritePropertyName("storageSyncServiceUid"u8);
                 writer.WriteStringValue(StorageSyncServiceUid.Value);
             }
-            if (Optional.IsDefined(LastWorkflowId))
+            if (Core.Optional.IsDefined(LastWorkflowId))
             {
                 writer.WritePropertyName("lastWorkflowId"u8);
                 writer.WriteStringValue(LastWorkflowId);
             }
-            if (Optional.IsDefined(LastOperationName))
+            if (Core.Optional.IsDefined(LastOperationName))
             {
                 writer.WritePropertyName("lastOperationName"u8);
                 writer.WriteStringValue(LastOperationName);
             }
-            if (Optional.IsDefined(DiscoveryEndpointUri))
+            if (Core.Optional.IsDefined(DiscoveryEndpointUri))
             {
                 writer.WritePropertyName("discoveryEndpointUri"u8);
                 writer.WriteStringValue(DiscoveryEndpointUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ResourceLocation))
+            if (Core.Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation.Value);
             }
-            if (Optional.IsDefined(ServiceLocation))
+            if (Core.Optional.IsDefined(ServiceLocation))
             {
                 writer.WritePropertyName("serviceLocation"u8);
                 writer.WriteStringValue(ServiceLocation.Value);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (Core.Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ManagementEndpointUri))
+            if (Core.Optional.IsDefined(ManagementEndpointUri))
             {
                 writer.WritePropertyName("managementEndpointUri"u8);
                 writer.WriteStringValue(ManagementEndpointUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(MonitoringEndpointUri))
+            if (Core.Optional.IsDefined(MonitoringEndpointUri))
             {
                 writer.WritePropertyName("monitoringEndpointUri"u8);
                 writer.WriteStringValue(MonitoringEndpointUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(MonitoringConfiguration))
+            if (Core.Optional.IsDefined(MonitoringConfiguration))
             {
                 writer.WritePropertyName("monitoringConfiguration"u8);
                 writer.WriteStringValue(MonitoringConfiguration);
@@ -137,30 +137,30 @@ namespace Azure.ResourceManager.StorageSync
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<BinaryData> serverCertificate = default;
-            Optional<string> agentVersion = default;
-            Optional<RegisteredServerAgentVersionStatus> agentVersionStatus = default;
-            Optional<DateTimeOffset> agentVersionExpirationDate = default;
-            Optional<string> serverOSVersion = default;
-            Optional<int> serverManagementErrorCode = default;
-            Optional<string> lastHeartbeat = default;
-            Optional<string> provisioningState = default;
-            Optional<string> serverRole = default;
-            Optional<Guid> clusterId = default;
-            Optional<string> clusterName = default;
-            Optional<Guid> serverId = default;
-            Optional<Guid> storageSyncServiceUid = default;
-            Optional<string> lastWorkflowId = default;
-            Optional<string> lastOperationName = default;
-            Optional<Uri> discoveryEndpointUri = default;
-            Optional<AzureLocation> resourceLocation = default;
-            Optional<AzureLocation> serviceLocation = default;
-            Optional<string> friendlyName = default;
-            Optional<Uri> managementEndpointUri = default;
-            Optional<Uri> monitoringEndpointUri = default;
-            Optional<string> monitoringConfiguration = default;
-            Optional<string> serverName = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<BinaryData> serverCertificate = default;
+            Core.Optional<string> agentVersion = default;
+            Core.Optional<RegisteredServerAgentVersionStatus> agentVersionStatus = default;
+            Core.Optional<DateTimeOffset> agentVersionExpirationDate = default;
+            Core.Optional<string> serverOSVersion = default;
+            Core.Optional<int> serverManagementErrorCode = default;
+            Core.Optional<string> lastHeartbeat = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<string> serverRole = default;
+            Core.Optional<Guid> clusterId = default;
+            Core.Optional<string> clusterName = default;
+            Core.Optional<Guid> serverId = default;
+            Core.Optional<Guid> storageSyncServiceUid = default;
+            Core.Optional<string> lastWorkflowId = default;
+            Core.Optional<string> lastOperationName = default;
+            Core.Optional<Uri> discoveryEndpointUri = default;
+            Core.Optional<AzureLocation> resourceLocation = default;
+            Core.Optional<AzureLocation> serviceLocation = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<Uri> managementEndpointUri = default;
+            Core.Optional<Uri> monitoringEndpointUri = default;
+            Core.Optional<string> monitoringConfiguration = default;
+            Core.Optional<string> serverName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.StorageSync
                     continue;
                 }
             }
-            return new StorageSyncRegisteredServerData(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, Optional.ToNullable(agentVersionStatus), Optional.ToNullable(agentVersionExpirationDate), serverOSVersion.Value, Optional.ToNullable(serverManagementErrorCode), lastHeartbeat.Value, provisioningState.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), Optional.ToNullable(storageSyncServiceUid), lastWorkflowId.Value, lastOperationName.Value, discoveryEndpointUri.Value, Optional.ToNullable(resourceLocation), Optional.ToNullable(serviceLocation), friendlyName.Value, managementEndpointUri.Value, monitoringEndpointUri.Value, monitoringConfiguration.Value, serverName.Value);
+            return new StorageSyncRegisteredServerData(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, Core.Optional.ToNullable(agentVersionStatus), Core.Optional.ToNullable(agentVersionExpirationDate), serverOSVersion.Value, Core.Optional.ToNullable(serverManagementErrorCode), lastHeartbeat.Value, provisioningState.Value, serverRole.Value, Core.Optional.ToNullable(clusterId), clusterName.Value, Core.Optional.ToNullable(serverId), Core.Optional.ToNullable(storageSyncServiceUid), lastWorkflowId.Value, lastOperationName.Value, discoveryEndpointUri.Value, Core.Optional.ToNullable(resourceLocation), Core.Optional.ToNullable(serviceLocation), friendlyName.Value, managementEndpointUri.Value, monitoringEndpointUri.Value, monitoringConfiguration.Value, serverName.Value);
         }
     }
 }

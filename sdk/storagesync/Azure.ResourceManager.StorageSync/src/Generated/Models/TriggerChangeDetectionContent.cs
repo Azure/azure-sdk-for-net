@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Initializes a new instance of TriggerChangeDetectionContent. </summary>
         public TriggerChangeDetectionContent()
         {
-            Paths = new ChangeTrackingList<string>();
+            Paths = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Relative path to a directory Azure File share for which change detection is to be performed. </summary>

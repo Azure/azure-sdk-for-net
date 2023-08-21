@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class BigDataPoolAutoScaleProperties : IUtf8JsonSerializable
+    public partial class BigDataPoolAutoScaleProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinNodeCount))
+            if (Core.Optional.IsDefined(MinNodeCount))
             {
                 writer.WritePropertyName("minNodeCount"u8);
                 writer.WriteNumberValue(MinNodeCount.Value);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(MaxNodeCount))
+            if (Core.Optional.IsDefined(MaxNodeCount))
             {
                 writer.WritePropertyName("maxNodeCount"u8);
                 writer.WriteNumberValue(MaxNodeCount.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<int> minNodeCount = default;
-            Optional<bool> enabled = default;
-            Optional<int> maxNodeCount = default;
+            Core.Optional<int> minNodeCount = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<int> maxNodeCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minNodeCount"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new BigDataPoolAutoScaleProperties(Optional.ToNullable(minNodeCount), Optional.ToNullable(enabled), Optional.ToNullable(maxNodeCount));
+            return new BigDataPoolAutoScaleProperties(Core.Optional.ToNullable(minNodeCount), Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(maxNodeCount));
         }
     }
 }

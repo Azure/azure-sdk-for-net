@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class ExpectedStatusCodeRangeInfo : IUtf8JsonSerializable
+    public partial class ExpectedStatusCodeRangeInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Min))
+            if (Core.Optional.IsDefined(Min))
             {
                 writer.WritePropertyName("min"u8);
                 writer.WriteNumberValue(Min.Value);
             }
-            if (Optional.IsDefined(Max))
+            if (Core.Optional.IsDefined(Max))
             {
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Optional<int> min = default;
-            Optional<int> max = default;
+            Core.Optional<int> min = default;
+            Core.Optional<int> max = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("min"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     continue;
                 }
             }
-            return new ExpectedStatusCodeRangeInfo(Optional.ToNullable(min), Optional.ToNullable(max));
+            return new ExpectedStatusCodeRangeInfo(Core.Optional.ToNullable(min), Core.Optional.ToNullable(max));
         }
     }
 }

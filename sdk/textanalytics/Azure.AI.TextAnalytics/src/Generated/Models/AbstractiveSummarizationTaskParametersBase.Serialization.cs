@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AbstractiveSummarizationTaskParametersBase : IUtf8JsonSerializable
+    internal partial class AbstractiveSummarizationTaskParametersBase : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SentenceCount))
+            if (Core.Optional.IsDefined(SentenceCount))
             {
                 writer.WritePropertyName("sentenceCount"u8);
                 writer.WriteNumberValue(SentenceCount.Value);
             }
-            if (Optional.IsDefined(StringIndexType))
+            if (Core.Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<int> sentenceCount = default;
-            Optional<StringIndexType> stringIndexType = default;
+            Core.Optional<int> sentenceCount = default;
+            Core.Optional<StringIndexType> stringIndexType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sentenceCount"u8))
@@ -57,7 +57,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AbstractiveSummarizationTaskParametersBase(Optional.ToNullable(sentenceCount), Optional.ToNullable(stringIndexType));
+            return new AbstractiveSummarizationTaskParametersBase(Core.Optional.ToNullable(sentenceCount), Core.Optional.ToNullable(stringIndexType));
         }
     }
 }

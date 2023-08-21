@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<TableData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<TableData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ListTableResource(Optional.ToList(value), nextLink.Value);
+            return new ListTableResource(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

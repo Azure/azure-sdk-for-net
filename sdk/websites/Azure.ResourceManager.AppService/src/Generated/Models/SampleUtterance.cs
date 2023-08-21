@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of SampleUtterance. </summary>
         public SampleUtterance()
         {
-            Links = new ChangeTrackingList<string>();
+            Links = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SampleUtterance. </summary>

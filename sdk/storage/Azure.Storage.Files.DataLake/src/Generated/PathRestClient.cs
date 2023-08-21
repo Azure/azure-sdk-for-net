@@ -229,7 +229,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="encryptionContext"> Specifies the encryption context to set on the file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Create or rename a file or directory.    By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken.  This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations).  To fail if the destination already exists, use a conditional request with If-None-Match: "*". </remarks>
-        public async Task<ResponseWithHeaders<PathCreateHeaders>> CreateAsync(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string owner = null, string group = null, string acl = null, string proposedLeaseId = null, long? leaseDuration = null, PathExpiryOptions? expiryOptions = null, string expiresOn = null, string encryptionContext = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PathCreateHeaders>> CreateAsync(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string owner = null, string group = null, string acl = null, string proposedLeaseId = null, long? leaseDuration = null, PathExpiryOptions? expiryOptions = null, string expiresOn = null, string encryptionContext = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(timeout, resource, continuation, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm, owner, group, acl, proposedLeaseId, leaseDuration, expiryOptions, expiresOn, encryptionContext);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -237,7 +237,7 @@ namespace Azure.Storage.Files.DataLake
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -280,7 +280,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="encryptionContext"> Specifies the encryption context to set on the file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Create or rename a file or directory.    By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken.  This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations).  To fail if the destination already exists, use a conditional request with If-None-Match: "*". </remarks>
-        public ResponseWithHeaders<PathCreateHeaders> Create(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string owner = null, string group = null, string acl = null, string proposedLeaseId = null, long? leaseDuration = null, PathExpiryOptions? expiryOptions = null, string expiresOn = null, string encryptionContext = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PathCreateHeaders> Create(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string owner = null, string group = null, string acl = null, string proposedLeaseId = null, long? leaseDuration = null, PathExpiryOptions? expiryOptions = null, string expiresOn = null, string encryptionContext = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(timeout, resource, continuation, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm, owner, group, acl, proposedLeaseId, leaseDuration, expiryOptions, expiresOn, encryptionContext);
             _pipeline.Send(message, cancellationToken);
@@ -288,7 +288,7 @@ namespace Azure.Storage.Files.DataLake
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -438,7 +438,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks> Uploads data to be appended to a file, flushes (writes) previously uploaded data to a file, sets properties for a file or directory, or sets access control for a file or directory. Data can only be appended to a file. Concurrent writes to the same file using multiple clients are not supported. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
-        public async Task<ResponseWithHeaders<SetAccessControlRecursiveResponse, PathUpdateHeaders>> UpdateAsync(PathUpdateAction action, PathSetAccessControlRecursiveMode mode, Stream body, int? timeout = null, int? maxRecords = null, string continuation = null, bool? forceFlag = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string properties = null, string owner = null, string group = null, string permissions = null, string acl = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<SetAccessControlRecursiveResponse, PathUpdateHeaders>> UpdateAsync(PathUpdateAction action, PathSetAccessControlRecursiveMode mode, Stream body, int? timeout = null, int? maxRecords = null, string continuation = null, bool? forceFlag = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string properties = null, string owner = null, string group = null, string permissions = null, string acl = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -455,10 +455,10 @@ namespace Azure.Storage.Files.DataLake
                         SetAccessControlRecursiveResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = SetAccessControlRecursiveResponse.DeserializeSetAccessControlRecursiveResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 202:
-                    return ResponseWithHeaders.FromValue((SetAccessControlRecursiveResponse)null, headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue<SetAccessControlRecursiveResponse, PathUpdateHeaders>((SetAccessControlRecursiveResponse)null, headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -495,7 +495,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks> Uploads data to be appended to a file, flushes (writes) previously uploaded data to a file, sets properties for a file or directory, or sets access control for a file or directory. Data can only be appended to a file. Concurrent writes to the same file using multiple clients are not supported. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
-        public ResponseWithHeaders<SetAccessControlRecursiveResponse, PathUpdateHeaders> Update(PathUpdateAction action, PathSetAccessControlRecursiveMode mode, Stream body, int? timeout = null, int? maxRecords = null, string continuation = null, bool? forceFlag = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string properties = null, string owner = null, string group = null, string permissions = null, string acl = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<SetAccessControlRecursiveResponse, PathUpdateHeaders> Update(PathUpdateAction action, PathSetAccessControlRecursiveMode mode, Stream body, int? timeout = null, int? maxRecords = null, string continuation = null, bool? forceFlag = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string properties = null, string owner = null, string group = null, string permissions = null, string acl = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -512,10 +512,10 @@ namespace Azure.Storage.Files.DataLake
                         SetAccessControlRecursiveResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = SetAccessControlRecursiveResponse.DeserializeSetAccessControlRecursiveResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 202:
-                    return ResponseWithHeaders.FromValue((SetAccessControlRecursiveResponse)null, headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue<SetAccessControlRecursiveResponse, PathUpdateHeaders>((SetAccessControlRecursiveResponse)null, headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -583,7 +583,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Create and manage a lease to restrict write and delete access to the path. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
-        public async Task<ResponseWithHeaders<PathLeaseHeaders>> LeaseAsync(PathLeaseAction xMsLeaseAction, int? timeout = null, int? xMsLeaseBreakPeriod = null, string leaseId = null, string proposedLeaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PathLeaseHeaders>> LeaseAsync(PathLeaseAction xMsLeaseAction, int? timeout = null, int? xMsLeaseBreakPeriod = null, string leaseId = null, string proposedLeaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateLeaseRequest(xMsLeaseAction, timeout, xMsLeaseBreakPeriod, leaseId, proposedLeaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -593,7 +593,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                 case 201:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -611,7 +611,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Create and manage a lease to restrict write and delete access to the path. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
-        public ResponseWithHeaders<PathLeaseHeaders> Lease(PathLeaseAction xMsLeaseAction, int? timeout = null, int? xMsLeaseBreakPeriod = null, string leaseId = null, string proposedLeaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PathLeaseHeaders> Lease(PathLeaseAction xMsLeaseAction, int? timeout = null, int? xMsLeaseBreakPeriod = null, string leaseId = null, string proposedLeaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateLeaseRequest(xMsLeaseAction, timeout, xMsLeaseBreakPeriod, leaseId, proposedLeaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
@@ -621,7 +621,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                 case 201:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -699,7 +699,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Read the contents of a file.  For read operations, range requests are supported. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
-        public async Task<ResponseWithHeaders<Stream, PathReadHeaders>> ReadAsync(int? timeout = null, string range = null, string leaseId = null, bool? xMsRangeGetContentMd5 = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<Stream, PathReadHeaders>> ReadAsync(int? timeout = null, string range = null, string leaseId = null, bool? xMsRangeGetContentMd5 = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateReadRequest(timeout, range, leaseId, xMsRangeGetContentMd5, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -710,7 +710,7 @@ namespace Azure.Storage.Files.DataLake
                 case 206:
                     {
                         var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -731,7 +731,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Read the contents of a file.  For read operations, range requests are supported. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
-        public ResponseWithHeaders<Stream, PathReadHeaders> Read(int? timeout = null, string range = null, string leaseId = null, bool? xMsRangeGetContentMd5 = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<Stream, PathReadHeaders> Read(int? timeout = null, string range = null, string leaseId = null, bool? xMsRangeGetContentMd5 = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateReadRequest(timeout, range, leaseId, xMsRangeGetContentMd5, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
             _pipeline.Send(message, cancellationToken);
@@ -742,7 +742,7 @@ namespace Azure.Storage.Files.DataLake
                 case 206:
                     {
                         var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -805,7 +805,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Get Properties returns all system and user defined properties for a path. Get Status returns all system defined properties for a path. Get Access Control List returns the access control list for a path. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
-        public async Task<ResponseWithHeaders<PathGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, PathGetPropertiesAction? action = null, bool? upn = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PathGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, PathGetPropertiesAction? action = null, bool? upn = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout, action, upn, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -813,7 +813,7 @@ namespace Azure.Storage.Files.DataLake
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -830,7 +830,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Get Properties returns all system and user defined properties for a path. Get Status returns all system defined properties for a path. Get Access Control List returns the access control list for a path. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
-        public ResponseWithHeaders<PathGetPropertiesHeaders> GetProperties(int? timeout = null, PathGetPropertiesAction? action = null, bool? upn = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PathGetPropertiesHeaders> GetProperties(int? timeout = null, PathGetPropertiesAction? action = null, bool? upn = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout, action, upn, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
@@ -838,7 +838,7 @@ namespace Azure.Storage.Files.DataLake
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -905,7 +905,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="paginated"> If true, paginated behavior will be seen. Pagination is for the recursive ACL checks as a POSIX requirement in the server and Delete in an atomic operation once the ACL checks are completed. If false or missing, normal default behavior will kick in, which may timeout in case of very large directories due to recursive ACL checks. This new parameter is introduced for backward compatibility. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Delete the file or directory. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
-        public async Task<ResponseWithHeaders<PathDeleteHeaders>> DeleteAsync(int? timeout = null, bool? recursive = null, string continuation = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, bool? paginated = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PathDeleteHeaders>> DeleteAsync(int? timeout = null, bool? recursive = null, string continuation = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, bool? paginated = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteRequest(timeout, recursive, continuation, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, paginated);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -914,7 +914,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -932,7 +932,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="paginated"> If true, paginated behavior will be seen. Pagination is for the recursive ACL checks as a POSIX requirement in the server and Delete in an atomic operation once the ACL checks are completed. If false or missing, normal default behavior will kick in, which may timeout in case of very large directories due to recursive ACL checks. This new parameter is introduced for backward compatibility. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Delete the file or directory. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
-        public ResponseWithHeaders<PathDeleteHeaders> Delete(int? timeout = null, bool? recursive = null, string continuation = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, bool? paginated = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PathDeleteHeaders> Delete(int? timeout = null, bool? recursive = null, string continuation = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, bool? paginated = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteRequest(timeout, recursive, continuation, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, paginated);
             _pipeline.Send(message, cancellationToken);
@@ -941,7 +941,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1013,7 +1013,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PathSetAccessControlHeaders>> SetAccessControlAsync(int? timeout = null, string leaseId = null, string owner = null, string group = null, string permissions = null, string acl = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PathSetAccessControlHeaders>> SetAccessControlAsync(int? timeout = null, string leaseId = null, string owner = null, string group = null, string permissions = null, string acl = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetAccessControlRequest(timeout, leaseId, owner, group, permissions, acl, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1021,7 +1021,7 @@ namespace Azure.Storage.Files.DataLake
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1039,7 +1039,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PathSetAccessControlHeaders> SetAccessControl(int? timeout = null, string leaseId = null, string owner = null, string group = null, string permissions = null, string acl = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PathSetAccessControlHeaders> SetAccessControl(int? timeout = null, string leaseId = null, string owner = null, string group = null, string permissions = null, string acl = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetAccessControlRequest(timeout, leaseId, owner, group, permissions, acl, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
             _pipeline.Send(message, cancellationToken);
@@ -1047,7 +1047,7 @@ namespace Azure.Storage.Files.DataLake
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1096,7 +1096,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="maxRecords"> Optional. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items. </param>
         /// <param name="acl"> Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format "[scope:][type]:[id]:[permissions]". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<SetAccessControlRecursiveResponse, PathSetAccessControlRecursiveHeaders>> SetAccessControlRecursiveAsync(PathSetAccessControlRecursiveMode mode, int? timeout = null, string continuation = null, bool? forceFlag = null, int? maxRecords = null, string acl = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<SetAccessControlRecursiveResponse, PathSetAccessControlRecursiveHeaders>> SetAccessControlRecursiveAsync(PathSetAccessControlRecursiveMode mode, int? timeout = null, string continuation = null, bool? forceFlag = null, int? maxRecords = null, string acl = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetAccessControlRecursiveRequest(mode, timeout, continuation, forceFlag, maxRecords, acl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1108,7 +1108,7 @@ namespace Azure.Storage.Files.DataLake
                         SetAccessControlRecursiveResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = SetAccessControlRecursiveResponse.DeserializeSetAccessControlRecursiveResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1123,7 +1123,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="maxRecords"> Optional. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items. </param>
         /// <param name="acl"> Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format "[scope:][type]:[id]:[permissions]". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<SetAccessControlRecursiveResponse, PathSetAccessControlRecursiveHeaders> SetAccessControlRecursive(PathSetAccessControlRecursiveMode mode, int? timeout = null, string continuation = null, bool? forceFlag = null, int? maxRecords = null, string acl = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<SetAccessControlRecursiveResponse, PathSetAccessControlRecursiveHeaders> SetAccessControlRecursive(PathSetAccessControlRecursiveMode mode, int? timeout = null, string continuation = null, bool? forceFlag = null, int? maxRecords = null, string acl = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetAccessControlRecursiveRequest(mode, timeout, continuation, forceFlag, maxRecords, acl);
             _pipeline.Send(message, cancellationToken);
@@ -1135,7 +1135,7 @@ namespace Azure.Storage.Files.DataLake
                         SetAccessControlRecursiveResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = SetAccessControlRecursiveResponse.DeserializeSetAccessControlRecursiveResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1264,7 +1264,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PathFlushDataHeaders>> FlushDataAsync(int? timeout = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, DataLakeLeaseAction? leaseAction = null, long? leaseDuration = null, string proposedLeaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PathFlushDataHeaders>> FlushDataAsync(int? timeout = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, DataLakeLeaseAction? leaseAction = null, long? leaseDuration = null, string proposedLeaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateFlushDataRequest(timeout, position, retainUncommittedData, close, contentLength, contentMD5, leaseId, leaseAction, leaseDuration, proposedLeaseId, cacheControl, contentType, contentDisposition, contentEncoding, contentLanguage, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1272,7 +1272,7 @@ namespace Azure.Storage.Files.DataLake
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1302,7 +1302,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PathFlushDataHeaders> FlushData(int? timeout = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, DataLakeLeaseAction? leaseAction = null, long? leaseDuration = null, string proposedLeaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PathFlushDataHeaders> FlushData(int? timeout = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, DataLakeLeaseAction? leaseAction = null, long? leaseDuration = null, string proposedLeaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateFlushDataRequest(timeout, position, retainUncommittedData, close, contentLength, contentMD5, leaseId, leaseAction, leaseDuration, proposedLeaseId, cacheControl, contentType, contentDisposition, contentEncoding, contentLanguage, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
             _pipeline.Send(message, cancellationToken);
@@ -1310,7 +1310,7 @@ namespace Azure.Storage.Files.DataLake
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1401,7 +1401,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="flush"> If file should be flushed after the append. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PathAppendDataHeaders>> AppendDataAsync(Stream body, long? position = null, int? timeout = null, long? contentLength = null, byte[] transactionalContentHash = null, byte[] transactionalContentCrc64 = null, string leaseId = null, DataLakeLeaseAction? leaseAction = null, long? leaseDuration = null, string proposedLeaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, bool? flush = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PathAppendDataHeaders>> AppendDataAsync(Stream body, long? position = null, int? timeout = null, long? contentLength = null, byte[] transactionalContentHash = null, byte[] transactionalContentCrc64 = null, string leaseId = null, DataLakeLeaseAction? leaseAction = null, long? leaseDuration = null, string proposedLeaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, bool? flush = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -1414,7 +1414,7 @@ namespace Azure.Storage.Files.DataLake
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1437,7 +1437,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="flush"> If file should be flushed after the append. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<PathAppendDataHeaders> AppendData(Stream body, long? position = null, int? timeout = null, long? contentLength = null, byte[] transactionalContentHash = null, byte[] transactionalContentCrc64 = null, string leaseId = null, DataLakeLeaseAction? leaseAction = null, long? leaseDuration = null, string proposedLeaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, bool? flush = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PathAppendDataHeaders> AppendData(Stream body, long? position = null, int? timeout = null, long? contentLength = null, byte[] transactionalContentHash = null, byte[] transactionalContentCrc64 = null, string leaseId = null, DataLakeLeaseAction? leaseAction = null, long? leaseDuration = null, string proposedLeaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, bool? flush = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -1450,7 +1450,7 @@ namespace Azure.Storage.Files.DataLake
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1484,7 +1484,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PathSetExpiryHeaders>> SetExpiryAsync(PathExpiryOptions expiryOptions, int? timeout = null, string expiresOn = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PathSetExpiryHeaders>> SetExpiryAsync(PathExpiryOptions expiryOptions, int? timeout = null, string expiresOn = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetExpiryRequest(expiryOptions, timeout, expiresOn);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1492,7 +1492,7 @@ namespace Azure.Storage.Files.DataLake
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1503,7 +1503,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PathSetExpiryHeaders> SetExpiry(PathExpiryOptions expiryOptions, int? timeout = null, string expiresOn = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PathSetExpiryHeaders> SetExpiry(PathExpiryOptions expiryOptions, int? timeout = null, string expiresOn = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetExpiryRequest(expiryOptions, timeout, expiresOn);
             _pipeline.Send(message, cancellationToken);
@@ -1511,7 +1511,7 @@ namespace Azure.Storage.Files.DataLake
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1543,7 +1543,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="undeleteSource"> Only for hierarchical namespace enabled accounts. Optional. The path of the soft deleted blob to undelete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PathUndeleteHeaders>> UndeleteAsync(int? timeout = null, string undeleteSource = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PathUndeleteHeaders>> UndeleteAsync(int? timeout = null, string undeleteSource = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateUndeleteRequest(timeout, undeleteSource);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1551,7 +1551,7 @@ namespace Azure.Storage.Files.DataLake
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1561,7 +1561,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="undeleteSource"> Only for hierarchical namespace enabled accounts. Optional. The path of the soft deleted blob to undelete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PathUndeleteHeaders> Undelete(int? timeout = null, string undeleteSource = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PathUndeleteHeaders> Undelete(int? timeout = null, string undeleteSource = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateUndeleteRequest(timeout, undeleteSource);
             _pipeline.Send(message, cancellationToken);
@@ -1569,7 +1569,7 @@ namespace Azure.Storage.Files.DataLake
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

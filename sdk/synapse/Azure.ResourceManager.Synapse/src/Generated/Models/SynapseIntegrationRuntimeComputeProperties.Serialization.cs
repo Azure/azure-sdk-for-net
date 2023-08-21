@@ -12,37 +12,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeComputeProperties : IUtf8JsonSerializable
+    public partial class SynapseIntegrationRuntimeComputeProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(NodeSize))
+            if (Core.Optional.IsDefined(NodeSize))
             {
                 writer.WritePropertyName("nodeSize"u8);
                 writer.WriteStringValue(NodeSize);
             }
-            if (Optional.IsDefined(NumberOfNodes))
+            if (Core.Optional.IsDefined(NumberOfNodes))
             {
                 writer.WritePropertyName("numberOfNodes"u8);
                 writer.WriteNumberValue(NumberOfNodes.Value);
             }
-            if (Optional.IsDefined(MaxParallelExecutionsPerNode))
+            if (Core.Optional.IsDefined(MaxParallelExecutionsPerNode))
             {
                 writer.WritePropertyName("maxParallelExecutionsPerNode"u8);
                 writer.WriteNumberValue(MaxParallelExecutionsPerNode.Value);
             }
-            if (Optional.IsDefined(DataFlowProperties))
+            if (Core.Optional.IsDefined(DataFlowProperties))
             {
                 writer.WritePropertyName("dataFlowProperties"u8);
                 writer.WriteObjectValue(DataFlowProperties);
             }
-            if (Optional.IsDefined(VnetProperties))
+            if (Core.Optional.IsDefined(VnetProperties))
             {
                 writer.WritePropertyName("vNetProperties"u8);
                 writer.WriteObjectValue(VnetProperties);
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> nodeSize = default;
-            Optional<int> numberOfNodes = default;
-            Optional<int> maxParallelExecutionsPerNode = default;
-            Optional<SynapseIntegrationRuntimeDataFlowProperties> dataFlowProperties = default;
-            Optional<SynapseIntegrationRuntimeVnetProperties> vNetProperties = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<string> nodeSize = default;
+            Core.Optional<int> numberOfNodes = default;
+            Core.Optional<int> maxParallelExecutionsPerNode = default;
+            Core.Optional<SynapseIntegrationRuntimeDataFlowProperties> dataFlowProperties = default;
+            Core.Optional<SynapseIntegrationRuntimeVnetProperties> vNetProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeComputeProperties(Optional.ToNullable(location), nodeSize.Value, Optional.ToNullable(numberOfNodes), Optional.ToNullable(maxParallelExecutionsPerNode), dataFlowProperties.Value, vNetProperties.Value, additionalProperties);
+            return new SynapseIntegrationRuntimeComputeProperties(Core.Optional.ToNullable(location), nodeSize.Value, Core.Optional.ToNullable(numberOfNodes), Core.Optional.ToNullable(maxParallelExecutionsPerNode), dataFlowProperties.Value, vNetProperties.Value, additionalProperties);
         }
     }
 }

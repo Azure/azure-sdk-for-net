@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial struct LinkedEntity : IUtf8JsonSerializable
+    public partial struct LinkedEntity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -28,7 +28,7 @@ namespace Azure.AI.TextAnalytics
             writer.WriteEndArray();
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(Language);
-            if (Optional.IsDefined(DataSourceEntityId))
+            if (Core.Optional.IsDefined(DataSourceEntityId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(DataSourceEntityId);
@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics
             writer.WriteStringValue(Url.AbsoluteUri);
             writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(DataSource);
-            if (Optional.IsDefined(BingEntitySearchApiId))
+            if (Core.Optional.IsDefined(BingEntitySearchApiId))
             {
                 writer.WritePropertyName("bingId"u8);
                 writer.WriteStringValue(BingEntitySearchApiId);
@@ -50,10 +50,10 @@ namespace Azure.AI.TextAnalytics
             string name = default;
             IEnumerable<LinkedEntityMatch> matches = default;
             string language = default;
-            Optional<string> id = default;
+            Core.Optional<string> id = default;
             Uri url = default;
             string dataSource = default;
-            Optional<string> bingId = default;
+            Core.Optional<string> bingId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

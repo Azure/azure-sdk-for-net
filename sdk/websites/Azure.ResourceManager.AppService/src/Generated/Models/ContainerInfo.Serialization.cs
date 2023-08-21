@@ -11,47 +11,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ContainerInfo : IUtf8JsonSerializable
+    public partial class ContainerInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CurrentTimeStamp))
+            if (Core.Optional.IsDefined(CurrentTimeStamp))
             {
                 writer.WritePropertyName("currentTimeStamp"u8);
                 writer.WriteStringValue(CurrentTimeStamp.Value, "O");
             }
-            if (Optional.IsDefined(PreviousTimeStamp))
+            if (Core.Optional.IsDefined(PreviousTimeStamp))
             {
                 writer.WritePropertyName("previousTimeStamp"u8);
                 writer.WriteStringValue(PreviousTimeStamp.Value, "O");
             }
-            if (Optional.IsDefined(CurrentCpuStats))
+            if (Core.Optional.IsDefined(CurrentCpuStats))
             {
                 writer.WritePropertyName("currentCpuStats"u8);
                 writer.WriteObjectValue(CurrentCpuStats);
             }
-            if (Optional.IsDefined(PreviousCpuStats))
+            if (Core.Optional.IsDefined(PreviousCpuStats))
             {
                 writer.WritePropertyName("previousCpuStats"u8);
                 writer.WriteObjectValue(PreviousCpuStats);
             }
-            if (Optional.IsDefined(MemoryStats))
+            if (Core.Optional.IsDefined(MemoryStats))
             {
                 writer.WritePropertyName("memoryStats"u8);
                 writer.WriteObjectValue(MemoryStats);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Eth0))
+            if (Core.Optional.IsDefined(Eth0))
             {
                 writer.WritePropertyName("eth0"u8);
                 writer.WriteObjectValue(Eth0);
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> currentTimeStamp = default;
-            Optional<DateTimeOffset> previousTimeStamp = default;
-            Optional<ContainerCpuStatistics> currentCpuStats = default;
-            Optional<ContainerCpuStatistics> previousCpuStats = default;
-            Optional<ContainerMemoryStatistics> memoryStats = default;
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<ContainerNetworkInterfaceStatistics> eth0 = default;
+            Core.Optional<DateTimeOffset> currentTimeStamp = default;
+            Core.Optional<DateTimeOffset> previousTimeStamp = default;
+            Core.Optional<ContainerCpuStatistics> currentCpuStats = default;
+            Core.Optional<ContainerCpuStatistics> previousCpuStats = default;
+            Core.Optional<ContainerMemoryStatistics> memoryStats = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> id = default;
+            Core.Optional<ContainerNetworkInterfaceStatistics> eth0 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentTimeStamp"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ContainerInfo(Optional.ToNullable(currentTimeStamp), Optional.ToNullable(previousTimeStamp), currentCpuStats.Value, previousCpuStats.Value, memoryStats.Value, name.Value, id.Value, eth0.Value);
+            return new ContainerInfo(Core.Optional.ToNullable(currentTimeStamp), Core.Optional.ToNullable(previousTimeStamp), currentCpuStats.Value, previousCpuStats.Value, memoryStats.Value, name.Value, id.Value, eth0.Value);
         }
     }
 }

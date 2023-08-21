@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Synapse
             if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content0 = new Utf8JsonRequestContent();
+                var content0 = new Core.Utf8JsonRequestContent();
                 content0.JsonWriter.WriteObjectValue(content);
                 request.Content = content0;
             }

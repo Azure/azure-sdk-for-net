@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class PrometheusHAClusterProviderInstanceProperties : IUtf8JsonSerializable
+    public partial class PrometheusHAClusterProviderInstanceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrometheusUri))
+            if (Core.Optional.IsDefined(PrometheusUri))
             {
                 writer.WritePropertyName("prometheusUrl"u8);
                 writer.WriteStringValue(PrometheusUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Hostname))
+            if (Core.Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Optional.IsDefined(Sid))
+            if (Core.Optional.IsDefined(Sid))
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid);
             }
-            if (Optional.IsDefined(ClusterName))
+            if (Core.Optional.IsDefined(ClusterName))
             {
                 writer.WritePropertyName("clusterName"u8);
                 writer.WriteStringValue(ClusterName);
             }
-            if (Optional.IsDefined(SslPreference))
+            if (Core.Optional.IsDefined(SslPreference))
             {
                 writer.WritePropertyName("sslPreference"u8);
                 writer.WriteStringValue(SslPreference.Value.ToString());
             }
-            if (Optional.IsDefined(SslCertificateUri))
+            if (Core.Optional.IsDefined(SslCertificateUri))
             {
                 writer.WritePropertyName("sslCertificateUri"u8);
                 writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<Uri> prometheusUrl = default;
-            Optional<string> hostname = default;
-            Optional<string> sid = default;
-            Optional<string> clusterName = default;
-            Optional<SapSslPreference> sslPreference = default;
-            Optional<Uri> sslCertificateUri = default;
+            Core.Optional<Uri> prometheusUrl = default;
+            Core.Optional<string> hostname = default;
+            Core.Optional<string> sid = default;
+            Core.Optional<string> clusterName = default;
+            Core.Optional<SapSslPreference> sslPreference = default;
+            Core.Optional<Uri> sslCertificateUri = default;
             string providerType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new PrometheusHAClusterProviderInstanceProperties(providerType, prometheusUrl.Value, hostname.Value, sid.Value, clusterName.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value);
+            return new PrometheusHAClusterProviderInstanceProperties(providerType, prometheusUrl.Value, hostname.Value, sid.Value, clusterName.Value, Core.Optional.ToNullable(sslPreference), sslCertificateUri.Value);
         }
     }
 }

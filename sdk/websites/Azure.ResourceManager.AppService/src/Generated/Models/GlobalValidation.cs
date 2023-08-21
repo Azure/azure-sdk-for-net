@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of GlobalValidation. </summary>
         public GlobalValidation()
         {
-            ExcludedPaths = new ChangeTrackingList<string>();
+            ExcludedPaths = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of GlobalValidation. </summary>

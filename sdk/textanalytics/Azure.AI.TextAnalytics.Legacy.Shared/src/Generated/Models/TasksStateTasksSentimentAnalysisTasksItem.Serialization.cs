@@ -20,9 +20,9 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             {
                 return null;
             }
-            Optional<SentimentResponse> results = default;
+            Core.Optional<SentimentResponse> results = default;
             DateTimeOffset lastUpdateDateTime = default;
-            Optional<string> taskName = default;
+            Core.Optional<string> taskName = default;
             State status = default;
             foreach (var property in element.EnumerateObject())
             {

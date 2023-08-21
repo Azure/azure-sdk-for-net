@@ -22,7 +22,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Argument.AssertNotNull(nodeName, nameof(nodeName));
 
             NodeName = nodeName;
-            OutputSelectors = new ChangeTrackingList<OutputSelector>();
+            OutputSelectors = new Core.ChangeTrackingList<OutputSelector>();
         }
 
         /// <summary> Initializes a new instance of NodeInput. </summary>

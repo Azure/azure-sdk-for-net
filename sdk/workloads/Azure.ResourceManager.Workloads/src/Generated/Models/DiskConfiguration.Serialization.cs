@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    internal partial class DiskConfiguration : IUtf8JsonSerializable
+    internal partial class DiskConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DiskVolumeConfigurations))
+            if (Core.Optional.IsCollectionDefined(DiskVolumeConfigurations))
             {
                 writer.WritePropertyName("diskVolumeConfigurations"u8);
                 writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, DiskVolumeConfiguration>> diskVolumeConfigurations = default;
+            Core.Optional<IDictionary<string, DiskVolumeConfiguration>> diskVolumeConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskVolumeConfigurations"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new DiskConfiguration(Optional.ToDictionary(diskVolumeConfigurations));
+            return new DiskConfiguration(Core.Optional.ToDictionary(diskVolumeConfigurations));
         }
     }
 }

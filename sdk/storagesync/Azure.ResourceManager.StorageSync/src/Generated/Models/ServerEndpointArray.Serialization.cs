@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageSyncServerEndpointData>> value = default;
+            Core.Optional<IReadOnlyList<StorageSyncServerEndpointData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new ServerEndpointArray(Optional.ToList(value));
+            return new ServerEndpointArray(Core.Optional.ToList(value));
         }
     }
 }

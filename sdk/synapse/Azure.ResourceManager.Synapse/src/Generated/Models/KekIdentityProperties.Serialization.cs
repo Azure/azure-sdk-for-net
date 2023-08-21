@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class KekIdentityProperties : IUtf8JsonSerializable
+    public partial class KekIdentityProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserAssignedIdentityId))
+            if (Core.Optional.IsDefined(UserAssignedIdentityId))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentityId);
             }
-            if (Optional.IsDefined(UseSystemAssignedIdentity))
+            if (Core.Optional.IsDefined(UseSystemAssignedIdentity))
             {
                 writer.WritePropertyName("useSystemAssignedIdentity"u8);
 #if NET6_0_OR_GREATER
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> userAssignedIdentity = default;
-            Optional<BinaryData> useSystemAssignedIdentity = default;
+            Core.Optional<ResourceIdentifier> userAssignedIdentity = default;
+            Core.Optional<BinaryData> useSystemAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentity"u8))

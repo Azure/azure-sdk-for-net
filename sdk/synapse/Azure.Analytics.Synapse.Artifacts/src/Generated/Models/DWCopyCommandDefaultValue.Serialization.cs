@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DWCopyCommandDefaultValueConverter))]
-    public partial class DWCopyCommandDefaultValue : IUtf8JsonSerializable
+    public partial class DWCopyCommandDefaultValue : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ColumnName))
+            if (Core.Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("columnName"u8);
                 writer.WriteObjectValue(ColumnName);
             }
-            if (Optional.IsDefined(DefaultValue))
+            if (Core.Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteObjectValue(DefaultValue);
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> columnName = default;
-            Optional<object> defaultValue = default;
+            Core.Optional<object> columnName = default;
+            Core.Optional<object> defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("columnName"u8))

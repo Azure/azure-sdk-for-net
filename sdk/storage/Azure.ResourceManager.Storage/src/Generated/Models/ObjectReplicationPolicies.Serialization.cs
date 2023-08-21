@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ObjectReplicationPolicyData>> value = default;
+            Core.Optional<IReadOnlyList<ObjectReplicationPolicyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ObjectReplicationPolicies(Optional.ToList(value));
+            return new ObjectReplicationPolicies(Core.Optional.ToList(value));
         }
     }
 }

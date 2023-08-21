@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class NodeInput : IUtf8JsonSerializable
+    public partial class NodeInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("nodeName"u8);
             writer.WriteStringValue(NodeName);
-            if (Optional.IsCollectionDefined(OutputSelectors))
+            if (Core.Optional.IsCollectionDefined(OutputSelectors))
             {
                 writer.WritePropertyName("outputSelectors"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string nodeName = default;
-            Optional<IList<OutputSelector>> outputSelectors = default;
+            Core.Optional<IList<OutputSelector>> outputSelectors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodeName"u8))
@@ -61,7 +61,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new NodeInput(nodeName, Optional.ToList(outputSelectors));
+            return new NodeInput(nodeName, Core.Optional.ToList(outputSelectors));
         }
     }
 }

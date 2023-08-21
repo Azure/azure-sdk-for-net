@@ -13,12 +13,12 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapsePrivateLinkHubData : IUtf8JsonSerializable
+    public partial class SynapsePrivateLinkHubData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Synapse
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionForPrivateLinkHubBasic>> privateEndpointConnections = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<IReadOnlyList<PrivateEndpointConnectionForPrivateLinkHubBasic>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapsePrivateLinkHubData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, Optional.ToList(privateEndpointConnections));
+            return new SynapsePrivateLinkHubData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, provisioningState.Value, Core.Optional.ToList(privateEndpointConnections));
         }
     }
 }

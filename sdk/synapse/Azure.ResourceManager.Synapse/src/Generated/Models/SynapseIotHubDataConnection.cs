@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseIotHubDataConnection. </summary>
         public SynapseIotHubDataConnection()
         {
-            EventSystemProperties = new ChangeTrackingList<string>();
+            EventSystemProperties = new Core.ChangeTrackingList<string>();
             Kind = SynapseDataConnectionKind.IotHub;
         }
 

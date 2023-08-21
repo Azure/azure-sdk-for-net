@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceEnvironmentAddressResult. </summary>
         public AppServiceEnvironmentAddressResult()
         {
-            OutboundIPAddresses = new ChangeTrackingList<IPAddress>();
-            VirtualIPMappings = new ChangeTrackingList<VirtualIPMapping>();
+            OutboundIPAddresses = new Core.ChangeTrackingList<IPAddress>();
+            VirtualIPMappings = new Core.ChangeTrackingList<VirtualIPMapping>();
         }
 
         /// <summary> Initializes a new instance of AppServiceEnvironmentAddressResult. </summary>

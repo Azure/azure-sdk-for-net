@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class PrivateAccessVirtualNetwork : IUtf8JsonSerializable
+    public partial class PrivateAccessVirtualNetwork : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Key))
+            if (Core.Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteNumberValue(Key.Value);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (Core.Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsCollectionDefined(Subnets))
+            if (Core.Optional.IsCollectionDefined(Subnets))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> key = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<IList<PrivateAccessSubnet>> subnets = default;
+            Core.Optional<string> name = default;
+            Core.Optional<int> key = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<IList<PrivateAccessSubnet>> subnets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new PrivateAccessVirtualNetwork(name.Value, Optional.ToNullable(key), resourceId.Value, Optional.ToList(subnets));
+            return new PrivateAccessVirtualNetwork(name.Value, Core.Optional.ToNullable(key), resourceId.Value, Core.Optional.ToList(subnets));
         }
     }
 }

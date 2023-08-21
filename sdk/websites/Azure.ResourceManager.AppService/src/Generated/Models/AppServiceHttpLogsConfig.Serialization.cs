@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceHttpLogsConfig : IUtf8JsonSerializable
+    public partial class AppServiceHttpLogsConfig : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FileSystem))
+            if (Core.Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
                 writer.WriteObjectValue(FileSystem);
             }
-            if (Optional.IsDefined(AzureBlobStorage))
+            if (Core.Optional.IsDefined(AzureBlobStorage))
             {
                 writer.WritePropertyName("azureBlobStorage"u8);
                 writer.WriteObjectValue(AzureBlobStorage);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<FileSystemHttpLogsConfig> fileSystem = default;
-            Optional<AppServiceBlobStorageHttpLogsConfig> azureBlobStorage = default;
+            Core.Optional<FileSystemHttpLogsConfig> fileSystem = default;
+            Core.Optional<AppServiceBlobStorageHttpLogsConfig> azureBlobStorage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileSystem"u8))

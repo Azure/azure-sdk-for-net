@@ -14,24 +14,24 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlScriptContentConverter))]
-    public partial class SqlScriptContent : IUtf8JsonSerializable
+    public partial class SqlScriptContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            if (Optional.IsDefined(CurrentConnection))
+            if (Core.Optional.IsDefined(CurrentConnection))
             {
                 writer.WritePropertyName("currentConnection"u8);
                 writer.WriteObjectValue(CurrentConnection);
             }
-            if (Optional.IsDefined(ResultLimit))
+            if (Core.Optional.IsDefined(ResultLimit))
             {
                 writer.WritePropertyName("resultLimit"u8);
                 writer.WriteNumberValue(ResultLimit.Value);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Core.Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
@@ -51,9 +51,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string query = default;
-            Optional<SqlConnection> currentConnection = default;
-            Optional<int> resultLimit = default;
-            Optional<SqlScriptMetadata> metadata = default;
+            Core.Optional<SqlConnection> currentConnection = default;
+            Core.Optional<int> resultLimit = default;
+            Core.Optional<SqlScriptMetadata> metadata = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlScriptContent(query, currentConnection.Value, Optional.ToNullable(resultLimit), metadata.Value, additionalProperties);
+            return new SqlScriptContent(query, currentConnection.Value, Core.Optional.ToNullable(resultLimit), metadata.Value, additionalProperties);
         }
 
         internal partial class SqlScriptContentConverter : JsonConverter<SqlScriptContent>

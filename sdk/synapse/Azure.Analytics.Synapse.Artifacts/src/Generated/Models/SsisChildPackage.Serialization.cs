@@ -13,21 +13,21 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SsisChildPackageConverter))]
-    public partial class SsisChildPackage : IUtf8JsonSerializable
+    public partial class SsisChildPackage : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("packagePath"u8);
             writer.WriteObjectValue(PackagePath);
-            if (Optional.IsDefined(PackageName))
+            if (Core.Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
             writer.WritePropertyName("packageContent"u8);
             writer.WriteObjectValue(PackageContent);
-            if (Optional.IsDefined(PackageLastModifiedDate))
+            if (Core.Optional.IsDefined(PackageLastModifiedDate))
             {
                 writer.WritePropertyName("packageLastModifiedDate"u8);
                 writer.WriteStringValue(PackageLastModifiedDate);
@@ -42,9 +42,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             object packagePath = default;
-            Optional<string> packageName = default;
+            Core.Optional<string> packageName = default;
             object packageContent = default;
-            Optional<string> packageLastModifiedDate = default;
+            Core.Optional<string> packageLastModifiedDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packagePath"u8))

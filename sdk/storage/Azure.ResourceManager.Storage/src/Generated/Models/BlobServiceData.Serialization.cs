@@ -12,54 +12,54 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class BlobServiceData : IUtf8JsonSerializable
+    public partial class BlobServiceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Cors))
+            if (Core.Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
                 writer.WriteObjectValue(Cors);
             }
-            if (Optional.IsDefined(DefaultServiceVersion))
+            if (Core.Optional.IsDefined(DefaultServiceVersion))
             {
                 writer.WritePropertyName("defaultServiceVersion"u8);
                 writer.WriteStringValue(DefaultServiceVersion);
             }
-            if (Optional.IsDefined(DeleteRetentionPolicy))
+            if (Core.Optional.IsDefined(DeleteRetentionPolicy))
             {
                 writer.WritePropertyName("deleteRetentionPolicy"u8);
                 writer.WriteObjectValue(DeleteRetentionPolicy);
             }
-            if (Optional.IsDefined(IsVersioningEnabled))
+            if (Core.Optional.IsDefined(IsVersioningEnabled))
             {
                 writer.WritePropertyName("isVersioningEnabled"u8);
                 writer.WriteBooleanValue(IsVersioningEnabled.Value);
             }
-            if (Optional.IsDefined(IsAutomaticSnapshotPolicyEnabled))
+            if (Core.Optional.IsDefined(IsAutomaticSnapshotPolicyEnabled))
             {
                 writer.WritePropertyName("automaticSnapshotPolicyEnabled"u8);
                 writer.WriteBooleanValue(IsAutomaticSnapshotPolicyEnabled.Value);
             }
-            if (Optional.IsDefined(ChangeFeed))
+            if (Core.Optional.IsDefined(ChangeFeed))
             {
                 writer.WritePropertyName("changeFeed"u8);
                 writer.WriteObjectValue(ChangeFeed);
             }
-            if (Optional.IsDefined(RestorePolicy))
+            if (Core.Optional.IsDefined(RestorePolicy))
             {
                 writer.WritePropertyName("restorePolicy"u8);
                 writer.WriteObjectValue(RestorePolicy);
             }
-            if (Optional.IsDefined(ContainerDeleteRetentionPolicy))
+            if (Core.Optional.IsDefined(ContainerDeleteRetentionPolicy))
             {
                 writer.WritePropertyName("containerDeleteRetentionPolicy"u8);
                 writer.WriteObjectValue(ContainerDeleteRetentionPolicy);
             }
-            if (Optional.IsDefined(LastAccessTimeTrackingPolicy))
+            if (Core.Optional.IsDefined(LastAccessTimeTrackingPolicy))
             {
                 writer.WritePropertyName("lastAccessTimeTrackingPolicy"u8);
                 writer.WriteObjectValue(LastAccessTimeTrackingPolicy);
@@ -74,20 +74,20 @@ namespace Azure.ResourceManager.Storage
             {
                 return null;
             }
-            Optional<StorageSku> sku = default;
+            Core.Optional<StorageSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<StorageCorsRules> cors = default;
-            Optional<string> defaultServiceVersion = default;
-            Optional<DeleteRetentionPolicy> deleteRetentionPolicy = default;
-            Optional<bool> isVersioningEnabled = default;
-            Optional<bool> automaticSnapshotPolicyEnabled = default;
-            Optional<BlobServiceChangeFeed> changeFeed = default;
-            Optional<RestorePolicy> restorePolicy = default;
-            Optional<DeleteRetentionPolicy> containerDeleteRetentionPolicy = default;
-            Optional<LastAccessTimeTrackingPolicy> lastAccessTimeTrackingPolicy = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<StorageCorsRules> cors = default;
+            Core.Optional<string> defaultServiceVersion = default;
+            Core.Optional<DeleteRetentionPolicy> deleteRetentionPolicy = default;
+            Core.Optional<bool> isVersioningEnabled = default;
+            Core.Optional<bool> automaticSnapshotPolicyEnabled = default;
+            Core.Optional<BlobServiceChangeFeed> changeFeed = default;
+            Core.Optional<RestorePolicy> restorePolicy = default;
+            Core.Optional<DeleteRetentionPolicy> containerDeleteRetentionPolicy = default;
+            Core.Optional<LastAccessTimeTrackingPolicy> lastAccessTimeTrackingPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new BlobServiceData(id, name, type, systemData.Value, sku.Value, cors.Value, defaultServiceVersion.Value, deleteRetentionPolicy.Value, Optional.ToNullable(isVersioningEnabled), Optional.ToNullable(automaticSnapshotPolicyEnabled), changeFeed.Value, restorePolicy.Value, containerDeleteRetentionPolicy.Value, lastAccessTimeTrackingPolicy.Value);
+            return new BlobServiceData(id, name, type, systemData.Value, sku.Value, cors.Value, defaultServiceVersion.Value, deleteRetentionPolicy.Value, Core.Optional.ToNullable(isVersioningEnabled), Core.Optional.ToNullable(automaticSnapshotPolicyEnabled), changeFeed.Value, restorePolicy.Value, containerDeleteRetentionPolicy.Value, lastAccessTimeTrackingPolicy.Value);
         }
     }
 }

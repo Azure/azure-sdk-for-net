@@ -14,15 +14,15 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class StorageMigrationResultOperationSource : IOperationSource<StorageMigrationResult>
+    internal class StorageMigrationResultOperationSource : Core.IOperationSource<StorageMigrationResult>
     {
-        StorageMigrationResult IOperationSource<StorageMigrationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        StorageMigrationResult Core.IOperationSource<StorageMigrationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return StorageMigrationResult.DeserializeStorageMigrationResult(document.RootElement);
         }
 
-        async ValueTask<StorageMigrationResult> IOperationSource<StorageMigrationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StorageMigrationResult> Core.IOperationSource<StorageMigrationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return StorageMigrationResult.DeserializeStorageMigrationResult(document.RootElement);

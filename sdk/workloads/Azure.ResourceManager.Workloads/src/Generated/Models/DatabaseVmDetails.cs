@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of DatabaseVmDetails. </summary>
         internal DatabaseVmDetails()
         {
-            StorageDetails = new ChangeTrackingList<SubResource>();
+            StorageDetails = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of DatabaseVmDetails. </summary>

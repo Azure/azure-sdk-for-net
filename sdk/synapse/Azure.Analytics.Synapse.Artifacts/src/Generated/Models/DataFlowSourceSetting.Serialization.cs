@@ -14,17 +14,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataFlowSourceSettingConverter))]
-    public partial class DataFlowSourceSetting : IUtf8JsonSerializable
+    public partial class DataFlowSourceSetting : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceName))
+            if (Core.Optional.IsDefined(SourceName))
             {
                 writer.WritePropertyName("sourceName"u8);
                 writer.WriteStringValue(SourceName);
             }
-            if (Optional.IsDefined(RowLimit))
+            if (Core.Optional.IsDefined(RowLimit))
             {
                 writer.WritePropertyName("rowLimit"u8);
                 writer.WriteNumberValue(RowLimit.Value);
@@ -43,8 +43,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> sourceName = default;
-            Optional<int> rowLimit = default;
+            Core.Optional<string> sourceName = default;
+            Core.Optional<int> rowLimit = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowSourceSetting(sourceName.Value, Optional.ToNullable(rowLimit), additionalProperties);
+            return new DataFlowSourceSetting(sourceName.Value, Core.Optional.ToNullable(rowLimit), additionalProperties);
         }
 
         internal partial class DataFlowSourceSettingConverter : JsonConverter<DataFlowSourceSetting>

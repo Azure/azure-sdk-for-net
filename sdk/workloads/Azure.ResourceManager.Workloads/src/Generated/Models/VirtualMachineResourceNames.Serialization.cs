@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class VirtualMachineResourceNames : IUtf8JsonSerializable
+    public partial class VirtualMachineResourceNames : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmName))
+            if (Core.Optional.IsDefined(VmName))
             {
                 writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (Optional.IsDefined(HostName))
+            if (Core.Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsCollectionDefined(NetworkInterfaces))
+            if (Core.Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OSDiskName))
+            if (Core.Optional.IsDefined(OSDiskName))
             {
                 writer.WritePropertyName("osDiskName"u8);
                 writer.WriteStringValue(OSDiskName);
             }
-            if (Optional.IsCollectionDefined(DataDiskNames))
+            if (Core.Optional.IsCollectionDefined(DataDiskNames))
             {
                 writer.WritePropertyName("dataDiskNames"u8);
                 writer.WriteStartObject();
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> vmName = default;
-            Optional<string> hostName = default;
-            Optional<IList<NetworkInterfaceResourceNames>> networkInterfaces = default;
-            Optional<string> osDiskName = default;
-            Optional<IDictionary<string, IList<string>>> dataDiskNames = default;
+            Core.Optional<string> vmName = default;
+            Core.Optional<string> hostName = default;
+            Core.Optional<IList<NetworkInterfaceResourceNames>> networkInterfaces = default;
+            Core.Optional<string> osDiskName = default;
+            Core.Optional<IDictionary<string, IList<string>>> dataDiskNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmName"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new VirtualMachineResourceNames(vmName.Value, hostName.Value, Optional.ToList(networkInterfaces), osDiskName.Value, Optional.ToDictionary(dataDiskNames));
+            return new VirtualMachineResourceNames(vmName.Value, hostName.Value, Core.Optional.ToList(networkInterfaces), osDiskName.Value, Core.Optional.ToDictionary(dataDiskNames));
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 return null;
             }
-            Optional<SentimentResponse> results = default;
+            Core.Optional<SentimentResponse> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))

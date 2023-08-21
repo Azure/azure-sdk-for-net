@@ -14,15 +14,15 @@ using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    internal class StreamAnalyticsQueryTestingResultOperationSource : IOperationSource<StreamAnalyticsQueryTestingResult>
+    internal class StreamAnalyticsQueryTestingResultOperationSource : Core.IOperationSource<StreamAnalyticsQueryTestingResult>
     {
-        StreamAnalyticsQueryTestingResult IOperationSource<StreamAnalyticsQueryTestingResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        StreamAnalyticsQueryTestingResult Core.IOperationSource<StreamAnalyticsQueryTestingResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return StreamAnalyticsQueryTestingResult.DeserializeStreamAnalyticsQueryTestingResult(document.RootElement);
         }
 
-        async ValueTask<StreamAnalyticsQueryTestingResult> IOperationSource<StreamAnalyticsQueryTestingResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StreamAnalyticsQueryTestingResult> Core.IOperationSource<StreamAnalyticsQueryTestingResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return StreamAnalyticsQueryTestingResult.DeserializeStreamAnalyticsQueryTestingResult(document.RootElement);

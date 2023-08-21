@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> isSupported = default;
-            Optional<bool> isDefaultOff = default;
+            Core.Optional<bool> isSupported = default;
+            Core.Optional<bool> isDefaultOff = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSupported"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppInsightsWebAppStackSettings(Optional.ToNullable(isSupported), Optional.ToNullable(isDefaultOff));
+            return new AppInsightsWebAppStackSettings(Core.Optional.ToNullable(isSupported), Core.Optional.ToNullable(isDefaultOff));
         }
     }
 }

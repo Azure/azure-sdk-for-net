@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CloudEndpointData>> value = default;
+            Core.Optional<IReadOnlyList<CloudEndpointData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new CloudEndpointArray(Optional.ToList(value));
+            return new CloudEndpointArray(Core.Optional.ToList(value));
         }
     }
 }

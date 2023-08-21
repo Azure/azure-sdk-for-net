@@ -26,9 +26,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
             LinkedServiceName = linkedServiceName;
-            Parameters = new ChangeTrackingDictionary<string, ParameterSpecification>();
-            Annotations = new ChangeTrackingList<object>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            Parameters = new Core.ChangeTrackingDictionary<string, ParameterSpecification>();
+            Annotations = new Core.ChangeTrackingList<object>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of Dataset. </summary>

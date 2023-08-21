@@ -10,46 +10,46 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class PostgreSQLOutputDataSource : IUtf8JsonSerializable
+    public partial class PostgreSQLOutputDataSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Server))
+            if (Core.Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
-            if (Optional.IsDefined(Database))
+            if (Core.Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
                 writer.WriteStringValue(Database);
             }
-            if (Optional.IsDefined(Table))
+            if (Core.Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(Table);
             }
-            if (Optional.IsDefined(User))
+            if (Core.Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(MaxWriterCount))
+            if (Core.Optional.IsDefined(MaxWriterCount))
             {
                 writer.WritePropertyName("maxWriterCount"u8);
                 writer.WriteNumberValue(MaxWriterCount.Value);
             }
-            if (Optional.IsDefined(AuthenticationMode))
+            if (Core.Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
@@ -65,13 +65,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> server = default;
-            Optional<string> database = default;
-            Optional<string> table = default;
-            Optional<string> user = default;
-            Optional<string> password = default;
-            Optional<int> maxWriterCount = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            Core.Optional<string> server = default;
+            Core.Optional<string> database = default;
+            Core.Optional<string> table = default;
+            Core.Optional<string> user = default;
+            Core.Optional<string> password = default;
+            Core.Optional<int> maxWriterCount = default;
+            Core.Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new PostgreSQLOutputDataSource(type, server.Value, database.Value, table.Value, user.Value, password.Value, Optional.ToNullable(maxWriterCount), Optional.ToNullable(authenticationMode));
+            return new PostgreSQLOutputDataSource(type, server.Value, database.Value, table.Value, user.Value, password.Value, Core.Optional.ToNullable(maxWriterCount), Core.Optional.ToNullable(authenticationMode));
         }
     }
 }

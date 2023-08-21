@@ -14,24 +14,24 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class ObjectReplicationPolicyData : IUtf8JsonSerializable
+    public partial class ObjectReplicationPolicyData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceAccount))
+            if (Core.Optional.IsDefined(SourceAccount))
             {
                 writer.WritePropertyName("sourceAccount"u8);
                 writer.WriteStringValue(SourceAccount);
             }
-            if (Optional.IsDefined(DestinationAccount))
+            if (Core.Optional.IsDefined(DestinationAccount))
             {
                 writer.WritePropertyName("destinationAccount"u8);
                 writer.WriteStringValue(DestinationAccount);
             }
-            if (Optional.IsCollectionDefined(Rules))
+            if (Core.Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> policyId = default;
-            Optional<DateTimeOffset> enabledTime = default;
-            Optional<string> sourceAccount = default;
-            Optional<string> destinationAccount = default;
-            Optional<IList<ObjectReplicationPolicyRule>> rules = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> policyId = default;
+            Core.Optional<DateTimeOffset> enabledTime = default;
+            Core.Optional<string> sourceAccount = default;
+            Core.Optional<string> destinationAccount = default;
+            Core.Optional<IList<ObjectReplicationPolicyRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new ObjectReplicationPolicyData(id, name, type, systemData.Value, policyId.Value, Optional.ToNullable(enabledTime), sourceAccount.Value, destinationAccount.Value, Optional.ToList(rules));
+            return new ObjectReplicationPolicyData(id, name, type, systemData.Value, policyId.Value, Core.Optional.ToNullable(enabledTime), sourceAccount.Value, destinationAccount.Value, Core.Optional.ToList(rules));
         }
     }
 }

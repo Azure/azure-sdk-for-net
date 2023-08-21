@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class WebSiteSourceControlOperationSource : IOperationSource<WebSiteSourceControlResource>
+    internal class WebSiteSourceControlOperationSource : Core.IOperationSource<WebSiteSourceControlResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppService
             _client = client;
         }
 
-        WebSiteSourceControlResource IOperationSource<WebSiteSourceControlResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        WebSiteSourceControlResource Core.IOperationSource<WebSiteSourceControlResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SiteSourceControlData.DeserializeSiteSourceControlData(document.RootElement);
             return new WebSiteSourceControlResource(_client, data);
         }
 
-        async ValueTask<WebSiteSourceControlResource> IOperationSource<WebSiteSourceControlResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WebSiteSourceControlResource> Core.IOperationSource<WebSiteSourceControlResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SiteSourceControlData.DeserializeSiteSourceControlData(document.RootElement);

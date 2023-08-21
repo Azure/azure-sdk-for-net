@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseEventHubDataConnection. </summary>
         public SynapseEventHubDataConnection()
         {
-            EventSystemProperties = new ChangeTrackingList<string>();
+            EventSystemProperties = new Core.ChangeTrackingList<string>();
             Kind = SynapseDataConnectionKind.EventHub;
         }
 

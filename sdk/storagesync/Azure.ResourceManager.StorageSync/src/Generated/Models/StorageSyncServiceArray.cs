@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Initializes a new instance of StorageSyncServiceArray. </summary>
         internal StorageSyncServiceArray()
         {
-            Value = new ChangeTrackingList<StorageSyncServiceData>();
+            Value = new Core.ChangeTrackingList<StorageSyncServiceData>();
         }
 
         /// <summary> Initializes a new instance of StorageSyncServiceArray. </summary>

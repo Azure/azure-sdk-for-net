@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of StreamAnalyticsPrivateEndpointListResult. </summary>
         internal StreamAnalyticsPrivateEndpointListResult()
         {
-            Value = new ChangeTrackingList<StreamAnalyticsPrivateEndpointData>();
+            Value = new Core.ChangeTrackingList<StreamAnalyticsPrivateEndpointData>();
         }
 
         /// <summary> Initializes a new instance of StreamAnalyticsPrivateEndpointListResult. </summary>

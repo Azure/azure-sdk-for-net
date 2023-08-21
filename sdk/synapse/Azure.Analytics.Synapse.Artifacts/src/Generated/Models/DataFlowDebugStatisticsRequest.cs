@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DataFlowDebugStatisticsRequest. </summary>
         public DataFlowDebugStatisticsRequest()
         {
-            Columns = new ChangeTrackingList<string>();
+            Columns = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DataFlowDebugStatisticsRequest. </summary>

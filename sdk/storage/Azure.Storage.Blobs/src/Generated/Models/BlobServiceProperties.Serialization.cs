@@ -12,38 +12,38 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobServiceProperties : IXmlSerializable
+    public partial class BlobServiceProperties : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "StorageServiceProperties");
-            if (Optional.IsDefined(Logging))
+            if (Core.Optional.IsDefined(Logging))
             {
                 writer.WriteObjectValue(Logging, "Logging");
             }
-            if (Optional.IsDefined(HourMetrics))
+            if (Core.Optional.IsDefined(HourMetrics))
             {
                 writer.WriteObjectValue(HourMetrics, "HourMetrics");
             }
-            if (Optional.IsDefined(MinuteMetrics))
+            if (Core.Optional.IsDefined(MinuteMetrics))
             {
                 writer.WriteObjectValue(MinuteMetrics, "MinuteMetrics");
             }
-            if (Optional.IsDefined(DefaultServiceVersion))
+            if (Core.Optional.IsDefined(DefaultServiceVersion))
             {
                 writer.WriteStartElement("DefaultServiceVersion");
                 writer.WriteValue(DefaultServiceVersion);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(DeleteRetentionPolicy))
+            if (Core.Optional.IsDefined(DeleteRetentionPolicy))
             {
                 writer.WriteObjectValue(DeleteRetentionPolicy, "DeleteRetentionPolicy");
             }
-            if (Optional.IsDefined(StaticWebsite))
+            if (Core.Optional.IsDefined(StaticWebsite))
             {
                 writer.WriteObjectValue(StaticWebsite, "StaticWebsite");
             }
-            if (Optional.IsCollectionDefined(Cors))
+            if (Core.Optional.IsCollectionDefined(Cors))
             {
                 writer.WriteStartElement("Cors");
                 foreach (var item in Cors)

@@ -12,24 +12,24 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class FileServiceData : IUtf8JsonSerializable
+    public partial class FileServiceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Cors))
+            if (Core.Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
                 writer.WriteObjectValue(Cors);
             }
-            if (Optional.IsDefined(ShareDeleteRetentionPolicy))
+            if (Core.Optional.IsDefined(ShareDeleteRetentionPolicy))
             {
                 writer.WritePropertyName("shareDeleteRetentionPolicy"u8);
                 writer.WriteObjectValue(ShareDeleteRetentionPolicy);
             }
-            if (Optional.IsDefined(ProtocolSettings))
+            if (Core.Optional.IsDefined(ProtocolSettings))
             {
                 writer.WritePropertyName("protocolSettings"u8);
                 writer.WriteObjectValue(ProtocolSettings);
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.Storage
             {
                 return null;
             }
-            Optional<StorageSku> sku = default;
+            Core.Optional<StorageSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<StorageCorsRules> cors = default;
-            Optional<DeleteRetentionPolicy> shareDeleteRetentionPolicy = default;
-            Optional<ProtocolSettings> protocolSettings = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<StorageCorsRules> cors = default;
+            Core.Optional<DeleteRetentionPolicy> shareDeleteRetentionPolicy = default;
+            Core.Optional<ProtocolSettings> protocolSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))

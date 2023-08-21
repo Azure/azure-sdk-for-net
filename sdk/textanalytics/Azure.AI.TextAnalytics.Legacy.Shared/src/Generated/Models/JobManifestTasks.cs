@@ -16,11 +16,11 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <summary> Initializes a new instance of JobManifestTasks. </summary>
         public JobManifestTasks()
         {
-            EntityRecognitionTasks = new ChangeTrackingList<EntitiesTask>();
-            EntityRecognitionPiiTasks = new ChangeTrackingList<PiiTask>();
-            KeyPhraseExtractionTasks = new ChangeTrackingList<KeyPhrasesTask>();
-            EntityLinkingTasks = new ChangeTrackingList<EntityLinkingTask>();
-            SentimentAnalysisTasks = new ChangeTrackingList<SentimentAnalysisTask>();
+            EntityRecognitionTasks = new Core.ChangeTrackingList<EntitiesTask>();
+            EntityRecognitionPiiTasks = new Core.ChangeTrackingList<PiiTask>();
+            KeyPhraseExtractionTasks = new Core.ChangeTrackingList<KeyPhrasesTask>();
+            EntityLinkingTasks = new Core.ChangeTrackingList<EntityLinkingTask>();
+            SentimentAnalysisTasks = new Core.ChangeTrackingList<SentimentAnalysisTask>();
         }
     }
 }

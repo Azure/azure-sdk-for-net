@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of SiteAuthSettings. </summary>
         public SiteAuthSettings()
         {
-            AllowedExternalRedirectUrls = new ChangeTrackingList<string>();
-            AllowedAudiences = new ChangeTrackingList<string>();
-            AdditionalLoginParams = new ChangeTrackingList<string>();
-            GoogleOAuthScopes = new ChangeTrackingList<string>();
-            FacebookOAuthScopes = new ChangeTrackingList<string>();
-            GitHubOAuthScopes = new ChangeTrackingList<string>();
-            MicrosoftAccountOAuthScopes = new ChangeTrackingList<string>();
+            AllowedExternalRedirectUrls = new Core.ChangeTrackingList<string>();
+            AllowedAudiences = new Core.ChangeTrackingList<string>();
+            AdditionalLoginParams = new Core.ChangeTrackingList<string>();
+            GoogleOAuthScopes = new Core.ChangeTrackingList<string>();
+            FacebookOAuthScopes = new Core.ChangeTrackingList<string>();
+            GitHubOAuthScopes = new Core.ChangeTrackingList<string>();
+            MicrosoftAccountOAuthScopes = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SiteAuthSettings. </summary>

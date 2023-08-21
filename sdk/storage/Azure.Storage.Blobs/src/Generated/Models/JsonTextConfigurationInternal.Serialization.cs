@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class JsonTextConfigurationInternal : IXmlSerializable
+    internal partial class JsonTextConfigurationInternal : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "JsonTextConfiguration");
-            if (Optional.IsDefined(RecordSeparator))
+            if (Core.Optional.IsDefined(RecordSeparator))
             {
                 writer.WriteStartElement("RecordSeparator");
                 writer.WriteValue(RecordSeparator);

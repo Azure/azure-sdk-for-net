@@ -10,36 +10,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class IoTHubStreamInputDataSource : IUtf8JsonSerializable
+    public partial class IoTHubStreamInputDataSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StreamInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IotHubNamespace))
+            if (Core.Optional.IsDefined(IotHubNamespace))
             {
                 writer.WritePropertyName("iotHubNamespace"u8);
                 writer.WriteStringValue(IotHubNamespace);
             }
-            if (Optional.IsDefined(SharedAccessPolicyName))
+            if (Core.Optional.IsDefined(SharedAccessPolicyName))
             {
                 writer.WritePropertyName("sharedAccessPolicyName"u8);
                 writer.WriteStringValue(SharedAccessPolicyName);
             }
-            if (Optional.IsDefined(SharedAccessPolicyKey))
+            if (Core.Optional.IsDefined(SharedAccessPolicyKey))
             {
                 writer.WritePropertyName("sharedAccessPolicyKey"u8);
                 writer.WriteStringValue(SharedAccessPolicyKey);
             }
-            if (Optional.IsDefined(ConsumerGroupName))
+            if (Core.Optional.IsDefined(ConsumerGroupName))
             {
                 writer.WritePropertyName("consumerGroupName"u8);
                 writer.WriteStringValue(ConsumerGroupName);
             }
-            if (Optional.IsDefined(Endpoint))
+            if (Core.Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> iotHubNamespace = default;
-            Optional<string> sharedAccessPolicyName = default;
-            Optional<string> sharedAccessPolicyKey = default;
-            Optional<string> consumerGroupName = default;
-            Optional<string> endpoint = default;
+            Core.Optional<string> iotHubNamespace = default;
+            Core.Optional<string> sharedAccessPolicyName = default;
+            Core.Optional<string> sharedAccessPolicyKey = default;
+            Core.Optional<string> consumerGroupName = default;
+            Core.Optional<string> endpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<CloudEndpointLastChangeEnumerationStatus> lastEnumerationStatus = default;
-            Optional<CloudEndpointChangeEnumerationActivity> activity = default;
+            Core.Optional<DateTimeOffset> lastUpdatedTimestamp = default;
+            Core.Optional<CloudEndpointLastChangeEnumerationStatus> lastEnumerationStatus = default;
+            Core.Optional<CloudEndpointChangeEnumerationActivity> activity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimestamp"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new CloudEndpointChangeEnumerationStatus(Optional.ToNullable(lastUpdatedTimestamp), lastEnumerationStatus.Value, activity.Value);
+            return new CloudEndpointChangeEnumerationStatus(Core.Optional.ToNullable(lastUpdatedTimestamp), lastEnumerationStatus.Value, activity.Value);
         }
     }
 }

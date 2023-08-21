@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> Initializes a new instance of StoragePoolSkuRestrictionInfo. </summary>
         internal StoragePoolSkuRestrictionInfo()
         {
-            Locations = new ChangeTrackingList<AzureLocation>();
-            Zones = new ChangeTrackingList<string>();
+            Locations = new Core.ChangeTrackingList<AzureLocation>();
+            Zones = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StoragePoolSkuRestrictionInfo. </summary>

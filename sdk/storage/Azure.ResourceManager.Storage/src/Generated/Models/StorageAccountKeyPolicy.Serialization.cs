@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    internal partial class StorageAccountKeyPolicy : IUtf8JsonSerializable
+    internal partial class StorageAccountKeyPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyExpirationPeriodInDays"u8);

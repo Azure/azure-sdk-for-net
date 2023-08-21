@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Synapse
         /// <summary> Initializes a new instance of SynapseMaintenanceWindowData. </summary>
         public SynapseMaintenanceWindowData()
         {
-            TimeRanges = new ChangeTrackingList<SynapseMaintenanceWindowTimeRange>();
+            TimeRanges = new Core.ChangeTrackingList<SynapseMaintenanceWindowTimeRange>();
         }
 
         /// <summary> Initializes a new instance of SynapseMaintenanceWindowData. </summary>

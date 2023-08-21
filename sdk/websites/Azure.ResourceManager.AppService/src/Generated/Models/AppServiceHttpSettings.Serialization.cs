@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceHttpSettings : IUtf8JsonSerializable
+    public partial class AppServiceHttpSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsHttpsRequired))
+            if (Core.Optional.IsDefined(IsHttpsRequired))
             {
                 writer.WritePropertyName("requireHttps"u8);
                 writer.WriteBooleanValue(IsHttpsRequired.Value);
             }
-            if (Optional.IsDefined(Routes))
+            if (Core.Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteObjectValue(Routes);
             }
-            if (Optional.IsDefined(ForwardProxy))
+            if (Core.Optional.IsDefined(ForwardProxy))
             {
                 writer.WritePropertyName("forwardProxy"u8);
                 writer.WriteObjectValue(ForwardProxy);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> requireHttps = default;
-            Optional<AppServiceHttpSettingsRoutes> routes = default;
-            Optional<AppServiceForwardProxy> forwardProxy = default;
+            Core.Optional<bool> requireHttps = default;
+            Core.Optional<AppServiceHttpSettingsRoutes> routes = default;
+            Core.Optional<AppServiceForwardProxy> forwardProxy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requireHttps"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceHttpSettings(Optional.ToNullable(requireHttps), routes.Value, forwardProxy.Value);
+            return new AppServiceHttpSettings(Core.Optional.ToNullable(requireHttps), routes.Value, forwardProxy.Value);
         }
     }
 }

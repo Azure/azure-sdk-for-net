@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> java11Runtime = default;
-            Optional<string> java8Runtime = default;
-            Optional<bool> isPreview = default;
-            Optional<bool> isDeprecated = default;
-            Optional<bool> isHidden = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<bool> isAutoUpdate = default;
-            Optional<bool> isEarlyAccess = default;
+            Core.Optional<string> java11Runtime = default;
+            Core.Optional<string> java8Runtime = default;
+            Core.Optional<bool> isPreview = default;
+            Core.Optional<bool> isDeprecated = default;
+            Core.Optional<bool> isHidden = default;
+            Core.Optional<DateTimeOffset> endOfLifeDate = default;
+            Core.Optional<bool> isAutoUpdate = default;
+            Core.Optional<bool> isEarlyAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("java11Runtime"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new LinuxJavaContainerSettings(java11Runtime.Value, java8Runtime.Value, Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(isAutoUpdate), Optional.ToNullable(isEarlyAccess));
+            return new LinuxJavaContainerSettings(java11Runtime.Value, java8Runtime.Value, Core.Optional.ToNullable(isPreview), Core.Optional.ToNullable(isDeprecated), Core.Optional.ToNullable(isHidden), Core.Optional.ToNullable(endOfLifeDate), Core.Optional.ToNullable(isAutoUpdate), Core.Optional.ToNullable(isEarlyAccess));
         }
     }
 }

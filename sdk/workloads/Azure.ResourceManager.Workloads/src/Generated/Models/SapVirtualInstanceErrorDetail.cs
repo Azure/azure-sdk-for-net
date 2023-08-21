@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of SapVirtualInstanceErrorDetail. </summary>
         internal SapVirtualInstanceErrorDetail()
         {
-            Details = new ChangeTrackingList<SapVirtualInstanceErrorDetail>();
+            Details = new Core.ChangeTrackingList<SapVirtualInstanceErrorDetail>();
         }
 
         /// <summary> Initializes a new instance of SapVirtualInstanceErrorDetail. </summary>

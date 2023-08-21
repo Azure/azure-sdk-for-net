@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamingJobFunctionProperties : IUtf8JsonSerializable
+    public partial class StreamingJobFunctionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FunctionPropertiesType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Inputs))
+            if (Core.Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Output))
+            if (Core.Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteObjectValue(Output);
             }
-            if (Optional.IsDefined(Binding))
+            if (Core.Optional.IsDefined(Binding))
             {
                 writer.WritePropertyName("binding"u8);
                 writer.WriteObjectValue(Binding);

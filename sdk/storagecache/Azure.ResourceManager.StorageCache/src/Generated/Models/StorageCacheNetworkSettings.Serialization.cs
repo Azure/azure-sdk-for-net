@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheNetworkSettings : IUtf8JsonSerializable
+    public partial class StorageCacheNetworkSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mtu))
+            if (Core.Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (Optional.IsCollectionDefined(DnsServers))
+            if (Core.Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DnsSearchDomain))
+            if (Core.Optional.IsDefined(DnsSearchDomain))
             {
                 writer.WritePropertyName("dnsSearchDomain"u8);
                 writer.WriteStringValue(DnsSearchDomain);
             }
-            if (Optional.IsDefined(NtpServer))
+            if (Core.Optional.IsDefined(NtpServer))
             {
                 writer.WritePropertyName("ntpServer"u8);
                 writer.WriteStringValue(NtpServer);
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<int> mtu = default;
-            Optional<IReadOnlyList<IPAddress>> utilityAddresses = default;
-            Optional<IList<IPAddress>> dnsServers = default;
-            Optional<string> dnsSearchDomain = default;
-            Optional<string> ntpServer = default;
+            Core.Optional<int> mtu = default;
+            Core.Optional<IReadOnlyList<IPAddress>> utilityAddresses = default;
+            Core.Optional<IList<IPAddress>> dnsServers = default;
+            Core.Optional<string> dnsSearchDomain = default;
+            Core.Optional<string> ntpServer = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mtu"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new StorageCacheNetworkSettings(Optional.ToNullable(mtu), Optional.ToList(utilityAddresses), Optional.ToList(dnsServers), dnsSearchDomain.Value, ntpServer.Value);
+            return new StorageCacheNetworkSettings(Core.Optional.ToNullable(mtu), Core.Optional.ToList(utilityAddresses), Core.Optional.ToList(dnsServers), dnsSearchDomain.Value, ntpServer.Value);
         }
     }
 }

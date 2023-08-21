@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Type = type;
             ReferenceName = referenceName;
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of CredentialReference. </summary>

@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = await _storageCacheCachesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = _storageCacheCachesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = await _storageCacheCachesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation<StorageCacheResource>(new StorageCacheOperationSource(Client), _storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation<StorageCacheResource>(new StorageCacheOperationSource(Client), _storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = _storageCacheCachesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new StorageCacheArmOperation<StorageCacheResource>(new StorageCacheOperationSource(Client), _storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation<StorageCacheResource>(new StorageCacheOperationSource(Client), _storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = await _storageCacheCachesRestClient.DebugInfoAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateDebugInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateDebugInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = _storageCacheCachesRestClient.DebugInfo(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateDebugInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateDebugInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = await _storageCacheCachesRestClient.FlushAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateFlushRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateFlushRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = _storageCacheCachesRestClient.Flush(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateFlushRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateFlushRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = await _storageCacheCachesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = _storageCacheCachesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = await _storageCacheCachesRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = _storageCacheCachesRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = await _storageCacheCachesRestClient.StartPrimingJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, primingjob, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateStartPrimingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, primingjob).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateStartPrimingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, primingjob).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = _storageCacheCachesRestClient.StartPrimingJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, primingjob, cancellationToken);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateStartPrimingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, primingjob).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateStartPrimingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, primingjob).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = await _storageCacheCachesRestClient.StopPrimingJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateStopPrimingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateStopPrimingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = _storageCacheCachesRestClient.StopPrimingJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateStopPrimingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateStopPrimingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = await _storageCacheCachesRestClient.PausePrimingJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreatePausePrimingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreatePausePrimingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = _storageCacheCachesRestClient.PausePrimingJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreatePausePrimingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreatePausePrimingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = await _storageCacheCachesRestClient.ResumePrimingJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateResumePrimingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateResumePrimingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = _storageCacheCachesRestClient.ResumePrimingJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateResumePrimingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateResumePrimingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -924,7 +924,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = await _storageCacheCachesRestClient.UpgradeFirmwareAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateUpgradeFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateUpgradeFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = _storageCacheCachesRestClient.UpgradeFirmware(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateUpgradeFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateUpgradeFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = await _storageCacheCachesRestClient.SpaceAllocationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, spaceAllocation, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateSpaceAllocationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, spaceAllocation).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateSpaceAllocationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, spaceAllocation).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = _storageCacheCachesRestClient.SpaceAllocation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, spaceAllocation, cancellationToken);
-                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateSpaceAllocationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, spaceAllocation).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation(_storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateSpaceAllocationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, spaceAllocation).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

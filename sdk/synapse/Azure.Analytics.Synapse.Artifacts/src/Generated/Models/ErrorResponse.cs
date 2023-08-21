@@ -16,8 +16,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
         internal ErrorResponse()
         {
-            Details = new ChangeTrackingList<ErrorResponse>();
-            AdditionalInfo = new ChangeTrackingList<ErrorAdditionalInfo>();
+            Details = new Core.ChangeTrackingList<ErrorResponse>();
+            AdditionalInfo = new Core.ChangeTrackingList<ErrorAdditionalInfo>();
         }
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>

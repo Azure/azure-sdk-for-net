@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of FileShareItems. </summary>
         internal FileShareItems()
         {
-            Value = new ChangeTrackingList<FileShareData>();
+            Value = new Core.ChangeTrackingList<FileShareData>();
         }
 
         /// <summary> Initializes a new instance of FileShareItems. </summary>

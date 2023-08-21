@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceFacebookProvider : IUtf8JsonSerializable
+    public partial class AppServiceFacebookProvider : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Registration))
+            if (Core.Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
             }
-            if (Optional.IsDefined(GraphApiVersion))
+            if (Core.Optional.IsDefined(GraphApiVersion))
             {
                 writer.WritePropertyName("graphApiVersion"u8);
                 writer.WriteStringValue(GraphApiVersion);
             }
-            if (Optional.IsDefined(Login))
+            if (Core.Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<AppRegistration> registration = default;
-            Optional<string> graphApiVersion = default;
-            Optional<LoginScopes> login = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<AppRegistration> registration = default;
+            Core.Optional<string> graphApiVersion = default;
+            Core.Optional<LoginScopes> login = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceFacebookProvider(Optional.ToNullable(enabled), registration.Value, graphApiVersion.Value, login.Value);
+            return new AppServiceFacebookProvider(Core.Optional.ToNullable(enabled), registration.Value, graphApiVersion.Value, login.Value);
         }
     }
 }

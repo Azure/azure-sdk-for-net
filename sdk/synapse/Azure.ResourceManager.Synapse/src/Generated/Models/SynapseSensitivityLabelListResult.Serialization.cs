@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseSensitivityLabelData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SynapseSensitivityLabelData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseSensitivityLabelListResult(Optional.ToList(value), nextLink.Value);
+            return new SynapseSensitivityLabelListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

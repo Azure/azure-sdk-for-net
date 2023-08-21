@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <summary> Initializes a new instance of TrafficManagerMonitorConfig. </summary>
         public TrafficManagerMonitorConfig()
         {
-            CustomHeaders = new ChangeTrackingList<TrafficManagerMonitorConfigCustomHeaderInfo>();
-            ExpectedStatusCodeRanges = new ChangeTrackingList<ExpectedStatusCodeRangeInfo>();
+            CustomHeaders = new Core.ChangeTrackingList<TrafficManagerMonitorConfigCustomHeaderInfo>();
+            ExpectedStatusCodeRanges = new Core.ChangeTrackingList<ExpectedStatusCodeRangeInfo>();
         }
 
         /// <summary> Initializes a new instance of TrafficManagerMonitorConfig. </summary>

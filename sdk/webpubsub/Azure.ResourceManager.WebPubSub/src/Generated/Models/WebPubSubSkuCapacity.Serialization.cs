@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<int> minimum = default;
-            Optional<int> maximum = default;
-            Optional<int> @default = default;
-            Optional<IReadOnlyList<int>> allowedValues = default;
-            Optional<WebPubSubScaleType> scaleType = default;
+            Core.Optional<int> minimum = default;
+            Core.Optional<int> maximum = default;
+            Core.Optional<int> @default = default;
+            Core.Optional<IReadOnlyList<int>> allowedValues = default;
+            Core.Optional<WebPubSubScaleType> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new WebPubSubSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToList(allowedValues), Optional.ToNullable(scaleType));
+            return new WebPubSubSkuCapacity(Core.Optional.ToNullable(minimum), Core.Optional.ToNullable(maximum), Core.Optional.ToNullable(@default), Core.Optional.ToList(allowedValues), Core.Optional.ToNullable(scaleType));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of UsageListResult. </summary>
         internal UsageListResult()
         {
-            Value = new ChangeTrackingList<StorageUsage>();
+            Value = new Core.ChangeTrackingList<StorageUsage>();
         }
 
         /// <summary> Initializes a new instance of UsageListResult. </summary>

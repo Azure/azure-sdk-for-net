@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SqlPoolInfoListResult. </summary>
         internal SqlPoolInfoListResult()
         {
-            Value = new ChangeTrackingList<SqlPool>();
+            Value = new Core.ChangeTrackingList<SqlPool>();
         }
 
         /// <summary> Initializes a new instance of SqlPoolInfoListResult. </summary>

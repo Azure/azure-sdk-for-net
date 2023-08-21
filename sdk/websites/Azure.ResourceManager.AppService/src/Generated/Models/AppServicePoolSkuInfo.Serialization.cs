@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<AppServiceSkuDescription> sku = default;
-            Optional<AppServiceSkuCapacity> capacity = default;
+            Core.Optional<ResourceType> resourceType = default;
+            Core.Optional<AppServiceSkuDescription> sku = default;
+            Core.Optional<AppServiceSkuCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServicePoolSkuInfo(Optional.ToNullable(resourceType), sku.Value, capacity.Value);
+            return new AppServicePoolSkuInfo(Core.Optional.ToNullable(resourceType), sku.Value, capacity.Value);
         }
     }
 }

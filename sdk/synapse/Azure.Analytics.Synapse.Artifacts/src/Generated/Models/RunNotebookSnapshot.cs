@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Id = id;
             Notebook = notebook;
-            Parameters = new ChangeTrackingDictionary<string, RunNotebookParameter>();
+            Parameters = new Core.ChangeTrackingDictionary<string, RunNotebookParameter>();
         }
 
         /// <summary> Initializes a new instance of RunNotebookSnapshot. </summary>

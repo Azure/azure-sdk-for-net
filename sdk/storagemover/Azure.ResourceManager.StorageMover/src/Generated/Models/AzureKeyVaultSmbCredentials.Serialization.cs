@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class AzureKeyVaultSmbCredentials : IUtf8JsonSerializable
+    public partial class AzureKeyVaultSmbCredentials : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UsernameUriString))
+            if (Core.Optional.IsDefined(UsernameUriString))
             {
                 writer.WritePropertyName("usernameUri"u8);
                 writer.WriteStringValue(UsernameUriString);
             }
-            if (Optional.IsDefined(PasswordUriString))
+            if (Core.Optional.IsDefined(PasswordUriString))
             {
                 writer.WritePropertyName("passwordUri"u8);
                 writer.WriteStringValue(PasswordUriString);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Optional<string> usernameUriString = default;
-            Optional<string> passwordUriString = default;
+            Core.Optional<string> usernameUriString = default;
+            Core.Optional<string> passwordUriString = default;
             CredentialType type = default;
             foreach (var property in element.EnumerateObject())
             {

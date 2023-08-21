@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of StorageCachesResult. </summary>
         internal StorageCachesResult()
         {
-            Value = new ChangeTrackingList<StorageCacheData>();
+            Value = new Core.ChangeTrackingList<StorageCacheData>();
         }
 
         /// <summary> Initializes a new instance of StorageCachesResult. </summary>

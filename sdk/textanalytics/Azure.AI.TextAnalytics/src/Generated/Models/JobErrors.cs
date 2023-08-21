@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of JobErrors. </summary>
         internal JobErrors()
         {
-            Errors = new ChangeTrackingList<Error>();
+            Errors = new Core.ChangeTrackingList<Error>();
         }
 
         /// <summary> Gets the errors. </summary>

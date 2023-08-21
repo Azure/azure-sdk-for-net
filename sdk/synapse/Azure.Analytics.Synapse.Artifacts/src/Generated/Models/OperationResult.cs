@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of OperationResult. </summary>
         internal OperationResult()
         {
-            Details = new ChangeTrackingList<CloudError>();
+            Details = new Core.ChangeTrackingList<CloudError>();
         }
 
         /// <summary> Initializes a new instance of OperationResult. </summary>

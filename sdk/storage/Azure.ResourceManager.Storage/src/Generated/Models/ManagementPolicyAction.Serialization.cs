@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ManagementPolicyAction : IUtf8JsonSerializable
+    public partial class ManagementPolicyAction : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BaseBlob))
+            if (Core.Optional.IsDefined(BaseBlob))
             {
                 writer.WritePropertyName("baseBlob"u8);
                 writer.WriteObjectValue(BaseBlob);
             }
-            if (Optional.IsDefined(Snapshot))
+            if (Core.Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
                 writer.WriteObjectValue(Snapshot);
             }
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteObjectValue(Version);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<ManagementPolicyBaseBlob> baseBlob = default;
-            Optional<ManagementPolicySnapShot> snapshot = default;
-            Optional<ManagementPolicyVersion> version = default;
+            Core.Optional<ManagementPolicyBaseBlob> baseBlob = default;
+            Core.Optional<ManagementPolicySnapShot> snapshot = default;
+            Core.Optional<ManagementPolicyVersion> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseBlob"u8))

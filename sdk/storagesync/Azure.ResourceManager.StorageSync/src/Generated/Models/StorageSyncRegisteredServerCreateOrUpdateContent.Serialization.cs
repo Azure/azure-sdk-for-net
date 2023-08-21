@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class StorageSyncRegisteredServerCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class StorageSyncRegisteredServerCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerCertificate))
+            if (Core.Optional.IsDefined(ServerCertificate))
             {
                 writer.WritePropertyName("serverCertificate"u8);
 #if NET6_0_OR_GREATER
@@ -28,42 +28,42 @@ namespace Azure.ResourceManager.StorageSync.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(ServerCertificate.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(AgentVersion))
+            if (Core.Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Optional.IsDefined(ServerOSVersion))
+            if (Core.Optional.IsDefined(ServerOSVersion))
             {
                 writer.WritePropertyName("serverOSVersion"u8);
                 writer.WriteStringValue(ServerOSVersion);
             }
-            if (Optional.IsDefined(LastHeartbeat))
+            if (Core.Optional.IsDefined(LastHeartbeat))
             {
                 writer.WritePropertyName("lastHeartBeat"u8);
                 writer.WriteStringValue(LastHeartbeat);
             }
-            if (Optional.IsDefined(ServerRole))
+            if (Core.Optional.IsDefined(ServerRole))
             {
                 writer.WritePropertyName("serverRole"u8);
                 writer.WriteStringValue(ServerRole);
             }
-            if (Optional.IsDefined(ClusterId))
+            if (Core.Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId.Value);
             }
-            if (Optional.IsDefined(ClusterName))
+            if (Core.Optional.IsDefined(ClusterName))
             {
                 writer.WritePropertyName("clusterName"u8);
                 writer.WriteStringValue(ClusterName);
             }
-            if (Optional.IsDefined(ServerId))
+            if (Core.Optional.IsDefined(ServerId))
             {
                 writer.WritePropertyName("serverId"u8);
                 writer.WriteStringValue(ServerId.Value);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (Core.Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.StorageSync.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<BinaryData> serverCertificate = default;
-            Optional<string> agentVersion = default;
-            Optional<string> serverOSVersion = default;
-            Optional<string> lastHeartbeat = default;
-            Optional<string> serverRole = default;
-            Optional<Guid> clusterId = default;
-            Optional<string> clusterName = default;
-            Optional<Guid> serverId = default;
-            Optional<string> friendlyName = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<BinaryData> serverCertificate = default;
+            Core.Optional<string> agentVersion = default;
+            Core.Optional<string> serverOSVersion = default;
+            Core.Optional<string> lastHeartbeat = default;
+            Core.Optional<string> serverRole = default;
+            Core.Optional<Guid> clusterId = default;
+            Core.Optional<string> clusterName = default;
+            Core.Optional<Guid> serverId = default;
+            Core.Optional<string> friendlyName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new StorageSyncRegisteredServerCreateOrUpdateContent(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, serverOSVersion.Value, lastHeartbeat.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), friendlyName.Value);
+            return new StorageSyncRegisteredServerCreateOrUpdateContent(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, serverOSVersion.Value, lastHeartbeat.Value, serverRole.Value, Core.Optional.ToNullable(clusterId), clusterName.Value, Core.Optional.ToNullable(serverId), friendlyName.Value);
         }
     }
 }

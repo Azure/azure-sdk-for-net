@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<long> perItemErrorCount = default;
-            Optional<long> appliedItemCount = default;
-            Optional<long> totalItemCount = default;
-            Optional<long> appliedBytes = default;
-            Optional<long> totalBytes = default;
-            Optional<ServerEndpointSyncMode> syncMode = default;
-            Optional<int> sessionMinutesRemaining = default;
+            Core.Optional<DateTimeOffset> timestamp = default;
+            Core.Optional<long> perItemErrorCount = default;
+            Core.Optional<long> appliedItemCount = default;
+            Core.Optional<long> totalItemCount = default;
+            Core.Optional<long> appliedBytes = default;
+            Core.Optional<long> totalBytes = default;
+            Core.Optional<ServerEndpointSyncMode> syncMode = default;
+            Core.Optional<int> sessionMinutesRemaining = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new ServerEndpointSyncActivityStatus(Optional.ToNullable(timestamp), Optional.ToNullable(perItemErrorCount), Optional.ToNullable(appliedItemCount), Optional.ToNullable(totalItemCount), Optional.ToNullable(appliedBytes), Optional.ToNullable(totalBytes), Optional.ToNullable(syncMode), Optional.ToNullable(sessionMinutesRemaining));
+            return new ServerEndpointSyncActivityStatus(Core.Optional.ToNullable(timestamp), Core.Optional.ToNullable(perItemErrorCount), Core.Optional.ToNullable(appliedItemCount), Core.Optional.ToNullable(totalItemCount), Core.Optional.ToNullable(appliedBytes), Core.Optional.ToNullable(totalBytes), Core.Optional.ToNullable(syncMode), Core.Optional.ToNullable(sessionMinutesRemaining));
         }
     }
 }

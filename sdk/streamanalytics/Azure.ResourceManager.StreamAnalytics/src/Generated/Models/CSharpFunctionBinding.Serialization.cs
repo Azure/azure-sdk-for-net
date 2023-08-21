@@ -10,31 +10,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class CSharpFunctionBinding : IUtf8JsonSerializable
+    public partial class CSharpFunctionBinding : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FunctionBindingType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DllPath))
+            if (Core.Optional.IsDefined(DllPath))
             {
                 writer.WritePropertyName("dllPath"u8);
                 writer.WriteStringValue(DllPath);
             }
-            if (Optional.IsDefined(Class))
+            if (Core.Optional.IsDefined(Class))
             {
                 writer.WritePropertyName("class"u8);
                 writer.WriteStringValue(Class);
             }
-            if (Optional.IsDefined(Method))
+            if (Core.Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (Optional.IsDefined(UpdateMode))
+            if (Core.Optional.IsDefined(UpdateMode))
             {
                 writer.WritePropertyName("updateMode"u8);
                 writer.WriteStringValue(UpdateMode.Value.ToString());
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> dllPath = default;
-            Optional<string> @class = default;
-            Optional<string> method = default;
-            Optional<StreamingJobFunctionUpdateMode> updateMode = default;
+            Core.Optional<string> dllPath = default;
+            Core.Optional<string> @class = default;
+            Core.Optional<string> method = default;
+            Core.Optional<StreamingJobFunctionUpdateMode> updateMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new CSharpFunctionBinding(type, dllPath.Value, @class.Value, method.Value, Optional.ToNullable(updateMode));
+            return new CSharpFunctionBinding(type, dllPath.Value, @class.Value, method.Value, Core.Optional.ToNullable(updateMode));
         }
     }
 }

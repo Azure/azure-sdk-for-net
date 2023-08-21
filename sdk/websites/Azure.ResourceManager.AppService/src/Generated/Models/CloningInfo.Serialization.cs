@@ -12,44 +12,44 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class CloningInfo : IUtf8JsonSerializable
+    public partial class CloningInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CorrelationId))
+            if (Core.Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId.Value);
             }
-            if (Optional.IsDefined(CanOverwrite))
+            if (Core.Optional.IsDefined(CanOverwrite))
             {
                 writer.WritePropertyName("overwrite"u8);
                 writer.WriteBooleanValue(CanOverwrite.Value);
             }
-            if (Optional.IsDefined(CloneCustomHostNames))
+            if (Core.Optional.IsDefined(CloneCustomHostNames))
             {
                 writer.WritePropertyName("cloneCustomHostNames"u8);
                 writer.WriteBooleanValue(CloneCustomHostNames.Value);
             }
-            if (Optional.IsDefined(CloneSourceControl))
+            if (Core.Optional.IsDefined(CloneSourceControl))
             {
                 writer.WritePropertyName("cloneSourceControl"u8);
                 writer.WriteBooleanValue(CloneSourceControl.Value);
             }
             writer.WritePropertyName("sourceWebAppId"u8);
             writer.WriteStringValue(SourceWebAppId);
-            if (Optional.IsDefined(SourceWebAppLocation))
+            if (Core.Optional.IsDefined(SourceWebAppLocation))
             {
                 writer.WritePropertyName("sourceWebAppLocation"u8);
                 writer.WriteStringValue(SourceWebAppLocation.Value);
             }
-            if (Optional.IsDefined(HostingEnvironment))
+            if (Core.Optional.IsDefined(HostingEnvironment))
             {
                 writer.WritePropertyName("hostingEnvironment"u8);
                 writer.WriteStringValue(HostingEnvironment);
             }
-            if (Optional.IsCollectionDefined(AppSettingsOverrides))
+            if (Core.Optional.IsCollectionDefined(AppSettingsOverrides))
             {
                 writer.WritePropertyName("appSettingsOverrides"u8);
                 writer.WriteStartObject();
@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ConfigureLoadBalancing))
+            if (Core.Optional.IsDefined(ConfigureLoadBalancing))
             {
                 writer.WritePropertyName("configureLoadBalancing"u8);
                 writer.WriteBooleanValue(ConfigureLoadBalancing.Value);
             }
-            if (Optional.IsDefined(TrafficManagerProfileId))
+            if (Core.Optional.IsDefined(TrafficManagerProfileId))
             {
                 writer.WritePropertyName("trafficManagerProfileId"u8);
                 writer.WriteStringValue(TrafficManagerProfileId);
             }
-            if (Optional.IsDefined(TrafficManagerProfileName))
+            if (Core.Optional.IsDefined(TrafficManagerProfileName))
             {
                 writer.WritePropertyName("trafficManagerProfileName"u8);
                 writer.WriteStringValue(TrafficManagerProfileName);
@@ -84,17 +84,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<Guid> correlationId = default;
-            Optional<bool> overwrite = default;
-            Optional<bool> cloneCustomHostNames = default;
-            Optional<bool> cloneSourceControl = default;
+            Core.Optional<Guid> correlationId = default;
+            Core.Optional<bool> overwrite = default;
+            Core.Optional<bool> cloneCustomHostNames = default;
+            Core.Optional<bool> cloneSourceControl = default;
             ResourceIdentifier sourceWebAppId = default;
-            Optional<AzureLocation> sourceWebAppLocation = default;
-            Optional<string> hostingEnvironment = default;
-            Optional<IDictionary<string, string>> appSettingsOverrides = default;
-            Optional<bool> configureLoadBalancing = default;
-            Optional<ResourceIdentifier> trafficManagerProfileId = default;
-            Optional<string> trafficManagerProfileName = default;
+            Core.Optional<AzureLocation> sourceWebAppLocation = default;
+            Core.Optional<string> hostingEnvironment = default;
+            Core.Optional<IDictionary<string, string>> appSettingsOverrides = default;
+            Core.Optional<bool> configureLoadBalancing = default;
+            Core.Optional<ResourceIdentifier> trafficManagerProfileId = default;
+            Core.Optional<string> trafficManagerProfileName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("correlationId"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new CloningInfo(Optional.ToNullable(correlationId), Optional.ToNullable(overwrite), Optional.ToNullable(cloneCustomHostNames), Optional.ToNullable(cloneSourceControl), sourceWebAppId, Optional.ToNullable(sourceWebAppLocation), hostingEnvironment.Value, Optional.ToDictionary(appSettingsOverrides), Optional.ToNullable(configureLoadBalancing), trafficManagerProfileId.Value, trafficManagerProfileName.Value);
+            return new CloningInfo(Core.Optional.ToNullable(correlationId), Core.Optional.ToNullable(overwrite), Core.Optional.ToNullable(cloneCustomHostNames), Core.Optional.ToNullable(cloneSourceControl), sourceWebAppId, Core.Optional.ToNullable(sourceWebAppLocation), hostingEnvironment.Value, Core.Optional.ToDictionary(appSettingsOverrides), Core.Optional.ToNullable(configureLoadBalancing), trafficManagerProfileId.Value, trafficManagerProfileName.Value);
         }
     }
 }

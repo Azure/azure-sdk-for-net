@@ -13,22 +13,22 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    public partial class WebPubSubData : IUtf8JsonSerializable
+    public partial class WebPubSubData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,37 +43,37 @@ namespace Azure.ResourceManager.WebPubSub
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Tls))
+            if (Core.Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
                 writer.WriteObjectValue(Tls);
             }
-            if (Optional.IsDefined(LiveTraceConfiguration))
+            if (Core.Optional.IsDefined(LiveTraceConfiguration))
             {
                 writer.WritePropertyName("liveTraceConfiguration"u8);
                 writer.WriteObjectValue(LiveTraceConfiguration);
             }
-            if (Optional.IsDefined(ResourceLogConfiguration))
+            if (Core.Optional.IsDefined(ResourceLogConfiguration))
             {
                 writer.WritePropertyName("resourceLogConfiguration"u8);
                 writer.WriteObjectValue(ResourceLogConfiguration);
             }
-            if (Optional.IsDefined(NetworkAcls))
+            if (Core.Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkACLs"u8);
                 writer.WriteObjectValue(NetworkAcls);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess);
             }
-            if (Optional.IsDefined(IsLocalAuthDisabled))
+            if (Core.Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
-            if (Optional.IsDefined(IsAadAuthDisabled))
+            if (Core.Optional.IsDefined(IsAadAuthDisabled))
             {
                 writer.WritePropertyName("disableAadAuth"u8);
                 writer.WriteBooleanValue(IsAadAuthDisabled.Value);
@@ -88,30 +88,30 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 return null;
             }
-            Optional<BillingInfoSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<BillingInfoSku> sku = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WebPubSubProvisioningState> provisioningState = default;
-            Optional<string> externalIP = default;
-            Optional<string> hostName = default;
-            Optional<int> publicPort = default;
-            Optional<int> serverPort = default;
-            Optional<string> version = default;
-            Optional<IReadOnlyList<WebPubSubPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<IReadOnlyList<WebPubSubSharedPrivateLinkData>> sharedPrivateLinkResources = default;
-            Optional<WebPubSubTlsSettings> tls = default;
-            Optional<string> hostNamePrefix = default;
-            Optional<LiveTraceConfiguration> liveTraceConfiguration = default;
-            Optional<ResourceLogConfiguration> resourceLogConfiguration = default;
-            Optional<WebPubSubNetworkAcls> networkAcls = default;
-            Optional<string> publicNetworkAccess = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<bool> disableAadAuth = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<WebPubSubProvisioningState> provisioningState = default;
+            Core.Optional<string> externalIP = default;
+            Core.Optional<string> hostName = default;
+            Core.Optional<int> publicPort = default;
+            Core.Optional<int> serverPort = default;
+            Core.Optional<string> version = default;
+            Core.Optional<IReadOnlyList<WebPubSubPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Core.Optional<IReadOnlyList<WebPubSubSharedPrivateLinkData>> sharedPrivateLinkResources = default;
+            Core.Optional<WebPubSubTlsSettings> tls = default;
+            Core.Optional<string> hostNamePrefix = default;
+            Core.Optional<LiveTraceConfiguration> liveTraceConfiguration = default;
+            Core.Optional<ResourceLogConfiguration> resourceLogConfiguration = default;
+            Core.Optional<WebPubSubNetworkAcls> networkAcls = default;
+            Core.Optional<string> publicNetworkAccess = default;
+            Core.Optional<bool> disableLocalAuth = default;
+            Core.Optional<bool> disableAadAuth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.WebPubSub
                     continue;
                 }
             }
-            return new WebPubSubData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), tls.Value, hostNamePrefix.Value, liveTraceConfiguration.Value, resourceLogConfiguration.Value, networkAcls.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth));
+            return new WebPubSubData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, identity, Core.Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Core.Optional.ToNullable(publicPort), Core.Optional.ToNullable(serverPort), version.Value, Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToList(sharedPrivateLinkResources), tls.Value, hostNamePrefix.Value, liveTraceConfiguration.Value, resourceLogConfiguration.Value, networkAcls.Value, publicNetworkAccess.Value, Core.Optional.ToNullable(disableLocalAuth), Core.Optional.ToNullable(disableAadAuth));
         }
     }
 }

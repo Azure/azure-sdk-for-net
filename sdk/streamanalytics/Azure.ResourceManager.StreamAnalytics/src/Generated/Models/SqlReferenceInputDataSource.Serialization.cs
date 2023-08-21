@@ -11,56 +11,56 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class SqlReferenceInputDataSource : IUtf8JsonSerializable
+    public partial class SqlReferenceInputDataSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ReferenceInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Server))
+            if (Core.Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
-            if (Optional.IsDefined(Database))
+            if (Core.Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
                 writer.WriteStringValue(Database);
             }
-            if (Optional.IsDefined(User))
+            if (Core.Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(RefreshType))
+            if (Core.Optional.IsDefined(RefreshType))
             {
                 writer.WritePropertyName("refreshType"u8);
                 writer.WriteStringValue(RefreshType.Value.ToString());
             }
-            if (Optional.IsDefined(RefreshInterval))
+            if (Core.Optional.IsDefined(RefreshInterval))
             {
                 writer.WritePropertyName("refreshRate"u8);
                 writer.WriteStringValue(RefreshInterval.Value, "T");
             }
-            if (Optional.IsDefined(FullSnapshotQuery))
+            if (Core.Optional.IsDefined(FullSnapshotQuery))
             {
                 writer.WritePropertyName("fullSnapshotQuery"u8);
                 writer.WriteStringValue(FullSnapshotQuery);
             }
-            if (Optional.IsDefined(DeltaSnapshotQuery))
+            if (Core.Optional.IsDefined(DeltaSnapshotQuery))
             {
                 writer.WritePropertyName("deltaSnapshotQuery"u8);
                 writer.WriteStringValue(DeltaSnapshotQuery);
             }
-            if (Optional.IsDefined(AuthenticationMode))
+            if (Core.Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
@@ -76,15 +76,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> server = default;
-            Optional<string> database = default;
-            Optional<string> user = default;
-            Optional<string> password = default;
-            Optional<DataRefreshType> refreshType = default;
-            Optional<TimeSpan> refreshRate = default;
-            Optional<string> fullSnapshotQuery = default;
-            Optional<string> deltaSnapshotQuery = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            Core.Optional<string> server = default;
+            Core.Optional<string> database = default;
+            Core.Optional<string> user = default;
+            Core.Optional<string> password = default;
+            Core.Optional<DataRefreshType> refreshType = default;
+            Core.Optional<TimeSpan> refreshRate = default;
+            Core.Optional<string> fullSnapshotQuery = default;
+            Core.Optional<string> deltaSnapshotQuery = default;
+            Core.Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new SqlReferenceInputDataSource(type, server.Value, database.Value, user.Value, password.Value, Optional.ToNullable(refreshType), Optional.ToNullable(refreshRate), fullSnapshotQuery.Value, deltaSnapshotQuery.Value, Optional.ToNullable(authenticationMode));
+            return new SqlReferenceInputDataSource(type, server.Value, database.Value, user.Value, password.Value, Core.Optional.ToNullable(refreshType), Core.Optional.ToNullable(refreshRate), fullSnapshotQuery.Value, deltaSnapshotQuery.Value, Core.Optional.ToNullable(authenticationMode));
         }
     }
 }

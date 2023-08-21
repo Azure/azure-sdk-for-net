@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of PublicNetworkAcls. </summary>
         public PublicNetworkAcls()
         {
-            Allow = new ChangeTrackingList<WebPubSubRequestType>();
-            Deny = new ChangeTrackingList<WebPubSubRequestType>();
+            Allow = new Core.ChangeTrackingList<WebPubSubRequestType>();
+            Deny = new Core.ChangeTrackingList<WebPubSubRequestType>();
         }
 
         /// <summary> Initializes a new instance of PublicNetworkAcls. </summary>

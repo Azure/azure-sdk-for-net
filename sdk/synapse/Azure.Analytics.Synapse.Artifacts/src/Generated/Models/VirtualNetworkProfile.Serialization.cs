@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(VirtualNetworkProfileConverter))]
-    public partial class VirtualNetworkProfile : IUtf8JsonSerializable
+    public partial class VirtualNetworkProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeSubnetId))
+            if (Core.Optional.IsDefined(ComputeSubnetId))
             {
                 writer.WritePropertyName("computeSubnetId"u8);
                 writer.WriteStringValue(ComputeSubnetId);
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> computeSubnetId = default;
+            Core.Optional<string> computeSubnetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeSubnetId"u8))

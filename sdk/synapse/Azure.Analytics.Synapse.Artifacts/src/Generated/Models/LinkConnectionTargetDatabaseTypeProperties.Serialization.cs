@@ -13,22 +13,22 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkConnectionTargetDatabaseTypePropertiesConverter))]
-    public partial class LinkConnectionTargetDatabaseTypeProperties : IUtf8JsonSerializable
+    public partial class LinkConnectionTargetDatabaseTypeProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CrossTableTransaction))
+            if (Core.Optional.IsDefined(CrossTableTransaction))
             {
                 writer.WritePropertyName("crossTableTransaction"u8);
                 writer.WriteBooleanValue(CrossTableTransaction.Value);
             }
-            if (Optional.IsDefined(DropExistingTargetTableOnStart))
+            if (Core.Optional.IsDefined(DropExistingTargetTableOnStart))
             {
                 writer.WritePropertyName("dropExistingTargetTableOnStart"u8);
                 writer.WriteBooleanValue(DropExistingTargetTableOnStart.Value);
             }
-            if (Optional.IsDefined(ActionOnExistingTargetTable))
+            if (Core.Optional.IsDefined(ActionOnExistingTargetTable))
             {
                 writer.WritePropertyName("actionOnExistingTargetTable"u8);
                 writer.WriteStringValue(ActionOnExistingTargetTable.Value.ToString());
@@ -42,9 +42,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<bool> crossTableTransaction = default;
-            Optional<bool> dropExistingTargetTableOnStart = default;
-            Optional<ActionOnExistingTargetTable> actionOnExistingTargetTable = default;
+            Core.Optional<bool> crossTableTransaction = default;
+            Core.Optional<bool> dropExistingTargetTableOnStart = default;
+            Core.Optional<ActionOnExistingTargetTable> actionOnExistingTargetTable = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("crossTableTransaction"u8))
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnectionTargetDatabaseTypeProperties(Optional.ToNullable(crossTableTransaction), Optional.ToNullable(dropExistingTargetTableOnStart), Optional.ToNullable(actionOnExistingTargetTable));
+            return new LinkConnectionTargetDatabaseTypeProperties(Core.Optional.ToNullable(crossTableTransaction), Core.Optional.ToNullable(dropExistingTargetTableOnStart), Core.Optional.ToNullable(actionOnExistingTargetTable));
         }
 
         internal partial class LinkConnectionTargetDatabaseTypePropertiesConverter : JsonConverter<LinkConnectionTargetDatabaseTypeProperties>

@@ -10,46 +10,46 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class DocumentDbOutputDataSource : IUtf8JsonSerializable
+    public partial class DocumentDbOutputDataSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccountId))
+            if (Core.Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (Optional.IsDefined(AccountKey))
+            if (Core.Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
-            if (Optional.IsDefined(Database))
+            if (Core.Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
                 writer.WriteStringValue(Database);
             }
-            if (Optional.IsDefined(CollectionNamePattern))
+            if (Core.Optional.IsDefined(CollectionNamePattern))
             {
                 writer.WritePropertyName("collectionNamePattern"u8);
                 writer.WriteStringValue(CollectionNamePattern);
             }
-            if (Optional.IsDefined(PartitionKey))
+            if (Core.Optional.IsDefined(PartitionKey))
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteStringValue(PartitionKey);
             }
-            if (Optional.IsDefined(DocumentId))
+            if (Core.Optional.IsDefined(DocumentId))
             {
                 writer.WritePropertyName("documentId"u8);
                 writer.WriteStringValue(DocumentId);
             }
-            if (Optional.IsDefined(AuthenticationMode))
+            if (Core.Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
@@ -65,13 +65,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> accountId = default;
-            Optional<string> accountKey = default;
-            Optional<string> database = default;
-            Optional<string> collectionNamePattern = default;
-            Optional<string> partitionKey = default;
-            Optional<string> documentId = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            Core.Optional<string> accountId = default;
+            Core.Optional<string> accountKey = default;
+            Core.Optional<string> database = default;
+            Core.Optional<string> collectionNamePattern = default;
+            Core.Optional<string> partitionKey = default;
+            Core.Optional<string> documentId = default;
+            Core.Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new DocumentDbOutputDataSource(type, accountId.Value, accountKey.Value, database.Value, collectionNamePattern.Value, partitionKey.Value, documentId.Value, Optional.ToNullable(authenticationMode));
+            return new DocumentDbOutputDataSource(type, accountId.Value, accountKey.Value, database.Value, collectionNamePattern.Value, partitionKey.Value, documentId.Value, Core.Optional.ToNullable(authenticationMode));
         }
     }
 }

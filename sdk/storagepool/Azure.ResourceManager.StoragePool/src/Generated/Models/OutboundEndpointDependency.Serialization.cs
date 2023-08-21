@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
-            Optional<IReadOnlyList<OutboundEndpointDetail>> endpointDetails = default;
+            Core.Optional<string> domainName = default;
+            Core.Optional<IReadOnlyList<OutboundEndpointDetail>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     continue;
                 }
             }
-            return new OutboundEndpointDependency(domainName.Value, Optional.ToList(endpointDetails));
+            return new OutboundEndpointDependency(domainName.Value, Core.Optional.ToList(endpointDetails));
         }
     }
 }

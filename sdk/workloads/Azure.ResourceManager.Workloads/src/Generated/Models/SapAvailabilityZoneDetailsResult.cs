@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of SapAvailabilityZoneDetailsResult. </summary>
         internal SapAvailabilityZoneDetailsResult()
         {
-            AvailabilityZonePairs = new ChangeTrackingList<SapAvailabilityZonePair>();
+            AvailabilityZonePairs = new Core.ChangeTrackingList<SapAvailabilityZonePair>();
         }
 
         /// <summary> Initializes a new instance of SapAvailabilityZoneDetailsResult. </summary>

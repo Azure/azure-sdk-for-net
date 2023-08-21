@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseLanguageExtensionsList. </summary>
         public SynapseLanguageExtensionsList()
         {
-            Value = new ChangeTrackingList<SynapseLanguageExtension>();
+            Value = new Core.ChangeTrackingList<SynapseLanguageExtension>();
         }
 
         /// <summary> Initializes a new instance of SynapseLanguageExtensionsList. </summary>

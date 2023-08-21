@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobSignedIdentifier : IXmlSerializable
+    public partial class BlobSignedIdentifier : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "SignedIdentifier");
             writer.WriteStartElement("Id");

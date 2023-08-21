@@ -12,44 +12,44 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class RelayServiceConnectionEntityData : IUtf8JsonSerializable
+    public partial class RelayServiceConnectionEntityData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EntityName))
+            if (Core.Optional.IsDefined(EntityName))
             {
                 writer.WritePropertyName("entityName"u8);
                 writer.WriteStringValue(EntityName);
             }
-            if (Optional.IsDefined(EntityConnectionString))
+            if (Core.Optional.IsDefined(EntityConnectionString))
             {
                 writer.WritePropertyName("entityConnectionString"u8);
                 writer.WriteStringValue(EntityConnectionString);
             }
-            if (Optional.IsDefined(ResourceConnectionString))
+            if (Core.Optional.IsDefined(ResourceConnectionString))
             {
                 writer.WritePropertyName("resourceConnectionString"u8);
                 writer.WriteStringValue(ResourceConnectionString);
             }
-            if (Optional.IsDefined(Hostname))
+            if (Core.Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Optional.IsDefined(Port))
+            if (Core.Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(BiztalkUri))
+            if (Core.Optional.IsDefined(BiztalkUri))
             {
                 writer.WritePropertyName("biztalkUri"u8);
                 writer.WriteStringValue(BiztalkUri.AbsoluteUri);
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> entityName = default;
-            Optional<string> entityConnectionString = default;
-            Optional<string> resourceConnectionString = default;
-            Optional<string> hostname = default;
-            Optional<int> port = default;
-            Optional<Uri> biztalkUri = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> entityName = default;
+            Core.Optional<string> entityConnectionString = default;
+            Core.Optional<string> resourceConnectionString = default;
+            Core.Optional<string> hostname = default;
+            Core.Optional<int> port = default;
+            Core.Optional<Uri> biztalkUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new RelayServiceConnectionEntityData(id, name, type, systemData.Value, entityName.Value, entityConnectionString.Value, resourceConnectionString.Value, hostname.Value, Optional.ToNullable(port), biztalkUri.Value, kind.Value);
+            return new RelayServiceConnectionEntityData(id, name, type, systemData.Value, entityName.Value, entityConnectionString.Value, resourceConnectionString.Value, hostname.Value, Core.Optional.ToNullable(port), biztalkUri.Value, kind.Value);
         }
     }
 }

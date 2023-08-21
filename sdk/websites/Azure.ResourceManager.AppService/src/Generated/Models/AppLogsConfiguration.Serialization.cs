@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppLogsConfiguration : IUtf8JsonSerializable
+    public partial class AppLogsConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Destination))
+            if (Core.Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteStringValue(Destination);
             }
-            if (Optional.IsDefined(LogAnalyticsConfiguration))
+            if (Core.Optional.IsDefined(LogAnalyticsConfiguration))
             {
                 writer.WritePropertyName("logAnalyticsConfiguration"u8);
                 writer.WriteObjectValue(LogAnalyticsConfiguration);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> destination = default;
-            Optional<LogAnalyticsConfiguration> logAnalyticsConfiguration = default;
+            Core.Optional<string> destination = default;
+            Core.Optional<LogAnalyticsConfiguration> logAnalyticsConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("destination"u8))

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ContainerCpuUsage : IUtf8JsonSerializable
+    public partial class ContainerCpuUsage : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TotalUsage))
+            if (Core.Optional.IsDefined(TotalUsage))
             {
                 writer.WritePropertyName("totalUsage"u8);
                 writer.WriteNumberValue(TotalUsage.Value);
             }
-            if (Optional.IsCollectionDefined(PerCpuUsage))
+            if (Core.Optional.IsCollectionDefined(PerCpuUsage))
             {
                 writer.WritePropertyName("perCpuUsage"u8);
                 writer.WriteStartArray();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(KernelModeUsage))
+            if (Core.Optional.IsDefined(KernelModeUsage))
             {
                 writer.WritePropertyName("kernelModeUsage"u8);
                 writer.WriteNumberValue(KernelModeUsage.Value);
             }
-            if (Optional.IsDefined(UserModeUsage))
+            if (Core.Optional.IsDefined(UserModeUsage))
             {
                 writer.WritePropertyName("userModeUsage"u8);
                 writer.WriteNumberValue(UserModeUsage.Value);
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<long> totalUsage = default;
-            Optional<IList<long>> perCpuUsage = default;
-            Optional<long> kernelModeUsage = default;
-            Optional<long> userModeUsage = default;
+            Core.Optional<long> totalUsage = default;
+            Core.Optional<IList<long>> perCpuUsage = default;
+            Core.Optional<long> kernelModeUsage = default;
+            Core.Optional<long> userModeUsage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalUsage"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ContainerCpuUsage(Optional.ToNullable(totalUsage), Optional.ToList(perCpuUsage), Optional.ToNullable(kernelModeUsage), Optional.ToNullable(userModeUsage));
+            return new ContainerCpuUsage(Core.Optional.ToNullable(totalUsage), Core.Optional.ToList(perCpuUsage), Core.Optional.ToNullable(kernelModeUsage), Core.Optional.ToNullable(userModeUsage));
         }
     }
 }

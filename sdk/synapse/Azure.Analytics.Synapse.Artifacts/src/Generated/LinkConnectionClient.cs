@@ -507,7 +507,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LinkConnectionResource.DeserializeLinkConnectionResource, _clientDiagnostics, _pipeline, "LinkConnectionClient.ListByWorkspace", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LinkConnectionResource.DeserializeLinkConnectionResource, _clientDiagnostics, _pipeline, "LinkConnectionClient.ListByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> List link connections. </summary>
@@ -516,7 +516,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LinkConnectionResource.DeserializeLinkConnectionResource, _clientDiagnostics, _pipeline, "LinkConnectionClient.ListByWorkspace", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LinkConnectionResource.DeserializeLinkConnectionResource, _clientDiagnostics, _pipeline, "LinkConnectionClient.ListByWorkspace", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -13,16 +13,16 @@ using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    public partial class DiskPoolIscsiTargetData : IUtf8JsonSerializable
+    public partial class DiskPoolIscsiTargetData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("aclMode"u8);
             writer.WriteStringValue(AclMode.ToString());
-            if (Optional.IsCollectionDefined(StaticAcls))
+            if (Core.Optional.IsCollectionDefined(StaticAcls))
             {
                 writer.WritePropertyName("staticAcls"u8);
                 writer.WriteStartArray();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StoragePool
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Luns))
+            if (Core.Optional.IsCollectionDefined(Luns))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StoragePool
             writer.WriteStringValue(TargetIqn);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (Core.Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StoragePool
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Port))
+            if (Core.Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
@@ -71,21 +71,21 @@ namespace Azure.ResourceManager.StoragePool
             {
                 return null;
             }
-            Optional<string> managedBy = default;
-            Optional<IReadOnlyList<string>> managedByExtended = default;
+            Core.Optional<string> managedBy = default;
+            Core.Optional<IReadOnlyList<string>> managedByExtended = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             DiskPoolIscsiTargetAclMode aclMode = default;
-            Optional<IList<DiskPoolIscsiTargetPortalGroupAcl>> staticAcls = default;
-            Optional<IList<ManagedDiskIscsiLun>> luns = default;
+            Core.Optional<IList<DiskPoolIscsiTargetPortalGroupAcl>> staticAcls = default;
+            Core.Optional<IList<ManagedDiskIscsiLun>> luns = default;
             string targetIqn = default;
             DiskPoolIscsiTargetProvisioningState provisioningState = default;
             StoragePoolOperationalStatus status = default;
-            Optional<IList<string>> endpoints = default;
-            Optional<int> port = default;
-            Optional<IReadOnlyList<string>> sessions = default;
+            Core.Optional<IList<string>> endpoints = default;
+            Core.Optional<int> port = default;
+            Core.Optional<IReadOnlyList<string>> sessions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.StoragePool
                     continue;
                 }
             }
-            return new DiskPoolIscsiTargetData(id, name, type, systemData.Value, managedBy.Value, Optional.ToList(managedByExtended), aclMode, Optional.ToList(staticAcls), Optional.ToList(luns), targetIqn, provisioningState, status, Optional.ToList(endpoints), Optional.ToNullable(port), Optional.ToList(sessions));
+            return new DiskPoolIscsiTargetData(id, name, type, systemData.Value, managedBy.Value, Core.Optional.ToList(managedByExtended), aclMode, Core.Optional.ToList(staticAcls), Core.Optional.ToList(luns), targetIqn, provisioningState, status, Core.Optional.ToList(endpoints), Core.Optional.ToNullable(port), Core.Optional.ToList(sessions));
         }
     }
 }

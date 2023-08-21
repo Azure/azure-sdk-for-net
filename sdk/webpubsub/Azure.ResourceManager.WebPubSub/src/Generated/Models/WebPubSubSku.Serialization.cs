@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<BillingInfoSku> sku = default;
-            Optional<WebPubSubSkuCapacity> capacity = default;
+            Core.Optional<ResourceType> resourceType = default;
+            Core.Optional<BillingInfoSku> sku = default;
+            Core.Optional<WebPubSubSkuCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new WebPubSubSku(Optional.ToNullable(resourceType), sku.Value, capacity.Value);
+            return new WebPubSubSku(Core.Optional.ToNullable(resourceType), sku.Value, capacity.Value);
         }
     }
 }

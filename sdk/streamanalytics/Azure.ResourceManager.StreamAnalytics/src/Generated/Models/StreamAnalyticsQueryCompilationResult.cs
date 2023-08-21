@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of StreamAnalyticsQueryCompilationResult. </summary>
         internal StreamAnalyticsQueryCompilationResult()
         {
-            Errors = new ChangeTrackingList<StreamAnalyticsQueryCompilationError>();
-            Warnings = new ChangeTrackingList<string>();
-            Inputs = new ChangeTrackingList<string>();
-            Outputs = new ChangeTrackingList<string>();
-            Functions = new ChangeTrackingList<string>();
+            Errors = new Core.ChangeTrackingList<StreamAnalyticsQueryCompilationError>();
+            Warnings = new Core.ChangeTrackingList<string>();
+            Inputs = new Core.ChangeTrackingList<string>();
+            Outputs = new Core.ChangeTrackingList<string>();
+            Functions = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StreamAnalyticsQueryCompilationResult. </summary>

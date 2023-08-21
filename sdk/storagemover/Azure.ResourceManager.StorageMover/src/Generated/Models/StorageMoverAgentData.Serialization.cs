@@ -13,14 +13,14 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    public partial class StorageMoverAgentData : IUtf8JsonSerializable
+    public partial class StorageMoverAgentData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.StorageMover
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> agentVersion = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> agentVersion = default;
             string arcResourceId = default;
             string arcVmUuid = default;
-            Optional<StorageMoverAgentStatus> agentStatus = default;
-            Optional<DateTimeOffset> lastStatusUpdate = default;
-            Optional<string> localIPAddress = default;
-            Optional<long> memoryInMB = default;
-            Optional<long> numberOfCores = default;
-            Optional<long> uptimeInSeconds = default;
-            Optional<StorageMoverAgentPropertiesErrorDetails> errorDetails = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
+            Core.Optional<StorageMoverAgentStatus> agentStatus = default;
+            Core.Optional<DateTimeOffset> lastStatusUpdate = default;
+            Core.Optional<string> localIPAddress = default;
+            Core.Optional<long> memoryInMB = default;
+            Core.Optional<long> numberOfCores = default;
+            Core.Optional<long> uptimeInSeconds = default;
+            Core.Optional<StorageMoverAgentPropertiesErrorDetails> errorDetails = default;
+            Core.Optional<StorageMoverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.StorageMover
                     continue;
                 }
             }
-            return new StorageMoverAgentData(id, name, type, systemData.Value, description.Value, agentVersion.Value, arcResourceId, arcVmUuid, Optional.ToNullable(agentStatus), Optional.ToNullable(lastStatusUpdate), localIPAddress.Value, Optional.ToNullable(memoryInMB), Optional.ToNullable(numberOfCores), Optional.ToNullable(uptimeInSeconds), errorDetails.Value, Optional.ToNullable(provisioningState));
+            return new StorageMoverAgentData(id, name, type, systemData.Value, description.Value, agentVersion.Value, arcResourceId, arcVmUuid, Core.Optional.ToNullable(agentStatus), Core.Optional.ToNullable(lastStatusUpdate), localIPAddress.Value, Core.Optional.ToNullable(memoryInMB), Core.Optional.ToNullable(numberOfCores), Core.Optional.ToNullable(uptimeInSeconds), errorDetails.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

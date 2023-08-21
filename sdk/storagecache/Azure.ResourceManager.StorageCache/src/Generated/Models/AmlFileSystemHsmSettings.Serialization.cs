@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFileSystemHsmSettings : IUtf8JsonSerializable
+    public partial class AmlFileSystemHsmSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("container"u8);
             writer.WriteStringValue(Container);
             writer.WritePropertyName("loggingContainer"u8);
             writer.WriteStringValue(LoggingContainer);
-            if (Optional.IsDefined(ImportPrefix))
+            if (Core.Optional.IsDefined(ImportPrefix))
             {
                 writer.WritePropertyName("importPrefix"u8);
                 writer.WriteStringValue(ImportPrefix);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             string container = default;
             string loggingContainer = default;
-            Optional<string> importPrefix = default;
+            Core.Optional<string> importPrefix = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("container"u8))

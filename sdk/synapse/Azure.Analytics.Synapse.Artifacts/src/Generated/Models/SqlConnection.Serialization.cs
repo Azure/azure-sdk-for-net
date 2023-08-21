@@ -14,27 +14,27 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlConnectionConverter))]
-    public partial class SqlConnection : IUtf8JsonSerializable
+    public partial class SqlConnection : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Type))
+            if (Core.Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(PoolName))
+            if (Core.Optional.IsDefined(PoolName))
             {
                 writer.WritePropertyName("poolName"u8);
                 writer.WriteStringValue(PoolName);
             }
-            if (Optional.IsDefined(DatabaseName))
+            if (Core.Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
@@ -53,10 +53,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<SqlConnectionType> type = default;
-            Optional<string> name = default;
-            Optional<string> poolName = default;
-            Optional<string> databaseName = default;
+            Core.Optional<SqlConnectionType> type = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> poolName = default;
+            Core.Optional<string> databaseName = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlConnection(Optional.ToNullable(type), name.Value, poolName.Value, databaseName.Value, additionalProperties);
+            return new SqlConnection(Core.Optional.ToNullable(type), name.Value, poolName.Value, databaseName.Value, additionalProperties);
         }
 
         internal partial class SqlConnectionConverter : JsonConverter<SqlConnection>

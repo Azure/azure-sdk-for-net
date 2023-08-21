@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapSshPublicKey : IUtf8JsonSerializable
+    public partial class SapSshPublicKey : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyData))
+            if (Core.Optional.IsDefined(KeyData))
             {
                 writer.WritePropertyName("keyData"u8);
                 writer.WriteStringValue(KeyData);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> keyData = default;
+            Core.Optional<string> keyData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyData"u8))

@@ -11,52 +11,52 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseWorkspaceRepositoryConfiguration : IUtf8JsonSerializable
+    public partial class SynapseWorkspaceRepositoryConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WorkspaceRepositoryConfigurationType))
+            if (Core.Optional.IsDefined(WorkspaceRepositoryConfigurationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WorkspaceRepositoryConfigurationType);
             }
-            if (Optional.IsDefined(HostName))
+            if (Core.Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(AccountName))
+            if (Core.Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsDefined(ProjectName))
+            if (Core.Optional.IsDefined(ProjectName))
             {
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
             }
-            if (Optional.IsDefined(RepositoryName))
+            if (Core.Optional.IsDefined(RepositoryName))
             {
                 writer.WritePropertyName("repositoryName"u8);
                 writer.WriteStringValue(RepositoryName);
             }
-            if (Optional.IsDefined(CollaborationBranch))
+            if (Core.Optional.IsDefined(CollaborationBranch))
             {
                 writer.WritePropertyName("collaborationBranch"u8);
                 writer.WriteStringValue(CollaborationBranch);
             }
-            if (Optional.IsDefined(RootFolder))
+            if (Core.Optional.IsDefined(RootFolder))
             {
                 writer.WritePropertyName("rootFolder"u8);
                 writer.WriteStringValue(RootFolder);
             }
-            if (Optional.IsDefined(LastCommitId))
+            if (Core.Optional.IsDefined(LastCommitId))
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (Optional.IsDefined(TenantId))
+            if (Core.Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> hostName = default;
-            Optional<string> accountName = default;
-            Optional<string> projectName = default;
-            Optional<string> repositoryName = default;
-            Optional<string> collaborationBranch = default;
-            Optional<string> rootFolder = default;
-            Optional<string> lastCommitId = default;
-            Optional<Guid> tenantId = default;
+            Core.Optional<string> type = default;
+            Core.Optional<string> hostName = default;
+            Core.Optional<string> accountName = default;
+            Core.Optional<string> projectName = default;
+            Core.Optional<string> repositoryName = default;
+            Core.Optional<string> collaborationBranch = default;
+            Core.Optional<string> rootFolder = default;
+            Core.Optional<string> lastCommitId = default;
+            Core.Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseWorkspaceRepositoryConfiguration(type.Value, hostName.Value, accountName.Value, projectName.Value, repositoryName.Value, collaborationBranch.Value, rootFolder.Value, lastCommitId.Value, Optional.ToNullable(tenantId));
+            return new SynapseWorkspaceRepositoryConfiguration(type.Value, hostName.Value, accountName.Value, projectName.Value, repositoryName.Value, collaborationBranch.Value, rootFolder.Value, lastCommitId.Value, Core.Optional.ToNullable(tenantId));
         }
     }
 }

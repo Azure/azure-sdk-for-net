@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> timeGrain = default;
-            Optional<TimeSpan> blobDuration = default;
+            Core.Optional<string> timeGrain = default;
+            Core.Optional<TimeSpan> blobDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeGrain"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new MetricAvailability(timeGrain.Value, Optional.ToNullable(blobDuration));
+            return new MetricAvailability(timeGrain.Value, Core.Optional.ToNullable(blobDuration));
         }
     }
 }

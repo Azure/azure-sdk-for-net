@@ -13,32 +13,32 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(EvaluateDataFlowExpressionRequestConverter))]
-    public partial class EvaluateDataFlowExpressionRequest : IUtf8JsonSerializable
+    public partial class EvaluateDataFlowExpressionRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SessionId))
+            if (Core.Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId);
             }
-            if (Optional.IsDefined(DataFlowName))
+            if (Core.Optional.IsDefined(DataFlowName))
             {
                 writer.WritePropertyName("dataFlowName"u8);
                 writer.WriteStringValue(DataFlowName);
             }
-            if (Optional.IsDefined(StreamName))
+            if (Core.Optional.IsDefined(StreamName))
             {
                 writer.WritePropertyName("streamName"u8);
                 writer.WriteStringValue(StreamName);
             }
-            if (Optional.IsDefined(RowLimits))
+            if (Core.Optional.IsDefined(RowLimits))
             {
                 writer.WritePropertyName("rowLimits"u8);
                 writer.WriteNumberValue(RowLimits.Value);
             }
-            if (Optional.IsDefined(Expression))
+            if (Core.Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
@@ -52,11 +52,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> sessionId = default;
-            Optional<string> dataFlowName = default;
-            Optional<string> streamName = default;
-            Optional<int> rowLimits = default;
-            Optional<string> expression = default;
+            Core.Optional<string> sessionId = default;
+            Core.Optional<string> dataFlowName = default;
+            Core.Optional<string> streamName = default;
+            Core.Optional<int> rowLimits = default;
+            Core.Optional<string> expression = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionId"u8))
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new EvaluateDataFlowExpressionRequest(sessionId.Value, dataFlowName.Value, streamName.Value, Optional.ToNullable(rowLimits), expression.Value);
+            return new EvaluateDataFlowExpressionRequest(sessionId.Value, dataFlowName.Value, streamName.Value, Core.Optional.ToNullable(rowLimits), expression.Value);
         }
 
         internal partial class EvaluateDataFlowExpressionRequestConverter : JsonConverter<EvaluateDataFlowExpressionRequest>

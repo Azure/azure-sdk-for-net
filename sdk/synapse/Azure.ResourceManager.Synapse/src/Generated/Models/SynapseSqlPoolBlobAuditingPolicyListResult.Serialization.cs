@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseSqlPoolBlobAuditingPolicyData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SynapseSqlPoolBlobAuditingPolicyData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseSqlPoolBlobAuditingPolicyListResult(Optional.ToList(value), nextLink.Value);
+            return new SynapseSqlPoolBlobAuditingPolicyListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

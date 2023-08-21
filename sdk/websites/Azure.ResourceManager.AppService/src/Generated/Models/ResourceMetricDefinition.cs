@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of ResourceMetricDefinition. </summary>
         public ResourceMetricDefinition()
         {
-            MetricAvailabilities = new ChangeTrackingList<ResourceMetricAvailability>();
-            Properties = new ChangeTrackingDictionary<string, string>();
+            MetricAvailabilities = new Core.ChangeTrackingList<ResourceMetricAvailability>();
+            Properties = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ResourceMetricDefinition. </summary>

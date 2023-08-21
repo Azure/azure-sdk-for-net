@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class VideoPublishingOptions : IUtf8JsonSerializable
+    public partial class VideoPublishingOptions : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableVideoPreviewImage))
+            if (Core.Optional.IsDefined(EnableVideoPreviewImage))
             {
                 writer.WritePropertyName("enableVideoPreviewImage"u8);
                 writer.WriteStringValue(EnableVideoPreviewImage);
@@ -29,7 +29,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> enableVideoPreviewImage = default;
+            Core.Optional<string> enableVideoPreviewImage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableVideoPreviewImage"u8))

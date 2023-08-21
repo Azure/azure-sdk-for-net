@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class SynapseBigDataPoolInfoOperationSource : IOperationSource<SynapseBigDataPoolInfoResource>
+    internal class SynapseBigDataPoolInfoOperationSource : Core.IOperationSource<SynapseBigDataPoolInfoResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        SynapseBigDataPoolInfoResource IOperationSource<SynapseBigDataPoolInfoResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SynapseBigDataPoolInfoResource Core.IOperationSource<SynapseBigDataPoolInfoResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseBigDataPoolInfoData.DeserializeSynapseBigDataPoolInfoData(document.RootElement);
             return new SynapseBigDataPoolInfoResource(_client, data);
         }
 
-        async ValueTask<SynapseBigDataPoolInfoResource> IOperationSource<SynapseBigDataPoolInfoResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SynapseBigDataPoolInfoResource> Core.IOperationSource<SynapseBigDataPoolInfoResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseBigDataPoolInfoData.DeserializeSynapseBigDataPoolInfoData(document.RootElement);

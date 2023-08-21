@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Run notebook. </summary>
-    public partial class RunNotebookCreateRunOperation : Operation<RunNotebookResponse>, IOperationSource<RunNotebookResponse>
+    public partial class RunNotebookCreateRunOperation : Operation<RunNotebookResponse>, Core.IOperationSource<RunNotebookResponse>
     {
         private readonly OperationInternal<RunNotebookResponse> _operation;
 
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal RunNotebookCreateRunOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            IOperation<RunNotebookResponse> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
+            IOperation<RunNotebookResponse> nextLinkOperation = Core.NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, Core.OperationFinalStateVia.Location);
             _operation = new OperationInternal<RunNotebookResponse>(nextLinkOperation, clientDiagnostics, response, "RunNotebookCreateRunOperation");
         }
 
@@ -67,13 +67,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <inheritdoc />
         public override ValueTask<Response<RunNotebookResponse>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        RunNotebookResponse IOperationSource<RunNotebookResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        RunNotebookResponse Core.IOperationSource<RunNotebookResponse>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return RunNotebookResponse.DeserializeRunNotebookResponse(document.RootElement);
         }
 
-        async ValueTask<RunNotebookResponse> IOperationSource<RunNotebookResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RunNotebookResponse> Core.IOperationSource<RunNotebookResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return RunNotebookResponse.DeserializeRunNotebookResponse(document.RootElement);

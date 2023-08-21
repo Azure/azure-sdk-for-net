@@ -14,64 +14,64 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class ContinuousWebJobData : IUtf8JsonSerializable
+    public partial class ContinuousWebJobData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DetailedStatus))
+            if (Core.Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailed_status"u8);
                 writer.WriteStringValue(DetailedStatus);
             }
-            if (Optional.IsDefined(LogUri))
+            if (Core.Optional.IsDefined(LogUri))
             {
                 writer.WritePropertyName("log_url"u8);
                 writer.WriteStringValue(LogUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(RunCommand))
+            if (Core.Optional.IsDefined(RunCommand))
             {
                 writer.WritePropertyName("run_command"u8);
                 writer.WriteStringValue(RunCommand);
             }
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ExtraInfoUri))
+            if (Core.Optional.IsDefined(ExtraInfoUri))
             {
                 writer.WritePropertyName("extra_info_url"u8);
                 writer.WriteStringValue(ExtraInfoUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(WebJobType))
+            if (Core.Optional.IsDefined(WebJobType))
             {
                 writer.WritePropertyName("web_job_type"u8);
                 writer.WriteStringValue(WebJobType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Error))
+            if (Core.Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
-            if (Optional.IsDefined(IsUsingSdk))
+            if (Core.Optional.IsDefined(IsUsingSdk))
             {
                 writer.WritePropertyName("using_sdk"u8);
                 writer.WriteBooleanValue(IsUsingSdk.Value);
             }
-            if (Optional.IsCollectionDefined(Settings))
+            if (Core.Optional.IsCollectionDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();
@@ -101,21 +101,21 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContinuousWebJobStatus> status = default;
-            Optional<string> detailedStatus = default;
-            Optional<Uri> logUrl = default;
-            Optional<string> runCommand = default;
-            Optional<Uri> url = default;
-            Optional<Uri> extraInfoUrl = default;
-            Optional<WebJobType> webJobType = default;
-            Optional<string> error = default;
-            Optional<bool> usingSdk = default;
-            Optional<IDictionary<string, BinaryData>> settings = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ContinuousWebJobStatus> status = default;
+            Core.Optional<string> detailedStatus = default;
+            Core.Optional<Uri> logUrl = default;
+            Core.Optional<string> runCommand = default;
+            Core.Optional<Uri> url = default;
+            Core.Optional<Uri> extraInfoUrl = default;
+            Core.Optional<WebJobType> webJobType = default;
+            Core.Optional<string> error = default;
+            Core.Optional<bool> usingSdk = default;
+            Core.Optional<IDictionary<string, BinaryData>> settings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new ContinuousWebJobData(id, name, type, systemData.Value, Optional.ToNullable(status), detailedStatus.Value, logUrl.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), Optional.ToDictionary(settings), kind.Value);
+            return new ContinuousWebJobData(id, name, type, systemData.Value, Core.Optional.ToNullable(status), detailedStatus.Value, logUrl.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Core.Optional.ToNullable(webJobType), error.Value, Core.Optional.ToNullable(usingSdk), Core.Optional.ToDictionary(settings), kind.Value);
         }
     }
 }

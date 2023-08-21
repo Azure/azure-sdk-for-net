@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ObjectReplicationPolicyRule : IUtf8JsonSerializable
+    public partial class ObjectReplicationPolicyRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RuleId))
+            if (Core.Optional.IsDefined(RuleId))
             {
                 writer.WritePropertyName("ruleId"u8);
                 writer.WriteStringValue(RuleId);
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStringValue(SourceContainer);
             writer.WritePropertyName("destinationContainer"u8);
             writer.WriteStringValue(DestinationContainer);
-            if (Optional.IsDefined(Filters))
+            if (Core.Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<string> ruleId = default;
+            Core.Optional<string> ruleId = default;
             string sourceContainer = default;
             string destinationContainer = default;
-            Optional<ObjectReplicationPolicyFilter> filters = default;
+            Core.Optional<ObjectReplicationPolicyFilter> filters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleId"u8))

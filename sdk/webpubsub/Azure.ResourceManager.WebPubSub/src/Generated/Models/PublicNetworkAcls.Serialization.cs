@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class PublicNetworkAcls : IUtf8JsonSerializable
+    public partial class PublicNetworkAcls : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Allow))
+            if (Core.Optional.IsCollectionDefined(Allow))
             {
                 writer.WritePropertyName("allow"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Deny))
+            if (Core.Optional.IsCollectionDefined(Deny))
             {
                 writer.WritePropertyName("deny"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<IList<WebPubSubRequestType>> allow = default;
-            Optional<IList<WebPubSubRequestType>> deny = default;
+            Core.Optional<IList<WebPubSubRequestType>> allow = default;
+            Core.Optional<IList<WebPubSubRequestType>> deny = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allow"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new PublicNetworkAcls(Optional.ToList(allow), Optional.ToList(deny));
+            return new PublicNetworkAcls(Core.Optional.ToList(allow), Core.Optional.ToList(deny));
         }
     }
 }

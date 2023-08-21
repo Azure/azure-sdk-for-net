@@ -16,7 +16,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of RemoteDeviceAdapterCollection. </summary>
         public RemoteDeviceAdapterCollection()
         {
-            Value = new ChangeTrackingList<RemoteDeviceAdapter>();
+            Value = new Core.ChangeTrackingList<RemoteDeviceAdapter>();
         }
 
         /// <summary> Initializes a new instance of RemoteDeviceAdapterCollection. </summary>

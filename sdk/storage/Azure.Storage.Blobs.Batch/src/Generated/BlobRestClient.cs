@@ -97,7 +97,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobSetAccessTierHeaders>> SetAccessTierAsync(string containerName, string blob, BatchAccessTier tier, int? timeout = null, BatchRehydratePriority? rehydratePriority = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<BlobSetAccessTierHeaders>> SetAccessTierAsync(string containerName, string blob, BatchAccessTier tier, int? timeout = null, BatchRehydratePriority? rehydratePriority = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {
@@ -115,7 +115,7 @@ namespace Azure.Storage.Blobs.Batch
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -131,7 +131,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobSetAccessTierHeaders> SetAccessTier(string containerName, string blob, BatchAccessTier tier, int? timeout = null, BatchRehydratePriority? rehydratePriority = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<BlobSetAccessTierHeaders> SetAccessTier(string containerName, string blob, BatchAccessTier tier, int? timeout = null, BatchRehydratePriority? rehydratePriority = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {
@@ -149,7 +149,7 @@ namespace Azure.Storage.Blobs.Batch
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -230,7 +230,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="blobDeleteType"> Optional.  Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlobDeleteHeaders>> DeleteAsync(string containerName, string blob, int? timeout = null, string leaseId = null, DeleteSnapshotsOptionType? deleteSnapshots = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, BlobDeleteType? blobDeleteType = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<BlobDeleteHeaders>> DeleteAsync(string containerName, string blob, int? timeout = null, string leaseId = null, DeleteSnapshotsOptionType? deleteSnapshots = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, BlobDeleteType? blobDeleteType = null, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {
@@ -247,7 +247,7 @@ namespace Azure.Storage.Blobs.Batch
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -267,7 +267,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="blobDeleteType"> Optional.  Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="blob"/> is null. </exception>
-        public ResponseWithHeaders<BlobDeleteHeaders> Delete(string containerName, string blob, int? timeout = null, string leaseId = null, DeleteSnapshotsOptionType? deleteSnapshots = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, BlobDeleteType? blobDeleteType = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<BlobDeleteHeaders> Delete(string containerName, string blob, int? timeout = null, string leaseId = null, DeleteSnapshotsOptionType? deleteSnapshots = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, BlobDeleteType? blobDeleteType = null, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {
@@ -284,7 +284,7 @@ namespace Azure.Storage.Blobs.Batch
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

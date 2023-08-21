@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public StorageSyncServiceCreateOrUpdateContent(AzureLocation location)
         {
             Location = location;
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </summary>

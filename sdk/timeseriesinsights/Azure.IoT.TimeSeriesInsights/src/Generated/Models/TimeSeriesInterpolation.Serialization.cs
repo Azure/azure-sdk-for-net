@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class TimeSeriesInterpolation : IUtf8JsonSerializable
+    public partial class TimeSeriesInterpolation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(Boundary))
+            if (Core.Optional.IsDefined(Boundary))
             {
                 writer.WritePropertyName("boundary"u8);
                 writer.WriteObjectValue(Boundary);
@@ -34,8 +34,8 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<InterpolationKind> kind = default;
-            Optional<InterpolationBoundary> boundary = default;
+            Core.Optional<InterpolationKind> kind = default;
+            Core.Optional<InterpolationBoundary> boundary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -57,7 +57,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TimeSeriesInterpolation(Optional.ToNullable(kind), boundary.Value);
+            return new TimeSeriesInterpolation(Core.Optional.ToNullable(kind), boundary.Value);
         }
     }
 }

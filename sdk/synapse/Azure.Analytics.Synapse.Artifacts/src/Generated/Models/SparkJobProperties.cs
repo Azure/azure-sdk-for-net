@@ -29,16 +29,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(executorMemory, nameof(executorMemory));
 
             File = file;
-            Args = new ChangeTrackingList<string>();
-            Jars = new ChangeTrackingList<string>();
-            Files = new ChangeTrackingList<string>();
-            Archives = new ChangeTrackingList<string>();
+            Args = new Core.ChangeTrackingList<string>();
+            Jars = new Core.ChangeTrackingList<string>();
+            Files = new Core.ChangeTrackingList<string>();
+            Archives = new Core.ChangeTrackingList<string>();
             DriverMemory = driverMemory;
             DriverCores = driverCores;
             ExecutorMemory = executorMemory;
             ExecutorCores = executorCores;
             NumExecutors = numExecutors;
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SparkJobProperties. </summary>

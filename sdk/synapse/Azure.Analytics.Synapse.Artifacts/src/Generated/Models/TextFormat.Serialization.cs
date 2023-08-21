@@ -14,64 +14,64 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(TextFormatConverter))]
-    public partial class TextFormat : IUtf8JsonSerializable
+    public partial class TextFormat : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ColumnDelimiter))
+            if (Core.Optional.IsDefined(ColumnDelimiter))
             {
                 writer.WritePropertyName("columnDelimiter"u8);
                 writer.WriteObjectValue(ColumnDelimiter);
             }
-            if (Optional.IsDefined(RowDelimiter))
+            if (Core.Optional.IsDefined(RowDelimiter))
             {
                 writer.WritePropertyName("rowDelimiter"u8);
                 writer.WriteObjectValue(RowDelimiter);
             }
-            if (Optional.IsDefined(EscapeChar))
+            if (Core.Optional.IsDefined(EscapeChar))
             {
                 writer.WritePropertyName("escapeChar"u8);
                 writer.WriteObjectValue(EscapeChar);
             }
-            if (Optional.IsDefined(QuoteChar))
+            if (Core.Optional.IsDefined(QuoteChar))
             {
                 writer.WritePropertyName("quoteChar"u8);
                 writer.WriteObjectValue(QuoteChar);
             }
-            if (Optional.IsDefined(NullValue))
+            if (Core.Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue"u8);
                 writer.WriteObjectValue(NullValue);
             }
-            if (Optional.IsDefined(EncodingName))
+            if (Core.Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
                 writer.WriteObjectValue(EncodingName);
             }
-            if (Optional.IsDefined(TreatEmptyAsNull))
+            if (Core.Optional.IsDefined(TreatEmptyAsNull))
             {
                 writer.WritePropertyName("treatEmptyAsNull"u8);
                 writer.WriteObjectValue(TreatEmptyAsNull);
             }
-            if (Optional.IsDefined(SkipLineCount))
+            if (Core.Optional.IsDefined(SkipLineCount))
             {
                 writer.WritePropertyName("skipLineCount"u8);
                 writer.WriteObjectValue(SkipLineCount);
             }
-            if (Optional.IsDefined(FirstRowAsHeader))
+            if (Core.Optional.IsDefined(FirstRowAsHeader))
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
                 writer.WriteObjectValue(FirstRowAsHeader);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Serializer))
+            if (Core.Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer"u8);
                 writer.WriteObjectValue(Serializer);
             }
-            if (Optional.IsDefined(Deserializer))
+            if (Core.Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer"u8);
                 writer.WriteObjectValue(Deserializer);
@@ -90,18 +90,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> columnDelimiter = default;
-            Optional<object> rowDelimiter = default;
-            Optional<object> escapeChar = default;
-            Optional<object> quoteChar = default;
-            Optional<object> nullValue = default;
-            Optional<object> encodingName = default;
-            Optional<object> treatEmptyAsNull = default;
-            Optional<object> skipLineCount = default;
-            Optional<object> firstRowAsHeader = default;
+            Core.Optional<object> columnDelimiter = default;
+            Core.Optional<object> rowDelimiter = default;
+            Core.Optional<object> escapeChar = default;
+            Core.Optional<object> quoteChar = default;
+            Core.Optional<object> nullValue = default;
+            Core.Optional<object> encodingName = default;
+            Core.Optional<object> treatEmptyAsNull = default;
+            Core.Optional<object> skipLineCount = default;
+            Core.Optional<object> firstRowAsHeader = default;
             string type = default;
-            Optional<object> serializer = default;
-            Optional<object> deserializer = default;
+            Core.Optional<object> serializer = default;
+            Core.Optional<object> deserializer = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

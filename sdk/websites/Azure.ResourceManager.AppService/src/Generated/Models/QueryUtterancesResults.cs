@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of QueryUtterancesResults. </summary>
         public QueryUtterancesResults()
         {
-            Results = new ChangeTrackingList<QueryUtterancesResult>();
+            Results = new Core.ChangeTrackingList<QueryUtterancesResult>();
         }
 
         /// <summary> Initializes a new instance of QueryUtterancesResults. </summary>

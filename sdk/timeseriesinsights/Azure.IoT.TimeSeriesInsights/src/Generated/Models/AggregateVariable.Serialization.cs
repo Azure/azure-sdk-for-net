@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class AggregateVariable : IUtf8JsonSerializable
+    public partial class AggregateVariable : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("aggregation"u8);
             writer.WriteObjectValue(Aggregation);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Optional.IsDefined(Filter))
+            if (Core.Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -35,7 +35,7 @@ namespace Azure.IoT.TimeSeriesInsights
             }
             TimeSeriesExpression aggregation = default;
             string kind = default;
-            Optional<TimeSeriesExpression> filter = default;
+            Core.Optional<TimeSeriesExpression> filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aggregation"u8))

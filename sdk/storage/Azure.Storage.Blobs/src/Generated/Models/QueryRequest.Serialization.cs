@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class QueryRequest : IXmlSerializable
+    internal partial class QueryRequest : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "QueryRequest");
             writer.WriteStartElement("QueryType");
@@ -21,11 +21,11 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteStartElement("Expression");
             writer.WriteValue(Expression);
             writer.WriteEndElement();
-            if (Optional.IsDefined(InputSerialization))
+            if (Core.Optional.IsDefined(InputSerialization))
             {
                 writer.WriteObjectValue(InputSerialization, "InputSerialization");
             }
-            if (Optional.IsDefined(OutputSerialization))
+            if (Core.Optional.IsDefined(OutputSerialization))
             {
                 writer.WriteObjectValue(OutputSerialization, "OutputSerialization");
             }

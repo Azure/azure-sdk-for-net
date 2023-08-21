@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueMessage : IXmlSerializable
+    public partial class QueueMessage : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "QueueMessage");
             writer.WriteStartElement("MessageText");

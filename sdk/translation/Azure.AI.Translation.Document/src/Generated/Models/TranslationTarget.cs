@@ -25,7 +25,7 @@ namespace Azure.AI.Translation.Document
 
             TargetUri = targetUri;
             LanguageCode = languageCode;
-            Glossaries = new ChangeTrackingList<TranslationGlossary>();
+            Glossaries = new Core.ChangeTrackingList<TranslationGlossary>();
         }
         /// <summary> List of Glossary. </summary>
         public IList<TranslationGlossary> Glossaries { get; }

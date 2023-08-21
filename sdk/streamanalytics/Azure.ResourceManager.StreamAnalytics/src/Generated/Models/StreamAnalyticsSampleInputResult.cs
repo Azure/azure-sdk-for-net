@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of StreamAnalyticsSampleInputResult. </summary>
         internal StreamAnalyticsSampleInputResult()
         {
-            Diagnostics = new ChangeTrackingList<string>();
+            Diagnostics = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StreamAnalyticsSampleInputResult. </summary>

@@ -13,29 +13,29 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseClusterPrincipalAssignmentData : IUtf8JsonSerializable
+    public partial class SynapseClusterPrincipalAssignmentData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrincipalId))
+            if (Core.Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
-            if (Optional.IsDefined(Role))
+            if (Core.Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
-            if (Optional.IsDefined(TenantId))
+            if (Core.Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(PrincipalType))
+            if (Core.Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> principalId = default;
-            Optional<SynapseClusterPrincipalRole> role = default;
-            Optional<Guid> tenantId = default;
-            Optional<SynapsePrincipalType> principalType = default;
-            Optional<string> tenantName = default;
-            Optional<string> principalName = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
-            Optional<Guid> aadObjectId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> principalId = default;
+            Core.Optional<SynapseClusterPrincipalRole> role = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<SynapsePrincipalType> principalType = default;
+            Core.Optional<string> tenantName = default;
+            Core.Optional<string> principalName = default;
+            Core.Optional<ResourceProvisioningState> provisioningState = default;
+            Core.Optional<Guid> aadObjectId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseClusterPrincipalAssignmentData(id, name, type, systemData.Value, principalId.Value, Optional.ToNullable(role), Optional.ToNullable(tenantId), Optional.ToNullable(principalType), tenantName.Value, principalName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aadObjectId));
+            return new SynapseClusterPrincipalAssignmentData(id, name, type, systemData.Value, principalId.Value, Core.Optional.ToNullable(role), Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(principalType), tenantName.Value, principalName.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(aadObjectId));
         }
     }
 }

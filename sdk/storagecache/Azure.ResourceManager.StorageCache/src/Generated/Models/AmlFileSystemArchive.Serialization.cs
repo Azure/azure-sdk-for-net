@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> filesystemPath = default;
-            Optional<AmlFileSystemArchiveStatus> status = default;
+            Core.Optional<string> filesystemPath = default;
+            Core.Optional<AmlFileSystemArchiveStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filesystemPath"u8))

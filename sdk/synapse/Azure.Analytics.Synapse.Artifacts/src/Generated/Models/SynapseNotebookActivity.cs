@@ -24,8 +24,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(notebook, nameof(notebook));
 
             Notebook = notebook;
-            Parameters = new ChangeTrackingDictionary<string, NotebookParameter>();
-            SparkConfig = new ChangeTrackingDictionary<string, object>();
+            Parameters = new Core.ChangeTrackingDictionary<string, NotebookParameter>();
+            SparkConfig = new Core.ChangeTrackingDictionary<string, object>();
             Type = "SynapseNotebook";
         }
 

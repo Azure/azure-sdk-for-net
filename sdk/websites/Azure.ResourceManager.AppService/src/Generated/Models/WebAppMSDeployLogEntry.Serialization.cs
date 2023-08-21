@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> time = default;
-            Optional<WebAppMSDeployLogEntryType> type = default;
-            Optional<string> message = default;
+            Core.Optional<DateTimeOffset> time = default;
+            Core.Optional<WebAppMSDeployLogEntryType> type = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new WebAppMSDeployLogEntry(Optional.ToNullable(time), Optional.ToNullable(type), message.Value);
+            return new WebAppMSDeployLogEntry(Core.Optional.ToNullable(time), Core.Optional.ToNullable(type), message.Value);
         }
     }
 }

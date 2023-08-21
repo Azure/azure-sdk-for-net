@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Workloads
         /// <summary> Initializes a new instance of SapLandscapeMonitorData. </summary>
         public SapLandscapeMonitorData()
         {
-            TopMetricsThresholds = new ChangeTrackingList<SapLandscapeMonitorMetricThresholds>();
+            TopMetricsThresholds = new Core.ChangeTrackingList<SapLandscapeMonitorMetricThresholds>();
         }
 
         /// <summary> Initializes a new instance of SapLandscapeMonitorData. </summary>

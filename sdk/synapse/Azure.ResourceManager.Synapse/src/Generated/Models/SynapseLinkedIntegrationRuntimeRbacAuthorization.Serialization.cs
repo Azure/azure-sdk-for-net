@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseLinkedIntegrationRuntimeRbacAuthorization : IUtf8JsonSerializable
+    public partial class SynapseLinkedIntegrationRuntimeRbacAuthorization : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);

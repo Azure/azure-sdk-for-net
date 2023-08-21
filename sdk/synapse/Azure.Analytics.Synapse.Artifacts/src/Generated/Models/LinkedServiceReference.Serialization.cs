@@ -15,16 +15,16 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkedServiceReferenceConverter))]
-    public partial class LinkedServiceReference : IUtf8JsonSerializable
+    public partial class LinkedServiceReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             LinkedServiceReferenceType type = default;
             string referenceName = default;
-            Optional<IDictionary<string, object>> parameters = default;
+            Core.Optional<IDictionary<string, object>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -86,7 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkedServiceReference(type, referenceName, Optional.ToDictionary(parameters));
+            return new LinkedServiceReference(type, referenceName, Core.Optional.ToDictionary(parameters));
         }
 
         internal partial class LinkedServiceReferenceConverter : JsonConverter<LinkedServiceReference>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of AmlFileSystemPropertiesHsm. </summary>
         public AmlFileSystemPropertiesHsm()
         {
-            ArchiveStatus = new ChangeTrackingList<AmlFileSystemArchive>();
+            ArchiveStatus = new Core.ChangeTrackingList<AmlFileSystemArchive>();
         }
 
         /// <summary> Initializes a new instance of AmlFileSystemPropertiesHsm. </summary>

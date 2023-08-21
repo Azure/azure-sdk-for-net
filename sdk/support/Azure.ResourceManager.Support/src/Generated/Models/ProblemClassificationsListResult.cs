@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of ProblemClassificationsListResult. </summary>
         internal ProblemClassificationsListResult()
         {
-            Value = new ChangeTrackingList<ProblemClassificationData>();
+            Value = new Core.ChangeTrackingList<ProblemClassificationData>();
         }
 
         /// <summary> Initializes a new instance of ProblemClassificationsListResult. </summary>

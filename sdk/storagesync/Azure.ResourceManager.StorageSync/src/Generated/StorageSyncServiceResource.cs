@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = await _storageSyncServiceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation(_storageSyncServiceClientDiagnostics, Pipeline, _storageSyncServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation(_storageSyncServiceClientDiagnostics, Pipeline, _storageSyncServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = _storageSyncServiceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StorageSyncArmOperation(_storageSyncServiceClientDiagnostics, Pipeline, _storageSyncServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation(_storageSyncServiceClientDiagnostics, Pipeline, _storageSyncServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = await _storageSyncServiceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation<StorageSyncServiceResource>(new StorageSyncServiceOperationSource(Client), _storageSyncServiceClientDiagnostics, Pipeline, _storageSyncServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation<StorageSyncServiceResource>(new StorageSyncServiceOperationSource(Client), _storageSyncServiceClientDiagnostics, Pipeline, _storageSyncServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = _storageSyncServiceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new StorageSyncArmOperation<StorageSyncServiceResource>(new StorageSyncServiceOperationSource(Client), _storageSyncServiceClientDiagnostics, Pipeline, _storageSyncServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation<StorageSyncServiceResource>(new StorageSyncServiceOperationSource(Client), _storageSyncServiceClientDiagnostics, Pipeline, _storageSyncServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual AsyncPageable<StorageSyncPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, StorageSyncPrivateLinkResource.DeserializeStorageSyncPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "StorageSyncServiceResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, StorageSyncPrivateLinkResource.DeserializeStorageSyncPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "StorageSyncServiceResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual Pageable<StorageSyncPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, StorageSyncPrivateLinkResource.DeserializeStorageSyncPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "StorageSyncServiceResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, StorageSyncPrivateLinkResource.DeserializeStorageSyncPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "StorageSyncServiceResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>

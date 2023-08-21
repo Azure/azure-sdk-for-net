@@ -40,8 +40,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             HostSubscriptionId = hostSubscriptionId;
             Tenant = tenant;
             ClusterResourceGroup = clusterResourceGroup;
-            AdditionalLinkedServiceNames = new ChangeTrackingList<LinkedServiceReference>();
-            ScriptActions = new ChangeTrackingList<ScriptAction>();
+            AdditionalLinkedServiceNames = new Core.ChangeTrackingList<LinkedServiceReference>();
+            ScriptActions = new Core.ChangeTrackingList<ScriptAction>();
             Type = "HDInsightOnDemand";
         }
 

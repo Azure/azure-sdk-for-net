@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseGrantSqlControlToManagedIdentity : IUtf8JsonSerializable
+    public partial class SynapseGrantSqlControlToManagedIdentity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DesiredState))
+            if (Core.Optional.IsDefined(DesiredState))
             {
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToSerialString());
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<SynapseDesiredState> desiredState = default;
-            Optional<SynapseGrantSqlControlToManagedIdentityState> actualState = default;
+            Core.Optional<SynapseDesiredState> desiredState = default;
+            Core.Optional<SynapseGrantSqlControlToManagedIdentityState> actualState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("desiredState"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseGrantSqlControlToManagedIdentity(Optional.ToNullable(desiredState), Optional.ToNullable(actualState));
+            return new SynapseGrantSqlControlToManagedIdentity(Core.Optional.ToNullable(desiredState), Core.Optional.ToNullable(actualState));
         }
     }
 }

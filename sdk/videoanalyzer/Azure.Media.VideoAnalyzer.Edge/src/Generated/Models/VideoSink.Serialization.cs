@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class VideoSink : IUtf8JsonSerializable
+    public partial class VideoSink : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("videoName"u8);
             writer.WriteStringValue(VideoName);
-            if (Optional.IsDefined(VideoCreationProperties))
+            if (Core.Optional.IsDefined(VideoCreationProperties))
             {
                 writer.WritePropertyName("videoCreationProperties"u8);
                 writer.WriteObjectValue(VideoCreationProperties);
             }
-            if (Optional.IsDefined(VideoPublishingOptions))
+            if (Core.Optional.IsDefined(VideoPublishingOptions))
             {
                 writer.WritePropertyName("videoPublishingOptions"u8);
                 writer.WriteObjectValue(VideoPublishingOptions);
@@ -53,8 +53,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string videoName = default;
-            Optional<VideoCreationProperties> videoCreationProperties = default;
-            Optional<VideoPublishingOptions> videoPublishingOptions = default;
+            Core.Optional<VideoCreationProperties> videoCreationProperties = default;
+            Core.Optional<VideoPublishingOptions> videoPublishingOptions = default;
             string localMediaCachePath = default;
             string localMediaCacheMaximumSizeMiB = default;
             string type = default;

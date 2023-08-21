@@ -14,12 +14,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SnowflakeExportCopyCommandConverter))]
-    public partial class SnowflakeExportCopyCommand : IUtf8JsonSerializable
+    public partial class SnowflakeExportCopyCommand : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AdditionalCopyOptions))
+            if (Core.Optional.IsCollectionDefined(AdditionalCopyOptions))
             {
                 writer.WritePropertyName("additionalCopyOptions"u8);
                 writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(AdditionalFormatOptions))
+            if (Core.Optional.IsCollectionDefined(AdditionalFormatOptions))
             {
                 writer.WritePropertyName("additionalFormatOptions"u8);
                 writer.WriteStartObject();
@@ -67,8 +67,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, object>> additionalCopyOptions = default;
-            Optional<IDictionary<string, object>> additionalFormatOptions = default;
+            Core.Optional<IDictionary<string, object>> additionalCopyOptions = default;
+            Core.Optional<IDictionary<string, object>> additionalFormatOptions = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -124,7 +124,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SnowflakeExportCopyCommand(type, additionalProperties, Optional.ToDictionary(additionalCopyOptions), Optional.ToDictionary(additionalFormatOptions));
+            return new SnowflakeExportCopyCommand(type, additionalProperties, Core.Optional.ToDictionary(additionalCopyOptions), Core.Optional.ToDictionary(additionalFormatOptions));
         }
 
         internal partial class SnowflakeExportCopyCommandConverter : JsonConverter<SnowflakeExportCopyCommand>

@@ -14,12 +14,12 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    public partial class SapCentralServerInstanceData : IUtf8JsonSerializable
+    public partial class SapCentralServerInstanceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.Workloads
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MessageServerProperties))
+            if (Core.Optional.IsDefined(MessageServerProperties))
             {
                 writer.WritePropertyName("messageServerProperties"u8);
                 writer.WriteObjectValue(MessageServerProperties);
             }
-            if (Optional.IsDefined(EnqueueServerProperties))
+            if (Core.Optional.IsDefined(EnqueueServerProperties))
             {
                 writer.WritePropertyName("enqueueServerProperties"u8);
                 writer.WriteObjectValue(EnqueueServerProperties);
             }
-            if (Optional.IsDefined(GatewayServerProperties))
+            if (Core.Optional.IsDefined(GatewayServerProperties))
             {
                 writer.WritePropertyName("gatewayServerProperties"u8);
                 writer.WriteObjectValue(GatewayServerProperties);
             }
-            if (Optional.IsDefined(EnqueueReplicationServerProperties))
+            if (Core.Optional.IsDefined(EnqueueReplicationServerProperties))
             {
                 writer.WritePropertyName("enqueueReplicationServerProperties"u8);
                 writer.WriteObjectValue(EnqueueReplicationServerProperties);
@@ -64,26 +64,26 @@ namespace Azure.ResourceManager.Workloads
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> instanceNo = default;
-            Optional<ResourceIdentifier> subnet = default;
-            Optional<MessageServerProperties> messageServerProperties = default;
-            Optional<EnqueueServerProperties> enqueueServerProperties = default;
-            Optional<GatewayServerProperties> gatewayServerProperties = default;
-            Optional<EnqueueReplicationServerProperties> enqueueReplicationServerProperties = default;
-            Optional<string> kernelVersion = default;
-            Optional<string> kernelPatch = default;
-            Optional<SubResource> loadBalancerDetails = default;
-            Optional<IReadOnlyList<CentralServerVmDetails>> vmDetails = default;
-            Optional<SapVirtualInstanceStatus> status = default;
-            Optional<SapHealthState> health = default;
-            Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
-            Optional<SapVirtualInstanceError> errors = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> instanceNo = default;
+            Core.Optional<ResourceIdentifier> subnet = default;
+            Core.Optional<MessageServerProperties> messageServerProperties = default;
+            Core.Optional<EnqueueServerProperties> enqueueServerProperties = default;
+            Core.Optional<GatewayServerProperties> gatewayServerProperties = default;
+            Core.Optional<EnqueueReplicationServerProperties> enqueueReplicationServerProperties = default;
+            Core.Optional<string> kernelVersion = default;
+            Core.Optional<string> kernelPatch = default;
+            Core.Optional<SubResource> loadBalancerDetails = default;
+            Core.Optional<IReadOnlyList<CentralServerVmDetails>> vmDetails = default;
+            Core.Optional<SapVirtualInstanceStatus> status = default;
+            Core.Optional<SapHealthState> health = default;
+            Core.Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
+            Core.Optional<SapVirtualInstanceError> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Workloads
                     continue;
                 }
             }
-            return new SapCentralServerInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceNo.Value, subnet.Value, messageServerProperties.Value, enqueueServerProperties.Value, gatewayServerProperties.Value, enqueueReplicationServerProperties.Value, kernelVersion.Value, kernelPatch.Value, loadBalancerDetails, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(provisioningState), errors.Value);
+            return new SapCentralServerInstanceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, instanceNo.Value, subnet.Value, messageServerProperties.Value, enqueueServerProperties.Value, gatewayServerProperties.Value, enqueueReplicationServerProperties.Value, kernelVersion.Value, kernelPatch.Value, loadBalancerDetails, Core.Optional.ToList(vmDetails), Core.Optional.ToNullable(status), Core.Optional.ToNullable(health), Core.Optional.ToNullable(provisioningState), errors.Value);
         }
     }
 }

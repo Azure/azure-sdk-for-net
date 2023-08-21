@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DiagnosticAnalysis. </summary>
         public DiagnosticAnalysis()
         {
-            AbnormalTimePeriods = new ChangeTrackingList<AbnormalTimePeriod>();
-            Payload = new ChangeTrackingList<AnalysisDetectorEvidences>();
-            NonCorrelatedDetectors = new ChangeTrackingList<DetectorDefinition>();
+            AbnormalTimePeriods = new Core.ChangeTrackingList<AbnormalTimePeriod>();
+            Payload = new Core.ChangeTrackingList<AnalysisDetectorEvidences>();
+            NonCorrelatedDetectors = new Core.ChangeTrackingList<DetectorDefinition>();
         }
 
         /// <summary> Initializes a new instance of DiagnosticAnalysis. </summary>

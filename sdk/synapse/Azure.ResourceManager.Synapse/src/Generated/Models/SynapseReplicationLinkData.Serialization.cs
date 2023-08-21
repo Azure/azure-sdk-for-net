@@ -13,9 +13,9 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseReplicationLinkData : IUtf8JsonSerializable
+    public partial class SynapseReplicationLinkData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -30,21 +30,21 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isTerminationAllowed = default;
-            Optional<string> replicationMode = default;
-            Optional<string> partnerServer = default;
-            Optional<string> partnerDatabase = default;
-            Optional<AzureLocation> partnerLocation = default;
-            Optional<SynapseReplicationRole> role = default;
-            Optional<SynapseReplicationRole> partnerRole = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<int> percentComplete = default;
-            Optional<SynapseReplicationState> replicationState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<bool> isTerminationAllowed = default;
+            Core.Optional<string> replicationMode = default;
+            Core.Optional<string> partnerServer = default;
+            Core.Optional<string> partnerDatabase = default;
+            Core.Optional<AzureLocation> partnerLocation = default;
+            Core.Optional<SynapseReplicationRole> role = default;
+            Core.Optional<SynapseReplicationRole> partnerRole = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<int> percentComplete = default;
+            Core.Optional<SynapseReplicationState> replicationState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseReplicationLinkData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(isTerminationAllowed), replicationMode.Value, partnerServer.Value, partnerDatabase.Value, Optional.ToNullable(partnerLocation), Optional.ToNullable(role), Optional.ToNullable(partnerRole), Optional.ToNullable(startTime), Optional.ToNullable(percentComplete), Optional.ToNullable(replicationState));
+            return new SynapseReplicationLinkData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(isTerminationAllowed), replicationMode.Value, partnerServer.Value, partnerDatabase.Value, Core.Optional.ToNullable(partnerLocation), Core.Optional.ToNullable(role), Core.Optional.ToNullable(partnerRole), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(percentComplete), Core.Optional.ToNullable(replicationState));
         }
     }
 }

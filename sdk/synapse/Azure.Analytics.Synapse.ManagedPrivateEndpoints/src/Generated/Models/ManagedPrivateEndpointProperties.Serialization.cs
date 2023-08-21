@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
-    public partial class ManagedPrivateEndpointProperties : IUtf8JsonSerializable
+    public partial class ManagedPrivateEndpointProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(PrivateLinkResourceId))
+            if (Core.Optional.IsDefined(PrivateLinkResourceId))
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (Optional.IsDefined(GroupId))
+            if (Core.Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsDefined(ConnectionState))
+            if (Core.Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
             }
-            if (Optional.IsCollectionDefined(Fqdns))
+            if (Core.Optional.IsCollectionDefined(Fqdns))
             {
                 writer.WritePropertyName("fqdns"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsCompliant))
+            if (Core.Optional.IsDefined(IsCompliant))
             {
                 writer.WritePropertyName("isCompliant"u8);
                 writer.WriteBooleanValue(IsCompliant.Value);
@@ -60,14 +60,14 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> privateLinkResourceId = default;
-            Optional<string> groupId = default;
-            Optional<string> provisioningState = default;
-            Optional<ManagedPrivateEndpointConnectionState> connectionState = default;
-            Optional<bool> isReserved = default;
-            Optional<IList<string>> fqdns = default;
-            Optional<bool> isCompliant = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> privateLinkResourceId = default;
+            Core.Optional<string> groupId = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<ManagedPrivateEndpointConnectionState> connectionState = default;
+            Core.Optional<bool> isReserved = default;
+            Core.Optional<IList<string>> fqdns = default;
+            Core.Optional<bool> isCompliant = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -132,7 +132,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                     continue;
                 }
             }
-            return new ManagedPrivateEndpointProperties(name.Value, privateLinkResourceId.Value, groupId.Value, provisioningState.Value, connectionState.Value, Optional.ToNullable(isReserved), Optional.ToList(fqdns), Optional.ToNullable(isCompliant));
+            return new ManagedPrivateEndpointProperties(name.Value, privateLinkResourceId.Value, groupId.Value, provisioningState.Value, connectionState.Value, Core.Optional.ToNullable(isReserved), Core.Optional.ToList(fqdns), Core.Optional.ToNullable(isCompliant));
         }
     }
 }

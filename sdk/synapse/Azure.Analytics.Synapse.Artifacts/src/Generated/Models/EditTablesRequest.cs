@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of EditTablesRequest. </summary>
         public EditTablesRequest()
         {
-            LinkTables = new ChangeTrackingList<LinkTableRequest>();
+            LinkTables = new Core.ChangeTrackingList<LinkTableRequest>();
         }
 
         /// <summary> Initializes a new instance of EditTablesRequest. </summary>

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class KeyInfo : IXmlSerializable
+    internal partial class KeyInfo : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "KeyInfo");
-            if (Optional.IsDefined(Start))
+            if (Core.Optional.IsDefined(Start))
             {
                 writer.WriteStartElement("Start");
                 writer.WriteValue(Start);

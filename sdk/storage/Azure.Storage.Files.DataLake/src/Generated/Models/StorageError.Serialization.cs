@@ -29,7 +29,7 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 return null;
             }
-            Optional<StorageErrorError> error = default;
+            Core.Optional<StorageErrorError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))

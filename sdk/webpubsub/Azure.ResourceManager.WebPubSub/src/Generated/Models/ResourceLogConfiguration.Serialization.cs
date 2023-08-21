@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    internal partial class ResourceLogConfiguration : IUtf8JsonSerializable
+    internal partial class ResourceLogConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Categories))
+            if (Core.Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<IList<ResourceLogCategory>> categories = default;
+            Core.Optional<IList<ResourceLogCategory>> categories = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("categories"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new ResourceLogConfiguration(Optional.ToList(categories));
+            return new ResourceLogConfiguration(Core.Optional.ToList(categories));
         }
     }
 }

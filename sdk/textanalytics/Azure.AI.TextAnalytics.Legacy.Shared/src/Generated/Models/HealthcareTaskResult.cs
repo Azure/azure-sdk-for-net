@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <summary> Initializes a new instance of HealthcareTaskResult. </summary>
         internal HealthcareTaskResult()
         {
-            Errors = new ChangeTrackingList<TextAnalyticsError>();
+            Errors = new Core.ChangeTrackingList<TextAnalyticsError>();
         }
 
         /// <summary> Initializes a new instance of HealthcareTaskResult. </summary>

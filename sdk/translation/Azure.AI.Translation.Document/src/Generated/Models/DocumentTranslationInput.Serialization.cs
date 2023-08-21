@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    public partial class DocumentTranslationInput : IUtf8JsonSerializable
+    public partial class DocumentTranslationInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
@@ -24,7 +24,7 @@ namespace Azure.AI.Translation.Document
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(StorageUriKind))
+            if (Core.Optional.IsDefined(StorageUriKind))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageUriKind.Value.ToSerialString());

@@ -15,18 +15,18 @@ using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    public partial class StreamingJobData : IUtf8JsonSerializable
+    public partial class StreamingJobData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -41,57 +41,57 @@ namespace Azure.ResourceManager.StreamAnalytics
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(JobType))
+            if (Core.Optional.IsDefined(JobType))
             {
                 writer.WritePropertyName("jobType"u8);
                 writer.WriteStringValue(JobType.Value.ToString());
             }
-            if (Optional.IsDefined(OutputStartMode))
+            if (Core.Optional.IsDefined(OutputStartMode))
             {
                 writer.WritePropertyName("outputStartMode"u8);
                 writer.WriteStringValue(OutputStartMode.Value.ToString());
             }
-            if (Optional.IsDefined(OutputStartOn))
+            if (Core.Optional.IsDefined(OutputStartOn))
             {
                 writer.WritePropertyName("outputStartTime"u8);
                 writer.WriteStringValue(OutputStartOn.Value, "O");
             }
-            if (Optional.IsDefined(EventsOutOfOrderPolicy))
+            if (Core.Optional.IsDefined(EventsOutOfOrderPolicy))
             {
                 writer.WritePropertyName("eventsOutOfOrderPolicy"u8);
                 writer.WriteStringValue(EventsOutOfOrderPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(OutputErrorPolicy))
+            if (Core.Optional.IsDefined(OutputErrorPolicy))
             {
                 writer.WritePropertyName("outputErrorPolicy"u8);
                 writer.WriteStringValue(OutputErrorPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(EventsOutOfOrderMaxDelayInSeconds))
+            if (Core.Optional.IsDefined(EventsOutOfOrderMaxDelayInSeconds))
             {
                 writer.WritePropertyName("eventsOutOfOrderMaxDelayInSeconds"u8);
                 writer.WriteNumberValue(EventsOutOfOrderMaxDelayInSeconds.Value);
             }
-            if (Optional.IsDefined(EventsLateArrivalMaxDelayInSeconds))
+            if (Core.Optional.IsDefined(EventsLateArrivalMaxDelayInSeconds))
             {
                 writer.WritePropertyName("eventsLateArrivalMaxDelayInSeconds"u8);
                 writer.WriteNumberValue(EventsLateArrivalMaxDelayInSeconds.Value);
             }
-            if (Optional.IsDefined(DataLocalion))
+            if (Core.Optional.IsDefined(DataLocalion))
             {
                 writer.WritePropertyName("dataLocale"u8);
                 writer.WriteStringValue(DataLocalion.Value);
             }
-            if (Optional.IsDefined(CompatibilityLevel))
+            if (Core.Optional.IsDefined(CompatibilityLevel))
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Inputs))
+            if (Core.Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Transformation))
+            if (Core.Optional.IsDefined(Transformation))
             {
                 writer.WritePropertyName("transformation"u8);
                 writer.WriteObjectValue(Transformation);
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (Core.Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Functions))
+            if (Core.Optional.IsCollectionDefined(Functions))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(JobStorageAccount))
+            if (Core.Optional.IsDefined(JobStorageAccount))
             {
                 if (JobStorageAccount != null)
                 {
@@ -138,17 +138,17 @@ namespace Azure.ResourceManager.StreamAnalytics
                     writer.WriteNull("jobStorageAccount");
                 }
             }
-            if (Optional.IsDefined(ContentStoragePolicy))
+            if (Core.Optional.IsDefined(ContentStoragePolicy))
             {
                 writer.WritePropertyName("contentStoragePolicy"u8);
                 writer.WriteStringValue(ContentStoragePolicy.Value.ToString());
             }
-            if (Optional.IsDefined(Externals))
+            if (Core.Optional.IsDefined(Externals))
             {
                 writer.WritePropertyName("externals"u8);
                 writer.WriteObjectValue(Externals);
             }
-            if (Optional.IsDefined(Cluster))
+            if (Core.Optional.IsDefined(Cluster))
             {
                 if (Cluster != null)
                 {
@@ -170,37 +170,37 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<StreamAnalyticsSku> sku = default;
-            Optional<Guid> jobId = default;
-            Optional<string> provisioningState = default;
-            Optional<string> jobState = default;
-            Optional<StreamingJobType> jobType = default;
-            Optional<StreamingJobOutputStartMode> outputStartMode = default;
-            Optional<DateTimeOffset> outputStartTime = default;
-            Optional<DateTimeOffset> lastOutputEventTime = default;
-            Optional<EventsOutOfOrderPolicy> eventsOutOfOrderPolicy = default;
-            Optional<StreamingJobOutputErrorPolicy> outputErrorPolicy = default;
-            Optional<int> eventsOutOfOrderMaxDelayInSeconds = default;
-            Optional<int> eventsLateArrivalMaxDelayInSeconds = default;
-            Optional<AzureLocation> dataLocale = default;
-            Optional<StreamingJobCompatibilityLevel> compatibilityLevel = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<IList<StreamingJobInputData>> inputs = default;
-            Optional<StreamingJobTransformationData> transformation = default;
-            Optional<IList<StreamingJobOutputData>> outputs = default;
-            Optional<IList<StreamingJobFunctionData>> functions = default;
-            Optional<ETag> etag = default;
-            Optional<StreamingJobStorageAccount> jobStorageAccount = default;
-            Optional<StreamingJobContentStoragePolicy> contentStoragePolicy = default;
-            Optional<StreamingJobExternal> externals = default;
-            Optional<ClusterInfo> cluster = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<StreamAnalyticsSku> sku = default;
+            Core.Optional<Guid> jobId = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<string> jobState = default;
+            Core.Optional<StreamingJobType> jobType = default;
+            Core.Optional<StreamingJobOutputStartMode> outputStartMode = default;
+            Core.Optional<DateTimeOffset> outputStartTime = default;
+            Core.Optional<DateTimeOffset> lastOutputEventTime = default;
+            Core.Optional<EventsOutOfOrderPolicy> eventsOutOfOrderPolicy = default;
+            Core.Optional<StreamingJobOutputErrorPolicy> outputErrorPolicy = default;
+            Core.Optional<int> eventsOutOfOrderMaxDelayInSeconds = default;
+            Core.Optional<int> eventsLateArrivalMaxDelayInSeconds = default;
+            Core.Optional<AzureLocation> dataLocale = default;
+            Core.Optional<StreamingJobCompatibilityLevel> compatibilityLevel = default;
+            Core.Optional<DateTimeOffset> createdDate = default;
+            Core.Optional<IList<StreamingJobInputData>> inputs = default;
+            Core.Optional<StreamingJobTransformationData> transformation = default;
+            Core.Optional<IList<StreamingJobOutputData>> outputs = default;
+            Core.Optional<IList<StreamingJobFunctionData>> functions = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<StreamingJobStorageAccount> jobStorageAccount = default;
+            Core.Optional<StreamingJobContentStoragePolicy> contentStoragePolicy = default;
+            Core.Optional<StreamingJobExternal> externals = default;
+            Core.Optional<ClusterInfo> cluster = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     continue;
                 }
             }
-            return new StreamingJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(jobId), provisioningState.Value, jobState.Value, Optional.ToNullable(jobType), Optional.ToNullable(outputStartMode), Optional.ToNullable(outputStartTime), Optional.ToNullable(lastOutputEventTime), Optional.ToNullable(eventsOutOfOrderPolicy), Optional.ToNullable(outputErrorPolicy), Optional.ToNullable(eventsOutOfOrderMaxDelayInSeconds), Optional.ToNullable(eventsLateArrivalMaxDelayInSeconds), Optional.ToNullable(dataLocale), Optional.ToNullable(compatibilityLevel), Optional.ToNullable(createdDate), Optional.ToList(inputs), transformation.Value, Optional.ToList(outputs), Optional.ToList(functions), Optional.ToNullable(etag), jobStorageAccount.Value, Optional.ToNullable(contentStoragePolicy), externals.Value, cluster.Value);
+            return new StreamingJobData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, sku.Value, Core.Optional.ToNullable(jobId), provisioningState.Value, jobState.Value, Core.Optional.ToNullable(jobType), Core.Optional.ToNullable(outputStartMode), Core.Optional.ToNullable(outputStartTime), Core.Optional.ToNullable(lastOutputEventTime), Core.Optional.ToNullable(eventsOutOfOrderPolicy), Core.Optional.ToNullable(outputErrorPolicy), Core.Optional.ToNullable(eventsOutOfOrderMaxDelayInSeconds), Core.Optional.ToNullable(eventsLateArrivalMaxDelayInSeconds), Core.Optional.ToNullable(dataLocale), Core.Optional.ToNullable(compatibilityLevel), Core.Optional.ToNullable(createdDate), Core.Optional.ToList(inputs), transformation.Value, Core.Optional.ToList(outputs), Core.Optional.ToList(functions), Core.Optional.ToNullable(etag), jobStorageAccount.Value, Core.Optional.ToNullable(contentStoragePolicy), externals.Value, cluster.Value);
         }
     }
 }

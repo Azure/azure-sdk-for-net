@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseBigDataPoolInfoListResult. </summary>
         internal SynapseBigDataPoolInfoListResult()
         {
-            Value = new ChangeTrackingList<SynapseBigDataPoolInfoData>();
+            Value = new Core.ChangeTrackingList<SynapseBigDataPoolInfoData>();
         }
 
         /// <summary> Initializes a new instance of SynapseBigDataPoolInfoListResult. </summary>

@@ -11,19 +11,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class CsmPublishingCredentialsPoliciesEntityData : IUtf8JsonSerializable
+    public partial class CsmPublishingCredentialsPoliciesEntityData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Allow))
+            if (Core.Optional.IsDefined(Allow))
             {
                 writer.WritePropertyName("allow"u8);
                 writer.WriteBooleanValue(Allow.Value);
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> allow = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<bool> allow = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new CsmPublishingCredentialsPoliciesEntityData(id, name, type, systemData.Value, Optional.ToNullable(allow), kind.Value);
+            return new CsmPublishingCredentialsPoliciesEntityData(id, name, type, systemData.Value, Core.Optional.ToNullable(allow), kind.Value);
         }
     }
 }

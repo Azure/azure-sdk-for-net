@@ -107,7 +107,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sparkJobDefinition);
             request.Content = content;
             return message;
@@ -389,7 +389,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
             return message;
@@ -463,7 +463,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sparkJobDefinitionAzureResource);
             request.Content = content;
             return message;

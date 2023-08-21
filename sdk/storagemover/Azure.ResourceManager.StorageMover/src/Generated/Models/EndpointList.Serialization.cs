@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageMoverEndpointData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<StorageMoverEndpointData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     continue;
                 }
             }
-            return new EndpointList(Optional.ToList(value), nextLink.Value);
+            return new EndpointList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

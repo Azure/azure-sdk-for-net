@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<string>> zones = default;
-            Optional<IReadOnlyList<StoragePoolSkuZoneDetails>> zoneDetails = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IReadOnlyList<string>> zones = default;
+            Core.Optional<IReadOnlyList<StoragePoolSkuZoneDetails>> zoneDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     continue;
                 }
             }
-            return new StoragePoolSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(zoneDetails));
+            return new StoragePoolSkuLocationInfo(Core.Optional.ToNullable(location), Core.Optional.ToList(zones), Core.Optional.ToList(zoneDetails));
         }
     }
 }

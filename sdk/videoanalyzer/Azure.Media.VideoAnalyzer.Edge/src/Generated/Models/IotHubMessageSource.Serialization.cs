@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class IotHubMessageSource : IUtf8JsonSerializable
+    public partial class IotHubMessageSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(HubInputName))
+            if (Core.Optional.IsDefined(HubInputName))
             {
                 writer.WritePropertyName("hubInputName"u8);
                 writer.WriteStringValue(HubInputName);
@@ -33,7 +33,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> hubInputName = default;
+            Core.Optional<string> hubInputName = default;
             string type = default;
             string name = default;
             foreach (var property in element.EnumerateObject())

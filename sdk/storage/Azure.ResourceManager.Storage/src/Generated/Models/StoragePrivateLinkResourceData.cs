@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of StoragePrivateLinkResourceData. </summary>
         public StoragePrivateLinkResourceData()
         {
-            RequiredMembers = new ChangeTrackingList<string>();
-            RequiredZoneNames = new ChangeTrackingList<string>();
+            RequiredMembers = new Core.ChangeTrackingList<string>();
+            RequiredZoneNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StoragePrivateLinkResourceData. </summary>

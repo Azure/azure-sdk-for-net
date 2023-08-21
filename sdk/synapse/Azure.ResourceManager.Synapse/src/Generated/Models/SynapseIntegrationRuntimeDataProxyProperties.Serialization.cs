@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeDataProxyProperties : IUtf8JsonSerializable
+    public partial class SynapseIntegrationRuntimeDataProxyProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectVia))
+            if (Core.Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(StagingLinkedService))
+            if (Core.Optional.IsDefined(StagingLinkedService))
             {
                 writer.WritePropertyName("stagingLinkedService"u8);
                 writer.WriteObjectValue(StagingLinkedService);
             }
-            if (Optional.IsDefined(Path))
+            if (Core.Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<SynapseEntityReference> connectVia = default;
-            Optional<SynapseEntityReference> stagingLinkedService = default;
-            Optional<string> path = default;
+            Core.Optional<SynapseEntityReference> connectVia = default;
+            Core.Optional<SynapseEntityReference> stagingLinkedService = default;
+            Core.Optional<string> path = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectVia"u8))

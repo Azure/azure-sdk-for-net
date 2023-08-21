@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DetectorDataSource. </summary>
         public DetectorDataSource()
         {
-            Instructions = new ChangeTrackingList<string>();
-            DataSourceUri = new ChangeTrackingList<AppServiceNameValuePair>();
+            Instructions = new Core.ChangeTrackingList<string>();
+            DataSourceUri = new Core.ChangeTrackingList<AppServiceNameValuePair>();
         }
 
         /// <summary> Initializes a new instance of DetectorDataSource. </summary>

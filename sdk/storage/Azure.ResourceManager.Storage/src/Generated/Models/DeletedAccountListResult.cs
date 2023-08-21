@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of DeletedAccountListResult. </summary>
         internal DeletedAccountListResult()
         {
-            Value = new ChangeTrackingList<DeletedAccountData>();
+            Value = new Core.ChangeTrackingList<DeletedAccountData>();
         }
 
         /// <summary> Initializes a new instance of DeletedAccountListResult. </summary>

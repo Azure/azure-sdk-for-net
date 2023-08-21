@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    internal partial class ProtocolSettings : IUtf8JsonSerializable
+    internal partial class ProtocolSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SmbSetting))
+            if (Core.Optional.IsDefined(SmbSetting))
             {
                 writer.WritePropertyName("smb"u8);
                 writer.WriteObjectValue(SmbSetting);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<SmbSetting> smb = default;
+            Core.Optional<SmbSetting> smb = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("smb"u8))

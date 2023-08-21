@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class BigDataPoolSparkConfigProperties : IUtf8JsonSerializable
+    public partial class BigDataPoolSparkConfigProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Content))
+            if (Core.Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsDefined(Filename))
+            if (Core.Optional.IsDefined(Filename))
             {
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
-            if (Optional.IsDefined(ConfigurationType))
+            if (Core.Optional.IsDefined(ConfigurationType))
             {
                 writer.WritePropertyName("configurationType"u8);
                 writer.WriteStringValue(ConfigurationType.Value.ToString());
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> time = default;
-            Optional<string> content = default;
-            Optional<string> filename = default;
-            Optional<SynapseSparkConfigurationType> configurationType = default;
+            Core.Optional<DateTimeOffset> time = default;
+            Core.Optional<string> content = default;
+            Core.Optional<string> filename = default;
+            Core.Optional<SynapseSparkConfigurationType> configurationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new BigDataPoolSparkConfigProperties(Optional.ToNullable(time), content.Value, filename.Value, Optional.ToNullable(configurationType));
+            return new BigDataPoolSparkConfigProperties(Core.Optional.ToNullable(time), content.Value, filename.Value, Core.Optional.ToNullable(configurationType));
         }
     }
 }

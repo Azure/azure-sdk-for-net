@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint. </summary>
         internal SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint()
         {
-            EndpointDetails = new ChangeTrackingList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>();
+            EndpointDetails = new Core.ChangeTrackingList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>();
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint. </summary>

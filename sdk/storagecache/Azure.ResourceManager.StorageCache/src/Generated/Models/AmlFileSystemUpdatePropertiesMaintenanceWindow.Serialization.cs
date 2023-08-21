@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFileSystemUpdatePropertiesMaintenanceWindow : IUtf8JsonSerializable
+    public partial class AmlFileSystemUpdatePropertiesMaintenanceWindow : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DayOfWeek))
+            if (Core.Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
             }
-            if (Optional.IsDefined(TimeOfDayUTC))
+            if (Core.Optional.IsDefined(TimeOfDayUTC))
             {
                 writer.WritePropertyName("timeOfDayUTC"u8);
                 writer.WriteStringValue(TimeOfDayUTC);

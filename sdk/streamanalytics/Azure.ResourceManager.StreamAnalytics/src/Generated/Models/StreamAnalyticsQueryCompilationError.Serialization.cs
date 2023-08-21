@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<int> startLine = default;
-            Optional<int> startColumn = default;
-            Optional<int> endLine = default;
-            Optional<int> endColumn = default;
-            Optional<bool> isGlobal = default;
+            Core.Optional<string> message = default;
+            Core.Optional<int> startLine = default;
+            Core.Optional<int> startColumn = default;
+            Core.Optional<int> endLine = default;
+            Core.Optional<int> endColumn = default;
+            Core.Optional<bool> isGlobal = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamAnalyticsQueryCompilationError(message.Value, Optional.ToNullable(startLine), Optional.ToNullable(startColumn), Optional.ToNullable(endLine), Optional.ToNullable(endColumn), Optional.ToNullable(isGlobal));
+            return new StreamAnalyticsQueryCompilationError(message.Value, Core.Optional.ToNullable(startLine), Core.Optional.ToNullable(startColumn), Core.Optional.ToNullable(endLine), Core.Optional.ToNullable(endColumn), Core.Optional.ToNullable(isGlobal));
         }
     }
 }

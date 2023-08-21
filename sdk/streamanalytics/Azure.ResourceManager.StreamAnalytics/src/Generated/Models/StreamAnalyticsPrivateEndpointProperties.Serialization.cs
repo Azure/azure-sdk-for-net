@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsPrivateEndpointProperties : IUtf8JsonSerializable
+    public partial class StreamAnalyticsPrivateEndpointProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ManualPrivateLinkServiceConnections))
+            if (Core.Optional.IsCollectionDefined(ManualPrivateLinkServiceConnections))
             {
                 writer.WritePropertyName("manualPrivateLinkServiceConnections"u8);
                 writer.WriteStartArray();
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<IList<StreamAnalyticsPrivateLinkServiceConnection>> manualPrivateLinkServiceConnections = default;
+            Core.Optional<DateTimeOffset> createdDate = default;
+            Core.Optional<IList<StreamAnalyticsPrivateLinkServiceConnection>> manualPrivateLinkServiceConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdDate"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamAnalyticsPrivateEndpointProperties(Optional.ToNullable(createdDate), Optional.ToList(manualPrivateLinkServiceConnections));
+            return new StreamAnalyticsPrivateEndpointProperties(Core.Optional.ToNullable(createdDate), Core.Optional.ToList(manualPrivateLinkServiceConnections));
         }
     }
 }

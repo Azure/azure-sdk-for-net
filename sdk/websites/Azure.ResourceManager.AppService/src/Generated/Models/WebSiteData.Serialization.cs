@@ -15,27 +15,27 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class WebSiteData : IUtf8JsonSerializable
+    public partial class WebSiteData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(ExtendedLocation))
+            if (Core.Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(HostNameSslStates))
+            if (Core.Optional.IsCollectionDefined(HostNameSslStates))
             {
                 writer.WritePropertyName("hostNameSslStates"u8);
                 writer.WriteStartArray();
@@ -65,37 +65,37 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AppServicePlanId))
+            if (Core.Optional.IsDefined(AppServicePlanId))
             {
                 writer.WritePropertyName("serverFarmId"u8);
                 writer.WriteStringValue(AppServicePlanId);
             }
-            if (Optional.IsDefined(IsReserved))
+            if (Core.Optional.IsDefined(IsReserved))
             {
                 writer.WritePropertyName("reserved"u8);
                 writer.WriteBooleanValue(IsReserved.Value);
             }
-            if (Optional.IsDefined(IsXenon))
+            if (Core.Optional.IsDefined(IsXenon))
             {
                 writer.WritePropertyName("isXenon"u8);
                 writer.WriteBooleanValue(IsXenon.Value);
             }
-            if (Optional.IsDefined(IsHyperV))
+            if (Core.Optional.IsDefined(IsHyperV))
             {
                 writer.WritePropertyName("hyperV"u8);
                 writer.WriteBooleanValue(IsHyperV.Value);
             }
-            if (Optional.IsDefined(SiteConfig))
+            if (Core.Optional.IsDefined(SiteConfig))
             {
                 writer.WritePropertyName("siteConfig"u8);
                 writer.WriteObjectValue(SiteConfig);
             }
-            if (Optional.IsDefined(IsScmSiteAlsoStopped))
+            if (Core.Optional.IsDefined(IsScmSiteAlsoStopped))
             {
                 writer.WritePropertyName("scmSiteAlsoStopped"u8);
                 writer.WriteBooleanValue(IsScmSiteAlsoStopped.Value);
             }
-            if (Optional.IsDefined(HostingEnvironmentProfile))
+            if (Core.Optional.IsDefined(HostingEnvironmentProfile))
             {
                 if (HostingEnvironmentProfile != null)
                 {
@@ -107,47 +107,47 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("hostingEnvironmentProfile");
                 }
             }
-            if (Optional.IsDefined(IsClientAffinityEnabled))
+            if (Core.Optional.IsDefined(IsClientAffinityEnabled))
             {
                 writer.WritePropertyName("clientAffinityEnabled"u8);
                 writer.WriteBooleanValue(IsClientAffinityEnabled.Value);
             }
-            if (Optional.IsDefined(IsClientCertEnabled))
+            if (Core.Optional.IsDefined(IsClientCertEnabled))
             {
                 writer.WritePropertyName("clientCertEnabled"u8);
                 writer.WriteBooleanValue(IsClientCertEnabled.Value);
             }
-            if (Optional.IsDefined(ClientCertMode))
+            if (Core.Optional.IsDefined(ClientCertMode))
             {
                 writer.WritePropertyName("clientCertMode"u8);
                 writer.WriteStringValue(ClientCertMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ClientCertExclusionPaths))
+            if (Core.Optional.IsDefined(ClientCertExclusionPaths))
             {
                 writer.WritePropertyName("clientCertExclusionPaths"u8);
                 writer.WriteStringValue(ClientCertExclusionPaths);
             }
-            if (Optional.IsDefined(IsHostNameDisabled))
+            if (Core.Optional.IsDefined(IsHostNameDisabled))
             {
                 writer.WritePropertyName("hostNamesDisabled"u8);
                 writer.WriteBooleanValue(IsHostNameDisabled.Value);
             }
-            if (Optional.IsDefined(CustomDomainVerificationId))
+            if (Core.Optional.IsDefined(CustomDomainVerificationId))
             {
                 writer.WritePropertyName("customDomainVerificationId"u8);
                 writer.WriteStringValue(CustomDomainVerificationId);
             }
-            if (Optional.IsDefined(ContainerSize))
+            if (Core.Optional.IsDefined(ContainerSize))
             {
                 writer.WritePropertyName("containerSize"u8);
                 writer.WriteNumberValue(ContainerSize.Value);
             }
-            if (Optional.IsDefined(DailyMemoryTimeQuota))
+            if (Core.Optional.IsDefined(DailyMemoryTimeQuota))
             {
                 writer.WritePropertyName("dailyMemoryTimeQuota"u8);
                 writer.WriteNumberValue(DailyMemoryTimeQuota.Value);
             }
-            if (Optional.IsDefined(CloningInfo))
+            if (Core.Optional.IsDefined(CloningInfo))
             {
                 if (CloningInfo != null)
                 {
@@ -159,27 +159,27 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("cloningInfo");
                 }
             }
-            if (Optional.IsDefined(IsHttpsOnly))
+            if (Core.Optional.IsDefined(IsHttpsOnly))
             {
                 writer.WritePropertyName("httpsOnly"u8);
                 writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
-            if (Optional.IsDefined(RedundancyMode))
+            if (Core.Optional.IsDefined(RedundancyMode))
             {
                 writer.WritePropertyName("redundancyMode"u8);
                 writer.WriteStringValue(RedundancyMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(IsStorageAccountRequired))
+            if (Core.Optional.IsDefined(IsStorageAccountRequired))
             {
                 writer.WritePropertyName("storageAccountRequired"u8);
                 writer.WriteBooleanValue(IsStorageAccountRequired.Value);
             }
-            if (Optional.IsDefined(KeyVaultReferenceIdentity))
+            if (Core.Optional.IsDefined(KeyVaultReferenceIdentity))
             {
                 writer.WritePropertyName("keyVaultReferenceIdentity"u8);
                 writer.WriteStringValue(KeyVaultReferenceIdentity);
             }
-            if (Optional.IsDefined(VirtualNetworkSubnetId))
+            if (Core.Optional.IsDefined(VirtualNetworkSubnetId))
             {
                 writer.WritePropertyName("virtualNetworkSubnetId"u8);
                 writer.WriteStringValue(VirtualNetworkSubnetId);
@@ -194,56 +194,56 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<ExtendedLocation> extendedLocation = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> state = default;
-            Optional<IReadOnlyList<string>> hostNames = default;
-            Optional<string> repositorySiteName = default;
-            Optional<AppServiceUsageState> usageState = default;
-            Optional<bool> enabled = default;
-            Optional<IReadOnlyList<string>> enabledHostNames = default;
-            Optional<WebSiteAvailabilityState> availabilityState = default;
-            Optional<IList<HostNameSslState>> hostNameSslStates = default;
-            Optional<ResourceIdentifier> serverFarmId = default;
-            Optional<bool> reserved = default;
-            Optional<bool> isXenon = default;
-            Optional<bool> hyperV = default;
-            Optional<DateTimeOffset> lastModifiedTimeUtc = default;
-            Optional<SiteConfigProperties> siteConfig = default;
-            Optional<IReadOnlyList<string>> trafficManagerHostNames = default;
-            Optional<bool> scmSiteAlsoStopped = default;
-            Optional<string> targetSwapSlot = default;
-            Optional<HostingEnvironmentProfile> hostingEnvironmentProfile = default;
-            Optional<bool> clientAffinityEnabled = default;
-            Optional<bool> clientCertEnabled = default;
-            Optional<ClientCertMode> clientCertMode = default;
-            Optional<string> clientCertExclusionPaths = default;
-            Optional<bool> hostNamesDisabled = default;
-            Optional<string> customDomainVerificationId = default;
-            Optional<string> outboundIPAddresses = default;
-            Optional<string> possibleOutboundIPAddresses = default;
-            Optional<int> containerSize = default;
-            Optional<int> dailyMemoryTimeQuota = default;
-            Optional<DateTimeOffset?> suspendedTill = default;
-            Optional<int?> maxNumberOfWorkers = default;
-            Optional<CloningInfo> cloningInfo = default;
-            Optional<string> resourceGroup = default;
-            Optional<bool> isDefaultContainer = default;
-            Optional<string> defaultHostName = default;
-            Optional<SlotSwapStatus> slotSwapStatus = default;
-            Optional<bool> httpsOnly = default;
-            Optional<RedundancyMode> redundancyMode = default;
-            Optional<Guid?> inProgressOperationId = default;
-            Optional<bool> storageAccountRequired = default;
-            Optional<string> keyVaultReferenceIdentity = default;
-            Optional<ResourceIdentifier> virtualNetworkSubnetId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> state = default;
+            Core.Optional<IReadOnlyList<string>> hostNames = default;
+            Core.Optional<string> repositorySiteName = default;
+            Core.Optional<AppServiceUsageState> usageState = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<IReadOnlyList<string>> enabledHostNames = default;
+            Core.Optional<WebSiteAvailabilityState> availabilityState = default;
+            Core.Optional<IList<HostNameSslState>> hostNameSslStates = default;
+            Core.Optional<ResourceIdentifier> serverFarmId = default;
+            Core.Optional<bool> reserved = default;
+            Core.Optional<bool> isXenon = default;
+            Core.Optional<bool> hyperV = default;
+            Core.Optional<DateTimeOffset> lastModifiedTimeUtc = default;
+            Core.Optional<SiteConfigProperties> siteConfig = default;
+            Core.Optional<IReadOnlyList<string>> trafficManagerHostNames = default;
+            Core.Optional<bool> scmSiteAlsoStopped = default;
+            Core.Optional<string> targetSwapSlot = default;
+            Core.Optional<HostingEnvironmentProfile> hostingEnvironmentProfile = default;
+            Core.Optional<bool> clientAffinityEnabled = default;
+            Core.Optional<bool> clientCertEnabled = default;
+            Core.Optional<ClientCertMode> clientCertMode = default;
+            Core.Optional<string> clientCertExclusionPaths = default;
+            Core.Optional<bool> hostNamesDisabled = default;
+            Core.Optional<string> customDomainVerificationId = default;
+            Core.Optional<string> outboundIPAddresses = default;
+            Core.Optional<string> possibleOutboundIPAddresses = default;
+            Core.Optional<int> containerSize = default;
+            Core.Optional<int> dailyMemoryTimeQuota = default;
+            Core.Optional<DateTimeOffset?> suspendedTill = default;
+            Core.Optional<int?> maxNumberOfWorkers = default;
+            Core.Optional<CloningInfo> cloningInfo = default;
+            Core.Optional<string> resourceGroup = default;
+            Core.Optional<bool> isDefaultContainer = default;
+            Core.Optional<string> defaultHostName = default;
+            Core.Optional<SlotSwapStatus> slotSwapStatus = default;
+            Core.Optional<bool> httpsOnly = default;
+            Core.Optional<RedundancyMode> redundancyMode = default;
+            Core.Optional<Guid?> inProgressOperationId = default;
+            Core.Optional<bool> storageAccountRequired = default;
+            Core.Optional<string> keyVaultReferenceIdentity = default;
+            Core.Optional<ResourceIdentifier> virtualNetworkSubnetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new WebSiteData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, extendedLocation, state.Value, Optional.ToList(hostNames), repositorySiteName.Value, Optional.ToNullable(usageState), Optional.ToNullable(enabled), Optional.ToList(enabledHostNames), Optional.ToNullable(availabilityState), Optional.ToList(hostNameSslStates), serverFarmId.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(lastModifiedTimeUtc), siteConfig.Value, Optional.ToList(trafficManagerHostNames), Optional.ToNullable(scmSiteAlsoStopped), targetSwapSlot.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(clientAffinityEnabled), Optional.ToNullable(clientCertEnabled), Optional.ToNullable(clientCertMode), clientCertExclusionPaths.Value, Optional.ToNullable(hostNamesDisabled), customDomainVerificationId.Value, outboundIPAddresses.Value, possibleOutboundIPAddresses.Value, Optional.ToNullable(containerSize), Optional.ToNullable(dailyMemoryTimeQuota), Optional.ToNullable(suspendedTill), Optional.ToNullable(maxNumberOfWorkers), cloningInfo.Value, resourceGroup.Value, Optional.ToNullable(isDefaultContainer), defaultHostName.Value, slotSwapStatus.Value, Optional.ToNullable(httpsOnly), Optional.ToNullable(redundancyMode), Optional.ToNullable(inProgressOperationId), Optional.ToNullable(storageAccountRequired), keyVaultReferenceIdentity.Value, virtualNetworkSubnetId.Value, kind.Value);
+            return new WebSiteData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, extendedLocation, state.Value, Core.Optional.ToList(hostNames), repositorySiteName.Value, Core.Optional.ToNullable(usageState), Core.Optional.ToNullable(enabled), Core.Optional.ToList(enabledHostNames), Core.Optional.ToNullable(availabilityState), Core.Optional.ToList(hostNameSslStates), serverFarmId.Value, Core.Optional.ToNullable(reserved), Core.Optional.ToNullable(isXenon), Core.Optional.ToNullable(hyperV), Core.Optional.ToNullable(lastModifiedTimeUtc), siteConfig.Value, Core.Optional.ToList(trafficManagerHostNames), Core.Optional.ToNullable(scmSiteAlsoStopped), targetSwapSlot.Value, hostingEnvironmentProfile.Value, Core.Optional.ToNullable(clientAffinityEnabled), Core.Optional.ToNullable(clientCertEnabled), Core.Optional.ToNullable(clientCertMode), clientCertExclusionPaths.Value, Core.Optional.ToNullable(hostNamesDisabled), customDomainVerificationId.Value, outboundIPAddresses.Value, possibleOutboundIPAddresses.Value, Core.Optional.ToNullable(containerSize), Core.Optional.ToNullable(dailyMemoryTimeQuota), Core.Optional.ToNullable(suspendedTill), Core.Optional.ToNullable(maxNumberOfWorkers), cloningInfo.Value, resourceGroup.Value, Core.Optional.ToNullable(isDefaultContainer), defaultHostName.Value, slotSwapStatus.Value, Core.Optional.ToNullable(httpsOnly), Core.Optional.ToNullable(redundancyMode), Core.Optional.ToNullable(inProgressOperationId), Core.Optional.ToNullable(storageAccountRequired), keyVaultReferenceIdentity.Value, virtualNetworkSubnetId.Value, kind.Value);
         }
     }
 }

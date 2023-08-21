@@ -13,27 +13,27 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SapTablePartitionSettingsConverter))]
-    public partial class SapTablePartitionSettings : IUtf8JsonSerializable
+    public partial class SapTablePartitionSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PartitionColumnName))
+            if (Core.Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
                 writer.WriteObjectValue(PartitionColumnName);
             }
-            if (Optional.IsDefined(PartitionUpperBound))
+            if (Core.Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
                 writer.WriteObjectValue(PartitionUpperBound);
             }
-            if (Optional.IsDefined(PartitionLowerBound))
+            if (Core.Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
                 writer.WriteObjectValue(PartitionLowerBound);
             }
-            if (Optional.IsDefined(MaxPartitionsNumber))
+            if (Core.Optional.IsDefined(MaxPartitionsNumber))
             {
                 writer.WritePropertyName("maxPartitionsNumber"u8);
                 writer.WriteObjectValue(MaxPartitionsNumber);
@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> partitionColumnName = default;
-            Optional<object> partitionUpperBound = default;
-            Optional<object> partitionLowerBound = default;
-            Optional<object> maxPartitionsNumber = default;
+            Core.Optional<object> partitionColumnName = default;
+            Core.Optional<object> partitionUpperBound = default;
+            Core.Optional<object> partitionLowerBound = default;
+            Core.Optional<object> maxPartitionsNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionColumnName"u8))

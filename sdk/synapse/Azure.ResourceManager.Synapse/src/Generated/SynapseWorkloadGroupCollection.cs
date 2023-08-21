@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseWorkloadGroupResource>(new SynapseWorkloadGroupOperationSource(Client), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseWorkloadGroupResource>(new SynapseWorkloadGroupOperationSource(Client), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseWorkloadGroupResource>(new SynapseWorkloadGroupOperationSource(Client), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseWorkloadGroupResource>(new SynapseWorkloadGroupOperationSource(Client), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadGroupResource(Client, SynapseWorkloadGroupData.DeserializeSynapseWorkloadGroupData(e)), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, "SynapseWorkloadGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadGroupResource(Client, SynapseWorkloadGroupData.DeserializeSynapseWorkloadGroupData(e)), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, "SynapseWorkloadGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadGroupResource(Client, SynapseWorkloadGroupData.DeserializeSynapseWorkloadGroupData(e)), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, "SynapseWorkloadGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadGroupResource(Client, SynapseWorkloadGroupData.DeserializeSynapseWorkloadGroupData(e)), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, "SynapseWorkloadGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

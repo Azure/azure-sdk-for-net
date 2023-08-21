@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of RoutingRuleExperiments. </summary>
         public RoutingRuleExperiments()
         {
-            RampUpRules = new ChangeTrackingList<RampUpRule>();
+            RampUpRules = new Core.ChangeTrackingList<RampUpRule>();
         }
 
         /// <summary> Initializes a new instance of RoutingRuleExperiments. </summary>

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeSsisProperties. </summary>
         public SynapseIntegrationRuntimeSsisProperties()
         {
-            ExpressCustomSetupProperties = new ChangeTrackingList<SynapseCustomSetupBase>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ExpressCustomSetupProperties = new Core.ChangeTrackingList<SynapseCustomSetupBase>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeSsisProperties. </summary>

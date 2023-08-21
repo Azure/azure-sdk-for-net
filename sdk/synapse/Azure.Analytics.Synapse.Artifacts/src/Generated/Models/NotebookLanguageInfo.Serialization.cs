@@ -14,14 +14,14 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(NotebookLanguageInfoConverter))]
-    public partial class NotebookLanguageInfo : IUtf8JsonSerializable
+    public partial class NotebookLanguageInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(CodemirrorMode))
+            if (Core.Optional.IsDefined(CodemirrorMode))
             {
                 writer.WritePropertyName("codemirror_mode"u8);
                 writer.WriteStringValue(CodemirrorMode);
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string name = default;
-            Optional<string> codemirrorMode = default;
+            Core.Optional<string> codemirrorMode = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

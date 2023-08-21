@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseKustoPoolPrivateLinkList. </summary>
         internal SynapseKustoPoolPrivateLinkList()
         {
-            Value = new ChangeTrackingList<SynapseKustoPoolPrivateLinkData>();
+            Value = new Core.ChangeTrackingList<SynapseKustoPoolPrivateLinkData>();
         }
 
         /// <summary> Initializes a new instance of SynapseKustoPoolPrivateLinkList. </summary>

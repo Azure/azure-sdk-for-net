@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseTableLevelSharingProperties : IUtf8JsonSerializable
+    public partial class SynapseTableLevelSharingProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TablesToInclude))
+            if (Core.Optional.IsCollectionDefined(TablesToInclude))
             {
                 writer.WritePropertyName("tablesToInclude"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TablesToExclude))
+            if (Core.Optional.IsCollectionDefined(TablesToExclude))
             {
                 writer.WritePropertyName("tablesToExclude"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExternalTablesToInclude))
+            if (Core.Optional.IsCollectionDefined(ExternalTablesToInclude))
             {
                 writer.WritePropertyName("externalTablesToInclude"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExternalTablesToExclude))
+            if (Core.Optional.IsCollectionDefined(ExternalTablesToExclude))
             {
                 writer.WritePropertyName("externalTablesToExclude"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MaterializedViewsToInclude))
+            if (Core.Optional.IsCollectionDefined(MaterializedViewsToInclude))
             {
                 writer.WritePropertyName("materializedViewsToInclude"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MaterializedViewsToExclude))
+            if (Core.Optional.IsCollectionDefined(MaterializedViewsToExclude))
             {
                 writer.WritePropertyName("materializedViewsToExclude"u8);
                 writer.WriteStartArray();
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IList<string>> tablesToInclude = default;
-            Optional<IList<string>> tablesToExclude = default;
-            Optional<IList<string>> externalTablesToInclude = default;
-            Optional<IList<string>> externalTablesToExclude = default;
-            Optional<IList<string>> materializedViewsToInclude = default;
-            Optional<IList<string>> materializedViewsToExclude = default;
+            Core.Optional<IList<string>> tablesToInclude = default;
+            Core.Optional<IList<string>> tablesToExclude = default;
+            Core.Optional<IList<string>> externalTablesToInclude = default;
+            Core.Optional<IList<string>> externalTablesToExclude = default;
+            Core.Optional<IList<string>> materializedViewsToInclude = default;
+            Core.Optional<IList<string>> materializedViewsToExclude = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tablesToInclude"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseTableLevelSharingProperties(Optional.ToList(tablesToInclude), Optional.ToList(tablesToExclude), Optional.ToList(externalTablesToInclude), Optional.ToList(externalTablesToExclude), Optional.ToList(materializedViewsToInclude), Optional.ToList(materializedViewsToExclude));
+            return new SynapseTableLevelSharingProperties(Core.Optional.ToList(tablesToInclude), Core.Optional.ToList(tablesToExclude), Core.Optional.ToList(externalTablesToInclude), Core.Optional.ToList(externalTablesToExclude), Core.Optional.ToList(materializedViewsToInclude), Core.Optional.ToList(materializedViewsToExclude));
         }
     }
 }

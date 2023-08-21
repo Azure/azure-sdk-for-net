@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of QueryDataFlowDebugSessionsResponse. </summary>
         internal QueryDataFlowDebugSessionsResponse()
         {
-            Value = new ChangeTrackingList<DataFlowDebugSessionInfo>();
+            Value = new Core.ChangeTrackingList<DataFlowDebugSessionInfo>();
         }
 
         /// <summary> Initializes a new instance of QueryDataFlowDebugSessionsResponse. </summary>

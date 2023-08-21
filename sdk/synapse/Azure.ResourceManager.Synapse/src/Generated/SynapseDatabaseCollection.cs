@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseDatabaseKustoPoolDatabasesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseDatabaseResource>(new SynapseDatabaseOperationSource(Client), _synapseDatabaseKustoPoolDatabasesClientDiagnostics, Pipeline, _synapseDatabaseKustoPoolDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseDatabaseResource>(new SynapseDatabaseOperationSource(Client), _synapseDatabaseKustoPoolDatabasesClientDiagnostics, Pipeline, _synapseDatabaseKustoPoolDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseDatabaseKustoPoolDatabasesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName, data, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseDatabaseResource>(new SynapseDatabaseOperationSource(Client), _synapseDatabaseKustoPoolDatabasesClientDiagnostics, Pipeline, _synapseDatabaseKustoPoolDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseDatabaseResource>(new SynapseDatabaseOperationSource(Client), _synapseDatabaseKustoPoolDatabasesClientDiagnostics, Pipeline, _synapseDatabaseKustoPoolDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDatabaseKustoPoolDatabasesRestClient.CreateListByKustoPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseDatabaseResource(Client, SynapseDatabaseData.DeserializeSynapseDatabaseData(e)), _synapseDatabaseKustoPoolDatabasesClientDiagnostics, Pipeline, "SynapseDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseDatabaseResource(Client, SynapseDatabaseData.DeserializeSynapseDatabaseData(e)), _synapseDatabaseKustoPoolDatabasesClientDiagnostics, Pipeline, "SynapseDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDatabaseKustoPoolDatabasesRestClient.CreateListByKustoPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseDatabaseResource(Client, SynapseDatabaseData.DeserializeSynapseDatabaseData(e)), _synapseDatabaseKustoPoolDatabasesClientDiagnostics, Pipeline, "SynapseDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseDatabaseResource(Client, SynapseDatabaseData.DeserializeSynapseDatabaseData(e)), _synapseDatabaseKustoPoolDatabasesClientDiagnostics, Pipeline, "SynapseDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

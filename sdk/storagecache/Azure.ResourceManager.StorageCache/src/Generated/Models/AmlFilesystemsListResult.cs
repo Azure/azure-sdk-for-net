@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of AmlFilesystemsListResult. </summary>
         internal AmlFilesystemsListResult()
         {
-            Value = new ChangeTrackingList<AmlFileSystemData>();
+            Value = new Core.ChangeTrackingList<AmlFileSystemData>();
         }
 
         /// <summary> Initializes a new instance of AmlFilesystemsListResult. </summary>

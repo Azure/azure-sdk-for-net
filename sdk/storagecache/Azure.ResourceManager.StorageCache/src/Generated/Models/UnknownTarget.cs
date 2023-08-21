@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of UnknownTarget. </summary>
         public UnknownTarget()
         {
-            Attributes = new ChangeTrackingDictionary<string, string>();
+            Attributes = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of UnknownTarget. </summary>

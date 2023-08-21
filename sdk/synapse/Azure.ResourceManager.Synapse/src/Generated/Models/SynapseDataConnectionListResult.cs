@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseDataConnectionListResult. </summary>
         internal SynapseDataConnectionListResult()
         {
-            Value = new ChangeTrackingList<SynapseDataConnectionData>();
+            Value = new Core.ChangeTrackingList<SynapseDataConnectionData>();
         }
 
         /// <summary> Initializes a new instance of SynapseDataConnectionListResult. </summary>

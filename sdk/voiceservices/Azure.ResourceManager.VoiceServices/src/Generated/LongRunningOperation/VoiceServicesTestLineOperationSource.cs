@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.VoiceServices
 {
-    internal class VoiceServicesTestLineOperationSource : IOperationSource<VoiceServicesTestLineResource>
+    internal class VoiceServicesTestLineOperationSource : Core.IOperationSource<VoiceServicesTestLineResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.VoiceServices
             _client = client;
         }
 
-        VoiceServicesTestLineResource IOperationSource<VoiceServicesTestLineResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        VoiceServicesTestLineResource Core.IOperationSource<VoiceServicesTestLineResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(document.RootElement);
             return new VoiceServicesTestLineResource(_client, data);
         }
 
-        async ValueTask<VoiceServicesTestLineResource> IOperationSource<VoiceServicesTestLineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VoiceServicesTestLineResource> Core.IOperationSource<VoiceServicesTestLineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(document.RootElement);

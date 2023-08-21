@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Initializes a new instance of RegisteredServerArray. </summary>
         internal RegisteredServerArray()
         {
-            Value = new ChangeTrackingList<StorageSyncRegisteredServerData>();
+            Value = new Core.ChangeTrackingList<StorageSyncRegisteredServerData>();
         }
 
         /// <summary> Initializes a new instance of RegisteredServerArray. </summary>

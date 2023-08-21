@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseEncryptionProtectorListResult. </summary>
         internal SynapseEncryptionProtectorListResult()
         {
-            Value = new ChangeTrackingList<SynapseEncryptionProtectorData>();
+            Value = new Core.ChangeTrackingList<SynapseEncryptionProtectorData>();
         }
 
         /// <summary> Initializes a new instance of SynapseEncryptionProtectorListResult. </summary>

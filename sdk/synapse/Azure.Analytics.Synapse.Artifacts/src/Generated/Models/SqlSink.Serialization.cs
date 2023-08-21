@@ -14,27 +14,27 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlSinkConverter))]
-    public partial class SqlSink : IUtf8JsonSerializable
+    public partial class SqlSink : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SqlWriterStoredProcedureName))
+            if (Core.Optional.IsDefined(SqlWriterStoredProcedureName))
             {
                 writer.WritePropertyName("sqlWriterStoredProcedureName"u8);
                 writer.WriteObjectValue(SqlWriterStoredProcedureName);
             }
-            if (Optional.IsDefined(SqlWriterTableType))
+            if (Core.Optional.IsDefined(SqlWriterTableType))
             {
                 writer.WritePropertyName("sqlWriterTableType"u8);
                 writer.WriteObjectValue(SqlWriterTableType);
             }
-            if (Optional.IsDefined(PreCopyScript))
+            if (Core.Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
                 writer.WriteObjectValue(PreCopyScript);
             }
-            if (Optional.IsCollectionDefined(StoredProcedureParameters))
+            if (Core.Optional.IsCollectionDefined(StoredProcedureParameters))
             {
                 writer.WritePropertyName("storedProcedureParameters"u8);
                 writer.WriteStartObject();
@@ -45,39 +45,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(StoredProcedureTableTypeParameterName))
+            if (Core.Optional.IsDefined(StoredProcedureTableTypeParameterName))
             {
                 writer.WritePropertyName("storedProcedureTableTypeParameterName"u8);
                 writer.WriteObjectValue(StoredProcedureTableTypeParameterName);
             }
-            if (Optional.IsDefined(TableOption))
+            if (Core.Optional.IsDefined(TableOption))
             {
                 writer.WritePropertyName("tableOption"u8);
                 writer.WriteObjectValue(TableOption);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (Core.Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 writer.WriteObjectValue(WriteBatchSize);
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (Core.Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 writer.WriteObjectValue(WriteBatchTimeout);
             }
-            if (Optional.IsDefined(SinkRetryCount))
+            if (Core.Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 writer.WriteObjectValue(SinkRetryCount);
             }
-            if (Optional.IsDefined(SinkRetryWait))
+            if (Core.Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 writer.WriteObjectValue(SinkRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (Core.Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -96,18 +96,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> sqlWriterStoredProcedureName = default;
-            Optional<object> sqlWriterTableType = default;
-            Optional<object> preCopyScript = default;
-            Optional<IDictionary<string, StoredProcedureParameter>> storedProcedureParameters = default;
-            Optional<object> storedProcedureTableTypeParameterName = default;
-            Optional<object> tableOption = default;
+            Core.Optional<object> sqlWriterStoredProcedureName = default;
+            Core.Optional<object> sqlWriterTableType = default;
+            Core.Optional<object> preCopyScript = default;
+            Core.Optional<IDictionary<string, StoredProcedureParameter>> storedProcedureParameters = default;
+            Core.Optional<object> storedProcedureTableTypeParameterName = default;
+            Core.Optional<object> tableOption = default;
             string type = default;
-            Optional<object> writeBatchSize = default;
-            Optional<object> writeBatchTimeout = default;
-            Optional<object> sinkRetryCount = default;
-            Optional<object> sinkRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            Core.Optional<object> writeBatchSize = default;
+            Core.Optional<object> writeBatchTimeout = default;
+            Core.Optional<object> sinkRetryCount = default;
+            Core.Optional<object> sinkRetryWait = default;
+            Core.Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, sqlWriterStoredProcedureName.Value, sqlWriterTableType.Value, preCopyScript.Value, Optional.ToDictionary(storedProcedureParameters), storedProcedureTableTypeParameterName.Value, tableOption.Value);
+            return new SqlSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, sqlWriterStoredProcedureName.Value, sqlWriterTableType.Value, preCopyScript.Value, Core.Optional.ToDictionary(storedProcedureParameters), storedProcedureTableTypeParameterName.Value, tableOption.Value);
         }
 
         internal partial class SqlSinkConverter : JsonConverter<SqlSink>

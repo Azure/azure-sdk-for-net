@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DomainPurchaseConsent. </summary>
         public DomainPurchaseConsent()
         {
-            AgreementKeys = new ChangeTrackingList<string>();
+            AgreementKeys = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DomainPurchaseConsent. </summary>

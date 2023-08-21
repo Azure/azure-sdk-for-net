@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class HealthcareLROResult : IUtf8JsonSerializable
+    internal partial class HealthcareLROResult : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("results"u8);
             writer.WriteObjectValue(Results);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(TaskName))
+            if (Core.Optional.IsDefined(TaskName))
             {
                 writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             HealthcareResult results = default;
             AnalyzeTextLROResultsKind kind = default;
-            Optional<string> taskName = default;
+            Core.Optional<string> taskName = default;
             DateTimeOffset lastUpdateDateTime = default;
             TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())

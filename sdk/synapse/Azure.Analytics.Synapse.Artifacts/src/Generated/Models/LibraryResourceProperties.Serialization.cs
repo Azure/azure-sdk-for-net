@@ -13,9 +13,9 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LibraryResourcePropertiesConverter))]
-    public partial class LibraryResourceProperties : IUtf8JsonSerializable
+    public partial class LibraryResourceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -27,13 +27,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> path = default;
-            Optional<string> containerName = default;
-            Optional<string> uploadedTimestamp = default;
-            Optional<string> type = default;
-            Optional<string> provisioningStatus = default;
-            Optional<string> creatorId = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> path = default;
+            Core.Optional<string> containerName = default;
+            Core.Optional<string> uploadedTimestamp = default;
+            Core.Optional<string> type = default;
+            Core.Optional<string> provisioningStatus = default;
+            Core.Optional<string> creatorId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

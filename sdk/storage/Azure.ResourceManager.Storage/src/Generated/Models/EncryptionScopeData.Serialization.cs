@@ -13,29 +13,29 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class EncryptionScopeData : IUtf8JsonSerializable
+    public partial class EncryptionScopeData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Source))
+            if (Core.Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (Core.Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Optional.IsDefined(RequireInfrastructureEncryption))
+            if (Core.Optional.IsDefined(RequireInfrastructureEncryption))
             {
                 writer.WritePropertyName("requireInfrastructureEncryption"u8);
                 writer.WriteBooleanValue(RequireInfrastructureEncryption.Value);
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EncryptionScopeSource> source = default;
-            Optional<EncryptionScopeState> state = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<EncryptionScopeKeyVaultProperties> keyVaultProperties = default;
-            Optional<bool> requireInfrastructureEncryption = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<EncryptionScopeSource> source = default;
+            Core.Optional<EncryptionScopeState> state = default;
+            Core.Optional<DateTimeOffset> creationTime = default;
+            Core.Optional<DateTimeOffset> lastModifiedTime = default;
+            Core.Optional<EncryptionScopeKeyVaultProperties> keyVaultProperties = default;
+            Core.Optional<bool> requireInfrastructureEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new EncryptionScopeData(id, name, type, systemData.Value, Optional.ToNullable(source), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), keyVaultProperties.Value, Optional.ToNullable(requireInfrastructureEncryption));
+            return new EncryptionScopeData(id, name, type, systemData.Value, Core.Optional.ToNullable(source), Core.Optional.ToNullable(state), Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime), keyVaultProperties.Value, Core.Optional.ToNullable(requireInfrastructureEncryption));
         }
     }
 }

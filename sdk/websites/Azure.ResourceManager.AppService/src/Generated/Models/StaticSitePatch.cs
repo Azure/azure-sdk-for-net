@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of StaticSitePatch. </summary>
         public StaticSitePatch()
         {
-            CustomDomains = new ChangeTrackingList<string>();
-            PrivateEndpointConnections = new ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
-            UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>();
+            CustomDomains = new Core.ChangeTrackingList<string>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
+            UserProvidedFunctionApps = new Core.ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>();
         }
 
         /// <summary> Initializes a new instance of StaticSitePatch. </summary>

@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of RunNotebookError. </summary>
         internal RunNotebookError()
         {
-            Traceback = new ChangeTrackingList<string>();
+            Traceback = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RunNotebookError. </summary>

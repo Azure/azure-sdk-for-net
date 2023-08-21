@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of BlobServiceItems. </summary>
         internal BlobServiceItems()
         {
-            Value = new ChangeTrackingList<BlobServiceData>();
+            Value = new Core.ChangeTrackingList<BlobServiceData>();
         }
 
         /// <summary> Initializes a new instance of BlobServiceItems. </summary>

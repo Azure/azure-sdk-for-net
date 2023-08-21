@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> Initializes a new instance of StoragePoolSkuZoneDetails. </summary>
         internal StoragePoolSkuZoneDetails()
         {
-            Name = new ChangeTrackingList<string>();
-            Capabilities = new ChangeTrackingList<StoragePoolSkuCapability>();
+            Name = new Core.ChangeTrackingList<string>();
+            Capabilities = new Core.ChangeTrackingList<StoragePoolSkuCapability>();
         }
 
         /// <summary> Initializes a new instance of StoragePoolSkuZoneDetails. </summary>

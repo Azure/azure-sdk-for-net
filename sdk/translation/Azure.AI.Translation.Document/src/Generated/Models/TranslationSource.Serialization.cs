@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    public partial class TranslationSource : IUtf8JsonSerializable
+    public partial class TranslationSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceUrl"u8);
             writer.WriteStringValue(SourceUri.AbsoluteUri);
-            if (Optional.IsDefined(Filter))
+            if (Core.Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
-            if (Optional.IsDefined(LanguageCode))
+            if (Core.Optional.IsDefined(LanguageCode))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(LanguageCode);
             }
-            if (Optional.IsDefined(StorageSource))
+            if (Core.Optional.IsDefined(StorageSource))
             {
                 writer.WritePropertyName("storageSource"u8);
                 writer.WriteStringValue(StorageSource);

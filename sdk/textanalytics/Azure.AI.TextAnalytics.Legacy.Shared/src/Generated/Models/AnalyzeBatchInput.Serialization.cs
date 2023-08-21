@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class AnalyzeBatchInput : IUtf8JsonSerializable
+    internal partial class AnalyzeBatchInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("analysisInput"u8);
             writer.WriteObjectValue(AnalysisInput);
             writer.WritePropertyName("tasks"u8);
             writer.WriteObjectValue(Tasks);
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);

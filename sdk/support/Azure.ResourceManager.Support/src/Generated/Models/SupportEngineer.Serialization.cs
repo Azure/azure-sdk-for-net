@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    internal partial class SupportEngineer : IUtf8JsonSerializable
+    internal partial class SupportEngineer : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<string> emailAddress = default;
+            Core.Optional<string> emailAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("emailAddress"u8))

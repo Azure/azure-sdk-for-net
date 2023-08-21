@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareSmbSettings : IXmlSerializable
+    public partial class ShareSmbSettings : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "SMB");
-            if (Optional.IsDefined(Multichannel))
+            if (Core.Optional.IsDefined(Multichannel))
             {
                 writer.WriteObjectValue(Multichannel, "Multichannel");
             }

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> masterKey = default;
-            Optional<IReadOnlyDictionary<string, string>> functionKeys = default;
-            Optional<IReadOnlyDictionary<string, string>> systemKeys = default;
+            Core.Optional<string> masterKey = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> functionKeys = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> systemKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("masterKey"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new FunctionAppHostKeys(masterKey.Value, Optional.ToDictionary(functionKeys), Optional.ToDictionary(systemKeys));
+            return new FunctionAppHostKeys(masterKey.Value, Core.Optional.ToDictionary(functionKeys), Core.Optional.ToDictionary(systemKeys));
         }
     }
 }

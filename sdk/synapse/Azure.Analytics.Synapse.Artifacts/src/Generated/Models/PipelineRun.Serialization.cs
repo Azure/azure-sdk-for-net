@@ -22,18 +22,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> runId = default;
-            Optional<string> runGroupId = default;
-            Optional<bool> isLatest = default;
-            Optional<string> pipelineName = default;
-            Optional<IReadOnlyDictionary<string, string>> parameters = default;
-            Optional<PipelineRunInvokedBy> invokedBy = default;
-            Optional<DateTimeOffset> lastUpdated = default;
-            Optional<DateTimeOffset> runStart = default;
-            Optional<DateTimeOffset?> runEnd = default;
-            Optional<int> durationInMs = default;
-            Optional<string> status = default;
-            Optional<string> message = default;
+            Core.Optional<string> runId = default;
+            Core.Optional<string> runGroupId = default;
+            Core.Optional<bool> isLatest = default;
+            Core.Optional<string> pipelineName = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> parameters = default;
+            Core.Optional<PipelineRunInvokedBy> invokedBy = default;
+            Core.Optional<DateTimeOffset> lastUpdated = default;
+            Core.Optional<DateTimeOffset> runStart = default;
+            Core.Optional<DateTimeOffset?> runEnd = default;
+            Core.Optional<int> durationInMs = default;
+            Core.Optional<string> status = default;
+            Core.Optional<string> message = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineRun(runId.Value, runGroupId.Value, Optional.ToNullable(isLatest), pipelineName.Value, Optional.ToDictionary(parameters), invokedBy.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(runStart), Optional.ToNullable(runEnd), Optional.ToNullable(durationInMs), status.Value, message.Value, additionalProperties);
+            return new PipelineRun(runId.Value, runGroupId.Value, Core.Optional.ToNullable(isLatest), pipelineName.Value, Core.Optional.ToDictionary(parameters), invokedBy.Value, Core.Optional.ToNullable(lastUpdated), Core.Optional.ToNullable(runStart), Core.Optional.ToNullable(runEnd), Core.Optional.ToNullable(durationInMs), status.Value, message.Value, additionalProperties);
         }
 
         internal partial class PipelineRunConverter : JsonConverter<PipelineRun>

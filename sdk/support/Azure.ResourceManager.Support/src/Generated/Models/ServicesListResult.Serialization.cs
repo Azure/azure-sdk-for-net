@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SupportAzureServiceData>> value = default;
+            Core.Optional<IReadOnlyList<SupportAzureServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Support.Models
                     continue;
                 }
             }
-            return new ServicesListResult(Optional.ToList(value));
+            return new ServicesListResult(Core.Optional.ToList(value));
         }
     }
 }

@@ -13,14 +13,14 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class StorageAccountManagementPolicyData : IUtf8JsonSerializable
+    public partial class StorageAccountManagementPolicyData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Policy))
+            if (Core.Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<ManagementPolicySchema> policy = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> lastModifiedTime = default;
+            Core.Optional<ManagementPolicySchema> policy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new StorageAccountManagementPolicyData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), policy.Value);
+            return new StorageAccountManagementPolicyData(id, name, type, systemData.Value, Core.Optional.ToNullable(lastModifiedTime), policy.Value);
         }
     }
 }

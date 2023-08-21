@@ -22,15 +22,15 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             AnalyzeTasks tasks = default;
-            Optional<TextDocumentBatchStatistics> statistics = default;
-            Optional<string> displayName = default;
+            Core.Optional<TextDocumentBatchStatistics> statistics = default;
+            Core.Optional<string> displayName = default;
             DateTimeOffset createdDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
+            Core.Optional<DateTimeOffset> expirationDateTime = default;
             string jobId = default;
             DateTimeOffset lastUpdatedDateTime = default;
             TextAnalyticsOperationStatus status = default;
-            Optional<IReadOnlyList<Error>> errors = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<Error>> errors = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tasks"u8))
@@ -101,7 +101,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AnalyzeTextJobState(displayName.Value, createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdatedDateTime, status, Optional.ToList(errors), nextLink.Value, tasks, statistics.Value);
+            return new AnalyzeTextJobState(displayName.Value, createdDateTime, Core.Optional.ToNullable(expirationDateTime), jobId, lastUpdatedDateTime, status, Core.Optional.ToList(errors), nextLink.Value, tasks, statistics.Value);
         }
     }
 }

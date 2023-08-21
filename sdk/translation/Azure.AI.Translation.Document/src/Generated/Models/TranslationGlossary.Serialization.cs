@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    public partial class TranslationGlossary : IUtf8JsonSerializable
+    public partial class TranslationGlossary : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("glossaryUrl"u8);
             writer.WriteStringValue(GlossaryUri.AbsoluteUri);
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format);
-            if (Optional.IsDefined(FormatVersion))
+            if (Core.Optional.IsDefined(FormatVersion))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(FormatVersion);
             }
-            if (Optional.IsDefined(StorageSource))
+            if (Core.Optional.IsDefined(StorageSource))
             {
                 writer.WritePropertyName("storageSource"u8);
                 writer.WriteStringValue(StorageSource);

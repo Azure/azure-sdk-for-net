@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class ExecuteDataFlowActivityTypePropertiesCompute : IUtf8JsonSerializable
+    public partial class ExecuteDataFlowActivityTypePropertiesCompute : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeType))
+            if (Core.Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType.Value.ToString());
             }
-            if (Optional.IsDefined(CoreCount))
+            if (Core.Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
@@ -34,8 +34,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<DataFlowComputeType> computeType = default;
-            Optional<int> coreCount = default;
+            Core.Optional<DataFlowComputeType> computeType = default;
+            Core.Optional<int> coreCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeType"u8))
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ExecuteDataFlowActivityTypePropertiesCompute(Optional.ToNullable(computeType), Optional.ToNullable(coreCount));
+            return new ExecuteDataFlowActivityTypePropertiesCompute(Core.Optional.ToNullable(computeType), Core.Optional.ToNullable(coreCount));
         }
     }
 }

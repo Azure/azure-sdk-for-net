@@ -14,15 +14,15 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class AppServiceOperationOperationSource : IOperationSource<AppServiceOperation>
+    internal class AppServiceOperationOperationSource : Core.IOperationSource<AppServiceOperation>
     {
-        AppServiceOperation IOperationSource<AppServiceOperation>.CreateResult(Response response, CancellationToken cancellationToken)
+        AppServiceOperation Core.IOperationSource<AppServiceOperation>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return AppServiceOperation.DeserializeAppServiceOperation(document.RootElement);
         }
 
-        async ValueTask<AppServiceOperation> IOperationSource<AppServiceOperation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AppServiceOperation> Core.IOperationSource<AppServiceOperation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return AppServiceOperation.DeserializeAppServiceOperation(document.RootElement);

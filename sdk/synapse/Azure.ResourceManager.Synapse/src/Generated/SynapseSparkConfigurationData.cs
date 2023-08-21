@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Synapse
             Argument.AssertNotNull(configs, nameof(configs));
 
             Configs = configs;
-            Annotations = new ChangeTrackingList<string>();
-            ConfigMergeRule = new ChangeTrackingDictionary<string, string>();
+            Annotations = new Core.ChangeTrackingList<string>();
+            ConfigMergeRule = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of SynapseSparkConfigurationData. </summary>

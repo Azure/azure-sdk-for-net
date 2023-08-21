@@ -22,20 +22,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> file = default;
-            Optional<string> className = default;
-            Optional<IReadOnlyList<string>> args = default;
-            Optional<IReadOnlyList<string>> jars = default;
-            Optional<IReadOnlyList<string>> pyFiles = default;
-            Optional<IReadOnlyList<string>> files = default;
-            Optional<IReadOnlyList<string>> archives = default;
-            Optional<IReadOnlyDictionary<string, string>> conf = default;
-            Optional<string> driverMemory = default;
-            Optional<int> driverCores = default;
-            Optional<string> executorMemory = default;
-            Optional<int> executorCores = default;
-            Optional<int> numExecutors = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> file = default;
+            Core.Optional<string> className = default;
+            Core.Optional<IReadOnlyList<string>> args = default;
+            Core.Optional<IReadOnlyList<string>> jars = default;
+            Core.Optional<IReadOnlyList<string>> pyFiles = default;
+            Core.Optional<IReadOnlyList<string>> files = default;
+            Core.Optional<IReadOnlyList<string>> archives = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> conf = default;
+            Core.Optional<string> driverMemory = default;
+            Core.Optional<int> driverCores = default;
+            Core.Optional<string> executorMemory = default;
+            Core.Optional<int> executorCores = default;
+            Core.Optional<int> numExecutors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -175,7 +175,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SparkRequest(name.Value, file.Value, className.Value, Optional.ToList(args), Optional.ToList(jars), Optional.ToList(pyFiles), Optional.ToList(files), Optional.ToList(archives), Optional.ToDictionary(conf), driverMemory.Value, Optional.ToNullable(driverCores), executorMemory.Value, Optional.ToNullable(executorCores), Optional.ToNullable(numExecutors));
+            return new SparkRequest(name.Value, file.Value, className.Value, Core.Optional.ToList(args), Core.Optional.ToList(jars), Core.Optional.ToList(pyFiles), Core.Optional.ToList(files), Core.Optional.ToList(archives), Core.Optional.ToDictionary(conf), driverMemory.Value, Core.Optional.ToNullable(driverCores), executorMemory.Value, Core.Optional.ToNullable(executorCores), Core.Optional.ToNullable(numExecutors));
         }
 
         internal partial class SparkRequestConverter : JsonConverter<SparkRequest>

@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountEncryptionServices : IUtf8JsonSerializable
+    public partial class StorageAccountEncryptionServices : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Blob))
+            if (Core.Optional.IsDefined(Blob))
             {
                 writer.WritePropertyName("blob"u8);
                 writer.WriteObjectValue(Blob);
             }
-            if (Optional.IsDefined(File))
+            if (Core.Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
                 writer.WriteObjectValue(File);
             }
-            if (Optional.IsDefined(Table))
+            if (Core.Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteObjectValue(Table);
             }
-            if (Optional.IsDefined(Queue))
+            if (Core.Optional.IsDefined(Queue))
             {
                 writer.WritePropertyName("queue"u8);
                 writer.WriteObjectValue(Queue);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<StorageEncryptionService> blob = default;
-            Optional<StorageEncryptionService> file = default;
-            Optional<StorageEncryptionService> table = default;
-            Optional<StorageEncryptionService> queue = default;
+            Core.Optional<StorageEncryptionService> blob = default;
+            Core.Optional<StorageEncryptionService> file = default;
+            Core.Optional<StorageEncryptionService> table = default;
+            Core.Optional<StorageEncryptionService> queue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blob"u8))

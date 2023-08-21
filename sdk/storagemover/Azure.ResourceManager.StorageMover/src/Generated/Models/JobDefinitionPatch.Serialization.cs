@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class JobDefinitionPatch : IUtf8JsonSerializable
+    public partial class JobDefinitionPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(CopyMode))
+            if (Core.Optional.IsDefined(CopyMode))
             {
                 writer.WritePropertyName("copyMode"u8);
                 writer.WriteStringValue(CopyMode.Value.ToString());
             }
-            if (Optional.IsDefined(AgentName))
+            if (Core.Optional.IsDefined(AgentName))
             {
                 writer.WritePropertyName("agentName"u8);
                 writer.WriteStringValue(AgentName);

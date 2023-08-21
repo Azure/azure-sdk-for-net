@@ -14,12 +14,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(RecurrenceScheduleConverter))]
-    public partial class RecurrenceSchedule : IUtf8JsonSerializable
+    public partial class RecurrenceSchedule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Minutes))
+            if (Core.Optional.IsCollectionDefined(Minutes))
             {
                 writer.WritePropertyName("minutes"u8);
                 writer.WriteStartArray();
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Hours))
+            if (Core.Optional.IsCollectionDefined(Hours))
             {
                 writer.WritePropertyName("hours"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WeekDays))
+            if (Core.Optional.IsCollectionDefined(WeekDays))
             {
                 writer.WritePropertyName("weekDays"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MonthDays))
+            if (Core.Optional.IsCollectionDefined(MonthDays))
             {
                 writer.WritePropertyName("monthDays"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MonthlyOccurrences))
+            if (Core.Optional.IsCollectionDefined(MonthlyOccurrences))
             {
                 writer.WritePropertyName("monthlyOccurrences"u8);
                 writer.WriteStartArray();
@@ -83,11 +83,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IList<int>> minutes = default;
-            Optional<IList<int>> hours = default;
-            Optional<IList<DayOfWeek>> weekDays = default;
-            Optional<IList<int>> monthDays = default;
-            Optional<IList<RecurrenceScheduleOccurrence>> monthlyOccurrences = default;
+            Core.Optional<IList<int>> minutes = default;
+            Core.Optional<IList<int>> hours = default;
+            Core.Optional<IList<DayOfWeek>> weekDays = default;
+            Core.Optional<IList<int>> monthDays = default;
+            Core.Optional<IList<RecurrenceScheduleOccurrence>> monthlyOccurrences = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RecurrenceSchedule(Optional.ToList(minutes), Optional.ToList(hours), Optional.ToList(weekDays), Optional.ToList(monthDays), Optional.ToList(monthlyOccurrences), additionalProperties);
+            return new RecurrenceSchedule(Core.Optional.ToList(minutes), Core.Optional.ToList(hours), Core.Optional.ToList(weekDays), Core.Optional.ToList(monthDays), Core.Optional.ToList(monthlyOccurrences), additionalProperties);
         }
 
         internal partial class RecurrenceScheduleConverter : JsonConverter<RecurrenceSchedule>

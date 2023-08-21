@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of EventHubOutputDataSource. </summary>
         public EventHubOutputDataSource()
         {
-            PropertyColumns = new ChangeTrackingList<string>();
+            PropertyColumns = new Core.ChangeTrackingList<string>();
             OutputDataSourceType = "Microsoft.ServiceBus/EventHub";
         }
 

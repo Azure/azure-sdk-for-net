@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ThreeTierFullResourceNames : IUtf8JsonSerializable
+    public partial class ThreeTierFullResourceNames : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CentralServer))
+            if (Core.Optional.IsDefined(CentralServer))
             {
                 writer.WritePropertyName("centralServer"u8);
                 writer.WriteObjectValue(CentralServer);
             }
-            if (Optional.IsDefined(ApplicationServer))
+            if (Core.Optional.IsDefined(ApplicationServer))
             {
                 writer.WritePropertyName("applicationServer"u8);
                 writer.WriteObjectValue(ApplicationServer);
             }
-            if (Optional.IsDefined(DatabaseServer))
+            if (Core.Optional.IsDefined(DatabaseServer))
             {
                 writer.WritePropertyName("databaseServer"u8);
                 writer.WriteObjectValue(DatabaseServer);
             }
-            if (Optional.IsDefined(SharedStorage))
+            if (Core.Optional.IsDefined(SharedStorage))
             {
                 writer.WritePropertyName("sharedStorage"u8);
                 writer.WriteObjectValue(SharedStorage);
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<CentralServerFullResourceNames> centralServer = default;
-            Optional<ApplicationServerFullResourceNames> applicationServer = default;
-            Optional<DatabaseServerFullResourceNames> databaseServer = default;
-            Optional<SharedStorageResourceNames> sharedStorage = default;
+            Core.Optional<CentralServerFullResourceNames> centralServer = default;
+            Core.Optional<ApplicationServerFullResourceNames> applicationServer = default;
+            Core.Optional<DatabaseServerFullResourceNames> databaseServer = default;
+            Core.Optional<SharedStorageResourceNames> sharedStorage = default;
             SapNamingPatternType namingPatternType = default;
             foreach (var property in element.EnumerateObject())
             {

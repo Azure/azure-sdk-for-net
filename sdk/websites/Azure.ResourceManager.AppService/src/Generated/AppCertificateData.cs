@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The location. </param>
         public AppCertificateData(AzureLocation location) : base(location)
         {
-            HostNames = new ChangeTrackingList<string>();
+            HostNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppCertificateData. </summary>

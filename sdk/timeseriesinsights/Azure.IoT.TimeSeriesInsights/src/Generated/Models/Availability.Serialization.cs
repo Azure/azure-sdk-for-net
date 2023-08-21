@@ -20,9 +20,9 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<DateTimeRange> range = default;
-            Optional<TimeSpan> intervalSize = default;
-            Optional<IReadOnlyDictionary<string, int>> distribution = default;
+            Core.Optional<DateTimeRange> range = default;
+            Core.Optional<TimeSpan> intervalSize = default;
+            Core.Optional<IReadOnlyDictionary<string, int>> distribution = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("range"u8))
@@ -58,7 +58,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new Availability(range.Value, Optional.ToNullable(intervalSize), Optional.ToDictionary(distribution));
+            return new Availability(range.Value, Core.Optional.ToNullable(intervalSize), Core.Optional.ToDictionary(distribution));
         }
     }
 }

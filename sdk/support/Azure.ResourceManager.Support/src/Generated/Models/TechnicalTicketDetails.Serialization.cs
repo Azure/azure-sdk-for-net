@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    internal partial class TechnicalTicketDetails : IUtf8JsonSerializable
+    internal partial class TechnicalTicketDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (Core.Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))

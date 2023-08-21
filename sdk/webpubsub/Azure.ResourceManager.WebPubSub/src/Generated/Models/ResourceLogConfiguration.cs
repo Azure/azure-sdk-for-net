@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of ResourceLogConfiguration. </summary>
         public ResourceLogConfiguration()
         {
-            Categories = new ChangeTrackingList<ResourceLogCategory>();
+            Categories = new Core.ChangeTrackingList<ResourceLogCategory>();
         }
 
         /// <summary> Initializes a new instance of ResourceLogConfiguration. </summary>

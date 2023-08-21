@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class HealthcareResultDocumentsItem : IUtf8JsonSerializable
+    internal partial class HealthcareResultDocumentsItem : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("entities"u8);
@@ -40,7 +40,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Statistics))
+            if (Core.Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics.Value);
@@ -58,7 +58,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<HealthcareRelationInternal> relations = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
-            Optional<TextDocumentStatistics> statistics = default;
+            Core.Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("entities"u8))
@@ -106,7 +106,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), entities, relations);
+            return new HealthcareResultDocumentsItem(id, warnings, Core.Optional.ToNullable(statistics), entities, relations);
         }
     }
 }

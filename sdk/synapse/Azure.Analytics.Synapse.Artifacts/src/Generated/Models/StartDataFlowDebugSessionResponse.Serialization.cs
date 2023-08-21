@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(StartDataFlowDebugSessionResponseConverter))]
-    public partial class StartDataFlowDebugSessionResponse : IUtf8JsonSerializable
+    public partial class StartDataFlowDebugSessionResponse : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(JobVersion))
+            if (Core.Optional.IsDefined(JobVersion))
             {
                 writer.WritePropertyName("jobVersion"u8);
                 writer.WriteStringValue(JobVersion);
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> jobVersion = default;
+            Core.Optional<string> jobVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobVersion"u8))

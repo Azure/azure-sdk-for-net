@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobAnalyticsLogging : IXmlSerializable
+    public partial class BlobAnalyticsLogging : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "Logging");
             writer.WriteStartElement("Version");

@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<ApplicationServerVirtualMachineType> type = default;
-            Optional<ResourceIdentifier> virtualMachineId = default;
-            Optional<IReadOnlyList<SubResource>> storageDetails = default;
+            Core.Optional<ApplicationServerVirtualMachineType> type = default;
+            Core.Optional<ResourceIdentifier> virtualMachineId = default;
+            Core.Optional<IReadOnlyList<SubResource>> storageDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new ApplicationServerVmDetails(Optional.ToNullable(type), virtualMachineId.Value, Optional.ToList(storageDetails));
+            return new ApplicationServerVmDetails(Core.Optional.ToNullable(type), virtualMachineId.Value, Core.Optional.ToList(storageDetails));
         }
     }
 }

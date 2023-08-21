@@ -16,7 +16,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of DiscoveredOnvifDeviceCollection. </summary>
         public DiscoveredOnvifDeviceCollection()
         {
-            Value = new ChangeTrackingList<DiscoveredOnvifDevice>();
+            Value = new Core.ChangeTrackingList<DiscoveredOnvifDevice>();
         }
 
         /// <summary> Initializes a new instance of DiscoveredOnvifDeviceCollection. </summary>

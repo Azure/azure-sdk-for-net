@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Initializes a new instance of ServerEndpointRecallStatus. </summary>
         internal ServerEndpointRecallStatus()
         {
-            RecallErrors = new ChangeTrackingList<ServerEndpointRecallError>();
+            RecallErrors = new Core.ChangeTrackingList<ServerEndpointRecallError>();
         }
 
         /// <summary> Initializes a new instance of ServerEndpointRecallStatus. </summary>

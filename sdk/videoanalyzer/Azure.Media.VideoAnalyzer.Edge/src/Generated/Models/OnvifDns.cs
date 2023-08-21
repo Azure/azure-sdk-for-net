@@ -16,8 +16,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of OnvifDns. </summary>
         public OnvifDns()
         {
-            Ipv4Address = new ChangeTrackingList<string>();
-            Ipv6Address = new ChangeTrackingList<string>();
+            Ipv4Address = new Core.ChangeTrackingList<string>();
+            Ipv6Address = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of OnvifDns. </summary>

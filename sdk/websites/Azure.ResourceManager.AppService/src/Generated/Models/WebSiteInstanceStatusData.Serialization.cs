@@ -14,44 +14,44 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class WebSiteInstanceStatusData : IUtf8JsonSerializable
+    public partial class WebSiteInstanceStatusData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StatusUri))
+            if (Core.Optional.IsDefined(StatusUri))
             {
                 writer.WritePropertyName("statusUrl"u8);
                 writer.WriteStringValue(StatusUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DetectorUri))
+            if (Core.Optional.IsDefined(DetectorUri))
             {
                 writer.WritePropertyName("detectorUrl"u8);
                 writer.WriteStringValue(DetectorUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ConsoleUri))
+            if (Core.Optional.IsDefined(ConsoleUri))
             {
                 writer.WritePropertyName("consoleUrl"u8);
                 writer.WriteStringValue(ConsoleUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(HealthCheckUri))
+            if (Core.Optional.IsDefined(HealthCheckUri))
             {
                 writer.WritePropertyName("healthCheckUrl"u8);
                 writer.WriteStringValue(HealthCheckUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Containers))
+            if (Core.Optional.IsCollectionDefined(Containers))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartObject();
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SiteRuntimeState> state = default;
-            Optional<Uri> statusUrl = default;
-            Optional<Uri> detectorUrl = default;
-            Optional<Uri> consoleUrl = default;
-            Optional<Uri> healthCheckUrl = default;
-            Optional<IDictionary<string, ContainerInfo>> containers = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<SiteRuntimeState> state = default;
+            Core.Optional<Uri> statusUrl = default;
+            Core.Optional<Uri> detectorUrl = default;
+            Core.Optional<Uri> consoleUrl = default;
+            Core.Optional<Uri> healthCheckUrl = default;
+            Core.Optional<IDictionary<string, ContainerInfo>> containers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new WebSiteInstanceStatusData(id, name, type, systemData.Value, Optional.ToNullable(state), statusUrl.Value, detectorUrl.Value, consoleUrl.Value, healthCheckUrl.Value, Optional.ToDictionary(containers), kind.Value);
+            return new WebSiteInstanceStatusData(id, name, type, systemData.Value, Core.Optional.ToNullable(state), statusUrl.Value, detectorUrl.Value, consoleUrl.Value, healthCheckUrl.Value, Core.Optional.ToDictionary(containers), kind.Value);
         }
     }
 }

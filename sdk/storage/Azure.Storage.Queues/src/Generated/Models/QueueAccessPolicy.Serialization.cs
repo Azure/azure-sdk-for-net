@@ -12,24 +12,24 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueAccessPolicy : IXmlSerializable
+    public partial class QueueAccessPolicy : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
-            if (Optional.IsDefined(StartsOn))
+            if (Core.Optional.IsDefined(StartsOn))
             {
                 writer.WriteStartElement("Start");
                 writer.WriteValue(StartsOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(ExpiresOn))
+            if (Core.Optional.IsDefined(ExpiresOn))
             {
                 writer.WriteStartElement("Expiry");
                 writer.WriteValue(ExpiresOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(Permissions))
+            if (Core.Optional.IsDefined(Permissions))
             {
                 writer.WriteStartElement("Permission");
                 writer.WriteValue(Permissions);

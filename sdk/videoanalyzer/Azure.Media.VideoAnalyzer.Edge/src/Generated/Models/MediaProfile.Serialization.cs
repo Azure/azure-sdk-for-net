@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class MediaProfile : IUtf8JsonSerializable
+    public partial class MediaProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(MediaUri))
+            if (Core.Optional.IsDefined(MediaUri))
             {
                 writer.WritePropertyName("mediaUri"u8);
                 writer.WriteObjectValue(MediaUri);
             }
-            if (Optional.IsDefined(VideoEncoderConfiguration))
+            if (Core.Optional.IsDefined(VideoEncoderConfiguration))
             {
                 writer.WritePropertyName("videoEncoderConfiguration"u8);
                 writer.WriteObjectValue(VideoEncoderConfiguration);
@@ -39,9 +39,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<object> mediaUri = default;
-            Optional<VideoEncoderConfiguration> videoEncoderConfiguration = default;
+            Core.Optional<string> name = default;
+            Core.Optional<object> mediaUri = default;
+            Core.Optional<VideoEncoderConfiguration> videoEncoderConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

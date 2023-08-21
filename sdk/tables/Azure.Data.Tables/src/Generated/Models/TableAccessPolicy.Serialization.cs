@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableAccessPolicy : IXmlSerializable
+    public partial class TableAccessPolicy : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
             if (StartsOn != null)

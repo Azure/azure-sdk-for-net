@@ -11,42 +11,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceSkuDescription : IUtf8JsonSerializable
+    public partial class AppServiceSkuDescription : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Tier))
+            if (Core.Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Optional.IsDefined(Size))
+            if (Core.Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Optional.IsDefined(Family))
+            if (Core.Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Optional.IsDefined(Capacity))
+            if (Core.Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (Optional.IsDefined(SkuCapacity))
+            if (Core.Optional.IsDefined(SkuCapacity))
             {
                 writer.WritePropertyName("skuCapacity"u8);
                 writer.WriteObjectValue(SkuCapacity);
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (Core.Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Capabilities))
+            if (Core.Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -75,14 +75,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<int> capacity = default;
-            Optional<AppServiceSkuCapacity> skuCapacity = default;
-            Optional<IList<AzureLocation>> locations = default;
-            Optional<IList<AppServiceSkuCapability>> capabilities = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> tier = default;
+            Core.Optional<string> size = default;
+            Core.Optional<string> family = default;
+            Core.Optional<int> capacity = default;
+            Core.Optional<AppServiceSkuCapacity> skuCapacity = default;
+            Core.Optional<IList<AzureLocation>> locations = default;
+            Core.Optional<IList<AppServiceSkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceSkuDescription(name.Value, tier.Value, size.Value, family.Value, Optional.ToNullable(capacity), skuCapacity.Value, Optional.ToList(locations), Optional.ToList(capabilities));
+            return new AppServiceSkuDescription(name.Value, tier.Value, size.Value, family.Value, Core.Optional.ToNullable(capacity), skuCapacity.Value, Core.Optional.ToList(locations), Core.Optional.ToList(capabilities));
         }
     }
 }

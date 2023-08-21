@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
-    public partial class DiskPoolIscsiTargetPortalGroupAcl : IUtf8JsonSerializable
+    public partial class DiskPoolIscsiTargetPortalGroupAcl : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("initiatorIqn"u8);

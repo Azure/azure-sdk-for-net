@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class SynapseAadOnlyAuthenticationOperationSource : IOperationSource<SynapseAadOnlyAuthenticationResource>
+    internal class SynapseAadOnlyAuthenticationOperationSource : Core.IOperationSource<SynapseAadOnlyAuthenticationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        SynapseAadOnlyAuthenticationResource IOperationSource<SynapseAadOnlyAuthenticationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SynapseAadOnlyAuthenticationResource Core.IOperationSource<SynapseAadOnlyAuthenticationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseAadOnlyAuthenticationData.DeserializeSynapseAadOnlyAuthenticationData(document.RootElement);
             return new SynapseAadOnlyAuthenticationResource(_client, data);
         }
 
-        async ValueTask<SynapseAadOnlyAuthenticationResource> IOperationSource<SynapseAadOnlyAuthenticationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SynapseAadOnlyAuthenticationResource> Core.IOperationSource<SynapseAadOnlyAuthenticationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseAadOnlyAuthenticationData.DeserializeSynapseAadOnlyAuthenticationData(document.RootElement);

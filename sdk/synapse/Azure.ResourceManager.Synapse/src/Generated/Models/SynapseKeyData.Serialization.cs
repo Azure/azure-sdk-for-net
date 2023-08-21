@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseKeyData : IUtf8JsonSerializable
+    public partial class SynapseKeyData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsActiveCmk))
+            if (Core.Optional.IsDefined(IsActiveCmk))
             {
                 writer.WritePropertyName("isActiveCMK"u8);
                 writer.WriteBooleanValue(IsActiveCmk.Value);
             }
-            if (Optional.IsDefined(KeyVaultUri))
+            if (Core.Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUrl"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isActiveCMK = default;
-            Optional<Uri> keyVaultUrl = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<bool> isActiveCMK = default;
+            Core.Optional<Uri> keyVaultUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseKeyData(id, name, type, systemData.Value, Optional.ToNullable(isActiveCMK), keyVaultUrl.Value);
+            return new SynapseKeyData(id, name, type, systemData.Value, Core.Optional.ToNullable(isActiveCMK), keyVaultUrl.Value);
         }
     }
 }

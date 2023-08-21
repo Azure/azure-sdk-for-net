@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> since = default;
-            Optional<string> code = default;
-            Optional<string> message = default;
+            Core.Optional<DateTimeOffset> since = default;
+            Core.Optional<string> code = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("since"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamingJobDiagnosticCondition(Optional.ToNullable(since), code.Value, message.Value);
+            return new StreamingJobDiagnosticCondition(Core.Optional.ToNullable(since), code.Value, message.Value);
         }
     }
 }

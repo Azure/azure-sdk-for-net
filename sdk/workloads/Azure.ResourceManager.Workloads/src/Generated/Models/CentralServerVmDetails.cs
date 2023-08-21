@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of CentralServerVmDetails. </summary>
         internal CentralServerVmDetails()
         {
-            StorageDetails = new ChangeTrackingList<SubResource>();
+            StorageDetails = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of CentralServerVmDetails. </summary>

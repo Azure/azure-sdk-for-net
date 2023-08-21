@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of PrivateAccessVirtualNetwork. </summary>
         public PrivateAccessVirtualNetwork()
         {
-            Subnets = new ChangeTrackingList<PrivateAccessSubnet>();
+            Subnets = new Core.ChangeTrackingList<PrivateAccessSubnet>();
         }
 
         /// <summary> Initializes a new instance of PrivateAccessVirtualNetwork. </summary>

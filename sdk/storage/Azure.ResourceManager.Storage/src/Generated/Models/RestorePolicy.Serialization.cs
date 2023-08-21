@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class RestorePolicy : IUtf8JsonSerializable
+    public partial class RestorePolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Optional.IsDefined(Days))
+            if (Core.Optional.IsDefined(Days))
             {
                 writer.WritePropertyName("days"u8);
                 writer.WriteNumberValue(Days.Value);
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             bool enabled = default;
-            Optional<int> days = default;
-            Optional<DateTimeOffset> lastEnabledTime = default;
-            Optional<DateTimeOffset> minRestoreTime = default;
+            Core.Optional<int> days = default;
+            Core.Optional<DateTimeOffset> lastEnabledTime = default;
+            Core.Optional<DateTimeOffset> minRestoreTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new RestorePolicy(enabled, Optional.ToNullable(days), Optional.ToNullable(lastEnabledTime), Optional.ToNullable(minRestoreTime));
+            return new RestorePolicy(enabled, Core.Optional.ToNullable(days), Core.Optional.ToNullable(lastEnabledTime), Core.Optional.ToNullable(minRestoreTime));
         }
     }
 }

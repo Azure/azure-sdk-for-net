@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppCertificatePatch. </summary>
         public AppCertificatePatch()
         {
-            HostNames = new ChangeTrackingList<string>();
+            HostNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppCertificatePatch. </summary>

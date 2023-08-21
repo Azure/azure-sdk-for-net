@@ -57,7 +57,7 @@ namespace Azure.Data.Tables
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
-            var content = new XmlWriterContent();
+            var content = new Core.XmlWriterContent();
             content.XmlWriter.WriteObjectValue(tableServiceProperties, "StorageServiceProperties");
             request.Content = content;
             return message;
@@ -68,7 +68,7 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableServiceProperties"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(TableServiceProperties tableServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(TableServiceProperties tableServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (tableServiceProperties == null)
             {
@@ -81,7 +81,7 @@ namespace Azure.Data.Tables
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -92,7 +92,7 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableServiceProperties"/> is null. </exception>
-        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(TableServiceProperties tableServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(TableServiceProperties tableServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (tableServiceProperties == null)
             {
@@ -105,7 +105,7 @@ namespace Azure.Data.Tables
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -134,7 +134,7 @@ namespace Azure.Data.Tables
         /// <summary> Gets the properties of an account's Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<TableServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<TableServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -149,7 +149,7 @@ namespace Azure.Data.Tables
                         {
                             value = TableServiceProperties.DeserializeTableServiceProperties(storageServicePropertiesElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -159,7 +159,7 @@ namespace Azure.Data.Tables
         /// <summary> Gets the properties of an account's Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<TableServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<TableServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout);
             _pipeline.Send(message, cancellationToken);
@@ -174,7 +174,7 @@ namespace Azure.Data.Tables
                         {
                             value = TableServiceProperties.DeserializeTableServiceProperties(storageServicePropertiesElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -204,7 +204,7 @@ namespace Azure.Data.Tables
         /// <summary> Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the account. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<TableServiceStatistics, ServiceGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<TableServiceStatistics, ServiceGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetStatisticsRequest(timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -219,7 +219,7 @@ namespace Azure.Data.Tables
                         {
                             value = TableServiceStatistics.DeserializeTableServiceStatistics(storageServiceStatsElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -229,7 +229,7 @@ namespace Azure.Data.Tables
         /// <summary> Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the account. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<TableServiceStatistics, ServiceGetStatisticsHeaders> GetStatistics(int? timeout = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<TableServiceStatistics, ServiceGetStatisticsHeaders> GetStatistics(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetStatisticsRequest(timeout);
             _pipeline.Send(message, cancellationToken);
@@ -244,7 +244,7 @@ namespace Azure.Data.Tables
                         {
                             value = TableServiceStatistics.DeserializeTableServiceStatistics(storageServiceStatsElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

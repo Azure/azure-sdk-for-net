@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WebPubSubPrivateLink>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<WebPubSubPrivateLink>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new PrivateLinkResourceList(Optional.ToList(value), nextLink.Value);
+            return new PrivateLinkResourceList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

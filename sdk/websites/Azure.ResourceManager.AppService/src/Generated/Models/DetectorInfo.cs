@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DetectorInfo. </summary>
         public DetectorInfo()
         {
-            SupportTopicList = new ChangeTrackingList<DetectorSupportTopic>();
-            AnalysisType = new ChangeTrackingList<string>();
+            SupportTopicList = new Core.ChangeTrackingList<DetectorSupportTopic>();
+            AnalysisType = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DetectorInfo. </summary>

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageRoutingPreference : IUtf8JsonSerializable
+    public partial class StorageRoutingPreference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoutingChoice))
+            if (Core.Optional.IsDefined(RoutingChoice))
             {
                 writer.WritePropertyName("routingChoice"u8);
                 writer.WriteStringValue(RoutingChoice.Value.ToString());
             }
-            if (Optional.IsDefined(IsMicrosoftEndpointsPublished))
+            if (Core.Optional.IsDefined(IsMicrosoftEndpointsPublished))
             {
                 writer.WritePropertyName("publishMicrosoftEndpoints"u8);
                 writer.WriteBooleanValue(IsMicrosoftEndpointsPublished.Value);
             }
-            if (Optional.IsDefined(IsInternetEndpointsPublished))
+            if (Core.Optional.IsDefined(IsInternetEndpointsPublished))
             {
                 writer.WritePropertyName("publishInternetEndpoints"u8);
                 writer.WriteBooleanValue(IsInternetEndpointsPublished.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<StorageRoutingChoice> routingChoice = default;
-            Optional<bool> publishMicrosoftEndpoints = default;
-            Optional<bool> publishInternetEndpoints = default;
+            Core.Optional<StorageRoutingChoice> routingChoice = default;
+            Core.Optional<bool> publishMicrosoftEndpoints = default;
+            Core.Optional<bool> publishInternetEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routingChoice"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StorageRoutingPreference(Optional.ToNullable(routingChoice), Optional.ToNullable(publishMicrosoftEndpoints), Optional.ToNullable(publishInternetEndpoints));
+            return new StorageRoutingPreference(Core.Optional.ToNullable(routingChoice), Core.Optional.ToNullable(publishMicrosoftEndpoints), Core.Optional.ToNullable(publishInternetEndpoints));
         }
     }
 }
