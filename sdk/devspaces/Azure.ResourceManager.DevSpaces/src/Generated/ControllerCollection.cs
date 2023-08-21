@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DevSpaces
             try
             {
                 var response = await _controllerRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevSpacesArmOperation<ControllerResource>(new ControllerOperationSource(Client), _controllerClientDiagnostics, Pipeline, _controllerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevSpacesArmOperation<ControllerResource>(new ControllerOperationSource(Client), _controllerClientDiagnostics, Pipeline, _controllerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DevSpaces
             try
             {
                 var response = _controllerRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken);
-                var operation = new DevSpacesArmOperation<ControllerResource>(new ControllerOperationSource(Client), _controllerClientDiagnostics, Pipeline, _controllerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevSpacesArmOperation<ControllerResource>(new ControllerOperationSource(Client), _controllerClientDiagnostics, Pipeline, _controllerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DevSpaces
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _controllerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _controllerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ControllerResource(Client, ControllerData.DeserializeControllerData(e)), _controllerClientDiagnostics, Pipeline, "ControllerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ControllerResource(Client, ControllerData.DeserializeControllerData(e)), _controllerClientDiagnostics, Pipeline, "ControllerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DevSpaces
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _controllerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _controllerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ControllerResource(Client, ControllerData.DeserializeControllerData(e)), _controllerClientDiagnostics, Pipeline, "ControllerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ControllerResource(Client, ControllerData.DeserializeControllerData(e)), _controllerClientDiagnostics, Pipeline, "ControllerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

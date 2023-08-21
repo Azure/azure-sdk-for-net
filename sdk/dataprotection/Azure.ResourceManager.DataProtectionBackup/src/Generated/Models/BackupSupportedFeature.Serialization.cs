@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> featureName = default;
-            Optional<FeatureSupportStatus> supportStatus = default;
-            Optional<IReadOnlyList<string>> exposureControlledFeatures = default;
+            Core.Optional<string> featureName = default;
+            Core.Optional<FeatureSupportStatus> supportStatus = default;
+            Core.Optional<IReadOnlyList<string>> exposureControlledFeatures = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("featureName"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new BackupSupportedFeature(featureName.Value, Optional.ToNullable(supportStatus), Optional.ToList(exposureControlledFeatures));
+            return new BackupSupportedFeature(featureName.Value, Core.Optional.ToNullable(supportStatus), Core.Optional.ToList(exposureControlledFeatures));
         }
     }
 }

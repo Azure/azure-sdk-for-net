@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrateMongoDBTaskProperties. </summary>
         public MigrateMongoDBTaskProperties()
         {
-            Output = new ChangeTrackingList<MongoDBProgress>();
+            Output = new Core.ChangeTrackingList<MongoDBProgress>();
             TaskType = TaskType.MigrateMongoDB;
         }
 

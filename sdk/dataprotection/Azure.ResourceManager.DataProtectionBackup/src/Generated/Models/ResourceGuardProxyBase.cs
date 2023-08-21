@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of ResourceGuardProxyBase. </summary>
         public ResourceGuardProxyBase()
         {
-            ResourceGuardOperationDetails = new ChangeTrackingList<ResourceGuardOperationDetail>();
+            ResourceGuardOperationDetails = new Core.ChangeTrackingList<ResourceGuardOperationDetail>();
         }
 
         /// <summary> Initializes a new instance of ResourceGuardProxyBase. </summary>

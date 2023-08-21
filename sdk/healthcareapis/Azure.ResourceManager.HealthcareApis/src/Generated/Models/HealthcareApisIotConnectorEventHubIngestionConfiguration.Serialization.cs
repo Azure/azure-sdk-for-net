@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisIotConnectorEventHubIngestionConfiguration : IUtf8JsonSerializable
+    public partial class HealthcareApisIotConnectorEventHubIngestionConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventHubName))
+            if (Core.Optional.IsDefined(EventHubName))
             {
                 writer.WritePropertyName("eventHubName"u8);
                 writer.WriteStringValue(EventHubName);
             }
-            if (Optional.IsDefined(ConsumerGroup))
+            if (Core.Optional.IsDefined(ConsumerGroup))
             {
                 writer.WritePropertyName("consumerGroup"u8);
                 writer.WriteStringValue(ConsumerGroup);
             }
-            if (Optional.IsDefined(FullyQualifiedEventHubNamespace))
+            if (Core.Optional.IsDefined(FullyQualifiedEventHubNamespace))
             {
                 writer.WritePropertyName("fullyQualifiedEventHubNamespace"u8);
                 writer.WriteStringValue(FullyQualifiedEventHubNamespace);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<string> eventHubName = default;
-            Optional<string> consumerGroup = default;
-            Optional<string> fullyQualifiedEventHubNamespace = default;
+            Core.Optional<string> eventHubName = default;
+            Core.Optional<string> consumerGroup = default;
+            Core.Optional<string> fullyQualifiedEventHubNamespace = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventHubName"u8))

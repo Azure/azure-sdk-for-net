@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class RetentionDescription : IUtf8JsonSerializable
+    public partial class RetentionDescription : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CleanupPolicy))
+            if (Core.Optional.IsDefined(CleanupPolicy))
             {
                 writer.WritePropertyName("cleanupPolicy"u8);
                 writer.WriteStringValue(CleanupPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(RetentionTimeInHours))
+            if (Core.Optional.IsDefined(RetentionTimeInHours))
             {
                 writer.WritePropertyName("retentionTimeInHours"u8);
                 writer.WriteNumberValue(RetentionTimeInHours.Value);
             }
-            if (Optional.IsDefined(TombstoneRetentionTimeInHours))
+            if (Core.Optional.IsDefined(TombstoneRetentionTimeInHours))
             {
                 writer.WritePropertyName("tombstoneRetentionTimeInHours"u8);
                 writer.WriteNumberValue(TombstoneRetentionTimeInHours.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<CleanupPolicyRetentionDescription> cleanupPolicy = default;
-            Optional<long> retentionTimeInHours = default;
-            Optional<int> tombstoneRetentionTimeInHours = default;
+            Core.Optional<CleanupPolicyRetentionDescription> cleanupPolicy = default;
+            Core.Optional<long> retentionTimeInHours = default;
+            Core.Optional<int> tombstoneRetentionTimeInHours = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cleanupPolicy"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new RetentionDescription(Optional.ToNullable(cleanupPolicy), Optional.ToNullable(retentionTimeInHours), Optional.ToNullable(tombstoneRetentionTimeInHours));
+            return new RetentionDescription(Core.Optional.ToNullable(cleanupPolicy), Core.Optional.ToNullable(retentionTimeInHours), Core.Optional.ToNullable(tombstoneRetentionTimeInHours));
         }
     }
 }

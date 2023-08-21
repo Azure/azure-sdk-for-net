@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    public partial class FrontDoorData : IUtf8JsonSerializable
+    public partial class FrontDoorData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.FrontDoor
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (Core.Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsCollectionDefined(RoutingRules))
+            if (Core.Optional.IsCollectionDefined(RoutingRules))
             {
                 writer.WritePropertyName("routingRules"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LoadBalancingSettings))
+            if (Core.Optional.IsCollectionDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HealthProbeSettings))
+            if (Core.Optional.IsCollectionDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BackendPools))
+            if (Core.Optional.IsCollectionDefined(BackendPools))
             {
                 writer.WritePropertyName("backendPools"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FrontendEndpoints))
+            if (Core.Optional.IsCollectionDefined(FrontendEndpoints))
             {
                 writer.WritePropertyName("frontendEndpoints"u8);
                 writer.WriteStartArray();
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BackendPoolsSettings))
+            if (Core.Optional.IsDefined(BackendPoolsSettings))
             {
                 writer.WritePropertyName("backendPoolsSettings"u8);
                 writer.WriteObjectValue(BackendPoolsSettings);
             }
-            if (Optional.IsDefined(EnabledState))
+            if (Core.Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
@@ -108,26 +108,26 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> friendlyName = default;
-            Optional<IList<RoutingRuleData>> routingRules = default;
-            Optional<IList<FrontDoorLoadBalancingSettingsData>> loadBalancingSettings = default;
-            Optional<IList<FrontDoorHealthProbeSettingsData>> healthProbeSettings = default;
-            Optional<IList<FrontDoorBackendPool>> backendPools = default;
-            Optional<IList<FrontendEndpointData>> frontendEndpoints = default;
-            Optional<BackendPoolsSettings> backendPoolsSettings = default;
-            Optional<FrontDoorEnabledState> enabledState = default;
-            Optional<FrontDoorResourceState> resourceState = default;
-            Optional<string> provisioningState = default;
-            Optional<string> cname = default;
-            Optional<string> frontdoorId = default;
-            Optional<IReadOnlyList<FrontDoorRulesEngineData>> rulesEngines = default;
-            Optional<IReadOnlyDictionary<string, string>> extendedProperties = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<IList<RoutingRuleData>> routingRules = default;
+            Core.Optional<IList<FrontDoorLoadBalancingSettingsData>> loadBalancingSettings = default;
+            Core.Optional<IList<FrontDoorHealthProbeSettingsData>> healthProbeSettings = default;
+            Core.Optional<IList<FrontDoorBackendPool>> backendPools = default;
+            Core.Optional<IList<FrontendEndpointData>> frontendEndpoints = default;
+            Core.Optional<BackendPoolsSettings> backendPoolsSettings = default;
+            Core.Optional<FrontDoorEnabledState> enabledState = default;
+            Core.Optional<FrontDoorResourceState> resourceState = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<string> cname = default;
+            Core.Optional<string> frontdoorId = default;
+            Core.Optional<IReadOnlyList<FrontDoorRulesEngineData>> rulesEngines = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> extendedProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.FrontDoor
                     continue;
                 }
             }
-            return new FrontDoorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, friendlyName.Value, Optional.ToList(routingRules), Optional.ToList(loadBalancingSettings), Optional.ToList(healthProbeSettings), Optional.ToList(backendPools), Optional.ToList(frontendEndpoints), backendPoolsSettings.Value, Optional.ToNullable(enabledState), Optional.ToNullable(resourceState), provisioningState.Value, cname.Value, frontdoorId.Value, Optional.ToList(rulesEngines), Optional.ToDictionary(extendedProperties));
+            return new FrontDoorData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, friendlyName.Value, Core.Optional.ToList(routingRules), Core.Optional.ToList(loadBalancingSettings), Core.Optional.ToList(healthProbeSettings), Core.Optional.ToList(backendPools), Core.Optional.ToList(frontendEndpoints), backendPoolsSettings.Value, Core.Optional.ToNullable(enabledState), Core.Optional.ToNullable(resourceState), provisioningState.Value, cname.Value, frontdoorId.Value, Core.Optional.ToList(rulesEngines), Core.Optional.ToDictionary(extendedProperties));
         }
     }
 }

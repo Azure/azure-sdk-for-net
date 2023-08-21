@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    internal partial class ImmutabilitySettings : IUtf8JsonSerializable
+    internal partial class ImmutabilitySettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<BackupVaultImmutabilityState> state = default;
+            Core.Optional<BackupVaultImmutabilityState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new ImmutabilitySettings(Optional.ToNullable(state));
+            return new ImmutabilitySettings(Core.Optional.ToNullable(state));
         }
     }
 }

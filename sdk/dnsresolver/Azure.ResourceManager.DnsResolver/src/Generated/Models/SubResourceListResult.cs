@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of SubResourceListResult. </summary>
         internal SubResourceListResult()
         {
-            Value = new ChangeTrackingList<WritableSubResource>();
+            Value = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of SubResourceListResult. </summary>

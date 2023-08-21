@@ -12,12 +12,12 @@ using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisWorkspaceProperties : IUtf8JsonSerializable
+    public partial class HealthcareApisWorkspaceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<HealthcareApisProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
+            Core.Optional<HealthcareApisProvisioningState> provisioningState = default;
+            Core.Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Core.Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new HealthcareApisWorkspaceProperties(Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess));
+            return new HealthcareApisWorkspaceProperties(Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(publicNetworkAccess));
         }
     }
 }

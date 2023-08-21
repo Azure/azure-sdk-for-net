@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ConnectToTargetSqlMITaskProperties. </summary>
         public ConnectToTargetSqlMITaskProperties()
         {
-            Output = new ChangeTrackingList<ConnectToTargetSqlMITaskOutput>();
+            Output = new Core.ChangeTrackingList<ConnectToTargetSqlMITaskOutput>();
             TaskType = TaskType.ConnectToTargetAzureSqlDBMI;
         }
 

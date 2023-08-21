@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabGlobalScheduleRetargetContent : IUtf8JsonSerializable
+    public partial class DevTestLabGlobalScheduleRetargetContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CurrentResourceId))
+            if (Core.Optional.IsDefined(CurrentResourceId))
             {
                 writer.WritePropertyName("currentResourceId"u8);
                 writer.WriteStringValue(CurrentResourceId);
             }
-            if (Optional.IsDefined(TargetResourceId))
+            if (Core.Optional.IsDefined(TargetResourceId))
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);

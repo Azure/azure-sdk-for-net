@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<BinaryData> properties = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<BinaryData> properties = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
             string status = default;
-            Optional<float> percentComplete = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<OperationStatusResult>> operations = default;
-            Optional<ResponseError> error = default;
+            Core.Optional<float> percentComplete = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<IReadOnlyList<OperationStatusResult>> operations = default;
+            Core.Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     continue;
                 }
             }
-            return new DevCenterOperationStatus(id.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value, resourceId.Value, properties.Value);
+            return new DevCenterOperationStatus(id.Value, name.Value, status, Core.Optional.ToNullable(percentComplete), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToList(operations), error.Value, resourceId.Value, properties.Value);
         }
     }
 }

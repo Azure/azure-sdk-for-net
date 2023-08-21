@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _devTestLabFormulaFormulasRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation<DevTestLabFormulaResource>(new DevTestLabFormulaOperationSource(Client), _devTestLabFormulaFormulasClientDiagnostics, Pipeline, _devTestLabFormulaFormulasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation<DevTestLabFormulaResource>(new DevTestLabFormulaOperationSource(Client), _devTestLabFormulaFormulasClientDiagnostics, Pipeline, _devTestLabFormulaFormulasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _devTestLabFormulaFormulasRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new DevTestLabsArmOperation<DevTestLabFormulaResource>(new DevTestLabFormulaOperationSource(Client), _devTestLabFormulaFormulasClientDiagnostics, Pipeline, _devTestLabFormulaFormulasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation<DevTestLabFormulaResource>(new DevTestLabFormulaOperationSource(Client), _devTestLabFormulaFormulasClientDiagnostics, Pipeline, _devTestLabFormulaFormulasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabFormulaFormulasRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabFormulaFormulasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabFormulaResource(Client, DevTestLabFormulaData.DeserializeDevTestLabFormulaData(e)), _devTestLabFormulaFormulasClientDiagnostics, Pipeline, "DevTestLabFormulaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabFormulaResource(Client, DevTestLabFormulaData.DeserializeDevTestLabFormulaData(e)), _devTestLabFormulaFormulasClientDiagnostics, Pipeline, "DevTestLabFormulaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabFormulaFormulasRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabFormulaFormulasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabFormulaResource(Client, DevTestLabFormulaData.DeserializeDevTestLabFormulaData(e)), _devTestLabFormulaFormulasClientDiagnostics, Pipeline, "DevTestLabFormulaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabFormulaResource(Client, DevTestLabFormulaData.DeserializeDevTestLabFormulaData(e)), _devTestLabFormulaFormulasClientDiagnostics, Pipeline, "DevTestLabFormulaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

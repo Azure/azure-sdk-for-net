@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBFinishCommand : IUtf8JsonSerializable
+    public partial class MongoDBFinishCommand : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Input))
+            if (Core.Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<MongoDBFinishCommandInput> input = default;
+            Core.Optional<MongoDBFinishCommandInput> input = default;
             CommandType commandType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<CommandState> state = default;
+            Core.Optional<IReadOnlyList<ODataError>> errors = default;
+            Core.Optional<CommandState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MongoDBFinishCommand(commandType, Optional.ToList(errors), Optional.ToNullable(state), input.Value);
+            return new MongoDBFinishCommand(commandType, Core.Optional.ToList(errors), Core.Optional.ToNullable(state), input.Value);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DigitalTwinsPrivateEndpointConnectionData>> value = default;
+            Core.Optional<IReadOnlyList<DigitalTwinsPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionsResponse(Optional.ToList(value));
+            return new PrivateEndpointConnectionsResponse(Core.Optional.ToList(value));
         }
     }
 }

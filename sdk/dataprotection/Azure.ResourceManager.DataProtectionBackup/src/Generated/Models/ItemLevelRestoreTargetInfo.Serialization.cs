@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class ItemLevelRestoreTargetInfo : IUtf8JsonSerializable
+    public partial class ItemLevelRestoreTargetInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("restoreCriteria"u8);
@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndArray();
             writer.WritePropertyName("datasourceInfo"u8);
             writer.WriteObjectValue(DatasourceInfo);
-            if (Optional.IsDefined(DatasourceSetInfo))
+            if (Core.Optional.IsDefined(DatasourceSetInfo))
             {
                 writer.WritePropertyName("datasourceSetInfo"u8);
                 writer.WriteObjectValue(DatasourceSetInfo);
             }
-            if (Optional.IsDefined(DatasourceAuthCredentials))
+            if (Core.Optional.IsDefined(DatasourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
                 writer.WriteObjectValue(DatasourceAuthCredentials);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("recoveryOption"u8);
             writer.WriteStringValue(RecoverySetting.ToString());
-            if (Optional.IsDefined(RestoreLocation))
+            if (Core.Optional.IsDefined(RestoreLocation))
             {
                 writer.WritePropertyName("restoreLocation"u8);
                 writer.WriteStringValue(RestoreLocation.Value);

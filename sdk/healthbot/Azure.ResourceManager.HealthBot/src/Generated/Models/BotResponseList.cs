@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HealthBot.Models
         /// <summary> Initializes a new instance of BotResponseList. </summary>
         internal BotResponseList()
         {
-            Value = new ChangeTrackingList<HealthBotData>();
+            Value = new Core.ChangeTrackingList<HealthBotData>();
         }
 
         /// <summary> Initializes a new instance of BotResponseList. </summary>

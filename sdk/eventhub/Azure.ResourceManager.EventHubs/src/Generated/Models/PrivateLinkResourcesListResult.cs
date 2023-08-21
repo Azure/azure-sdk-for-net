@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of PrivateLinkResourcesListResult. </summary>
         internal PrivateLinkResourcesListResult()
         {
-            Value = new ChangeTrackingList<EventHubsPrivateLinkResourceData>();
+            Value = new Core.ChangeTrackingList<EventHubsPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResourcesListResult. </summary>

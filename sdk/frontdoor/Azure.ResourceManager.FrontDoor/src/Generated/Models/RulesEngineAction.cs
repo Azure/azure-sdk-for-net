@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of RulesEngineAction. </summary>
         public RulesEngineAction()
         {
-            RequestHeaderActions = new ChangeTrackingList<RulesEngineHeaderAction>();
-            ResponseHeaderActions = new ChangeTrackingList<RulesEngineHeaderAction>();
+            RequestHeaderActions = new Core.ChangeTrackingList<RulesEngineHeaderAction>();
+            ResponseHeaderActions = new Core.ChangeTrackingList<RulesEngineHeaderAction>();
         }
 
         /// <summary> Initializes a new instance of RulesEngineAction. </summary>

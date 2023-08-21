@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorBackend : IUtf8JsonSerializable
+    public partial class FrontDoorBackend : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Address))
+            if (Core.Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (Optional.IsDefined(PrivateLinkAlias))
+            if (Core.Optional.IsDefined(PrivateLinkAlias))
             {
                 writer.WritePropertyName("privateLinkAlias"u8);
                 writer.WriteStringValue(PrivateLinkAlias);
             }
-            if (Optional.IsDefined(PrivateLinkResourceId))
+            if (Core.Optional.IsDefined(PrivateLinkResourceId))
             {
                 if (PrivateLinkResourceId != null)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteNull("privateLinkResourceId");
                 }
             }
-            if (Optional.IsDefined(PrivateLinkLocation))
+            if (Core.Optional.IsDefined(PrivateLinkLocation))
             {
                 if (PrivateLinkLocation != null)
                 {
@@ -49,37 +49,37 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteNull("privateLinkLocation");
                 }
             }
-            if (Optional.IsDefined(PrivateLinkApprovalMessage))
+            if (Core.Optional.IsDefined(PrivateLinkApprovalMessage))
             {
                 writer.WritePropertyName("privateLinkApprovalMessage"u8);
                 writer.WriteStringValue(PrivateLinkApprovalMessage);
             }
-            if (Optional.IsDefined(HttpPort))
+            if (Core.Optional.IsDefined(HttpPort))
             {
                 writer.WritePropertyName("httpPort"u8);
                 writer.WriteNumberValue(HttpPort.Value);
             }
-            if (Optional.IsDefined(HttpsPort))
+            if (Core.Optional.IsDefined(HttpsPort))
             {
                 writer.WritePropertyName("httpsPort"u8);
                 writer.WriteNumberValue(HttpsPort.Value);
             }
-            if (Optional.IsDefined(EnabledState))
+            if (Core.Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (Optional.IsDefined(Priority))
+            if (Core.Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(Weight))
+            if (Core.Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (Optional.IsDefined(BackendHostHeader))
+            if (Core.Optional.IsDefined(BackendHostHeader))
             {
                 writer.WritePropertyName("backendHostHeader"u8);
                 writer.WriteStringValue(BackendHostHeader);
@@ -93,18 +93,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<string> address = default;
-            Optional<string> privateLinkAlias = default;
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<AzureLocation?> privateLinkLocation = default;
-            Optional<BackendPrivateEndpointStatus?> privateEndpointStatus = default;
-            Optional<string> privateLinkApprovalMessage = default;
-            Optional<int> httpPort = default;
-            Optional<int> httpsPort = default;
-            Optional<BackendEnabledState> enabledState = default;
-            Optional<int> priority = default;
-            Optional<int> weight = default;
-            Optional<string> backendHostHeader = default;
+            Core.Optional<string> address = default;
+            Core.Optional<string> privateLinkAlias = default;
+            Core.Optional<ResourceIdentifier> privateLinkResourceId = default;
+            Core.Optional<AzureLocation?> privateLinkLocation = default;
+            Core.Optional<BackendPrivateEndpointStatus?> privateEndpointStatus = default;
+            Core.Optional<string> privateLinkApprovalMessage = default;
+            Core.Optional<int> httpPort = default;
+            Core.Optional<int> httpsPort = default;
+            Core.Optional<BackendEnabledState> enabledState = default;
+            Core.Optional<int> priority = default;
+            Core.Optional<int> weight = default;
+            Core.Optional<string> backendHostHeader = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new FrontDoorBackend(address.Value, privateLinkAlias.Value, privateLinkResourceId.Value, Optional.ToNullable(privateLinkLocation), Optional.ToNullable(privateEndpointStatus), privateLinkApprovalMessage.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), Optional.ToNullable(enabledState), Optional.ToNullable(priority), Optional.ToNullable(weight), backendHostHeader.Value);
+            return new FrontDoorBackend(address.Value, privateLinkAlias.Value, privateLinkResourceId.Value, Core.Optional.ToNullable(privateLinkLocation), Core.Optional.ToNullable(privateEndpointStatus), privateLinkApprovalMessage.Value, Core.Optional.ToNullable(httpPort), Core.Optional.ToNullable(httpsPort), Core.Optional.ToNullable(enabledState), Core.Optional.ToNullable(priority), Core.Optional.ToNullable(weight), backendHostHeader.Value);
         }
     }
 }

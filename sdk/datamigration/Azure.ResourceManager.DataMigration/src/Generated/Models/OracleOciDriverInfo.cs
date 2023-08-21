@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of OracleOciDriverInfo. </summary>
         internal OracleOciDriverInfo()
         {
-            SupportedOracleVersions = new ChangeTrackingList<string>();
+            SupportedOracleVersions = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of OracleOciDriverInfo. </summary>

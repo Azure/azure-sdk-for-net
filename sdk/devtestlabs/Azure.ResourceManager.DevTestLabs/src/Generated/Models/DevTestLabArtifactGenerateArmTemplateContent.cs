@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of DevTestLabArtifactGenerateArmTemplateContent. </summary>
         public DevTestLabArtifactGenerateArmTemplateContent()
         {
-            Parameters = new ChangeTrackingList<DevTestLabParameter>();
+            Parameters = new Core.ChangeTrackingList<DevTestLabParameter>();
         }
 
         /// <summary> The resource name of the virtual machine. </summary>

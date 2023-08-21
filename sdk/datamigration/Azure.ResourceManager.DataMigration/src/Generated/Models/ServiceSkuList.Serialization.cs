@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvailableServiceSku>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<AvailableServiceSku>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ServiceSkuList(Optional.ToList(value), nextLink.Value);
+            return new ServiceSkuList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

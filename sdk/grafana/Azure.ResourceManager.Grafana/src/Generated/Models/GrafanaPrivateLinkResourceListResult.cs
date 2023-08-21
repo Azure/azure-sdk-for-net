@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <summary> Initializes a new instance of GrafanaPrivateLinkResourceListResult. </summary>
         internal GrafanaPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<GrafanaPrivateLinkResourceData>();
+            Value = new Core.ChangeTrackingList<GrafanaPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of GrafanaPrivateLinkResourceListResult. </summary>

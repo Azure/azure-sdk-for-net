@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of DevBoxDefinitionListResult. </summary>
         internal DevBoxDefinitionListResult()
         {
-            Value = new ChangeTrackingList<DevBoxDefinitionData>();
+            Value = new Core.ChangeTrackingList<DevBoxDefinitionData>();
         }
 
         /// <summary> Initializes a new instance of DevBoxDefinitionListResult. </summary>

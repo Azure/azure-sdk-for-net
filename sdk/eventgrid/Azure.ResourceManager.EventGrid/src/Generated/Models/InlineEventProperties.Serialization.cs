@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class InlineEventProperties : IUtf8JsonSerializable
+    public partial class InlineEventProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(DocumentationUri))
+            if (Core.Optional.IsDefined(DocumentationUri))
             {
                 writer.WritePropertyName("documentationUrl"u8);
                 writer.WriteStringValue(DocumentationUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DataSchemaUri))
+            if (Core.Optional.IsDefined(DataSchemaUri))
             {
                 writer.WritePropertyName("dataSchemaUrl"u8);
                 writer.WriteStringValue(DataSchemaUri.AbsoluteUri);
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<Uri> documentationUri = default;
-            Optional<Uri> dataSchemaUri = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<Uri> documentationUri = default;
+            Core.Optional<Uri> dataSchemaUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))

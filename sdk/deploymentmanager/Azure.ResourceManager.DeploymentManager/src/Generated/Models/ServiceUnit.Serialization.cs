@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<RolloutStep>> steps = default;
+            Core.Optional<string> name = default;
+            Core.Optional<IReadOnlyList<RolloutStep>> steps = default;
             string targetResourceGroup = default;
             DeploymentMode deploymentMode = default;
-            Optional<ServiceUnitArtifacts> artifacts = default;
+            Core.Optional<ServiceUnitArtifacts> artifacts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     continue;
                 }
             }
-            return new ServiceUnit(targetResourceGroup, deploymentMode, artifacts.Value, name.Value, Optional.ToList(steps));
+            return new ServiceUnit(targetResourceGroup, deploymentMode, artifacts.Value, name.Value, Core.Optional.ToList(steps));
         }
     }
 }

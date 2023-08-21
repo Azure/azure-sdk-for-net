@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    internal class DevCenterGalleryOperationSource : IOperationSource<DevCenterGalleryResource>
+    internal class DevCenterGalleryOperationSource : Core.IOperationSource<DevCenterGalleryResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DevCenter
             _client = client;
         }
 
-        DevCenterGalleryResource IOperationSource<DevCenterGalleryResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DevCenterGalleryResource Core.IOperationSource<DevCenterGalleryResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DevCenterGalleryData.DeserializeDevCenterGalleryData(document.RootElement);
             return new DevCenterGalleryResource(_client, data);
         }
 
-        async ValueTask<DevCenterGalleryResource> IOperationSource<DevCenterGalleryResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DevCenterGalleryResource> Core.IOperationSource<DevCenterGalleryResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DevCenterGalleryData.DeserializeDevCenterGalleryData(document.RootElement);

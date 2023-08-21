@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class FilteringTag : IUtf8JsonSerializable
+    public partial class FilteringTag : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(Action))
+            if (Core.Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> value = default;
-            Optional<TagAction> action = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> value = default;
+            Core.Optional<TagAction> action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     continue;
                 }
             }
-            return new FilteringTag(name.Value, value.Value, Optional.ToNullable(action));
+            return new FilteringTag(name.Value, value.Value, Core.Optional.ToNullable(action));
         }
     }
 }

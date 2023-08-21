@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    internal partial class QuerySpecification : IUtf8JsonSerializable
+    internal partial class QuerySpecification : Azure.Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Query))
+            if (Azure.Core.Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (Optional.IsDefined(ContinuationToken))
+            if (Azure.Core.Optional.IsDefined(ContinuationToken))
             {
                 writer.WritePropertyName("continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);

@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataSourceInfo : IUtf8JsonSerializable
+    public partial class DataSourceInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataSourceType))
+            if (Core.Optional.IsDefined(DataSourceType))
             {
                 writer.WritePropertyName("datasourceType"u8);
                 writer.WriteStringValue(DataSourceType);
             }
-            if (Optional.IsDefined(ObjectType))
+            if (Core.Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
             writer.WritePropertyName("resourceID"u8);
             writer.WriteStringValue(ResourceId);
-            if (Optional.IsDefined(ResourceLocation))
+            if (Core.Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation.Value);
             }
-            if (Optional.IsDefined(ResourceName))
+            if (Core.Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (Core.Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(ResourceUriString))
+            if (Core.Optional.IsDefined(ResourceUriString))
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUriString);
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> datasourceType = default;
-            Optional<string> objectType = default;
+            Core.Optional<string> datasourceType = default;
+            Core.Optional<string> objectType = default;
             ResourceIdentifier resourceId = default;
-            Optional<AzureLocation> resourceLocation = default;
-            Optional<string> resourceName = default;
-            Optional<ResourceType> resourceType = default;
-            Optional<string> resourceUri = default;
+            Core.Optional<AzureLocation> resourceLocation = default;
+            Core.Optional<string> resourceName = default;
+            Core.Optional<ResourceType> resourceType = default;
+            Core.Optional<string> resourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datasourceType"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new DataSourceInfo(datasourceType.Value, objectType.Value, resourceId, Optional.ToNullable(resourceLocation), resourceName.Value, Optional.ToNullable(resourceType), resourceUri.Value);
+            return new DataSourceInfo(datasourceType.Value, objectType.Value, resourceId, Core.Optional.ToNullable(resourceLocation), resourceName.Value, Core.Optional.ToNullable(resourceType), resourceUri.Value);
         }
     }
 }

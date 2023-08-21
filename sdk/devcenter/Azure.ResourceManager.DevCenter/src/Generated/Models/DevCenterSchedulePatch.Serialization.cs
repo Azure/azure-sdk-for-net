@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterSchedulePatch : IUtf8JsonSerializable
+    public partial class DevCenterSchedulePatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -26,34 +26,34 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScheduledType))
+            if (Core.Optional.IsDefined(ScheduledType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ScheduledType.Value.ToString());
             }
-            if (Optional.IsDefined(Frequency))
+            if (Core.Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Optional.IsDefined(Time))
+            if (Core.Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);
             }
-            if (Optional.IsDefined(TimeZone))
+            if (Core.Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());

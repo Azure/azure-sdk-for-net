@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class PartnerTopicPatch : IUtf8JsonSerializable
+    public partial class PartnerTopicPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);

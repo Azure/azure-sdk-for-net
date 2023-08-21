@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Initializes a new instance of EventHubsApplicationGroupData. </summary>
         public EventHubsApplicationGroupData()
         {
-            Policies = new ChangeTrackingList<EventHubsApplicationGroupPolicy>();
+            Policies = new Core.ChangeTrackingList<EventHubsApplicationGroupPolicy>();
         }
 
         /// <summary> Initializes a new instance of EventHubsApplicationGroupData. </summary>

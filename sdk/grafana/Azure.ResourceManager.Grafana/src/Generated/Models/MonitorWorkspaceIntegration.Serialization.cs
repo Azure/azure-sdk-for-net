@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    public partial class MonitorWorkspaceIntegration : IUtf8JsonSerializable
+    public partial class MonitorWorkspaceIntegration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MonitorWorkspaceResourceId))
+            if (Core.Optional.IsDefined(MonitorWorkspaceResourceId))
             {
                 writer.WritePropertyName("azureMonitorWorkspaceResourceId"u8);
                 writer.WriteStringValue(MonitorWorkspaceResourceId);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> azureMonitorWorkspaceResourceId = default;
+            Core.Optional<ResourceIdentifier> azureMonitorWorkspaceResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureMonitorWorkspaceResourceId"u8))

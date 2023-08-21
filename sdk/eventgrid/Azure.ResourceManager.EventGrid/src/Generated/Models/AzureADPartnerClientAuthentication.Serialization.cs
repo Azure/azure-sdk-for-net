@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class AzureADPartnerClientAuthentication : IUtf8JsonSerializable
+    public partial class AzureADPartnerClientAuthentication : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("clientAuthenticationType"u8);
             writer.WriteStringValue(ClientAuthenticationType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureActiveDirectoryTenantId))
+            if (Core.Optional.IsDefined(AzureActiveDirectoryTenantId))
             {
                 writer.WritePropertyName("azureActiveDirectoryTenantId"u8);
                 writer.WriteStringValue(AzureActiveDirectoryTenantId);
             }
-            if (Optional.IsDefined(AzureActiveDirectoryApplicationIdOrUri))
+            if (Core.Optional.IsDefined(AzureActiveDirectoryApplicationIdOrUri))
             {
                 writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri"u8);
                 writer.WriteStringValue(AzureActiveDirectoryApplicationIdOrUri.AbsoluteUri);
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             PartnerClientAuthenticationType clientAuthenticationType = default;
-            Optional<string> azureActiveDirectoryTenantId = default;
-            Optional<Uri> azureActiveDirectoryApplicationIdOrUri = default;
+            Core.Optional<string> azureActiveDirectoryTenantId = default;
+            Core.Optional<Uri> azureActiveDirectoryApplicationIdOrUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientAuthenticationType"u8))

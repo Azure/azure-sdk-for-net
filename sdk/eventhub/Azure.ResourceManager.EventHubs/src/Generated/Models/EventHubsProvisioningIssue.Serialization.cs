@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsProvisioningIssue : IUtf8JsonSerializable
+    public partial class EventHubsProvisioningIssue : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<EventHubsProvisioningIssueProperties> properties = default;
+            Core.Optional<string> name = default;
+            Core.Optional<EventHubsProvisioningIssueProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

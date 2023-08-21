@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = await _edgeOrderAddressRestClient.CreateAddressAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(new EdgeOrderAddressOperationSource(Client), _edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(new EdgeOrderAddressOperationSource(Client), _edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = _edgeOrderAddressRestClient.CreateAddress(Id.SubscriptionId, Id.ResourceGroupName, addressName, data, cancellationToken);
-                var operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(new EdgeOrderAddressOperationSource(Client), _edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(new EdgeOrderAddressOperationSource(Client), _edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), _edgeOrderAddressClientDiagnostics, Pipeline, "EdgeOrderAddressCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), _edgeOrderAddressClientDiagnostics, Pipeline, "EdgeOrderAddressCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), _edgeOrderAddressClientDiagnostics, Pipeline, "EdgeOrderAddressCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), _edgeOrderAddressClientDiagnostics, Pipeline, "EdgeOrderAddressCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

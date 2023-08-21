@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisServiceAcrConfiguration : IUtf8JsonSerializable
+    public partial class HealthcareApisServiceAcrConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LoginServers))
+            if (Core.Optional.IsCollectionDefined(LoginServers))
             {
                 writer.WritePropertyName("loginServers"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OciArtifacts))
+            if (Core.Optional.IsCollectionDefined(OciArtifacts))
             {
                 writer.WritePropertyName("ociArtifacts"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<IList<string>> loginServers = default;
-            Optional<IList<HealthcareApisServiceOciArtifactEntry>> ociArtifacts = default;
+            Core.Optional<IList<string>> loginServers = default;
+            Core.Optional<IList<HealthcareApisServiceOciArtifactEntry>> ociArtifacts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loginServers"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new HealthcareApisServiceAcrConfiguration(Optional.ToList(loginServers), Optional.ToList(ociArtifacts));
+            return new HealthcareApisServiceAcrConfiguration(Core.Optional.ToList(loginServers), Core.Optional.ToList(ociArtifacts));
         }
     }
 }

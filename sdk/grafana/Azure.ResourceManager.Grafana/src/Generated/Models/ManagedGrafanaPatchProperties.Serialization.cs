@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    public partial class ManagedGrafanaPatchProperties : IUtf8JsonSerializable
+    public partial class ManagedGrafanaPatchProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ZoneRedundancy))
+            if (Core.Optional.IsDefined(ZoneRedundancy))
             {
                 writer.WritePropertyName("zoneRedundancy"u8);
                 writer.WriteStringValue(ZoneRedundancy.Value.ToString());
             }
-            if (Optional.IsDefined(ApiKey))
+            if (Core.Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey.Value.ToString());
             }
-            if (Optional.IsDefined(DeterministicOutboundIP))
+            if (Core.Optional.IsDefined(DeterministicOutboundIP))
             {
                 writer.WritePropertyName("deterministicOutboundIP"u8);
                 writer.WriteStringValue(DeterministicOutboundIP.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(GrafanaIntegrations))
+            if (Core.Optional.IsDefined(GrafanaIntegrations))
             {
                 writer.WritePropertyName("grafanaIntegrations"u8);
                 writer.WriteObjectValue(GrafanaIntegrations);

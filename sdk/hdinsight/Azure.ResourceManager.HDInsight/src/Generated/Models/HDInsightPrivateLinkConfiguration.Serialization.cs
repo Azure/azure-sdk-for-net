@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightPrivateLinkConfiguration : IUtf8JsonSerializable
+    public partial class HDInsightPrivateLinkConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            Core.Optional<string> id = default;
             string name = default;
-            Optional<ResourceType> type = default;
+            Core.Optional<ResourceType> type = default;
             string groupId = default;
-            Optional<HDInsightPrivateLinkConfigurationProvisioningState> provisioningState = default;
+            Core.Optional<HDInsightPrivateLinkConfigurationProvisioningState> provisioningState = default;
             IList<HDInsightIPConfiguration> ipConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightPrivateLinkConfiguration(id.Value, name, Optional.ToNullable(type), groupId, Optional.ToNullable(provisioningState), ipConfigurations);
+            return new HDInsightPrivateLinkConfiguration(id.Value, name, Core.Optional.ToNullable(type), groupId, Core.Optional.ToNullable(provisioningState), ipConfigurations);
         }
     }
 }

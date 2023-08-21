@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ConnectToSourceOracleSyncTaskOutput. </summary>
         internal ConnectToSourceOracleSyncTaskOutput()
         {
-            Databases = new ChangeTrackingList<string>();
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            Databases = new Core.ChangeTrackingList<string>();
+            ValidationErrors = new Core.ChangeTrackingList<ReportableException>();
         }
 
         /// <summary> Initializes a new instance of ConnectToSourceOracleSyncTaskOutput. </summary>

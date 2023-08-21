@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterTrackedResourceUpdate : IUtf8JsonSerializable
+    public partial class DevCenterTrackedResourceUpdate : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);

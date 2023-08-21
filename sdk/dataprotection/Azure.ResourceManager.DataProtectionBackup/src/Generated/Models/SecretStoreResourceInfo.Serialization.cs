@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class SecretStoreResourceInfo : IUtf8JsonSerializable
+    public partial class SecretStoreResourceInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             writer.WritePropertyName("secretStoreType"u8);
             writer.WriteStringValue(SecretStoreType.ToString());
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<Uri> uri = default;
+            Core.Optional<Uri> uri = default;
             SecretStoreType secretStoreType = default;
-            Optional<string> value = default;
+            Core.Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"u8))

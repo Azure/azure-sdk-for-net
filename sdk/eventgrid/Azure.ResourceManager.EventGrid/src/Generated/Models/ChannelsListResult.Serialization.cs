@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PartnerNamespaceChannelData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<PartnerNamespaceChannelData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new ChannelsListResult(Optional.ToList(value), nextLink.Value);
+            return new ChannelsListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

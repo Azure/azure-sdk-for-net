@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> endTime = default;
-            Optional<ResponseError> error = default;
-            Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<ResponseError> error = default;
+            Core.Optional<DateTimeOffset> startTime = default;
             DataShareOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new DataShareOperationResult(Optional.ToNullable(endTime), error.Value, Optional.ToNullable(startTime), status);
+            return new DataShareOperationResult(Core.Optional.ToNullable(endTime), error.Value, Core.Optional.ToNullable(startTime), status);
         }
     }
 }

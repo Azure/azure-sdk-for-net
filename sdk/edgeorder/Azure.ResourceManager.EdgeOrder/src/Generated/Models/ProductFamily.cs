@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of ProductFamily. </summary>
         internal ProductFamily()
         {
-            ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
-            FilterableProperties = new ChangeTrackingList<FilterableProperty>();
-            ProductLines = new ChangeTrackingList<ProductLine>();
-            ResourceProviderDetails = new ChangeTrackingList<ResourceProviderDetails>();
+            ImageInformation = new Core.ChangeTrackingList<EdgeOrderProductImageInformation>();
+            FilterableProperties = new Core.ChangeTrackingList<FilterableProperty>();
+            ProductLines = new Core.ChangeTrackingList<ProductLine>();
+            ResourceProviderDetails = new Core.ChangeTrackingList<ResourceProviderDetails>();
         }
 
         /// <summary> Initializes a new instance of ProductFamily. </summary>

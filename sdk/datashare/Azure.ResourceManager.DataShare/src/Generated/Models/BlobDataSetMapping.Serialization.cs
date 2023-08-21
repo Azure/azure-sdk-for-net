@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class BlobDataSetMapping : IUtf8JsonSerializable
+    public partial class BlobDataSetMapping : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStringValue(DataSetId);
             writer.WritePropertyName("filePath"u8);
             writer.WriteStringValue(FilePath);
-            if (Optional.IsDefined(OutputType))
+            if (Core.Optional.IsDefined(OutputType))
             {
                 writer.WritePropertyName("outputType"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             string containerName = default;
             Guid dataSetId = default;
-            Optional<DataSetMappingStatus> dataSetMappingStatus = default;
+            Core.Optional<DataSetMappingStatus> dataSetMappingStatus = default;
             string filePath = default;
-            Optional<DataShareOutputType> outputType = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            Core.Optional<DataShareOutputType> outputType = default;
+            Core.Optional<DataShareProvisioningState> provisioningState = default;
             string resourceGroup = default;
             string storageAccountName = default;
             string subscriptionId = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new BlobDataSetMapping(id, name, type, systemData.Value, kind, containerName, dataSetId, Optional.ToNullable(dataSetMappingStatus), filePath, Optional.ToNullable(outputType), Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
+            return new BlobDataSetMapping(id, name, type, systemData.Value, kind, containerName, dataSetId, Core.Optional.ToNullable(dataSetMappingStatus), filePath, Core.Optional.ToNullable(outputType), Core.Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
         }
     }
 }

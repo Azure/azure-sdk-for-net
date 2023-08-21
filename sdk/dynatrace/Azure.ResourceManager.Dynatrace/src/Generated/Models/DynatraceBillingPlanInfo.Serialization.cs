@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceBillingPlanInfo : IUtf8JsonSerializable
+    public partial class DynatraceBillingPlanInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UsageType))
+            if (Core.Optional.IsDefined(UsageType))
             {
                 writer.WritePropertyName("usageType"u8);
                 writer.WriteStringValue(UsageType);
             }
-            if (Optional.IsDefined(BillingCycle))
+            if (Core.Optional.IsDefined(BillingCycle))
             {
                 writer.WritePropertyName("billingCycle"u8);
                 writer.WriteStringValue(BillingCycle);
             }
-            if (Optional.IsDefined(PlanDetails))
+            if (Core.Optional.IsDefined(PlanDetails))
             {
                 writer.WritePropertyName("planDetails"u8);
                 writer.WriteStringValue(PlanDetails);
             }
-            if (Optional.IsDefined(EffectiveOn))
+            if (Core.Optional.IsDefined(EffectiveOn))
             {
                 writer.WritePropertyName("effectiveDate"u8);
                 writer.WriteStringValue(EffectiveOn.Value, "O");
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<string> usageType = default;
-            Optional<string> billingCycle = default;
-            Optional<string> planDetails = default;
-            Optional<DateTimeOffset> effectiveDate = default;
+            Core.Optional<string> usageType = default;
+            Core.Optional<string> billingCycle = default;
+            Core.Optional<string> planDetails = default;
+            Core.Optional<DateTimeOffset> effectiveDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usageType"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new DynatraceBillingPlanInfo(usageType.Value, billingCycle.Value, planDetails.Value, Optional.ToNullable(effectiveDate));
+            return new DynatraceBillingPlanInfo(usageType.Value, billingCycle.Value, planDetails.Value, Core.Optional.ToNullable(effectiveDate));
         }
     }
 }

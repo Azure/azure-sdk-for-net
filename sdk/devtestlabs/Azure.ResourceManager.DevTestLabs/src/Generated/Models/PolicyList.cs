@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of PolicyList. </summary>
         internal PolicyList()
         {
-            Value = new ChangeTrackingList<DevTestLabPolicyData>();
+            Value = new Core.ChangeTrackingList<DevTestLabPolicyData>();
         }
 
         /// <summary> Initializes a new instance of PolicyList. </summary>

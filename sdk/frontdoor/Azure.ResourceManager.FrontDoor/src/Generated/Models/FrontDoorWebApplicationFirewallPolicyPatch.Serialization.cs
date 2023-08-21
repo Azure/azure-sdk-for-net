@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorWebApplicationFirewallPolicyPatch : IUtf8JsonSerializable
+    public partial class FrontDoorWebApplicationFirewallPolicyPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

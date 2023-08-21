@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of EHNamespaceIdListResult. </summary>
         internal EHNamespaceIdListResult()
         {
-            Value = new ChangeTrackingList<SubResource>();
+            Value = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of EHNamespaceIdListResult. </summary>

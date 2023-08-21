@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<string> issueType = default;
-            Optional<string> description = default;
+            Core.Optional<string> issueType = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("issueType"u8))

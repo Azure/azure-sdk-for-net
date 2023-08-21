@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
             SelectedDatabases = selectedDatabases.ToList();
-            OptionalAgentSettings = new ChangeTrackingDictionary<string, string>();
+            OptionalAgentSettings = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskInput. </summary>

@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="location"> The location. </param>
         public DevTestLabCostData(AzureLocation location) : base(location)
         {
-            LabCostDetails = new ChangeTrackingList<DevTestLabCostDetails>();
-            ResourceCosts = new ChangeTrackingList<DevTestLabResourceCost>();
+            LabCostDetails = new Core.ChangeTrackingList<DevTestLabCostDetails>();
+            ResourceCosts = new Core.ChangeTrackingList<DevTestLabResourceCost>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabCostData. </summary>

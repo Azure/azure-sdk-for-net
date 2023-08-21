@@ -14,9 +14,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    public partial class DnsForwardingRuleData : IUtf8JsonSerializable
+    public partial class DnsForwardingRuleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DnsResolver
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Metadata))
+            if (Core.Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DnsResolver
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(DnsForwardingRuleState))
+            if (Core.Optional.IsDefined(DnsForwardingRuleState))
             {
                 writer.WritePropertyName("forwardingRuleState"u8);
                 writer.WriteStringValue(DnsForwardingRuleState.Value.ToString());
@@ -56,16 +56,16 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             string domainName = default;
             IList<TargetDnsServer> targetDnsServers = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<DnsForwardingRuleState> forwardingRuleState = default;
-            Optional<DnsResolverProvisioningState> provisioningState = default;
+            Core.Optional<IDictionary<string, string>> metadata = default;
+            Core.Optional<DnsForwardingRuleState> forwardingRuleState = default;
+            Core.Optional<DnsResolverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-            return new DnsForwardingRuleData(id, name, type, systemData.Value, Optional.ToNullable(etag), domainName, targetDnsServers, Optional.ToDictionary(metadata), Optional.ToNullable(forwardingRuleState), Optional.ToNullable(provisioningState));
+            return new DnsForwardingRuleData(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), domainName, targetDnsServers, Core.Optional.ToDictionary(metadata), Core.Optional.ToNullable(forwardingRuleState), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

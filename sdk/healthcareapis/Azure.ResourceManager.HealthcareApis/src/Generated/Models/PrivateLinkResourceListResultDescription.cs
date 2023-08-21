@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of PrivateLinkResourceListResultDescription. </summary>
         internal PrivateLinkResourceListResultDescription()
         {
-            Value = new ChangeTrackingList<HealthcareApisPrivateLinkResourceData>();
+            Value = new Core.ChangeTrackingList<HealthcareApisPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResourceListResultDescription. </summary>

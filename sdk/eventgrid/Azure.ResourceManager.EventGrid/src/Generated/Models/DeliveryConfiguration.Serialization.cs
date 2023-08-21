@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class DeliveryConfiguration : IUtf8JsonSerializable
+    public partial class DeliveryConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeliveryMode))
+            if (Core.Optional.IsDefined(DeliveryMode))
             {
                 writer.WritePropertyName("deliveryMode"u8);
                 writer.WriteStringValue(DeliveryMode.Value.ToString());
             }
-            if (Optional.IsDefined(Queue))
+            if (Core.Optional.IsDefined(Queue))
             {
                 writer.WritePropertyName("queue"u8);
                 writer.WriteObjectValue(Queue);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<DeliveryMode> deliveryMode = default;
-            Optional<QueueInfo> queue = default;
+            Core.Optional<DeliveryMode> deliveryMode = default;
+            Core.Optional<QueueInfo> queue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deliveryMode"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new DeliveryConfiguration(Optional.ToNullable(deliveryMode), queue.Value);
+            return new DeliveryConfiguration(Core.Optional.ToNullable(deliveryMode), queue.Value);
         }
     }
 }

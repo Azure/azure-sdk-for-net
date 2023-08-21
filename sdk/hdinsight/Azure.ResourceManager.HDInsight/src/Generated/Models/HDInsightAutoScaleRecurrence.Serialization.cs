@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightAutoScaleRecurrence : IUtf8JsonSerializable
+    public partial class HDInsightAutoScaleRecurrence : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TimeZone))
+            if (Core.Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsCollectionDefined(Schedule))
+            if (Core.Optional.IsCollectionDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> timeZone = default;
-            Optional<IList<HDInsightAutoScaleSchedule>> schedule = default;
+            Core.Optional<string> timeZone = default;
+            Core.Optional<IList<HDInsightAutoScaleSchedule>> schedule = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeZone"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightAutoScaleRecurrence(timeZone.Value, Optional.ToList(schedule));
+            return new HDInsightAutoScaleRecurrence(timeZone.Value, Core.Optional.ToList(schedule));
         }
     }
 }

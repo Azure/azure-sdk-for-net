@@ -18,10 +18,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> clientRequestId = default;
-            Optional<string> clientIpAddress = default;
-            Optional<string> method = default;
-            Optional<string> url = default;
+            Core.Optional<string> clientRequestId = default;
+            Core.Optional<string> clientIpAddress = default;
+            Core.Optional<string> method = default;
+            Core.Optional<string> url = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientRequestId"u8))

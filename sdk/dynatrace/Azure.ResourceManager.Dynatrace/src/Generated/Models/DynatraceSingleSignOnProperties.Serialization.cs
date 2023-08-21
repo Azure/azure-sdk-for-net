@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceSingleSignOnProperties : IUtf8JsonSerializable
+    public partial class DynatraceSingleSignOnProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SingleSignOnState))
+            if (Core.Optional.IsDefined(SingleSignOnState))
             {
                 writer.WritePropertyName("singleSignOnState"u8);
                 writer.WriteStringValue(SingleSignOnState.Value.ToString());
             }
-            if (Optional.IsDefined(EnterpriseAppId))
+            if (Core.Optional.IsDefined(EnterpriseAppId))
             {
                 writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId.Value);
             }
-            if (Optional.IsDefined(SingleSignOnUri))
+            if (Core.Optional.IsDefined(SingleSignOnUri))
             {
                 writer.WritePropertyName("singleSignOnUrl"u8);
                 writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(AadDomains))
+            if (Core.Optional.IsCollectionDefined(AadDomains))
             {
                 writer.WritePropertyName("aadDomains"u8);
                 writer.WriteStartArray();
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<DynatraceSingleSignOnState> singleSignOnState = default;
-            Optional<Guid> enterpriseAppId = default;
-            Optional<Uri> singleSignOnUrl = default;
-            Optional<IList<string>> aadDomains = default;
-            Optional<DynatraceProvisioningState> provisioningState = default;
+            Core.Optional<DynatraceSingleSignOnState> singleSignOnState = default;
+            Core.Optional<Guid> enterpriseAppId = default;
+            Core.Optional<Uri> singleSignOnUrl = default;
+            Core.Optional<IList<string>> aadDomains = default;
+            Core.Optional<DynatraceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("singleSignOnState"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new DynatraceSingleSignOnProperties(Optional.ToNullable(singleSignOnState), Optional.ToNullable(enterpriseAppId), singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToNullable(provisioningState));
+            return new DynatraceSingleSignOnProperties(Core.Optional.ToNullable(singleSignOnState), Core.Optional.ToNullable(enterpriseAppId), singleSignOnUrl.Value, Core.Optional.ToList(aadDomains), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

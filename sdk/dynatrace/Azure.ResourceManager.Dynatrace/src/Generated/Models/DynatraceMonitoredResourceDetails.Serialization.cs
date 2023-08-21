@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<MetricsSendingStatus> sendingMetrics = default;
-            Optional<string> reasonForMetricsStatus = default;
-            Optional<LogsSendingStatus> sendingLogs = default;
-            Optional<string> reasonForLogsStatus = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<MetricsSendingStatus> sendingMetrics = default;
+            Core.Optional<string> reasonForMetricsStatus = default;
+            Core.Optional<LogsSendingStatus> sendingLogs = default;
+            Core.Optional<string> reasonForLogsStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new DynatraceMonitoredResourceDetails(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
+            return new DynatraceMonitoredResourceDetails(id.Value, Core.Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Core.Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
         }
     }
 }

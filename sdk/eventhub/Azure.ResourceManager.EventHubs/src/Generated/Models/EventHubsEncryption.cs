@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of EventHubsEncryption. </summary>
         public EventHubsEncryption()
         {
-            KeyVaultProperties = new ChangeTrackingList<EventHubsKeyVaultProperties>();
+            KeyVaultProperties = new Core.ChangeTrackingList<EventHubsKeyVaultProperties>();
         }
 
         /// <summary> Initializes a new instance of EventHubsEncryption. </summary>

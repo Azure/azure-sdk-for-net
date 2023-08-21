@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

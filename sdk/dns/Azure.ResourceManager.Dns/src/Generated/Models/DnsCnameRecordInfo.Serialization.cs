@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    internal partial class DnsCnameRecordInfo : IUtf8JsonSerializable
+    internal partial class DnsCnameRecordInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Cname))
+            if (Core.Optional.IsDefined(Cname))
             {
                 writer.WritePropertyName("cname"u8);
                 writer.WriteStringValue(Cname);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<string> cname = default;
+            Core.Optional<string> cname = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cname"u8))

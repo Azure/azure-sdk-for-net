@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = await _eventHubsClusterClustersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation(_eventHubsClusterClustersClientDiagnostics, Pipeline, _eventHubsClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventHubsArmOperation(_eventHubsClusterClustersClientDiagnostics, Pipeline, _eventHubsClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _eventHubsClusterClustersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new EventHubsArmOperation(_eventHubsClusterClustersClientDiagnostics, Pipeline, _eventHubsClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventHubsArmOperation(_eventHubsClusterClustersClientDiagnostics, Pipeline, _eventHubsClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = await _eventHubsClusterClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation<EventHubsClusterResource>(new EventHubsClusterOperationSource(Client), _eventHubsClusterClustersClientDiagnostics, Pipeline, _eventHubsClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventHubsArmOperation<EventHubsClusterResource>(new EventHubsClusterOperationSource(Client), _eventHubsClusterClustersClientDiagnostics, Pipeline, _eventHubsClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _eventHubsClusterClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new EventHubsArmOperation<EventHubsClusterResource>(new EventHubsClusterOperationSource(Client), _eventHubsClusterClustersClientDiagnostics, Pipeline, _eventHubsClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventHubsArmOperation<EventHubsClusterResource>(new EventHubsClusterOperationSource(Client), _eventHubsClusterClustersClientDiagnostics, Pipeline, _eventHubsClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual AsyncPageable<SubResource> GetNamespacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsClusterClustersRestClient.CreateListNamespacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _eventHubsClusterClustersClientDiagnostics, Pipeline, "EventHubsClusterResource.GetNamespaces", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _eventHubsClusterClustersClientDiagnostics, Pipeline, "EventHubsClusterResource.GetNamespaces", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Pageable<SubResource> GetNamespaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsClusterClustersRestClient.CreateListNamespacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _eventHubsClusterClustersClientDiagnostics, Pipeline, "EventHubsClusterResource.GetNamespaces", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _eventHubsClusterClustersClientDiagnostics, Pipeline, "EventHubsClusterResource.GetNamespaces", "value", null, cancellationToken);
         }
 
         /// <summary>

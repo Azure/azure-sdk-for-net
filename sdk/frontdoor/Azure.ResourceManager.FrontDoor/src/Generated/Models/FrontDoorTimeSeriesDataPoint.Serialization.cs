@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorTimeSeriesDataPoint : IUtf8JsonSerializable
+    public partial class FrontDoorTimeSeriesDataPoint : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DateTimeUtc))
+            if (Core.Optional.IsDefined(DateTimeUtc))
             {
                 writer.WritePropertyName("dateTimeUTC"u8);
                 writer.WriteStringValue(DateTimeUtc.Value, "O");
             }
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dateTimeUtc = default;
-            Optional<float> value = default;
+            Core.Optional<DateTimeOffset> dateTimeUtc = default;
+            Core.Optional<float> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateTimeUTC"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new FrontDoorTimeSeriesDataPoint(Optional.ToNullable(dateTimeUtc), Optional.ToNullable(value));
+            return new FrontDoorTimeSeriesDataPoint(Core.Optional.ToNullable(dateTimeUtc), Core.Optional.ToNullable(value));
         }
     }
 }

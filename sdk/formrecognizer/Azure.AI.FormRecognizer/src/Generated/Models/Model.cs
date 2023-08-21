@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Models
             Argument.AssertNotNull(modelInfo, nameof(modelInfo));
 
             ModelInfo = modelInfo;
-            ComposedTrainResults = new ChangeTrackingList<TrainResult>();
+            ComposedTrainResults = new Core.ChangeTrackingList<TrainResult>();
         }
 
         /// <summary> Initializes a new instance of Model. </summary>

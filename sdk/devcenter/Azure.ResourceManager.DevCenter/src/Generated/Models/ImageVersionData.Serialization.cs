@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class ImageVersionData : IUtf8JsonSerializable
+    public partial class ImageVersionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> name0 = default;
-            Optional<DateTimeOffset> publishedDate = default;
-            Optional<bool> excludeFromLatest = default;
-            Optional<int> osDiskImageSizeInGb = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> name0 = default;
+            Core.Optional<DateTimeOffset> publishedDate = default;
+            Core.Optional<bool> excludeFromLatest = default;
+            Core.Optional<int> osDiskImageSizeInGb = default;
+            Core.Optional<DevCenterProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new ImageVersionData(id, name, type, systemData.Value, name0.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(osDiskImageSizeInGb), Optional.ToNullable(provisioningState));
+            return new ImageVersionData(id, name, type, systemData.Value, name0.Value, Core.Optional.ToNullable(publishedDate), Core.Optional.ToNullable(excludeFromLatest), Core.Optional.ToNullable(osDiskImageSizeInGb), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

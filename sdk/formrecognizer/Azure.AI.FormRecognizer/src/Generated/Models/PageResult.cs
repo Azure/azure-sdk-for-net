@@ -18,8 +18,8 @@ namespace Azure.AI.FormRecognizer.Models
         internal PageResult(int page)
         {
             Page = page;
-            KeyValuePairs = new ChangeTrackingList<KeyValuePair>();
-            Tables = new ChangeTrackingList<DataTable>();
+            KeyValuePairs = new Core.ChangeTrackingList<KeyValuePair>();
+            Tables = new Core.ChangeTrackingList<DataTable>();
         }
 
         /// <summary> Initializes a new instance of PageResult. </summary>

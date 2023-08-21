@@ -14,29 +14,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dynatrace
 {
-    public partial class DynatraceSingleSignOnData : IUtf8JsonSerializable
+    public partial class DynatraceSingleSignOnData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SingleSignOnState))
+            if (Core.Optional.IsDefined(SingleSignOnState))
             {
                 writer.WritePropertyName("singleSignOnState"u8);
                 writer.WriteStringValue(SingleSignOnState.Value.ToString());
             }
-            if (Optional.IsDefined(EnterpriseAppId))
+            if (Core.Optional.IsDefined(EnterpriseAppId))
             {
                 writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId.Value);
             }
-            if (Optional.IsDefined(SingleSignOnUri))
+            if (Core.Optional.IsDefined(SingleSignOnUri))
             {
                 writer.WritePropertyName("singleSignOnUrl"u8);
                 writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(AadDomains))
+            if (Core.Optional.IsCollectionDefined(AadDomains))
             {
                 writer.WritePropertyName("aadDomains"u8);
                 writer.WriteStartArray();
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Dynatrace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DynatraceSingleSignOnState> singleSignOnState = default;
-            Optional<Guid> enterpriseAppId = default;
-            Optional<Uri> singleSignOnUrl = default;
-            Optional<IList<string>> aadDomains = default;
-            Optional<DynatraceProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DynatraceSingleSignOnState> singleSignOnState = default;
+            Core.Optional<Guid> enterpriseAppId = default;
+            Core.Optional<Uri> singleSignOnUrl = default;
+            Core.Optional<IList<string>> aadDomains = default;
+            Core.Optional<DynatraceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Dynatrace
                     continue;
                 }
             }
-            return new DynatraceSingleSignOnData(id, name, type, systemData.Value, Optional.ToNullable(singleSignOnState), Optional.ToNullable(enterpriseAppId), singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToNullable(provisioningState));
+            return new DynatraceSingleSignOnData(id, name, type, systemData.Value, Core.Optional.ToNullable(singleSignOnState), Core.Optional.ToNullable(enterpriseAppId), singleSignOnUrl.Value, Core.Optional.ToList(aadDomains), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

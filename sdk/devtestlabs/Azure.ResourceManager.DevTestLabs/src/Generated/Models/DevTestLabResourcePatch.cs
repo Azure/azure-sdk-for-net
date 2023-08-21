@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of DevTestLabResourcePatch. </summary>
         public DevTestLabResourcePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The tags of the resource. </summary>

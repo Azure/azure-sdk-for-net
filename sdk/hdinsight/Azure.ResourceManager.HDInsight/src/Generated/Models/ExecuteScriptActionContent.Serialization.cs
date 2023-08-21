@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class ExecuteScriptActionContent : IUtf8JsonSerializable
+    public partial class ExecuteScriptActionContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ScriptActions))
+            if (Core.Optional.IsCollectionDefined(ScriptActions))
             {
                 writer.WritePropertyName("scriptActions"u8);
                 writer.WriteStartArray();

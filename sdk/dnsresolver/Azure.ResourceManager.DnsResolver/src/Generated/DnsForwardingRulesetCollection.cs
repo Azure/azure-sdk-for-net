@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = await _dnsForwardingRulesetRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, data, ifMatch, ifNoneMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = _dnsForwardingRulesetRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, data, ifMatch, ifNoneMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRulesetRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsForwardingRulesetRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetResource(Client, DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(e)), _dnsForwardingRulesetClientDiagnostics, Pipeline, "DnsForwardingRulesetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetResource(Client, DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(e)), _dnsForwardingRulesetClientDiagnostics, Pipeline, "DnsForwardingRulesetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRulesetRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsForwardingRulesetRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetResource(Client, DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(e)), _dnsForwardingRulesetClientDiagnostics, Pipeline, "DnsForwardingRulesetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetResource(Client, DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(e)), _dnsForwardingRulesetClientDiagnostics, Pipeline, "DnsForwardingRulesetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

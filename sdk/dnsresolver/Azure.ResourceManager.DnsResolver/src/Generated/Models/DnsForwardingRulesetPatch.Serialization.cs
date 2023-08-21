@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    public partial class DnsForwardingRulesetPatch : IUtf8JsonSerializable
+    public partial class DnsForwardingRulesetPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DnsResolverOutboundEndpoints))
+            if (Core.Optional.IsCollectionDefined(DnsResolverOutboundEndpoints))
             {
                 writer.WritePropertyName("dnsResolverOutboundEndpoints"u8);
                 writer.WriteStartArray();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightPrivateLinkServiceConnectionState : IUtf8JsonSerializable
+    public partial class HDInsightPrivateLinkServiceConnectionState : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ActionsRequired))
+            if (Core.Optional.IsDefined(ActionsRequired))
             {
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             HDInsightPrivateLinkServiceConnectionStatus status = default;
-            Optional<string> description = default;
-            Optional<string> actionsRequired = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))

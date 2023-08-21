@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ServiceSku : IUtf8JsonSerializable
+    public partial class ServiceSku : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Tier))
+            if (Core.Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Optional.IsDefined(Family))
+            if (Core.Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Optional.IsDefined(Size))
+            if (Core.Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Optional.IsDefined(Capacity))
+            if (Core.Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> family = default;
-            Optional<string> size = default;
-            Optional<int> capacity = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> tier = default;
+            Core.Optional<string> family = default;
+            Core.Optional<string> size = default;
+            Core.Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ServiceSku(name.Value, tier.Value, family.Value, size.Value, Optional.ToNullable(capacity));
+            return new ServiceSku(name.Value, tier.Value, family.Value, size.Value, Core.Optional.ToNullable(capacity));
         }
     }
 }

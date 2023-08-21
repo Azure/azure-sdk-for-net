@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of QuotaList. </summary>
         internal QuotaList()
         {
-            Value = new ChangeTrackingList<Quota>();
+            Value = new Core.ChangeTrackingList<Quota>();
         }
 
         /// <summary> Initializes a new instance of QuotaList. </summary>

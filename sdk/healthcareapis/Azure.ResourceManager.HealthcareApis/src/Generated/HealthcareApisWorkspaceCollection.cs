@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HealthcareApis
             try
             {
                 var response = await _healthcareApisWorkspaceWorkspacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthcareApisArmOperation<HealthcareApisWorkspaceResource>(new HealthcareApisWorkspaceOperationSource(Client), _healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, _healthcareApisWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new HealthcareApisArmOperation<HealthcareApisWorkspaceResource>(new HealthcareApisWorkspaceOperationSource(Client), _healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, _healthcareApisWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HealthcareApis
             try
             {
                 var response = _healthcareApisWorkspaceWorkspacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
-                var operation = new HealthcareApisArmOperation<HealthcareApisWorkspaceResource>(new HealthcareApisWorkspaceOperationSource(Client), _healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, _healthcareApisWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new HealthcareApisArmOperation<HealthcareApisWorkspaceResource>(new HealthcareApisWorkspaceOperationSource(Client), _healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, _healthcareApisWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthcareApisWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisWorkspaceResource(Client, HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(e)), _healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, "HealthcareApisWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisWorkspaceResource(Client, HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(e)), _healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, "HealthcareApisWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthcareApisWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisWorkspaceResource(Client, HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(e)), _healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, "HealthcareApisWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisWorkspaceResource(Client, HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(e)), _healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, "HealthcareApisWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

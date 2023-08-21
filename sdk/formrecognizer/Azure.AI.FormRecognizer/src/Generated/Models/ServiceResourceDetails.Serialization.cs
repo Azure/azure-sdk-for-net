@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             CustomDocumentModelsDetails customDocumentModels = default;
-            Optional<ResourceQuotaDetails> customNeuralDocumentModelBuilds = default;
+            Core.Optional<ResourceQuotaDetails> customNeuralDocumentModelBuilds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customDocumentModels"u8))

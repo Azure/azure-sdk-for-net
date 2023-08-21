@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of DevCenterProjectEnvironmentPatch. </summary>
         public DevCenterProjectEnvironmentPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            UserRoleAssignments = new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            UserRoleAssignments = new Core.ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>();
         }
 
         /// <summary> Resource tags. </summary>

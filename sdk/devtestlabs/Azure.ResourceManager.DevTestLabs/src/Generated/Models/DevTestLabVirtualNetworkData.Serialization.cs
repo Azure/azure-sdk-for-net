@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabVirtualNetworkData : IUtf8JsonSerializable
+    public partial class DevTestLabVirtualNetworkData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevTestLabs
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedSubnets))
+            if (Core.Optional.IsCollectionDefined(AllowedSubnets))
             {
                 writer.WritePropertyName("allowedSubnets"u8);
                 writer.WriteStartArray();
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ExternalProviderResourceId))
+            if (Core.Optional.IsDefined(ExternalProviderResourceId))
             {
                 writer.WritePropertyName("externalProviderResourceId"u8);
                 writer.WriteStringValue(ExternalProviderResourceId);
             }
-            if (Optional.IsCollectionDefined(SubnetOverrides))
+            if (Core.Optional.IsCollectionDefined(SubnetOverrides))
             {
                 writer.WritePropertyName("subnetOverrides"u8);
                 writer.WriteStartArray();
@@ -74,20 +74,20 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<DevTestLabSubnet>> allowedSubnets = default;
-            Optional<string> description = default;
-            Optional<string> externalProviderResourceId = default;
-            Optional<IReadOnlyList<DevTestLabExternalSubnet>> externalSubnets = default;
-            Optional<IList<DevTestLabSubnetOverride>> subnetOverrides = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IList<DevTestLabSubnet>> allowedSubnets = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> externalProviderResourceId = default;
+            Core.Optional<IReadOnlyList<DevTestLabExternalSubnet>> externalSubnets = default;
+            Core.Optional<IList<DevTestLabSubnetOverride>> subnetOverrides = default;
+            Core.Optional<DateTimeOffset> createdDate = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     continue;
                 }
             }
-            return new DevTestLabVirtualNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(allowedSubnets), description.Value, externalProviderResourceId.Value, Optional.ToList(externalSubnets), Optional.ToList(subnetOverrides), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
+            return new DevTestLabVirtualNetworkData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToList(allowedSubnets), description.Value, externalProviderResourceId.Value, Core.Optional.ToList(externalSubnets), Core.Optional.ToList(subnetOverrides), Core.Optional.ToNullable(createdDate), provisioningState.Value, Core.Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

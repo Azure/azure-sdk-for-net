@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="location"> The location. </param>
         public ManagedRuleSetDefinition(AzureLocation location) : base(location)
         {
-            RuleGroups = new ChangeTrackingList<ManagedRuleGroupDefinition>();
+            RuleGroups = new Core.ChangeTrackingList<ManagedRuleGroupDefinition>();
         }
 
         /// <summary> Initializes a new instance of ManagedRuleSetDefinition. </summary>

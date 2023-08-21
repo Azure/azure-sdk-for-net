@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
-    public partial class DataShareData : IUtf8JsonSerializable
+    public partial class DataShareData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ShareKind))
+            if (Core.Optional.IsDefined(ShareKind))
             {
                 writer.WritePropertyName("shareKind"u8);
                 writer.WriteStringValue(ShareKind.Value.ToString());
             }
-            if (Optional.IsDefined(Terms))
+            if (Core.Optional.IsDefined(Terms))
             {
                 writer.WritePropertyName("terms"u8);
                 writer.WriteStringValue(Terms);
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.DataShare
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<string> description = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
-            Optional<DataShareKind> shareKind = default;
-            Optional<string> terms = default;
-            Optional<string> userEmail = default;
-            Optional<string> userName = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> createdAt = default;
+            Core.Optional<string> description = default;
+            Core.Optional<DataShareProvisioningState> provisioningState = default;
+            Core.Optional<DataShareKind> shareKind = default;
+            Core.Optional<string> terms = default;
+            Core.Optional<string> userEmail = default;
+            Core.Optional<string> userName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataShare
                     continue;
                 }
             }
-            return new DataShareData(id, name, type, systemData.Value, Optional.ToNullable(createdAt), description.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(shareKind), terms.Value, userEmail.Value, userName.Value);
+            return new DataShareData(id, name, type, systemData.Value, Core.Optional.ToNullable(createdAt), description.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(shareKind), terms.Value, userEmail.Value, userName.Value);
         }
     }
 }

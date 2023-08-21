@@ -13,17 +13,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabServiceRunnerData : IUtf8JsonSerializable
+    public partial class DevTestLabServiceRunnerData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<DevTestLabManagedIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<DevTestLabManagedIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     continue;
                 }
             }
-            return new DevTestLabServiceRunnerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value);
+            return new DevTestLabServiceRunnerData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity.Value);
         }
     }
 }

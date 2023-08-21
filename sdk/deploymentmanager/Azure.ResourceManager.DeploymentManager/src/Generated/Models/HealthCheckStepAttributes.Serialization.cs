@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    public partial class HealthCheckStepAttributes : IUtf8JsonSerializable
+    public partial class HealthCheckStepAttributes : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(HealthCheckStepAttributesType);
-            if (Optional.IsDefined(WaitDuration))
+            if (Core.Optional.IsDefined(WaitDuration))
             {
                 writer.WritePropertyName("waitDuration"u8);
                 writer.WriteStringValue(WaitDuration.Value, "P");
             }
-            if (Optional.IsDefined(MaxElasticDuration))
+            if (Core.Optional.IsDefined(MaxElasticDuration))
             {
                 writer.WritePropertyName("maxElasticDuration"u8);
                 writer.WriteStringValue(MaxElasticDuration.Value, "P");

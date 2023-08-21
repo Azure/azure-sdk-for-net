@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = await _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation(_frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FrontDoorArmOperation(_frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new FrontDoorArmOperation(_frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new FrontDoorArmOperation(_frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = await _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(new FrontDoorNetworkExperimentProfileOperationSource(Client), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(new FrontDoorNetworkExperimentProfileOperationSource(Client), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(new FrontDoorNetworkExperimentProfileOperationSource(Client), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(new FrontDoorNetworkExperimentProfileOperationSource(Client), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preconfiguredEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _preconfiguredEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PreconfiguredEndpoint.DeserializePreconfiguredEndpoint, _preconfiguredEndpointsClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PreconfiguredEndpoint.DeserializePreconfiguredEndpoint, _preconfiguredEndpointsClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preconfiguredEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _preconfiguredEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PreconfiguredEndpoint.DeserializePreconfiguredEndpoint, _preconfiguredEndpointsClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PreconfiguredEndpoint.DeserializePreconfiguredEndpoint, _preconfiguredEndpointsClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

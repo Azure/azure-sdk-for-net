@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.FluidRelay.Models
         /// <summary> Initializes a new instance of FluidRelayEndpoints. </summary>
         internal FluidRelayEndpoints()
         {
-            OrdererEndpoints = new ChangeTrackingList<string>();
-            StorageEndpoints = new ChangeTrackingList<string>();
-            ServiceEndpoints = new ChangeTrackingList<string>();
+            OrdererEndpoints = new Core.ChangeTrackingList<string>();
+            StorageEndpoints = new Core.ChangeTrackingList<string>();
+            ServiceEndpoints = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of FluidRelayEndpoints. </summary>

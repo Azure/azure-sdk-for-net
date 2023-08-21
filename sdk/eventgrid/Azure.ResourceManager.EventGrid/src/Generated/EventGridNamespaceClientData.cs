@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Initializes a new instance of EventGridNamespaceClientData. </summary>
         public EventGridNamespaceClientData()
         {
-            Attributes = new ChangeTrackingDictionary<string, BinaryData>();
+            Attributes = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of EventGridNamespaceClientData. </summary>

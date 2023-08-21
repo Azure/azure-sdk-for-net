@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of VerifiedPartnersListResult. </summary>
         internal VerifiedPartnersListResult()
         {
-            Value = new ChangeTrackingList<VerifiedPartnerData>();
+            Value = new Core.ChangeTrackingList<VerifiedPartnerData>();
         }
 
         /// <summary> Initializes a new instance of VerifiedPartnersListResult. </summary>

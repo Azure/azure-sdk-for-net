@@ -11,17 +11,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsNetworkRuleSetVirtualNetworkRules : IUtf8JsonSerializable
+    public partial class EventHubsNetworkRuleSetVirtualNetworkRules : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Subnet))
+            if (Core.Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
+            if (Core.Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
             {
                 writer.WritePropertyName("ignoreMissingVnetServiceEndpoint"u8);
                 writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> subnet = default;
-            Optional<bool> ignoreMissingVnetServiceEndpoint = default;
+            Core.Optional<WritableSubResource> subnet = default;
+            Core.Optional<bool> ignoreMissingVnetServiceEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnet"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new EventHubsNetworkRuleSetVirtualNetworkRules(subnet, Optional.ToNullable(ignoreMissingVnetServiceEndpoint));
+            return new EventHubsNetworkRuleSetVirtualNetworkRules(subnet, Core.Optional.ToNullable(ignoreMissingVnetServiceEndpoint));
         }
     }
 }

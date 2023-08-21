@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _partnerConfigurationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation(_partnerConfigurationClientDiagnostics, Pipeline, _partnerConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation(_partnerConfigurationClientDiagnostics, Pipeline, _partnerConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _partnerConfigurationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                var operation = new EventGridArmOperation(_partnerConfigurationClientDiagnostics, Pipeline, _partnerConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation(_partnerConfigurationClientDiagnostics, Pipeline, _partnerConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _partnerConfigurationRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<PartnerConfigurationResource>(new PartnerConfigurationOperationSource(Client), _partnerConfigurationClientDiagnostics, Pipeline, _partnerConfigurationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<PartnerConfigurationResource>(new PartnerConfigurationOperationSource(Client), _partnerConfigurationClientDiagnostics, Pipeline, _partnerConfigurationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _partnerConfigurationRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, patch, cancellationToken);
-                var operation = new EventGridArmOperation<PartnerConfigurationResource>(new PartnerConfigurationOperationSource(Client), _partnerConfigurationClientDiagnostics, Pipeline, _partnerConfigurationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<PartnerConfigurationResource>(new PartnerConfigurationOperationSource(Client), _partnerConfigurationClientDiagnostics, Pipeline, _partnerConfigurationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _partnerConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<PartnerConfigurationResource>(new PartnerConfigurationOperationSource(Client), _partnerConfigurationClientDiagnostics, Pipeline, _partnerConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<PartnerConfigurationResource>(new PartnerConfigurationOperationSource(Client), _partnerConfigurationClientDiagnostics, Pipeline, _partnerConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _partnerConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken);
-                var operation = new EventGridArmOperation<PartnerConfigurationResource>(new PartnerConfigurationOperationSource(Client), _partnerConfigurationClientDiagnostics, Pipeline, _partnerConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<PartnerConfigurationResource>(new PartnerConfigurationOperationSource(Client), _partnerConfigurationClientDiagnostics, Pipeline, _partnerConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

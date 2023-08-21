@@ -21,12 +21,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> partitionName = default;
-            Optional<string> imageStudyInstanceUid = default;
-            Optional<string> imageSeriesInstanceUid = default;
-            Optional<string> imageSopInstanceUid = default;
-            Optional<string> serviceHostName = default;
-            Optional<long> sequenceNumber = default;
+            Core.Optional<string> partitionName = default;
+            Core.Optional<string> imageStudyInstanceUid = default;
+            Core.Optional<string> imageSeriesInstanceUid = default;
+            Core.Optional<string> imageSopInstanceUid = default;
+            Core.Optional<string> serviceHostName = default;
+            Core.Optional<long> sequenceNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionName"u8))
@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new HealthcareDicomImageUpdatedEventData(partitionName.Value, imageStudyInstanceUid.Value, imageSeriesInstanceUid.Value, imageSopInstanceUid.Value, serviceHostName.Value, Optional.ToNullable(sequenceNumber));
+            return new HealthcareDicomImageUpdatedEventData(partitionName.Value, imageStudyInstanceUid.Value, imageSeriesInstanceUid.Value, imageSopInstanceUid.Value, serviceHostName.Value, Core.Optional.ToNullable(sequenceNumber));
         }
 
         internal partial class HealthcareDicomImageUpdatedEventDataConverter : JsonConverter<HealthcareDicomImageUpdatedEventData>

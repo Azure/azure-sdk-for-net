@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of EventGridDomainPatch. </summary>
         public EventGridDomainPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            InboundIPRules = new ChangeTrackingList<EventGridInboundIPRule>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            InboundIPRules = new Core.ChangeTrackingList<EventGridInboundIPRule>();
         }
 
         /// <summary> Tags of the domains resource. </summary>

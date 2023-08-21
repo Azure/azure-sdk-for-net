@@ -24,12 +24,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             StringIndexType stringIndexType = default;
             string content = default;
             IReadOnlyList<DocumentPage> pages = default;
-            Optional<IReadOnlyList<DocumentParagraph>> paragraphs = default;
-            Optional<IReadOnlyList<DocumentTable>> tables = default;
-            Optional<IReadOnlyList<DocumentKeyValuePair>> keyValuePairs = default;
-            Optional<IReadOnlyList<DocumentStyle>> styles = default;
-            Optional<IReadOnlyList<DocumentLanguage>> languages = default;
-            Optional<IReadOnlyList<AnalyzedDocument>> documents = default;
+            Core.Optional<IReadOnlyList<DocumentParagraph>> paragraphs = default;
+            Core.Optional<IReadOnlyList<DocumentTable>> tables = default;
+            Core.Optional<IReadOnlyList<DocumentKeyValuePair>> keyValuePairs = default;
+            Core.Optional<IReadOnlyList<DocumentStyle>> styles = default;
+            Core.Optional<IReadOnlyList<DocumentLanguage>> languages = default;
+            Core.Optional<IReadOnlyList<AnalyzedDocument>> documents = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiVersion"u8))
@@ -147,7 +147,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new AnalyzeResult(apiVersion, modelId, stringIndexType, content, pages, Optional.ToList(paragraphs), Optional.ToList(tables), Optional.ToList(keyValuePairs), Optional.ToList(styles), Optional.ToList(languages), Optional.ToList(documents));
+            return new AnalyzeResult(apiVersion, modelId, stringIndexType, content, pages, Core.Optional.ToList(paragraphs), Core.Optional.ToList(tables), Core.Optional.ToList(keyValuePairs), Core.Optional.ToList(styles), Core.Optional.ToList(languages), Core.Optional.ToList(documents));
         }
     }
 }

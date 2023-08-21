@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class RuntimeScriptActionDetail : IUtf8JsonSerializable
+    public partial class RuntimeScriptActionDetail : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Optional.IsDefined(Parameters))
+            if (Core.Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);
@@ -42,18 +42,18 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<long> scriptExecutionId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> status = default;
-            Optional<string> operation = default;
-            Optional<IReadOnlyList<ScriptActionExecutionSummary>> executionSummary = default;
-            Optional<string> debugInformation = default;
+            Core.Optional<long> scriptExecutionId = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<string> status = default;
+            Core.Optional<string> operation = default;
+            Core.Optional<IReadOnlyList<ScriptActionExecutionSummary>> executionSummary = default;
+            Core.Optional<string> debugInformation = default;
             string name = default;
             Uri uri = default;
-            Optional<string> parameters = default;
+            Core.Optional<string> parameters = default;
             IList<string> roles = default;
-            Optional<string> applicationName = default;
+            Core.Optional<string> applicationName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scriptExecutionId"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new RuntimeScriptActionDetail(name, uri, parameters.Value, roles, applicationName.Value, Optional.ToNullable(scriptExecutionId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, operation.Value, Optional.ToList(executionSummary), debugInformation.Value);
+            return new RuntimeScriptActionDetail(name, uri, parameters.Value, roles, applicationName.Value, Core.Optional.ToNullable(scriptExecutionId), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), status.Value, operation.Value, Core.Optional.ToList(executionSummary), debugInformation.Value);
         }
     }
 }

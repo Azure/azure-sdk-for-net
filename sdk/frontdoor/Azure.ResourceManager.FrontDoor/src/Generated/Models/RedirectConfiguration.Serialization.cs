@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class RedirectConfiguration : IUtf8JsonSerializable
+    public partial class RedirectConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RedirectType))
+            if (Core.Optional.IsDefined(RedirectType))
             {
                 writer.WritePropertyName("redirectType"u8);
                 writer.WriteStringValue(RedirectType.Value.ToString());
             }
-            if (Optional.IsDefined(RedirectProtocol))
+            if (Core.Optional.IsDefined(RedirectProtocol))
             {
                 writer.WritePropertyName("redirectProtocol"u8);
                 writer.WriteStringValue(RedirectProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(CustomHost))
+            if (Core.Optional.IsDefined(CustomHost))
             {
                 writer.WritePropertyName("customHost"u8);
                 writer.WriteStringValue(CustomHost);
             }
-            if (Optional.IsDefined(CustomPath))
+            if (Core.Optional.IsDefined(CustomPath))
             {
                 writer.WritePropertyName("customPath"u8);
                 writer.WriteStringValue(CustomPath);
             }
-            if (Optional.IsDefined(CustomFragment))
+            if (Core.Optional.IsDefined(CustomFragment))
             {
                 writer.WritePropertyName("customFragment"u8);
                 writer.WriteStringValue(CustomFragment);
             }
-            if (Optional.IsDefined(CustomQueryString))
+            if (Core.Optional.IsDefined(CustomQueryString))
             {
                 writer.WritePropertyName("customQueryString"u8);
                 writer.WriteStringValue(CustomQueryString);
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<FrontDoorRedirectType> redirectType = default;
-            Optional<FrontDoorRedirectProtocol> redirectProtocol = default;
-            Optional<string> customHost = default;
-            Optional<string> customPath = default;
-            Optional<string> customFragment = default;
-            Optional<string> customQueryString = default;
+            Core.Optional<FrontDoorRedirectType> redirectType = default;
+            Core.Optional<FrontDoorRedirectProtocol> redirectProtocol = default;
+            Core.Optional<string> customHost = default;
+            Core.Optional<string> customPath = default;
+            Core.Optional<string> customFragment = default;
+            Core.Optional<string> customQueryString = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new RedirectConfiguration(odataType, Optional.ToNullable(redirectType), Optional.ToNullable(redirectProtocol), customHost.Value, customPath.Value, customFragment.Value, customQueryString.Value);
+            return new RedirectConfiguration(odataType, Core.Optional.ToNullable(redirectType), Core.Optional.ToNullable(redirectProtocol), customHost.Value, customPath.Value, customFragment.Value, customQueryString.Value);
         }
     }
 }

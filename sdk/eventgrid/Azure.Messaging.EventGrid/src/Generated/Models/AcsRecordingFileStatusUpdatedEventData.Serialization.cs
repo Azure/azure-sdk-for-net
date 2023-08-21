@@ -21,13 +21,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<AcsRecordingStorageInfoProperties> recordingStorageInfo = default;
-            Optional<DateTimeOffset> recordingStartTime = default;
-            Optional<long> recordingDurationMs = default;
-            Optional<AcsRecordingContentType> recordingContentType = default;
-            Optional<AcsRecordingChannelType> recordingChannelType = default;
-            Optional<AcsRecordingFormatType> recordingFormatType = default;
-            Optional<string> sessionEndReason = default;
+            Core.Optional<AcsRecordingStorageInfoProperties> recordingStorageInfo = default;
+            Core.Optional<DateTimeOffset> recordingStartTime = default;
+            Core.Optional<long> recordingDurationMs = default;
+            Core.Optional<AcsRecordingContentType> recordingContentType = default;
+            Core.Optional<AcsRecordingChannelType> recordingChannelType = default;
+            Core.Optional<AcsRecordingFormatType> recordingFormatType = default;
+            Core.Optional<string> sessionEndReason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordingStorageInfo"u8))
@@ -90,7 +90,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo.Value, Optional.ToNullable(recordingStartTime), Optional.ToNullable(recordingDurationMs), Optional.ToNullable(recordingContentType), Optional.ToNullable(recordingChannelType), Optional.ToNullable(recordingFormatType), sessionEndReason.Value);
+            return new AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo.Value, Core.Optional.ToNullable(recordingStartTime), Core.Optional.ToNullable(recordingDurationMs), Core.Optional.ToNullable(recordingContentType), Core.Optional.ToNullable(recordingChannelType), Core.Optional.ToNullable(recordingFormatType), sessionEndReason.Value);
         }
 
         internal partial class AcsRecordingFileStatusUpdatedEventDataConverter : JsonConverter<AcsRecordingFileStatusUpdatedEventData>

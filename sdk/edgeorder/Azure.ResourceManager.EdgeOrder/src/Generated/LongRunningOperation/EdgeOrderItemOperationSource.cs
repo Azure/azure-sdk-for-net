@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    internal class EdgeOrderItemOperationSource : IOperationSource<EdgeOrderItemResource>
+    internal class EdgeOrderItemOperationSource : Core.IOperationSource<EdgeOrderItemResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.EdgeOrder
             _client = client;
         }
 
-        EdgeOrderItemResource IOperationSource<EdgeOrderItemResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        EdgeOrderItemResource Core.IOperationSource<EdgeOrderItemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = EdgeOrderItemData.DeserializeEdgeOrderItemData(document.RootElement);
             return new EdgeOrderItemResource(_client, data);
         }
 
-        async ValueTask<EdgeOrderItemResource> IOperationSource<EdgeOrderItemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EdgeOrderItemResource> Core.IOperationSource<EdgeOrderItemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = EdgeOrderItemData.DeserializeEdgeOrderItemData(document.RootElement);

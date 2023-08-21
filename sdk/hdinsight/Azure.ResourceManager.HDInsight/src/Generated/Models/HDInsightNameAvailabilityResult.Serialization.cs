@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<bool> nameAvailable = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
+            Core.Optional<bool> nameAvailable = default;
+            Core.Optional<string> reason = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightNameAvailabilityResult(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
+            return new HDInsightNameAvailabilityResult(Core.Optional.ToNullable(nameAvailable), reason.Value, message.Value);
         }
     }
 }

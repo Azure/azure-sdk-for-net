@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> agentVersion = default;
-            Optional<BinaryData> agentConfiguration = default;
-            Optional<string> status = default;
-            Optional<string> vmSize = default;
-            Optional<IReadOnlyList<string>> supportedTaskTypes = default;
+            Core.Optional<string> agentVersion = default;
+            Core.Optional<BinaryData> agentConfiguration = default;
+            Core.Optional<string> status = default;
+            Core.Optional<string> vmSize = default;
+            Core.Optional<IReadOnlyList<string>> supportedTaskTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("agentVersion"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new DataMigrationServiceStatusResponse(agentVersion.Value, agentConfiguration.Value, status.Value, vmSize.Value, Optional.ToList(supportedTaskTypes));
+            return new DataMigrationServiceStatusResponse(agentVersion.Value, agentConfiguration.Value, status.Value, vmSize.Value, Core.Optional.ToList(supportedTaskTypes));
         }
     }
 }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DicomServiceData>> value = default;
+            Core.Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DicomServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new DicomServiceCollection(nextLink.Value, Optional.ToList(value));
+            return new DicomServiceCollection(nextLink.Value, Core.Optional.ToList(value));
         }
     }
 }

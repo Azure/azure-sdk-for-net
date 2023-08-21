@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    internal partial class UnknownAdvancedFilter : IUtf8JsonSerializable
+    internal partial class UnknownAdvancedFilter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("operatorType"u8);
             writer.WriteStringValue(OperatorType.ToString());
-            if (Optional.IsDefined(Key))
+            if (Core.Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             AdvancedFilterOperatorType operatorType = "Unknown";
-            Optional<string> key = default;
+            Core.Optional<string> key = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operatorType"u8))

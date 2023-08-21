@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class RestorableTimeRange : IUtf8JsonSerializable
+    public partial class RestorableTimeRange : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndOn, "O");
-            if (Optional.IsDefined(ObjectType))
+            if (Core.Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
-            Optional<string> objectType = default;
+            Core.Optional<string> objectType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))

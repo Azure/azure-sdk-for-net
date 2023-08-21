@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="location"> The location. </param>
         public DevCenterProjectEnvironmentData(AzureLocation location) : base(location)
         {
-            UserRoleAssignments = new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>();
+            UserRoleAssignments = new Core.ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>();
         }
 
         /// <summary> Initializes a new instance of DevCenterProjectEnvironmentData. </summary>

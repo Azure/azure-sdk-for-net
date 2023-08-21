@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> schemaName = default;
-            Optional<IReadOnlyList<DatabaseTable>> tables = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Core.Optional<string> schemaName = default;
+            Core.Optional<IReadOnlyList<DatabaseTable>> tables = default;
+            Core.Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaName"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new GetUserTablesOracleTaskOutput(schemaName.Value, Optional.ToList(tables), Optional.ToList(validationErrors));
+            return new GetUserTablesOracleTaskOutput(schemaName.Value, Core.Optional.ToList(tables), Core.Optional.ToList(validationErrors));
         }
     }
 }

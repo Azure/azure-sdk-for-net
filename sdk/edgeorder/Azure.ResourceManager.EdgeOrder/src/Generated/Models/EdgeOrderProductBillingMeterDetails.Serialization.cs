@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<EdgeOrderProductMeterDetails> meterDetails = default;
-            Optional<EdgeOrderProductMeteringType> meteringType = default;
-            Optional<string> frequency = default;
+            Core.Optional<string> name = default;
+            Core.Optional<EdgeOrderProductMeterDetails> meterDetails = default;
+            Core.Optional<EdgeOrderProductMeteringType> meteringType = default;
+            Core.Optional<string> frequency = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new EdgeOrderProductBillingMeterDetails(name.Value, meterDetails.Value, Optional.ToNullable(meteringType), frequency.Value);
+            return new EdgeOrderProductBillingMeterDetails(name.Value, meterDetails.Value, Core.Optional.ToNullable(meteringType), frequency.Value);
         }
     }
 }

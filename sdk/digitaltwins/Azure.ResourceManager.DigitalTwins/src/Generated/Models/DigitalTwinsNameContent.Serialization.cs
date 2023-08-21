@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DigitalTwinsNameContent : IUtf8JsonSerializable
+    public partial class DigitalTwinsNameContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);

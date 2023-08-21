@@ -22,8 +22,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             AnalyzeResultOperationStatus status = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
-            Optional<JsonElement> error = default;
-            Optional<AnalyzeResult> analyzeResult = default;
+            Core.Optional<JsonElement> error = default;
+            Core.Optional<AnalyzeResult> analyzeResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))

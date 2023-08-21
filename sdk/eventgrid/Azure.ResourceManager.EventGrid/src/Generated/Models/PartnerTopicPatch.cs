@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of PartnerTopicPatch. </summary>
         public PartnerTopicPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Tags of the Partner Topic resource. </summary>

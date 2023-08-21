@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightClusterNetworkProperties : IUtf8JsonSerializable
+    public partial class HDInsightClusterNetworkProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceProviderConnection))
+            if (Core.Optional.IsDefined(ResourceProviderConnection))
             {
                 writer.WritePropertyName("resourceProviderConnection"u8);
                 writer.WriteStringValue(ResourceProviderConnection.Value.ToString());
             }
-            if (Optional.IsDefined(PrivateLink))
+            if (Core.Optional.IsDefined(PrivateLink))
             {
                 writer.WritePropertyName("privateLink"u8);
                 writer.WriteStringValue(PrivateLink.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<HDInsightResourceProviderConnection> resourceProviderConnection = default;
-            Optional<HDInsightPrivateLinkState> privateLink = default;
+            Core.Optional<HDInsightResourceProviderConnection> resourceProviderConnection = default;
+            Core.Optional<HDInsightPrivateLinkState> privateLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceProviderConnection"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightClusterNetworkProperties(Optional.ToNullable(resourceProviderConnection), Optional.ToNullable(privateLink));
+            return new HDInsightClusterNetworkProperties(Core.Optional.ToNullable(resourceProviderConnection), Core.Optional.ToNullable(privateLink));
         }
     }
 }

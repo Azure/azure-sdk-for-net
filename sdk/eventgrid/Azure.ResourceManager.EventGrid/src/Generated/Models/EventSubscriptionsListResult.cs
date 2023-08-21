@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of EventSubscriptionsListResult. </summary>
         internal EventSubscriptionsListResult()
         {
-            Value = new ChangeTrackingList<EventGridSubscriptionData>();
+            Value = new Core.ChangeTrackingList<EventGridSubscriptionData>();
         }
 
         /// <summary> Initializes a new instance of EventSubscriptionsListResult. </summary>

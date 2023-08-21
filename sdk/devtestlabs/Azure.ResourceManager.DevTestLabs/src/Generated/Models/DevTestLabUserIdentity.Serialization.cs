@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabUserIdentity : IUtf8JsonSerializable
+    public partial class DevTestLabUserIdentity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrincipalName))
+            if (Core.Optional.IsDefined(PrincipalName))
             {
                 writer.WritePropertyName("principalName"u8);
                 writer.WriteStringValue(PrincipalName);
             }
-            if (Optional.IsDefined(PrincipalId))
+            if (Core.Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
-            if (Optional.IsDefined(TenantId))
+            if (Core.Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(ObjectId))
+            if (Core.Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (Optional.IsDefined(AppId))
+            if (Core.Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> principalName = default;
-            Optional<string> principalId = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> objectId = default;
-            Optional<string> appId = default;
+            Core.Optional<string> principalName = default;
+            Core.Optional<string> principalId = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<string> objectId = default;
+            Core.Optional<string> appId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalName"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabUserIdentity(principalName.Value, principalId.Value, Optional.ToNullable(tenantId), objectId.Value, appId.Value);
+            return new DevTestLabUserIdentity(principalName.Value, principalId.Value, Core.Optional.ToNullable(tenantId), objectId.Value, appId.Value);
         }
     }
 }

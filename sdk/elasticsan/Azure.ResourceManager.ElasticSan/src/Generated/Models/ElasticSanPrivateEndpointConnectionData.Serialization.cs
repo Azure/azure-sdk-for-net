@@ -14,21 +14,21 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    public partial class ElasticSanPrivateEndpointConnectionData : IUtf8JsonSerializable
+    public partial class ElasticSanPrivateEndpointConnectionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (Core.Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
             writer.WriteObjectValue(ConnectionState);
-            if (Optional.IsCollectionDefined(GroupIds))
+            if (Core.Optional.IsCollectionDefined(GroupIds))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.ElasticSan
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ElasticSanProvisioningState> provisioningState = default;
-            Optional<SubResource> privateEndpoint = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ElasticSanProvisioningState> provisioningState = default;
+            Core.Optional<SubResource> privateEndpoint = default;
             ElasticSanPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
-            Optional<IList<string>> groupIds = default;
+            Core.Optional<IList<string>> groupIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ElasticSan
                     continue;
                 }
             }
-            return new ElasticSanPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState, Optional.ToList(groupIds));
+            return new ElasticSanPrivateEndpointConnectionData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState, Core.Optional.ToList(groupIds));
         }
     }
 }

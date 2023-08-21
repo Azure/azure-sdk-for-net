@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class RoutingIdentityInfo : IUtf8JsonSerializable
+    public partial class RoutingIdentityInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IdentityType))
+            if (Core.Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType.Value.ToString());
             }
-            if (Optional.IsDefined(UserAssignedIdentity))
+            if (Core.Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<RoutingIdentityType> type = default;
-            Optional<string> userAssignedIdentity = default;
+            Core.Optional<RoutingIdentityType> type = default;
+            Core.Optional<string> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new RoutingIdentityInfo(Optional.ToNullable(type), userAssignedIdentity.Value);
+            return new RoutingIdentityInfo(Core.Optional.ToNullable(type), userAssignedIdentity.Value);
         }
     }
 }

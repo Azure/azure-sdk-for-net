@@ -21,11 +21,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<StorageTaskCompletedStatus> status = default;
-            Optional<DateTimeOffset> completedDateTime = default;
-            Optional<string> taskExecutionId = default;
-            Optional<string> taskName = default;
-            Optional<Uri> summaryReportBlobUrl = default;
+            Core.Optional<StorageTaskCompletedStatus> status = default;
+            Core.Optional<DateTimeOffset> completedDateTime = default;
+            Core.Optional<string> taskExecutionId = default;
+            Core.Optional<string> taskName = default;
+            Core.Optional<Uri> summaryReportBlobUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new StorageTaskCompletedEventData(Optional.ToNullable(status), Optional.ToNullable(completedDateTime), taskExecutionId.Value, taskName.Value, summaryReportBlobUrl.Value);
+            return new StorageTaskCompletedEventData(Core.Optional.ToNullable(status), Core.Optional.ToNullable(completedDateTime), taskExecutionId.Value, taskName.Value, summaryReportBlobUrl.Value);
         }
 
         internal partial class StorageTaskCompletedEventDataConverter : JsonConverter<StorageTaskCompletedEventData>

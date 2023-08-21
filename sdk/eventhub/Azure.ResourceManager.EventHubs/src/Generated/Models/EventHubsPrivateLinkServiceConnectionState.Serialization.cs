@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsPrivateLinkServiceConnectionState : IUtf8JsonSerializable
+    public partial class EventHubsPrivateLinkServiceConnectionState : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<EventHubsPrivateLinkConnectionStatus> status = default;
-            Optional<string> description = default;
+            Core.Optional<EventHubsPrivateLinkConnectionStatus> status = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new EventHubsPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value);
+            return new EventHubsPrivateLinkServiceConnectionState(Core.Optional.ToNullable(status), description.Value);
         }
     }
 }

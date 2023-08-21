@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
-            Optional<Guid> reportId = default;
-            Optional<GuestConfigurationAssignmentInfo> assignment = default;
-            Optional<GuestConfigurationVmInfo> vm = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<GuestConfigurationAssignmentReportDetails> details = default;
-            Optional<string> vmssResourceId = default;
+            Core.Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
+            Core.Optional<Guid> reportId = default;
+            Core.Optional<GuestConfigurationAssignmentInfo> assignment = default;
+            Core.Optional<GuestConfigurationVmInfo> vm = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<GuestConfigurationAssignmentReportDetails> details = default;
+            Core.Optional<string> vmssResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("complianceStatus"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     continue;
                 }
             }
-            return new GuestConfigurationAssignmentReportProperties(Optional.ToNullable(complianceStatus), Optional.ToNullable(reportId), assignment.Value, vm.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), details.Value, vmssResourceId.Value);
+            return new GuestConfigurationAssignmentReportProperties(Core.Optional.ToNullable(complianceStatus), Core.Optional.ToNullable(reportId), assignment.Value, vm.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), details.Value, vmssResourceId.Value);
         }
     }
 }

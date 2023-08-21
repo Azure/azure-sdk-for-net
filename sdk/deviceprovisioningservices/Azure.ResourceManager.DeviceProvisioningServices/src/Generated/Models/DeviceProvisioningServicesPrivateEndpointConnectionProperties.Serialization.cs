@@ -11,12 +11,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class DeviceProvisioningServicesPrivateEndpointConnectionProperties : IUtf8JsonSerializable
+    public partial class DeviceProvisioningServicesPrivateEndpointConnectionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (Core.Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<SubResource> privateEndpoint = default;
+            Core.Optional<SubResource> privateEndpoint = default;
             DeviceProvisioningServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {

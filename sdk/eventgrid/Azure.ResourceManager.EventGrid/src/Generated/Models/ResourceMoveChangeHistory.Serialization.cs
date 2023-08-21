@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class ResourceMoveChangeHistory : IUtf8JsonSerializable
+    public partial class ResourceMoveChangeHistory : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureSubscriptionId))
+            if (Core.Optional.IsDefined(AzureSubscriptionId))
             {
                 writer.WritePropertyName("azureSubscriptionId"u8);
                 writer.WriteStringValue(AzureSubscriptionId);
             }
-            if (Optional.IsDefined(ResourceGroupName))
+            if (Core.Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Optional.IsDefined(ChangedTimeUtc))
+            if (Core.Optional.IsDefined(ChangedTimeUtc))
             {
                 writer.WritePropertyName("changedTimeUtc"u8);
                 writer.WriteStringValue(ChangedTimeUtc.Value, "O");
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> azureSubscriptionId = default;
-            Optional<string> resourceGroupName = default;
-            Optional<DateTimeOffset> changedTimeUtc = default;
+            Core.Optional<string> azureSubscriptionId = default;
+            Core.Optional<string> resourceGroupName = default;
+            Core.Optional<DateTimeOffset> changedTimeUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureSubscriptionId"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new ResourceMoveChangeHistory(azureSubscriptionId.Value, resourceGroupName.Value, Optional.ToNullable(changedTimeUtc));
+            return new ResourceMoveChangeHistory(azureSubscriptionId.Value, resourceGroupName.Value, Core.Optional.ToNullable(changedTimeUtc));
         }
     }
 }

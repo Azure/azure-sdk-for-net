@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<EventHubsResourceAssociationAccessMode> accessMode = default;
+            Core.Optional<string> name = default;
+            Core.Optional<EventHubsResourceAssociationAccessMode> accessMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(name.Value, Optional.ToNullable(accessMode));
+            return new EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(name.Value, Core.Optional.ToNullable(accessMode));
         }
     }
 }

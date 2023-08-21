@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class AzureBlob : IUtf8JsonSerializable
+    public partial class AzureBlob : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountResourceId))
+            if (Core.Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (Optional.IsDefined(AccountKey))
+            if (Core.Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
-            if (Optional.IsDefined(BlobContainerName))
+            if (Core.Optional.IsDefined(BlobContainerName))
             {
                 writer.WritePropertyName("blobContainerName"u8);
                 writer.WriteStringValue(BlobContainerName);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> storageAccountResourceId = default;
-            Optional<string> accountKey = default;
-            Optional<string> blobContainerName = default;
+            Core.Optional<string> storageAccountResourceId = default;
+            Core.Optional<string> accountKey = default;
+            Core.Optional<string> blobContainerName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountResourceId"u8))

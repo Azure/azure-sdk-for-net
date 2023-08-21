@@ -13,29 +13,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
-    public partial class DataShareInvitationData : IUtf8JsonSerializable
+    public partial class DataShareInvitationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExpireOn))
+            if (Core.Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(TargetActiveDirectoryId))
+            if (Core.Optional.IsDefined(TargetActiveDirectoryId))
             {
                 writer.WritePropertyName("targetActiveDirectoryId"u8);
                 writer.WriteStringValue(TargetActiveDirectoryId);
             }
-            if (Optional.IsDefined(TargetEmail))
+            if (Core.Optional.IsDefined(TargetEmail))
             {
                 writer.WritePropertyName("targetEmail"u8);
                 writer.WriteStringValue(TargetEmail);
             }
-            if (Optional.IsDefined(TargetObjectId))
+            if (Core.Optional.IsDefined(TargetObjectId))
             {
                 writer.WritePropertyName("targetObjectId"u8);
                 writer.WriteStringValue(TargetObjectId);
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.DataShare
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<Guid> invitationId = default;
-            Optional<DataShareInvitationStatus> invitationStatus = default;
-            Optional<DateTimeOffset> respondedAt = default;
-            Optional<DateTimeOffset> sentAt = default;
-            Optional<string> targetActiveDirectoryId = default;
-            Optional<string> targetEmail = default;
-            Optional<string> targetObjectId = default;
-            Optional<string> userEmail = default;
-            Optional<string> userName = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> expirationDate = default;
+            Core.Optional<Guid> invitationId = default;
+            Core.Optional<DataShareInvitationStatus> invitationStatus = default;
+            Core.Optional<DateTimeOffset> respondedAt = default;
+            Core.Optional<DateTimeOffset> sentAt = default;
+            Core.Optional<string> targetActiveDirectoryId = default;
+            Core.Optional<string> targetEmail = default;
+            Core.Optional<string> targetObjectId = default;
+            Core.Optional<string> userEmail = default;
+            Core.Optional<string> userName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataShare
                     continue;
                 }
             }
-            return new DataShareInvitationData(id, name, type, systemData.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(invitationId), Optional.ToNullable(invitationStatus), Optional.ToNullable(respondedAt), Optional.ToNullable(sentAt), targetActiveDirectoryId.Value, targetEmail.Value, targetObjectId.Value, userEmail.Value, userName.Value);
+            return new DataShareInvitationData(id, name, type, systemData.Value, Core.Optional.ToNullable(expirationDate), Core.Optional.ToNullable(invitationId), Core.Optional.ToNullable(invitationStatus), Core.Optional.ToNullable(respondedAt), Core.Optional.ToNullable(sentAt), targetActiveDirectoryId.Value, targetEmail.Value, targetObjectId.Value, userEmail.Value, userName.Value);
         }
     }
 }

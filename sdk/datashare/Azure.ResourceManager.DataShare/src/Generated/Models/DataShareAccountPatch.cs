@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Initializes a new instance of DataShareAccountPatch. </summary>
         public DataShareAccountPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Tags on the azure resource. </summary>

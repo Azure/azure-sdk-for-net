@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabData : IUtf8JsonSerializable
+    public partial class DevTestLabData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DevTestLabs
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LabStorageType))
+            if (Core.Optional.IsDefined(LabStorageType))
             {
                 writer.WritePropertyName("labStorageType"u8);
                 writer.WriteStringValue(LabStorageType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(MandatoryArtifactsResourceIdsLinux))
+            if (Core.Optional.IsCollectionDefined(MandatoryArtifactsResourceIdsLinux))
             {
                 writer.WritePropertyName("mandatoryArtifactsResourceIdsLinux"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MandatoryArtifactsResourceIdsWindows))
+            if (Core.Optional.IsCollectionDefined(MandatoryArtifactsResourceIdsWindows))
             {
                 writer.WritePropertyName("mandatoryArtifactsResourceIdsWindows"u8);
                 writer.WriteStartArray();
@@ -59,27 +59,27 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PremiumDataDisks))
+            if (Core.Optional.IsDefined(PremiumDataDisks))
             {
                 writer.WritePropertyName("premiumDataDisks"u8);
                 writer.WriteStringValue(PremiumDataDisks.Value.ToString());
             }
-            if (Optional.IsDefined(EnvironmentPermission))
+            if (Core.Optional.IsDefined(EnvironmentPermission))
             {
                 writer.WritePropertyName("environmentPermission"u8);
                 writer.WriteStringValue(EnvironmentPermission.Value.ToString());
             }
-            if (Optional.IsDefined(Announcement))
+            if (Core.Optional.IsDefined(Announcement))
             {
                 writer.WritePropertyName("announcement"u8);
                 writer.WriteObjectValue(Announcement);
             }
-            if (Optional.IsDefined(Support))
+            if (Core.Optional.IsDefined(Support))
             {
                 writer.WritePropertyName("support"u8);
                 writer.WriteObjectValue(Support);
             }
-            if (Optional.IsCollectionDefined(ExtendedProperties))
+            if (Core.Optional.IsCollectionDefined(ExtendedProperties))
             {
                 writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteStartObject();
@@ -100,32 +100,32 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> defaultStorageAccount = default;
-            Optional<string> defaultPremiumStorageAccount = default;
-            Optional<string> artifactsStorageAccount = default;
-            Optional<string> premiumDataDiskStorageAccount = default;
-            Optional<string> vaultName = default;
-            Optional<DevTestLabStorageType> labStorageType = default;
-            Optional<IList<string>> mandatoryArtifactsResourceIdsLinux = default;
-            Optional<IList<string>> mandatoryArtifactsResourceIdsWindows = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<DevTestLabPremiumDataDisk> premiumDataDisks = default;
-            Optional<DevTestLabEnvironmentPermission> environmentPermission = default;
-            Optional<DevTestLabAnnouncement> announcement = default;
-            Optional<DevTestLabSupport> support = default;
-            Optional<string> vmCreationResourceGroup = default;
-            Optional<string> publicIPId = default;
-            Optional<string> loadBalancerId = default;
-            Optional<string> networkSecurityGroupId = default;
-            Optional<IDictionary<string, string>> extendedProperties = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> defaultStorageAccount = default;
+            Core.Optional<string> defaultPremiumStorageAccount = default;
+            Core.Optional<string> artifactsStorageAccount = default;
+            Core.Optional<string> premiumDataDiskStorageAccount = default;
+            Core.Optional<string> vaultName = default;
+            Core.Optional<DevTestLabStorageType> labStorageType = default;
+            Core.Optional<IList<string>> mandatoryArtifactsResourceIdsLinux = default;
+            Core.Optional<IList<string>> mandatoryArtifactsResourceIdsWindows = default;
+            Core.Optional<DateTimeOffset> createdDate = default;
+            Core.Optional<DevTestLabPremiumDataDisk> premiumDataDisks = default;
+            Core.Optional<DevTestLabEnvironmentPermission> environmentPermission = default;
+            Core.Optional<DevTestLabAnnouncement> announcement = default;
+            Core.Optional<DevTestLabSupport> support = default;
+            Core.Optional<string> vmCreationResourceGroup = default;
+            Core.Optional<string> publicIPId = default;
+            Core.Optional<string> loadBalancerId = default;
+            Core.Optional<string> networkSecurityGroupId = default;
+            Core.Optional<IDictionary<string, string>> extendedProperties = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     continue;
                 }
             }
-            return new DevTestLabData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, defaultStorageAccount.Value, defaultPremiumStorageAccount.Value, artifactsStorageAccount.Value, premiumDataDiskStorageAccount.Value, vaultName.Value, Optional.ToNullable(labStorageType), Optional.ToList(mandatoryArtifactsResourceIdsLinux), Optional.ToList(mandatoryArtifactsResourceIdsWindows), Optional.ToNullable(createdDate), Optional.ToNullable(premiumDataDisks), Optional.ToNullable(environmentPermission), announcement.Value, support.Value, vmCreationResourceGroup.Value, publicIPId.Value, loadBalancerId.Value, networkSecurityGroupId.Value, Optional.ToDictionary(extendedProperties), provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
+            return new DevTestLabData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, defaultStorageAccount.Value, defaultPremiumStorageAccount.Value, artifactsStorageAccount.Value, premiumDataDiskStorageAccount.Value, vaultName.Value, Core.Optional.ToNullable(labStorageType), Core.Optional.ToList(mandatoryArtifactsResourceIdsLinux), Core.Optional.ToList(mandatoryArtifactsResourceIdsWindows), Core.Optional.ToNullable(createdDate), Core.Optional.ToNullable(premiumDataDisks), Core.Optional.ToNullable(environmentPermission), announcement.Value, support.Value, vmCreationResourceGroup.Value, publicIPId.Value, loadBalancerId.Value, networkSecurityGroupId.Value, Core.Optional.ToDictionary(extendedProperties), provisioningState.Value, Core.Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

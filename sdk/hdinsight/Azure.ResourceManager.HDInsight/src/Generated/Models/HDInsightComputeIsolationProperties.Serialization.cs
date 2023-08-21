@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightComputeIsolationProperties : IUtf8JsonSerializable
+    public partial class HDInsightComputeIsolationProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableComputeIsolation))
+            if (Core.Optional.IsDefined(EnableComputeIsolation))
             {
                 writer.WritePropertyName("enableComputeIsolation"u8);
                 writer.WriteBooleanValue(EnableComputeIsolation.Value);
             }
-            if (Optional.IsDefined(HostSku))
+            if (Core.Optional.IsDefined(HostSku))
             {
                 writer.WritePropertyName("hostSku"u8);
                 writer.WriteStringValue(HostSku);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<bool> enableComputeIsolation = default;
-            Optional<string> hostSku = default;
+            Core.Optional<bool> enableComputeIsolation = default;
+            Core.Optional<string> hostSku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableComputeIsolation"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightComputeIsolationProperties(Optional.ToNullable(enableComputeIsolation), hostSku.Value);
+            return new HDInsightComputeIsolationProperties(Core.Optional.ToNullable(enableComputeIsolation), hostSku.Value);
         }
     }
 }

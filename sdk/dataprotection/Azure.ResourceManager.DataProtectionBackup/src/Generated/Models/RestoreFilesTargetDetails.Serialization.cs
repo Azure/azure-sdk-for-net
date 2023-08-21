@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class RestoreFilesTargetDetails : IUtf8JsonSerializable
+    public partial class RestoreFilesTargetDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("filePrefix"u8);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(RestoreTargetLocationType.ToString());
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Optional.IsDefined(TargetResourceArmId))
+            if (Core.Optional.IsDefined(TargetResourceArmId))
             {
                 writer.WritePropertyName("targetResourceArmId"u8);
                 writer.WriteStringValue(TargetResourceArmId);

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _eventGridNamespaceNamespacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<EventGridNamespaceResource>(new EventGridNamespaceOperationSource(Client), _eventGridNamespaceNamespacesClientDiagnostics, Pipeline, _eventGridNamespaceNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new EventGridArmOperation<EventGridNamespaceResource>(new EventGridNamespaceOperationSource(Client), _eventGridNamespaceNamespacesClientDiagnostics, Pipeline, _eventGridNamespaceNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _eventGridNamespaceNamespacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data, cancellationToken);
-                var operation = new EventGridArmOperation<EventGridNamespaceResource>(new EventGridNamespaceOperationSource(Client), _eventGridNamespaceNamespacesClientDiagnostics, Pipeline, _eventGridNamespaceNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new EventGridArmOperation<EventGridNamespaceResource>(new EventGridNamespaceOperationSource(Client), _eventGridNamespaceNamespacesClientDiagnostics, Pipeline, _eventGridNamespaceNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridNamespaceNamespacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventGridNamespaceNamespacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridNamespaceResource(Client, EventGridNamespaceData.DeserializeEventGridNamespaceData(e)), _eventGridNamespaceNamespacesClientDiagnostics, Pipeline, "EventGridNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridNamespaceResource(Client, EventGridNamespaceData.DeserializeEventGridNamespaceData(e)), _eventGridNamespaceNamespacesClientDiagnostics, Pipeline, "EventGridNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridNamespaceNamespacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventGridNamespaceNamespacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridNamespaceResource(Client, EventGridNamespaceData.DeserializeEventGridNamespaceData(e)), _eventGridNamespaceNamespacesClientDiagnostics, Pipeline, "EventGridNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridNamespaceResource(Client, EventGridNamespaceData.DeserializeEventGridNamespaceData(e)), _eventGridNamespaceNamespacesClientDiagnostics, Pipeline, "EventGridNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

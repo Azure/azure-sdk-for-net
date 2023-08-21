@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    public partial class DigitalTwinsEventRoute : IUtf8JsonSerializable
+    public partial class DigitalTwinsEventRoute : Azure.Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpointName"u8);
@@ -28,7 +28,7 @@ namespace Azure.DigitalTwins.Core
             {
                 return null;
             }
-            Optional<string> id = default;
+            Azure.Core.Optional<string> id = default;
             string endpointName = default;
             string filter = default;
             foreach (var property in element.EnumerateObject())

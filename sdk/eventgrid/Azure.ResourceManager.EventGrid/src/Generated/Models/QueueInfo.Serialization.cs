@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class QueueInfo : IUtf8JsonSerializable
+    public partial class QueueInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReceiveLockDurationInSeconds))
+            if (Core.Optional.IsDefined(ReceiveLockDurationInSeconds))
             {
                 writer.WritePropertyName("receiveLockDurationInSeconds"u8);
                 writer.WriteNumberValue(ReceiveLockDurationInSeconds.Value);
             }
-            if (Optional.IsDefined(MaxDeliveryCount))
+            if (Core.Optional.IsDefined(MaxDeliveryCount))
             {
                 writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
             }
-            if (Optional.IsDefined(DeadLetterDestinationWithResourceIdentity))
+            if (Core.Optional.IsDefined(DeadLetterDestinationWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterDestinationWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeadLetterDestinationWithResourceIdentity);
             }
-            if (Optional.IsDefined(EventTimeToLive))
+            if (Core.Optional.IsDefined(EventTimeToLive))
             {
                 writer.WritePropertyName("eventTimeToLive"u8);
                 writer.WriteStringValue(EventTimeToLive.Value, "P");
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<int> receiveLockDurationInSeconds = default;
-            Optional<int> maxDeliveryCount = default;
-            Optional<DeadLetterWithResourceIdentity> deadLetterDestinationWithResourceIdentity = default;
-            Optional<TimeSpan> eventTimeToLive = default;
+            Core.Optional<int> receiveLockDurationInSeconds = default;
+            Core.Optional<int> maxDeliveryCount = default;
+            Core.Optional<DeadLetterWithResourceIdentity> deadLetterDestinationWithResourceIdentity = default;
+            Core.Optional<TimeSpan> eventTimeToLive = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("receiveLockDurationInSeconds"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new QueueInfo(Optional.ToNullable(receiveLockDurationInSeconds), Optional.ToNullable(maxDeliveryCount), deadLetterDestinationWithResourceIdentity.Value, Optional.ToNullable(eventTimeToLive));
+            return new QueueInfo(Core.Optional.ToNullable(receiveLockDurationInSeconds), Core.Optional.ToNullable(maxDeliveryCount), deadLetterDestinationWithResourceIdentity.Value, Core.Optional.ToNullable(eventTimeToLive));
         }
     }
 }

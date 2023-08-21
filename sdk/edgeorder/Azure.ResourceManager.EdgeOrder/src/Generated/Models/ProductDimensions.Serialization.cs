@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<double> length = default;
-            Optional<double> height = default;
-            Optional<double> width = default;
-            Optional<ProductLengthHeightWidthUnit> lengthHeightUnit = default;
-            Optional<double> weight = default;
-            Optional<double> depth = default;
-            Optional<ProductWeightMeasurementUnit> weightUnit = default;
+            Core.Optional<double> length = default;
+            Core.Optional<double> height = default;
+            Core.Optional<double> width = default;
+            Core.Optional<ProductLengthHeightWidthUnit> lengthHeightUnit = default;
+            Core.Optional<double> weight = default;
+            Core.Optional<double> depth = default;
+            Core.Optional<ProductWeightMeasurementUnit> weightUnit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("length"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new ProductDimensions(Optional.ToNullable(length), Optional.ToNullable(height), Optional.ToNullable(width), Optional.ToNullable(lengthHeightUnit), Optional.ToNullable(weight), Optional.ToNullable(depth), Optional.ToNullable(weightUnit));
+            return new ProductDimensions(Core.Optional.ToNullable(length), Core.Optional.ToNullable(height), Core.Optional.ToNullable(width), Core.Optional.ToNullable(lengthHeightUnit), Core.Optional.ToNullable(weight), Core.Optional.ToNullable(depth), Core.Optional.ToNullable(weightUnit));
         }
     }
 }

@@ -26,8 +26,8 @@ namespace Azure.AI.FormRecognizer.Models
             Width = width;
             Height = height;
             Unit = unit;
-            Lines = new ChangeTrackingList<TextLine>();
-            SelectionMarks = new ChangeTrackingList<SelectionMark>();
+            Lines = new Core.ChangeTrackingList<TextLine>();
+            SelectionMarks = new Core.ChangeTrackingList<SelectionMark>();
         }
 
         /// <summary> Initializes a new instance of ReadResult. </summary>

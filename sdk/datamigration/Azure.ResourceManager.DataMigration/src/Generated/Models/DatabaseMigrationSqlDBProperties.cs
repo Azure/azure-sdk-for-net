@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of DatabaseMigrationSqlDBProperties. </summary>
         public DatabaseMigrationSqlDBProperties()
         {
-            TableList = new ChangeTrackingList<string>();
+            TableList = new Core.ChangeTrackingList<string>();
             Kind = ResourceType.SqlDB;
         }
 

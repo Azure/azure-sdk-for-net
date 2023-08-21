@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class PartnerAuthorization : IUtf8JsonSerializable
+    public partial class PartnerAuthorization : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultMaximumExpirationTimeInDays))
+            if (Core.Optional.IsDefined(DefaultMaximumExpirationTimeInDays))
             {
                 writer.WritePropertyName("defaultMaximumExpirationTimeInDays"u8);
                 writer.WriteNumberValue(DefaultMaximumExpirationTimeInDays.Value);
             }
-            if (Optional.IsCollectionDefined(AuthorizedPartnersList))
+            if (Core.Optional.IsCollectionDefined(AuthorizedPartnersList))
             {
                 writer.WritePropertyName("authorizedPartnersList"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<int> defaultMaximumExpirationTimeInDays = default;
-            Optional<IList<EventGridPartnerContent>> authorizedPartnersList = default;
+            Core.Optional<int> defaultMaximumExpirationTimeInDays = default;
+            Core.Optional<IList<EventGridPartnerContent>> authorizedPartnersList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultMaximumExpirationTimeInDays"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new PartnerAuthorization(Optional.ToNullable(defaultMaximumExpirationTimeInDays), Optional.ToList(authorizedPartnersList));
+            return new PartnerAuthorization(Core.Optional.ToNullable(defaultMaximumExpirationTimeInDays), Core.Optional.ToList(authorizedPartnersList));
         }
     }
 }

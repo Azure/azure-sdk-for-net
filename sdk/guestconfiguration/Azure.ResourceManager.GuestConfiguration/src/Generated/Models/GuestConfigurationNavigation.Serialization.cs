@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class GuestConfigurationNavigation : IUtf8JsonSerializable
+    public partial class GuestConfigurationNavigation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 if (Kind != null)
                 {
@@ -29,27 +29,27 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("kind");
                 }
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(ContentUri))
+            if (Core.Optional.IsDefined(ContentUri))
             {
                 writer.WritePropertyName("contentUri"u8);
                 writer.WriteStringValue(ContentUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ContentHash))
+            if (Core.Optional.IsDefined(ContentHash))
             {
                 writer.WritePropertyName("contentHash"u8);
                 writer.WriteStringValue(ContentHash);
             }
-            if (Optional.IsDefined(AssignmentType))
+            if (Core.Optional.IsDefined(AssignmentType))
             {
                 if (AssignmentType != null)
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("assignmentType");
                 }
             }
-            if (Optional.IsCollectionDefined(ConfigurationParameters))
+            if (Core.Optional.IsCollectionDefined(ConfigurationParameters))
             {
                 writer.WritePropertyName("configurationParameter"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedParameters))
+            if (Core.Optional.IsCollectionDefined(ConfigurationProtectedParameters))
             {
                 writer.WritePropertyName("configurationProtectedParameter"u8);
                 writer.WriteStartArray();
@@ -90,17 +90,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<GuestConfigurationKind?> kind = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
-            Optional<Uri> contentUri = default;
-            Optional<string> contentHash = default;
-            Optional<GuestConfigurationAssignmentType?> assignmentType = default;
-            Optional<string> assignmentSource = default;
-            Optional<string> contentType = default;
-            Optional<IList<GuestConfigurationParameter>> configurationParameter = default;
-            Optional<IList<GuestConfigurationParameter>> configurationProtectedParameter = default;
-            Optional<LcmConfigurationSetting> configurationSetting = default;
+            Core.Optional<GuestConfigurationKind?> kind = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> version = default;
+            Core.Optional<Uri> contentUri = default;
+            Core.Optional<string> contentHash = default;
+            Core.Optional<GuestConfigurationAssignmentType?> assignmentType = default;
+            Core.Optional<string> assignmentSource = default;
+            Core.Optional<string> contentType = default;
+            Core.Optional<IList<GuestConfigurationParameter>> configurationParameter = default;
+            Core.Optional<IList<GuestConfigurationParameter>> configurationProtectedParameter = default;
+            Core.Optional<LcmConfigurationSetting> configurationSetting = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     continue;
                 }
             }
-            return new GuestConfigurationNavigation(Optional.ToNullable(kind), name.Value, version.Value, contentUri.Value, contentHash.Value, Optional.ToNullable(assignmentType), assignmentSource.Value, contentType.Value, Optional.ToList(configurationParameter), Optional.ToList(configurationProtectedParameter), configurationSetting.Value);
+            return new GuestConfigurationNavigation(Core.Optional.ToNullable(kind), name.Value, version.Value, contentUri.Value, contentHash.Value, Core.Optional.ToNullable(assignmentType), assignmentSource.Value, contentType.Value, Core.Optional.ToList(configurationParameter), Core.Optional.ToList(configurationProtectedParameter), configurationSetting.Value);
         }
     }
 }

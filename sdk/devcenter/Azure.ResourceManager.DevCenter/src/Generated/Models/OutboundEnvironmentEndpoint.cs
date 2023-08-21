@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>
         internal OutboundEnvironmentEndpoint()
         {
-            Endpoints = new ChangeTrackingList<EndpointDependency>();
+            Endpoints = new Core.ChangeTrackingList<EndpointDependency>();
         }
 
         /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>

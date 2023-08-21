@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class DevCenterCatalogData : IUtf8JsonSerializable
+    public partial class DevCenterCatalogData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GitHub))
+            if (Core.Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
                 writer.WriteObjectValue(GitHub);
             }
-            if (Optional.IsDefined(AdoGit))
+            if (Core.Optional.IsDefined(AdoGit))
             {
                 writer.WritePropertyName("adoGit"u8);
                 writer.WriteObjectValue(AdoGit);
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevCenterGitCatalog> gitHub = default;
-            Optional<DevCenterGitCatalog> adoGit = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
-            Optional<DevCenterCatalogSyncState> syncState = default;
-            Optional<DateTimeOffset> lastSyncTime = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DevCenterGitCatalog> gitHub = default;
+            Core.Optional<DevCenterGitCatalog> adoGit = default;
+            Core.Optional<DevCenterProvisioningState> provisioningState = default;
+            Core.Optional<DevCenterCatalogSyncState> syncState = default;
+            Core.Optional<DateTimeOffset> lastSyncTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new DevCenterCatalogData(id, name, type, systemData.Value, gitHub.Value, adoGit.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(syncState), Optional.ToNullable(lastSyncTime));
+            return new DevCenterCatalogData(id, name, type, systemData.Value, gitHub.Value, adoGit.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(syncState), Core.Optional.ToNullable(lastSyncTime));
         }
     }
 }

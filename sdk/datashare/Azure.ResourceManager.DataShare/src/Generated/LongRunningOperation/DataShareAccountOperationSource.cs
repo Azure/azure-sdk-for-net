@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataShare
 {
-    internal class DataShareAccountOperationSource : IOperationSource<DataShareAccountResource>
+    internal class DataShareAccountOperationSource : Core.IOperationSource<DataShareAccountResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataShare
             _client = client;
         }
 
-        DataShareAccountResource IOperationSource<DataShareAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DataShareAccountResource Core.IOperationSource<DataShareAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DataShareAccountData.DeserializeDataShareAccountData(document.RootElement);
             return new DataShareAccountResource(_client, data);
         }
 
-        async ValueTask<DataShareAccountResource> IOperationSource<DataShareAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DataShareAccountResource> Core.IOperationSource<DataShareAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DataShareAccountData.DeserializeDataShareAccountData(document.RootElement);

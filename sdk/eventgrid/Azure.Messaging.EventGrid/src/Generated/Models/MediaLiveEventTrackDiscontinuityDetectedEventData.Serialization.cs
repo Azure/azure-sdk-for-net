@@ -21,13 +21,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> trackType = default;
-            Optional<string> trackName = default;
-            Optional<long> bitrate = default;
-            Optional<string> previousTimestamp = default;
-            Optional<string> newTimestamp = default;
-            Optional<string> timescale = default;
-            Optional<string> discontinuityGap = default;
+            Core.Optional<string> trackType = default;
+            Core.Optional<string> trackName = default;
+            Core.Optional<long> bitrate = default;
+            Core.Optional<string> previousTimestamp = default;
+            Core.Optional<string> newTimestamp = default;
+            Core.Optional<string> timescale = default;
+            Core.Optional<string> discontinuityGap = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trackType"u8))
@@ -70,7 +70,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaLiveEventTrackDiscontinuityDetectedEventData(trackType.Value, trackName.Value, Optional.ToNullable(bitrate), previousTimestamp.Value, newTimestamp.Value, timescale.Value, discontinuityGap.Value);
+            return new MediaLiveEventTrackDiscontinuityDetectedEventData(trackType.Value, trackName.Value, Core.Optional.ToNullable(bitrate), previousTimestamp.Value, newTimestamp.Value, timescale.Value, discontinuityGap.Value);
         }
 
         internal partial class MediaLiveEventTrackDiscontinuityDetectedEventDataConverter : JsonConverter<MediaLiveEventTrackDiscontinuityDetectedEventData>

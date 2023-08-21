@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Argument.AssertNotNull(uri, nameof(uri));
             Argument.AssertNotNull(roles, nameof(roles));
 
-            ExecutionSummary = new ChangeTrackingList<ScriptActionExecutionSummary>();
+            ExecutionSummary = new Core.ChangeTrackingList<ScriptActionExecutionSummary>();
         }
 
         /// <summary> Initializes a new instance of RuntimeScriptActionDetail. </summary>

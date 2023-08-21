@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class AttachedNetworkConnectionData : IUtf8JsonSerializable
+    public partial class AttachedNetworkConnectionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkConnectionId))
+            if (Core.Optional.IsDefined(NetworkConnectionId))
             {
                 writer.WritePropertyName("networkConnectionId"u8);
                 writer.WriteStringValue(NetworkConnectionId);
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> networkConnectionId = default;
-            Optional<AzureLocation> networkConnectionLocation = default;
-            Optional<DevCenterHealthCheckStatus> healthCheckStatus = default;
-            Optional<DomainJoinType> domainJoinType = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DevCenterProvisioningState> provisioningState = default;
+            Core.Optional<ResourceIdentifier> networkConnectionId = default;
+            Core.Optional<AzureLocation> networkConnectionLocation = default;
+            Core.Optional<DevCenterHealthCheckStatus> healthCheckStatus = default;
+            Core.Optional<DomainJoinType> domainJoinType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new AttachedNetworkConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), networkConnectionId.Value, Optional.ToNullable(networkConnectionLocation), Optional.ToNullable(healthCheckStatus), Optional.ToNullable(domainJoinType));
+            return new AttachedNetworkConnectionData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), networkConnectionId.Value, Core.Optional.ToNullable(networkConnectionLocation), Core.Optional.ToNullable(healthCheckStatus), Core.Optional.ToNullable(domainJoinType));
         }
     }
 }

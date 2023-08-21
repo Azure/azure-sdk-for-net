@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeletedDataProtectionBackupInstanceData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DeletedDataProtectionBackupInstanceData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new DeletedBackupInstanceResourceList(nextLink.Value, Optional.ToList(value));
+            return new DeletedBackupInstanceResourceList(nextLink.Value, Core.Optional.ToList(value));
         }
     }
 }

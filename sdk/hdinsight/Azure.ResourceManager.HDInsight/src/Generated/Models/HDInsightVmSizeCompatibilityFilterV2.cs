@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightVmSizeCompatibilityFilterV2. </summary>
         internal HDInsightVmSizeCompatibilityFilterV2()
         {
-            Regions = new ChangeTrackingList<string>();
-            ClusterFlavors = new ChangeTrackingList<string>();
-            NodeTypes = new ChangeTrackingList<string>();
-            ClusterVersions = new ChangeTrackingList<string>();
-            OSType = new ChangeTrackingList<HDInsightOSType>();
-            VmSizes = new ChangeTrackingList<string>();
+            Regions = new Core.ChangeTrackingList<string>();
+            ClusterFlavors = new Core.ChangeTrackingList<string>();
+            NodeTypes = new Core.ChangeTrackingList<string>();
+            ClusterVersions = new Core.ChangeTrackingList<string>();
+            OSType = new Core.ChangeTrackingList<HDInsightOSType>();
+            VmSizes = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HDInsightVmSizeCompatibilityFilterV2. </summary>

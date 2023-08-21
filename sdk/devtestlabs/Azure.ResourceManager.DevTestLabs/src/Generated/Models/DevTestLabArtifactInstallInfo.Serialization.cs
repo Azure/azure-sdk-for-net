@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabArtifactInstallInfo : IUtf8JsonSerializable
+    public partial class DevTestLabArtifactInstallInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArtifactId))
+            if (Core.Optional.IsDefined(ArtifactId))
             {
                 writer.WritePropertyName("artifactId"u8);
                 writer.WriteStringValue(ArtifactId);
             }
-            if (Optional.IsDefined(ArtifactTitle))
+            if (Core.Optional.IsDefined(ArtifactTitle))
             {
                 writer.WritePropertyName("artifactTitle"u8);
                 writer.WriteStringValue(ArtifactTitle);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(DeploymentStatusMessage))
+            if (Core.Optional.IsDefined(DeploymentStatusMessage))
             {
                 writer.WritePropertyName("deploymentStatusMessage"u8);
                 writer.WriteStringValue(DeploymentStatusMessage);
             }
-            if (Optional.IsDefined(VmExtensionStatusMessage))
+            if (Core.Optional.IsDefined(VmExtensionStatusMessage))
             {
                 writer.WritePropertyName("vmExtensionStatusMessage"u8);
                 writer.WriteStringValue(VmExtensionStatusMessage);
             }
-            if (Optional.IsDefined(InstallOn))
+            if (Core.Optional.IsDefined(InstallOn))
             {
                 writer.WritePropertyName("installTime"u8);
                 writer.WriteStringValue(InstallOn.Value, "O");
@@ -66,13 +66,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> artifactId = default;
-            Optional<string> artifactTitle = default;
-            Optional<IList<DevTestLabArtifactParameter>> parameters = default;
-            Optional<string> status = default;
-            Optional<string> deploymentStatusMessage = default;
-            Optional<string> vmExtensionStatusMessage = default;
-            Optional<DateTimeOffset> installTime = default;
+            Core.Optional<string> artifactId = default;
+            Core.Optional<string> artifactTitle = default;
+            Core.Optional<IList<DevTestLabArtifactParameter>> parameters = default;
+            Core.Optional<string> status = default;
+            Core.Optional<string> deploymentStatusMessage = default;
+            Core.Optional<string> vmExtensionStatusMessage = default;
+            Core.Optional<DateTimeOffset> installTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("artifactId"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabArtifactInstallInfo(artifactId.Value, artifactTitle.Value, Optional.ToList(parameters), status.Value, deploymentStatusMessage.Value, vmExtensionStatusMessage.Value, Optional.ToNullable(installTime));
+            return new DevTestLabArtifactInstallInfo(artifactId.Value, artifactTitle.Value, Core.Optional.ToList(parameters), status.Value, deploymentStatusMessage.Value, vmExtensionStatusMessage.Value, Core.Optional.ToNullable(installTime));
         }
     }
 }

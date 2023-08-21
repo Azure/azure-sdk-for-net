@@ -10,52 +10,52 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabNetworkInterface : IUtf8JsonSerializable
+    public partial class DevTestLabNetworkInterface : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualNetworkId))
+            if (Core.Optional.IsDefined(VirtualNetworkId))
             {
                 writer.WritePropertyName("virtualNetworkId"u8);
                 writer.WriteStringValue(VirtualNetworkId);
             }
-            if (Optional.IsDefined(SubnetId))
+            if (Core.Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(PublicIPAddressId))
+            if (Core.Optional.IsDefined(PublicIPAddressId))
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
-            if (Optional.IsDefined(PublicIPAddress))
+            if (Core.Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);
             }
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (Core.Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (Optional.IsDefined(DnsName))
+            if (Core.Optional.IsDefined(DnsName))
             {
                 writer.WritePropertyName("dnsName"u8);
                 writer.WriteStringValue(DnsName);
             }
-            if (Optional.IsDefined(RdpAuthority))
+            if (Core.Optional.IsDefined(RdpAuthority))
             {
                 writer.WritePropertyName("rdpAuthority"u8);
                 writer.WriteStringValue(RdpAuthority);
             }
-            if (Optional.IsDefined(SshAuthority))
+            if (Core.Optional.IsDefined(SshAuthority))
             {
                 writer.WritePropertyName("sshAuthority"u8);
                 writer.WriteStringValue(SshAuthority);
             }
-            if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
+            if (Core.Optional.IsDefined(SharedPublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
                 writer.WriteObjectValue(SharedPublicIPAddressConfiguration);
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> virtualNetworkId = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<ResourceIdentifier> publicIPAddressId = default;
-            Optional<string> publicIPAddress = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> dnsName = default;
-            Optional<string> rdpAuthority = default;
-            Optional<string> sshAuthority = default;
-            Optional<SharedPublicIPAddressConfiguration> sharedPublicIPAddressConfiguration = default;
+            Core.Optional<ResourceIdentifier> virtualNetworkId = default;
+            Core.Optional<ResourceIdentifier> subnetId = default;
+            Core.Optional<ResourceIdentifier> publicIPAddressId = default;
+            Core.Optional<string> publicIPAddress = default;
+            Core.Optional<string> privateIPAddress = default;
+            Core.Optional<string> dnsName = default;
+            Core.Optional<string> rdpAuthority = default;
+            Core.Optional<string> sshAuthority = default;
+            Core.Optional<SharedPublicIPAddressConfiguration> sharedPublicIPAddressConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualNetworkId"u8))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of PartnerNamespacesListResult. </summary>
         internal PartnerNamespacesListResult()
         {
-            Value = new ChangeTrackingList<PartnerNamespaceData>();
+            Value = new Core.ChangeTrackingList<PartnerNamespaceData>();
         }
 
         /// <summary> Initializes a new instance of PartnerNamespacesListResult. </summary>

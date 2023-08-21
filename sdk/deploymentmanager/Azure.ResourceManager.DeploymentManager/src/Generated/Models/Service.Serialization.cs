@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<ServiceUnit>> serviceUnits = default;
+            Core.Optional<string> name = default;
+            Core.Optional<IReadOnlyList<ServiceUnit>> serviceUnits = default;
             string targetLocation = default;
             string targetSubscriptionId = default;
             foreach (var property in element.EnumerateObject())
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     continue;
                 }
             }
-            return new Service(targetLocation, targetSubscriptionId, name.Value, Optional.ToList(serviceUnits));
+            return new Service(targetLocation, targetSubscriptionId, name.Value, Core.Optional.ToList(serviceUnits));
         }
     }
 }

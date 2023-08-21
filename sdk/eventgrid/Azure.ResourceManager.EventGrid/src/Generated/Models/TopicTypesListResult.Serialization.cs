@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<TopicTypeData>> value = default;
+            Core.Optional<IReadOnlyList<TopicTypeData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new TopicTypesListResult(Optional.ToList(value));
+            return new TopicTypesListResult(Core.Optional.ToList(value));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightClusterValidationErrorInfo. </summary>
         internal HDInsightClusterValidationErrorInfo()
         {
-            MessageArguments = new ChangeTrackingList<string>();
+            MessageArguments = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterValidationErrorInfo. </summary>

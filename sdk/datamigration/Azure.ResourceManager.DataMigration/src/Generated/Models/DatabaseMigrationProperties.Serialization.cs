@@ -10,44 +10,44 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class DatabaseMigrationProperties : IUtf8JsonSerializable
+    public partial class DatabaseMigrationProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(Scope))
+            if (Core.Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(SourceSqlConnection))
+            if (Core.Optional.IsDefined(SourceSqlConnection))
             {
                 writer.WritePropertyName("sourceSqlConnection"u8);
                 writer.WriteObjectValue(SourceSqlConnection);
             }
-            if (Optional.IsDefined(SourceDatabaseName))
+            if (Core.Optional.IsDefined(SourceDatabaseName))
             {
                 writer.WritePropertyName("sourceDatabaseName"u8);
                 writer.WriteStringValue(SourceDatabaseName);
             }
-            if (Optional.IsDefined(MigrationService))
+            if (Core.Optional.IsDefined(MigrationService))
             {
                 writer.WritePropertyName("migrationService"u8);
                 writer.WriteStringValue(MigrationService);
             }
-            if (Optional.IsDefined(MigrationOperationId))
+            if (Core.Optional.IsDefined(MigrationOperationId))
             {
                 writer.WritePropertyName("migrationOperationId"u8);
                 writer.WriteStringValue(MigrationOperationId);
             }
-            if (Optional.IsDefined(TargetDatabaseCollation))
+            if (Core.Optional.IsDefined(TargetDatabaseCollation))
             {
                 writer.WritePropertyName("targetDatabaseCollation"u8);
                 writer.WriteStringValue(TargetDatabaseCollation);
             }
-            if (Optional.IsDefined(ProvisioningError))
+            if (Core.Optional.IsDefined(ProvisioningError))
             {
                 writer.WritePropertyName("provisioningError"u8);
                 writer.WriteStringValue(ProvisioningError);

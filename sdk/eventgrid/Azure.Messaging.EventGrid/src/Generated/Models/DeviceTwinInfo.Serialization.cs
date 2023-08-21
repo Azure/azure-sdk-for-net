@@ -18,17 +18,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> authenticationType = default;
-            Optional<float> cloudToDeviceMessageCount = default;
-            Optional<string> connectionState = default;
-            Optional<string> deviceId = default;
-            Optional<string> etag = default;
-            Optional<string> lastActivityTime = default;
-            Optional<DeviceTwinInfoProperties> properties = default;
-            Optional<string> status = default;
-            Optional<string> statusUpdateTime = default;
-            Optional<float> version = default;
-            Optional<DeviceTwinInfoX509Thumbprint> x509Thumbprint = default;
+            Core.Optional<string> authenticationType = default;
+            Core.Optional<float> cloudToDeviceMessageCount = default;
+            Core.Optional<string> connectionState = default;
+            Core.Optional<string> deviceId = default;
+            Core.Optional<string> etag = default;
+            Core.Optional<string> lastActivityTime = default;
+            Core.Optional<DeviceTwinInfoProperties> properties = default;
+            Core.Optional<string> status = default;
+            Core.Optional<string> statusUpdateTime = default;
+            Core.Optional<float> version = default;
+            Core.Optional<DeviceTwinInfoX509Thumbprint> x509Thumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authenticationType"u8))
@@ -103,7 +103,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new DeviceTwinInfo(authenticationType.Value, Optional.ToNullable(cloudToDeviceMessageCount), connectionState.Value, deviceId.Value, etag.Value, lastActivityTime.Value, properties.Value, status.Value, statusUpdateTime.Value, Optional.ToNullable(version), x509Thumbprint.Value);
+            return new DeviceTwinInfo(authenticationType.Value, Core.Optional.ToNullable(cloudToDeviceMessageCount), connectionState.Value, deviceId.Value, etag.Value, lastActivityTime.Value, properties.Value, status.Value, statusUpdateTime.Value, Core.Optional.ToNullable(version), x509Thumbprint.Value);
         }
     }
 }

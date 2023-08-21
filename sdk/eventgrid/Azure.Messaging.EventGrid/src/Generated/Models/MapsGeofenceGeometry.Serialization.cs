@@ -18,12 +18,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> deviceId = default;
-            Optional<float> distance = default;
-            Optional<string> geometryId = default;
-            Optional<float> nearestLat = default;
-            Optional<float> nearestLon = default;
-            Optional<string> udId = default;
+            Core.Optional<string> deviceId = default;
+            Core.Optional<float> distance = default;
+            Core.Optional<string> geometryId = default;
+            Core.Optional<float> nearestLat = default;
+            Core.Optional<float> nearestLon = default;
+            Core.Optional<string> udId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -69,7 +69,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MapsGeofenceGeometry(deviceId.Value, Optional.ToNullable(distance), geometryId.Value, Optional.ToNullable(nearestLat), Optional.ToNullable(nearestLon), udId.Value);
+            return new MapsGeofenceGeometry(deviceId.Value, Core.Optional.ToNullable(distance), geometryId.Value, Core.Optional.ToNullable(nearestLat), Core.Optional.ToNullable(nearestLon), udId.Value);
         }
     }
 }

@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<EventHubsNspAccessRuleDirection> direction = default;
-            Optional<IReadOnlyList<string>> addressPrefixes = default;
-            Optional<IReadOnlyList<SubResource>> subscriptions = default;
-            Optional<IReadOnlyList<EventHubsNetworkSecurityPerimeter>> networkSecurityPerimeters = default;
-            Optional<IReadOnlyList<string>> fullyQualifiedDomainNames = default;
+            Core.Optional<EventHubsNspAccessRuleDirection> direction = default;
+            Core.Optional<IReadOnlyList<string>> addressPrefixes = default;
+            Core.Optional<IReadOnlyList<SubResource>> subscriptions = default;
+            Core.Optional<IReadOnlyList<EventHubsNetworkSecurityPerimeter>> networkSecurityPerimeters = default;
+            Core.Optional<IReadOnlyList<string>> fullyQualifiedDomainNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("direction"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new EventHubsNspAccessRuleProperties(Optional.ToNullable(direction), Optional.ToList(addressPrefixes), Optional.ToList(subscriptions), Optional.ToList(networkSecurityPerimeters), Optional.ToList(fullyQualifiedDomainNames));
+            return new EventHubsNspAccessRuleProperties(Core.Optional.ToNullable(direction), Core.Optional.ToList(addressPrefixes), Core.Optional.ToList(subscriptions), Core.Optional.ToList(networkSecurityPerimeters), Core.Optional.ToList(fullyQualifiedDomainNames));
         }
     }
 }

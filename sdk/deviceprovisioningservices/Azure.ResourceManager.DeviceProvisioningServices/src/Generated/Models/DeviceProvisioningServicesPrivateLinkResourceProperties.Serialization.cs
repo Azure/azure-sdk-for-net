@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<string> groupId = default;
-            Optional<IReadOnlyList<string>> requiredMembers = default;
-            Optional<IReadOnlyList<string>> requiredZoneNames = default;
+            Core.Optional<string> groupId = default;
+            Core.Optional<IReadOnlyList<string>> requiredMembers = default;
+            Core.Optional<IReadOnlyList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     continue;
                 }
             }
-            return new DeviceProvisioningServicesPrivateLinkResourceProperties(groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new DeviceProvisioningServicesPrivateLinkResourceProperties(groupId.Value, Core.Optional.ToList(requiredMembers), Core.Optional.ToList(requiredZoneNames));
         }
     }
 }

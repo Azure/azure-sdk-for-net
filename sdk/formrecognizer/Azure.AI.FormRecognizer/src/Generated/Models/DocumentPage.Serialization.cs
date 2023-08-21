@@ -20,16 +20,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             int pageNumber = default;
-            Optional<float> angle = default;
-            Optional<float> width = default;
-            Optional<float> height = default;
-            Optional<V3LengthUnit> unit = default;
+            Core.Optional<float> angle = default;
+            Core.Optional<float> width = default;
+            Core.Optional<float> height = default;
+            Core.Optional<V3LengthUnit> unit = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            Optional<IReadOnlyList<DocumentWord>> words = default;
-            Optional<IReadOnlyList<DocumentSelectionMark>> selectionMarks = default;
-            Optional<IReadOnlyList<DocumentLine>> lines = default;
-            Optional<IReadOnlyList<DocumentBarcode>> barcodes = default;
-            Optional<IReadOnlyList<DocumentFormula>> formulas = default;
+            Core.Optional<IReadOnlyList<DocumentWord>> words = default;
+            Core.Optional<IReadOnlyList<DocumentSelectionMark>> selectionMarks = default;
+            Core.Optional<IReadOnlyList<DocumentLine>> lines = default;
+            Core.Optional<IReadOnlyList<DocumentBarcode>> barcodes = default;
+            Core.Optional<IReadOnlyList<DocumentFormula>> formulas = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pageNumber"u8))
@@ -154,7 +154,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentPage(pageNumber, Optional.ToNullable(angle), Optional.ToNullable(width), Optional.ToNullable(height), Optional.ToNullable(unit), spans, Optional.ToList(words), Optional.ToList(selectionMarks), Optional.ToList(lines), Optional.ToList(barcodes), Optional.ToList(formulas));
+            return new DocumentPage(pageNumber, Core.Optional.ToNullable(angle), Core.Optional.ToNullable(width), Core.Optional.ToNullable(height), Core.Optional.ToNullable(unit), spans, Core.Optional.ToList(words), Core.Optional.ToList(selectionMarks), Core.Optional.ToList(lines), Core.Optional.ToList(barcodes), Core.Optional.ToList(formulas));
         }
     }
 }

@@ -21,21 +21,21 @@ namespace Azure.AI.FormRecognizer.Models
                 return null;
             }
             FieldValueType type = default;
-            Optional<string> valueString = default;
-            Optional<DateTimeOffset> valueDate = default;
-            Optional<TimeSpan> valueTime = default;
-            Optional<string> valuePhoneNumber = default;
-            Optional<float> valueNumber = default;
-            Optional<long> valueInteger = default;
-            Optional<IReadOnlyList<FieldValue_internal>> valueArray = default;
-            Optional<IReadOnlyDictionary<string, FieldValue_internal>> valueObject = default;
-            Optional<SelectionMarkState> valueSelectionMark = default;
-            Optional<string> valueCountryRegion = default;
-            Optional<string> text = default;
-            Optional<IReadOnlyList<float>> boundingBox = default;
-            Optional<float> confidence = default;
-            Optional<IReadOnlyList<string>> elements = default;
-            Optional<int> page = default;
+            Core.Optional<string> valueString = default;
+            Core.Optional<DateTimeOffset> valueDate = default;
+            Core.Optional<TimeSpan> valueTime = default;
+            Core.Optional<string> valuePhoneNumber = default;
+            Core.Optional<float> valueNumber = default;
+            Core.Optional<long> valueInteger = default;
+            Core.Optional<IReadOnlyList<FieldValue_internal>> valueArray = default;
+            Core.Optional<IReadOnlyDictionary<string, FieldValue_internal>> valueObject = default;
+            Core.Optional<SelectionMarkState> valueSelectionMark = default;
+            Core.Optional<string> valueCountryRegion = default;
+            Core.Optional<string> text = default;
+            Core.Optional<IReadOnlyList<float>> boundingBox = default;
+            Core.Optional<float> confidence = default;
+            Core.Optional<IReadOnlyList<string>> elements = default;
+            Core.Optional<int> page = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -183,7 +183,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new FieldValue_internal(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToList(valueArray), Optional.ToDictionary(valueObject), Optional.ToNullable(valueSelectionMark), valueCountryRegion.Value, text.Value, Optional.ToList(boundingBox), Optional.ToNullable(confidence), Optional.ToList(elements), Optional.ToNullable(page));
+            return new FieldValue_internal(type, valueString.Value, Core.Optional.ToNullable(valueDate), Core.Optional.ToNullable(valueTime), valuePhoneNumber.Value, Core.Optional.ToNullable(valueNumber), Core.Optional.ToNullable(valueInteger), Core.Optional.ToList(valueArray), Core.Optional.ToDictionary(valueObject), Core.Optional.ToNullable(valueSelectionMark), valueCountryRegion.Value, text.Value, Core.Optional.ToList(boundingBox), Core.Optional.ToNullable(confidence), Core.Optional.ToList(elements), Core.Optional.ToNullable(page));
         }
     }
 }

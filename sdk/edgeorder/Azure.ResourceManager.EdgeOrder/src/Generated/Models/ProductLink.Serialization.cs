@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<ProductLinkType> linkType = default;
-            Optional<Uri> linkUrl = default;
+            Core.Optional<ProductLinkType> linkType = default;
+            Core.Optional<Uri> linkUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkType"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new ProductLink(Optional.ToNullable(linkType), linkUrl.Value);
+            return new ProductLink(Core.Optional.ToNullable(linkType), linkUrl.Value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <summary> Initializes a new instance of CustomLocationEnabledResourceType. </summary>
         public CustomLocationEnabledResourceType()
         {
-            TypesMetadata = new ChangeTrackingList<CustomLocationEnabledResourceTypeMetadata>();
+            TypesMetadata = new Core.ChangeTrackingList<CustomLocationEnabledResourceTypeMetadata>();
         }
 
         /// <summary> Initializes a new instance of CustomLocationEnabledResourceType. </summary>

@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> name = default;
+            Core.Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

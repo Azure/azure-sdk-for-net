@@ -12,12 +12,12 @@ using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisServiceProperties : IUtf8JsonSerializable
+    public partial class HealthcareApisServiceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AccessPolicies))
+            if (Core.Optional.IsCollectionDefined(AccessPolicies))
             {
                 writer.WritePropertyName("accessPolicies"u8);
                 writer.WriteStartArray();
@@ -27,27 +27,27 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CosmosDbConfiguration))
+            if (Core.Optional.IsDefined(CosmosDbConfiguration))
             {
                 writer.WritePropertyName("cosmosDbConfiguration"u8);
                 writer.WriteObjectValue(CosmosDbConfiguration);
             }
-            if (Optional.IsDefined(AuthenticationConfiguration))
+            if (Core.Optional.IsDefined(AuthenticationConfiguration))
             {
                 writer.WritePropertyName("authenticationConfiguration"u8);
                 writer.WriteObjectValue(AuthenticationConfiguration);
             }
-            if (Optional.IsDefined(CorsConfiguration))
+            if (Core.Optional.IsDefined(CorsConfiguration))
             {
                 writer.WritePropertyName("corsConfiguration"u8);
                 writer.WriteObjectValue(CorsConfiguration);
             }
-            if (Optional.IsDefined(ExportConfiguration))
+            if (Core.Optional.IsDefined(ExportConfiguration))
             {
                 writer.WritePropertyName("exportConfiguration"u8);
                 writer.WriteObjectValue(ExportConfiguration);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (Core.Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(AcrConfiguration))
+            if (Core.Optional.IsDefined(AcrConfiguration))
             {
                 writer.WritePropertyName("acrConfiguration"u8);
                 writer.WriteObjectValue(AcrConfiguration);
             }
-            if (Optional.IsDefined(ImportConfiguration))
+            if (Core.Optional.IsDefined(ImportConfiguration))
             {
                 writer.WritePropertyName("importConfiguration"u8);
                 writer.WriteObjectValue(ImportConfiguration);
@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<HealthcareApisProvisioningState> provisioningState = default;
-            Optional<IList<HealthcareApisServiceAccessPolicyEntry>> accessPolicies = default;
-            Optional<HealthcareApisServiceCosmosDbConfiguration> cosmosDbConfiguration = default;
-            Optional<HealthcareApisServiceAuthenticationConfiguration> authenticationConfiguration = default;
-            Optional<HealthcareApisServiceCorsConfiguration> corsConfiguration = default;
-            Optional<ServiceExportConfigurationInfo> exportConfiguration = default;
-            Optional<IList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<HealthcareApisServiceAcrConfiguration> acrConfiguration = default;
-            Optional<HealthcareApisServiceImportConfiguration> importConfiguration = default;
+            Core.Optional<HealthcareApisProvisioningState> provisioningState = default;
+            Core.Optional<IList<HealthcareApisServiceAccessPolicyEntry>> accessPolicies = default;
+            Core.Optional<HealthcareApisServiceCosmosDbConfiguration> cosmosDbConfiguration = default;
+            Core.Optional<HealthcareApisServiceAuthenticationConfiguration> authenticationConfiguration = default;
+            Core.Optional<HealthcareApisServiceCorsConfiguration> corsConfiguration = default;
+            Core.Optional<ServiceExportConfigurationInfo> exportConfiguration = default;
+            Core.Optional<IList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Core.Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
+            Core.Optional<HealthcareApisServiceAcrConfiguration> acrConfiguration = default;
+            Core.Optional<HealthcareApisServiceImportConfiguration> importConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new HealthcareApisServiceProperties(Optional.ToNullable(provisioningState), Optional.ToList(accessPolicies), cosmosDbConfiguration.Value, authenticationConfiguration.Value, corsConfiguration.Value, exportConfiguration.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), acrConfiguration.Value, importConfiguration.Value);
+            return new HealthcareApisServiceProperties(Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(accessPolicies), cosmosDbConfiguration.Value, authenticationConfiguration.Value, corsConfiguration.Value, exportConfiguration.Value, Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(publicNetworkAccess), acrConfiguration.Value, importConfiguration.Value);
         }
     }
 }

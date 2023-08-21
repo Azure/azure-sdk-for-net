@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class PartnerNamespaceData : IUtf8JsonSerializable
+    public partial class PartnerNamespaceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.EventGrid
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PartnerRegistrationFullyQualifiedId))
+            if (Core.Optional.IsDefined(PartnerRegistrationFullyQualifiedId))
             {
                 writer.WritePropertyName("partnerRegistrationFullyQualifiedId"u8);
                 writer.WriteStringValue(PartnerRegistrationFullyQualifiedId);
             }
-            if (Optional.IsDefined(MinimumTlsVersionAllowed))
+            if (Core.Optional.IsDefined(MinimumTlsVersionAllowed))
             {
                 writer.WritePropertyName("minimumTlsVersionAllowed"u8);
                 writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(InboundIPRules))
+            if (Core.Optional.IsCollectionDefined(InboundIPRules))
             {
                 writer.WritePropertyName("inboundIpRules"u8);
                 writer.WriteStartArray();
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsLocalAuthDisabled))
+            if (Core.Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
-            if (Optional.IsDefined(PartnerTopicRoutingMode))
+            if (Core.Optional.IsDefined(PartnerTopicRoutingMode))
             {
                 writer.WritePropertyName("partnerTopicRoutingMode"u8);
                 writer.WriteStringValue(PartnerTopicRoutingMode.Value.ToString());
@@ -79,21 +79,21 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<EventGridPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<PartnerNamespaceProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> partnerRegistrationFullyQualifiedId = default;
-            Optional<TlsVersion> minimumTlsVersionAllowed = default;
-            Optional<Uri> endpoint = default;
-            Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<PartnerTopicRoutingMode> partnerTopicRoutingMode = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyList<EventGridPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Core.Optional<PartnerNamespaceProvisioningState> provisioningState = default;
+            Core.Optional<ResourceIdentifier> partnerRegistrationFullyQualifiedId = default;
+            Core.Optional<TlsVersion> minimumTlsVersionAllowed = default;
+            Core.Optional<Uri> endpoint = default;
+            Core.Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
+            Core.Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
+            Core.Optional<bool> disableLocalAuth = default;
+            Core.Optional<PartnerTopicRoutingMode> partnerTopicRoutingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new PartnerNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), partnerRegistrationFullyQualifiedId.Value, Optional.ToNullable(minimumTlsVersionAllowed), endpoint.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(partnerTopicRoutingMode));
+            return new PartnerNamespaceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(provisioningState), partnerRegistrationFullyQualifiedId.Value, Core.Optional.ToNullable(minimumTlsVersionAllowed), endpoint.Value, Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToList(inboundIPRules), Core.Optional.ToNullable(disableLocalAuth), Core.Optional.ToNullable(partnerTopicRoutingMode));
         }
     }
 }

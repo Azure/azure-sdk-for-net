@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrationOperationInput : IUtf8JsonSerializable
+    public partial class MigrationOperationInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MigrationOperationId))
+            if (Core.Optional.IsDefined(MigrationOperationId))
             {
                 writer.WritePropertyName("migrationOperationId"u8);
                 writer.WriteStringValue(MigrationOperationId.Value);

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class FhirServiceImportConfiguration : IUtf8JsonSerializable
+    public partial class FhirServiceImportConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IntegrationDataStore))
+            if (Core.Optional.IsDefined(IntegrationDataStore))
             {
                 writer.WritePropertyName("integrationDataStore"u8);
                 writer.WriteStringValue(IntegrationDataStore);
             }
-            if (Optional.IsDefined(IsInitialImportMode))
+            if (Core.Optional.IsDefined(IsInitialImportMode))
             {
                 writer.WritePropertyName("initialImportMode"u8);
                 writer.WriteBooleanValue(IsInitialImportMode.Value);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<string> integrationDataStore = default;
-            Optional<bool> initialImportMode = default;
-            Optional<bool> enabled = default;
+            Core.Optional<string> integrationDataStore = default;
+            Core.Optional<bool> initialImportMode = default;
+            Core.Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("integrationDataStore"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new FhirServiceImportConfiguration(integrationDataStore.Value, Optional.ToNullable(initialImportMode), Optional.ToNullable(enabled));
+            return new FhirServiceImportConfiguration(integrationDataStore.Value, Core.Optional.ToNullable(initialImportMode), Core.Optional.ToNullable(enabled));
         }
     }
 }

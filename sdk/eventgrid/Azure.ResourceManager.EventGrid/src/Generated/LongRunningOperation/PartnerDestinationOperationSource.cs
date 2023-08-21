@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class PartnerDestinationOperationSource : IOperationSource<PartnerDestinationResource>
+    internal class PartnerDestinationOperationSource : Core.IOperationSource<PartnerDestinationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.EventGrid
             _client = client;
         }
 
-        PartnerDestinationResource IOperationSource<PartnerDestinationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PartnerDestinationResource Core.IOperationSource<PartnerDestinationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PartnerDestinationData.DeserializePartnerDestinationData(document.RootElement);
             return new PartnerDestinationResource(_client, data);
         }
 
-        async ValueTask<PartnerDestinationResource> IOperationSource<PartnerDestinationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PartnerDestinationResource> Core.IOperationSource<PartnerDestinationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PartnerDestinationData.DeserializePartnerDestinationData(document.RootElement);

@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> resourcename = default;
-            Optional<string> resourceUId = default;
-            Optional<double> resourceCost = default;
-            Optional<string> resourceType = default;
-            Optional<string> resourceOwner = default;
-            Optional<string> resourcePricingTier = default;
-            Optional<string> resourceStatus = default;
-            Optional<string> resourceId = default;
-            Optional<string> externalResourceId = default;
+            Core.Optional<string> resourcename = default;
+            Core.Optional<string> resourceUId = default;
+            Core.Optional<double> resourceCost = default;
+            Core.Optional<string> resourceType = default;
+            Core.Optional<string> resourceOwner = default;
+            Core.Optional<string> resourcePricingTier = default;
+            Core.Optional<string> resourceStatus = default;
+            Core.Optional<string> resourceId = default;
+            Core.Optional<string> externalResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourcename"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabResourceCost(resourcename.Value, resourceUId.Value, Optional.ToNullable(resourceCost), resourceType.Value, resourceOwner.Value, resourcePricingTier.Value, resourceStatus.Value, resourceId.Value, externalResourceId.Value);
+            return new DevTestLabResourceCost(resourcename.Value, resourceUId.Value, Core.Optional.ToNullable(resourceCost), resourceType.Value, resourceOwner.Value, resourcePricingTier.Value, resourceStatus.Value, resourceId.Value, externalResourceId.Value);
         }
     }
 }

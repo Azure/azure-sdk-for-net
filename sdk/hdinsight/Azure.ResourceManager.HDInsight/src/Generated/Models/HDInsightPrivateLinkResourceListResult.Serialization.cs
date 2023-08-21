@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HDInsightPrivateLinkResourceData>> value = default;
+            Core.Optional<IReadOnlyList<HDInsightPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightPrivateLinkResourceListResult(Optional.ToList(value));
+            return new HDInsightPrivateLinkResourceListResult(Core.Optional.ToList(value));
         }
     }
 }

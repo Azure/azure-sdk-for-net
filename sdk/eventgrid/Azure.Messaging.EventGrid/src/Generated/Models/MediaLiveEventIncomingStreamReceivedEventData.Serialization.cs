@@ -21,15 +21,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> ingestUrl = default;
-            Optional<string> trackType = default;
-            Optional<string> trackName = default;
-            Optional<long> bitrate = default;
-            Optional<string> encoderIp = default;
-            Optional<string> encoderPort = default;
-            Optional<string> timestamp = default;
-            Optional<string> duration = default;
-            Optional<string> timescale = default;
+            Core.Optional<string> ingestUrl = default;
+            Core.Optional<string> trackType = default;
+            Core.Optional<string> trackName = default;
+            Core.Optional<long> bitrate = default;
+            Core.Optional<string> encoderIp = default;
+            Core.Optional<string> encoderPort = default;
+            Core.Optional<string> timestamp = default;
+            Core.Optional<string> duration = default;
+            Core.Optional<string> timescale = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ingestUrl"u8))
@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaLiveEventIncomingStreamReceivedEventData(ingestUrl.Value, trackType.Value, trackName.Value, Optional.ToNullable(bitrate), encoderIp.Value, encoderPort.Value, timestamp.Value, duration.Value, timescale.Value);
+            return new MediaLiveEventIncomingStreamReceivedEventData(ingestUrl.Value, trackType.Value, trackName.Value, Core.Optional.ToNullable(bitrate), encoderIp.Value, encoderPort.Value, timestamp.Value, duration.Value, timescale.Value);
         }
 
         internal partial class MediaLiveEventIncomingStreamReceivedEventDataConverter : JsonConverter<MediaLiveEventIncomingStreamReceivedEventData>

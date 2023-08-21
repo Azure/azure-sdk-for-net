@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             try
             {
                 var response = await _customLocationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ExtendedLocationsArmOperation(_customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ExtendedLocationsArmOperation(_customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             try
             {
                 var response = _customLocationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ExtendedLocationsArmOperation(_customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ExtendedLocationsArmOperation(_customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customLocationRestClient.CreateListEnabledResourceTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customLocationRestClient.CreateListEnabledResourceTypesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CustomLocationEnabledResourceType.DeserializeCustomLocationEnabledResourceType, _customLocationClientDiagnostics, Pipeline, "CustomLocationResource.GetEnabledResourceTypes", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CustomLocationEnabledResourceType.DeserializeCustomLocationEnabledResourceType, _customLocationClientDiagnostics, Pipeline, "CustomLocationResource.GetEnabledResourceTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customLocationRestClient.CreateListEnabledResourceTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customLocationRestClient.CreateListEnabledResourceTypesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CustomLocationEnabledResourceType.DeserializeCustomLocationEnabledResourceType, _customLocationClientDiagnostics, Pipeline, "CustomLocationResource.GetEnabledResourceTypes", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CustomLocationEnabledResourceType.DeserializeCustomLocationEnabledResourceType, _customLocationClientDiagnostics, Pipeline, "CustomLocationResource.GetEnabledResourceTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

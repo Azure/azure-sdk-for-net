@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubsAuthorizationRuleData : IUtf8JsonSerializable
+    public partial class EventHubsAuthorizationRuleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rights))
+            if (Core.Optional.IsCollectionDefined(Rights))
             {
                 writer.WritePropertyName("rights"u8);
                 writer.WriteStartArray();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<EventHubsAccessRight>> rights = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IList<EventHubsAccessRight>> rights = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubsAuthorizationRuleData(id, name, type, systemData.Value, Optional.ToList(rights), Optional.ToNullable(location));
+            return new EventHubsAuthorizationRuleData(id, name, type, systemData.Value, Core.Optional.ToList(rights), Core.Optional.ToNullable(location));
         }
     }
 }

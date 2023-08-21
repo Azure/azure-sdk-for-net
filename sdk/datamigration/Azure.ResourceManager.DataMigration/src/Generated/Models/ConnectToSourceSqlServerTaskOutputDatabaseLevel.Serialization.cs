@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<double> sizeMB = default;
-            Optional<IReadOnlyList<DatabaseFileInfo>> databaseFiles = default;
-            Optional<DatabaseCompatLevel> compatibilityLevel = default;
-            Optional<DatabaseState> databaseState = default;
-            Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<double> sizeMB = default;
+            Core.Optional<IReadOnlyList<DatabaseFileInfo>> databaseFiles = default;
+            Core.Optional<DatabaseCompatLevel> compatibilityLevel = default;
+            Core.Optional<DatabaseState> databaseState = default;
+            Core.Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ConnectToSourceSqlServerTaskOutputDatabaseLevel(id.Value, resultType, name.Value, Optional.ToNullable(sizeMB), Optional.ToList(databaseFiles), Optional.ToNullable(compatibilityLevel), Optional.ToNullable(databaseState));
+            return new ConnectToSourceSqlServerTaskOutputDatabaseLevel(id.Value, resultType, name.Value, Core.Optional.ToNullable(sizeMB), Core.Optional.ToList(databaseFiles), Core.Optional.ToNullable(compatibilityLevel), Core.Optional.ToNullable(databaseState));
         }
     }
 }

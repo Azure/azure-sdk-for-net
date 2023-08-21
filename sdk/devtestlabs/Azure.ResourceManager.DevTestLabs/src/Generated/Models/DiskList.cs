@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of DiskList. </summary>
         internal DiskList()
         {
-            Value = new ChangeTrackingList<DevTestLabDiskData>();
+            Value = new Core.ChangeTrackingList<DevTestLabDiskData>();
         }
 
         /// <summary> Initializes a new instance of DiskList. </summary>

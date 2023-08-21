@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    internal partial class FormulaPropertiesFromVm : IUtf8JsonSerializable
+    internal partial class FormulaPropertiesFromVm : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LabVmId))
+            if (Core.Optional.IsDefined(LabVmId))
             {
                 writer.WritePropertyName("labVmId"u8);
                 writer.WriteStringValue(LabVmId);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> labVmId = default;
+            Core.Optional<string> labVmId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("labVmId"u8))

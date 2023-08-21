@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of AvailableClustersList. </summary>
         internal AvailableClustersList()
         {
-            Value = new ChangeTrackingList<AvailableCluster>();
+            Value = new Core.ChangeTrackingList<AvailableCluster>();
         }
 
         /// <summary> Initializes a new instance of AvailableClustersList. </summary>

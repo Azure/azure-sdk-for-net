@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskProperties. </summary>
         public MigrateMySqlAzureDBForMySqlOfflineTaskProperties()
         {
-            Output = new ChangeTrackingList<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>();
+            Output = new Core.ChangeTrackingList<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>();
             TaskType = TaskType.MigrateMySqlAzureDBForMySql;
         }
 

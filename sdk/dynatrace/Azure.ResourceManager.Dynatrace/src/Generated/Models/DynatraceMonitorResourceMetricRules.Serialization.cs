@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    internal partial class DynatraceMonitorResourceMetricRules : IUtf8JsonSerializable
+    internal partial class DynatraceMonitorResourceMetricRules : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(FilteringTags))
+            if (Core.Optional.IsCollectionDefined(FilteringTags))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<IList<DynatraceMonitorResourceFilteringTag>> filteringTags = default;
+            Core.Optional<IList<DynatraceMonitorResourceFilteringTag>> filteringTags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filteringTags"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new DynatraceMonitorResourceMetricRules(Optional.ToList(filteringTags));
+            return new DynatraceMonitorResourceMetricRules(Core.Optional.ToList(filteringTags));
         }
     }
 }

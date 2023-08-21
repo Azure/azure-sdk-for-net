@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of HealthcareApisServiceCorsConfiguration. </summary>
         public HealthcareApisServiceCorsConfiguration()
         {
-            Origins = new ChangeTrackingList<string>();
-            Headers = new ChangeTrackingList<string>();
-            Methods = new ChangeTrackingList<string>();
+            Origins = new Core.ChangeTrackingList<string>();
+            Headers = new Core.ChangeTrackingList<string>();
+            Methods = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HealthcareApisServiceCorsConfiguration. </summary>

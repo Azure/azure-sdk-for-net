@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<AppAction> action = default;
+            Core.Optional<AppAction> action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AppEventTypeDetail(Optional.ToNullable(action));
+            return new AppEventTypeDetail(Core.Optional.ToNullable(action));
         }
     }
 }

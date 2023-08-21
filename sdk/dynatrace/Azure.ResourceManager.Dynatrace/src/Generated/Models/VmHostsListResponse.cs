@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Initializes a new instance of VmHostsListResponse. </summary>
         internal VmHostsListResponse()
         {
-            Value = new ChangeTrackingList<DynatraceMonitorVmInfo>();
+            Value = new Core.ChangeTrackingList<DynatraceMonitorVmInfo>();
         }
 
         /// <summary> Initializes a new instance of VmHostsListResponse. </summary>

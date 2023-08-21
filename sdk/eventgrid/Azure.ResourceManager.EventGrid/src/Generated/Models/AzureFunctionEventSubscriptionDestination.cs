@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of AzureFunctionEventSubscriptionDestination. </summary>
         public AzureFunctionEventSubscriptionDestination()
         {
-            DeliveryAttributeMappings = new ChangeTrackingList<DeliveryAttributeMapping>();
+            DeliveryAttributeMappings = new Core.ChangeTrackingList<DeliveryAttributeMapping>();
             EndpointType = EndpointType.AzureFunction;
         }
 

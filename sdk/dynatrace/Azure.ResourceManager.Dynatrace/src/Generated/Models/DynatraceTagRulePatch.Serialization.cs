@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceTagRulePatch : IUtf8JsonSerializable
+    public partial class DynatraceTagRulePatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogRules))
+            if (Core.Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
                 writer.WriteObjectValue(LogRules);
             }
-            if (Optional.IsDefined(MetricRules))
+            if (Core.Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules);

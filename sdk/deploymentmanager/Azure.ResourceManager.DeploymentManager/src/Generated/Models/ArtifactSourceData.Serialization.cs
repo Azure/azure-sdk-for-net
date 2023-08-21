@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeploymentManager
 {
-    public partial class ArtifactSourceData : IUtf8JsonSerializable
+    public partial class ArtifactSourceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.DeploymentManager
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceType))
+            if (Core.Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("sourceType"u8);
                 writer.WriteStringValue(SourceType);
             }
-            if (Optional.IsDefined(ArtifactRoot))
+            if (Core.Optional.IsDefined(ArtifactRoot))
             {
                 writer.WritePropertyName("artifactRoot"u8);
                 writer.WriteStringValue(ArtifactRoot);
             }
-            if (Optional.IsDefined(Authentication))
+            if (Core.Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
@@ -58,15 +58,15 @@ namespace Azure.ResourceManager.DeploymentManager
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> sourceType = default;
-            Optional<string> artifactRoot = default;
-            Optional<Authentication> authentication = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> sourceType = default;
+            Core.Optional<string> artifactRoot = default;
+            Core.Optional<Authentication> authentication = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DeploymentManager
                     continue;
                 }
             }
-            return new ArtifactSourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sourceType.Value, artifactRoot.Value, authentication.Value);
+            return new ArtifactSourceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sourceType.Value, artifactRoot.Value, authentication.Value);
         }
     }
 }

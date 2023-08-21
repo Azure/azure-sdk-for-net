@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of MsixPackageList. </summary>
         internal MsixPackageList()
         {
-            Value = new ChangeTrackingList<MsixPackageData>();
+            Value = new Core.ChangeTrackingList<MsixPackageData>();
         }
 
         /// <summary> Initializes a new instance of MsixPackageList. </summary>

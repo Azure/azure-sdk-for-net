@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of OrderItemPreferences. </summary>
         public OrderItemPreferences()
         {
-            NotificationPreferences = new ChangeTrackingList<NotificationPreference>();
+            NotificationPreferences = new Core.ChangeTrackingList<NotificationPreference>();
         }
 
         /// <summary> Initializes a new instance of OrderItemPreferences. </summary>

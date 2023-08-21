@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class ClassifierDocumentTypeDetails : IUtf8JsonSerializable
+    public partial class ClassifierDocumentTypeDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureBlobSource))
+            if (Core.Optional.IsDefined(AzureBlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
                 writer.WriteObjectValue(AzureBlobSource);
             }
-            if (Optional.IsDefined(AzureBlobFileListSource))
+            if (Core.Optional.IsDefined(AzureBlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
                 writer.WriteObjectValue(AzureBlobFileListSource);
@@ -34,8 +34,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
-            Optional<BlobContentSource> azureBlobSource = default;
-            Optional<BlobFileListContentSource> azureBlobFileListSource = default;
+            Core.Optional<BlobContentSource> azureBlobSource = default;
+            Core.Optional<BlobFileListContentSource> azureBlobFileListSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureBlobSource"u8))

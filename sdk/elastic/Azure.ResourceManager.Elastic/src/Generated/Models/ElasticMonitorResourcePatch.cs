@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <summary> Initializes a new instance of ElasticMonitorResourcePatch. </summary>
         public ElasticMonitorResourcePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> elastic monitor resource tags. </summary>

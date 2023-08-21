@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<OracleOciDriverInfo> installedDriver = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Core.Optional<OracleOciDriverInfo> installedDriver = default;
+            Core.Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("installedDriver"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new CheckOciDriverTaskOutput(installedDriver.Value, Optional.ToList(validationErrors));
+            return new CheckOciDriverTaskOutput(installedDriver.Value, Core.Optional.ToList(validationErrors));
         }
     }
 }

@@ -20,17 +20,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
-            Optional<DocumentClassifierDetails> result = default;
+            Core.Optional<DocumentClassifierDetails> result = default;
             string operationId = default;
             DocumentOperationStatus status = default;
-            Optional<int> percentCompleted = default;
+            Core.Optional<int> percentCompleted = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             DocumentOperationKind kind = default;
             Uri resourceLocation = default;
-            Optional<string> apiVersion = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<JsonElement> error = default;
+            Core.Optional<string> apiVersion = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Core.Optional<JsonElement> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("result"u8))
@@ -106,7 +106,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentClassifierBuildOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error, result.Value);
+            return new DocumentClassifierBuildOperationDetails(operationId, status, Core.Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Core.Optional.ToDictionary(tags), error, result.Value);
         }
     }
 }

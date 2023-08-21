@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Argument.AssertNotNull(hierarchyInformation, nameof(hierarchyInformation));
 
             HierarchyInformation = hierarchyInformation;
-            DeviceDetails = new ChangeTrackingList<EdgeOrderProductDeviceDetails>();
+            DeviceDetails = new Core.ChangeTrackingList<EdgeOrderProductDeviceDetails>();
         }
 
         /// <summary> Initializes a new instance of ProductDetails. </summary>

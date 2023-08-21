@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReportableException>> errors = default;
+            Core.Optional<IReadOnlyList<ReportableException>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errors"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateMISyncCompleteCommandOutput(Optional.ToList(errors));
+            return new MigrateMISyncCompleteCommandOutput(Core.Optional.ToList(errors));
         }
     }
 }

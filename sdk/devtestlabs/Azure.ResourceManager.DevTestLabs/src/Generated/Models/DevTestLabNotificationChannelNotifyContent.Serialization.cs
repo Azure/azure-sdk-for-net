@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabNotificationChannelNotifyContent : IUtf8JsonSerializable
+    public partial class DevTestLabNotificationChannelNotifyContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventName))
+            if (Core.Optional.IsDefined(EventName))
             {
                 writer.WritePropertyName("eventName"u8);
                 writer.WriteStringValue(EventName.Value.ToString());
             }
-            if (Optional.IsDefined(JsonPayload))
+            if (Core.Optional.IsDefined(JsonPayload))
             {
                 writer.WritePropertyName("jsonPayload"u8);
                 writer.WriteStringValue(JsonPayload);

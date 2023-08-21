@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Argument.AssertNotNull(taskName, nameof(taskName));
             Argument.AssertNotNull(taskStatus, nameof(taskStatus));
 
-            AdditionalDetails = new ChangeTrackingDictionary<string, string>();
+            AdditionalDetails = new Core.ChangeTrackingDictionary<string, string>();
             TaskId = taskId;
             TaskName = taskName;
             TaskStatus = taskStatus;

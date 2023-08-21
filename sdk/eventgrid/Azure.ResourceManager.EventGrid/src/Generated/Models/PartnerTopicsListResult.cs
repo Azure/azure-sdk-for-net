@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of PartnerTopicsListResult. </summary>
         internal PartnerTopicsListResult()
         {
-            Value = new ChangeTrackingList<PartnerTopicData>();
+            Value = new Core.ChangeTrackingList<PartnerTopicData>();
         }
 
         /// <summary> Initializes a new instance of PartnerTopicsListResult. </summary>

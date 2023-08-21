@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of BackupJobExtendedInfo. </summary>
         internal BackupJobExtendedInfo()
         {
-            AdditionalDetails = new ChangeTrackingDictionary<string, string>();
-            SubTasks = new ChangeTrackingList<BackupJobSubTask>();
+            AdditionalDetails = new Core.ChangeTrackingDictionary<string, string>();
+            SubTasks = new Core.ChangeTrackingList<BackupJobSubTask>();
         }
 
         /// <summary> Initializes a new instance of BackupJobExtendedInfo. </summary>

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ValidateMigrationInputSqlServerSqlMISyncTaskInput : IUtf8JsonSerializable
+    public partial class ValidateMigrationInputSqlServerSqlMISyncTaskInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("selectedDatabases"u8);
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(BackupFileShare))
+            if (Core.Optional.IsDefined(BackupFileShare))
             {
                 writer.WritePropertyName("backupFileShare"u8);
                 writer.WriteObjectValue(BackupFileShare);
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = default;
-            Optional<FileShare> backupFileShare = default;
+            Core.Optional<FileShare> backupFileShare = default;
             string storageResourceId = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             MISqlConnectionInfo targetConnectionInfo = default;

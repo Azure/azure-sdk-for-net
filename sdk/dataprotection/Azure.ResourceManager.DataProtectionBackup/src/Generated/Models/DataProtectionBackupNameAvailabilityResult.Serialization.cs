@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<bool> nameAvailable = default;
-            Optional<string> reason = default;
+            Core.Optional<string> message = default;
+            Core.Optional<bool> nameAvailable = default;
+            Core.Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new DataProtectionBackupNameAvailabilityResult(message.Value, Optional.ToNullable(nameAvailable), reason.Value);
+            return new DataProtectionBackupNameAvailabilityResult(message.Value, Core.Optional.ToNullable(nameAvailable), reason.Value);
         }
     }
 }

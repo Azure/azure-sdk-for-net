@@ -21,12 +21,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<DateTimeOffset> time = default;
-            Optional<CommunicationIdentifierModel> addedByCommunicationIdentifier = default;
-            Optional<AcsChatThreadParticipantProperties> participantAdded = default;
-            Optional<long> version = default;
-            Optional<string> transactionId = default;
-            Optional<string> threadId = default;
+            Core.Optional<DateTimeOffset> time = default;
+            Core.Optional<CommunicationIdentifierModel> addedByCommunicationIdentifier = default;
+            Core.Optional<AcsChatThreadParticipantProperties> participantAdded = default;
+            Core.Optional<long> version = default;
+            Core.Optional<string> transactionId = default;
+            Core.Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -76,7 +76,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatParticipantAddedToThreadEventData(transactionId.Value, threadId.Value, Optional.ToNullable(time), addedByCommunicationIdentifier.Value, participantAdded.Value, Optional.ToNullable(version));
+            return new AcsChatParticipantAddedToThreadEventData(transactionId.Value, threadId.Value, Core.Optional.ToNullable(time), addedByCommunicationIdentifier.Value, participantAdded.Value, Core.Optional.ToNullable(version));
         }
 
         internal partial class AcsChatParticipantAddedToThreadEventDataConverter : JsonConverter<AcsChatParticipantAddedToThreadEventData>

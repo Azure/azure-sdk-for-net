@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of ScalingPlanPooledSchedulePatch. </summary>
         public ScalingPlanPooledSchedulePatch()
         {
-            DaysOfWeek = new ChangeTrackingList<DesktopVirtualizationDayOfWeek>();
+            DaysOfWeek = new Core.ChangeTrackingList<DesktopVirtualizationDayOfWeek>();
         }
 
         /// <summary> Initializes a new instance of ScalingPlanPooledSchedulePatch. </summary>

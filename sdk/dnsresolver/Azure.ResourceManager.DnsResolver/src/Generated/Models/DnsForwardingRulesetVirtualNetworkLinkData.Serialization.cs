@@ -15,15 +15,15 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    public partial class DnsForwardingRulesetVirtualNetworkLinkData : IUtf8JsonSerializable
+    public partial class DnsForwardingRulesetVirtualNetworkLinkData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("virtualNetwork"u8);
-            JsonSerializer.Serialize(writer, VirtualNetwork); if (Optional.IsCollectionDefined(Metadata))
+            JsonSerializer.Serialize(writer, VirtualNetwork); if (Core.Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             WritableSubResource virtualNetwork = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<DnsResolverProvisioningState> provisioningState = default;
+            Core.Optional<IDictionary<string, string>> metadata = default;
+            Core.Optional<DnsResolverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-            return new DnsForwardingRulesetVirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToNullable(etag), virtualNetwork, Optional.ToDictionary(metadata), Optional.ToNullable(provisioningState));
+            return new DnsForwardingRulesetVirtualNetworkLinkData(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), virtualNetwork, Core.Optional.ToDictionary(metadata), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

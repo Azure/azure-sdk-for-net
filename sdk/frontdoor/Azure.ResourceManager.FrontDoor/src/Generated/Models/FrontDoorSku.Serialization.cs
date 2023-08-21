@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    internal partial class FrontDoorSku : IUtf8JsonSerializable
+    internal partial class FrontDoorSku : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<FrontDoorSkuName> name = default;
+            Core.Optional<FrontDoorSkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new FrontDoorSku(Optional.ToNullable(name));
+            return new FrontDoorSku(Core.Optional.ToNullable(name));
         }
     }
 }

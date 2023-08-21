@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<ResourceSkuRestrictionsType> type = default;
-            Optional<IReadOnlyList<string>> values = default;
-            Optional<ResourceSkuRestrictionsReasonCode> reasonCode = default;
+            Core.Optional<ResourceSkuRestrictionsType> type = default;
+            Core.Optional<IReadOnlyList<string>> values = default;
+            Core.Optional<ResourceSkuRestrictionsReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ResourceSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), Optional.ToNullable(reasonCode));
+            return new ResourceSkuRestrictions(Core.Optional.ToNullable(type), Core.Optional.ToList(values), Core.Optional.ToNullable(reasonCode));
         }
     }
 }

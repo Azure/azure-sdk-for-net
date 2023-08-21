@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabCostData : IUtf8JsonSerializable
+    public partial class DevTestLabCostData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,27 +34,27 @@ namespace Azure.ResourceManager.DevTestLabs
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetCost))
+            if (Core.Optional.IsDefined(TargetCost))
             {
                 writer.WritePropertyName("targetCost"u8);
                 writer.WriteObjectValue(TargetCost);
             }
-            if (Optional.IsDefined(CurrencyCode))
+            if (Core.Optional.IsDefined(CurrencyCode))
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Core.Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Core.Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Core.Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -69,22 +69,22 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevTestLabTargetCost> targetCost = default;
-            Optional<LabCostSummaryProperties> labCostSummary = default;
-            Optional<IReadOnlyList<DevTestLabCostDetails>> labCostDetails = default;
-            Optional<IReadOnlyList<DevTestLabResourceCost>> resourceCosts = default;
-            Optional<string> currencyCode = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> endDateTime = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DevTestLabTargetCost> targetCost = default;
+            Core.Optional<LabCostSummaryProperties> labCostSummary = default;
+            Core.Optional<IReadOnlyList<DevTestLabCostDetails>> labCostDetails = default;
+            Core.Optional<IReadOnlyList<DevTestLabResourceCost>> resourceCosts = default;
+            Core.Optional<string> currencyCode = default;
+            Core.Optional<DateTimeOffset> startDateTime = default;
+            Core.Optional<DateTimeOffset> endDateTime = default;
+            Core.Optional<DateTimeOffset> createdDate = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     continue;
                 }
             }
-            return new DevTestLabCostData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, targetCost.Value, labCostSummary.Value, Optional.ToList(labCostDetails), Optional.ToList(resourceCosts), currencyCode.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
+            return new DevTestLabCostData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, targetCost.Value, labCostSummary.Value, Core.Optional.ToList(labCostDetails), Core.Optional.ToList(resourceCosts), currencyCode.Value, Core.Optional.ToNullable(startDateTime), Core.Optional.ToNullable(endDateTime), Core.Optional.ToNullable(createdDate), provisioningState.Value, Core.Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

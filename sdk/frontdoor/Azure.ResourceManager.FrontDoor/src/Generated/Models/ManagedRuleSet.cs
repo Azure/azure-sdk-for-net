@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
-            Exclusions = new ChangeTrackingList<ManagedRuleExclusion>();
-            RuleGroupOverrides = new ChangeTrackingList<ManagedRuleGroupOverride>();
+            Exclusions = new Core.ChangeTrackingList<ManagedRuleExclusion>();
+            RuleGroupOverrides = new Core.ChangeTrackingList<ManagedRuleGroupOverride>();
         }
 
         /// <summary> Initializes a new instance of ManagedRuleSet. </summary>

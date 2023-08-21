@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <summary> Initializes a new instance of ManagedGrafanaPatch. </summary>
         public ManagedGrafanaPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The managed identity of the grafana resource. </summary>

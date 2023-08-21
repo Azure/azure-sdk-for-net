@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    internal partial class FhirServiceExportConfiguration : IUtf8JsonSerializable
+    internal partial class FhirServiceExportConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountName))
+            if (Core.Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<string> storageAccountName = default;
+            Core.Optional<string> storageAccountName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountName"u8))

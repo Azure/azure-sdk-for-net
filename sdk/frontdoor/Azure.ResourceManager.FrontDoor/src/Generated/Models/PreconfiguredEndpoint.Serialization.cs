@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class PreconfiguredEndpoint : IUtf8JsonSerializable
+    public partial class PreconfiguredEndpoint : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Endpoint))
+            if (Core.Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (Optional.IsDefined(EndpointType))
+            if (Core.Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("endpointType"u8);
                 writer.WriteStringValue(EndpointType.Value.ToString());
             }
-            if (Optional.IsDefined(Backend))
+            if (Core.Optional.IsDefined(Backend))
             {
                 writer.WritePropertyName("backend"u8);
                 writer.WriteStringValue(Backend);
@@ -62,16 +62,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> endpoint = default;
-            Optional<FrontDoorEndpointType> endpointType = default;
-            Optional<string> backend = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> endpoint = default;
+            Core.Optional<FrontDoorEndpointType> endpointType = default;
+            Core.Optional<string> backend = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new PreconfiguredEndpoint(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, endpoint.Value, Optional.ToNullable(endpointType), backend.Value);
+            return new PreconfiguredEndpoint(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, description.Value, endpoint.Value, Core.Optional.ToNullable(endpointType), backend.Value);
         }
     }
 }

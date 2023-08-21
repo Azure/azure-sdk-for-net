@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class GuestConfigurationInfo : IUtf8JsonSerializable
+    public partial class GuestConfigurationInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> version = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

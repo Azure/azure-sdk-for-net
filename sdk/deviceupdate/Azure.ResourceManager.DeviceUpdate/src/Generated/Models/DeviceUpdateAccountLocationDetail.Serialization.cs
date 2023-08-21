@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DeviceUpdateAccountLocationRole> role = default;
+            Core.Optional<string> name = default;
+            Core.Optional<DeviceUpdateAccountLocationRole> role = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     continue;
                 }
             }
-            return new DeviceUpdateAccountLocationDetail(name.Value, Optional.ToNullable(role));
+            return new DeviceUpdateAccountLocationDetail(name.Value, Core.Optional.ToNullable(role));
         }
     }
 }

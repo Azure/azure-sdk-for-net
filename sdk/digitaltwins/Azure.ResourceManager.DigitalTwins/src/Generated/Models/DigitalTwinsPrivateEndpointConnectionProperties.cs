@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Initializes a new instance of DigitalTwinsPrivateEndpointConnectionProperties. </summary>
         public DigitalTwinsPrivateEndpointConnectionProperties()
         {
-            GroupIds = new ChangeTrackingList<string>();
+            GroupIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DigitalTwinsPrivateEndpointConnectionProperties. </summary>

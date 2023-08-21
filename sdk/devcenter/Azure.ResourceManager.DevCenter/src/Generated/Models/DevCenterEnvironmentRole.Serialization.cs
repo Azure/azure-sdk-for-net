@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterEnvironmentRole : IUtf8JsonSerializable
+    public partial class DevCenterEnvironmentRole : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<string> roleName = default;
-            Optional<string> description = default;
+            Core.Optional<string> roleName = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("roleName"u8))

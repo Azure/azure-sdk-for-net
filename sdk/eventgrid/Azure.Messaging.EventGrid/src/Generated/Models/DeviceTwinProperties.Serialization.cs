@@ -18,8 +18,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<DeviceTwinMetadata> metadata = default;
-            Optional<float> version = default;
+            Core.Optional<DeviceTwinMetadata> metadata = default;
+            Core.Optional<float> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metadata"u8))
@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new DeviceTwinProperties(metadata.Value, Optional.ToNullable(version));
+            return new DeviceTwinProperties(metadata.Value, Core.Optional.ToNullable(version));
         }
     }
 }

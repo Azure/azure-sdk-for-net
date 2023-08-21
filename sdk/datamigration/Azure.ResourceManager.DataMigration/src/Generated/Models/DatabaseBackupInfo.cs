@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of DatabaseBackupInfo. </summary>
         internal DatabaseBackupInfo()
         {
-            BackupFiles = new ChangeTrackingList<string>();
+            BackupFiles = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DatabaseBackupInfo. </summary>

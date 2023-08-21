@@ -15,8 +15,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         internal static CurrencyValue DeserializeCurrencyValue(JsonElement element)
         {
             double amount = default;
-            Optional<string> currencySymbol = default;
-            Optional<string> currencyCode = default;
+            Core.Optional<string> currencySymbol = default;
+            Core.Optional<string> currencyCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("amount"u8))

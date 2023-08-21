@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<BackupSupportedFeatureType> featureType = default;
-            Optional<IReadOnlyList<BackupSupportedFeature>> features = default;
+            Core.Optional<BackupSupportedFeatureType> featureType = default;
+            Core.Optional<IReadOnlyList<BackupSupportedFeature>> features = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new BackupFeatureValidationResult(objectType, Optional.ToNullable(featureType), Optional.ToList(features));
+            return new BackupFeatureValidationResult(objectType, Core.Optional.ToNullable(featureType), Core.Optional.ToList(features));
         }
     }
 }

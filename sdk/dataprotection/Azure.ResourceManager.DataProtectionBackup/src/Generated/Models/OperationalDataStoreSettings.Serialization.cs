@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class OperationalDataStoreSettings : IUtf8JsonSerializable
+    public partial class OperationalDataStoreSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceGroupId))
+            if (Core.Optional.IsDefined(ResourceGroupId))
             {
                 writer.WritePropertyName("resourceGroupId"u8);
                 writer.WriteStringValue(ResourceGroupId);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceGroupId = default;
+            Core.Optional<ResourceIdentifier> resourceGroupId = default;
             string objectType = default;
             DataStoreType dataStoreType = default;
             foreach (var property in element.EnumerateObject())

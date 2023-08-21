@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = await _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, policyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(new FrontDoorWebApplicationFirewallPolicyOperationSource(Client), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(new FrontDoorWebApplicationFirewallPolicyOperationSource(Client), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, policyName, data, cancellationToken);
-                var operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(new FrontDoorWebApplicationFirewallPolicyOperationSource(Client), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(new FrontDoorWebApplicationFirewallPolicyOperationSource(Client), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorWebApplicationFirewallPolicyResource(Client, FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(e)), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorWebApplicationFirewallPolicyResource(Client, FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(e)), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorWebApplicationFirewallPolicyResource(Client, FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(e)), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorWebApplicationFirewallPolicyResource(Client, FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(e)), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownCommandProperties : IUtf8JsonSerializable
+    internal partial class UnknownCommandProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("commandType"u8);
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             CommandType commandType = "Unknown";
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<CommandState> state = default;
+            Core.Optional<IReadOnlyList<ODataError>> errors = default;
+            Core.Optional<CommandState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commandType"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new UnknownCommandProperties(commandType, Optional.ToList(errors), Optional.ToNullable(state));
+            return new UnknownCommandProperties(commandType, Core.Optional.ToList(errors), Core.Optional.ToNullable(state));
         }
     }
 }

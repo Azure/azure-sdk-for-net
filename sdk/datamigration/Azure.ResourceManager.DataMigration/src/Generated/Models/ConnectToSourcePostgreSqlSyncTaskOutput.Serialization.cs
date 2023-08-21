@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> sourceServerVersion = default;
-            Optional<IReadOnlyList<string>> databases = default;
-            Optional<string> sourceServerBrandVersion = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> sourceServerVersion = default;
+            Core.Optional<IReadOnlyList<string>> databases = default;
+            Core.Optional<string> sourceServerBrandVersion = default;
+            Core.Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ConnectToSourcePostgreSqlSyncTaskOutput(id.Value, sourceServerVersion.Value, Optional.ToList(databases), sourceServerBrandVersion.Value, Optional.ToList(validationErrors));
+            return new ConnectToSourcePostgreSqlSyncTaskOutput(id.Value, sourceServerVersion.Value, Core.Optional.ToList(databases), sourceServerBrandVersion.Value, Core.Optional.ToList(validationErrors));
         }
     }
 }

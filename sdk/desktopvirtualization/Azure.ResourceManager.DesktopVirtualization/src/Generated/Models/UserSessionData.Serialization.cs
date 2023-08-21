@@ -13,34 +13,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class UserSessionData : IUtf8JsonSerializable
+    public partial class UserSessionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserPrincipalName))
+            if (Core.Optional.IsDefined(UserPrincipalName))
             {
                 writer.WritePropertyName("userPrincipalName"u8);
                 writer.WriteStringValue(UserPrincipalName);
             }
-            if (Optional.IsDefined(ApplicationType))
+            if (Core.Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
-            if (Optional.IsDefined(SessionState))
+            if (Core.Optional.IsDefined(SessionState))
             {
                 writer.WritePropertyName("sessionState"u8);
                 writer.WriteStringValue(SessionState.Value.ToString());
             }
-            if (Optional.IsDefined(ActiveDirectoryUserName))
+            if (Core.Optional.IsDefined(ActiveDirectoryUserName))
             {
                 writer.WritePropertyName("activeDirectoryUserName"u8);
                 writer.WriteStringValue(ActiveDirectoryUserName);
             }
-            if (Optional.IsDefined(CreateOn))
+            if (Core.Optional.IsDefined(CreateOn))
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreateOn.Value, "O");
@@ -58,13 +58,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> objectId = default;
-            Optional<string> userPrincipalName = default;
-            Optional<VirtualApplicationType> applicationType = default;
-            Optional<UserSessionState> sessionState = default;
-            Optional<string> activeDirectoryUserName = default;
-            Optional<DateTimeOffset> createTime = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> objectId = default;
+            Core.Optional<string> userPrincipalName = default;
+            Core.Optional<VirtualApplicationType> applicationType = default;
+            Core.Optional<UserSessionState> sessionState = default;
+            Core.Optional<string> activeDirectoryUserName = default;
+            Core.Optional<DateTimeOffset> createTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new UserSessionData(id, name, type, systemData.Value, objectId.Value, userPrincipalName.Value, Optional.ToNullable(applicationType), Optional.ToNullable(sessionState), activeDirectoryUserName.Value, Optional.ToNullable(createTime));
+            return new UserSessionData(id, name, type, systemData.Value, objectId.Value, userPrincipalName.Value, Core.Optional.ToNullable(applicationType), Core.Optional.ToNullable(sessionState), activeDirectoryUserName.Value, Core.Optional.ToNullable(createTime));
         }
     }
 }

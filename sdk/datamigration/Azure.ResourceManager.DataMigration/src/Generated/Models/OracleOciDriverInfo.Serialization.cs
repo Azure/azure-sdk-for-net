@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> driverName = default;
-            Optional<string> driverSize = default;
-            Optional<string> archiveChecksum = default;
-            Optional<string> oracleChecksum = default;
-            Optional<string> assemblyVersion = default;
-            Optional<IReadOnlyList<string>> supportedOracleVersions = default;
+            Core.Optional<string> driverName = default;
+            Core.Optional<string> driverSize = default;
+            Core.Optional<string> archiveChecksum = default;
+            Core.Optional<string> oracleChecksum = default;
+            Core.Optional<string> assemblyVersion = default;
+            Core.Optional<IReadOnlyList<string>> supportedOracleVersions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("driverName"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new OracleOciDriverInfo(driverName.Value, driverSize.Value, archiveChecksum.Value, oracleChecksum.Value, assemblyVersion.Value, Optional.ToList(supportedOracleVersions));
+            return new OracleOciDriverInfo(driverName.Value, driverSize.Value, archiveChecksum.Value, oracleChecksum.Value, assemblyVersion.Value, Core.Optional.ToList(supportedOracleVersions));
         }
     }
 }

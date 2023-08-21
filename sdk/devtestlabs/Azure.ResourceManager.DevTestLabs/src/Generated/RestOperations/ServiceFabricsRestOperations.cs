@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DevTestLabs
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.DevTestLabs
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
             _userAgent.Apply(message);

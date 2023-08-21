@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<double> sizeMB = default;
-            Optional<MigrationState> state = default;
-            Optional<DatabaseMigrationStage> stage = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Optional<string> id = default;
+            Core.Optional<string> databaseName = default;
+            Core.Optional<double> sizeMB = default;
+            Core.Optional<MigrationState> state = default;
+            Core.Optional<DatabaseMigrationStage> stage = default;
+            Core.Optional<DateTimeOffset> startedOn = default;
+            Core.Optional<DateTimeOffset> endedOn = default;
+            Core.Optional<string> message = default;
+            Core.Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
+            Core.Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSqlServerSqlMITaskOutputDatabaseLevel(id.Value, resultType, databaseName.Value, Optional.ToNullable(sizeMB), Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), message.Value, Optional.ToList(exceptionsAndWarnings));
+            return new MigrateSqlServerSqlMITaskOutputDatabaseLevel(id.Value, resultType, databaseName.Value, Core.Optional.ToNullable(sizeMB), Core.Optional.ToNullable(state), Core.Optional.ToNullable(stage), Core.Optional.ToNullable(startedOn), Core.Optional.ToNullable(endedOn), message.Value, Core.Optional.ToList(exceptionsAndWarnings));
         }
     }
 }

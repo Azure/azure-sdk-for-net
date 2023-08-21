@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<string> ruleGroupName = default;
-            Optional<string> description = default;
-            Optional<IReadOnlyList<ManagedRuleDefinition>> rules = default;
+            Core.Optional<string> ruleGroupName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IReadOnlyList<ManagedRuleDefinition>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleGroupName"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new ManagedRuleGroupDefinition(ruleGroupName.Value, description.Value, Optional.ToList(rules));
+            return new ManagedRuleGroupDefinition(ruleGroupName.Value, description.Value, Core.Optional.ToList(rules));
         }
     }
 }

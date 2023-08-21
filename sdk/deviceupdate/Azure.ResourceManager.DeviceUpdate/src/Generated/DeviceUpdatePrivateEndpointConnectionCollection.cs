@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             try
             {
                 var response = await _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceUpdateArmOperation<DeviceUpdatePrivateEndpointConnectionResource>(new DeviceUpdatePrivateEndpointConnectionOperationSource(Client), _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DeviceUpdateArmOperation<DeviceUpdatePrivateEndpointConnectionResource>(new DeviceUpdatePrivateEndpointConnectionOperationSource(Client), _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             try
             {
                 var response = _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new DeviceUpdateArmOperation<DeviceUpdatePrivateEndpointConnectionResource>(new DeviceUpdatePrivateEndpointConnectionOperationSource(Client), _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DeviceUpdateArmOperation<DeviceUpdatePrivateEndpointConnectionResource>(new DeviceUpdatePrivateEndpointConnectionOperationSource(Client), _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         public virtual AsyncPageable<DeviceUpdatePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DeviceUpdatePrivateEndpointConnectionResource(Client, DeviceUpdatePrivateEndpointConnectionData.DeserializeDeviceUpdatePrivateEndpointConnectionData(e)), _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "DeviceUpdatePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DeviceUpdatePrivateEndpointConnectionResource(Client, DeviceUpdatePrivateEndpointConnectionData.DeserializeDeviceUpdatePrivateEndpointConnectionData(e)), _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "DeviceUpdatePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         public virtual Pageable<DeviceUpdatePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DeviceUpdatePrivateEndpointConnectionResource(Client, DeviceUpdatePrivateEndpointConnectionData.DeserializeDeviceUpdatePrivateEndpointConnectionData(e)), _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "DeviceUpdatePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DeviceUpdatePrivateEndpointConnectionResource(Client, DeviceUpdatePrivateEndpointConnectionData.DeserializeDeviceUpdatePrivateEndpointConnectionData(e)), _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "DeviceUpdatePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

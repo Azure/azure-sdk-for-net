@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of IotFhirDestinationCollection. </summary>
         internal IotFhirDestinationCollection()
         {
-            Value = new ChangeTrackingList<HealthcareApisIotFhirDestinationData>();
+            Value = new Core.ChangeTrackingList<HealthcareApisIotFhirDestinationData>();
         }
 
         /// <summary> Initializes a new instance of IotFhirDestinationCollection. </summary>

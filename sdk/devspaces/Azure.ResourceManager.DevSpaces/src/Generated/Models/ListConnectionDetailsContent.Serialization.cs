@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
-    public partial class ListConnectionDetailsContent : IUtf8JsonSerializable
+    public partial class ListConnectionDetailsContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetContainerHostResourceId"u8);

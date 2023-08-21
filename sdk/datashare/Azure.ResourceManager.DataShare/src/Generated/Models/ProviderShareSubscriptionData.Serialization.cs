@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
-    public partial class ProviderShareSubscriptionData : IUtf8JsonSerializable
+    public partial class ProviderShareSubscriptionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExpireOn))
+            if (Core.Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.DataShare
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> consumerEmail = default;
-            Optional<string> consumerName = default;
-            Optional<string> consumerTenantName = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> providerEmail = default;
-            Optional<string> providerName = default;
-            Optional<DateTimeOffset> sharedAt = default;
-            Optional<string> shareSubscriptionObjectId = default;
-            Optional<ShareSubscriptionStatus> shareSubscriptionStatus = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> consumerEmail = default;
+            Core.Optional<string> consumerName = default;
+            Core.Optional<string> consumerTenantName = default;
+            Core.Optional<DateTimeOffset> createdAt = default;
+            Core.Optional<DateTimeOffset> expirationDate = default;
+            Core.Optional<string> providerEmail = default;
+            Core.Optional<string> providerName = default;
+            Core.Optional<DateTimeOffset> sharedAt = default;
+            Core.Optional<string> shareSubscriptionObjectId = default;
+            Core.Optional<ShareSubscriptionStatus> shareSubscriptionStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataShare
                     continue;
                 }
             }
-            return new ProviderShareSubscriptionData(id, name, type, systemData.Value, consumerEmail.Value, consumerName.Value, consumerTenantName.Value, Optional.ToNullable(createdAt), Optional.ToNullable(expirationDate), providerEmail.Value, providerName.Value, Optional.ToNullable(sharedAt), shareSubscriptionObjectId.Value, Optional.ToNullable(shareSubscriptionStatus));
+            return new ProviderShareSubscriptionData(id, name, type, systemData.Value, consumerEmail.Value, consumerName.Value, consumerTenantName.Value, Core.Optional.ToNullable(createdAt), Core.Optional.ToNullable(expirationDate), providerEmail.Value, providerName.Value, Core.Optional.ToNullable(sharedAt), shareSubscriptionObjectId.Value, Core.Optional.ToNullable(shareSubscriptionStatus));
         }
     }
 }

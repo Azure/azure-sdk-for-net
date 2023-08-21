@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevCenterEnvironmentTypeData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DevCenterEnvironmentTypeData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     continue;
                 }
             }
-            return new EnvironmentTypeListResult(Optional.ToList(value), nextLink.Value);
+            return new EnvironmentTypeListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

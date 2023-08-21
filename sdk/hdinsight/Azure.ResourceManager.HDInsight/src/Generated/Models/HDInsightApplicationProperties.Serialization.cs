@@ -13,17 +13,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightApplicationProperties : IUtf8JsonSerializable
+    public partial class HDInsightApplicationProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeProfile))
+            if (Core.Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
                 writer.WriteObjectValue(ComputeProfile);
             }
-            if (Optional.IsCollectionDefined(InstallScriptActions))
+            if (Core.Optional.IsCollectionDefined(InstallScriptActions))
             {
                 writer.WritePropertyName("installScriptActions"u8);
                 writer.WriteStartArray();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UninstallScriptActions))
+            if (Core.Optional.IsCollectionDefined(UninstallScriptActions))
             {
                 writer.WritePropertyName("uninstallScriptActions"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HttpsEndpoints))
+            if (Core.Optional.IsCollectionDefined(HttpsEndpoints))
             {
                 writer.WritePropertyName("httpsEndpoints"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SshEndpoints))
+            if (Core.Optional.IsCollectionDefined(SshEndpoints))
             {
                 writer.WritePropertyName("sshEndpoints"u8);
                 writer.WriteStartArray();
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ApplicationType))
+            if (Core.Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType);
             }
-            if (Optional.IsCollectionDefined(Errors))
+            if (Core.Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
+            if (Core.Optional.IsCollectionDefined(PrivateLinkConfigurations))
             {
                 writer.WritePropertyName("privateLinkConfigurations"u8);
                 writer.WriteStartArray();
@@ -97,18 +97,18 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<ComputeProfile> computeProfile = default;
-            Optional<IList<RuntimeScriptAction>> installScriptActions = default;
-            Optional<IList<RuntimeScriptAction>> uninstallScriptActions = default;
-            Optional<IList<HDInsightApplicationHttpsEndpoint>> httpsEndpoints = default;
-            Optional<IList<HDInsightApplicationEndpoint>> sshEndpoints = default;
-            Optional<string> provisioningState = default;
-            Optional<string> applicationType = default;
-            Optional<string> applicationState = default;
-            Optional<IList<ResponseError>> errors = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> marketplaceIdentifier = default;
-            Optional<IList<HDInsightPrivateLinkConfiguration>> privateLinkConfigurations = default;
+            Core.Optional<ComputeProfile> computeProfile = default;
+            Core.Optional<IList<RuntimeScriptAction>> installScriptActions = default;
+            Core.Optional<IList<RuntimeScriptAction>> uninstallScriptActions = default;
+            Core.Optional<IList<HDInsightApplicationHttpsEndpoint>> httpsEndpoints = default;
+            Core.Optional<IList<HDInsightApplicationEndpoint>> sshEndpoints = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<string> applicationType = default;
+            Core.Optional<string> applicationState = default;
+            Core.Optional<IList<ResponseError>> errors = default;
+            Core.Optional<DateTimeOffset> createdDate = default;
+            Core.Optional<string> marketplaceIdentifier = default;
+            Core.Optional<IList<HDInsightPrivateLinkConfiguration>> privateLinkConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeProfile"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightApplicationProperties(computeProfile.Value, Optional.ToList(installScriptActions), Optional.ToList(uninstallScriptActions), Optional.ToList(httpsEndpoints), Optional.ToList(sshEndpoints), provisioningState.Value, applicationType.Value, applicationState.Value, Optional.ToList(errors), Optional.ToNullable(createdDate), marketplaceIdentifier.Value, Optional.ToList(privateLinkConfigurations));
+            return new HDInsightApplicationProperties(computeProfile.Value, Core.Optional.ToList(installScriptActions), Core.Optional.ToList(uninstallScriptActions), Core.Optional.ToList(httpsEndpoints), Core.Optional.ToList(sshEndpoints), provisioningState.Value, applicationType.Value, applicationState.Value, Core.Optional.ToList(errors), Core.Optional.ToNullable(createdDate), marketplaceIdentifier.Value, Core.Optional.ToList(privateLinkConfigurations));
         }
     }
 }

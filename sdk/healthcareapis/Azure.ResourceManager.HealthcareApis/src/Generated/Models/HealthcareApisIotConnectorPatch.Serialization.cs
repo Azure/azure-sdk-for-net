@@ -12,18 +12,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisIotConnectorPatch : IUtf8JsonSerializable
+    public partial class HealthcareApisIotConnectorPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new HealthcareApisIotConnectorPatch(Optional.ToDictionary(tags), identity);
+            return new HealthcareApisIotConnectorPatch(Core.Optional.ToDictionary(tags), identity);
         }
     }
 }

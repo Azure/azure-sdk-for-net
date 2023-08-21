@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> contents = default;
+            Core.Optional<string> contents = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contents"u8))

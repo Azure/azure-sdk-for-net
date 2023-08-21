@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> migrationState = default;
-            Optional<SqlBackupSetInfo> fullBackupSetInfo = default;
-            Optional<SqlBackupSetInfo> lastRestoredBackupSetInfo = default;
-            Optional<IReadOnlyList<SqlBackupSetInfo>> activeBackupSets = default;
-            Optional<IReadOnlyList<string>> invalidFiles = default;
-            Optional<string> blobContainerName = default;
-            Optional<bool> isFullBackupRestored = default;
-            Optional<string> restoreBlockingReason = default;
-            Optional<string> completeRestoreErrorMessage = default;
-            Optional<IReadOnlyList<string>> fileUploadBlockingErrors = default;
-            Optional<string> currentRestoringFilename = default;
-            Optional<string> lastRestoredFilename = default;
-            Optional<int> pendingLogBackupsCount = default;
+            Core.Optional<string> migrationState = default;
+            Core.Optional<SqlBackupSetInfo> fullBackupSetInfo = default;
+            Core.Optional<SqlBackupSetInfo> lastRestoredBackupSetInfo = default;
+            Core.Optional<IReadOnlyList<SqlBackupSetInfo>> activeBackupSets = default;
+            Core.Optional<IReadOnlyList<string>> invalidFiles = default;
+            Core.Optional<string> blobContainerName = default;
+            Core.Optional<bool> isFullBackupRestored = default;
+            Core.Optional<string> restoreBlockingReason = default;
+            Core.Optional<string> completeRestoreErrorMessage = default;
+            Core.Optional<IReadOnlyList<string>> fileUploadBlockingErrors = default;
+            Core.Optional<string> currentRestoringFilename = default;
+            Core.Optional<string> lastRestoredFilename = default;
+            Core.Optional<int> pendingLogBackupsCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("migrationState"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrationStatusDetails(migrationState.Value, fullBackupSetInfo.Value, lastRestoredBackupSetInfo.Value, Optional.ToList(activeBackupSets), Optional.ToList(invalidFiles), blobContainerName.Value, Optional.ToNullable(isFullBackupRestored), restoreBlockingReason.Value, completeRestoreErrorMessage.Value, Optional.ToList(fileUploadBlockingErrors), currentRestoringFilename.Value, lastRestoredFilename.Value, Optional.ToNullable(pendingLogBackupsCount));
+            return new MigrationStatusDetails(migrationState.Value, fullBackupSetInfo.Value, lastRestoredBackupSetInfo.Value, Core.Optional.ToList(activeBackupSets), Core.Optional.ToList(invalidFiles), blobContainerName.Value, Core.Optional.ToNullable(isFullBackupRestored), restoreBlockingReason.Value, completeRestoreErrorMessage.Value, Core.Optional.ToList(fileUploadBlockingErrors), currentRestoringFilename.Value, lastRestoredFilename.Value, Core.Optional.ToNullable(pendingLogBackupsCount));
         }
     }
 }

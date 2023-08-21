@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
-    public partial class CustomLocationPatch : IUtf8JsonSerializable
+    public partial class CustomLocationPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Authentication))
+            if (Core.Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (Optional.IsCollectionDefined(ClusterExtensionIds))
+            if (Core.Optional.IsCollectionDefined(ClusterExtensionIds))
             {
                 writer.WritePropertyName("clusterExtensionIds"u8);
                 writer.WriteStartArray();
@@ -53,27 +53,27 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(HostResourceId))
+            if (Core.Optional.IsDefined(HostResourceId))
             {
                 writer.WritePropertyName("hostResourceId"u8);
                 writer.WriteStringValue(HostResourceId);
             }
-            if (Optional.IsDefined(HostType))
+            if (Core.Optional.IsDefined(HostType))
             {
                 writer.WritePropertyName("hostType"u8);
                 writer.WriteStringValue(HostType.Value.ToString());
             }
-            if (Optional.IsDefined(Namespace))
+            if (Core.Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);

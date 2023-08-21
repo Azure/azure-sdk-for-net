@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class SqlConnectionInformation : IUtf8JsonSerializable
+    public partial class SqlConnectionInformation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataSource))
+            if (Core.Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteStringValue(DataSource);
             }
-            if (Optional.IsDefined(Authentication))
+            if (Core.Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication);
             }
-            if (Optional.IsDefined(UserName))
+            if (Core.Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(EncryptConnection))
+            if (Core.Optional.IsDefined(EncryptConnection))
             {
                 writer.WritePropertyName("encryptConnection"u8);
                 writer.WriteBooleanValue(EncryptConnection.Value);
             }
-            if (Optional.IsDefined(TrustServerCertificate))
+            if (Core.Optional.IsDefined(TrustServerCertificate))
             {
                 writer.WritePropertyName("trustServerCertificate"u8);
                 writer.WriteBooleanValue(TrustServerCertificate.Value);
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> dataSource = default;
-            Optional<string> authentication = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
-            Optional<bool> encryptConnection = default;
-            Optional<bool> trustServerCertificate = default;
+            Core.Optional<string> dataSource = default;
+            Core.Optional<string> authentication = default;
+            Core.Optional<string> userName = default;
+            Core.Optional<string> password = default;
+            Core.Optional<bool> encryptConnection = default;
+            Core.Optional<bool> trustServerCertificate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSource"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new SqlConnectionInformation(dataSource.Value, authentication.Value, userName.Value, password.Value, Optional.ToNullable(encryptConnection), Optional.ToNullable(trustServerCertificate));
+            return new SqlConnectionInformation(dataSource.Value, authentication.Value, userName.Value, password.Value, Core.Optional.ToNullable(encryptConnection), Core.Optional.ToNullable(trustServerCertificate));
         }
     }
 }

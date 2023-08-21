@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class InstallOciDriverTaskInput : IUtf8JsonSerializable
+    internal partial class InstallOciDriverTaskInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DriverPackageName))
+            if (Core.Optional.IsDefined(DriverPackageName))
             {
                 writer.WritePropertyName("driverPackageName"u8);
                 writer.WriteStringValue(DriverPackageName);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> driverPackageName = default;
+            Core.Optional<string> driverPackageName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("driverPackageName"u8))

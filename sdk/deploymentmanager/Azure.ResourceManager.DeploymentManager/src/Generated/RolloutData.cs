@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <param name="location"> The location. </param>
         public RolloutData(AzureLocation location) : base(location)
         {
-            StepGroups = new ChangeTrackingList<StepGroup>();
-            Services = new ChangeTrackingList<Service>();
+            StepGroups = new Core.ChangeTrackingList<StepGroup>();
+            Services = new Core.ChangeTrackingList<Service>();
         }
 
         /// <summary> Initializes a new instance of RolloutData. </summary>

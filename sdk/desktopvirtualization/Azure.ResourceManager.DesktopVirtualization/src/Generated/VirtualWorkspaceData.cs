@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="location"> The location. </param>
         public VirtualWorkspaceData(AzureLocation location) : base(location)
         {
-            ApplicationGroupReferences = new ChangeTrackingList<string>();
+            ApplicationGroupReferences = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualWorkspaceData. </summary>

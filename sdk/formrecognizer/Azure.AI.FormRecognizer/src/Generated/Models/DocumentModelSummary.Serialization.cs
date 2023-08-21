@@ -21,11 +21,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             string modelId = default;
-            Optional<string> description = default;
+            Core.Optional<string> description = default;
             DateTimeOffset createdDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
-            Optional<string> apiVersion = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Core.Optional<DateTimeOffset> expirationDateTime = default;
+            Core.Optional<string> apiVersion = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelId"u8))
@@ -72,7 +72,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentModelSummary(modelId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion.Value, Optional.ToDictionary(tags));
+            return new DocumentModelSummary(modelId, description.Value, createdDateTime, Core.Optional.ToNullable(expirationDateTime), apiVersion.Value, Core.Optional.ToDictionary(tags));
         }
     }
 }

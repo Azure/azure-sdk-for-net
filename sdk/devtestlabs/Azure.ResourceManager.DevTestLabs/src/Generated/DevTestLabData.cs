@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="location"> The location. </param>
         public DevTestLabData(AzureLocation location) : base(location)
         {
-            MandatoryArtifactsResourceIdsLinux = new ChangeTrackingList<string>();
-            MandatoryArtifactsResourceIdsWindows = new ChangeTrackingList<string>();
-            ExtendedProperties = new ChangeTrackingDictionary<string, string>();
+            MandatoryArtifactsResourceIdsLinux = new Core.ChangeTrackingList<string>();
+            MandatoryArtifactsResourceIdsWindows = new Core.ChangeTrackingList<string>();
+            ExtendedProperties = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabData. </summary>

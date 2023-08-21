@@ -15,22 +15,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    public partial class FrontDoorWebApplicationFirewallPolicyData : IUtf8JsonSerializable
+    public partial class FrontDoorWebApplicationFirewallPolicyData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.FrontDoor
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicySettings))
+            if (Core.Optional.IsDefined(PolicySettings))
             {
                 writer.WritePropertyName("policySettings"u8);
                 writer.WriteObjectValue(PolicySettings);
             }
-            if (Optional.IsDefined(CustomRuleList))
+            if (Core.Optional.IsDefined(CustomRuleList))
             {
                 writer.WritePropertyName("customRules"u8);
                 writer.WriteObjectValue(CustomRuleList);
             }
-            if (Optional.IsDefined(ManagedRules))
+            if (Core.Optional.IsDefined(ManagedRules))
             {
                 writer.WritePropertyName("managedRules"u8);
                 writer.WriteObjectValue(ManagedRules);
@@ -70,22 +70,22 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<FrontDoorSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<FrontDoorSku> sku = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<FrontDoorWebApplicationFirewallPolicySettings> policySettings = default;
-            Optional<CustomRuleList> customRules = default;
-            Optional<ManagedRuleSetList> managedRules = default;
-            Optional<IReadOnlyList<SubResource>> frontendEndpointLinks = default;
-            Optional<IReadOnlyList<SubResource>> routingRuleLinks = default;
-            Optional<IReadOnlyList<SubResource>> securityPolicyLinks = default;
-            Optional<string> provisioningState = default;
-            Optional<FrontDoorWebApplicationFirewallPolicyResourceState> resourceState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<FrontDoorWebApplicationFirewallPolicySettings> policySettings = default;
+            Core.Optional<CustomRuleList> customRules = default;
+            Core.Optional<ManagedRuleSetList> managedRules = default;
+            Core.Optional<IReadOnlyList<SubResource>> frontendEndpointLinks = default;
+            Core.Optional<IReadOnlyList<SubResource>> routingRuleLinks = default;
+            Core.Optional<IReadOnlyList<SubResource>> securityPolicyLinks = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<FrontDoorWebApplicationFirewallPolicyResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.FrontDoor
                     continue;
                 }
             }
-            return new FrontDoorWebApplicationFirewallPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), sku.Value, policySettings.Value, customRules.Value, managedRules.Value, Optional.ToList(frontendEndpointLinks), Optional.ToList(routingRuleLinks), Optional.ToList(securityPolicyLinks), provisioningState.Value, Optional.ToNullable(resourceState));
+            return new FrontDoorWebApplicationFirewallPolicyData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), sku.Value, policySettings.Value, customRules.Value, managedRules.Value, Core.Optional.ToList(frontendEndpointLinks), Core.Optional.ToList(routingRuleLinks), Core.Optional.ToList(securityPolicyLinks), provisioningState.Value, Core.Optional.ToNullable(resourceState));
         }
     }
 }

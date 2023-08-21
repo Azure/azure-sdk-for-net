@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of SkuListResult. </summary>
         internal SkuListResult()
         {
-            Value = new ChangeTrackingList<DevCenterSkuDetails>();
+            Value = new Core.ChangeTrackingList<DevCenterSkuDetails>();
         }
 
         /// <summary> Initializes a new instance of SkuListResult. </summary>

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             MatchVariable = matchVariable;
             Operator = @operator;
             MatchValue = matchValue.ToList();
-            Transforms = new ChangeTrackingList<WebApplicationRuleMatchTransformType>();
+            Transforms = new Core.ChangeTrackingList<WebApplicationRuleMatchTransformType>();
         }
 
         /// <summary> Initializes a new instance of WebApplicationRuleMatchCondition. </summary>

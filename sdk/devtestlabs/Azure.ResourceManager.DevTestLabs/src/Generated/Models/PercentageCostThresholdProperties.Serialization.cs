@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    internal partial class PercentageCostThresholdProperties : IUtf8JsonSerializable
+    internal partial class PercentageCostThresholdProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ThresholdValue))
+            if (Core.Optional.IsDefined(ThresholdValue))
             {
                 writer.WritePropertyName("thresholdValue"u8);
                 writer.WriteNumberValue(ThresholdValue.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<double> thresholdValue = default;
+            Core.Optional<double> thresholdValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("thresholdValue"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new PercentageCostThresholdProperties(Optional.ToNullable(thresholdValue));
+            return new PercentageCostThresholdProperties(Core.Optional.ToNullable(thresholdValue));
         }
     }
 }

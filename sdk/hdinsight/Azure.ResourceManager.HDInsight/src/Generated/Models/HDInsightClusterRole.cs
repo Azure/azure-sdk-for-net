@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightClusterRole. </summary>
         public HDInsightClusterRole()
         {
-            DataDisksGroups = new ChangeTrackingList<HDInsightClusterDataDiskGroup>();
-            ScriptActions = new ChangeTrackingList<ScriptAction>();
+            DataDisksGroups = new Core.ChangeTrackingList<HDInsightClusterDataDiskGroup>();
+            ScriptActions = new Core.ChangeTrackingList<ScriptAction>();
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterRole. </summary>

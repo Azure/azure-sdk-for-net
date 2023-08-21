@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputValidationResult. </summary>
         internal MigrateSqlServerSqlDBTaskOutputValidationResult()
         {
-            SummaryResults = new ChangeTrackingDictionary<string, MigrationValidationDatabaseSummaryResult>();
+            SummaryResults = new Core.ChangeTrackingDictionary<string, MigrationValidationDatabaseSummaryResult>();
             ResultType = "MigrationValidationOutput";
         }
 

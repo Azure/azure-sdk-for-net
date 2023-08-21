@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of AcsSmsDeliveryReportReceivedEventData. </summary>
         internal AcsSmsDeliveryReportReceivedEventData()
         {
-            DeliveryAttempts = new ChangeTrackingList<AcsSmsDeliveryAttemptProperties>();
+            DeliveryAttempts = new Core.ChangeTrackingList<AcsSmsDeliveryAttemptProperties>();
         }
 
         /// <summary> Initializes a new instance of AcsSmsDeliveryReportReceivedEventData. </summary>

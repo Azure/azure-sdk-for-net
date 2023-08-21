@@ -18,10 +18,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> assetName = default;
+            Core.Optional<string> assetName = default;
             string odataType = default;
-            Optional<MediaJobError> error = default;
-            Optional<string> label = default;
+            Core.Optional<MediaJobError> error = default;
+            Core.Optional<string> label = default;
             long progress = default;
             MediaJobState state = default;
             foreach (var property in element.EnumerateObject())

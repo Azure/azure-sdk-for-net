@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> Initializes a new instance of HDInsightPrivateLinkResourceData. </summary>
         public HDInsightPrivateLinkResourceData()
         {
-            RequiredMembers = new ChangeTrackingList<string>();
-            RequiredZoneNames = new ChangeTrackingList<string>();
+            RequiredMembers = new Core.ChangeTrackingList<string>();
+            RequiredZoneNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HDInsightPrivateLinkResourceData. </summary>

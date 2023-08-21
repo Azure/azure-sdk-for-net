@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of DevCenterEnvironmentTypePatch. </summary>
         public DevCenterEnvironmentTypePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Resource tags. </summary>

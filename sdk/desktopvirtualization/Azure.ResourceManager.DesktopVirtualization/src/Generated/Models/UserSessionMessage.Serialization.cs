@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class UserSessionMessage : IUtf8JsonSerializable
+    public partial class UserSessionMessage : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MessageTitle))
+            if (Core.Optional.IsDefined(MessageTitle))
             {
                 writer.WritePropertyName("messageTitle"u8);
                 writer.WriteStringValue(MessageTitle);
             }
-            if (Optional.IsDefined(MessageBody))
+            if (Core.Optional.IsDefined(MessageBody))
             {
                 writer.WritePropertyName("messageBody"u8);
                 writer.WriteStringValue(MessageBody);

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel. </summary>
         internal MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel()
         {
-            ActiveBackupSets = new ChangeTrackingList<BackupSetInfo>();
-            ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
+            ActiveBackupSets = new Core.ChangeTrackingList<BackupSetInfo>();
+            ExceptionsAndWarnings = new Core.ChangeTrackingList<ReportableException>();
             ResultType = "DatabaseLevelOutput";
         }
 

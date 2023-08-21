@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupVaultSoftDeleteSettings : IUtf8JsonSerializable
+    public partial class BackupVaultSoftDeleteSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(RetentionDurationInDays))
+            if (Core.Optional.IsDefined(RetentionDurationInDays))
             {
                 writer.WritePropertyName("retentionDurationInDays"u8);
                 writer.WriteNumberValue(RetentionDurationInDays.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<BackupVaultSoftDeleteState> state = default;
-            Optional<double> retentionDurationInDays = default;
+            Core.Optional<BackupVaultSoftDeleteState> state = default;
+            Core.Optional<double> retentionDurationInDays = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new BackupVaultSoftDeleteSettings(Optional.ToNullable(state), Optional.ToNullable(retentionDurationInDays));
+            return new BackupVaultSoftDeleteSettings(Core.Optional.ToNullable(state), Core.Optional.ToNullable(retentionDurationInDays));
         }
     }
 }

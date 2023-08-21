@@ -21,13 +21,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModel> deletedByCommunicationIdentifier = default;
-            Optional<DateTimeOffset> deleteTime = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<long> version = default;
-            Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
-            Optional<string> transactionId = default;
-            Optional<string> threadId = default;
+            Core.Optional<CommunicationIdentifierModel> deletedByCommunicationIdentifier = default;
+            Core.Optional<DateTimeOffset> deleteTime = default;
+            Core.Optional<DateTimeOffset> createTime = default;
+            Core.Optional<long> version = default;
+            Core.Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
+            Core.Optional<string> transactionId = default;
+            Core.Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deletedByCommunicationIdentifier"u8))
@@ -86,7 +86,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatThreadWithUserDeletedEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), deletedByCommunicationIdentifier.Value, Optional.ToNullable(deleteTime));
+            return new AcsChatThreadWithUserDeletedEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Core.Optional.ToNullable(createTime), Core.Optional.ToNullable(version), deletedByCommunicationIdentifier.Value, Core.Optional.ToNullable(deleteTime));
         }
 
         internal partial class AcsChatThreadWithUserDeletedEventDataConverter : JsonConverter<AcsChatThreadWithUserDeletedEventData>

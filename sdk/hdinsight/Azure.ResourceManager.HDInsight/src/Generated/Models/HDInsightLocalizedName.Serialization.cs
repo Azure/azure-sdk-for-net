@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> value = default;
-            Optional<string> localizedValue = default;
+            Core.Optional<string> value = default;
+            Core.Optional<string> localizedValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))

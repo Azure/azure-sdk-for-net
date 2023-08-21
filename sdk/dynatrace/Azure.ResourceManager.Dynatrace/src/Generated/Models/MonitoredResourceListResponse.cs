@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Initializes a new instance of MonitoredResourceListResponse. </summary>
         internal MonitoredResourceListResponse()
         {
-            Value = new ChangeTrackingList<DynatraceMonitoredResourceDetails>();
+            Value = new Core.ChangeTrackingList<DynatraceMonitoredResourceDetails>();
         }
 
         /// <summary> Initializes a new instance of MonitoredResourceListResponse. </summary>

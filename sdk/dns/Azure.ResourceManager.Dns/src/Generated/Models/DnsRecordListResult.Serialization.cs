@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DnsRecordData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DnsRecordData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new DnsRecordListResult(Optional.ToList(value), nextLink.Value);
+            return new DnsRecordListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

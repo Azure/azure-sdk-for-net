@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="location"> The location. </param>
         public DicomServiceData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of DicomServiceData. </summary>

@@ -11,34 +11,34 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties : IUtf8JsonSerializable
+    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Input))
+            if (Core.Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (Optional.IsDefined(TaskId))
+            if (Core.Optional.IsDefined(TaskId))
             {
                 writer.WritePropertyName("taskId"u8);
                 writer.WriteStringValue(TaskId);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Core.Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn);
             }
-            if (Optional.IsDefined(IsCloneable))
+            if (Core.Optional.IsDefined(IsCloneable))
             {
                 writer.WritePropertyName("isCloneable"u8);
                 writer.WriteBooleanValue(IsCloneable.Value);
             }
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
-            if (Optional.IsCollectionDefined(ClientData))
+            if (Core.Optional.IsCollectionDefined(ClientData))
             {
                 writer.WritePropertyName("clientData"u8);
                 writer.WriteStartObject();
@@ -58,16 +58,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput> input = default;
-            Optional<IReadOnlyList<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>> output = default;
-            Optional<string> taskId = default;
-            Optional<string> createdOn = default;
-            Optional<bool> isCloneable = default;
+            Core.Optional<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput> input = default;
+            Core.Optional<IReadOnlyList<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>> output = default;
+            Core.Optional<string> taskId = default;
+            Core.Optional<string> createdOn = default;
+            Core.Optional<bool> isCloneable = default;
             TaskType taskType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<TaskState> state = default;
-            Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            Core.Optional<IReadOnlyList<ODataError>> errors = default;
+            Core.Optional<TaskState> state = default;
+            Core.Optional<IReadOnlyList<CommandProperties>> commands = default;
+            Core.Optional<IDictionary<string, string>> clientData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), input.Value, Optional.ToList(output), taskId.Value, createdOn.Value, Optional.ToNullable(isCloneable));
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties(taskType, Core.Optional.ToList(errors), Core.Optional.ToNullable(state), Core.Optional.ToList(commands), Core.Optional.ToDictionary(clientData), input.Value, Core.Optional.ToList(output), taskId.Value, createdOn.Value, Core.Optional.ToNullable(isCloneable));
         }
     }
 }

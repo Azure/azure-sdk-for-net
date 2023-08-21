@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of SessionHostList. </summary>
         internal SessionHostList()
         {
-            Value = new ChangeTrackingList<SessionHostData>();
+            Value = new Core.ChangeTrackingList<SessionHostData>();
         }
 
         /// <summary> Initializes a new instance of SessionHostList. </summary>

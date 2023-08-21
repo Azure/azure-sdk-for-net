@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<long> coresUsed = default;
-            Optional<long> maxCoresAllowed = default;
-            Optional<IReadOnlyList<RegionalQuotaCapability>> regionalQuotas = default;
+            Core.Optional<long> coresUsed = default;
+            Core.Optional<long> maxCoresAllowed = default;
+            Core.Optional<IReadOnlyList<RegionalQuotaCapability>> regionalQuotas = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coresUsed"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new QuotaCapability(Optional.ToNullable(coresUsed), Optional.ToNullable(maxCoresAllowed), Optional.ToList(regionalQuotas));
+            return new QuotaCapability(Core.Optional.ToNullable(coresUsed), Core.Optional.ToNullable(maxCoresAllowed), Core.Optional.ToList(regionalQuotas));
         }
     }
 }

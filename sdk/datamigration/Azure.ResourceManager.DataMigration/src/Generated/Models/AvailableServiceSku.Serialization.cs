@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<AvailableServiceSkuSku> sku = default;
-            Optional<AvailableServiceSkuCapacity> capacity = default;
+            Core.Optional<string> resourceType = default;
+            Core.Optional<AvailableServiceSkuSku> sku = default;
+            Core.Optional<AvailableServiceSkuCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))

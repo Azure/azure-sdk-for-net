@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataMigrationServiceData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DataMigrationServiceData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new DataMigrationServiceList(Optional.ToList(value), nextLink.Value);
+            return new DataMigrationServiceList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

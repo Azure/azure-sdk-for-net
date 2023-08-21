@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class ElasticSanPatch : IUtf8JsonSerializable
+    public partial class ElasticSanPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(BaseSizeTiB))
+            if (Core.Optional.IsDefined(BaseSizeTiB))
             {
                 writer.WritePropertyName("baseSizeTiB"u8);
                 writer.WriteNumberValue(BaseSizeTiB.Value);
             }
-            if (Optional.IsDefined(ExtendedCapacitySizeTiB))
+            if (Core.Optional.IsDefined(ExtendedCapacitySizeTiB))
             {
                 writer.WritePropertyName("extendedCapacitySizeTiB"u8);
                 writer.WriteNumberValue(ExtendedCapacitySizeTiB.Value);

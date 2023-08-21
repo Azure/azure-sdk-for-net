@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _systemTopicRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<SystemTopicResource>(new SystemTopicOperationSource(Client), _systemTopicClientDiagnostics, Pipeline, _systemTopicRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<SystemTopicResource>(new SystemTopicOperationSource(Client), _systemTopicClientDiagnostics, Pipeline, _systemTopicRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _systemTopicRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, data, cancellationToken);
-                var operation = new EventGridArmOperation<SystemTopicResource>(new SystemTopicOperationSource(Client), _systemTopicClientDiagnostics, Pipeline, _systemTopicRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<SystemTopicResource>(new SystemTopicOperationSource(Client), _systemTopicClientDiagnostics, Pipeline, _systemTopicRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _systemTopicRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _systemTopicRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), _systemTopicClientDiagnostics, Pipeline, "SystemTopicCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), _systemTopicClientDiagnostics, Pipeline, "SystemTopicCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _systemTopicRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _systemTopicRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), _systemTopicClientDiagnostics, Pipeline, "SystemTopicCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), _systemTopicClientDiagnostics, Pipeline, "SystemTopicCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

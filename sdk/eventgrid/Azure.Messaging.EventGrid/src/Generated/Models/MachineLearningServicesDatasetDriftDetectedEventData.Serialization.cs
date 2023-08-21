@@ -21,14 +21,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> dataDriftId = default;
-            Optional<string> dataDriftName = default;
-            Optional<string> runId = default;
-            Optional<string> baseDatasetId = default;
-            Optional<string> targetDatasetId = default;
-            Optional<double> driftCoefficient = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            Core.Optional<string> dataDriftId = default;
+            Core.Optional<string> dataDriftName = default;
+            Core.Optional<string> runId = default;
+            Core.Optional<string> baseDatasetId = default;
+            Core.Optional<string> targetDatasetId = default;
+            Core.Optional<double> driftCoefficient = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataDriftId"u8))
@@ -84,7 +84,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MachineLearningServicesDatasetDriftDetectedEventData(dataDriftId.Value, dataDriftName.Value, runId.Value, baseDatasetId.Value, targetDatasetId.Value, Optional.ToNullable(driftCoefficient), Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+            return new MachineLearningServicesDatasetDriftDetectedEventData(dataDriftId.Value, dataDriftName.Value, runId.Value, baseDatasetId.Value, targetDatasetId.Value, Core.Optional.ToNullable(driftCoefficient), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime));
         }
 
         internal partial class MachineLearningServicesDatasetDriftDetectedEventDataConverter : JsonConverter<MachineLearningServicesDatasetDriftDetectedEventData>

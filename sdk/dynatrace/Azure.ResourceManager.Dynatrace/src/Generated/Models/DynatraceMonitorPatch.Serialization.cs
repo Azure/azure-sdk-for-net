@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceMonitorPatch : IUtf8JsonSerializable
+    public partial class DynatraceMonitorPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(MonitoringStatus))
+            if (Core.Optional.IsDefined(MonitoringStatus))
             {
                 writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus.Value.ToString());
             }
-            if (Optional.IsDefined(MarketplaceSubscriptionStatus))
+            if (Core.Optional.IsDefined(MarketplaceSubscriptionStatus))
             {
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
             }
-            if (Optional.IsDefined(DynatraceEnvironmentProperties))
+            if (Core.Optional.IsDefined(DynatraceEnvironmentProperties))
             {
                 writer.WritePropertyName("dynatraceEnvironmentProperties"u8);
                 writer.WriteObjectValue(DynatraceEnvironmentProperties);
             }
-            if (Optional.IsDefined(UserInfo))
+            if (Core.Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
                 writer.WriteObjectValue(UserInfo);
             }
-            if (Optional.IsDefined(PlanData))
+            if (Core.Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
                 writer.WriteObjectValue(PlanData);

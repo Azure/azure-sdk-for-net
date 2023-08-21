@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    internal partial class EncryptionPreferences : IUtf8JsonSerializable
+    internal partial class EncryptionPreferences : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DoubleEncryptionStatus))
+            if (Core.Optional.IsDefined(DoubleEncryptionStatus))
             {
                 writer.WritePropertyName("doubleEncryptionStatus"u8);
                 writer.WriteStringValue(DoubleEncryptionStatus.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<DoubleEncryptionStatus> doubleEncryptionStatus = default;
+            Core.Optional<DoubleEncryptionStatus> doubleEncryptionStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("doubleEncryptionStatus"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new EncryptionPreferences(Optional.ToNullable(doubleEncryptionStatus));
+            return new EncryptionPreferences(Core.Optional.ToNullable(doubleEncryptionStatus));
         }
     }
 }

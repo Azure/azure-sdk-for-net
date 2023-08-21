@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBSyncTaskInput : IUtf8JsonSerializable
+    public partial class MigrateSqlServerSqlDBSyncTaskInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("selectedDatabases"u8);
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ValidationOptions))
+            if (Core.Optional.IsDefined(ValidationOptions))
             {
                 writer.WritePropertyName("validationOptions"u8);
                 writer.WriteObjectValue(ValidationOptions);
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases = default;
-            Optional<MigrationValidationOptions> validationOptions = default;
+            Core.Optional<MigrationValidationOptions> validationOptions = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
             foreach (var property in element.EnumerateObject())

@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of ScalingPlanPatch. </summary>
         public ScalingPlanPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            Schedules = new ChangeTrackingList<ScalingSchedule>();
-            HostPoolReferences = new ChangeTrackingList<ScalingHostPoolReference>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Schedules = new Core.ChangeTrackingList<ScalingSchedule>();
+            HostPoolReferences = new Core.ChangeTrackingList<ScalingHostPoolReference>();
         }
 
         /// <summary> tags to be updated. </summary>

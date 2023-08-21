@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class StringInAdvancedFilter : IUtf8JsonSerializable
+    public partial class StringInAdvancedFilter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Values))
+            if (Core.Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             writer.WritePropertyName("operatorType"u8);
             writer.WriteStringValue(OperatorType.ToString());
-            if (Optional.IsDefined(Key))
+            if (Core.Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IList<string>> values = default;
+            Core.Optional<IList<string>> values = default;
             AdvancedFilterOperatorType operatorType = default;
-            Optional<string> key = default;
+            Core.Optional<string> key = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new StringInAdvancedFilter(operatorType, key.Value, Optional.ToList(values));
+            return new StringInAdvancedFilter(operatorType, key.Value, Core.Optional.ToList(values));
         }
     }
 }

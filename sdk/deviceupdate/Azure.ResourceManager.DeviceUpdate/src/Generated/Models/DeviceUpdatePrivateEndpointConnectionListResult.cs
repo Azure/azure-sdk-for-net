@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionListResult. </summary>
         internal DeviceUpdatePrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionListResult. </summary>

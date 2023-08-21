@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabEvaluatePoliciesContent : IUtf8JsonSerializable
+    public partial class DevTestLabEvaluatePoliciesContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Policies))
+            if (Core.Optional.IsCollectionDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStartArray();

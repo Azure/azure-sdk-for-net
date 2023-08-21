@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of DevTestLabTargetCost. </summary>
         public DevTestLabTargetCost()
         {
-            CostThresholds = new ChangeTrackingList<DevTestLabCostThreshold>();
+            CostThresholds = new Core.ChangeTrackingList<DevTestLabCostThreshold>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabTargetCost. </summary>

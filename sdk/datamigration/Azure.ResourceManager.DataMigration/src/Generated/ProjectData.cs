@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="location"> The location. </param>
         public ProjectData(AzureLocation location) : base(location)
         {
-            DatabasesInfo = new ChangeTrackingList<DatabaseInfo>();
+            DatabasesInfo = new Core.ChangeTrackingList<DatabaseInfo>();
         }
 
         /// <summary> Initializes a new instance of ProjectData. </summary>

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightLinuxOSProfile : IUtf8JsonSerializable
+    public partial class HDInsightLinuxOSProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Username))
+            if (Core.Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(SshProfile))
+            if (Core.Optional.IsDefined(SshProfile))
             {
                 writer.WritePropertyName("sshProfile"u8);
                 writer.WriteObjectValue(SshProfile);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<SshProfile> sshProfile = default;
+            Core.Optional<string> username = default;
+            Core.Optional<string> password = default;
+            Core.Optional<SshProfile> sshProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))

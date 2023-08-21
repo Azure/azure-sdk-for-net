@@ -14,15 +14,15 @@ using Azure.ResourceManager.DataShare.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
-    internal class ShareSubscriptionSynchronizationOperationSource : IOperationSource<ShareSubscriptionSynchronization>
+    internal class ShareSubscriptionSynchronizationOperationSource : Core.IOperationSource<ShareSubscriptionSynchronization>
     {
-        ShareSubscriptionSynchronization IOperationSource<ShareSubscriptionSynchronization>.CreateResult(Response response, CancellationToken cancellationToken)
+        ShareSubscriptionSynchronization Core.IOperationSource<ShareSubscriptionSynchronization>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ShareSubscriptionSynchronization.DeserializeShareSubscriptionSynchronization(document.RootElement);
         }
 
-        async ValueTask<ShareSubscriptionSynchronization> IOperationSource<ShareSubscriptionSynchronization>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ShareSubscriptionSynchronization> Core.IOperationSource<ShareSubscriptionSynchronization>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ShareSubscriptionSynchronization.DeserializeShareSubscriptionSynchronization(document.RootElement);

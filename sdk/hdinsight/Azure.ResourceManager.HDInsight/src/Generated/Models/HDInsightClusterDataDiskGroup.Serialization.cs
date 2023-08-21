@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightClusterDataDiskGroup : IUtf8JsonSerializable
+    public partial class HDInsightClusterDataDiskGroup : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisksPerNode))
+            if (Core.Optional.IsDefined(DisksPerNode))
             {
                 writer.WritePropertyName("disksPerNode"u8);
                 writer.WriteNumberValue(DisksPerNode.Value);
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<int> disksPerNode = default;
-            Optional<string> storageAccountType = default;
-            Optional<int> diskSizeGB = default;
+            Core.Optional<int> disksPerNode = default;
+            Core.Optional<string> storageAccountType = default;
+            Core.Optional<int> diskSizeGB = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disksPerNode"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightClusterDataDiskGroup(Optional.ToNullable(disksPerNode), storageAccountType.Value, Optional.ToNullable(diskSizeGB));
+            return new HDInsightClusterDataDiskGroup(Core.Optional.ToNullable(disksPerNode), storageAccountType.Value, Core.Optional.ToNullable(diskSizeGB));
         }
     }
 }

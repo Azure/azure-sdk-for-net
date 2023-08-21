@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of DeletedBackupInstanceResourceList. </summary>
         internal DeletedBackupInstanceResourceList()
         {
-            Value = new ChangeTrackingList<DeletedDataProtectionBackupInstanceData>();
+            Value = new Core.ChangeTrackingList<DeletedDataProtectionBackupInstanceData>();
         }
 
         /// <summary> Initializes a new instance of DeletedBackupInstanceResourceList. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of TopicTypesListResult. </summary>
         internal TopicTypesListResult()
         {
-            Value = new ChangeTrackingList<TopicTypeData>();
+            Value = new Core.ChangeTrackingList<TopicTypeData>();
         }
 
         /// <summary> Initializes a new instance of TopicTypesListResult. </summary>

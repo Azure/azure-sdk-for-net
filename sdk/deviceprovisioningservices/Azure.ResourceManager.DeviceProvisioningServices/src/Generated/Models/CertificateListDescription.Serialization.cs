@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeviceProvisioningServicesCertificateData>> value = default;
+            Core.Optional<IReadOnlyList<DeviceProvisioningServicesCertificateData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     continue;
                 }
             }
-            return new CertificateListDescription(Optional.ToList(value));
+            return new CertificateListDescription(Core.Optional.ToList(value));
         }
     }
 }

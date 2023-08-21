@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBThrottlingSettings : IUtf8JsonSerializable
+    public partial class MongoDBThrottlingSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinFreeCpu))
+            if (Core.Optional.IsDefined(MinFreeCpu))
             {
                 writer.WritePropertyName("minFreeCpu"u8);
                 writer.WriteNumberValue(MinFreeCpu.Value);
             }
-            if (Optional.IsDefined(MinFreeMemoryMb))
+            if (Core.Optional.IsDefined(MinFreeMemoryMb))
             {
                 writer.WritePropertyName("minFreeMemoryMb"u8);
                 writer.WriteNumberValue(MinFreeMemoryMb.Value);
             }
-            if (Optional.IsDefined(MaxParallelism))
+            if (Core.Optional.IsDefined(MaxParallelism))
             {
                 writer.WritePropertyName("maxParallelism"u8);
                 writer.WriteNumberValue(MaxParallelism.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<int> minFreeCpu = default;
-            Optional<int> minFreeMemoryMb = default;
-            Optional<int> maxParallelism = default;
+            Core.Optional<int> minFreeCpu = default;
+            Core.Optional<int> minFreeMemoryMb = default;
+            Core.Optional<int> maxParallelism = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minFreeCpu"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MongoDBThrottlingSettings(Optional.ToNullable(minFreeCpu), Optional.ToNullable(minFreeMemoryMb), Optional.ToNullable(maxParallelism));
+            return new MongoDBThrottlingSettings(Core.Optional.ToNullable(minFreeCpu), Core.Optional.ToNullable(minFreeMemoryMb), Core.Optional.ToNullable(maxParallelism));
         }
     }
 }

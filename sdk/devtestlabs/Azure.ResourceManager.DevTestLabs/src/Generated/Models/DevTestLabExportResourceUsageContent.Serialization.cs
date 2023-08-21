@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabExportResourceUsageContent : IUtf8JsonSerializable
+    public partial class DevTestLabExportResourceUsageContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BlobStorageAbsoluteSasUri))
+            if (Core.Optional.IsDefined(BlobStorageAbsoluteSasUri))
             {
                 writer.WritePropertyName("blobStorageAbsoluteSasUri"u8);
                 writer.WriteStringValue(BlobStorageAbsoluteSasUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(UsageStartOn))
+            if (Core.Optional.IsDefined(UsageStartOn))
             {
                 writer.WritePropertyName("usageStartDate"u8);
                 writer.WriteStringValue(UsageStartOn.Value, "O");

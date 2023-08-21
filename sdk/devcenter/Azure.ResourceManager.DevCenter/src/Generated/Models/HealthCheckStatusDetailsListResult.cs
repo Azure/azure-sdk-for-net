@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of HealthCheckStatusDetailsListResult. </summary>
         internal HealthCheckStatusDetailsListResult()
         {
-            Value = new ChangeTrackingList<HealthCheckStatusDetailData>();
+            Value = new Core.ChangeTrackingList<HealthCheckStatusDetailData>();
         }
 
         /// <summary> Initializes a new instance of HealthCheckStatusDetailsListResult. </summary>

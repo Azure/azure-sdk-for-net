@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabDiskData : IUtf8JsonSerializable
+    public partial class DevTestLabDiskData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,42 +34,42 @@ namespace Azure.ResourceManager.DevTestLabs
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskType))
+            if (Core.Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
             }
-            if (Optional.IsDefined(DiskSizeGiB))
+            if (Core.Optional.IsDefined(DiskSizeGiB))
             {
                 writer.WritePropertyName("diskSizeGiB"u8);
                 writer.WriteNumberValue(DiskSizeGiB.Value);
             }
-            if (Optional.IsDefined(LeasedByLabVmId))
+            if (Core.Optional.IsDefined(LeasedByLabVmId))
             {
                 writer.WritePropertyName("leasedByLabVmId"u8);
                 writer.WriteStringValue(LeasedByLabVmId);
             }
-            if (Optional.IsDefined(DiskBlobName))
+            if (Core.Optional.IsDefined(DiskBlobName))
             {
                 writer.WritePropertyName("diskBlobName"u8);
                 writer.WriteStringValue(DiskBlobName);
             }
-            if (Optional.IsDefined(DiskUri))
+            if (Core.Optional.IsDefined(DiskUri))
             {
                 writer.WritePropertyName("diskUri"u8);
                 writer.WriteStringValue(DiskUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(StorageAccountId))
+            if (Core.Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (Optional.IsDefined(HostCaching))
+            if (Core.Optional.IsDefined(HostCaching))
             {
                 writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching);
             }
-            if (Optional.IsDefined(ManagedDiskId))
+            if (Core.Optional.IsDefined(ManagedDiskId))
             {
                 writer.WritePropertyName("managedDiskId"u8);
                 writer.WriteStringValue(ManagedDiskId);
@@ -84,23 +84,23 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevTestLabStorageType> diskType = default;
-            Optional<int> diskSizeGiB = default;
-            Optional<ResourceIdentifier> leasedByLabVmId = default;
-            Optional<string> diskBlobName = default;
-            Optional<Uri> diskUri = default;
-            Optional<string> storageAccountId = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> hostCaching = default;
-            Optional<ResourceIdentifier> managedDiskId = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DevTestLabStorageType> diskType = default;
+            Core.Optional<int> diskSizeGiB = default;
+            Core.Optional<ResourceIdentifier> leasedByLabVmId = default;
+            Core.Optional<string> diskBlobName = default;
+            Core.Optional<Uri> diskUri = default;
+            Core.Optional<string> storageAccountId = default;
+            Core.Optional<DateTimeOffset> createdDate = default;
+            Core.Optional<string> hostCaching = default;
+            Core.Optional<ResourceIdentifier> managedDiskId = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     continue;
                 }
             }
-            return new DevTestLabDiskData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(diskType), Optional.ToNullable(diskSizeGiB), leasedByLabVmId.Value, diskBlobName.Value, diskUri.Value, storageAccountId.Value, Optional.ToNullable(createdDate), hostCaching.Value, managedDiskId.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
+            return new DevTestLabDiskData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(diskType), Core.Optional.ToNullable(diskSizeGiB), leasedByLabVmId.Value, diskBlobName.Value, diskUri.Value, storageAccountId.Value, Core.Optional.ToNullable(createdDate), hostCaching.Value, managedDiskId.Value, provisioningState.Value, Core.Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

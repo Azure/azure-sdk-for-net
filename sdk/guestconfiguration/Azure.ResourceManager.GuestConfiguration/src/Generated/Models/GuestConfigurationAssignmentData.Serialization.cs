@@ -12,22 +12,22 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
-    public partial class GuestConfigurationAssignmentData : IUtf8JsonSerializable
+    public partial class GuestConfigurationAssignmentData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 return null;
             }
-            Optional<GuestConfigurationAssignmentProperties> properties = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<ResourceType> type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<GuestConfigurationAssignmentProperties> properties = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                     continue;
                 }
             }
-            return new GuestConfigurationAssignmentData(id.Value, name.Value, Optional.ToNullable(location), Optional.ToNullable(type), systemData, properties.Value);
+            return new GuestConfigurationAssignmentData(id.Value, name.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(type), systemData, properties.Value);
         }
     }
 }

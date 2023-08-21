@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightAutoScaleConfigurationUpdateContent : IUtf8JsonSerializable
+    public partial class HDInsightAutoScaleConfigurationUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutoScale))
+            if (Core.Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoscale"u8);
                 writer.WriteObjectValue(AutoScale);

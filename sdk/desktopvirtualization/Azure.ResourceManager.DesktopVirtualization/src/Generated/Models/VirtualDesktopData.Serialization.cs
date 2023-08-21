@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class VirtualDesktopData : IUtf8JsonSerializable
+    public partial class VirtualDesktopData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (Core.Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> objectId = default;
-            Optional<string> description = default;
-            Optional<string> friendlyName = default;
-            Optional<string> iconHash = default;
-            Optional<BinaryData> iconContent = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> objectId = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<string> iconHash = default;
+            Core.Optional<BinaryData> iconContent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

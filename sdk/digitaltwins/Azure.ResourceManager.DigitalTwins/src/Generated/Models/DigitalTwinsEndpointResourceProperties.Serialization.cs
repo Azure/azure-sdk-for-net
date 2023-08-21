@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DigitalTwinsEndpointResourceProperties : IUtf8JsonSerializable
+    public partial class DigitalTwinsEndpointResourceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Optional.IsDefined(AuthenticationType))
+            if (Core.Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Optional.IsDefined(DeadLetterSecret))
+            if (Core.Optional.IsDefined(DeadLetterSecret))
             {
                 if (DeadLetterSecret != null)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("deadLetterSecret");
                 }
             }
-            if (Optional.IsDefined(DeadLetterUri))
+            if (Core.Optional.IsDefined(DeadLetterUri))
             {
                 if (DeadLetterUri != null)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("deadLetterUri");
                 }
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {

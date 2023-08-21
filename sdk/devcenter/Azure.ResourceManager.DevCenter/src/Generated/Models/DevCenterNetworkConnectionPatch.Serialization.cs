@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterNetworkConnectionPatch : IUtf8JsonSerializable
+    public partial class DevCenterNetworkConnectionPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -26,34 +26,34 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SubnetId))
+            if (Core.Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(DomainName))
+            if (Core.Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (Optional.IsDefined(OrganizationUnit))
+            if (Core.Optional.IsDefined(OrganizationUnit))
             {
                 writer.WritePropertyName("organizationUnit"u8);
                 writer.WriteStringValue(OrganizationUnit);
             }
-            if (Optional.IsDefined(DomainUsername))
+            if (Core.Optional.IsDefined(DomainUsername))
             {
                 writer.WritePropertyName("domainUsername"u8);
                 writer.WriteStringValue(DomainUsername);
             }
-            if (Optional.IsDefined(DomainPassword))
+            if (Core.Optional.IsDefined(DomainPassword))
             {
                 writer.WritePropertyName("domainPassword"u8);
                 writer.WriteStringValue(DomainPassword);

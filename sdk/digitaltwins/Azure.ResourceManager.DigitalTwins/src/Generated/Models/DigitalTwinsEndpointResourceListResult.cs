@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceListResult. </summary>
         internal DigitalTwinsEndpointResourceListResult()
         {
-            Value = new ChangeTrackingList<DigitalTwinsEndpointResourceData>();
+            Value = new Core.ChangeTrackingList<DigitalTwinsEndpointResourceData>();
         }
 
         /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceListResult. </summary>

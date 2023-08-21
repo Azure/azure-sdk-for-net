@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ResourceSku. </summary>
         internal ResourceSku()
         {
-            Locations = new ChangeTrackingList<string>();
-            ApiVersions = new ChangeTrackingList<string>();
-            Costs = new ChangeTrackingList<ResourceSkuCosts>();
-            Capabilities = new ChangeTrackingList<ResourceSkuCapabilities>();
-            Restrictions = new ChangeTrackingList<ResourceSkuRestrictions>();
+            Locations = new Core.ChangeTrackingList<string>();
+            ApiVersions = new Core.ChangeTrackingList<string>();
+            Costs = new Core.ChangeTrackingList<ResourceSkuCosts>();
+            Capabilities = new Core.ChangeTrackingList<ResourceSkuCapabilities>();
+            Restrictions = new Core.ChangeTrackingList<ResourceSkuRestrictions>();
         }
 
         /// <summary> Initializes a new instance of ResourceSku. </summary>

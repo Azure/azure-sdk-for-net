@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    public partial class SqlMigrationServiceData : IUtf8JsonSerializable
+    public partial class SqlMigrationServiceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.DataMigration
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> integrationRuntimeState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<string> integrationRuntimeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataMigration
                     continue;
                 }
             }
-            return new SqlMigrationServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, integrationRuntimeState.Value);
+            return new SqlMigrationServiceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, provisioningState.Value, integrationRuntimeState.Value);
         }
     }
 }

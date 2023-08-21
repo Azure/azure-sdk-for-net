@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisIotMappingProperties : IUtf8JsonSerializable
+    public partial class HealthcareApisIotMappingProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Content))
+            if (Core.Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<BinaryData> content = default;
+            Core.Optional<BinaryData> content = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"u8))

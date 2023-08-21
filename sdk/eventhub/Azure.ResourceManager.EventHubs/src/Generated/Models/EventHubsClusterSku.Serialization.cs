@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsClusterSku : IUtf8JsonSerializable
+    public partial class EventHubsClusterSku : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Optional.IsDefined(Capacity))
+            if (Core.Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 return null;
             }
             EventHubsClusterSkuName name = default;
-            Optional<int> capacity = default;
+            Core.Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new EventHubsClusterSku(name, Optional.ToNullable(capacity));
+            return new EventHubsClusterSku(name, Core.Optional.ToNullable(capacity));
         }
     }
 }

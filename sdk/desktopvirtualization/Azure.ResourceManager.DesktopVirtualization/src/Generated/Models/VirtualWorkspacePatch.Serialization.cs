@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class VirtualWorkspacePatch : IUtf8JsonSerializable
+    public partial class VirtualWorkspacePatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (Core.Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsCollectionDefined(ApplicationGroupReferences))
+            if (Core.Optional.IsCollectionDefined(ApplicationGroupReferences))
             {
                 writer.WritePropertyName("applicationGroupReferences"u8);
                 writer.WriteStartArray();

@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class KubernetesClusterBackupDataSourceSettings : IUtf8JsonSerializable
+    public partial class KubernetesClusterBackupDataSourceSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("snapshotVolumes"u8);
             writer.WriteBooleanValue(IsSnapshotVolumesEnabled);
             writer.WritePropertyName("includeClusterScopeResources"u8);
             writer.WriteBooleanValue(IsClusterScopeResourcesIncluded);
-            if (Optional.IsCollectionDefined(IncludedNamespaces))
+            if (Core.Optional.IsCollectionDefined(IncludedNamespaces))
             {
                 writer.WritePropertyName("includedNamespaces"u8);
                 writer.WriteStartArray();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExcludedNamespaces))
+            if (Core.Optional.IsCollectionDefined(ExcludedNamespaces))
             {
                 writer.WritePropertyName("excludedNamespaces"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IncludedResourceTypes))
+            if (Core.Optional.IsCollectionDefined(IncludedResourceTypes))
             {
                 writer.WritePropertyName("includedResourceTypes"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExcludedResourceTypes))
+            if (Core.Optional.IsCollectionDefined(ExcludedResourceTypes))
             {
                 writer.WritePropertyName("excludedResourceTypes"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LabelSelectors))
+            if (Core.Optional.IsCollectionDefined(LabelSelectors))
             {
                 writer.WritePropertyName("labelSelectors"u8);
                 writer.WriteStartArray();
@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             bool snapshotVolumes = default;
             bool includeClusterScopeResources = default;
-            Optional<IList<string>> includedNamespaces = default;
-            Optional<IList<string>> excludedNamespaces = default;
-            Optional<IList<string>> includedResourceTypes = default;
-            Optional<IList<string>> excludedResourceTypes = default;
-            Optional<IList<string>> labelSelectors = default;
+            Core.Optional<IList<string>> includedNamespaces = default;
+            Core.Optional<IList<string>> excludedNamespaces = default;
+            Core.Optional<IList<string>> includedResourceTypes = default;
+            Core.Optional<IList<string>> excludedResourceTypes = default;
+            Core.Optional<IList<string>> labelSelectors = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new KubernetesClusterBackupDataSourceSettings(objectType, snapshotVolumes, includeClusterScopeResources, Optional.ToList(includedNamespaces), Optional.ToList(excludedNamespaces), Optional.ToList(includedResourceTypes), Optional.ToList(excludedResourceTypes), Optional.ToList(labelSelectors));
+            return new KubernetesClusterBackupDataSourceSettings(objectType, snapshotVolumes, includeClusterScopeResources, Core.Optional.ToList(includedNamespaces), Core.Optional.ToList(excludedNamespaces), Core.Optional.ToList(includedResourceTypes), Core.Optional.ToList(excludedResourceTypes), Core.Optional.ToList(labelSelectors));
         }
     }
 }

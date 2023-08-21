@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="location"> The location. </param>
         public FrontDoorWebApplicationFirewallPolicyData(AzureLocation location) : base(location)
         {
-            FrontendEndpointLinks = new ChangeTrackingList<SubResource>();
-            RoutingRuleLinks = new ChangeTrackingList<SubResource>();
-            SecurityPolicyLinks = new ChangeTrackingList<SubResource>();
+            FrontendEndpointLinks = new Core.ChangeTrackingList<SubResource>();
+            RoutingRuleLinks = new Core.ChangeTrackingList<SubResource>();
+            SecurityPolicyLinks = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of FrontDoorWebApplicationFirewallPolicyData. </summary>

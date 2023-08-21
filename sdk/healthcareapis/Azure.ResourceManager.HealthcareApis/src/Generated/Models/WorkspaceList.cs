@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of WorkspaceList. </summary>
         internal WorkspaceList()
         {
-            Value = new ChangeTrackingList<HealthcareApisWorkspaceData>();
+            Value = new Core.ChangeTrackingList<HealthcareApisWorkspaceData>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceList. </summary>

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DeviceUpdateAccountData>> value = default;
+            Core.Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DeviceUpdateAccountData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     continue;
                 }
             }
-            return new AccountList(nextLink.Value, Optional.ToList(value));
+            return new AccountList(nextLink.Value, Core.Optional.ToList(value));
         }
     }
 }

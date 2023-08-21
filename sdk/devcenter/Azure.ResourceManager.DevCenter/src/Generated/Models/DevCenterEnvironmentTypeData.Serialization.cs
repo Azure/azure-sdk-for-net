@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class DevCenterEnvironmentTypeData : IUtf8JsonSerializable
+    public partial class DevCenterEnvironmentTypeData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.DevCenter
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DevCenterProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new DevCenterEnvironmentTypeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), Optional.ToNullable(provisioningState));
+            return new DevCenterEnvironmentTypeData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

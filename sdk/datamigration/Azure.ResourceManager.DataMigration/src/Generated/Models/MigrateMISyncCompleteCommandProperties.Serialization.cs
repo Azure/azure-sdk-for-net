@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateMISyncCompleteCommandProperties : IUtf8JsonSerializable
+    public partial class MigrateMISyncCompleteCommandProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Input))
+            if (Core.Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<MigrateMISyncCompleteCommandInput> input = default;
-            Optional<MigrateMISyncCompleteCommandOutput> output = default;
+            Core.Optional<MigrateMISyncCompleteCommandInput> input = default;
+            Core.Optional<MigrateMISyncCompleteCommandOutput> output = default;
             CommandType commandType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<CommandState> state = default;
+            Core.Optional<IReadOnlyList<ODataError>> errors = default;
+            Core.Optional<CommandState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateMISyncCompleteCommandProperties(commandType, Optional.ToList(errors), Optional.ToNullable(state), input.Value, output.Value);
+            return new MigrateMISyncCompleteCommandProperties(commandType, Core.Optional.ToList(errors), Core.Optional.ToNullable(state), input.Value, output.Value);
         }
     }
 }

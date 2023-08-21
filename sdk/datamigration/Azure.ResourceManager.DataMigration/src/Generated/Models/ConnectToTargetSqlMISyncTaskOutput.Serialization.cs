@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> targetServerVersion = default;
-            Optional<string> targetServerBrandVersion = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Core.Optional<string> targetServerVersion = default;
+            Core.Optional<string> targetServerBrandVersion = default;
+            Core.Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetServerVersion"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ConnectToTargetSqlMISyncTaskOutput(targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToList(validationErrors));
+            return new ConnectToTargetSqlMISyncTaskOutput(targetServerVersion.Value, targetServerBrandVersion.Value, Core.Optional.ToList(validationErrors));
         }
     }
 }

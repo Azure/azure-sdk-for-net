@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSyncCompleteCommandInput : IUtf8JsonSerializable
+    public partial class MigrateSyncCompleteCommandInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("databaseName"u8);
             writer.WriteStringValue(DatabaseName);
-            if (Optional.IsDefined(CommitTimeStamp))
+            if (Core.Optional.IsDefined(CommitTimeStamp))
             {
                 writer.WritePropertyName("commitTimeStamp"u8);
                 writer.WriteStringValue(CommitTimeStamp.Value, "O");
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string databaseName = default;
-            Optional<DateTimeOffset> commitTimeStamp = default;
+            Core.Optional<DateTimeOffset> commitTimeStamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSyncCompleteCommandInput(databaseName, Optional.ToNullable(commitTimeStamp));
+            return new MigrateSyncCompleteCommandInput(databaseName, Core.Optional.ToNullable(commitTimeStamp));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of FhirServiceCollection. </summary>
         internal FhirServiceCollection()
         {
-            Value = new ChangeTrackingList<FhirServiceData>();
+            Value = new Core.ChangeTrackingList<FhirServiceData>();
         }
 
         /// <summary> Initializes a new instance of FhirServiceCollection. </summary>

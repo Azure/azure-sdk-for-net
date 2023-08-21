@@ -18,13 +18,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> mediaType = default;
-            Optional<long> size = default;
-            Optional<string> digest = default;
-            Optional<long> length = default;
-            Optional<string> repository = default;
-            Optional<string> url = default;
-            Optional<string> tag = default;
+            Core.Optional<string> mediaType = default;
+            Core.Optional<long> size = default;
+            Core.Optional<string> digest = default;
+            Core.Optional<long> length = default;
+            Core.Optional<string> repository = default;
+            Core.Optional<string> url = default;
+            Core.Optional<string> tag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"u8))
@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ContainerRegistryEventTarget(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToNullable(length), repository.Value, url.Value, tag.Value);
+            return new ContainerRegistryEventTarget(mediaType.Value, Core.Optional.ToNullable(size), digest.Value, Core.Optional.ToNullable(length), repository.Value, url.Value, tag.Value);
         }
     }
 }

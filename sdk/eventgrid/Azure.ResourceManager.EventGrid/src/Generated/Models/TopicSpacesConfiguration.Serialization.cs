@@ -10,42 +10,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class TopicSpacesConfiguration : IUtf8JsonSerializable
+    public partial class TopicSpacesConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(RouteTopicResourceId))
+            if (Core.Optional.IsDefined(RouteTopicResourceId))
             {
                 writer.WritePropertyName("routeTopicResourceId"u8);
                 writer.WriteStringValue(RouteTopicResourceId);
             }
-            if (Optional.IsDefined(RoutingEnrichments))
+            if (Core.Optional.IsDefined(RoutingEnrichments))
             {
                 writer.WritePropertyName("routingEnrichments"u8);
                 writer.WriteObjectValue(RoutingEnrichments);
             }
-            if (Optional.IsDefined(ClientAuthentication))
+            if (Core.Optional.IsDefined(ClientAuthentication))
             {
                 writer.WritePropertyName("clientAuthentication"u8);
                 writer.WriteObjectValue(ClientAuthentication);
             }
-            if (Optional.IsDefined(MaximumSessionExpiryInHours))
+            if (Core.Optional.IsDefined(MaximumSessionExpiryInHours))
             {
                 writer.WritePropertyName("maximumSessionExpiryInHours"u8);
                 writer.WriteNumberValue(MaximumSessionExpiryInHours.Value);
             }
-            if (Optional.IsDefined(MaximumClientSessionsPerAuthenticationName))
+            if (Core.Optional.IsDefined(MaximumClientSessionsPerAuthenticationName))
             {
                 writer.WritePropertyName("maximumClientSessionsPerAuthenticationName"u8);
                 writer.WriteNumberValue(MaximumClientSessionsPerAuthenticationName.Value);
             }
-            if (Optional.IsDefined(RoutingIdentityInfo))
+            if (Core.Optional.IsDefined(RoutingIdentityInfo))
             {
                 writer.WritePropertyName("routingIdentityInfo"u8);
                 writer.WriteObjectValue(RoutingIdentityInfo);
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<TopicSpacesConfigurationState> state = default;
-            Optional<string> routeTopicResourceId = default;
-            Optional<string> hostname = default;
-            Optional<RoutingEnrichments> routingEnrichments = default;
-            Optional<ClientAuthenticationSettings> clientAuthentication = default;
-            Optional<int> maximumSessionExpiryInHours = default;
-            Optional<int> maximumClientSessionsPerAuthenticationName = default;
-            Optional<RoutingIdentityInfo> routingIdentityInfo = default;
+            Core.Optional<TopicSpacesConfigurationState> state = default;
+            Core.Optional<string> routeTopicResourceId = default;
+            Core.Optional<string> hostname = default;
+            Core.Optional<RoutingEnrichments> routingEnrichments = default;
+            Core.Optional<ClientAuthenticationSettings> clientAuthentication = default;
+            Core.Optional<int> maximumSessionExpiryInHours = default;
+            Core.Optional<int> maximumClientSessionsPerAuthenticationName = default;
+            Core.Optional<RoutingIdentityInfo> routingIdentityInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new TopicSpacesConfiguration(Optional.ToNullable(state), routeTopicResourceId.Value, hostname.Value, routingEnrichments.Value, clientAuthentication.Value, Optional.ToNullable(maximumSessionExpiryInHours), Optional.ToNullable(maximumClientSessionsPerAuthenticationName), routingIdentityInfo.Value);
+            return new TopicSpacesConfiguration(Core.Optional.ToNullable(state), routeTopicResourceId.Value, hostname.Value, routingEnrichments.Value, clientAuthentication.Value, Core.Optional.ToNullable(maximumSessionExpiryInHours), Core.Optional.ToNullable(maximumClientSessionsPerAuthenticationName), routingIdentityInfo.Value);
         }
     }
 }

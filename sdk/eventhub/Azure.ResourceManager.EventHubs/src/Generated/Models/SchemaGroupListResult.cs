@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of SchemaGroupListResult. </summary>
         internal SchemaGroupListResult()
         {
-            Value = new ChangeTrackingList<EventHubsSchemaGroupData>();
+            Value = new Core.ChangeTrackingList<EventHubsSchemaGroupData>();
         }
 
         /// <summary> Initializes a new instance of SchemaGroupListResult. </summary>

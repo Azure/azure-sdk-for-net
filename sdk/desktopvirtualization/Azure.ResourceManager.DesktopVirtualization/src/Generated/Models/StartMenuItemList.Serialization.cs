@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DesktopVirtualizationStartMenuItem>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DesktopVirtualizationStartMenuItem>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new StartMenuItemList(Optional.ToList(value), nextLink.Value);
+            return new StartMenuItemList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    internal partial class AzureMonitorAlertSettings : IUtf8JsonSerializable
+    internal partial class AzureMonitorAlertSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlertSettingsForAllJobFailures))
+            if (Core.Optional.IsDefined(AlertSettingsForAllJobFailures))
             {
                 writer.WritePropertyName("alertsForAllJobFailures"u8);
                 writer.WriteStringValue(AlertSettingsForAllJobFailures.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<AzureMonitorAlertsState> alertsForAllJobFailures = default;
+            Core.Optional<AzureMonitorAlertsState> alertsForAllJobFailures = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertsForAllJobFailures"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new AzureMonitorAlertSettings(Optional.ToNullable(alertsForAllJobFailures));
+            return new AzureMonitorAlertSettings(Core.Optional.ToNullable(alertsForAllJobFailures));
         }
     }
 }

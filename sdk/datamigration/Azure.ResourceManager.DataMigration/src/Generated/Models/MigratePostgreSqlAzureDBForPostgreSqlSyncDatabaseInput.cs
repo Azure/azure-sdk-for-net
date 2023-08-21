@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput. </summary>
         public MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput()
         {
-            MigrationSetting = new ChangeTrackingDictionary<string, BinaryData>();
-            SourceSetting = new ChangeTrackingDictionary<string, string>();
-            TargetSetting = new ChangeTrackingDictionary<string, string>();
-            SelectedTables = new ChangeTrackingList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput>();
+            MigrationSetting = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            SourceSetting = new Core.ChangeTrackingDictionary<string, string>();
+            TargetSetting = new Core.ChangeTrackingDictionary<string, string>();
+            SelectedTables = new Core.ChangeTrackingList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput>();
         }
 
         /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput. </summary>

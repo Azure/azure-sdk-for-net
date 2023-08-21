@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightClusterCreationValidateResult. </summary>
         internal HDInsightClusterCreationValidateResult()
         {
-            ValidationErrors = new ChangeTrackingList<HDInsightClusterValidationErrorInfo>();
-            ValidationWarnings = new ChangeTrackingList<HDInsightClusterValidationErrorInfo>();
-            AaddsResourcesDetails = new ChangeTrackingList<HDInsightClusterAaddsDetail>();
+            ValidationErrors = new Core.ChangeTrackingList<HDInsightClusterValidationErrorInfo>();
+            ValidationWarnings = new Core.ChangeTrackingList<HDInsightClusterValidationErrorInfo>();
+            AaddsResourcesDetails = new Core.ChangeTrackingList<HDInsightClusterAaddsDetail>();
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterCreationValidateResult. </summary>

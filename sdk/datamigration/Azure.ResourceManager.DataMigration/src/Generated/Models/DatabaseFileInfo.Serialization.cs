@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<string> id = default;
-            Optional<string> logicalName = default;
-            Optional<string> physicalFullName = default;
-            Optional<string> restoreFullName = default;
-            Optional<DatabaseFileType> fileType = default;
-            Optional<double> sizeMB = default;
+            Core.Optional<string> databaseName = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> logicalName = default;
+            Core.Optional<string> physicalFullName = default;
+            Core.Optional<string> restoreFullName = default;
+            Core.Optional<DatabaseFileType> fileType = default;
+            Core.Optional<double> sizeMB = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new DatabaseFileInfo(databaseName.Value, id.Value, logicalName.Value, physicalFullName.Value, restoreFullName.Value, Optional.ToNullable(fileType), Optional.ToNullable(sizeMB));
+            return new DatabaseFileInfo(databaseName.Value, id.Value, logicalName.Value, physicalFullName.Value, restoreFullName.Value, Core.Optional.ToNullable(fileType), Core.Optional.ToNullable(sizeMB));
         }
     }
 }

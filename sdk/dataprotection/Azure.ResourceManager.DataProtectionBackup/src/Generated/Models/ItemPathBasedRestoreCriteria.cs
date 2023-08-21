@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             ItemPath = itemPath;
             IsPathRelativeToBackupItem = isPathRelativeToBackupItem;
-            SubItemPathPrefix = new ChangeTrackingList<string>();
+            SubItemPathPrefix = new Core.ChangeTrackingList<string>();
             ObjectType = "ItemPathBasedRestoreCriteria";
         }
 

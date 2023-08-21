@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterPoolPoolsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevCenterPoolResource>(new DevCenterPoolOperationSource(Client), _devCenterPoolPoolsClientDiagnostics, Pipeline, _devCenterPoolPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterPoolResource>(new DevCenterPoolOperationSource(Client), _devCenterPoolPoolsClientDiagnostics, Pipeline, _devCenterPoolPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterPoolPoolsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, cancellationToken);
-                var operation = new DevCenterArmOperation<DevCenterPoolResource>(new DevCenterPoolOperationSource(Client), _devCenterPoolPoolsClientDiagnostics, Pipeline, _devCenterPoolPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterPoolResource>(new DevCenterPoolOperationSource(Client), _devCenterPoolPoolsClientDiagnostics, Pipeline, _devCenterPoolPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterPoolPoolsRestClient.CreateListByProjectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterPoolPoolsRestClient.CreateListByProjectNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterPoolResource(Client, DevCenterPoolData.DeserializeDevCenterPoolData(e)), _devCenterPoolPoolsClientDiagnostics, Pipeline, "DevCenterPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterPoolResource(Client, DevCenterPoolData.DeserializeDevCenterPoolData(e)), _devCenterPoolPoolsClientDiagnostics, Pipeline, "DevCenterPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterPoolPoolsRestClient.CreateListByProjectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterPoolPoolsRestClient.CreateListByProjectNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterPoolResource(Client, DevCenterPoolData.DeserializeDevCenterPoolData(e)), _devCenterPoolPoolsClientDiagnostics, Pipeline, "DevCenterPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterPoolResource(Client, DevCenterPoolData.DeserializeDevCenterPoolData(e)), _devCenterPoolPoolsClientDiagnostics, Pipeline, "DevCenterPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

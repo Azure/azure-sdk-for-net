@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of PartnerAuthorization. </summary>
         public PartnerAuthorization()
         {
-            AuthorizedPartnersList = new ChangeTrackingList<EventGridPartnerContent>();
+            AuthorizedPartnersList = new Core.ChangeTrackingList<EventGridPartnerContent>();
         }
 
         /// <summary> Initializes a new instance of PartnerAuthorization. </summary>

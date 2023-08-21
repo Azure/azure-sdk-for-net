@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Grafana
 {
-    public partial class GrafanaPrivateLinkResourceData : IUtf8JsonSerializable
+    public partial class GrafanaPrivateLinkResourceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RequiredZoneNames))
+            if (Core.Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Grafana
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GrafanaProvisioningState> provisioningState = default;
-            Optional<string> groupId = default;
-            Optional<IReadOnlyList<string>> requiredMembers = default;
-            Optional<IList<string>> requiredZoneNames = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<GrafanaProvisioningState> provisioningState = default;
+            Core.Optional<string> groupId = default;
+            Core.Optional<IReadOnlyList<string>> requiredMembers = default;
+            Core.Optional<IList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Grafana
                     continue;
                 }
             }
-            return new GrafanaPrivateLinkResourceData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new GrafanaPrivateLinkResourceData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), groupId.Value, Core.Optional.ToList(requiredMembers), Core.Optional.ToList(requiredZoneNames));
         }
     }
 }

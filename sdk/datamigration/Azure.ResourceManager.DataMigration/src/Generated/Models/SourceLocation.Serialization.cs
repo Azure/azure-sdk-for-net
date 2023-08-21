@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class SourceLocation : IUtf8JsonSerializable
+    public partial class SourceLocation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FileShare))
+            if (Core.Optional.IsDefined(FileShare))
             {
                 writer.WritePropertyName("fileShare"u8);
                 writer.WriteObjectValue(FileShare);
             }
-            if (Optional.IsDefined(AzureBlob))
+            if (Core.Optional.IsDefined(AzureBlob))
             {
                 writer.WritePropertyName("azureBlob"u8);
                 writer.WriteObjectValue(AzureBlob);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<SqlFileShare> fileShare = default;
-            Optional<AzureBlob> azureBlob = default;
-            Optional<string> fileStorageType = default;
+            Core.Optional<SqlFileShare> fileShare = default;
+            Core.Optional<AzureBlob> azureBlob = default;
+            Core.Optional<string> fileStorageType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileShare"u8))

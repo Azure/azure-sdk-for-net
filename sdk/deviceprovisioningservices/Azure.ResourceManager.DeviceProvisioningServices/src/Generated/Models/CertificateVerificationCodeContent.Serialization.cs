@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class CertificateVerificationCodeContent : IUtf8JsonSerializable
+    public partial class CertificateVerificationCodeContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Certificate))
+            if (Core.Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteStringValue(Certificate);

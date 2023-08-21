@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Initializes a new instance of GroupIdInformationResponse. </summary>
         internal GroupIdInformationResponse()
         {
-            Value = new ChangeTrackingList<DigitalTwinsPrivateLinkResourceData>();
+            Value = new Core.ChangeTrackingList<DigitalTwinsPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of GroupIdInformationResponse. </summary>

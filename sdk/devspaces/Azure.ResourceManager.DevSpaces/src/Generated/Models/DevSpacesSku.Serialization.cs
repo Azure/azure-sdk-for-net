@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
-    public partial class DevSpacesSku : IUtf8JsonSerializable
+    public partial class DevSpacesSku : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Optional.IsDefined(Tier))
+            if (Core.Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 return null;
             }
             DevSpacesSkuName name = default;
-            Optional<DevSpacesSkuTier> tier = default;
+            Core.Optional<DevSpacesSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                     continue;
                 }
             }
-            return new DevSpacesSku(name, Optional.ToNullable(tier));
+            return new DevSpacesSku(name, Core.Optional.ToNullable(tier));
         }
     }
 }

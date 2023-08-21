@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> waitType = default;
-            Optional<float> waitTimeMs = default;
-            Optional<long> waitCount = default;
+            Core.Optional<string> waitType = default;
+            Core.Optional<float> waitTimeMs = default;
+            Core.Optional<long> waitCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("waitType"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new WaitStatistics(waitType.Value, Optional.ToNullable(waitTimeMs), Optional.ToNullable(waitCount));
+            return new WaitStatistics(waitType.Value, Core.Optional.ToNullable(waitTimeMs), Core.Optional.ToNullable(waitCount));
         }
     }
 }

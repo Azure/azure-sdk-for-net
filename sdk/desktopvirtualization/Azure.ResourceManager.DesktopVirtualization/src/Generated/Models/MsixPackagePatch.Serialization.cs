@@ -11,24 +11,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class MsixPackagePatch : IUtf8JsonSerializable
+    public partial class MsixPackagePatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsActive))
+            if (Core.Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("isActive"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
-            if (Optional.IsDefined(IsRegularRegistration))
+            if (Core.Optional.IsDefined(IsRegularRegistration))
             {
                 writer.WritePropertyName("isRegularRegistration"u8);
                 writer.WriteBooleanValue(IsRegularRegistration.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isActive = default;
-            Optional<bool> isRegularRegistration = default;
-            Optional<string> displayName = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<bool> isActive = default;
+            Core.Optional<bool> isRegularRegistration = default;
+            Core.Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new MsixPackagePatch(id, name, type, systemData.Value, Optional.ToNullable(isActive), Optional.ToNullable(isRegularRegistration), displayName.Value);
+            return new MsixPackagePatch(id, name, type, systemData.Value, Core.Optional.ToNullable(isActive), Core.Optional.ToNullable(isRegularRegistration), displayName.Value);
         }
     }
 }

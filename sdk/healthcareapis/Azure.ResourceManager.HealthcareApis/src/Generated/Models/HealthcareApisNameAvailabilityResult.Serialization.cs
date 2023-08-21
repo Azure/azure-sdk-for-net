@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<bool> nameAvailable = default;
-            Optional<HealthcareApisNameUnavailableReason> reason = default;
-            Optional<string> message = default;
+            Core.Optional<bool> nameAvailable = default;
+            Core.Optional<HealthcareApisNameUnavailableReason> reason = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new HealthcareApisNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
+            return new HealthcareApisNameAvailabilityResult(Core.Optional.ToNullable(nameAvailable), Core.Optional.ToNullable(reason), message.Value);
         }
     }
 }

@@ -21,9 +21,9 @@ namespace Azure.AI.FormRecognizer.Models
                 return null;
             }
             string docType = default;
-            Optional<Guid> modelId = default;
+            Core.Optional<Guid> modelId = default;
             IReadOnlyList<int> pageRange = default;
-            Optional<float> docTypeConfidence = default;
+            Core.Optional<float> docTypeConfidence = default;
             IReadOnlyDictionary<string, FieldValue_internal> fields = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,7 +71,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new DocumentResult(docType, Optional.ToNullable(modelId), pageRange, Optional.ToNullable(docTypeConfidence), fields);
+            return new DocumentResult(docType, Core.Optional.ToNullable(modelId), pageRange, Core.Optional.ToNullable(docTypeConfidence), fields);
         }
     }
 }

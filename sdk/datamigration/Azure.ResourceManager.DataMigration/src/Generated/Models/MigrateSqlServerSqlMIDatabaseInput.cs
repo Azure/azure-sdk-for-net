@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             Name = name;
             RestoreDatabaseName = restoreDatabaseName;
-            BackupFilePaths = new ChangeTrackingList<string>();
+            BackupFilePaths = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MigrateSqlServerSqlMIDatabaseInput. </summary>

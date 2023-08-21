@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    internal class HealthcareApisIotConnectorOperationSource : IOperationSource<HealthcareApisIotConnectorResource>
+    internal class HealthcareApisIotConnectorOperationSource : Core.IOperationSource<HealthcareApisIotConnectorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HealthcareApis
             _client = client;
         }
 
-        HealthcareApisIotConnectorResource IOperationSource<HealthcareApisIotConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HealthcareApisIotConnectorResource Core.IOperationSource<HealthcareApisIotConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(document.RootElement);
             return new HealthcareApisIotConnectorResource(_client, data);
         }
 
-        async ValueTask<HealthcareApisIotConnectorResource> IOperationSource<HealthcareApisIotConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HealthcareApisIotConnectorResource> Core.IOperationSource<HealthcareApisIotConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(document.RootElement);

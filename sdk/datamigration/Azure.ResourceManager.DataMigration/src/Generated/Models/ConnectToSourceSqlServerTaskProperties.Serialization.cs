@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToSourceSqlServerTaskProperties : IUtf8JsonSerializable
+    public partial class ConnectToSourceSqlServerTaskProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Input))
+            if (Core.Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (Optional.IsDefined(TaskId))
+            if (Core.Optional.IsDefined(TaskId))
             {
                 writer.WritePropertyName("taskId"u8);
                 writer.WriteStringValue(TaskId);
             }
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
-            if (Optional.IsCollectionDefined(ClientData))
+            if (Core.Optional.IsCollectionDefined(ClientData))
             {
                 writer.WritePropertyName("clientData"u8);
                 writer.WriteStartObject();
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<ConnectToSourceSqlServerTaskInput> input = default;
-            Optional<IReadOnlyList<ConnectToSourceSqlServerTaskOutput>> output = default;
-            Optional<string> taskId = default;
+            Core.Optional<ConnectToSourceSqlServerTaskInput> input = default;
+            Core.Optional<IReadOnlyList<ConnectToSourceSqlServerTaskOutput>> output = default;
+            Core.Optional<string> taskId = default;
             TaskType taskType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<TaskState> state = default;
-            Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            Core.Optional<IReadOnlyList<ODataError>> errors = default;
+            Core.Optional<TaskState> state = default;
+            Core.Optional<IReadOnlyList<CommandProperties>> commands = default;
+            Core.Optional<IDictionary<string, string>> clientData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ConnectToSourceSqlServerTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), input.Value, Optional.ToList(output), taskId.Value);
+            return new ConnectToSourceSqlServerTaskProperties(taskType, Core.Optional.ToList(errors), Core.Optional.ToNullable(state), Core.Optional.ToList(commands), Core.Optional.ToDictionary(clientData), input.Value, Core.Optional.ToList(output), taskId.Value);
         }
     }
 }

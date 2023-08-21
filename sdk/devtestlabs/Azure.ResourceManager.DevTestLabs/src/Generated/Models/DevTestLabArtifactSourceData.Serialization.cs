@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabArtifactSourceData : IUtf8JsonSerializable
+    public partial class DevTestLabArtifactSourceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,42 +34,42 @@ namespace Azure.ResourceManager.DevTestLabs
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SourceType))
+            if (Core.Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("sourceType"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
-            if (Optional.IsDefined(FolderPath))
+            if (Core.Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (Optional.IsDefined(ArmTemplateFolderPath))
+            if (Core.Optional.IsDefined(ArmTemplateFolderPath))
             {
                 writer.WritePropertyName("armTemplateFolderPath"u8);
                 writer.WriteStringValue(ArmTemplateFolderPath);
             }
-            if (Optional.IsDefined(BranchRef))
+            if (Core.Optional.IsDefined(BranchRef))
             {
                 writer.WritePropertyName("branchRef"u8);
                 writer.WriteStringValue(BranchRef);
             }
-            if (Optional.IsDefined(SecurityToken))
+            if (Core.Optional.IsDefined(SecurityToken))
             {
                 writer.WritePropertyName("securityToken"u8);
                 writer.WriteStringValue(SecurityToken);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -84,23 +84,23 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<Uri> uri = default;
-            Optional<DevTestLabSourceControlType> sourceType = default;
-            Optional<string> folderPath = default;
-            Optional<string> armTemplateFolderPath = default;
-            Optional<string> branchRef = default;
-            Optional<string> securityToken = default;
-            Optional<DevTestLabEnableStatus> status = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<Uri> uri = default;
+            Core.Optional<DevTestLabSourceControlType> sourceType = default;
+            Core.Optional<string> folderPath = default;
+            Core.Optional<string> armTemplateFolderPath = default;
+            Core.Optional<string> branchRef = default;
+            Core.Optional<string> securityToken = default;
+            Core.Optional<DevTestLabEnableStatus> status = default;
+            Core.Optional<DateTimeOffset> createdDate = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     continue;
                 }
             }
-            return new DevTestLabArtifactSourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, displayName.Value, uri.Value, Optional.ToNullable(sourceType), folderPath.Value, armTemplateFolderPath.Value, branchRef.Value, securityToken.Value, Optional.ToNullable(status), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
+            return new DevTestLabArtifactSourceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, displayName.Value, uri.Value, Core.Optional.ToNullable(sourceType), folderPath.Value, armTemplateFolderPath.Value, branchRef.Value, securityToken.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(createdDate), provisioningState.Value, Core.Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

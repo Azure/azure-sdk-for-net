@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    public partial class RestHealthCheck : IUtf8JsonSerializable
+    public partial class RestHealthCheck : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("request"u8);
             writer.WriteObjectValue(Request);
-            if (Optional.IsDefined(Response))
+            if (Core.Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
                 writer.WriteObjectValue(Response);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             }
             string name = default;
             RestRequest request = default;
-            Optional<RestResponse> response = default;
+            Core.Optional<RestResponse> response = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

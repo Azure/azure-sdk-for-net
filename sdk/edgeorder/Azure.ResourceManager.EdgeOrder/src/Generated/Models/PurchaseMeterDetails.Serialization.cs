@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> productId = default;
-            Optional<string> skuId = default;
-            Optional<string> termId = default;
+            Core.Optional<string> productId = default;
+            Core.Optional<string> skuId = default;
+            Core.Optional<string> termId = default;
             BillingType billingType = default;
-            Optional<double> multiplier = default;
-            Optional<EdgeOrderProductChargingType> chargingType = default;
+            Core.Optional<double> multiplier = default;
+            Core.Optional<EdgeOrderProductChargingType> chargingType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("productId"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new PurchaseMeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType), productId.Value, skuId.Value, termId.Value);
+            return new PurchaseMeterDetails(billingType, Core.Optional.ToNullable(multiplier), Core.Optional.ToNullable(chargingType), productId.Value, skuId.Value, termId.Value);
         }
     }
 }

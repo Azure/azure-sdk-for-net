@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightClusterDefinition. </summary>
         public HDInsightClusterDefinition()
         {
-            ComponentVersion = new ChangeTrackingDictionary<string, string>();
+            ComponentVersion = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterDefinition. </summary>

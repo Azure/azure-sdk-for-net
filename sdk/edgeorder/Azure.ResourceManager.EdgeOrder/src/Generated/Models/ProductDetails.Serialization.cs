@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class ProductDetails : IUtf8JsonSerializable
+    public partial class ProductDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayInfo))
+            if (Core.Optional.IsDefined(DisplayInfo))
             {
                 writer.WritePropertyName("displayInfo"u8);
                 writer.WriteObjectValue(DisplayInfo);
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<ProductDisplayInfo> displayInfo = default;
+            Core.Optional<ProductDisplayInfo> displayInfo = default;
             HierarchyInformation hierarchyInformation = default;
-            Optional<int> count = default;
-            Optional<DoubleEncryptionStatus> productDoubleEncryptionStatus = default;
-            Optional<IReadOnlyList<EdgeOrderProductDeviceDetails>> deviceDetails = default;
+            Core.Optional<int> count = default;
+            Core.Optional<DoubleEncryptionStatus> productDoubleEncryptionStatus = default;
+            Core.Optional<IReadOnlyList<EdgeOrderProductDeviceDetails>> deviceDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayInfo"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new ProductDetails(displayInfo.Value, hierarchyInformation, Optional.ToNullable(count), Optional.ToNullable(productDoubleEncryptionStatus), Optional.ToList(deviceDetails));
+            return new ProductDetails(displayInfo.Value, hierarchyInformation, Core.Optional.ToNullable(count), Core.Optional.ToNullable(productDoubleEncryptionStatus), Core.Optional.ToList(deviceDetails));
         }
     }
 }

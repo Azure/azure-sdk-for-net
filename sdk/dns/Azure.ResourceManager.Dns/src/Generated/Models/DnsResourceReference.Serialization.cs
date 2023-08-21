@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WritableSubResource>> dnsResources = default;
-            Optional<WritableSubResource> targetResource = default;
+            Core.Optional<IReadOnlyList<WritableSubResource>> dnsResources = default;
+            Core.Optional<WritableSubResource> targetResource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dnsResources"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new DnsResourceReference(Optional.ToList(dnsResources), targetResource);
+            return new DnsResourceReference(Core.Optional.ToList(dnsResources), targetResource);
         }
     }
 }

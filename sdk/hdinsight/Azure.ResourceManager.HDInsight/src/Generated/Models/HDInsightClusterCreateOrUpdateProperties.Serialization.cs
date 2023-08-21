@@ -10,77 +10,77 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightClusterCreateOrUpdateProperties : IUtf8JsonSerializable
+    public partial class HDInsightClusterCreateOrUpdateProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterVersion))
+            if (Core.Optional.IsDefined(ClusterVersion))
             {
                 writer.WritePropertyName("clusterVersion"u8);
                 writer.WriteStringValue(ClusterVersion);
             }
-            if (Optional.IsDefined(OSType))
+            if (Core.Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (Optional.IsDefined(Tier))
+            if (Core.Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (Optional.IsDefined(ClusterDefinition))
+            if (Core.Optional.IsDefined(ClusterDefinition))
             {
                 writer.WritePropertyName("clusterDefinition"u8);
                 writer.WriteObjectValue(ClusterDefinition);
             }
-            if (Optional.IsDefined(KafkaRestProperties))
+            if (Core.Optional.IsDefined(KafkaRestProperties))
             {
                 writer.WritePropertyName("kafkaRestProperties"u8);
                 writer.WriteObjectValue(KafkaRestProperties);
             }
-            if (Optional.IsDefined(SecurityProfile))
+            if (Core.Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (Optional.IsDefined(ComputeProfile))
+            if (Core.Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
                 writer.WriteObjectValue(ComputeProfile);
             }
-            if (Optional.IsDefined(StorageProfile))
+            if (Core.Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (Optional.IsDefined(DiskEncryptionProperties))
+            if (Core.Optional.IsDefined(DiskEncryptionProperties))
             {
                 writer.WritePropertyName("diskEncryptionProperties"u8);
                 writer.WriteObjectValue(DiskEncryptionProperties);
             }
-            if (Optional.IsDefined(EncryptionInTransitProperties))
+            if (Core.Optional.IsDefined(EncryptionInTransitProperties))
             {
                 writer.WritePropertyName("encryptionInTransitProperties"u8);
                 writer.WriteObjectValue(EncryptionInTransitProperties);
             }
-            if (Optional.IsDefined(MinSupportedTlsVersion))
+            if (Core.Optional.IsDefined(MinSupportedTlsVersion))
             {
                 writer.WritePropertyName("minSupportedTlsVersion"u8);
                 writer.WriteStringValue(MinSupportedTlsVersion);
             }
-            if (Optional.IsDefined(NetworkProperties))
+            if (Core.Optional.IsDefined(NetworkProperties))
             {
                 writer.WritePropertyName("networkProperties"u8);
                 writer.WriteObjectValue(NetworkProperties);
             }
-            if (Optional.IsDefined(ComputeIsolationProperties))
+            if (Core.Optional.IsDefined(ComputeIsolationProperties))
             {
                 writer.WritePropertyName("computeIsolationProperties"u8);
                 writer.WriteObjectValue(ComputeIsolationProperties);
             }
-            if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
+            if (Core.Optional.IsCollectionDefined(PrivateLinkConfigurations))
             {
                 writer.WritePropertyName("privateLinkConfigurations"u8);
                 writer.WriteStartArray();

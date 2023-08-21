@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of GetUserTablesPostgreSqlTaskProperties. </summary>
         public GetUserTablesPostgreSqlTaskProperties()
         {
-            Output = new ChangeTrackingList<GetUserTablesPostgreSqlTaskOutput>();
+            Output = new Core.ChangeTrackingList<GetUserTablesPostgreSqlTaskOutput>();
             TaskType = TaskType.GetUserTablesPostgreSql;
         }
 

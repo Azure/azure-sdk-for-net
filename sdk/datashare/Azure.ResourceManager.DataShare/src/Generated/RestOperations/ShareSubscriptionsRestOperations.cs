@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataShare
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(shareSubscriptionSynchronization);
             request.Content = content;
             _userAgent.Apply(message);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataShare
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(shareSubscriptionSynchronization);
             request.Content = content;
             _userAgent.Apply(message);
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.DataShare
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
+            var content0 = new Core.Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content);
             request.Content = content0;
             _userAgent.Apply(message);
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.DataShare
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);

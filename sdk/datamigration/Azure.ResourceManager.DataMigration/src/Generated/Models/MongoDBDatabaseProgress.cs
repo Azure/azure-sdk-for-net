@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Argument.AssertNotNull(elapsedTime, nameof(elapsedTime));
             Argument.AssertNotNull(errors, nameof(errors));
 
-            Collections = new ChangeTrackingDictionary<string, MongoDBCollectionProgress>();
+            Collections = new Core.ChangeTrackingDictionary<string, MongoDBCollectionProgress>();
             ResultType = MongoDBProgressResultType.Database;
         }
 

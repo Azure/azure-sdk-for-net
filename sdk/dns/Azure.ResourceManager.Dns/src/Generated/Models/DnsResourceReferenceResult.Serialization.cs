@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DnsResourceReference>> dnsResourceReferences = default;
+            Core.Optional<IReadOnlyList<DnsResourceReference>> dnsResourceReferences = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new DnsResourceReferenceResult(Optional.ToList(dnsResourceReferences));
+            return new DnsResourceReferenceResult(Core.Optional.ToList(dnsResourceReferences));
         }
     }
 }

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ValidateMigrationInputSqlServerSqlMISyncTaskOutput(id.Value, name.Value, Optional.ToList(validationErrors));
+            return new ValidateMigrationInputSqlServerSqlMISyncTaskOutput(id.Value, name.Value, Core.Optional.ToList(validationErrors));
         }
     }
 }

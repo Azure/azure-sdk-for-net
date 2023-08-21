@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <summary> Initializes a new instance of IotDpsSkuDefinitionListResult. </summary>
         internal IotDpsSkuDefinitionListResult()
         {
-            Value = new ChangeTrackingList<DeviceProvisioningServicesSkuDefinition>();
+            Value = new Core.ChangeTrackingList<DeviceProvisioningServicesSkuDefinition>();
         }
 
         /// <summary> Initializes a new instance of IotDpsSkuDefinitionListResult. </summary>

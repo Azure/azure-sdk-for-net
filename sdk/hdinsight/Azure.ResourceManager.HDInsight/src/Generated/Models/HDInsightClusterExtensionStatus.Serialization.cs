@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<bool> clusterMonitoringEnabled = default;
-            Optional<string> workspaceId = default;
+            Core.Optional<bool> clusterMonitoringEnabled = default;
+            Core.Optional<string> workspaceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterMonitoringEnabled"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightClusterExtensionStatus(Optional.ToNullable(clusterMonitoringEnabled), workspaceId.Value);
+            return new HDInsightClusterExtensionStatus(Core.Optional.ToNullable(clusterMonitoringEnabled), workspaceId.Value);
         }
     }
 }

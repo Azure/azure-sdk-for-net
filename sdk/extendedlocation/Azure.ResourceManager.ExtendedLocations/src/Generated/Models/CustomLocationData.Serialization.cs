@@ -13,17 +13,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ExtendedLocations
 {
-    public partial class CustomLocationData : IUtf8JsonSerializable
+    public partial class CustomLocationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.ExtendedLocations
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Authentication))
+            if (Core.Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (Optional.IsCollectionDefined(ClusterExtensionIds))
+            if (Core.Optional.IsCollectionDefined(ClusterExtensionIds))
             {
                 writer.WritePropertyName("clusterExtensionIds"u8);
                 writer.WriteStartArray();
@@ -58,27 +58,27 @@ namespace Azure.ResourceManager.ExtendedLocations
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(HostResourceId))
+            if (Core.Optional.IsDefined(HostResourceId))
             {
                 writer.WritePropertyName("hostResourceId"u8);
                 writer.WriteStringValue(HostResourceId);
             }
-            if (Optional.IsDefined(HostType))
+            if (Core.Optional.IsDefined(HostType))
             {
                 writer.WritePropertyName("hostType"u8);
                 writer.WriteStringValue(HostType.Value.ToString());
             }
-            if (Optional.IsDefined(Namespace))
+            if (Core.Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -93,20 +93,20 @@ namespace Azure.ResourceManager.ExtendedLocations
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<CustomLocationAuthentication> authentication = default;
-            Optional<IList<ResourceIdentifier>> clusterExtensionIds = default;
-            Optional<string> displayName = default;
-            Optional<ResourceIdentifier> hostResourceId = default;
-            Optional<CustomLocationHostType> hostType = default;
-            Optional<string> @namespace = default;
-            Optional<string> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<CustomLocationAuthentication> authentication = default;
+            Core.Optional<IList<ResourceIdentifier>> clusterExtensionIds = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<ResourceIdentifier> hostResourceId = default;
+            Core.Optional<CustomLocationHostType> hostType = default;
+            Core.Optional<string> @namespace = default;
+            Core.Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                     continue;
                 }
             }
-            return new CustomLocationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, authentication.Value, Optional.ToList(clusterExtensionIds), displayName.Value, hostResourceId.Value, Optional.ToNullable(hostType), @namespace.Value, provisioningState.Value);
+            return new CustomLocationData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, authentication.Value, Core.Optional.ToList(clusterExtensionIds), displayName.Value, hostResourceId.Value, Core.Optional.ToNullable(hostType), @namespace.Value, provisioningState.Value);
         }
     }
 }

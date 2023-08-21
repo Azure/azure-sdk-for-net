@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of HybridConnectionEventSubscriptionDestination. </summary>
         public HybridConnectionEventSubscriptionDestination()
         {
-            DeliveryAttributeMappings = new ChangeTrackingList<DeliveryAttributeMapping>();
+            DeliveryAttributeMappings = new Core.ChangeTrackingList<DeliveryAttributeMapping>();
             EndpointType = EndpointType.HybridConnection;
         }
 

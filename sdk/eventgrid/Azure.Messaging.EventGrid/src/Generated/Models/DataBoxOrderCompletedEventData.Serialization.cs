@@ -21,9 +21,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> serialNumber = default;
-            Optional<DataBoxStageName> stageName = default;
-            Optional<DateTimeOffset> stageTime = default;
+            Core.Optional<string> serialNumber = default;
+            Core.Optional<DataBoxStageName> stageName = default;
+            Core.Optional<DateTimeOffset> stageTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serialNumber"u8))
@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new DataBoxOrderCompletedEventData(serialNumber.Value, Optional.ToNullable(stageName), Optional.ToNullable(stageTime));
+            return new DataBoxOrderCompletedEventData(serialNumber.Value, Core.Optional.ToNullable(stageName), Core.Optional.ToNullable(stageTime));
         }
 
         internal partial class DataBoxOrderCompletedEventDataConverter : JsonConverter<DataBoxOrderCompletedEventData>

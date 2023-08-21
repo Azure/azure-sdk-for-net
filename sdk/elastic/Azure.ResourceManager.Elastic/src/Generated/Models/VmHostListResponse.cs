@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <summary> Initializes a new instance of VmHostListResponse. </summary>
         internal VmHostListResponse()
         {
-            Value = new ChangeTrackingList<VmResources>();
+            Value = new Core.ChangeTrackingList<VmResources>();
         }
 
         /// <summary> Initializes a new instance of VmHostListResponse. </summary>

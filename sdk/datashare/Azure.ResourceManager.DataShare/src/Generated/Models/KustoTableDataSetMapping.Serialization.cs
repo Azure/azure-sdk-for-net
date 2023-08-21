@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class KustoTableDataSetMapping : IUtf8JsonSerializable
+    public partial class KustoTableDataSetMapping : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             Guid dataSetId = default;
-            Optional<DataSetMappingStatus> dataSetMappingStatus = default;
+            Core.Optional<DataSetMappingStatus> dataSetMappingStatus = default;
             ResourceIdentifier kustoClusterResourceId = default;
-            Optional<AzureLocation> location = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<DataShareProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new KustoTableDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Optional.ToNullable(dataSetMappingStatus), kustoClusterResourceId, Optional.ToNullable(location), Optional.ToNullable(provisioningState));
+            return new KustoTableDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Core.Optional.ToNullable(dataSetMappingStatus), kustoClusterResourceId, Core.Optional.ToNullable(location), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

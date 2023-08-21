@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.DigitalTwins
             try
             {
                 var response = await _digitalTwinsDescriptionDigitalTwinsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DigitalTwinsArmOperation<DigitalTwinsDescriptionResource>(new DigitalTwinsDescriptionOperationSource(Client), _digitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, _digitalTwinsDescriptionDigitalTwinsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DigitalTwinsArmOperation<DigitalTwinsDescriptionResource>(new DigitalTwinsDescriptionOperationSource(Client), _digitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, _digitalTwinsDescriptionDigitalTwinsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.DigitalTwins
             try
             {
                 var response = _digitalTwinsDescriptionDigitalTwinsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DigitalTwinsArmOperation<DigitalTwinsDescriptionResource>(new DigitalTwinsDescriptionOperationSource(Client), _digitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, _digitalTwinsDescriptionDigitalTwinsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DigitalTwinsArmOperation<DigitalTwinsDescriptionResource>(new DigitalTwinsDescriptionOperationSource(Client), _digitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, _digitalTwinsDescriptionDigitalTwinsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.DigitalTwins
             try
             {
                 var response = await _digitalTwinsDescriptionDigitalTwinsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new DigitalTwinsArmOperation<DigitalTwinsDescriptionResource>(new DigitalTwinsDescriptionOperationSource(Client), _digitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, _digitalTwinsDescriptionDigitalTwinsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DigitalTwinsArmOperation<DigitalTwinsDescriptionResource>(new DigitalTwinsDescriptionOperationSource(Client), _digitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, _digitalTwinsDescriptionDigitalTwinsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.DigitalTwins
             try
             {
                 var response = _digitalTwinsDescriptionDigitalTwinsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new DigitalTwinsArmOperation<DigitalTwinsDescriptionResource>(new DigitalTwinsDescriptionOperationSource(Client), _digitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, _digitalTwinsDescriptionDigitalTwinsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DigitalTwinsArmOperation<DigitalTwinsDescriptionResource>(new DigitalTwinsDescriptionOperationSource(Client), _digitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, _digitalTwinsDescriptionDigitalTwinsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

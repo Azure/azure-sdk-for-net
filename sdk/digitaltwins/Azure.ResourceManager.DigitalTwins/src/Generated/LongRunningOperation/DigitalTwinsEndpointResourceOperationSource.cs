@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DigitalTwins
 {
-    internal class DigitalTwinsEndpointResourceOperationSource : IOperationSource<DigitalTwinsEndpointResource>
+    internal class DigitalTwinsEndpointResourceOperationSource : Core.IOperationSource<DigitalTwinsEndpointResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DigitalTwins
             _client = client;
         }
 
-        DigitalTwinsEndpointResource IOperationSource<DigitalTwinsEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DigitalTwinsEndpointResource Core.IOperationSource<DigitalTwinsEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(document.RootElement);
             return new DigitalTwinsEndpointResource(_client, data);
         }
 
-        async ValueTask<DigitalTwinsEndpointResource> IOperationSource<DigitalTwinsEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DigitalTwinsEndpointResource> Core.IOperationSource<DigitalTwinsEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(document.RootElement);

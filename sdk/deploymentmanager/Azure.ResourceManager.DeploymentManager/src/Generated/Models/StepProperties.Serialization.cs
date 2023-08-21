@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    public partial class StepProperties : IUtf8JsonSerializable
+    public partial class StepProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("stepType"u8);

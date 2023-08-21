@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         {
             Argument.AssertNotNull(targetResourceGroup, nameof(targetResourceGroup));
 
-            Steps = new ChangeTrackingList<RolloutStep>();
+            Steps = new Core.ChangeTrackingList<RolloutStep>();
         }
 
         /// <summary> Initializes a new instance of ServiceUnit. </summary>

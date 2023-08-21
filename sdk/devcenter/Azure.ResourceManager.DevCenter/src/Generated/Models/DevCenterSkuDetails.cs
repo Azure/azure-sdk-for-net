@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DevCenter.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            Locations = new ChangeTrackingList<string>();
-            Capabilities = new ChangeTrackingList<DevCenterCapability>();
+            Locations = new Core.ChangeTrackingList<string>();
+            Capabilities = new Core.ChangeTrackingList<DevCenterCapability>();
         }
 
         /// <summary> Initializes a new instance of DevCenterSkuDetails. </summary>

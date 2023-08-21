@@ -12,34 +12,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class DevCenterScheduleData : IUtf8JsonSerializable
+    public partial class DevCenterScheduleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScheduledType))
+            if (Core.Optional.IsDefined(ScheduledType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ScheduledType.Value.ToString());
             }
-            if (Optional.IsDefined(Frequency))
+            if (Core.Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Optional.IsDefined(Time))
+            if (Core.Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);
             }
-            if (Optional.IsDefined(TimeZone))
+            if (Core.Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevCenterScheduledType> type0 = default;
-            Optional<DevCenterScheduledFrequency> frequency = default;
-            Optional<string> time = default;
-            Optional<string> timeZone = default;
-            Optional<DevCenterScheduleEnableStatus> state = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DevCenterScheduledType> type0 = default;
+            Core.Optional<DevCenterScheduledFrequency> frequency = default;
+            Core.Optional<string> time = default;
+            Core.Optional<string> timeZone = default;
+            Core.Optional<DevCenterScheduleEnableStatus> state = default;
+            Core.Optional<DevCenterProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new DevCenterScheduleData(id, name, type, systemData.Value, Optional.ToNullable(type0), Optional.ToNullable(frequency), time.Value, timeZone.Value, Optional.ToNullable(state), Optional.ToNullable(provisioningState));
+            return new DevCenterScheduleData(id, name, type, systemData.Value, Core.Optional.ToNullable(type0), Core.Optional.ToNullable(frequency), time.Value, timeZone.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

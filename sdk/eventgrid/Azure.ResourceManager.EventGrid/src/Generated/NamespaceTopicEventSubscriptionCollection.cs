@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _namespaceTopicEventSubscriptionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<NamespaceTopicEventSubscriptionResource>(new NamespaceTopicEventSubscriptionOperationSource(Client), _namespaceTopicEventSubscriptionClientDiagnostics, Pipeline, _namespaceTopicEventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new EventGridArmOperation<NamespaceTopicEventSubscriptionResource>(new NamespaceTopicEventSubscriptionOperationSource(Client), _namespaceTopicEventSubscriptionClientDiagnostics, Pipeline, _namespaceTopicEventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _namespaceTopicEventSubscriptionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data, cancellationToken);
-                var operation = new EventGridArmOperation<NamespaceTopicEventSubscriptionResource>(new NamespaceTopicEventSubscriptionOperationSource(Client), _namespaceTopicEventSubscriptionClientDiagnostics, Pipeline, _namespaceTopicEventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new EventGridArmOperation<NamespaceTopicEventSubscriptionResource>(new NamespaceTopicEventSubscriptionOperationSource(Client), _namespaceTopicEventSubscriptionClientDiagnostics, Pipeline, _namespaceTopicEventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _namespaceTopicEventSubscriptionRestClient.CreateListByNamespaceTopicRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _namespaceTopicEventSubscriptionRestClient.CreateListByNamespaceTopicNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NamespaceTopicEventSubscriptionResource(Client, NamespaceTopicEventSubscriptionData.DeserializeNamespaceTopicEventSubscriptionData(e)), _namespaceTopicEventSubscriptionClientDiagnostics, Pipeline, "NamespaceTopicEventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NamespaceTopicEventSubscriptionResource(Client, NamespaceTopicEventSubscriptionData.DeserializeNamespaceTopicEventSubscriptionData(e)), _namespaceTopicEventSubscriptionClientDiagnostics, Pipeline, "NamespaceTopicEventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _namespaceTopicEventSubscriptionRestClient.CreateListByNamespaceTopicRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _namespaceTopicEventSubscriptionRestClient.CreateListByNamespaceTopicNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NamespaceTopicEventSubscriptionResource(Client, NamespaceTopicEventSubscriptionData.DeserializeNamespaceTopicEventSubscriptionData(e)), _namespaceTopicEventSubscriptionClientDiagnostics, Pipeline, "NamespaceTopicEventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NamespaceTopicEventSubscriptionResource(Client, NamespaceTopicEventSubscriptionData.DeserializeNamespaceTopicEventSubscriptionData(e)), _namespaceTopicEventSubscriptionClientDiagnostics, Pipeline, "NamespaceTopicEventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

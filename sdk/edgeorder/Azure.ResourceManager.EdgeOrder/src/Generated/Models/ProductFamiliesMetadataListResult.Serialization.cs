@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProductFamiliesMetadata>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ProductFamiliesMetadata>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new ProductFamiliesMetadataListResult(Optional.ToList(value), nextLink.Value);
+            return new ProductFamiliesMetadataListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

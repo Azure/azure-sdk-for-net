@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightApplicationProperties. </summary>
         public HDInsightApplicationProperties()
         {
-            InstallScriptActions = new ChangeTrackingList<RuntimeScriptAction>();
-            UninstallScriptActions = new ChangeTrackingList<RuntimeScriptAction>();
-            HttpsEndpoints = new ChangeTrackingList<HDInsightApplicationHttpsEndpoint>();
-            SshEndpoints = new ChangeTrackingList<HDInsightApplicationEndpoint>();
-            Errors = new ChangeTrackingList<ResponseError>();
-            PrivateLinkConfigurations = new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
+            InstallScriptActions = new Core.ChangeTrackingList<RuntimeScriptAction>();
+            UninstallScriptActions = new Core.ChangeTrackingList<RuntimeScriptAction>();
+            HttpsEndpoints = new Core.ChangeTrackingList<HDInsightApplicationHttpsEndpoint>();
+            SshEndpoints = new Core.ChangeTrackingList<HDInsightApplicationEndpoint>();
+            Errors = new Core.ChangeTrackingList<ResponseError>();
+            PrivateLinkConfigurations = new Core.ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
         }
 
         /// <summary> Initializes a new instance of HDInsightApplicationProperties. </summary>

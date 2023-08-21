@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of GetUserTablesOracleTaskProperties. </summary>
         public GetUserTablesOracleTaskProperties()
         {
-            Output = new ChangeTrackingList<GetUserTablesOracleTaskOutput>();
+            Output = new Core.ChangeTrackingList<GetUserTablesOracleTaskOutput>();
             TaskType = TaskType.GetUserTablesOracle;
         }
 

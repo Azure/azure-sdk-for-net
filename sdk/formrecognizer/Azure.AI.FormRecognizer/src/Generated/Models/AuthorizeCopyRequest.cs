@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Argument.AssertNotNull(modelId, nameof(modelId));
 
             ModelId = modelId;
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Unique document model name. </summary>

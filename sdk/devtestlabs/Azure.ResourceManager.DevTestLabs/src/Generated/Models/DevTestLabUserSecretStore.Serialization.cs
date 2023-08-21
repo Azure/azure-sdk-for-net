@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabUserSecretStore : IUtf8JsonSerializable
+    public partial class DevTestLabUserSecretStore : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyVaultUri))
+            if (Core.Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(KeyVaultId))
+            if (Core.Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<Uri> keyVaultUri = default;
-            Optional<ResourceIdentifier> keyVaultId = default;
+            Core.Optional<Uri> keyVaultUri = default;
+            Core.Optional<ResourceIdentifier> keyVaultId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultUri"u8))

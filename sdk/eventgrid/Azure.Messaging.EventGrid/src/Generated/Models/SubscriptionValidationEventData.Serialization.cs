@@ -21,8 +21,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> validationCode = default;
-            Optional<string> validationUrl = default;
+            Core.Optional<string> validationCode = default;
+            Core.Optional<string> validationUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationCode"u8))

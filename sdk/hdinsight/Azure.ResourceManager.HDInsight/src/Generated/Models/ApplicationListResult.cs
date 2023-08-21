@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of ApplicationListResult. </summary>
         internal ApplicationListResult()
         {
-            Value = new ChangeTrackingList<HDInsightApplicationData>();
+            Value = new Core.ChangeTrackingList<HDInsightApplicationData>();
         }
 
         /// <summary> Initializes a new instance of ApplicationListResult. </summary>

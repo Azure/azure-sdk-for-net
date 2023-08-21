@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Initializes a new instance of DeviceUpdatePrivateLinkResourceListResult. </summary>
         internal DeviceUpdatePrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<PrivateLinkData>();
+            Value = new Core.ChangeTrackingList<PrivateLinkData>();
         }
 
         /// <summary> Initializes a new instance of DeviceUpdatePrivateLinkResourceListResult. </summary>

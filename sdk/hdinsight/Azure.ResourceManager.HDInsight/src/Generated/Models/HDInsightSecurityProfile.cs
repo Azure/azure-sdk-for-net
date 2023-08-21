@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightSecurityProfile. </summary>
         public HDInsightSecurityProfile()
         {
-            LdapUris = new ChangeTrackingList<Uri>();
-            ClusterUsersGroupDNs = new ChangeTrackingList<string>();
+            LdapUris = new Core.ChangeTrackingList<Uri>();
+            ClusterUsersGroupDNs = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HDInsightSecurityProfile. </summary>

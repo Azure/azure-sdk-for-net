@@ -11,52 +11,52 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class ShareSynchronization : IUtf8JsonSerializable
+    public partial class ShareSynchronization : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConsumerEmail))
+            if (Core.Optional.IsDefined(ConsumerEmail))
             {
                 writer.WritePropertyName("consumerEmail"u8);
                 writer.WriteStringValue(ConsumerEmail);
             }
-            if (Optional.IsDefined(ConsumerName))
+            if (Core.Optional.IsDefined(ConsumerName))
             {
                 writer.WritePropertyName("consumerName"u8);
                 writer.WriteStringValue(ConsumerName);
             }
-            if (Optional.IsDefined(ConsumerTenantName))
+            if (Core.Optional.IsDefined(ConsumerTenantName))
             {
                 writer.WritePropertyName("consumerTenantName"u8);
                 writer.WriteStringValue(ConsumerTenantName);
             }
-            if (Optional.IsDefined(DurationInMilliSeconds))
+            if (Core.Optional.IsDefined(DurationInMilliSeconds))
             {
                 writer.WritePropertyName("durationMs"u8);
                 writer.WriteNumberValue(DurationInMilliSeconds.Value);
             }
-            if (Optional.IsDefined(EndOn))
+            if (Core.Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(Message))
+            if (Core.Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Core.Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(SynchronizationId))
+            if (Core.Optional.IsDefined(SynchronizationId))
             {
                 writer.WritePropertyName("synchronizationId"u8);
                 writer.WriteStringValue(SynchronizationId.Value);
@@ -70,16 +70,16 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<string> consumerEmail = default;
-            Optional<string> consumerName = default;
-            Optional<string> consumerTenantName = default;
-            Optional<int> durationMs = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> status = default;
-            Optional<Guid> synchronizationId = default;
-            Optional<SynchronizationMode> synchronizationMode = default;
+            Core.Optional<string> consumerEmail = default;
+            Core.Optional<string> consumerName = default;
+            Core.Optional<string> consumerTenantName = default;
+            Core.Optional<int> durationMs = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<string> message = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<string> status = default;
+            Core.Optional<Guid> synchronizationId = default;
+            Core.Optional<SynchronizationMode> synchronizationMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("consumerEmail"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new ShareSynchronization(consumerEmail.Value, consumerName.Value, consumerTenantName.Value, Optional.ToNullable(durationMs), Optional.ToNullable(endTime), message.Value, Optional.ToNullable(startTime), status.Value, Optional.ToNullable(synchronizationId), Optional.ToNullable(synchronizationMode));
+            return new ShareSynchronization(consumerEmail.Value, consumerName.Value, consumerTenantName.Value, Core.Optional.ToNullable(durationMs), Core.Optional.ToNullable(endTime), message.Value, Core.Optional.ToNullable(startTime), status.Value, Core.Optional.ToNullable(synchronizationId), Core.Optional.ToNullable(synchronizationMode));
         }
     }
 }

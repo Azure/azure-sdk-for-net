@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubsClusterData : IUtf8JsonSerializable
+    public partial class EventHubsClusterData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SupportsScaling))
+            if (Core.Optional.IsDefined(SupportsScaling))
             {
                 writer.WritePropertyName("supportsScaling"u8);
                 writer.WriteBooleanValue(SupportsScaling.Value);
@@ -54,18 +54,18 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Optional<EventHubsClusterSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<EventHubsClusterSku> sku = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<string> metricId = default;
-            Optional<string> status = default;
-            Optional<bool> supportsScaling = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> createdAt = default;
+            Core.Optional<DateTimeOffset> updatedAt = default;
+            Core.Optional<string> metricId = default;
+            Core.Optional<string> status = default;
+            Core.Optional<bool> supportsScaling = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubsClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), metricId.Value, status.Value, Optional.ToNullable(supportsScaling));
+            return new EventHubsClusterData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, Core.Optional.ToNullable(createdAt), Core.Optional.ToNullable(updatedAt), metricId.Value, status.Value, Core.Optional.ToNullable(supportsScaling));
         }
     }
 }

@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 return null;
             }
             string name = default;
-            Optional<string> status = default;
-            Optional<string> stepGroup = default;
-            Optional<StepOperationInfo> operationInfo = default;
-            Optional<IReadOnlyList<ResourceOperation>> resourceOperations = default;
-            Optional<IReadOnlyList<Message>> messages = default;
+            Core.Optional<string> status = default;
+            Core.Optional<string> stepGroup = default;
+            Core.Optional<StepOperationInfo> operationInfo = default;
+            Core.Optional<IReadOnlyList<ResourceOperation>> resourceOperations = default;
+            Core.Optional<IReadOnlyList<Message>> messages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     continue;
                 }
             }
-            return new RolloutStep(name, status.Value, stepGroup.Value, operationInfo.Value, Optional.ToList(resourceOperations), Optional.ToList(messages));
+            return new RolloutStep(name, status.Value, stepGroup.Value, operationInfo.Value, Core.Optional.ToList(resourceOperations), Core.Optional.ToList(messages));
         }
     }
 }

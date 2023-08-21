@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of SharedPublicIPAddressConfiguration. </summary>
         public SharedPublicIPAddressConfiguration()
         {
-            InboundNatRules = new ChangeTrackingList<DevTestLabInboundNatRule>();
+            InboundNatRules = new Core.ChangeTrackingList<DevTestLabInboundNatRule>();
         }
 
         /// <summary> Initializes a new instance of SharedPublicIPAddressConfiguration. </summary>

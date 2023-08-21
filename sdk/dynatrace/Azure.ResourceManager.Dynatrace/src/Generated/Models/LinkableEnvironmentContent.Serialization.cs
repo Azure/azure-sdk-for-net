@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class LinkableEnvironmentContent : IUtf8JsonSerializable
+    public partial class LinkableEnvironmentContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TenantId))
+            if (Core.Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(UserPrincipal))
+            if (Core.Optional.IsDefined(UserPrincipal))
             {
                 writer.WritePropertyName("userPrincipal"u8);
                 writer.WriteStringValue(UserPrincipal);
             }
-            if (Optional.IsDefined(Region))
+            if (Core.Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region.Value);

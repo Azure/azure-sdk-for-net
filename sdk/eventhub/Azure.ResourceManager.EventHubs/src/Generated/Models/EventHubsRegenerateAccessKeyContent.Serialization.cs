@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsRegenerateAccessKeyContent : IUtf8JsonSerializable
+    public partial class EventHubsRegenerateAccessKeyContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyType"u8);
             writer.WriteStringValue(KeyType.ToString());
-            if (Optional.IsDefined(Key))
+            if (Core.Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);

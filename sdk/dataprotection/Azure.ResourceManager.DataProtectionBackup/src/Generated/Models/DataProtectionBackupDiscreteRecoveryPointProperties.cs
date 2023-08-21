@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="recoverOn"></param>
         public DataProtectionBackupDiscreteRecoveryPointProperties(DateTimeOffset recoverOn)
         {
-            RecoveryPointDataStoresDetails = new ChangeTrackingList<RecoveryPointDataStoreDetail>();
+            RecoveryPointDataStoresDetails = new Core.ChangeTrackingList<RecoveryPointDataStoreDetail>();
             RecoverOn = recoverOn;
             ObjectType = "AzureBackupDiscreteRecoveryPoint";
         }

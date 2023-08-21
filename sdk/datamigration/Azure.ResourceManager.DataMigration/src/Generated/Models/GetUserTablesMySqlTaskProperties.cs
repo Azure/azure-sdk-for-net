@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of GetUserTablesMySqlTaskProperties. </summary>
         public GetUserTablesMySqlTaskProperties()
         {
-            Output = new ChangeTrackingList<GetUserTablesMySqlTaskOutput>();
+            Output = new Core.ChangeTrackingList<GetUserTablesMySqlTaskOutput>();
             TaskType = TaskType.GetUserTablesMySql;
         }
 

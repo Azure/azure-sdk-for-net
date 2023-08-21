@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    internal partial class UnknownTimeSeriesDatabaseConnectionProperties : IUtf8JsonSerializable
+    internal partial class UnknownTimeSeriesDatabaseConnectionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("connectionType"u8);
             writer.WriteStringValue(ConnectionType.ToString());
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 return null;
             }
             ConnectionType connectionType = "Unknown";
-            Optional<TimeSeriesDatabaseConnectionState> provisioningState = default;
-            Optional<DigitalTwinsManagedIdentityReference> identity = default;
+            Core.Optional<TimeSeriesDatabaseConnectionState> provisioningState = default;
+            Core.Optional<DigitalTwinsManagedIdentityReference> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionType"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new UnknownTimeSeriesDatabaseConnectionProperties(connectionType, Optional.ToNullable(provisioningState), identity.Value);
+            return new UnknownTimeSeriesDatabaseConnectionProperties(connectionType, Core.Optional.ToNullable(provisioningState), identity.Value);
         }
     }
 }

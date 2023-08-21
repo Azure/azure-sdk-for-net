@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    internal class DicomServiceOperationSource : IOperationSource<DicomServiceResource>
+    internal class DicomServiceOperationSource : Core.IOperationSource<DicomServiceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HealthcareApis
             _client = client;
         }
 
-        DicomServiceResource IOperationSource<DicomServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DicomServiceResource Core.IOperationSource<DicomServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DicomServiceData.DeserializeDicomServiceData(document.RootElement);
             return new DicomServiceResource(_client, data);
         }
 
-        async ValueTask<DicomServiceResource> IOperationSource<DicomServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DicomServiceResource> Core.IOperationSource<DicomServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DicomServiceData.DeserializeDicomServiceData(document.RootElement);

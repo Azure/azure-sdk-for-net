@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ComputeVmInstanceViewStatus>> statuses = default;
-            Optional<string> osType = default;
-            Optional<string> vmSize = default;
-            Optional<string> networkInterfaceId = default;
-            Optional<string> osDiskId = default;
-            Optional<IReadOnlyList<string>> dataDiskIds = default;
-            Optional<IReadOnlyList<ComputeDataDisk>> dataDisks = default;
+            Core.Optional<IReadOnlyList<ComputeVmInstanceViewStatus>> statuses = default;
+            Core.Optional<string> osType = default;
+            Core.Optional<string> vmSize = default;
+            Core.Optional<string> networkInterfaceId = default;
+            Core.Optional<string> osDiskId = default;
+            Core.Optional<IReadOnlyList<string>> dataDiskIds = default;
+            Core.Optional<IReadOnlyList<ComputeDataDisk>> dataDisks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statuses"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new ComputeVmProperties(Optional.ToList(statuses), osType.Value, vmSize.Value, networkInterfaceId.Value, osDiskId.Value, Optional.ToList(dataDiskIds), Optional.ToList(dataDisks));
+            return new ComputeVmProperties(Core.Optional.ToList(statuses), osType.Value, vmSize.Value, networkInterfaceId.Value, osDiskId.Value, Core.Optional.ToList(dataDiskIds), Core.Optional.ToList(dataDisks));
         }
     }
 }

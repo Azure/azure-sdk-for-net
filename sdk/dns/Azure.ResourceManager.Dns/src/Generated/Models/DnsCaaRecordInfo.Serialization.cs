@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DnsCaaRecordInfo : IUtf8JsonSerializable
+    public partial class DnsCaaRecordInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Flags))
+            if (Core.Optional.IsDefined(Flags))
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteNumberValue(Flags.Value);
             }
-            if (Optional.IsDefined(Tag))
+            if (Core.Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<int> flags = default;
-            Optional<string> tag = default;
-            Optional<string> value = default;
+            Core.Optional<int> flags = default;
+            Core.Optional<string> tag = default;
+            Core.Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("flags"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new DnsCaaRecordInfo(Optional.ToNullable(flags), tag.Value, value.Value);
+            return new DnsCaaRecordInfo(Core.Optional.ToNullable(flags), tag.Value, value.Value);
         }
     }
 }

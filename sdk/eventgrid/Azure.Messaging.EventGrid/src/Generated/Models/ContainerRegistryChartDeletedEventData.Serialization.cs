@@ -21,12 +21,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> action = default;
-            Optional<string> location = default;
-            Optional<ContainerRegistryArtifactEventTarget> target = default;
-            Optional<ContainerRegistryEventConnectedRegistry> connectedRegistry = default;
+            Core.Optional<string> id = default;
+            Core.Optional<DateTimeOffset> timestamp = default;
+            Core.Optional<string> action = default;
+            Core.Optional<string> location = default;
+            Core.Optional<ContainerRegistryArtifactEventTarget> target = default;
+            Core.Optional<ContainerRegistryEventConnectedRegistry> connectedRegistry = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ContainerRegistryChartDeletedEventData(id.Value, Optional.ToNullable(timestamp), action.Value, location.Value, target.Value, connectedRegistry.Value);
+            return new ContainerRegistryChartDeletedEventData(id.Value, Core.Optional.ToNullable(timestamp), action.Value, location.Value, target.Value, connectedRegistry.Value);
         }
 
         internal partial class ContainerRegistryChartDeletedEventDataConverter : JsonConverter<ContainerRegistryChartDeletedEventData>

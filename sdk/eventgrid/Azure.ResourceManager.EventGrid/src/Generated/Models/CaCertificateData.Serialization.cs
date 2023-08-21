@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class CaCertificateData : IUtf8JsonSerializable
+    public partial class CaCertificateData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(EncodedCertificate))
+            if (Core.Optional.IsDefined(EncodedCertificate))
             {
                 writer.WritePropertyName("encodedCertificate"u8);
                 writer.WriteStringValue(EncodedCertificate);
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> encodedCertificate = default;
-            Optional<DateTimeOffset> issueTimeInUtc = default;
-            Optional<DateTimeOffset> expiryTimeInUtc = default;
-            Optional<CaCertificateProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> encodedCertificate = default;
+            Core.Optional<DateTimeOffset> issueTimeInUtc = default;
+            Core.Optional<DateTimeOffset> expiryTimeInUtc = default;
+            Core.Optional<CaCertificateProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new CaCertificateData(id, name, type, systemData.Value, description.Value, encodedCertificate.Value, Optional.ToNullable(issueTimeInUtc), Optional.ToNullable(expiryTimeInUtc), Optional.ToNullable(provisioningState));
+            return new CaCertificateData(id, name, type, systemData.Value, description.Value, encodedCertificate.Value, Core.Optional.ToNullable(issueTimeInUtc), Core.Optional.ToNullable(expiryTimeInUtc), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

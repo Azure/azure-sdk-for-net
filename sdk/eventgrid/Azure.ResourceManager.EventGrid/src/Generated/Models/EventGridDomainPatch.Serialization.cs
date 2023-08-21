@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class EventGridDomainPatch : IUtf8JsonSerializable
+    public partial class EventGridDomainPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(InboundIPRules))
+            if (Core.Optional.IsCollectionDefined(InboundIPRules))
             {
                 writer.WritePropertyName("inboundIpRules"u8);
                 writer.WriteStartArray();
@@ -53,32 +53,32 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MinimumTlsVersionAllowed))
+            if (Core.Optional.IsDefined(MinimumTlsVersionAllowed))
             {
                 writer.WritePropertyName("minimumTlsVersionAllowed"u8);
                 writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
             }
-            if (Optional.IsDefined(IsLocalAuthDisabled))
+            if (Core.Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
-            if (Optional.IsDefined(AutoCreateTopicWithFirstSubscription))
+            if (Core.Optional.IsDefined(AutoCreateTopicWithFirstSubscription))
             {
                 writer.WritePropertyName("autoCreateTopicWithFirstSubscription"u8);
                 writer.WriteBooleanValue(AutoCreateTopicWithFirstSubscription.Value);
             }
-            if (Optional.IsDefined(AutoDeleteTopicWithLastSubscription))
+            if (Core.Optional.IsDefined(AutoDeleteTopicWithLastSubscription))
             {
                 writer.WritePropertyName("autoDeleteTopicWithLastSubscription"u8);
                 writer.WriteBooleanValue(AutoDeleteTopicWithLastSubscription.Value);
             }
-            if (Optional.IsDefined(DataResidencyBoundary))
+            if (Core.Optional.IsDefined(DataResidencyBoundary))
             {
                 writer.WritePropertyName("dataResidencyBoundary"u8);
                 writer.WriteStringValue(DataResidencyBoundary.Value.ToString());
             }
-            if (Optional.IsDefined(EventTypeInfo))
+            if (Core.Optional.IsDefined(EventTypeInfo))
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
                 writer.WriteObjectValue(EventTypeInfo);

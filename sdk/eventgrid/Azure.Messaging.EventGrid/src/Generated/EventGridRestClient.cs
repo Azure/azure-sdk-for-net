@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventGrid
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in events)
             {
@@ -127,7 +127,7 @@ namespace Azure.Messaging.EventGrid
                 request.Headers.Add("aeg-channel-name", aegChannelName);
             }
             request.Headers.Add("Content-Type", "application/cloudevents-batch+json; charset=utf-8");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in events)
             {
@@ -205,7 +205,7 @@ namespace Azure.Messaging.EventGrid
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in events)
             {

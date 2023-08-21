@@ -21,15 +21,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> action = default;
-            Optional<string> location = default;
-            Optional<ContainerRegistryEventTarget> target = default;
-            Optional<ContainerRegistryEventRequest> request = default;
-            Optional<ContainerRegistryEventActor> actor = default;
-            Optional<ContainerRegistryEventSource> source = default;
-            Optional<ContainerRegistryEventConnectedRegistry> connectedRegistry = default;
+            Core.Optional<string> id = default;
+            Core.Optional<DateTimeOffset> timestamp = default;
+            Core.Optional<string> action = default;
+            Core.Optional<string> location = default;
+            Core.Optional<ContainerRegistryEventTarget> target = default;
+            Core.Optional<ContainerRegistryEventRequest> request = default;
+            Core.Optional<ContainerRegistryEventActor> actor = default;
+            Core.Optional<ContainerRegistryEventSource> source = default;
+            Core.Optional<ContainerRegistryEventConnectedRegistry> connectedRegistry = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -102,7 +102,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ContainerRegistryImagePushedEventData(id.Value, Optional.ToNullable(timestamp), action.Value, location.Value, target.Value, request.Value, actor.Value, source.Value, connectedRegistry.Value);
+            return new ContainerRegistryImagePushedEventData(id.Value, Core.Optional.ToNullable(timestamp), action.Value, location.Value, target.Value, request.Value, actor.Value, source.Value, connectedRegistry.Value);
         }
 
         internal partial class ContainerRegistryImagePushedEventDataConverter : JsonConverter<ContainerRegistryImagePushedEventData>

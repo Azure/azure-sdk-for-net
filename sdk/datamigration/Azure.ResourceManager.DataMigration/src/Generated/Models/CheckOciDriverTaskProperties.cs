@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of CheckOciDriverTaskProperties. </summary>
         public CheckOciDriverTaskProperties()
         {
-            Output = new ChangeTrackingList<CheckOciDriverTaskOutput>();
+            Output = new Core.ChangeTrackingList<CheckOciDriverTaskOutput>();
             TaskType = TaskType.ServiceCheckOci;
         }
 

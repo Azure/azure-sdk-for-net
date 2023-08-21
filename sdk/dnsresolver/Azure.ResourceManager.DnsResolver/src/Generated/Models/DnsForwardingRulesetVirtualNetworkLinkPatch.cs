@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of DnsForwardingRulesetVirtualNetworkLinkPatch. </summary>
         public DnsForwardingRulesetVirtualNetworkLinkPatch()
         {
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            Metadata = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Metadata attached to the virtual network link. </summary>

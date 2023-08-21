@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FluidRelay.Models
 {
-    public partial class CmkIdentity : IUtf8JsonSerializable
+    public partial class CmkIdentity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IdentityType))
+            if (Core.Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("identityType"u8);
                 writer.WriteStringValue(IdentityType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(UserAssignedIdentityResourceId))
+            if (Core.Optional.IsDefined(UserAssignedIdentityResourceId))
             {
                 writer.WritePropertyName("userAssignedIdentityResourceId"u8);
                 writer.WriteStringValue(UserAssignedIdentityResourceId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.FluidRelay.Models
             {
                 return null;
             }
-            Optional<CmkIdentityType> identityType = default;
-            Optional<ResourceIdentifier> userAssignedIdentityResourceId = default;
+            Core.Optional<CmkIdentityType> identityType = default;
+            Core.Optional<ResourceIdentifier> userAssignedIdentityResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identityType"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                     continue;
                 }
             }
-            return new CmkIdentity(Optional.ToNullable(identityType), userAssignedIdentityResourceId.Value);
+            return new CmkIdentity(Core.Optional.ToNullable(identityType), userAssignedIdentityResourceId.Value);
         }
     }
 }

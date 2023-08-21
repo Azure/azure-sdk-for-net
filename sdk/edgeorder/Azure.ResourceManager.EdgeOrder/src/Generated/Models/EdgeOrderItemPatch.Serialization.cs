@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class EdgeOrderItemPatch : IUtf8JsonSerializable
+    public partial class EdgeOrderItemPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ForwardAddress))
+            if (Core.Optional.IsDefined(ForwardAddress))
             {
                 writer.WritePropertyName("forwardAddress"u8);
                 writer.WriteObjectValue(ForwardAddress);
             }
-            if (Optional.IsDefined(Preferences))
+            if (Core.Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
             }
-            if (Optional.IsCollectionDefined(NotificationEmailList))
+            if (Core.Optional.IsCollectionDefined(NotificationEmailList))
             {
                 writer.WritePropertyName("notificationEmailList"u8);
                 writer.WriteStartArray();

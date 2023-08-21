@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Initializes a new instance of PrivateLinkServiceConnection. </summary>
         public PrivateLinkServiceConnection()
         {
-            GroupIds = new ChangeTrackingList<string>();
+            GroupIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkServiceConnection. </summary>

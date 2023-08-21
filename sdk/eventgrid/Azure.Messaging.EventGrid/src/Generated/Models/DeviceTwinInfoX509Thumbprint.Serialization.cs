@@ -18,8 +18,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> primaryThumbprint = default;
-            Optional<string> secondaryThumbprint = default;
+            Core.Optional<string> primaryThumbprint = default;
+            Core.Optional<string> secondaryThumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryThumbprint"u8))

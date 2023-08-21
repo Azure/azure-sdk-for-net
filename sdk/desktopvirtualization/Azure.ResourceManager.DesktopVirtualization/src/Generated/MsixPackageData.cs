@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Initializes a new instance of MsixPackageData. </summary>
         public MsixPackageData()
         {
-            PackageDependencies = new ChangeTrackingList<MsixPackageDependencies>();
-            PackageApplications = new ChangeTrackingList<MsixPackageApplications>();
+            PackageDependencies = new Core.ChangeTrackingList<MsixPackageDependencies>();
+            PackageApplications = new Core.ChangeTrackingList<MsixPackageApplications>();
         }
 
         /// <summary> Initializes a new instance of MsixPackageData. </summary>

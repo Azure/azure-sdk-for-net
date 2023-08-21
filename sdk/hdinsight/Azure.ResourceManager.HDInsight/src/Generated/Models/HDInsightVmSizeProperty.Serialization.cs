@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> cores = default;
-            Optional<string> dataDiskStorageTier = default;
-            Optional<string> label = default;
-            Optional<long> maxDataDiskCount = default;
-            Optional<long> memoryInMB = default;
-            Optional<bool> supportedByVirtualMachines = default;
-            Optional<bool> supportedByWebWorkerRoles = default;
-            Optional<long> virtualMachineResourceDiskSizeInMB = default;
-            Optional<long> webWorkerResourceDiskSizeInMB = default;
+            Core.Optional<string> name = default;
+            Core.Optional<int> cores = default;
+            Core.Optional<string> dataDiskStorageTier = default;
+            Core.Optional<string> label = default;
+            Core.Optional<long> maxDataDiskCount = default;
+            Core.Optional<long> memoryInMB = default;
+            Core.Optional<bool> supportedByVirtualMachines = default;
+            Core.Optional<bool> supportedByWebWorkerRoles = default;
+            Core.Optional<long> virtualMachineResourceDiskSizeInMB = default;
+            Core.Optional<long> webWorkerResourceDiskSizeInMB = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightVmSizeProperty(name.Value, Optional.ToNullable(cores), dataDiskStorageTier.Value, label.Value, Optional.ToNullable(maxDataDiskCount), Optional.ToNullable(memoryInMB), Optional.ToNullable(supportedByVirtualMachines), Optional.ToNullable(supportedByWebWorkerRoles), Optional.ToNullable(virtualMachineResourceDiskSizeInMB), Optional.ToNullable(webWorkerResourceDiskSizeInMB));
+            return new HDInsightVmSizeProperty(name.Value, Core.Optional.ToNullable(cores), dataDiskStorageTier.Value, label.Value, Core.Optional.ToNullable(maxDataDiskCount), Core.Optional.ToNullable(memoryInMB), Core.Optional.ToNullable(supportedByVirtualMachines), Core.Optional.ToNullable(supportedByWebWorkerRoles), Core.Optional.ToNullable(virtualMachineResourceDiskSizeInMB), Core.Optional.ToNullable(webWorkerResourceDiskSizeInMB));
         }
     }
 }

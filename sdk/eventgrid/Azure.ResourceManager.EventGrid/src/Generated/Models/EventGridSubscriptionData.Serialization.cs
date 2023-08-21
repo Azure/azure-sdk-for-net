@@ -14,29 +14,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class EventGridSubscriptionData : IUtf8JsonSerializable
+    public partial class EventGridSubscriptionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Destination))
+            if (Core.Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
-            if (Optional.IsDefined(DeliveryWithResourceIdentity))
+            if (Core.Optional.IsDefined(DeliveryWithResourceIdentity))
             {
                 writer.WritePropertyName("deliveryWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeliveryWithResourceIdentity);
             }
-            if (Optional.IsDefined(Filter))
+            if (Core.Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (Core.Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -46,27 +46,27 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Core.Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTimeUtc"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(EventDeliverySchema))
+            if (Core.Optional.IsDefined(EventDeliverySchema))
             {
                 writer.WritePropertyName("eventDeliverySchema"u8);
                 writer.WriteStringValue(EventDeliverySchema.Value.ToString());
             }
-            if (Optional.IsDefined(RetryPolicy))
+            if (Core.Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
                 writer.WriteObjectValue(RetryPolicy);
             }
-            if (Optional.IsDefined(DeadLetterDestination))
+            if (Core.Optional.IsDefined(DeadLetterDestination))
             {
                 writer.WritePropertyName("deadLetterDestination"u8);
                 writer.WriteObjectValue(DeadLetterDestination);
             }
-            if (Optional.IsDefined(DeadLetterWithResourceIdentity))
+            if (Core.Optional.IsDefined(DeadLetterWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeadLetterWithResourceIdentity);
@@ -84,18 +84,18 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> topic = default;
-            Optional<EventSubscriptionProvisioningState> provisioningState = default;
-            Optional<EventSubscriptionDestination> destination = default;
-            Optional<DeliveryWithResourceIdentity> deliveryWithResourceIdentity = default;
-            Optional<EventSubscriptionFilter> filter = default;
-            Optional<IList<string>> labels = default;
-            Optional<DateTimeOffset> expirationTimeUtc = default;
-            Optional<EventDeliverySchema> eventDeliverySchema = default;
-            Optional<EventSubscriptionRetryPolicy> retryPolicy = default;
-            Optional<DeadLetterDestination> deadLetterDestination = default;
-            Optional<DeadLetterWithResourceIdentity> deadLetterWithResourceIdentity = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> topic = default;
+            Core.Optional<EventSubscriptionProvisioningState> provisioningState = default;
+            Core.Optional<EventSubscriptionDestination> destination = default;
+            Core.Optional<DeliveryWithResourceIdentity> deliveryWithResourceIdentity = default;
+            Core.Optional<EventSubscriptionFilter> filter = default;
+            Core.Optional<IList<string>> labels = default;
+            Core.Optional<DateTimeOffset> expirationTimeUtc = default;
+            Core.Optional<EventDeliverySchema> eventDeliverySchema = default;
+            Core.Optional<EventSubscriptionRetryPolicy> retryPolicy = default;
+            Core.Optional<DeadLetterDestination> deadLetterDestination = default;
+            Core.Optional<DeadLetterWithResourceIdentity> deadLetterWithResourceIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new EventGridSubscriptionData(id, name, type, systemData.Value, topic.Value, Optional.ToNullable(provisioningState), destination.Value, deliveryWithResourceIdentity.Value, filter.Value, Optional.ToList(labels), Optional.ToNullable(expirationTimeUtc), Optional.ToNullable(eventDeliverySchema), retryPolicy.Value, deadLetterDestination.Value, deadLetterWithResourceIdentity.Value);
+            return new EventGridSubscriptionData(id, name, type, systemData.Value, topic.Value, Core.Optional.ToNullable(provisioningState), destination.Value, deliveryWithResourceIdentity.Value, filter.Value, Core.Optional.ToList(labels), Core.Optional.ToNullable(expirationTimeUtc), Core.Optional.ToNullable(eventDeliverySchema), retryPolicy.Value, deadLetterDestination.Value, deadLetterWithResourceIdentity.Value);
         }
     }
 }

@@ -12,18 +12,18 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    public partial class InboundEndpointIPConfiguration : IUtf8JsonSerializable
+    public partial class InboundEndpointIPConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("subnet"u8);
-            JsonSerializer.Serialize(writer, Subnet); if (Optional.IsDefined(PrivateIPAddress))
+            JsonSerializer.Serialize(writer, Subnet); if (Core.Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
-            if (Optional.IsDefined(PrivateIPAllocationMethod))
+            if (Core.Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIpAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 return null;
             }
             WritableSubResource subnet = default;
-            Optional<IPAddress> privateIPAddress = default;
-            Optional<InboundEndpointIPAllocationMethod> privateIPAllocationMethod = default;
+            Core.Optional<IPAddress> privateIPAddress = default;
+            Core.Optional<InboundEndpointIPAllocationMethod> privateIPAllocationMethod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnet"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     continue;
                 }
             }
-            return new InboundEndpointIPConfiguration(subnet, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod));
+            return new InboundEndpointIPConfiguration(subnet, privateIPAddress.Value, Core.Optional.ToNullable(privateIPAllocationMethod));
         }
     }
 }

@@ -10,63 +10,63 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class PostgreSqlConnectionInfo : IUtf8JsonSerializable
+    public partial class PostgreSqlConnectionInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("serverName"u8);
             writer.WriteStringValue(ServerName);
-            if (Optional.IsDefined(DataSource))
+            if (Core.Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteStringValue(DataSource);
             }
-            if (Optional.IsDefined(ServerVersion))
+            if (Core.Optional.IsDefined(ServerVersion))
             {
                 writer.WritePropertyName("serverVersion"u8);
                 writer.WriteStringValue(ServerVersion);
             }
-            if (Optional.IsDefined(DatabaseName))
+            if (Core.Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
             writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
-            if (Optional.IsDefined(EncryptConnection))
+            if (Core.Optional.IsDefined(EncryptConnection))
             {
                 writer.WritePropertyName("encryptConnection"u8);
                 writer.WriteBooleanValue(EncryptConnection.Value);
             }
-            if (Optional.IsDefined(TrustServerCertificate))
+            if (Core.Optional.IsDefined(TrustServerCertificate))
             {
                 writer.WritePropertyName("trustServerCertificate"u8);
                 writer.WriteBooleanValue(TrustServerCertificate.Value);
             }
-            if (Optional.IsDefined(AdditionalSettings))
+            if (Core.Optional.IsDefined(AdditionalSettings))
             {
                 writer.WritePropertyName("additionalSettings"u8);
                 writer.WriteStringValue(AdditionalSettings);
             }
-            if (Optional.IsDefined(ServerBrandVersion))
+            if (Core.Optional.IsDefined(ServerBrandVersion))
             {
                 writer.WritePropertyName("serverBrandVersion"u8);
                 writer.WriteStringValue(ServerBrandVersion);
             }
-            if (Optional.IsDefined(Authentication))
+            if (Core.Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication.Value.ToString());
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectionInfoType);
-            if (Optional.IsDefined(UserName))
+            if (Core.Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -81,18 +81,18 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string serverName = default;
-            Optional<string> dataSource = default;
-            Optional<string> serverVersion = default;
-            Optional<string> databaseName = default;
+            Core.Optional<string> dataSource = default;
+            Core.Optional<string> serverVersion = default;
+            Core.Optional<string> databaseName = default;
             int port = default;
-            Optional<bool> encryptConnection = default;
-            Optional<bool> trustServerCertificate = default;
-            Optional<string> additionalSettings = default;
-            Optional<string> serverBrandVersion = default;
-            Optional<AuthenticationType> authentication = default;
+            Core.Optional<bool> encryptConnection = default;
+            Core.Optional<bool> trustServerCertificate = default;
+            Core.Optional<string> additionalSettings = default;
+            Core.Optional<string> serverBrandVersion = default;
+            Core.Optional<AuthenticationType> authentication = default;
             string type = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            Core.Optional<string> userName = default;
+            Core.Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverName"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new PostgreSqlConnectionInfo(type, userName.Value, password.Value, serverName, dataSource.Value, serverVersion.Value, databaseName.Value, port, Optional.ToNullable(encryptConnection), Optional.ToNullable(trustServerCertificate), additionalSettings.Value, serverBrandVersion.Value, Optional.ToNullable(authentication));
+            return new PostgreSqlConnectionInfo(type, userName.Value, password.Value, serverName, dataSource.Value, serverVersion.Value, databaseName.Value, port, Core.Optional.ToNullable(encryptConnection), Core.Optional.ToNullable(trustServerCertificate), additionalSettings.Value, serverBrandVersion.Value, Core.Optional.ToNullable(authentication));
         }
     }
 }

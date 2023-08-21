@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> Initializes a new instance of DnsTxtRecordInfo. </summary>
         public DnsTxtRecordInfo()
         {
-            Values = new ChangeTrackingList<string>();
+            Values = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DnsTxtRecordInfo. </summary>

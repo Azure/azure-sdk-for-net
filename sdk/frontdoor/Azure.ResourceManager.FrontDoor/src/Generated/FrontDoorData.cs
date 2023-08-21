@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="location"> The location. </param>
         public FrontDoorData(AzureLocation location) : base(location)
         {
-            RoutingRules = new ChangeTrackingList<RoutingRuleData>();
-            LoadBalancingSettings = new ChangeTrackingList<FrontDoorLoadBalancingSettingsData>();
-            HealthProbeSettings = new ChangeTrackingList<FrontDoorHealthProbeSettingsData>();
-            BackendPools = new ChangeTrackingList<FrontDoorBackendPool>();
-            FrontendEndpoints = new ChangeTrackingList<FrontendEndpointData>();
-            RulesEngines = new ChangeTrackingList<FrontDoorRulesEngineData>();
-            ExtendedProperties = new ChangeTrackingDictionary<string, string>();
+            RoutingRules = new Core.ChangeTrackingList<RoutingRuleData>();
+            LoadBalancingSettings = new Core.ChangeTrackingList<FrontDoorLoadBalancingSettingsData>();
+            HealthProbeSettings = new Core.ChangeTrackingList<FrontDoorHealthProbeSettingsData>();
+            BackendPools = new Core.ChangeTrackingList<FrontDoorBackendPool>();
+            FrontendEndpoints = new Core.ChangeTrackingList<FrontendEndpointData>();
+            RulesEngines = new Core.ChangeTrackingList<FrontDoorRulesEngineData>();
+            ExtendedProperties = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of FrontDoorData. </summary>

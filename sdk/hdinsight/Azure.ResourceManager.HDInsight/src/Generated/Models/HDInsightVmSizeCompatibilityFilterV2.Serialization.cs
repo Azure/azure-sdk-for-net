@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<HDInsightFilterMode> filterMode = default;
-            Optional<IReadOnlyList<string>> regions = default;
-            Optional<IReadOnlyList<string>> clusterFlavors = default;
-            Optional<IReadOnlyList<string>> nodeTypes = default;
-            Optional<IReadOnlyList<string>> clusterVersions = default;
-            Optional<IReadOnlyList<HDInsightOSType>> osType = default;
-            Optional<IReadOnlyList<string>> vmSizes = default;
-            Optional<string> espApplied = default;
-            Optional<string> computeIsolationSupported = default;
+            Core.Optional<HDInsightFilterMode> filterMode = default;
+            Core.Optional<IReadOnlyList<string>> regions = default;
+            Core.Optional<IReadOnlyList<string>> clusterFlavors = default;
+            Core.Optional<IReadOnlyList<string>> nodeTypes = default;
+            Core.Optional<IReadOnlyList<string>> clusterVersions = default;
+            Core.Optional<IReadOnlyList<HDInsightOSType>> osType = default;
+            Core.Optional<IReadOnlyList<string>> vmSizes = default;
+            Core.Optional<string> espApplied = default;
+            Core.Optional<string> computeIsolationSupported = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filterMode"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightVmSizeCompatibilityFilterV2(Optional.ToNullable(filterMode), Optional.ToList(regions), Optional.ToList(clusterFlavors), Optional.ToList(nodeTypes), Optional.ToList(clusterVersions), Optional.ToList(osType), Optional.ToList(vmSizes), espApplied.Value, computeIsolationSupported.Value);
+            return new HDInsightVmSizeCompatibilityFilterV2(Core.Optional.ToNullable(filterMode), Core.Optional.ToList(regions), Core.Optional.ToList(clusterFlavors), Core.Optional.ToList(nodeTypes), Core.Optional.ToList(clusterVersions), Core.Optional.ToList(osType), Core.Optional.ToList(vmSizes), espApplied.Value, computeIsolationSupported.Value);
         }
     }
 }

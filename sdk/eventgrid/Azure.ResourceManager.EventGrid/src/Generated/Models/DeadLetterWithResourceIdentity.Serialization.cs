@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class DeadLetterWithResourceIdentity : IUtf8JsonSerializable
+    public partial class DeadLetterWithResourceIdentity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Optional.IsDefined(DeadLetterDestination))
+            if (Core.Optional.IsDefined(DeadLetterDestination))
             {
                 writer.WritePropertyName("deadLetterDestination"u8);
                 writer.WriteObjectValue(DeadLetterDestination);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<EventSubscriptionIdentity> identity = default;
-            Optional<DeadLetterDestination> deadLetterDestination = default;
+            Core.Optional<EventSubscriptionIdentity> identity = default;
+            Core.Optional<DeadLetterDestination> deadLetterDestination = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))

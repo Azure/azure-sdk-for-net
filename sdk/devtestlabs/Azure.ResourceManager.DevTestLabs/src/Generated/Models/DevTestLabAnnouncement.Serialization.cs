@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabAnnouncement : IUtf8JsonSerializable
+    public partial class DevTestLabAnnouncement : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Title))
+            if (Core.Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Markdown))
+            if (Core.Optional.IsDefined(Markdown))
             {
                 writer.WritePropertyName("markdown"u8);
                 writer.WriteStringValue(Markdown);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Core.Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled.Value.ToString());
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Core.Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(IsExpired))
+            if (Core.Optional.IsDefined(IsExpired))
             {
                 writer.WritePropertyName("expired"u8);
                 writer.WriteBooleanValue(IsExpired.Value);
@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> markdown = default;
-            Optional<DevTestLabEnableStatus> enabled = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<bool> expired = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            Core.Optional<string> title = default;
+            Core.Optional<string> markdown = default;
+            Core.Optional<DevTestLabEnableStatus> enabled = default;
+            Core.Optional<DateTimeOffset> expirationDate = default;
+            Core.Optional<bool> expired = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabAnnouncement(title.Value, markdown.Value, Optional.ToNullable(enabled), Optional.ToNullable(expirationDate), Optional.ToNullable(expired), provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
+            return new DevTestLabAnnouncement(title.Value, markdown.Value, Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(expirationDate), Core.Optional.ToNullable(expired), provisioningState.Value, Core.Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

@@ -11,42 +11,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class RecoveryPointDataStoreDetail : IUtf8JsonSerializable
+    public partial class RecoveryPointDataStoreDetail : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreatedOn))
+            if (Core.Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Core.Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(RecoveryPointDataStoreId))
+            if (Core.Optional.IsDefined(RecoveryPointDataStoreId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(RecoveryPointDataStoreId.Value);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Core.Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metaData"u8);
                 writer.WriteStringValue(Metadata);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(RecoveryPointDataStoreType))
+            if (Core.Optional.IsDefined(RecoveryPointDataStoreType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RecoveryPointDataStoreType);
             }
-            if (Optional.IsDefined(IsVisible))
+            if (Core.Optional.IsDefined(IsVisible))
             {
                 writer.WritePropertyName("visible"u8);
                 writer.WriteBooleanValue(IsVisible.Value);
@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<Guid> id = default;
-            Optional<string> metaData = default;
-            Optional<string> state = default;
-            Optional<string> type = default;
-            Optional<bool> visible = default;
-            Optional<DateTimeOffset> rehydrationExpiryTime = default;
-            Optional<RecoveryPointDataStoreRehydrationStatus> rehydrationStatus = default;
+            Core.Optional<DateTimeOffset> creationTime = default;
+            Core.Optional<DateTimeOffset> expiryTime = default;
+            Core.Optional<Guid> id = default;
+            Core.Optional<string> metaData = default;
+            Core.Optional<string> state = default;
+            Core.Optional<string> type = default;
+            Core.Optional<bool> visible = default;
+            Core.Optional<DateTimeOffset> rehydrationExpiryTime = default;
+            Core.Optional<RecoveryPointDataStoreRehydrationStatus> rehydrationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("creationTime"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new RecoveryPointDataStoreDetail(Optional.ToNullable(creationTime), Optional.ToNullable(expiryTime), Optional.ToNullable(id), metaData.Value, state.Value, type.Value, Optional.ToNullable(visible), Optional.ToNullable(rehydrationExpiryTime), Optional.ToNullable(rehydrationStatus));
+            return new RecoveryPointDataStoreDetail(Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(expiryTime), Core.Optional.ToNullable(id), metaData.Value, state.Value, type.Value, Core.Optional.ToNullable(visible), Core.Optional.ToNullable(rehydrationExpiryTime), Core.Optional.ToNullable(rehydrationStatus));
         }
     }
 }

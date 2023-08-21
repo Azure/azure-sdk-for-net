@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             IReadOnlyDictionary<string, MongoDBError> errors = default;
             long eventsPending = default;
             long eventsReplayed = default;
-            Optional<DateTimeOffset> lastEventTime = default;
-            Optional<DateTimeOffset> lastReplayTime = default;
-            Optional<string> name = default;
-            Optional<string> qualifiedName = default;
+            Core.Optional<DateTimeOffset> lastEventTime = default;
+            Core.Optional<DateTimeOffset> lastReplayTime = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> qualifiedName = default;
             MongoDBProgressResultType resultType = "Unknown";
             MongoDBMigrationState state = default;
             long totalBytes = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new UnknownMongoDBProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, Optional.ToNullable(lastEventTime), Optional.ToNullable(lastReplayTime), name.Value, qualifiedName.Value, resultType, state, totalBytes, totalDocuments);
+            return new UnknownMongoDBProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, Core.Optional.ToNullable(lastEventTime), Core.Optional.ToNullable(lastReplayTime), name.Value, qualifiedName.Value, resultType, state, totalBytes, totalDocuments);
         }
     }
 }

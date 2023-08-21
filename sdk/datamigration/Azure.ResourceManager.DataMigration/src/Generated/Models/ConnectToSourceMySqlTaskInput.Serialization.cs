@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToSourceMySqlTaskInput : IUtf8JsonSerializable
+    public partial class ConnectToSourceMySqlTaskInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
-            if (Optional.IsDefined(TargetPlatform))
+            if (Core.Optional.IsDefined(TargetPlatform))
             {
                 writer.WritePropertyName("targetPlatform"u8);
                 writer.WriteStringValue(TargetPlatform.Value.ToString());
             }
-            if (Optional.IsDefined(CheckPermissionsGroup))
+            if (Core.Optional.IsDefined(CheckPermissionsGroup))
             {
                 writer.WritePropertyName("checkPermissionsGroup"u8);
                 writer.WriteStringValue(CheckPermissionsGroup.Value.ToSerialString());
             }
-            if (Optional.IsDefined(IsOfflineMigration))
+            if (Core.Optional.IsDefined(IsOfflineMigration))
             {
                 writer.WritePropertyName("isOfflineMigration"u8);
                 writer.WriteBooleanValue(IsOfflineMigration.Value);
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             MySqlConnectionInfo sourceConnectionInfo = default;
-            Optional<MySqlTargetPlatformType> targetPlatform = default;
-            Optional<ServerLevelPermissionsGroup> checkPermissionsGroup = default;
-            Optional<bool> isOfflineMigration = default;
+            Core.Optional<MySqlTargetPlatformType> targetPlatform = default;
+            Core.Optional<ServerLevelPermissionsGroup> checkPermissionsGroup = default;
+            Core.Optional<bool> isOfflineMigration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ConnectToSourceMySqlTaskInput(sourceConnectionInfo, Optional.ToNullable(targetPlatform), Optional.ToNullable(checkPermissionsGroup), Optional.ToNullable(isOfflineMigration));
+            return new ConnectToSourceMySqlTaskInput(sourceConnectionInfo, Core.Optional.ToNullable(targetPlatform), Core.Optional.ToNullable(checkPermissionsGroup), Core.Optional.ToNullable(isOfflineMigration));
         }
     }
 }

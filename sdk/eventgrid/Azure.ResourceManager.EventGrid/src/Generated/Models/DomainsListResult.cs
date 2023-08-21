@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of DomainsListResult. </summary>
         internal DomainsListResult()
         {
-            Value = new ChangeTrackingList<EventGridDomainData>();
+            Value = new Core.ChangeTrackingList<EventGridDomainData>();
         }
 
         /// <summary> Initializes a new instance of DomainsListResult. </summary>

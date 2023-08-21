@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput. </summary>
         internal ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput()
         {
-            Databases = new ChangeTrackingList<string>();
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
-            DatabaseSchemaMap = new ChangeTrackingList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem>();
+            Databases = new Core.ChangeTrackingList<string>();
+            ValidationErrors = new Core.ChangeTrackingList<ReportableException>();
+            DatabaseSchemaMap = new Core.ChangeTrackingList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem>();
         }
 
         /// <summary> Initializes a new instance of ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput. </summary>

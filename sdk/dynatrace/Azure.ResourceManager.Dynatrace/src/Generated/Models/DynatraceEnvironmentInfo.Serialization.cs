@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceEnvironmentInfo : IUtf8JsonSerializable
+    public partial class DynatraceEnvironmentInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnvironmentId))
+            if (Core.Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (Optional.IsDefined(IngestionKey))
+            if (Core.Optional.IsDefined(IngestionKey))
             {
                 writer.WritePropertyName("ingestionKey"u8);
                 writer.WriteStringValue(IngestionKey);
             }
-            if (Optional.IsDefined(LogsIngestionEndpoint))
+            if (Core.Optional.IsDefined(LogsIngestionEndpoint))
             {
                 writer.WritePropertyName("logsIngestionEndpoint"u8);
                 writer.WriteStringValue(LogsIngestionEndpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(LandingUri))
+            if (Core.Optional.IsDefined(LandingUri))
             {
                 writer.WritePropertyName("landingURL"u8);
                 writer.WriteStringValue(LandingUri.AbsoluteUri);
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<string> environmentId = default;
-            Optional<string> ingestionKey = default;
-            Optional<Uri> logsIngestionEndpoint = default;
-            Optional<Uri> landingUri = default;
+            Core.Optional<string> environmentId = default;
+            Core.Optional<string> ingestionKey = default;
+            Core.Optional<Uri> logsIngestionEndpoint = default;
+            Core.Optional<Uri> landingUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("environmentId"u8))

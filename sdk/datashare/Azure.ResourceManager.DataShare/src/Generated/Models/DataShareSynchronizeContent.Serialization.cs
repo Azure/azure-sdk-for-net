@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class DataShareSynchronizeContent : IUtf8JsonSerializable
+    public partial class DataShareSynchronizeContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SynchronizationMode))
+            if (Core.Optional.IsDefined(SynchronizationMode))
             {
                 writer.WritePropertyName("synchronizationMode"u8);
                 writer.WriteStringValue(SynchronizationMode.Value.ToString());
