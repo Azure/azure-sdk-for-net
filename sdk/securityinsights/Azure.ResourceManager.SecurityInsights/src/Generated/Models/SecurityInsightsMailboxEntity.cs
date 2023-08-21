@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsMailboxEntity. </summary>
         public SecurityInsightsMailboxEntity()
         {
-            AdditionalData = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.Mailbox;
         }
 

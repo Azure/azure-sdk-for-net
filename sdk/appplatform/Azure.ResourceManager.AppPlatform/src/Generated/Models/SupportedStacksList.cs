@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of SupportedStacksList. </summary>
         internal SupportedStacksList()
         {
-            Value = new Core.ChangeTrackingList<AppPlatformSupportedStackData>();
+            Value = new ChangeTrackingList<AppPlatformSupportedStackData>();
         }
 
         /// <summary> Initializes a new instance of SupportedStacksList. </summary>

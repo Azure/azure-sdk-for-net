@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> containerName = default;
-            Core.Optional<string> fabricName = default;
-            Core.Optional<string> remoteContainerName = default;
-            Core.Optional<string> remoteFabricName = default;
+            Optional<string> containerName = default;
+            Optional<string> fabricName = default;
+            Optional<string> remoteContainerName = default;
+            Optional<string> remoteFabricName = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {

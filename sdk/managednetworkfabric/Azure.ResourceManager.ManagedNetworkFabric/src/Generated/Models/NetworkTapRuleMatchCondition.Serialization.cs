@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkTapRuleMatchCondition : Core.IUtf8JsonSerializable
+    public partial class NetworkTapRuleMatchCondition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EncapsulationType))
+            if (Optional.IsDefined(EncapsulationType))
             {
                 writer.WritePropertyName("encapsulationType"u8);
                 writer.WriteStringValue(EncapsulationType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PortCondition))
+            if (Optional.IsDefined(PortCondition))
             {
                 writer.WritePropertyName("portCondition"u8);
                 writer.WriteObjectValue(PortCondition);
             }
-            if (Core.Optional.IsCollectionDefined(ProtocolTypes))
+            if (Optional.IsCollectionDefined(ProtocolTypes))
             {
                 writer.WritePropertyName("protocolTypes"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(VlanMatchCondition))
+            if (Optional.IsDefined(VlanMatchCondition))
             {
                 writer.WritePropertyName("vlanMatchCondition"u8);
                 writer.WriteObjectValue(VlanMatchCondition);
             }
-            if (Core.Optional.IsDefined(IPCondition))
+            if (Optional.IsDefined(IPCondition))
             {
                 writer.WritePropertyName("ipCondition"u8);
                 writer.WriteObjectValue(IPCondition);
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<NetworkTapEncapsulationType> encapsulationType = default;
-            Core.Optional<NetworkFabricPortCondition> portCondition = default;
-            Core.Optional<IList<string>> protocolTypes = default;
-            Core.Optional<VlanMatchCondition> vlanMatchCondition = default;
-            Core.Optional<IPMatchCondition> ipCondition = default;
+            Optional<NetworkTapEncapsulationType> encapsulationType = default;
+            Optional<NetworkFabricPortCondition> portCondition = default;
+            Optional<IList<string>> protocolTypes = default;
+            Optional<VlanMatchCondition> vlanMatchCondition = default;
+            Optional<IPMatchCondition> ipCondition = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encapsulationType"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new NetworkTapRuleMatchCondition(Core.Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value, Core.Optional.ToNullable(encapsulationType), portCondition.Value);
+            return new NetworkTapRuleMatchCondition(Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value, Optional.ToNullable(encapsulationType), portCondition.Value);
         }
     }
 }

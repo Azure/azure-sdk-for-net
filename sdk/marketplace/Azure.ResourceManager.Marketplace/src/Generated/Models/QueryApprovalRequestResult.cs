@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of QueryApprovalRequestResult. </summary>
         internal QueryApprovalRequestResult()
         {
-            PlansDetails = new Core.ChangeTrackingDictionary<string, PrivateStorePlanDetails>();
+            PlansDetails = new ChangeTrackingDictionary<string, PrivateStorePlanDetails>();
         }
 
         /// <summary> Initializes a new instance of QueryApprovalRequestResult. </summary>

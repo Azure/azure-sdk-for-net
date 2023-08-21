@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<Uri> blobUri = default;
-            Core.Optional<string> sasToken = default;
+            Optional<Uri> blobUri = default;
+            Optional<string> sasToken = default;
             string instanceType = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
+            Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobUri"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new ExportJobDetails(instanceType, Core.Optional.ToDictionary(affectedObjectDetails), blobUri.Value, sasToken.Value);
+            return new ExportJobDetails(instanceType, Optional.ToDictionary(affectedObjectDetails), blobUri.Value, sasToken.Value);
         }
     }
 }

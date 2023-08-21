@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class CloudServiceData : Core.IUtf8JsonSerializable
+    public partial class CloudServiceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Zones))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,52 +44,52 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PackageUri))
+            if (Optional.IsDefined(PackageUri))
             {
                 writer.WritePropertyName("packageUrl"u8);
                 writer.WriteStringValue(PackageUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(Configuration))
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteStringValue(Configuration);
             }
-            if (Core.Optional.IsDefined(ConfigurationUri))
+            if (Optional.IsDefined(ConfigurationUri))
             {
                 writer.WritePropertyName("configurationUrl"u8);
                 writer.WriteStringValue(ConfigurationUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(StartCloudService))
+            if (Optional.IsDefined(StartCloudService))
             {
                 writer.WritePropertyName("startCloudService"u8);
                 writer.WriteBooleanValue(StartCloudService.Value);
             }
-            if (Core.Optional.IsDefined(AllowModelOverride))
+            if (Optional.IsDefined(AllowModelOverride))
             {
                 writer.WritePropertyName("allowModelOverride"u8);
                 writer.WriteBooleanValue(AllowModelOverride.Value);
             }
-            if (Core.Optional.IsDefined(UpgradeMode))
+            if (Optional.IsDefined(UpgradeMode))
             {
                 writer.WritePropertyName("upgradeMode"u8);
                 writer.WriteStringValue(UpgradeMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RoleProfile))
+            if (Optional.IsDefined(RoleProfile))
             {
                 writer.WritePropertyName("roleProfile"u8);
                 writer.WriteObjectValue(RoleProfile);
             }
-            if (Core.Optional.IsDefined(OSProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (Core.Optional.IsDefined(NetworkProfile))
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Core.Optional.IsDefined(ExtensionProfile))
+            if (Optional.IsDefined(ExtensionProfile))
             {
                 writer.WritePropertyName("extensionProfile"u8);
                 writer.WriteObjectValue(ExtensionProfile);
@@ -104,25 +104,25 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Core.Optional<IList<string>> zones = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<string>> zones = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Uri> packageUrl = default;
-            Core.Optional<string> configuration = default;
-            Core.Optional<Uri> configurationUrl = default;
-            Core.Optional<bool> startCloudService = default;
-            Core.Optional<bool> allowModelOverride = default;
-            Core.Optional<CloudServiceUpgradeMode> upgradeMode = default;
-            Core.Optional<CloudServiceRoleProfile> roleProfile = default;
-            Core.Optional<CloudServiceOSProfile> osProfile = default;
-            Core.Optional<CloudServiceNetworkProfile> networkProfile = default;
-            Core.Optional<CloudServiceExtensionProfile> extensionProfile = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<string> uniqueId = default;
+            Optional<SystemData> systemData = default;
+            Optional<Uri> packageUrl = default;
+            Optional<string> configuration = default;
+            Optional<Uri> configurationUrl = default;
+            Optional<bool> startCloudService = default;
+            Optional<bool> allowModelOverride = default;
+            Optional<CloudServiceUpgradeMode> upgradeMode = default;
+            Optional<CloudServiceRoleProfile> roleProfile = default;
+            Optional<CloudServiceOSProfile> osProfile = default;
+            Optional<CloudServiceNetworkProfile> networkProfile = default;
+            Optional<CloudServiceExtensionProfile> extensionProfile = default;
+            Optional<string> provisioningState = default;
+            Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new CloudServiceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToList(zones), packageUrl.Value, configuration.Value, configurationUrl.Value, Core.Optional.ToNullable(startCloudService), Core.Optional.ToNullable(allowModelOverride), Core.Optional.ToNullable(upgradeMode), roleProfile.Value, osProfile.Value, networkProfile.Value, extensionProfile.Value, provisioningState.Value, uniqueId.Value);
+            return new CloudServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), packageUrl.Value, configuration.Value, configurationUrl.Value, Optional.ToNullable(startCloudService), Optional.ToNullable(allowModelOverride), Optional.ToNullable(upgradeMode), roleProfile.Value, osProfile.Value, networkProfile.Value, extensionProfile.Value, provisioningState.Value, uniqueId.Value);
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> complianceState = default;
-            Core.Optional<int> count = default;
+            Optional<string> complianceState = default;
+            Optional<int> count = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("complianceState"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new ComplianceDetail(complianceState.Value, Core.Optional.ToNullable(count));
+            return new ComplianceDetail(complianceState.Value, Optional.ToNullable(count));
         }
     }
 }

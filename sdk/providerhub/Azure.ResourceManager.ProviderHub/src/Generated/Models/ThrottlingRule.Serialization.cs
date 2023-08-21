@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ThrottlingRule : Core.IUtf8JsonSerializable
+    public partial class ThrottlingRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("action"u8);
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsCollectionDefined(RequiredFeatures))
+            if (Optional.IsCollectionDefined(RequiredFeatures))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             string action = default;
             IList<ThrottlingMetric> metrics = default;
-            Core.Optional<IList<string>> requiredFeatures = default;
+            Optional<IList<string>> requiredFeatures = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ThrottlingRule(action, metrics, Core.Optional.ToList(requiredFeatures));
+            return new ThrottlingRule(action, metrics, Optional.ToList(requiredFeatures));
         }
     }
 }

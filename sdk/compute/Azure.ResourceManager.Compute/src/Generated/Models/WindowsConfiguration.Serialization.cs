@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class WindowsConfiguration : Core.IUtf8JsonSerializable
+    public partial class WindowsConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProvisionVmAgent))
+            if (Optional.IsDefined(ProvisionVmAgent))
             {
                 writer.WritePropertyName("provisionVMAgent"u8);
                 writer.WriteBooleanValue(ProvisionVmAgent.Value);
             }
-            if (Core.Optional.IsDefined(IsAutomaticUpdatesEnabled))
+            if (Optional.IsDefined(IsAutomaticUpdatesEnabled))
             {
                 writer.WritePropertyName("enableAutomaticUpdates"u8);
                 writer.WriteBooleanValue(IsAutomaticUpdatesEnabled.Value);
             }
-            if (Core.Optional.IsDefined(TimeZone))
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Core.Optional.IsCollectionDefined(AdditionalUnattendContent))
+            if (Optional.IsCollectionDefined(AdditionalUnattendContent))
             {
                 writer.WritePropertyName("additionalUnattendContent"u8);
                 writer.WriteStartArray();
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(PatchSettings))
+            if (Optional.IsDefined(PatchSettings))
             {
                 writer.WritePropertyName("patchSettings"u8);
                 writer.WriteObjectValue(PatchSettings);
             }
-            if (Core.Optional.IsDefined(WinRM))
+            if (Optional.IsDefined(WinRM))
             {
                 writer.WritePropertyName("winRM"u8);
                 writer.WriteObjectValue(WinRM);
             }
-            if (Core.Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
+            if (Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
             {
                 writer.WritePropertyName("enableVMAgentPlatformUpdates"u8);
                 writer.WriteBooleanValue(IsVmAgentPlatformUpdatesEnabled.Value);
@@ -65,13 +65,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<bool> provisionVmAgent = default;
-            Core.Optional<bool> enableAutomaticUpdates = default;
-            Core.Optional<string> timeZone = default;
-            Core.Optional<IList<AdditionalUnattendContent>> additionalUnattendContent = default;
-            Core.Optional<PatchSettings> patchSettings = default;
-            Core.Optional<WinRMConfiguration> winRM = default;
-            Core.Optional<bool> enableVmAgentPlatformUpdates = default;
+            Optional<bool> provisionVmAgent = default;
+            Optional<bool> enableAutomaticUpdates = default;
+            Optional<string> timeZone = default;
+            Optional<IList<AdditionalUnattendContent>> additionalUnattendContent = default;
+            Optional<PatchSettings> patchSettings = default;
+            Optional<WinRMConfiguration> winRM = default;
+            Optional<bool> enableVmAgentPlatformUpdates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisionVMAgent"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new WindowsConfiguration(Core.Optional.ToNullable(provisionVmAgent), Core.Optional.ToNullable(enableAutomaticUpdates), timeZone.Value, Core.Optional.ToList(additionalUnattendContent), patchSettings.Value, winRM.Value, Core.Optional.ToNullable(enableVmAgentPlatformUpdates));
+            return new WindowsConfiguration(Optional.ToNullable(provisionVmAgent), Optional.ToNullable(enableAutomaticUpdates), timeZone.Value, Optional.ToList(additionalUnattendContent), patchSettings.Value, winRM.Value, Optional.ToNullable(enableVmAgentPlatformUpdates));
         }
     }
 }

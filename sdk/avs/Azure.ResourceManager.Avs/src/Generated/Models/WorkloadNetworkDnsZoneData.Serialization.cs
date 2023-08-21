@@ -14,19 +14,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class WorkloadNetworkDnsZoneData : Core.IUtf8JsonSerializable
+    public partial class WorkloadNetworkDnsZoneData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsCollectionDefined(Domain))
+            if (Optional.IsCollectionDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DnsServerIPs))
+            if (Optional.IsCollectionDefined(DnsServerIPs))
             {
                 writer.WritePropertyName("dnsServerIps"u8);
                 writer.WriteStartArray();
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SourceIP))
+            if (Optional.IsDefined(SourceIP))
             {
                 writer.WritePropertyName("sourceIp"u8);
                 writer.WriteStringValue(SourceIP.ToString());
             }
-            if (Core.Optional.IsDefined(DnsServices))
+            if (Optional.IsDefined(DnsServices))
             {
                 writer.WritePropertyName("dnsServices"u8);
                 writer.WriteNumberValue(DnsServices.Value);
             }
-            if (Core.Optional.IsDefined(Revision))
+            if (Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<IList<string>> domain = default;
-            Core.Optional<IList<IPAddress>> dnsServerIPs = default;
-            Core.Optional<IPAddress> sourceIP = default;
-            Core.Optional<long> dnsServices = default;
-            Core.Optional<WorkloadNetworkDnsZoneProvisioningState> provisioningState = default;
-            Core.Optional<long> revision = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<IList<string>> domain = default;
+            Optional<IList<IPAddress>> dnsServerIPs = default;
+            Optional<IPAddress> sourceIP = default;
+            Optional<long> dnsServices = default;
+            Optional<WorkloadNetworkDnsZoneProvisioningState> provisioningState = default;
+            Optional<long> revision = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new WorkloadNetworkDnsZoneData(id, name, type, systemData.Value, displayName.Value, Core.Optional.ToList(domain), Core.Optional.ToList(dnsServerIPs), sourceIP.Value, Core.Optional.ToNullable(dnsServices), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(revision));
+            return new WorkloadNetworkDnsZoneData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(domain), Optional.ToList(dnsServerIPs), sourceIP.Value, Optional.ToNullable(dnsServices), Optional.ToNullable(provisioningState), Optional.ToNullable(revision));
         }
     }
 }

@@ -12,9 +12,9 @@ using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    public partial class MySqlPrivateLinkResourceData : Core.IUtf8JsonSerializable
+    public partial class MySqlPrivateLinkResourceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.MySql
             {
                 return null;
             }
-            Core.Optional<MySqlPrivateLinkResourceProperties> properties = default;
+            Optional<MySqlPrivateLinkResourceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

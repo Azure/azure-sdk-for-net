@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<MachineLearningComputeProvisioningStatus> provisioningStatus = default;
-            Core.Optional<MachineLearningScheduleStatus> status = default;
-            Core.Optional<MachineLearningComputePowerAction> action = default;
-            Core.Optional<MachineLearningTriggerType> triggerType = default;
-            Core.Optional<MachineLearningRecurrenceTrigger> recurrence = default;
-            Core.Optional<CronTrigger> cron = default;
-            Core.Optional<MachineLearningScheduleBase> schedule = default;
+            Optional<string> id = default;
+            Optional<MachineLearningComputeProvisioningStatus> provisioningStatus = default;
+            Optional<MachineLearningScheduleStatus> status = default;
+            Optional<MachineLearningComputePowerAction> action = default;
+            Optional<MachineLearningTriggerType> triggerType = default;
+            Optional<MachineLearningRecurrenceTrigger> recurrence = default;
+            Optional<CronTrigger> cron = default;
+            Optional<MachineLearningScheduleBase> schedule = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningComputeStartStopSchedule(id.Value, Core.Optional.ToNullable(provisioningStatus), Core.Optional.ToNullable(status), Core.Optional.ToNullable(action), Core.Optional.ToNullable(triggerType), recurrence.Value, cron.Value, schedule.Value);
+            return new MachineLearningComputeStartStopSchedule(id.Value, Optional.ToNullable(provisioningStatus), Optional.ToNullable(status), Optional.ToNullable(action), Optional.ToNullable(triggerType), recurrence.Value, cron.Value, schedule.Value);
         }
     }
 }

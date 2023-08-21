@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Core.Optional<RecoveryServicesPrivateEndpointConnectionProvisioningState> provisioningState = default;
-            Core.Optional<SubResource> privateEndpoint = default;
-            Core.Optional<RecoveryServicesPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Core.Optional<IReadOnlyList<VaultSubResourceType>> groupIds = default;
+            Optional<RecoveryServicesPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<SubResource> privateEndpoint = default;
+            Optional<RecoveryServicesPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<IReadOnlyList<VaultSubResourceType>> groupIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new RecoveryServicesPrivateEndpointConnection(Core.Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState.Value, Core.Optional.ToList(groupIds));
+            return new RecoveryServicesPrivateEndpointConnection(Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToList(groupIds));
         }
     }
 }

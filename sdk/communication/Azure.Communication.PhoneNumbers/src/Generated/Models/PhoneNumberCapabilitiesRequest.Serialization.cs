@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    internal partial class PhoneNumberCapabilitiesRequest : Core.IUtf8JsonSerializable
+    internal partial class PhoneNumberCapabilitiesRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Calling))
+            if (Optional.IsDefined(Calling))
             {
                 writer.WritePropertyName("calling"u8);
                 writer.WriteStringValue(Calling.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Sms))
+            if (Optional.IsDefined(Sms))
             {
                 writer.WritePropertyName("sms"u8);
                 writer.WriteStringValue(Sms.Value.ToString());

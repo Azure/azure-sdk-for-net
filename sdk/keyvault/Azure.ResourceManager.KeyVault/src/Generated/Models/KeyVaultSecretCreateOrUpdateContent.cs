@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
             Properties = properties;
         }
 

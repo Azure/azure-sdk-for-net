@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class BotServiceSku : Core.IUtf8JsonSerializable
+    public partial class BotServiceSku : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             BotServiceSkuName name = default;
-            Core.Optional<BotServiceSkuTier> tier = default;
+            Optional<BotServiceSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new BotServiceSku(name, Core.Optional.ToNullable(tier));
+            return new BotServiceSku(name, Optional.ToNullable(tier));
         }
     }
 }

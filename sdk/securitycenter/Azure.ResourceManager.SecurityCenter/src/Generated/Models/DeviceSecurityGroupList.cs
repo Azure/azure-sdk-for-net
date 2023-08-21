@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of DeviceSecurityGroupList. </summary>
         internal DeviceSecurityGroupList()
         {
-            Value = new Core.ChangeTrackingList<DeviceSecurityGroupData>();
+            Value = new ChangeTrackingList<DeviceSecurityGroupData>();
         }
 
         /// <summary> Initializes a new instance of DeviceSecurityGroupList. </summary>

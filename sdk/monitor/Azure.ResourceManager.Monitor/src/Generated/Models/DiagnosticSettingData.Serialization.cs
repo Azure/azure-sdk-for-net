@@ -13,34 +13,34 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class DiagnosticSettingData : Core.IUtf8JsonSerializable
+    public partial class DiagnosticSettingData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StorageAccountId))
+            if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (Core.Optional.IsDefined(ServiceBusRuleId))
+            if (Optional.IsDefined(ServiceBusRuleId))
             {
                 writer.WritePropertyName("serviceBusRuleId"u8);
                 writer.WriteStringValue(ServiceBusRuleId);
             }
-            if (Core.Optional.IsDefined(EventHubAuthorizationRuleId))
+            if (Optional.IsDefined(EventHubAuthorizationRuleId))
             {
                 writer.WritePropertyName("eventHubAuthorizationRuleId"u8);
                 writer.WriteStringValue(EventHubAuthorizationRuleId);
             }
-            if (Core.Optional.IsDefined(EventHubName))
+            if (Optional.IsDefined(EventHubName))
             {
                 writer.WritePropertyName("eventHubName"u8);
                 writer.WriteStringValue(EventHubName);
             }
-            if (Core.Optional.IsCollectionDefined(Metrics))
+            if (Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Logs))
+            if (Optional.IsCollectionDefined(Logs))
             {
                 writer.WritePropertyName("logs"u8);
                 writer.WriteStartArray();
@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(WorkspaceId))
+            if (Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
-            if (Core.Optional.IsDefined(MarketplacePartnerId))
+            if (Optional.IsDefined(MarketplacePartnerId))
             {
                 writer.WritePropertyName("marketplacePartnerId"u8);
                 writer.WriteStringValue(MarketplacePartnerId);
             }
-            if (Core.Optional.IsDefined(LogAnalyticsDestinationType))
+            if (Optional.IsDefined(LogAnalyticsDestinationType))
             {
                 writer.WritePropertyName("logAnalyticsDestinationType"u8);
                 writer.WriteStringValue(LogAnalyticsDestinationType);
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> storageAccountId = default;
-            Core.Optional<ResourceIdentifier> serviceBusRuleId = default;
-            Core.Optional<ResourceIdentifier> eventHubAuthorizationRuleId = default;
-            Core.Optional<string> eventHubName = default;
-            Core.Optional<IList<MetricSettings>> metrics = default;
-            Core.Optional<IList<LogSettings>> logs = default;
-            Core.Optional<ResourceIdentifier> workspaceId = default;
-            Core.Optional<ResourceIdentifier> marketplacePartnerId = default;
-            Core.Optional<string> logAnalyticsDestinationType = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> storageAccountId = default;
+            Optional<ResourceIdentifier> serviceBusRuleId = default;
+            Optional<ResourceIdentifier> eventHubAuthorizationRuleId = default;
+            Optional<string> eventHubName = default;
+            Optional<IList<MetricSettings>> metrics = default;
+            Optional<IList<LogSettings>> logs = default;
+            Optional<ResourceIdentifier> workspaceId = default;
+            Optional<ResourceIdentifier> marketplacePartnerId = default;
+            Optional<string> logAnalyticsDestinationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new DiagnosticSettingData(id, name, type, systemData.Value, storageAccountId.Value, serviceBusRuleId.Value, eventHubAuthorizationRuleId.Value, eventHubName.Value, Core.Optional.ToList(metrics), Core.Optional.ToList(logs), workspaceId.Value, marketplacePartnerId.Value, logAnalyticsDestinationType.Value);
+            return new DiagnosticSettingData(id, name, type, systemData.Value, storageAccountId.Value, serviceBusRuleId.Value, eventHubAuthorizationRuleId.Value, eventHubName.Value, Optional.ToList(metrics), Optional.ToList(logs), workspaceId.Value, marketplacePartnerId.Value, logAnalyticsDestinationType.Value);
         }
     }
 }

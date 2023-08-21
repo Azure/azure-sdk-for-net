@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppSubvolumeInfoPatch : Core.IUtf8JsonSerializable
+    public partial class NetAppSubvolumeInfoPatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Size))
+            if (Optional.IsDefined(Size))
             {
                 if (Size != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("size");
                 }
             }
-            if (Core.Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);

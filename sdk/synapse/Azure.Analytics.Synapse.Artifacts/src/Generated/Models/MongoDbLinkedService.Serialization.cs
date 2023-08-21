@@ -14,24 +14,24 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(MongoDbLinkedServiceConverter))]
-    public partial class MongoDbLinkedService : Core.IUtf8JsonSerializable
+    public partial class MongoDbLinkedService : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Core.Optional.IsDefined(ConnectVia))
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Annotations))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -61,44 +61,44 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("server"u8);
             writer.WriteObjectValue(Server);
-            if (Core.Optional.IsDefined(AuthenticationType))
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
             writer.WritePropertyName("databaseName"u8);
             writer.WriteObjectValue(DatabaseName);
-            if (Core.Optional.IsDefined(Username))
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteObjectValue(Username);
             }
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
-            if (Core.Optional.IsDefined(AuthSource))
+            if (Optional.IsDefined(AuthSource))
             {
                 writer.WritePropertyName("authSource"u8);
                 writer.WriteObjectValue(AuthSource);
             }
-            if (Core.Optional.IsDefined(Port))
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteObjectValue(Port);
             }
-            if (Core.Optional.IsDefined(EnableSsl))
+            if (Optional.IsDefined(EnableSsl))
             {
                 writer.WritePropertyName("enableSsl"u8);
                 writer.WriteObjectValue(EnableSsl);
             }
-            if (Core.Optional.IsDefined(AllowSelfSignedServerCert))
+            if (Optional.IsDefined(AllowSelfSignedServerCert))
             {
                 writer.WritePropertyName("allowSelfSignedServerCert"u8);
                 writer.WriteObjectValue(AllowSelfSignedServerCert);
             }
-            if (Core.Optional.IsDefined(EncryptedCredential))
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);
@@ -119,20 +119,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Core.Optional<IntegrationRuntimeReference> connectVia = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Core.Optional<IList<object>> annotations = default;
+            Optional<IntegrationRuntimeReference> connectVia = default;
+            Optional<string> description = default;
+            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Optional<IList<object>> annotations = default;
             object server = default;
-            Core.Optional<MongoDbAuthenticationType> authenticationType = default;
+            Optional<MongoDbAuthenticationType> authenticationType = default;
             object databaseName = default;
-            Core.Optional<object> username = default;
-            Core.Optional<SecretBase> password = default;
-            Core.Optional<object> authSource = default;
-            Core.Optional<object> port = default;
-            Core.Optional<object> enableSsl = default;
-            Core.Optional<object> allowSelfSignedServerCert = default;
-            Core.Optional<object> encryptedCredential = default;
+            Optional<object> username = default;
+            Optional<SecretBase> password = default;
+            Optional<object> authSource = default;
+            Optional<object> port = default;
+            Optional<object> enableSsl = default;
+            Optional<object> allowSelfSignedServerCert = default;
+            Optional<object> encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -288,7 +288,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MongoDbLinkedService(type, connectVia.Value, description.Value, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(annotations), additionalProperties, server, Core.Optional.ToNullable(authenticationType), databaseName, username.Value, password.Value, authSource.Value, port.Value, enableSsl.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
+            return new MongoDbLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server, Optional.ToNullable(authenticationType), databaseName, username.Value, password.Value, authSource.Value, port.Value, enableSsl.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
         }
 
         internal partial class MongoDbLinkedServiceConverter : JsonConverter<MongoDbLinkedService>

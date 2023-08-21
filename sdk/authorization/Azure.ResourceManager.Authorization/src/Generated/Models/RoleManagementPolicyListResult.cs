@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of RoleManagementPolicyListResult. </summary>
         internal RoleManagementPolicyListResult()
         {
-            Value = new Core.ChangeTrackingList<RoleManagementPolicyData>();
+            Value = new ChangeTrackingList<RoleManagementPolicyData>();
         }
 
         /// <summary> Initializes a new instance of RoleManagementPolicyListResult. </summary>

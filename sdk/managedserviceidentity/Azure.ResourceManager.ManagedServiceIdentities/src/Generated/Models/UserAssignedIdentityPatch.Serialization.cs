@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
-    public partial class UserAssignedIdentityPatch : Core.IUtf8JsonSerializable
+    public partial class UserAssignedIdentityPatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,15 +43,15 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<Guid> principalId = default;
-            Core.Optional<Guid> clientId = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> tenantId = default;
+            Optional<Guid> principalId = default;
+            Optional<Guid> clientId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     continue;
                 }
             }
-            return new UserAssignedIdentityPatch(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(principalId), Core.Optional.ToNullable(clientId));
+            return new UserAssignedIdentityPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(tenantId), Optional.ToNullable(principalId), Optional.ToNullable(clientId));
         }
     }
 }

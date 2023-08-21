@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecuritySolutionsReferenceData : Core.IUtf8JsonSerializable
+    public partial class SecuritySolutionsReferenceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             SecurityFamily securityFamily = default;
             string alertVendorName = default;
             Uri packageInfoUrl = default;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecuritySolutionsReferenceData(id, name, type, systemData.Value, securityFamily, alertVendorName, packageInfoUrl, productName, publisher, publisherDisplayName, template, Core.Optional.ToNullable(location));
+            return new SecuritySolutionsReferenceData(id, name, type, systemData.Value, securityFamily, alertVendorName, packageInfoUrl, productName, publisher, publisherDisplayName, template, Optional.ToNullable(location));
         }
     }
 }

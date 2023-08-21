@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class Kustomization : Core.IUtf8JsonSerializable
+    public partial class Kustomization : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Core.Optional.IsCollectionDefined(DependsOn))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 if (DependsOn != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("dependsOn");
                 }
             }
-            if (Core.Optional.IsDefined(TimeoutInSeconds))
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (Core.Optional.IsDefined(SyncIntervalInSeconds))
+            if (Optional.IsDefined(SyncIntervalInSeconds))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (Core.Optional.IsDefined(RetryIntervalInSeconds))
+            if (Optional.IsDefined(RetryIntervalInSeconds))
             {
                 if (RetryIntervalInSeconds != null)
                 {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("retryIntervalInSeconds");
                 }
             }
-            if (Core.Optional.IsDefined(Prune))
+            if (Optional.IsDefined(Prune))
             {
                 writer.WritePropertyName("prune"u8);
                 writer.WriteBooleanValue(Prune.Value);
             }
-            if (Core.Optional.IsDefined(Force))
+            if (Optional.IsDefined(Force))
             {
                 writer.WritePropertyName("force"u8);
                 writer.WriteBooleanValue(Force.Value);
@@ -93,14 +93,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> path = default;
-            Core.Optional<IList<string>> dependsOn = default;
-            Core.Optional<long?> timeoutInSeconds = default;
-            Core.Optional<long?> syncIntervalInSeconds = default;
-            Core.Optional<long?> retryIntervalInSeconds = default;
-            Core.Optional<bool> prune = default;
-            Core.Optional<bool> force = default;
+            Optional<string> name = default;
+            Optional<string> path = default;
+            Optional<IList<string>> dependsOn = default;
+            Optional<long?> timeoutInSeconds = default;
+            Optional<long?> syncIntervalInSeconds = default;
+            Optional<long?> retryIntervalInSeconds = default;
+            Optional<bool> prune = default;
+            Optional<bool> force = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     continue;
                 }
             }
-            return new Kustomization(name.Value, path.Value, Core.Optional.ToList(dependsOn), Core.Optional.ToNullable(timeoutInSeconds), Core.Optional.ToNullable(syncIntervalInSeconds), Core.Optional.ToNullable(retryIntervalInSeconds), Core.Optional.ToNullable(prune), Core.Optional.ToNullable(force));
+            return new Kustomization(name.Value, path.Value, Optional.ToList(dependsOn), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(prune), Optional.ToNullable(force));
         }
     }
 }

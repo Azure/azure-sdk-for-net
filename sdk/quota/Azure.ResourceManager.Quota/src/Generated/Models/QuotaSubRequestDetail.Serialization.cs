@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Core.Optional<QuotaRequestResourceName> name = default;
-            Core.Optional<string> resourceType = default;
-            Core.Optional<string> unit = default;
-            Core.Optional<QuotaRequestState> provisioningState = default;
-            Core.Optional<string> message = default;
-            Core.Optional<Guid> subRequestId = default;
-            Core.Optional<QuotaLimitJsonObject> limit = default;
+            Optional<QuotaRequestResourceName> name = default;
+            Optional<string> resourceType = default;
+            Optional<string> unit = default;
+            Optional<QuotaRequestState> provisioningState = default;
+            Optional<string> message = default;
+            Optional<Guid> subRequestId = default;
+            Optional<QuotaLimitJsonObject> limit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Quota.Models
                     continue;
                 }
             }
-            return new QuotaSubRequestDetail(name.Value, resourceType.Value, unit.Value, Core.Optional.ToNullable(provisioningState), message.Value, Core.Optional.ToNullable(subRequestId), limit.Value);
+            return new QuotaSubRequestDetail(name.Value, resourceType.Value, unit.Value, Optional.ToNullable(provisioningState), message.Value, Optional.ToNullable(subRequestId), limit.Value);
         }
     }
 }

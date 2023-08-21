@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageSku : Core.IUtf8JsonSerializable
+    public partial class StorageSku : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             StorageSkuName name = default;
-            Core.Optional<StorageSkuTier> tier = default;
+            Optional<StorageSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StorageSku(name, Core.Optional.ToNullable(tier));
+            return new StorageSku(name, Optional.ToNullable(tier));
         }
     }
 }

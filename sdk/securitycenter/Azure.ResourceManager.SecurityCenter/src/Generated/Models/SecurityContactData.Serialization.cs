@@ -12,29 +12,29 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityContactData : Core.IUtf8JsonSerializable
+    public partial class SecurityContactData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Emails))
+            if (Optional.IsDefined(Emails))
             {
                 writer.WritePropertyName("emails"u8);
                 writer.WriteStringValue(Emails);
             }
-            if (Core.Optional.IsDefined(Phone))
+            if (Optional.IsDefined(Phone))
             {
                 writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
             }
-            if (Core.Optional.IsDefined(AlertNotifications))
+            if (Optional.IsDefined(AlertNotifications))
             {
                 writer.WritePropertyName("alertNotifications"u8);
                 writer.WriteObjectValue(AlertNotifications);
             }
-            if (Core.Optional.IsDefined(NotificationsByRole))
+            if (Optional.IsDefined(NotificationsByRole))
             {
                 writer.WritePropertyName("notificationsByRole"u8);
                 writer.WriteObjectValue(NotificationsByRole);
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> emails = default;
-            Core.Optional<string> phone = default;
-            Core.Optional<SecurityContactPropertiesAlertNotifications> alertNotifications = default;
-            Core.Optional<SecurityContactPropertiesNotificationsByRole> notificationsByRole = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> emails = default;
+            Optional<string> phone = default;
+            Optional<SecurityContactPropertiesAlertNotifications> alertNotifications = default;
+            Optional<SecurityContactPropertiesNotificationsByRole> notificationsByRole = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

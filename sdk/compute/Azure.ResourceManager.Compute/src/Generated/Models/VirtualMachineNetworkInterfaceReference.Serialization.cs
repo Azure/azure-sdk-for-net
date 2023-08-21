@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineNetworkInterfaceReference : Core.IUtf8JsonSerializable
+    public partial class VirtualMachineNetworkInterfaceReference : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Primary))
+            if (Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(Primary.Value);
             }
-            if (Core.Optional.IsDefined(DeleteOption))
+            if (Optional.IsDefined(DeleteOption))
             {
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<bool> primary = default;
-            Core.Optional<ComputeDeleteOption> deleteOption = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<bool> primary = default;
+            Optional<ComputeDeleteOption> deleteOption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineNetworkInterfaceReference(id.Value, Core.Optional.ToNullable(primary), Core.Optional.ToNullable(deleteOption));
+            return new VirtualMachineNetworkInterfaceReference(id.Value, Optional.ToNullable(primary), Optional.ToNullable(deleteOption));
         }
     }
 }

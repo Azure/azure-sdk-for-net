@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentFilter. </summary>
         public MaintenanceConfigurationAssignmentFilter()
         {
-            ResourceTypes = new Core.ChangeTrackingList<ResourceType>();
-            ResourceGroups = new Core.ChangeTrackingList<string>();
-            OSTypes = new Core.ChangeTrackingList<string>();
-            Locations = new Core.ChangeTrackingList<AzureLocation>();
+            ResourceTypes = new ChangeTrackingList<ResourceType>();
+            ResourceGroups = new ChangeTrackingList<string>();
+            OSTypes = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentFilter. </summary>

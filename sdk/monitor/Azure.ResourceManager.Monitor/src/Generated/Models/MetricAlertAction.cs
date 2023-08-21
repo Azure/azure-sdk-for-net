@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MetricAlertAction. </summary>
         public MetricAlertAction()
         {
-            WebHookProperties = new Core.ChangeTrackingDictionary<string, string>();
+            WebHookProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of MetricAlertAction. </summary>

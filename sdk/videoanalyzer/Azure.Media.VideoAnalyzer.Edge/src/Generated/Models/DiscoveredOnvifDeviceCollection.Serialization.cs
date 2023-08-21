@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class DiscoveredOnvifDeviceCollection : Core.IUtf8JsonSerializable
+    public partial class DiscoveredOnvifDeviceCollection : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Value))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<IList<DiscoveredOnvifDevice>> value = default;
+            Optional<IList<DiscoveredOnvifDevice>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -53,7 +53,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new DiscoveredOnvifDeviceCollection(Core.Optional.ToList(value));
+            return new DiscoveredOnvifDeviceCollection(Optional.ToList(value));
         }
     }
 }

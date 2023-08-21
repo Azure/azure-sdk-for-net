@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kubernetes.Models
 {
-    public partial class ListClusterUserCredentialProperties : Core.IUtf8JsonSerializable
+    public partial class ListClusterUserCredentialProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("authenticationMethod"u8);

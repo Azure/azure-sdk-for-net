@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of PrivateCloudList. </summary>
         internal PrivateCloudList()
         {
-            Value = new Core.ChangeTrackingList<AvsPrivateCloudData>();
+            Value = new ChangeTrackingList<AvsPrivateCloudData>();
         }
 
         /// <summary> Initializes a new instance of PrivateCloudList. </summary>

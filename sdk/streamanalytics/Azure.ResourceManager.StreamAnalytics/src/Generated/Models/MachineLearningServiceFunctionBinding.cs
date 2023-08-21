@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of MachineLearningServiceFunctionBinding. </summary>
         public MachineLearningServiceFunctionBinding()
         {
-            Inputs = new Core.ChangeTrackingList<MachineLearningServiceInputColumn>();
-            Outputs = new Core.ChangeTrackingList<MachineLearningServiceOutputColumn>();
+            Inputs = new ChangeTrackingList<MachineLearningServiceInputColumn>();
+            Outputs = new ChangeTrackingList<MachineLearningServiceOutputColumn>();
             FunctionBindingType = "Microsoft.MachineLearningServices";
         }
 

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> perimeterGuid = default;
-            Core.Optional<AzureLocation> location = default;
+            Optional<string> id = default;
+            Optional<string> perimeterGuid = default;
+            Optional<AzureLocation> location = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new EventHubsNetworkSecurityPerimeter(id.Value, perimeterGuid.Value, Core.Optional.ToNullable(location));
+            return new EventHubsNetworkSecurityPerimeter(id.Value, perimeterGuid.Value, Optional.ToNullable(location));
         }
     }
 }

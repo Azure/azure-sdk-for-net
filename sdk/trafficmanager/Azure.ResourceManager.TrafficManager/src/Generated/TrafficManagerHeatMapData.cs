@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <summary> Initializes a new instance of TrafficManagerHeatMapData. </summary>
         public TrafficManagerHeatMapData()
         {
-            Endpoints = new Core.ChangeTrackingList<TrafficManagerHeatMapEndpoint>();
-            TrafficFlows = new Core.ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>();
+            Endpoints = new ChangeTrackingList<TrafficManagerHeatMapEndpoint>();
+            TrafficFlows = new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>();
         }
 
         /// <summary> Initializes a new instance of TrafficManagerHeatMapData. </summary>

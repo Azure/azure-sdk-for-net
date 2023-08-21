@@ -11,92 +11,92 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetVmProfile : Core.IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetVmProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(OSProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (Core.Optional.IsDefined(StorageProfile))
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (Core.Optional.IsDefined(NetworkProfile))
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Core.Optional.IsDefined(SecurityProfile))
+            if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (Core.Optional.IsDefined(DiagnosticsProfile))
+            if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile"u8);
                 writer.WriteObjectValue(DiagnosticsProfile);
             }
-            if (Core.Optional.IsDefined(ExtensionProfile))
+            if (Optional.IsDefined(ExtensionProfile))
             {
                 writer.WritePropertyName("extensionProfile"u8);
                 writer.WriteObjectValue(ExtensionProfile);
             }
-            if (Core.Optional.IsDefined(LicenseType))
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType);
             }
-            if (Core.Optional.IsDefined(Priority))
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteStringValue(Priority.Value.ToString());
             }
-            if (Core.Optional.IsDefined(EvictionPolicy))
+            if (Optional.IsDefined(EvictionPolicy))
             {
                 writer.WritePropertyName("evictionPolicy"u8);
                 writer.WriteStringValue(EvictionPolicy.Value.ToString());
             }
-            if (Core.Optional.IsDefined(BillingProfile))
+            if (Optional.IsDefined(BillingProfile))
             {
                 writer.WritePropertyName("billingProfile"u8);
                 writer.WriteObjectValue(BillingProfile);
             }
-            if (Core.Optional.IsDefined(ScheduledEventsProfile))
+            if (Optional.IsDefined(ScheduledEventsProfile))
             {
                 writer.WritePropertyName("scheduledEventsProfile"u8);
                 writer.WriteObjectValue(ScheduledEventsProfile);
             }
-            if (Core.Optional.IsDefined(UserData))
+            if (Optional.IsDefined(UserData))
             {
                 writer.WritePropertyName("userData"u8);
                 writer.WriteStringValue(UserData);
             }
-            if (Core.Optional.IsDefined(CapacityReservation))
+            if (Optional.IsDefined(CapacityReservation))
             {
                 writer.WritePropertyName("capacityReservation"u8);
                 writer.WriteObjectValue(CapacityReservation);
             }
-            if (Core.Optional.IsDefined(ApplicationProfile))
+            if (Optional.IsDefined(ApplicationProfile))
             {
                 writer.WritePropertyName("applicationProfile"u8);
                 writer.WriteObjectValue(ApplicationProfile);
             }
-            if (Core.Optional.IsDefined(HardwareProfile))
+            if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (Core.Optional.IsDefined(ServiceArtifactReference))
+            if (Optional.IsDefined(ServiceArtifactReference))
             {
                 writer.WritePropertyName("serviceArtifactReference"u8);
                 JsonSerializer.Serialize(writer, ServiceArtifactReference);
             }
-            if (Core.Optional.IsDefined(SecurityPostureReference))
+            if (Optional.IsDefined(SecurityPostureReference))
             {
                 writer.WritePropertyName("securityPostureReference"u8);
                 writer.WriteObjectValue(SecurityPostureReference);
@@ -110,23 +110,23 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<VirtualMachineScaleSetOSProfile> osProfile = default;
-            Core.Optional<VirtualMachineScaleSetStorageProfile> storageProfile = default;
-            Core.Optional<VirtualMachineScaleSetNetworkProfile> networkProfile = default;
-            Core.Optional<SecurityProfile> securityProfile = default;
-            Core.Optional<DiagnosticsProfile> diagnosticsProfile = default;
-            Core.Optional<VirtualMachineScaleSetExtensionProfile> extensionProfile = default;
-            Core.Optional<string> licenseType = default;
-            Core.Optional<VirtualMachinePriorityType> priority = default;
-            Core.Optional<VirtualMachineEvictionPolicyType> evictionPolicy = default;
-            Core.Optional<BillingProfile> billingProfile = default;
-            Core.Optional<ComputeScheduledEventsProfile> scheduledEventsProfile = default;
-            Core.Optional<string> userData = default;
-            Core.Optional<CapacityReservationProfile> capacityReservation = default;
-            Core.Optional<ApplicationProfile> applicationProfile = default;
-            Core.Optional<VirtualMachineScaleSetHardwareProfile> hardwareProfile = default;
-            Core.Optional<WritableSubResource> serviceArtifactReference = default;
-            Core.Optional<ComputeSecurityPostureReference> securityPostureReference = default;
+            Optional<VirtualMachineScaleSetOSProfile> osProfile = default;
+            Optional<VirtualMachineScaleSetStorageProfile> storageProfile = default;
+            Optional<VirtualMachineScaleSetNetworkProfile> networkProfile = default;
+            Optional<SecurityProfile> securityProfile = default;
+            Optional<DiagnosticsProfile> diagnosticsProfile = default;
+            Optional<VirtualMachineScaleSetExtensionProfile> extensionProfile = default;
+            Optional<string> licenseType = default;
+            Optional<VirtualMachinePriorityType> priority = default;
+            Optional<VirtualMachineEvictionPolicyType> evictionPolicy = default;
+            Optional<BillingProfile> billingProfile = default;
+            Optional<ComputeScheduledEventsProfile> scheduledEventsProfile = default;
+            Optional<string> userData = default;
+            Optional<CapacityReservationProfile> capacityReservation = default;
+            Optional<ApplicationProfile> applicationProfile = default;
+            Optional<VirtualMachineScaleSetHardwareProfile> hardwareProfile = default;
+            Optional<WritableSubResource> serviceArtifactReference = default;
+            Optional<ComputeSecurityPostureReference> securityPostureReference = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osProfile"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVmProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, Core.Optional.ToNullable(priority), Core.Optional.ToNullable(evictionPolicy), billingProfile.Value, scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value, hardwareProfile.Value, serviceArtifactReference, securityPostureReference.Value);
+            return new VirtualMachineScaleSetVmProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value, hardwareProfile.Value, serviceArtifactReference, securityPostureReference.Value);
         }
     }
 }

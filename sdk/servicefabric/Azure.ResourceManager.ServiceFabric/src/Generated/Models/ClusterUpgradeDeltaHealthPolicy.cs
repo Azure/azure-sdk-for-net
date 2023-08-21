@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             MaxPercentDeltaUnhealthyNodes = maxPercentDeltaUnhealthyNodes;
             MaxPercentUpgradeDomainDeltaUnhealthyNodes = maxPercentUpgradeDomainDeltaUnhealthyNodes;
             MaxPercentDeltaUnhealthyApplications = maxPercentDeltaUnhealthyApplications;
-            ApplicationDeltaHealthPolicies = new Core.ChangeTrackingDictionary<string, ApplicationDeltaHealthPolicy>();
+            ApplicationDeltaHealthPolicies = new ChangeTrackingDictionary<string, ApplicationDeltaHealthPolicy>();
         }
 
         /// <summary> Initializes a new instance of ClusterUpgradeDeltaHealthPolicy. </summary>

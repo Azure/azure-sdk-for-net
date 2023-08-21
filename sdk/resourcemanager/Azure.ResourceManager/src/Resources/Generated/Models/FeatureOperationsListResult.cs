@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of FeatureOperationsListResult. </summary>
         internal FeatureOperationsListResult()
         {
-            Value = new Core.ChangeTrackingList<FeatureData>();
+            Value = new ChangeTrackingList<FeatureData>();
         }
 
         /// <summary> Initializes a new instance of FeatureOperationsListResult. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of GalleryImageList. </summary>
         internal GalleryImageList()
         {
-            Value = new Core.ChangeTrackingList<DevTestLabGalleryImage>();
+            Value = new ChangeTrackingList<DevTestLabGalleryImage>();
         }
 
         /// <summary> Initializes a new instance of GalleryImageList. </summary>

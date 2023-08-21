@@ -19,20 +19,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> diskId = default;
-            Core.Optional<string> diskName = default;
-            Core.Optional<SiteRecoveryDiskAccountType> diskType = default;
-            Core.Optional<string> diskPath = default;
-            Core.Optional<string> isOSDisk = default;
-            Core.Optional<long> capacityInBytes = default;
-            Core.Optional<ResourceIdentifier> logStorageAccountId = default;
-            Core.Optional<string> logStorageAccountSasSecretName = default;
-            Core.Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Core.Optional<string> seedManagedDiskId = default;
-            Core.Optional<Uri> seedBlobUri = default;
-            Core.Optional<string> targetManagedDiskId = default;
-            Core.Optional<Uri> targetBlobUri = default;
-            Core.Optional<string> targetDiskName = default;
+            Optional<string> diskId = default;
+            Optional<string> diskName = default;
+            Optional<SiteRecoveryDiskAccountType> diskType = default;
+            Optional<string> diskPath = default;
+            Optional<string> isOSDisk = default;
+            Optional<long> capacityInBytes = default;
+            Optional<ResourceIdentifier> logStorageAccountId = default;
+            Optional<string> logStorageAccountSasSecretName = default;
+            Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            Optional<string> seedManagedDiskId = default;
+            Optional<Uri> seedBlobUri = default;
+            Optional<string> targetManagedDiskId = default;
+            Optional<Uri> targetBlobUri = default;
+            Optional<string> targetDiskName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new VMwareCbtProtectedDiskDetails(diskId.Value, diskName.Value, Core.Optional.ToNullable(diskType), diskPath.Value, isOSDisk.Value, Core.Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, logStorageAccountSasSecretName.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, targetBlobUri.Value, targetDiskName.Value);
+            return new VMwareCbtProtectedDiskDetails(diskId.Value, diskName.Value, Optional.ToNullable(diskType), diskPath.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, logStorageAccountSasSecretName.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, targetBlobUri.Value, targetDiskName.Value);
         }
     }
 }

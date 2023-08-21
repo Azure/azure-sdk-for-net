@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
-    public partial class AutomanageConfigurationProfileAssignmentProperties : Core.IUtf8JsonSerializable
+    public partial class AutomanageConfigurationProfileAssignmentProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ConfigurationProfile))
+            if (Optional.IsDefined(ConfigurationProfile))
             {
                 writer.WritePropertyName("configurationProfile"u8);
                 writer.WriteStringValue(ConfigurationProfile);
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Automanage.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> configurationProfile = default;
-            Core.Optional<ResourceIdentifier> targetId = default;
-            Core.Optional<string> status = default;
+            Optional<ResourceIdentifier> configurationProfile = default;
+            Optional<ResourceIdentifier> targetId = default;
+            Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurationProfile"u8))

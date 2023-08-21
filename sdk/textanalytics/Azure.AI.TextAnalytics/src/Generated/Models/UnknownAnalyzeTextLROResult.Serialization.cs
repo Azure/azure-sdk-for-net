@@ -12,14 +12,14 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class UnknownAnalyzeTextLROResult : Core.IUtf8JsonSerializable
+    internal partial class UnknownAnalyzeTextLROResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Core.Optional.IsDefined(TaskName))
+            if (Optional.IsDefined(TaskName))
             {
                 writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
@@ -38,7 +38,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             AnalyzeTextLROResultsKind kind = "Unknown";
-            Core.Optional<string> taskName = default;
+            Optional<string> taskName = default;
             DateTimeOffset lastUpdateDateTime = default;
             TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabCustomImageVm : Core.IUtf8JsonSerializable
+    public partial class DevTestLabCustomImageVm : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SourceVmId))
+            if (Optional.IsDefined(SourceVmId))
             {
                 writer.WritePropertyName("sourceVmId"u8);
                 writer.WriteStringValue(SourceVmId);
             }
-            if (Core.Optional.IsDefined(WindowsOSInfo))
+            if (Optional.IsDefined(WindowsOSInfo))
             {
                 writer.WritePropertyName("windowsOsInfo"u8);
                 writer.WriteObjectValue(WindowsOSInfo);
             }
-            if (Core.Optional.IsDefined(LinuxOSInfo))
+            if (Optional.IsDefined(LinuxOSInfo))
             {
                 writer.WritePropertyName("linuxOsInfo"u8);
                 writer.WriteObjectValue(LinuxOSInfo);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<string> sourceVmId = default;
-            Core.Optional<WindowsOSInfo> windowsOSInfo = default;
-            Core.Optional<LinuxOSInfo> linuxOSInfo = default;
+            Optional<string> sourceVmId = default;
+            Optional<WindowsOSInfo> windowsOSInfo = default;
+            Optional<LinuxOSInfo> linuxOSInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceVmId"u8))

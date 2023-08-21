@@ -22,7 +22,7 @@ namespace Azure.Containers.ContainerRegistry
             string registry = default;
             string imageName = default;
             IReadOnlyList<TagAttributesBase> tags = default;
-            Core.Optional<string> link = default;
+            Optional<string> link = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registry"u8))

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of DiagnoseVirtualNetworkResult. </summary>
         internal DiagnoseVirtualNetworkResult()
         {
-            Findings = new Core.ChangeTrackingList<string>();
+            Findings = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DiagnoseVirtualNetworkResult. </summary>

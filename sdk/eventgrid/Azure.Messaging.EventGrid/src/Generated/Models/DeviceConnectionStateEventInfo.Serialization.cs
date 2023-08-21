@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<string> sequenceNumber = default;
+            Optional<string> sequenceNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sequenceNumber"u8))

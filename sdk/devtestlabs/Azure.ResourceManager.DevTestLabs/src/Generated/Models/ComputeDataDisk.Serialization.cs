@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<Uri> diskUri = default;
-            Core.Optional<string> managedDiskId = default;
-            Core.Optional<int> diskSizeGiB = default;
+            Optional<string> name = default;
+            Optional<Uri> diskUri = default;
+            Optional<string> managedDiskId = default;
+            Optional<int> diskSizeGiB = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new ComputeDataDisk(name.Value, diskUri.Value, managedDiskId.Value, Core.Optional.ToNullable(diskSizeGiB));
+            return new ComputeDataDisk(name.Value, diskUri.Value, managedDiskId.Value, Optional.ToNullable(diskSizeGiB));
         }
     }
 }

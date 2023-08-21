@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData>> value = default;
+            Optional<IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesPrivateEndpointConnectionListResult(Core.Optional.ToList(value));
+            return new CognitiveServicesPrivateEndpointConnectionListResult(Optional.ToList(value));
         }
     }
 }

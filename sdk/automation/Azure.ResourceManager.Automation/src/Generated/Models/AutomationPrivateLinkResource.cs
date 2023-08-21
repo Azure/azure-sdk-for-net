@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationPrivateLinkResource. </summary>
         public AutomationPrivateLinkResource()
         {
-            RequiredMembers = new Core.ChangeTrackingList<string>();
+            RequiredMembers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AutomationPrivateLinkResource. </summary>

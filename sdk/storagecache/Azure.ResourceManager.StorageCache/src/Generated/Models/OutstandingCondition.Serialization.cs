@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> timestamp = default;
-            Core.Optional<string> message = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new OutstandingCondition(Core.Optional.ToNullable(timestamp), message.Value);
+            return new OutstandingCondition(Optional.ToNullable(timestamp), message.Value);
         }
     }
 }

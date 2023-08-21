@@ -18,8 +18,8 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<SemanticFieldState> state = default;
+            Optional<string> name = default;
+            Optional<SemanticFieldState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new QueryResultDocumentSemanticField(name.Value, Core.Optional.ToNullable(state));
+            return new QueryResultDocumentSemanticField(name.Value, Optional.ToNullable(state));
         }
     }
 }

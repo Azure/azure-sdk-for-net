@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AkamaiSignatureHeaderAuthenticationKey : Core.IUtf8JsonSerializable
+    public partial class AkamaiSignatureHeaderAuthenticationKey : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identifier))
+            if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteStringValue(Identifier);
             }
-            if (Core.Optional.IsDefined(Base64Key))
+            if (Optional.IsDefined(Base64Key))
             {
                 writer.WritePropertyName("base64Key"u8);
                 writer.WriteStringValue(Base64Key);
             }
-            if (Core.Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiration"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<string> identifier = default;
-            Core.Optional<string> base64Key = default;
-            Core.Optional<DateTimeOffset> expiration = default;
+            Optional<string> identifier = default;
+            Optional<string> base64Key = default;
+            Optional<DateTimeOffset> expiration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identifier"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new AkamaiSignatureHeaderAuthenticationKey(identifier.Value, base64Key.Value, Core.Optional.ToNullable(expiration));
+            return new AkamaiSignatureHeaderAuthenticationKey(identifier.Value, base64Key.Value, Optional.ToNullable(expiration));
         }
     }
 }

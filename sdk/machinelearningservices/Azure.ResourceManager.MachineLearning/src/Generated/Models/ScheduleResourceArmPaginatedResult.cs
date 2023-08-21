@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ScheduleResourceArmPaginatedResult. </summary>
         internal ScheduleResourceArmPaginatedResult()
         {
-            Value = new Core.ChangeTrackingList<MachineLearningScheduleData>();
+            Value = new ChangeTrackingList<MachineLearningScheduleData>();
         }
 
         /// <summary> Initializes a new instance of ScheduleResourceArmPaginatedResult. </summary>

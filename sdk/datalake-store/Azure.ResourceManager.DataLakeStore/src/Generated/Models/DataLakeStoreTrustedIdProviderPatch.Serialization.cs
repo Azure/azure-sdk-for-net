@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    public partial class DataLakeStoreTrustedIdProviderPatch : Core.IUtf8JsonSerializable
+    public partial class DataLakeStoreTrustedIdProviderPatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IdProvider))
+            if (Optional.IsDefined(IdProvider))
             {
                 writer.WritePropertyName("idProvider"u8);
                 writer.WriteStringValue(IdProvider.AbsoluteUri);

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    public partial class CheckNameAvailabilityContent : Core.IUtf8JsonSerializable
+    public partial class CheckNameAvailabilityContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(ResourceType))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);

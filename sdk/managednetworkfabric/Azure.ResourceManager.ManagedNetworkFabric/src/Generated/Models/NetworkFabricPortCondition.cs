@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public NetworkFabricPortCondition(Layer4Protocol layer4Protocol)
         {
             Layer4Protocol = layer4Protocol;
-            Ports = new Core.ChangeTrackingList<string>();
-            PortGroupNames = new Core.ChangeTrackingList<string>();
+            Ports = new ChangeTrackingList<string>();
+            PortGroupNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkFabricPortCondition. </summary>

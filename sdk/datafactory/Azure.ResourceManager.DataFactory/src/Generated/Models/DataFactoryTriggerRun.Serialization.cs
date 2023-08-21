@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<string> triggerRunId = default;
-            Core.Optional<string> triggerName = default;
-            Core.Optional<string> triggerType = default;
-            Core.Optional<DateTimeOffset> triggerRunTimestamp = default;
-            Core.Optional<DataFactoryTriggerRunStatus> status = default;
-            Core.Optional<string> message = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> properties = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> triggeredPipelines = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> runDimension = default;
-            Core.Optional<IReadOnlyDictionary<string, BinaryData>> dependencyStatus = default;
+            Optional<string> triggerRunId = default;
+            Optional<string> triggerName = default;
+            Optional<string> triggerType = default;
+            Optional<DateTimeOffset> triggerRunTimestamp = default;
+            Optional<DataFactoryTriggerRunStatus> status = default;
+            Optional<string> message = default;
+            Optional<IReadOnlyDictionary<string, string>> properties = default;
+            Optional<IReadOnlyDictionary<string, string>> triggeredPipelines = default;
+            Optional<IReadOnlyDictionary<string, string>> runDimension = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> dependencyStatus = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryTriggerRun(triggerRunId.Value, triggerName.Value, triggerType.Value, Core.Optional.ToNullable(triggerRunTimestamp), Core.Optional.ToNullable(status), message.Value, Core.Optional.ToDictionary(properties), Core.Optional.ToDictionary(triggeredPipelines), Core.Optional.ToDictionary(runDimension), Core.Optional.ToDictionary(dependencyStatus), additionalProperties);
+            return new DataFactoryTriggerRun(triggerRunId.Value, triggerName.Value, triggerType.Value, Optional.ToNullable(triggerRunTimestamp), Optional.ToNullable(status), message.Value, Optional.ToDictionary(properties), Optional.ToDictionary(triggeredPipelines), Optional.ToDictionary(runDimension), Optional.ToDictionary(dependencyStatus), additionalProperties);
         }
     }
 }

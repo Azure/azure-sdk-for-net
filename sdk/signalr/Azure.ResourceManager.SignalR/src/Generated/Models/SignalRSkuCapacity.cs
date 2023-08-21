@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of SignalRSkuCapacity. </summary>
         internal SignalRSkuCapacity()
         {
-            AllowedValues = new Core.ChangeTrackingList<int>();
+            AllowedValues = new ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of SignalRSkuCapacity. </summary>

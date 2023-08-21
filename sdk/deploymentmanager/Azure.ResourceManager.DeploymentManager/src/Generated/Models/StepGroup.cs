@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Argument.AssertNotNull(deploymentTargetId, nameof(deploymentTargetId));
 
             Name = name;
-            DependsOnStepGroups = new Core.ChangeTrackingList<string>();
-            PreDeploymentSteps = new Core.ChangeTrackingList<PrePostStep>();
+            DependsOnStepGroups = new ChangeTrackingList<string>();
+            PreDeploymentSteps = new ChangeTrackingList<PrePostStep>();
             DeploymentTargetId = deploymentTargetId;
-            PostDeploymentSteps = new Core.ChangeTrackingList<PrePostStep>();
+            PostDeploymentSteps = new ChangeTrackingList<PrePostStep>();
         }
 
         /// <summary> Initializes a new instance of StepGroup. </summary>

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ExportRunErrorDetails : Core.IUtf8JsonSerializable
+    public partial class ExportRunErrorDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> code = default;
-            Core.Optional<string> message = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))

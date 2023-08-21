@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
+            Optional<string> id = default;
             string resultType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of ResponseMessageEnvelopeRemotePrivateEndpointConnection. </summary>
         internal ResponseMessageEnvelopeRemotePrivateEndpointConnection()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            Zones = new Core.ChangeTrackingList<string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ResponseMessageEnvelopeRemotePrivateEndpointConnection. </summary>

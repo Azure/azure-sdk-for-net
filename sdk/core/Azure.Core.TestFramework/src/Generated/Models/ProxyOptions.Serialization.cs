@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
-    public partial class ProxyOptions : Core.IUtf8JsonSerializable
+    public partial class ProxyOptions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Transport))
+            if (Optional.IsDefined(Transport))
             {
                 writer.WritePropertyName("Transport"u8);
                 writer.WriteObjectValue(Transport);

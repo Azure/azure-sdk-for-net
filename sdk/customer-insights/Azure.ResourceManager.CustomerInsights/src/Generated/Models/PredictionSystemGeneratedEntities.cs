@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of PredictionSystemGeneratedEntities. </summary>
         internal PredictionSystemGeneratedEntities()
         {
-            GeneratedInteractionTypes = new Core.ChangeTrackingList<string>();
-            GeneratedLinks = new Core.ChangeTrackingList<string>();
-            GeneratedKpis = new Core.ChangeTrackingDictionary<string, string>();
+            GeneratedInteractionTypes = new ChangeTrackingList<string>();
+            GeneratedLinks = new ChangeTrackingList<string>();
+            GeneratedKpis = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of PredictionSystemGeneratedEntities. </summary>

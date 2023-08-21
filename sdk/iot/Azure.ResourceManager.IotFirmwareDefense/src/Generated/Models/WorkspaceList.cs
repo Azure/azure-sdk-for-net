@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of WorkspaceList. </summary>
         internal WorkspaceList()
         {
-            Value = new Core.ChangeTrackingList<FirmwareWorkspaceData>();
+            Value = new ChangeTrackingList<FirmwareWorkspaceData>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceList. </summary>

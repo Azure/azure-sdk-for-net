@@ -11,31 +11,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class AzureFunctionEventSubscriptionDestination : Core.IUtf8JsonSerializable
+    public partial class AzureFunctionEventSubscriptionDestination : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Core.Optional.IsDefined(MaxEventsPerBatch))
+            if (Optional.IsDefined(MaxEventsPerBatch))
             {
                 writer.WritePropertyName("maxEventsPerBatch"u8);
                 writer.WriteNumberValue(MaxEventsPerBatch.Value);
             }
-            if (Core.Optional.IsDefined(PreferredBatchSizeInKilobytes))
+            if (Optional.IsDefined(PreferredBatchSizeInKilobytes))
             {
                 writer.WritePropertyName("preferredBatchSizeInKilobytes"u8);
                 writer.WriteNumberValue(PreferredBatchSizeInKilobytes.Value);
             }
-            if (Core.Optional.IsCollectionDefined(DeliveryAttributeMappings))
+            if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
             {
                 writer.WritePropertyName("deliveryAttributeMappings"u8);
                 writer.WriteStartArray();
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<int> maxEventsPerBatch = default;
-            Core.Optional<int> preferredBatchSizeInKilobytes = default;
-            Core.Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<int> maxEventsPerBatch = default;
+            Optional<int> preferredBatchSizeInKilobytes = default;
+            Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new AzureFunctionEventSubscriptionDestination(endpointType, resourceId.Value, Core.Optional.ToNullable(maxEventsPerBatch), Core.Optional.ToNullable(preferredBatchSizeInKilobytes), Core.Optional.ToList(deliveryAttributeMappings));
+            return new AzureFunctionEventSubscriptionDestination(endpointType, resourceId.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToList(deliveryAttributeMappings));
         }
     }
 }

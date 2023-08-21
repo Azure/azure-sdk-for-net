@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class LogAnalyticsQueryPackData : Core.IUtf8JsonSerializable
+    public partial class LogAnalyticsQueryPackData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,16 +43,16 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> queryPackId = default;
-            Core.Optional<DateTimeOffset> timeCreated = default;
-            Core.Optional<DateTimeOffset> timeModified = default;
-            Core.Optional<string> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> queryPackId = default;
+            Optional<DateTimeOffset> timeCreated = default;
+            Optional<DateTimeOffset> timeModified = default;
+            Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     continue;
                 }
             }
-            return new LogAnalyticsQueryPackData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(queryPackId), Core.Optional.ToNullable(timeCreated), Core.Optional.ToNullable(timeModified), provisioningState.Value);
+            return new LogAnalyticsQueryPackData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(queryPackId), Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified), provisioningState.Value);
         }
     }
 }

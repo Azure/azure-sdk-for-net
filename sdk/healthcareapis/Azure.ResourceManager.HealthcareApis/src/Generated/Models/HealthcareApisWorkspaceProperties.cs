@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of HealthcareApisWorkspaceProperties. </summary>
         public HealthcareApisWorkspaceProperties()
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of HealthcareApisWorkspaceProperties. </summary>

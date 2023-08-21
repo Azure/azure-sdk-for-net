@@ -11,28 +11,28 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ThresholdRuleCondition : Core.IUtf8JsonSerializable
+    public partial class ThresholdRuleCondition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToSerialString());
             writer.WritePropertyName("threshold"u8);
             writer.WriteNumberValue(Threshold);
-            if (Core.Optional.IsDefined(WindowSize))
+            if (Optional.IsDefined(WindowSize))
             {
                 writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
             }
-            if (Core.Optional.IsDefined(TimeAggregation))
+            if (Optional.IsDefined(TimeAggregation))
             {
                 writer.WritePropertyName("timeAggregation"u8);
                 writer.WriteStringValue(TimeAggregation.Value.ToSerialString());
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Core.Optional.IsDefined(DataSource))
+            if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             MonitorConditionOperator @operator = default;
             double threshold = default;
-            Core.Optional<TimeSpan> windowSize = default;
-            Core.Optional<ThresholdRuleConditionTimeAggregationType> timeAggregation = default;
+            Optional<TimeSpan> windowSize = default;
+            Optional<ThresholdRuleConditionTimeAggregationType> timeAggregation = default;
             string odataType = default;
-            Core.Optional<RuleDataSource> dataSource = default;
+            Optional<RuleDataSource> dataSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operator"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new ThresholdRuleCondition(odataType, dataSource.Value, @operator, threshold, Core.Optional.ToNullable(windowSize), Core.Optional.ToNullable(timeAggregation));
+            return new ThresholdRuleCondition(odataType, dataSource.Value, @operator, threshold, Optional.ToNullable(windowSize), Optional.ToNullable(timeAggregation));
         }
     }
 }

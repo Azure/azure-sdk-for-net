@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformBuildResultProperties : Core.IUtf8JsonSerializable
+    public partial class AppPlatformBuildResultProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(BuildPodName))
+            if (Optional.IsDefined(BuildPodName))
             {
                 writer.WritePropertyName("buildPodName"u8);
                 writer.WriteStringValue(BuildPodName);
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<AppPlatformBuildResultProvisioningState> provisioningState = default;
-            Core.Optional<string> buildPodName = default;
-            Core.Optional<IReadOnlyList<AppPlatformBuildStageProperties>> buildStages = default;
+            Optional<string> name = default;
+            Optional<AppPlatformBuildResultProvisioningState> provisioningState = default;
+            Optional<string> buildPodName = default;
+            Optional<IReadOnlyList<AppPlatformBuildStageProperties>> buildStages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformBuildResultProperties(name.Value, Core.Optional.ToNullable(provisioningState), buildPodName.Value, Core.Optional.ToList(buildStages));
+            return new AppPlatformBuildResultProperties(name.Value, Optional.ToNullable(provisioningState), buildPodName.Value, Optional.ToList(buildStages));
         }
     }
 }

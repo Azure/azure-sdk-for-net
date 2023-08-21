@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaAssetTrackTracksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation(_mediaAssetTrackTracksClientDiagnostics, Pipeline, _mediaAssetTrackTracksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation(_mediaAssetTrackTracksClientDiagnostics, Pipeline, _mediaAssetTrackTracksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaAssetTrackTracksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MediaArmOperation(_mediaAssetTrackTracksClientDiagnostics, Pipeline, _mediaAssetTrackTracksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation(_mediaAssetTrackTracksClientDiagnostics, Pipeline, _mediaAssetTrackTracksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaAssetTrackTracksRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaAssetTrackResource>(new MediaAssetTrackOperationSource(Client), _mediaAssetTrackTracksClientDiagnostics, Pipeline, _mediaAssetTrackTracksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation<MediaAssetTrackResource>(new MediaAssetTrackOperationSource(Client), _mediaAssetTrackTracksClientDiagnostics, Pipeline, _mediaAssetTrackTracksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaAssetTrackTracksRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MediaArmOperation<MediaAssetTrackResource>(new MediaAssetTrackOperationSource(Client), _mediaAssetTrackTracksClientDiagnostics, Pipeline, _mediaAssetTrackTracksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation<MediaAssetTrackResource>(new MediaAssetTrackOperationSource(Client), _mediaAssetTrackTracksClientDiagnostics, Pipeline, _mediaAssetTrackTracksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaAssetTrackTracksRestClient.UpdateTrackDataAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation(_mediaAssetTrackTracksClientDiagnostics, Pipeline, _mediaAssetTrackTracksRestClient.CreateUpdateTrackDataRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation(_mediaAssetTrackTracksClientDiagnostics, Pipeline, _mediaAssetTrackTracksRestClient.CreateUpdateTrackDataRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaAssetTrackTracksRestClient.UpdateTrackData(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MediaArmOperation(_mediaAssetTrackTracksClientDiagnostics, Pipeline, _mediaAssetTrackTracksRestClient.CreateUpdateTrackDataRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation(_mediaAssetTrackTracksClientDiagnostics, Pipeline, _mediaAssetTrackTracksRestClient.CreateUpdateTrackDataRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of SignalRResourceLogCategoryListResult. </summary>
         public SignalRResourceLogCategoryListResult()
         {
-            Categories = new Core.ChangeTrackingList<SignalRResourceLogCategory>();
+            Categories = new ChangeTrackingList<SignalRResourceLogCategory>();
         }
 
         /// <summary> Initializes a new instance of SignalRResourceLogCategoryListResult. </summary>

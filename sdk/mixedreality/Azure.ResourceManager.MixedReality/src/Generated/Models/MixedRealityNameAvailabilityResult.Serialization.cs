@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.MixedReality.Models
                 return null;
             }
             bool nameAvailable = default;
-            Core.Optional<MixedRealityNameUnavailableReason> reason = default;
-            Core.Optional<string> message = default;
+            Optional<MixedRealityNameUnavailableReason> reason = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                     continue;
                 }
             }
-            return new MixedRealityNameAvailabilityResult(nameAvailable, Core.Optional.ToNullable(reason), message.Value);
+            return new MixedRealityNameAvailabilityResult(nameAvailable, Optional.ToNullable(reason), message.Value);
         }
     }
 }

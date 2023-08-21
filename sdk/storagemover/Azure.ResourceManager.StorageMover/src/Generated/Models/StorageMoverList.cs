@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <summary> Initializes a new instance of StorageMoverList. </summary>
         internal StorageMoverList()
         {
-            Value = new Core.ChangeTrackingList<StorageMoverData>();
+            Value = new ChangeTrackingList<StorageMoverData>();
         }
 
         /// <summary> Initializes a new instance of StorageMoverList. </summary>

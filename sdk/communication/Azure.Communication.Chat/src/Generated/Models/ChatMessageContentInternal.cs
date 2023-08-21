@@ -17,7 +17,7 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of ChatMessageContentInternal. </summary>
         internal ChatMessageContentInternal()
         {
-            Participants = new Core.ChangeTrackingList<ChatParticipantInternal>();
+            Participants = new ChangeTrackingList<ChatParticipantInternal>();
         }
 
         /// <summary> Initializes a new instance of ChatMessageContentInternal. </summary>

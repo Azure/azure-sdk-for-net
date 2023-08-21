@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Core.Optional<string> loginServer = default;
-            Core.Optional<string> password = default;
-            Core.Optional<string> password2 = default;
-            Core.Optional<string> username = default;
+            Optional<string> loginServer = default;
+            Optional<string> password = default;
+            Optional<string> password2 = default;
+            Optional<string> username = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loginServer"u8))

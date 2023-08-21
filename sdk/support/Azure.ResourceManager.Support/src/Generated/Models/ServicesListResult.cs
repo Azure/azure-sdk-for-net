@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of ServicesListResult. </summary>
         internal ServicesListResult()
         {
-            Value = new Core.ChangeTrackingList<SupportAzureServiceData>();
+            Value = new ChangeTrackingList<SupportAzureServiceData>();
         }
 
         /// <summary> Initializes a new instance of ServicesListResult. </summary>

@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class EdgeNode : Core.IUtf8JsonSerializable
+    public partial class EdgeNode : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(IPAddressGroups))
+            if (Optional.IsCollectionDefined(IPAddressGroups))
             {
                 writer.WritePropertyName("ipAddressGroups"u8);
                 writer.WriteStartArray();
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Cdn.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IList<IPAddressGroup>> ipAddressGroups = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<IPAddressGroup>> ipAddressGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new EdgeNode(id, name, type, systemData.Value, Core.Optional.ToList(ipAddressGroups));
+            return new EdgeNode(id, name, type, systemData.Value, Optional.ToList(ipAddressGroups));
         }
     }
 }

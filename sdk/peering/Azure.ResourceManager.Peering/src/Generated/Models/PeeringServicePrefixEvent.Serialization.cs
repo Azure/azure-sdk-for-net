@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> eventTimestamp = default;
-            Core.Optional<string> eventType = default;
-            Core.Optional<string> eventSummary = default;
-            Core.Optional<string> eventLevel = default;
-            Core.Optional<string> eventDescription = default;
+            Optional<DateTimeOffset> eventTimestamp = default;
+            Optional<string> eventType = default;
+            Optional<string> eventSummary = default;
+            Optional<string> eventLevel = default;
+            Optional<string> eventDescription = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventTimestamp"u8))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new PeeringServicePrefixEvent(Core.Optional.ToNullable(eventTimestamp), eventType.Value, eventSummary.Value, eventLevel.Value, eventDescription.Value);
+            return new PeeringServicePrefixEvent(Optional.ToNullable(eventTimestamp), eventType.Value, eventSummary.Value, eventLevel.Value, eventDescription.Value);
         }
     }
 }

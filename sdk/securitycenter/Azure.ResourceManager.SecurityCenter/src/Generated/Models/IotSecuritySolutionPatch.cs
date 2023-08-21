@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of IotSecuritySolutionPatch. </summary>
         public IotSecuritySolutionPatch()
         {
-            RecommendationsConfiguration = new Core.ChangeTrackingList<RecommendationConfigurationProperties>();
+            RecommendationsConfiguration = new ChangeTrackingList<RecommendationConfigurationProperties>();
         }
 
         /// <summary> Initializes a new instance of IotSecuritySolutionPatch. </summary>

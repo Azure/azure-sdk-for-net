@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AutoHealRules : Core.IUtf8JsonSerializable
+    public partial class AutoHealRules : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Triggers))
+            if (Optional.IsDefined(Triggers))
             {
                 writer.WritePropertyName("triggers"u8);
                 writer.WriteObjectValue(Triggers);
             }
-            if (Core.Optional.IsDefined(Actions))
+            if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteObjectValue(Actions);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<AutoHealTriggers> triggers = default;
-            Core.Optional<AutoHealActions> actions = default;
+            Optional<AutoHealTriggers> triggers = default;
+            Optional<AutoHealActions> actions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("triggers"u8))

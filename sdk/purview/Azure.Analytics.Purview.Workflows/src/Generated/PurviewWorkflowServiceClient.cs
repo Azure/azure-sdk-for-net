@@ -815,7 +815,7 @@ namespace Azure.Analytics.Purview.Workflows
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowsNextPageRequest(nextLink, context);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflows", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflows", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -836,7 +836,7 @@ namespace Azure.Analytics.Purview.Workflows
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowsNextPageRequest(nextLink, context);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflows", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflows", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -862,7 +862,7 @@ namespace Azure.Analytics.Purview.Workflows
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowRuns", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowRuns", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -888,7 +888,7 @@ namespace Azure.Analytics.Purview.Workflows
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowRuns", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowRuns", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -917,7 +917,7 @@ namespace Azure.Analytics.Purview.Workflows
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowTasksRequest(viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowTasksNextPageRequest(nextLink, viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowTasks", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowTasks", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -946,7 +946,7 @@ namespace Azure.Analytics.Purview.Workflows
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowTasksRequest(viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowTasksNextPageRequest(nextLink, viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowTasks", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowTasks", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetWorkflowsRequest(RequestContext context)
@@ -1049,11 +1049,11 @@ namespace Azure.Analytics.Purview.Workflows
             {
                 uri.AppendQuery("orderby", orderby, true);
             }
-            if (runStatuses != null && Core.Optional.IsCollectionDefined(runStatuses))
+            if (runStatuses != null && Optional.IsCollectionDefined(runStatuses))
             {
                 uri.AppendQueryDelimited("runStatuses", runStatuses, ",", true);
             }
-            if (workflowIds != null && Core.Optional.IsCollectionDefined(workflowIds))
+            if (workflowIds != null && Optional.IsCollectionDefined(workflowIds))
             {
                 uri.AppendQueryDelimited("workflowIds", workflowIds, ",", true);
             }
@@ -1115,7 +1115,7 @@ namespace Azure.Analytics.Purview.Workflows
             {
                 uri.AppendQuery("viewMode", viewMode, true);
             }
-            if (workflowIds != null && Core.Optional.IsCollectionDefined(workflowIds))
+            if (workflowIds != null && Optional.IsCollectionDefined(workflowIds))
             {
                 uri.AppendQueryDelimited("workflowIds", workflowIds, ",", true);
             }
@@ -1131,11 +1131,11 @@ namespace Azure.Analytics.Purview.Workflows
             {
                 uri.AppendQuery("orderby", orderby, true);
             }
-            if (taskTypes != null && Core.Optional.IsCollectionDefined(taskTypes))
+            if (taskTypes != null && Optional.IsCollectionDefined(taskTypes))
             {
                 uri.AppendQueryDelimited("taskTypes", taskTypes, ",", true);
             }
-            if (taskStatuses != null && Core.Optional.IsCollectionDefined(taskStatuses))
+            if (taskStatuses != null && Optional.IsCollectionDefined(taskStatuses))
             {
                 uri.AppendQueryDelimited("taskStatuses", taskStatuses, ",", true);
             }

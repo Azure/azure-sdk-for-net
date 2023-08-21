@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of WindowsConfiguration. </summary>
         public WindowsConfiguration()
         {
-            AdditionalUnattendContent = new Core.ChangeTrackingList<AdditionalUnattendContent>();
+            AdditionalUnattendContent = new ChangeTrackingList<AdditionalUnattendContent>();
         }
 
         /// <summary> Initializes a new instance of WindowsConfiguration. </summary>

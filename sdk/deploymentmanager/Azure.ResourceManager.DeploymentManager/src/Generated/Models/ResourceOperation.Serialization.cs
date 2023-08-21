@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             {
                 return null;
             }
-            Core.Optional<string> resourceName = default;
-            Core.Optional<string> operationId = default;
-            Core.Optional<string> resourceType = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<string> statusMessage = default;
-            Core.Optional<string> statusCode = default;
+            Optional<string> resourceName = default;
+            Optional<string> operationId = default;
+            Optional<string> resourceType = default;
+            Optional<string> provisioningState = default;
+            Optional<string> statusMessage = default;
+            Optional<string> statusCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceName"u8))

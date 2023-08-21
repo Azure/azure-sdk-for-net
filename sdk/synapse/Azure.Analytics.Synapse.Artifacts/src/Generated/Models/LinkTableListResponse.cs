@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of LinkTableListResponse. </summary>
         internal LinkTableListResponse()
         {
-            Value = new Core.ChangeTrackingList<LinkTableResource>();
+            Value = new ChangeTrackingList<LinkTableResource>();
         }
 
         /// <summary> Initializes a new instance of LinkTableListResponse. </summary>

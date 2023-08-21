@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class RuleManagementEventClaimsDataSource : Core.IUtf8JsonSerializable
+    internal partial class RuleManagementEventClaimsDataSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EmailAddress))
+            if (Optional.IsDefined(EmailAddress))
             {
                 writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<string> emailAddress = default;
+            Optional<string> emailAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("emailAddress"u8))

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of CalculateExchangeResultProperties. </summary>
         internal CalculateExchangeResultProperties()
         {
-            ReservationsToPurchase = new Core.ChangeTrackingList<ReservationToPurchaseCalculateExchange>();
-            SavingsPlansToPurchase = new Core.ChangeTrackingList<SavingsPlanToPurchaseCalculateExchange>();
-            ReservationsToExchange = new Core.ChangeTrackingList<ReservationToExchange>();
+            ReservationsToPurchase = new ChangeTrackingList<ReservationToPurchaseCalculateExchange>();
+            SavingsPlansToPurchase = new ChangeTrackingList<SavingsPlanToPurchaseCalculateExchange>();
+            ReservationsToExchange = new ChangeTrackingList<ReservationToExchange>();
         }
 
         /// <summary> Initializes a new instance of CalculateExchangeResultProperties. </summary>

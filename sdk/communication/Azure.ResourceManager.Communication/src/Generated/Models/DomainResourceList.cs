@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> Initializes a new instance of DomainResourceList. </summary>
         internal DomainResourceList()
         {
-            Value = new Core.ChangeTrackingList<CommunicationDomainResourceData>();
+            Value = new ChangeTrackingList<CommunicationDomainResourceData>();
         }
 
         /// <summary> Initializes a new instance of DomainResourceList. </summary>

@@ -13,14 +13,14 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudRackData : Core.IUtf8JsonSerializable
+    public partial class NetworkCloudRackData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             string availabilityZone = default;
-            Core.Optional<ResourceIdentifier> clusterId = default;
-            Core.Optional<RackDetailedStatus> detailedStatus = default;
-            Core.Optional<string> detailedStatusMessage = default;
-            Core.Optional<RackProvisioningState> provisioningState = default;
+            Optional<ResourceIdentifier> clusterId = default;
+            Optional<RackDetailedStatus> detailedStatus = default;
+            Optional<string> detailedStatusMessage = default;
+            Optional<RackProvisioningState> provisioningState = default;
             string rackLocation = default;
             string rackSerialNumber = default;
             ResourceIdentifier rackSkuId = default;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new NetworkCloudRackData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, availabilityZone, clusterId.Value, Core.Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Core.Optional.ToNullable(provisioningState), rackLocation, rackSerialNumber, rackSkuId);
+            return new NetworkCloudRackData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, availabilityZone, clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(provisioningState), rackLocation, rackSerialNumber, rackSkuId);
         }
     }
 }

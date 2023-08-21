@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Support
         /// <summary> Initializes a new instance of SupportAzureServiceData. </summary>
         internal SupportAzureServiceData()
         {
-            ResourceTypes = new Core.ChangeTrackingList<string>();
+            ResourceTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SupportAzureServiceData. </summary>

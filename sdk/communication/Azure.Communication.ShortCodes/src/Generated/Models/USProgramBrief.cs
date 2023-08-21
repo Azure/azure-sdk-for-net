@@ -23,8 +23,8 @@ namespace Azure.Communication.ShortCodes.Models
         public USProgramBrief(Guid id)
         {
             Id = id;
-            ReviewNotes = new Core.ChangeTrackingList<ReviewNote>();
-            Costs = new Core.ChangeTrackingList<ShortCodeCost>();
+            ReviewNotes = new ChangeTrackingList<ReviewNote>();
+            Costs = new ChangeTrackingList<ShortCodeCost>();
         }
 
         /// <summary> Initializes a new instance of USProgramBrief. </summary>

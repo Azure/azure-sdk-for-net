@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkTapRuleMatchConfiguration : Core.IUtf8JsonSerializable
+    public partial class NetworkTapRuleMatchConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MatchConfigurationName))
+            if (Optional.IsDefined(MatchConfigurationName))
             {
                 writer.WritePropertyName("matchConfigurationName"u8);
                 writer.WriteStringValue(MatchConfigurationName);
             }
-            if (Core.Optional.IsDefined(SequenceNumber))
+            if (Optional.IsDefined(SequenceNumber))
             {
                 writer.WritePropertyName("sequenceNumber"u8);
                 writer.WriteNumberValue(SequenceNumber.Value);
             }
-            if (Core.Optional.IsDefined(IPAddressType))
+            if (Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStringValue(IPAddressType.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(MatchConditions))
+            if (Optional.IsCollectionDefined(MatchConditions))
             {
                 writer.WritePropertyName("matchConditions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Actions))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<string> matchConfigurationName = default;
-            Core.Optional<long> sequenceNumber = default;
-            Core.Optional<NetworkFabricIPAddressType> ipAddressType = default;
-            Core.Optional<IList<NetworkTapRuleMatchCondition>> matchConditions = default;
-            Core.Optional<IList<NetworkTapRuleAction>> actions = default;
+            Optional<string> matchConfigurationName = default;
+            Optional<long> sequenceNumber = default;
+            Optional<NetworkFabricIPAddressType> ipAddressType = default;
+            Optional<IList<NetworkTapRuleMatchCondition>> matchConditions = default;
+            Optional<IList<NetworkTapRuleAction>> actions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("matchConfigurationName"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new NetworkTapRuleMatchConfiguration(matchConfigurationName.Value, Core.Optional.ToNullable(sequenceNumber), Core.Optional.ToNullable(ipAddressType), Core.Optional.ToList(matchConditions), Core.Optional.ToList(actions));
+            return new NetworkTapRuleMatchConfiguration(matchConfigurationName.Value, Optional.ToNullable(sequenceNumber), Optional.ToNullable(ipAddressType), Optional.ToList(matchConditions), Optional.ToList(actions));
         }
     }
 }

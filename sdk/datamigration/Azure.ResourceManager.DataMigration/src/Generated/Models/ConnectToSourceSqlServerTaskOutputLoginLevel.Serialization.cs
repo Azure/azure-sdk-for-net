@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<LoginType> loginType = default;
-            Core.Optional<string> defaultDatabase = default;
-            Core.Optional<bool> isEnabled = default;
-            Core.Optional<MigrationEligibilityInfo> migrationEligibility = default;
-            Core.Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<LoginType> loginType = default;
+            Optional<string> defaultDatabase = default;
+            Optional<bool> isEnabled = default;
+            Optional<MigrationEligibilityInfo> migrationEligibility = default;
+            Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ConnectToSourceSqlServerTaskOutputLoginLevel(id.Value, resultType, name.Value, Core.Optional.ToNullable(loginType), defaultDatabase.Value, Core.Optional.ToNullable(isEnabled), migrationEligibility.Value);
+            return new ConnectToSourceSqlServerTaskOutputLoginLevel(id.Value, resultType, name.Value, Optional.ToNullable(loginType), defaultDatabase.Value, Optional.ToNullable(isEnabled), migrationEligibility.Value);
         }
     }
 }

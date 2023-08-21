@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationAccountStatisticsListResult. </summary>
         internal AutomationAccountStatisticsListResult()
         {
-            Value = new Core.ChangeTrackingList<AutomationAccountStatistics>();
+            Value = new ChangeTrackingList<AutomationAccountStatistics>();
         }
 
         /// <summary> Initializes a new instance of AutomationAccountStatisticsListResult. </summary>

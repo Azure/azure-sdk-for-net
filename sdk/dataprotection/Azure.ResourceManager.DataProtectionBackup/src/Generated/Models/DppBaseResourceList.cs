@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of DppBaseResourceList. </summary>
         internal DppBaseResourceList()
         {
-            Value = new Core.ChangeTrackingList<ResourceGuardProtectedObjectData>();
+            Value = new ChangeTrackingList<ResourceGuardProtectedObjectData>();
         }
 
         /// <summary> Initializes a new instance of DppBaseResourceList. </summary>

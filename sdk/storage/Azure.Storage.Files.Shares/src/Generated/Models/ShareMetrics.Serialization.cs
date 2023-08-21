@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareMetrics : Core.IXmlSerializable
+    public partial class ShareMetrics : IXmlSerializable
     {
-        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "Metrics");
             writer.WriteStartElement("Version");
@@ -22,13 +22,13 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Core.Optional.IsDefined(IncludeApis))
+            if (Optional.IsDefined(IncludeApis))
             {
                 writer.WriteStartElement("IncludeAPIs");
                 writer.WriteValue(IncludeApis.Value);
                 writer.WriteEndElement();
             }
-            if (Core.Optional.IsDefined(RetentionPolicy))
+            if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WriteObjectValue(RetentionPolicy, "RetentionPolicy");
             }

@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningScheduleProperties : Core.IUtf8JsonSerializable
+    public partial class MachineLearningScheduleProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("action"u8);
             writer.WriteObjectValue(Action);
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WritePropertyName("trigger"u8);
             writer.WriteObjectValue(Trigger);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningScheduleAction action = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<bool> isEnabled = default;
-            Core.Optional<MachineLearningScheduleProvisioningStatus> provisioningState = default;
+            Optional<string> displayName = default;
+            Optional<bool> isEnabled = default;
+            Optional<MachineLearningScheduleProvisioningStatus> provisioningState = default;
             MachineLearningTriggerBase trigger = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IDictionary<string, string>> properties = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<string> description = default;
+            Optional<IDictionary<string, string>> properties = default;
+            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningScheduleProperties(description.Value, Core.Optional.ToDictionary(properties), Core.Optional.ToDictionary(tags), action, displayName.Value, Core.Optional.ToNullable(isEnabled), Core.Optional.ToNullable(provisioningState), trigger);
+            return new MachineLearningScheduleProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), action, displayName.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(provisioningState), trigger);
         }
     }
 }

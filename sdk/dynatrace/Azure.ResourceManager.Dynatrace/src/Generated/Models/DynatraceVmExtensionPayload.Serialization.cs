@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Core.Optional<string> ingestionKey = default;
-            Core.Optional<string> environmentId = default;
+            Optional<string> ingestionKey = default;
+            Optional<string> environmentId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ingestionKey"u8))

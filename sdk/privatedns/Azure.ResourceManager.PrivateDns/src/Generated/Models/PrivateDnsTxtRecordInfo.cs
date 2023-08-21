@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <summary> Initializes a new instance of PrivateDnsTxtRecordInfo. </summary>
         public PrivateDnsTxtRecordInfo()
         {
-            Values = new Core.ChangeTrackingList<string>();
+            Values = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PrivateDnsTxtRecordInfo. </summary>

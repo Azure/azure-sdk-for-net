@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of PrivateLinkScopeValidationDetails. </summary>
         internal PrivateLinkScopeValidationDetails()
         {
-            ConnectionDetails = new Core.ChangeTrackingList<ConnectionDetail>();
+            ConnectionDetails = new ChangeTrackingList<ConnectionDetail>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkScopeValidationDetails. </summary>

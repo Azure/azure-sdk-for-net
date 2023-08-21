@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> Initializes a new instance of ScVmmVirtualMachinePatch. </summary>
         public ScVmmVirtualMachinePatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Defines the resource properties. </summary>

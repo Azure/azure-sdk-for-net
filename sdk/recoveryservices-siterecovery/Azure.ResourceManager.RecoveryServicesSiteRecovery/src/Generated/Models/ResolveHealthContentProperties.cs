@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ResolveHealthContentProperties. </summary>
         public ResolveHealthContentProperties()
         {
-            HealthErrors = new Core.ChangeTrackingList<ResolveHealthError>();
+            HealthErrors = new ChangeTrackingList<ResolveHealthError>();
         }
 
         /// <summary> Health errors. </summary>

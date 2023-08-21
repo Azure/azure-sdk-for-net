@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class AS2SecuritySettings : Core.IUtf8JsonSerializable
+    public partial class AS2SecuritySettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("overrideGroupSigningCertificate"u8);
             writer.WriteBooleanValue(OverrideGroupSigningCertificate);
-            if (Core.Optional.IsDefined(SigningCertificateName))
+            if (Optional.IsDefined(SigningCertificateName))
             {
                 writer.WritePropertyName("signingCertificateName"u8);
                 writer.WriteStringValue(SigningCertificateName);
             }
-            if (Core.Optional.IsDefined(EncryptionCertificateName))
+            if (Optional.IsDefined(EncryptionCertificateName))
             {
                 writer.WritePropertyName("encryptionCertificateName"u8);
                 writer.WriteStringValue(EncryptionCertificateName);
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(EnableNrrForOutboundDecodedMessages);
             writer.WritePropertyName("enableNRRForInboundMDN"u8);
             writer.WriteBooleanValue(EnableNrrForInboundMdn);
-            if (Core.Optional.IsDefined(Sha2AlgorithmFormat))
+            if (Optional.IsDefined(Sha2AlgorithmFormat))
             {
                 writer.WritePropertyName("sha2AlgorithmFormat"u8);
                 writer.WriteStringValue(Sha2AlgorithmFormat);
@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             bool overrideGroupSigningCertificate = default;
-            Core.Optional<string> signingCertificateName = default;
-            Core.Optional<string> encryptionCertificateName = default;
+            Optional<string> signingCertificateName = default;
+            Optional<string> encryptionCertificateName = default;
             bool enableNrrForInboundEncodedMessages = default;
             bool enableNrrForInboundDecodedMessages = default;
             bool enableNrrForOutboundMdn = default;
             bool enableNrrForOutboundEncodedMessages = default;
             bool enableNrrForOutboundDecodedMessages = default;
             bool enableNrrForInboundMdn = default;
-            Core.Optional<string> sha2AlgorithmFormat = default;
+            Optional<string> sha2AlgorithmFormat = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("overrideGroupSigningCertificate"u8))

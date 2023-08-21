@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> Initializes a new instance of NetworkProfileUpdate. </summary>
         public NetworkProfileUpdate()
         {
-            NetworkInterfaces = new Core.ChangeTrackingList<NetworkInterfacesUpdate>();
+            NetworkInterfaces = new ChangeTrackingList<NetworkInterfacesUpdate>();
         }
 
         /// <summary> Gets or sets the list of network interfaces associated with the virtual machine. </summary>

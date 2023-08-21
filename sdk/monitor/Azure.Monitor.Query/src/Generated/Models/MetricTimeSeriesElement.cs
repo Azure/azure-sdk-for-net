@@ -16,8 +16,8 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of MetricTimeSeriesElement. </summary>
         internal MetricTimeSeriesElement()
         {
-            Metadatavalues = new Core.ChangeTrackingList<MetadataValue>();
-            Values = new Core.ChangeTrackingList<MetricValue>();
+            Metadatavalues = new ChangeTrackingList<MetadataValue>();
+            Values = new ChangeTrackingList<MetricValue>();
         }
 
         /// <summary> Initializes a new instance of MetricTimeSeriesElement. </summary>

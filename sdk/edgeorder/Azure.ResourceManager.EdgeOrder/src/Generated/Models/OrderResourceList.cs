@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of OrderResourceList. </summary>
         internal OrderResourceList()
         {
-            Value = new Core.ChangeTrackingList<EdgeOrderData>();
+            Value = new ChangeTrackingList<EdgeOrderData>();
         }
 
         /// <summary> Initializes a new instance of OrderResourceList. </summary>

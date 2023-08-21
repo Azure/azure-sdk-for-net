@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of DeletedKeyVaultProperties. </summary>
         internal DeletedKeyVaultProperties()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DeletedKeyVaultProperties. </summary>

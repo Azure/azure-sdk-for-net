@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeSsisCatalogInfo. </summary>
         public SynapseIntegrationRuntimeSsisCatalogInfo()
         {
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeSsisCatalogInfo. </summary>

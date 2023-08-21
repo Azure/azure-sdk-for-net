@@ -26,9 +26,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            DependsOn = new Core.ChangeTrackingList<ActivityDependency>();
-            UserProperties = new Core.ChangeTrackingList<UserProperty>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
+            DependsOn = new ChangeTrackingList<ActivityDependency>();
+            UserProperties = new ChangeTrackingList<UserProperty>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of Activity. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryRunListResult. </summary>
         internal ContainerRegistryRunListResult()
         {
-            Value = new Core.ChangeTrackingList<ContainerRegistryRunData>();
+            Value = new ChangeTrackingList<ContainerRegistryRunData>();
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryRunListResult. </summary>

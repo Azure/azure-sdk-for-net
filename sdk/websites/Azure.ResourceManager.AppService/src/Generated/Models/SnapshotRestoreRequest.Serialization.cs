@@ -11,44 +11,44 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SnapshotRestoreRequest : Core.IUtf8JsonSerializable
+    public partial class SnapshotRestoreRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SnapshotTime))
+            if (Optional.IsDefined(SnapshotTime))
             {
                 writer.WritePropertyName("snapshotTime"u8);
                 writer.WriteStringValue(SnapshotTime);
             }
-            if (Core.Optional.IsDefined(RecoverySource))
+            if (Optional.IsDefined(RecoverySource))
             {
                 writer.WritePropertyName("recoverySource"u8);
                 writer.WriteObjectValue(RecoverySource);
             }
-            if (Core.Optional.IsDefined(CanOverwrite))
+            if (Optional.IsDefined(CanOverwrite))
             {
                 writer.WritePropertyName("overwrite"u8);
                 writer.WriteBooleanValue(CanOverwrite.Value);
             }
-            if (Core.Optional.IsDefined(RecoverConfiguration))
+            if (Optional.IsDefined(RecoverConfiguration))
             {
                 writer.WritePropertyName("recoverConfiguration"u8);
                 writer.WriteBooleanValue(RecoverConfiguration.Value);
             }
-            if (Core.Optional.IsDefined(IgnoreConflictingHostNames))
+            if (Optional.IsDefined(IgnoreConflictingHostNames))
             {
                 writer.WritePropertyName("ignoreConflictingHostNames"u8);
                 writer.WriteBooleanValue(IgnoreConflictingHostNames.Value);
             }
-            if (Core.Optional.IsDefined(UseDRSecondary))
+            if (Optional.IsDefined(UseDRSecondary))
             {
                 writer.WritePropertyName("useDRSecondary"u8);
                 writer.WriteBooleanValue(UseDRSecondary.Value);
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> snapshotTime = default;
-            Core.Optional<SnapshotRecoverySource> recoverySource = default;
-            Core.Optional<bool> overwrite = default;
-            Core.Optional<bool> recoverConfiguration = default;
-            Core.Optional<bool> ignoreConflictingHostNames = default;
-            Core.Optional<bool> useDRSecondary = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> snapshotTime = default;
+            Optional<SnapshotRecoverySource> recoverySource = default;
+            Optional<bool> overwrite = default;
+            Optional<bool> recoverConfiguration = default;
+            Optional<bool> ignoreConflictingHostNames = default;
+            Optional<bool> useDRSecondary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new SnapshotRestoreRequest(id, name, type, systemData.Value, snapshotTime.Value, recoverySource.Value, Core.Optional.ToNullable(overwrite), Core.Optional.ToNullable(recoverConfiguration), Core.Optional.ToNullable(ignoreConflictingHostNames), Core.Optional.ToNullable(useDRSecondary), kind.Value);
+            return new SnapshotRestoreRequest(id, name, type, systemData.Value, snapshotTime.Value, recoverySource.Value, Optional.ToNullable(overwrite), Optional.ToNullable(recoverConfiguration), Optional.ToNullable(ignoreConflictingHostNames), Optional.ToNullable(useDRSecondary), kind.Value);
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class MachineLearningDataLakeAnalyticsProperties : Core.IUtf8JsonSerializable
+    internal partial class MachineLearningDataLakeAnalyticsProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DataLakeStoreAccountName))
+            if (Optional.IsDefined(DataLakeStoreAccountName))
             {
                 writer.WritePropertyName("dataLakeStoreAccountName"u8);
                 writer.WriteStringValue(DataLakeStoreAccountName);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> dataLakeStoreAccountName = default;
+            Optional<string> dataLakeStoreAccountName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataLakeStoreAccountName"u8))

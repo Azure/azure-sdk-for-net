@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <summary> Initializes a new instance of KubernetesSourceControlConfigurationData. </summary>
         public KubernetesSourceControlConfigurationData()
         {
-            ConfigurationProtectedSettings = new Core.ChangeTrackingDictionary<string, string>();
+            ConfigurationProtectedSettings = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of KubernetesSourceControlConfigurationData. </summary>

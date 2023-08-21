@@ -12,29 +12,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class EventGridNamespacePermissionBindingData : Core.IUtf8JsonSerializable
+    public partial class EventGridNamespacePermissionBindingData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(TopicSpaceName))
+            if (Optional.IsDefined(TopicSpaceName))
             {
                 writer.WritePropertyName("topicSpaceName"u8);
                 writer.WriteStringValue(TopicSpaceName);
             }
-            if (Core.Optional.IsDefined(Permission))
+            if (Optional.IsDefined(Permission))
             {
                 writer.WritePropertyName("permission"u8);
                 writer.WriteStringValue(Permission.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ClientGroupName))
+            if (Optional.IsDefined(ClientGroupName))
             {
                 writer.WritePropertyName("clientGroupName"u8);
                 writer.WriteStringValue(ClientGroupName);
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> topicSpaceName = default;
-            Core.Optional<PermissionType> permission = default;
-            Core.Optional<string> clientGroupName = default;
-            Core.Optional<PermissionBindingProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<string> topicSpaceName = default;
+            Optional<PermissionType> permission = default;
+            Optional<string> clientGroupName = default;
+            Optional<PermissionBindingProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new EventGridNamespacePermissionBindingData(id, name, type, systemData.Value, description.Value, topicSpaceName.Value, Core.Optional.ToNullable(permission), clientGroupName.Value, Core.Optional.ToNullable(provisioningState));
+            return new EventGridNamespacePermissionBindingData(id, name, type, systemData.Value, description.Value, topicSpaceName.Value, Optional.ToNullable(permission), clientGroupName.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

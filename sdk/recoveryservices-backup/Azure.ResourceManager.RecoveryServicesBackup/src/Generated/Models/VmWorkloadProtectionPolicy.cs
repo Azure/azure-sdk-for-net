@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of VmWorkloadProtectionPolicy. </summary>
         public VmWorkloadProtectionPolicy()
         {
-            SubProtectionPolicy = new Core.ChangeTrackingList<SubProtectionPolicy>();
+            SubProtectionPolicy = new ChangeTrackingList<SubProtectionPolicy>();
             BackupManagementType = "AzureWorkload";
         }
 

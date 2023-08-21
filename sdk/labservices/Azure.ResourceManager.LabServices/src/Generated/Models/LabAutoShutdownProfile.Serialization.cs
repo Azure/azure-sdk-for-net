@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabAutoShutdownProfile : Core.IUtf8JsonSerializable
+    public partial class LabAutoShutdownProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ShutdownOnDisconnect))
+            if (Optional.IsDefined(ShutdownOnDisconnect))
             {
                 writer.WritePropertyName("shutdownOnDisconnect"u8);
                 writer.WriteStringValue(ShutdownOnDisconnect.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(ShutdownWhenNotConnected))
+            if (Optional.IsDefined(ShutdownWhenNotConnected))
             {
                 writer.WritePropertyName("shutdownWhenNotConnected"u8);
                 writer.WriteStringValue(ShutdownWhenNotConnected.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(ShutdownOnIdle))
+            if (Optional.IsDefined(ShutdownOnIdle))
             {
                 writer.WritePropertyName("shutdownOnIdle"u8);
                 writer.WriteStringValue(ShutdownOnIdle.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(DisconnectDelay))
+            if (Optional.IsDefined(DisconnectDelay))
             {
                 writer.WritePropertyName("disconnectDelay"u8);
                 writer.WriteStringValue(DisconnectDelay.Value, "P");
             }
-            if (Core.Optional.IsDefined(NoConnectDelay))
+            if (Optional.IsDefined(NoConnectDelay))
             {
                 writer.WritePropertyName("noConnectDelay"u8);
                 writer.WriteStringValue(NoConnectDelay.Value, "P");
             }
-            if (Core.Optional.IsDefined(IdleDelay))
+            if (Optional.IsDefined(IdleDelay))
             {
                 writer.WritePropertyName("idleDelay"u8);
                 writer.WriteStringValue(IdleDelay.Value, "P");
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Core.Optional<LabServicesEnableState> shutdownOnDisconnect = default;
-            Core.Optional<LabServicesEnableState> shutdownWhenNotConnected = default;
-            Core.Optional<LabVirtualMachineShutdownOnIdleMode> shutdownOnIdle = default;
-            Core.Optional<TimeSpan> disconnectDelay = default;
-            Core.Optional<TimeSpan> noConnectDelay = default;
-            Core.Optional<TimeSpan> idleDelay = default;
+            Optional<LabServicesEnableState> shutdownOnDisconnect = default;
+            Optional<LabServicesEnableState> shutdownWhenNotConnected = default;
+            Optional<LabVirtualMachineShutdownOnIdleMode> shutdownOnIdle = default;
+            Optional<TimeSpan> disconnectDelay = default;
+            Optional<TimeSpan> noConnectDelay = default;
+            Optional<TimeSpan> idleDelay = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("shutdownOnDisconnect"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     continue;
                 }
             }
-            return new LabAutoShutdownProfile(Core.Optional.ToNullable(shutdownOnDisconnect), Core.Optional.ToNullable(shutdownWhenNotConnected), Core.Optional.ToNullable(shutdownOnIdle), Core.Optional.ToNullable(disconnectDelay), Core.Optional.ToNullable(noConnectDelay), Core.Optional.ToNullable(idleDelay));
+            return new LabAutoShutdownProfile(Optional.ToNullable(shutdownOnDisconnect), Optional.ToNullable(shutdownWhenNotConnected), Optional.ToNullable(shutdownOnIdle), Optional.ToNullable(disconnectDelay), Optional.ToNullable(noConnectDelay), Optional.ToNullable(idleDelay));
         }
     }
 }

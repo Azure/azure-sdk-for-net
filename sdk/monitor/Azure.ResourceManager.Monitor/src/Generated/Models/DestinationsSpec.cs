@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of DestinationsSpec. </summary>
         public DestinationsSpec()
         {
-            LogAnalytics = new Core.ChangeTrackingList<LogAnalyticsDestination>();
-            MonitoringAccounts = new Core.ChangeTrackingList<MonitoringAccountDestination>();
-            EventHubs = new Core.ChangeTrackingList<DataCollectionRuleEventHubDestination>();
-            EventHubsDirect = new Core.ChangeTrackingList<DataCollectionRuleEventHubDirectDestination>();
-            StorageBlobsDirect = new Core.ChangeTrackingList<DataCollectionRuleStorageBlobDestination>();
-            StorageTablesDirect = new Core.ChangeTrackingList<DataCollectionRuleStorageTableDestination>();
-            StorageAccounts = new Core.ChangeTrackingList<DataCollectionRuleStorageBlobDestination>();
+            LogAnalytics = new ChangeTrackingList<LogAnalyticsDestination>();
+            MonitoringAccounts = new ChangeTrackingList<MonitoringAccountDestination>();
+            EventHubs = new ChangeTrackingList<DataCollectionRuleEventHubDestination>();
+            EventHubsDirect = new ChangeTrackingList<DataCollectionRuleEventHubDirectDestination>();
+            StorageBlobsDirect = new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>();
+            StorageTablesDirect = new ChangeTrackingList<DataCollectionRuleStorageTableDestination>();
+            StorageAccounts = new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>();
         }
 
         /// <summary> Initializes a new instance of DestinationsSpec. </summary>

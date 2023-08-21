@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<Uri>> assetContainerSasUris = default;
+            Optional<IReadOnlyList<Uri>> assetContainerSasUris = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assetContainerSasUrls"u8))
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new AssetContainerSas(Core.Optional.ToList(assetContainerSasUris));
+            return new AssetContainerSas(Optional.ToList(assetContainerSasUris));
         }
     }
 }

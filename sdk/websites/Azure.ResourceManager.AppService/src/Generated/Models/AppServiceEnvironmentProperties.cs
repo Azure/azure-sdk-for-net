@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.AppService.Models
             Argument.AssertNotNull(virtualNetwork, nameof(virtualNetwork));
 
             VirtualNetwork = virtualNetwork;
-            ClusterSettings = new Core.ChangeTrackingList<AppServiceNameValuePair>();
-            UserWhitelistedIPRanges = new Core.ChangeTrackingList<string>();
+            ClusterSettings = new ChangeTrackingList<AppServiceNameValuePair>();
+            UserWhitelistedIPRanges = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppServiceEnvironmentProperties. </summary>

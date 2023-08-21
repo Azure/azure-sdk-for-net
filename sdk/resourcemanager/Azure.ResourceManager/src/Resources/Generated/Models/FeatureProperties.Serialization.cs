@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<string> state = default;
+            Optional<string> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))

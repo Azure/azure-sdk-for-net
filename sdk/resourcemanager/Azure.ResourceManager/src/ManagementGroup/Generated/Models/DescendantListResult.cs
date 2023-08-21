@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// <summary> Initializes a new instance of DescendantListResult. </summary>
         internal DescendantListResult()
         {
-            Value = new Core.ChangeTrackingList<DescendantData>();
+            Value = new ChangeTrackingList<DescendantData>();
         }
 
         /// <summary> Initializes a new instance of DescendantListResult. </summary>

@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = await _reservationOrderRestClient.PurchaseAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _reservationOrderClientDiagnostics, Pipeline, _reservationOrderRestClient.CreatePurchaseRequest(Guid.Parse(Id.Name), content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _reservationOrderClientDiagnostics, Pipeline, _reservationOrderRestClient.CreatePurchaseRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = _reservationOrderRestClient.Purchase(Guid.Parse(Id.Name), content, cancellationToken);
-                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _reservationOrderClientDiagnostics, Pipeline, _reservationOrderRestClient.CreatePurchaseRequest(Guid.Parse(Id.Name), content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _reservationOrderClientDiagnostics, Pipeline, _reservationOrderRestClient.CreatePurchaseRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = await _reservationDetailReservationRestClient.SplitAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<IList<ReservationDetailData>>(new IListOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateSplitRequest(Guid.Parse(Id.Name), content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ReservationsArmOperation<IList<ReservationDetailData>>(new IListOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateSplitRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = _reservationDetailReservationRestClient.Split(Guid.Parse(Id.Name), content, cancellationToken);
-                var operation = new ReservationsArmOperation<IList<ReservationDetailData>>(new IListOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateSplitRequest(Guid.Parse(Id.Name), content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ReservationsArmOperation<IList<ReservationDetailData>>(new IListOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateSplitRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = await _reservationDetailReservationRestClient.MergeAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<IList<ReservationDetailData>>(new IListOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateMergeRequest(Guid.Parse(Id.Name), content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ReservationsArmOperation<IList<ReservationDetailData>>(new IListOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateMergeRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = _reservationDetailReservationRestClient.Merge(Guid.Parse(Id.Name), content, cancellationToken);
-                var operation = new ReservationsArmOperation<IList<ReservationDetailData>>(new IListOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateMergeRequest(Guid.Parse(Id.Name), content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ReservationsArmOperation<IList<ReservationDetailData>>(new IListOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateMergeRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = await _returnRestClient.PostAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _returnClientDiagnostics, Pipeline, _returnRestClient.CreatePostRequest(Guid.Parse(Id.Name), content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _returnClientDiagnostics, Pipeline, _returnRestClient.CreatePostRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = _returnRestClient.Post(Guid.Parse(Id.Name), content, cancellationToken);
-                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _returnClientDiagnostics, Pipeline, _returnRestClient.CreatePostRequest(Guid.Parse(Id.Name), content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _returnClientDiagnostics, Pipeline, _returnRestClient.CreatePostRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

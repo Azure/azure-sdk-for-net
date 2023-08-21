@@ -12,17 +12,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetNetworkProfile : Core.IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetNetworkProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HealthProbe))
+            if (Optional.IsDefined(HealthProbe))
             {
                 writer.WritePropertyName("healthProbe"u8);
                 JsonSerializer.Serialize(writer, HealthProbe);
             }
-            if (Core.Optional.IsCollectionDefined(NetworkInterfaceConfigurations))
+            if (Optional.IsCollectionDefined(NetworkInterfaceConfigurations))
             {
                 writer.WritePropertyName("networkInterfaceConfigurations"u8);
                 writer.WriteStartArray();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(NetworkApiVersion))
+            if (Optional.IsDefined(NetworkApiVersion))
             {
                 writer.WritePropertyName("networkApiVersion"u8);
                 writer.WriteStringValue(NetworkApiVersion.Value.ToString());
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<WritableSubResource> healthProbe = default;
-            Core.Optional<IList<VirtualMachineScaleSetNetworkConfiguration>> networkInterfaceConfigurations = default;
-            Core.Optional<NetworkApiVersion> networkApiVersion = default;
+            Optional<WritableSubResource> healthProbe = default;
+            Optional<IList<VirtualMachineScaleSetNetworkConfiguration>> networkInterfaceConfigurations = default;
+            Optional<NetworkApiVersion> networkApiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("healthProbe"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetNetworkProfile(healthProbe, Core.Optional.ToList(networkInterfaceConfigurations), Core.Optional.ToNullable(networkApiVersion));
+            return new VirtualMachineScaleSetNetworkProfile(healthProbe, Optional.ToList(networkInterfaceConfigurations), Optional.ToNullable(networkApiVersion));
         }
     }
 }

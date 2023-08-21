@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="location"> The location. </param>
         public CosmosDBForPostgreSqlClusterData(AzureLocation location) : base(location)
         {
-            ServerNames = new Core.ChangeTrackingList<ServerNameItem>();
-            ReadReplicas = new Core.ChangeTrackingList<string>();
-            PrivateEndpointConnections = new Core.ChangeTrackingList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>();
+            ServerNames = new ChangeTrackingList<ServerNameItem>();
+            ReadReplicas = new ChangeTrackingList<string>();
+            PrivateEndpointConnections = new ChangeTrackingList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterData. </summary>

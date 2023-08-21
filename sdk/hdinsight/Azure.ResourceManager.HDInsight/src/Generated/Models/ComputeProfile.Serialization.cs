@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    internal partial class ComputeProfile : Core.IUtf8JsonSerializable
+    internal partial class ComputeProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Roles))
+            if (Optional.IsCollectionDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<IList<HDInsightClusterRole>> roles = default;
+            Optional<IList<HDInsightClusterRole>> roles = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("roles"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new ComputeProfile(Core.Optional.ToList(roles));
+            return new ComputeProfile(Optional.ToList(roles));
         }
     }
 }

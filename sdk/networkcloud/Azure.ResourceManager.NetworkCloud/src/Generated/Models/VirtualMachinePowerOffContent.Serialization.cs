@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class VirtualMachinePowerOffContent : Core.IUtf8JsonSerializable
+    public partial class VirtualMachinePowerOffContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SkipShutdown))
+            if (Optional.IsDefined(SkipShutdown))
             {
                 writer.WritePropertyName("skipShutdown"u8);
                 writer.WriteStringValue(SkipShutdown.Value.ToString());

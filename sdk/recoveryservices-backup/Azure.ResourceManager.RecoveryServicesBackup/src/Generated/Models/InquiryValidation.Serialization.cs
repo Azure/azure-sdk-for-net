@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class InquiryValidation : Core.IUtf8JsonSerializable
+    public partial class InquiryValidation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Core.Optional.IsDefined(ErrorDetail))
+            if (Optional.IsDefined(ErrorDetail))
             {
                 writer.WritePropertyName("errorDetail"u8);
                 writer.WriteObjectValue(ErrorDetail);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<string> status = default;
-            Core.Optional<BackupErrorDetail> errorDetail = default;
-            Core.Optional<string> additionalDetail = default;
+            Optional<string> status = default;
+            Optional<BackupErrorDetail> errorDetail = default;
+            Optional<string> additionalDetail = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))

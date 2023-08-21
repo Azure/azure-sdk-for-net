@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseRecoverableSqlPoolListResult. </summary>
         internal SynapseRecoverableSqlPoolListResult()
         {
-            Value = new Core.ChangeTrackingList<SynapseRecoverableSqlPoolData>();
+            Value = new ChangeTrackingList<SynapseRecoverableSqlPoolData>();
         }
 
         /// <summary> Initializes a new instance of SynapseRecoverableSqlPoolListResult. </summary>

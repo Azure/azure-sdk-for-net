@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MetricAlertSingleResourceMultipleMetricCriteria : Core.IUtf8JsonSerializable
+    public partial class MetricAlertSingleResourceMultipleMetricCriteria : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AllOf))
+            if (Optional.IsCollectionDefined(AllOf))
             {
                 writer.WritePropertyName("allOf"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<IList<MetricCriteria>> allOf = default;
+            Optional<IList<MetricCriteria>> allOf = default;
             MonitorOdataType odataType = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MetricAlertSingleResourceMultipleMetricCriteria(odataType, additionalProperties, Core.Optional.ToList(allOf));
+            return new MetricAlertSingleResourceMultipleMetricCriteria(odataType, additionalProperties, Optional.ToList(allOf));
         }
     }
 }

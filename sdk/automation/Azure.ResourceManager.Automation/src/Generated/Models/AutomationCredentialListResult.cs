@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationCredentialListResult. </summary>
         internal AutomationCredentialListResult()
         {
-            Value = new Core.ChangeTrackingList<AutomationCredentialData>();
+            Value = new ChangeTrackingList<AutomationCredentialData>();
         }
 
         /// <summary> Initializes a new instance of AutomationCredentialListResult. </summary>

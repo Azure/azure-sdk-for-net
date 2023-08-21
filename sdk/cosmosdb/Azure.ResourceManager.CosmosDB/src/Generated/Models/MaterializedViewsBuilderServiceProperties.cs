@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of MaterializedViewsBuilderServiceProperties. </summary>
         public MaterializedViewsBuilderServiceProperties()
         {
-            Locations = new Core.ChangeTrackingList<MaterializedViewsBuilderRegionalService>();
+            Locations = new ChangeTrackingList<MaterializedViewsBuilderRegionalService>();
             ServiceType = CosmosDBServiceType.MaterializedViewsBuilder;
         }
 

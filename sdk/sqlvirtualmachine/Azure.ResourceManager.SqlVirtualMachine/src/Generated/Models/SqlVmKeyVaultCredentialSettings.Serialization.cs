@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlVmKeyVaultCredentialSettings : Core.IUtf8JsonSerializable
+    public partial class SqlVmKeyVaultCredentialSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(CredentialName))
+            if (Optional.IsDefined(CredentialName))
             {
                 writer.WritePropertyName("credentialName"u8);
                 writer.WriteStringValue(CredentialName);
             }
-            if (Core.Optional.IsDefined(AzureKeyVaultUri))
+            if (Optional.IsDefined(AzureKeyVaultUri))
             {
                 writer.WritePropertyName("azureKeyVaultUrl"u8);
                 writer.WriteStringValue(AzureKeyVaultUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(ServicePrincipalName))
+            if (Optional.IsDefined(ServicePrincipalName))
             {
                 writer.WritePropertyName("servicePrincipalName"u8);
                 writer.WriteStringValue(ServicePrincipalName);
             }
-            if (Core.Optional.IsDefined(ServicePrincipalSecret))
+            if (Optional.IsDefined(ServicePrincipalSecret))
             {
                 writer.WritePropertyName("servicePrincipalSecret"u8);
                 writer.WriteStringValue(ServicePrincipalSecret);
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Core.Optional<bool> enable = default;
-            Core.Optional<string> credentialName = default;
-            Core.Optional<Uri> azureKeyVaultUrl = default;
-            Core.Optional<string> servicePrincipalName = default;
-            Core.Optional<string> servicePrincipalSecret = default;
+            Optional<bool> enable = default;
+            Optional<string> credentialName = default;
+            Optional<Uri> azureKeyVaultUrl = default;
+            Optional<string> servicePrincipalName = default;
+            Optional<string> servicePrincipalSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enable"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new SqlVmKeyVaultCredentialSettings(Core.Optional.ToNullable(enable), credentialName.Value, azureKeyVaultUrl.Value, servicePrincipalName.Value, servicePrincipalSecret.Value);
+            return new SqlVmKeyVaultCredentialSettings(Optional.ToNullable(enable), credentialName.Value, azureKeyVaultUrl.Value, servicePrincipalName.Value, servicePrincipalSecret.Value);
         }
     }
 }

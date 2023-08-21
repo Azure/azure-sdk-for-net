@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskProperties. </summary>
         public ConnectToSourceSqlServerTaskProperties()
         {
-            Output = new Core.ChangeTrackingList<ConnectToSourceSqlServerTaskOutput>();
+            Output = new ChangeTrackingList<ConnectToSourceSqlServerTaskOutput>();
             TaskType = TaskType.ConnectToSourceSqlServer;
         }
 

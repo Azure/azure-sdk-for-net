@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<FieldRestrictions>> fieldRestrictions = default;
-            Core.Optional<CheckRestrictionsResultContentEvaluationResult> contentEvaluationResult = default;
+            Optional<IReadOnlyList<FieldRestrictions>> fieldRestrictions = default;
+            Optional<CheckRestrictionsResultContentEvaluationResult> contentEvaluationResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fieldRestrictions"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new CheckPolicyRestrictionsResult(Core.Optional.ToList(fieldRestrictions), contentEvaluationResult.Value);
+            return new CheckPolicyRestrictionsResult(Optional.ToList(fieldRestrictions), contentEvaluationResult.Value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AutoProvisioningSettingList. </summary>
         internal AutoProvisioningSettingList()
         {
-            Value = new Core.ChangeTrackingList<AutoProvisioningSettingData>();
+            Value = new ChangeTrackingList<AutoProvisioningSettingData>();
         }
 
         /// <summary> Initializes a new instance of AutoProvisioningSettingList. </summary>

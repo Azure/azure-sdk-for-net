@@ -29,8 +29,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             CellType = cellType;
             Metadata = metadata;
             Source = source.ToList();
-            Outputs = new Core.ChangeTrackingList<NotebookCellOutputItem>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
+            Outputs = new ChangeTrackingList<NotebookCellOutputItem>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of NotebookCell. </summary>

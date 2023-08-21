@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsClusterProperties : Core.IUtf8JsonSerializable
+    public partial class StreamAnalyticsClusterProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> createdDate = default;
-            Core.Optional<Guid> clusterId = default;
-            Core.Optional<StreamAnalyticsClusterProvisioningState> provisioningState = default;
-            Core.Optional<int> capacityAllocated = default;
-            Core.Optional<int> capacityAssigned = default;
+            Optional<DateTimeOffset> createdDate = default;
+            Optional<Guid> clusterId = default;
+            Optional<StreamAnalyticsClusterProvisioningState> provisioningState = default;
+            Optional<int> capacityAllocated = default;
+            Optional<int> capacityAssigned = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdDate"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamAnalyticsClusterProperties(Core.Optional.ToNullable(createdDate), Core.Optional.ToNullable(clusterId), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(capacityAllocated), Core.Optional.ToNullable(capacityAssigned));
+            return new StreamAnalyticsClusterProperties(Optional.ToNullable(createdDate), Optional.ToNullable(clusterId), Optional.ToNullable(provisioningState), Optional.ToNullable(capacityAllocated), Optional.ToNullable(capacityAssigned));
         }
     }
 }

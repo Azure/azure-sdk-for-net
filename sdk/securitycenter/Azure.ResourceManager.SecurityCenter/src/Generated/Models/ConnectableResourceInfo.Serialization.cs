@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<IReadOnlyList<ConnectedResourceInfo>> inboundConnectedResources = default;
-            Core.Optional<IReadOnlyList<ConnectedResourceInfo>> outboundConnectedResources = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<IReadOnlyList<ConnectedResourceInfo>> inboundConnectedResources = default;
+            Optional<IReadOnlyList<ConnectedResourceInfo>> outboundConnectedResources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new ConnectableResourceInfo(id.Value, Core.Optional.ToList(inboundConnectedResources), Core.Optional.ToList(outboundConnectedResources));
+            return new ConnectableResourceInfo(id.Value, Optional.ToList(inboundConnectedResources), Optional.ToList(outboundConnectedResources));
         }
     }
 }

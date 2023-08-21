@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _partnerDestinationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerDestinationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<PartnerDestinationResource>(new PartnerDestinationOperationSource(Client), _partnerDestinationClientDiagnostics, Pipeline, _partnerDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerDestinationName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new EventGridArmOperation<PartnerDestinationResource>(new PartnerDestinationOperationSource(Client), _partnerDestinationClientDiagnostics, Pipeline, _partnerDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerDestinationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _partnerDestinationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, partnerDestinationName, data, cancellationToken);
-                var operation = new EventGridArmOperation<PartnerDestinationResource>(new PartnerDestinationOperationSource(Client), _partnerDestinationClientDiagnostics, Pipeline, _partnerDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerDestinationName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new EventGridArmOperation<PartnerDestinationResource>(new PartnerDestinationOperationSource(Client), _partnerDestinationClientDiagnostics, Pipeline, _partnerDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerDestinationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerDestinationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerDestinationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerDestinationResource(Client, PartnerDestinationData.DeserializePartnerDestinationData(e)), _partnerDestinationClientDiagnostics, Pipeline, "PartnerDestinationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerDestinationResource(Client, PartnerDestinationData.DeserializePartnerDestinationData(e)), _partnerDestinationClientDiagnostics, Pipeline, "PartnerDestinationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerDestinationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerDestinationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerDestinationResource(Client, PartnerDestinationData.DeserializePartnerDestinationData(e)), _partnerDestinationClientDiagnostics, Pipeline, "PartnerDestinationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerDestinationResource(Client, PartnerDestinationData.DeserializePartnerDestinationData(e)), _partnerDestinationClientDiagnostics, Pipeline, "PartnerDestinationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

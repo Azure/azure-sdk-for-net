@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<KeyVaultSetting>> settings = default;
+            Optional<IReadOnlyList<KeyVaultSetting>> settings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("settings"u8))
@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Administration
                     continue;
                 }
             }
-            return new GetSettingsResult(Core.Optional.ToList(settings));
+            return new GetSettingsResult(Optional.ToList(settings));
         }
     }
 }

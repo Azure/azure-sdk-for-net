@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Initializes a new instance of DscNodeData. </summary>
         public DscNodeData()
         {
-            ExtensionHandler = new Core.ChangeTrackingList<DscNodeExtensionHandlerAssociationProperty>();
+            ExtensionHandler = new ChangeTrackingList<DscNodeExtensionHandlerAssociationProperty>();
         }
 
         /// <summary> Initializes a new instance of DscNodeData. </summary>

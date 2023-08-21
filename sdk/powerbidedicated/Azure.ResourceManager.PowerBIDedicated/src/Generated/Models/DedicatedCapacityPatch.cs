@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <summary> Initializes a new instance of DedicatedCapacityPatch. </summary>
         public DedicatedCapacityPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The SKU of the Dedicated capacity resource. </summary>

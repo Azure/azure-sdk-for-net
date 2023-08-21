@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <summary> Initializes a new instance of GrafanaPrivateEndpointConnectionListResult. </summary>
         internal GrafanaPrivateEndpointConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<GrafanaPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<GrafanaPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of GrafanaPrivateEndpointConnectionListResult. </summary>

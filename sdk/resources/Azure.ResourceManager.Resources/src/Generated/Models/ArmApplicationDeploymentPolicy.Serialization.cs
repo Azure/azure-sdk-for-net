@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal partial class ArmApplicationDeploymentPolicy : Core.IUtf8JsonSerializable
+    internal partial class ArmApplicationDeploymentPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("deploymentMode"u8);

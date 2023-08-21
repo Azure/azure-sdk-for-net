@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DevCenterPoolData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DevCenterPoolData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     continue;
                 }
             }
-            return new PoolListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new PoolListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

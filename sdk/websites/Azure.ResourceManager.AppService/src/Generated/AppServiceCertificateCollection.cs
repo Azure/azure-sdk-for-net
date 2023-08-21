@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateOrUpdateCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<AppServiceCertificateResource>(new AppServiceCertificateOperationSource(Client), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<AppServiceCertificateResource>(new AppServiceCertificateOperationSource(Client), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateOrUpdateCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<AppServiceCertificateResource>(new AppServiceCertificateOperationSource(Client), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<AppServiceCertificateResource>(new AppServiceCertificateOperationSource(Client), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateListCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateListCertificatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppServiceCertificateResource(Client, AppServiceCertificateData.DeserializeAppServiceCertificateData(e)), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, "AppServiceCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppServiceCertificateResource(Client, AppServiceCertificateData.DeserializeAppServiceCertificateData(e)), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, "AppServiceCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateListCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateListCertificatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppServiceCertificateResource(Client, AppServiceCertificateData.DeserializeAppServiceCertificateData(e)), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, "AppServiceCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppServiceCertificateResource(Client, AppServiceCertificateData.DeserializeAppServiceCertificateData(e)), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, "AppServiceCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

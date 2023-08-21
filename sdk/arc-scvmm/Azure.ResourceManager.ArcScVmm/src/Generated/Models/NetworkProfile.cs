@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> Initializes a new instance of NetworkProfile. </summary>
         public NetworkProfile()
         {
-            NetworkInterfaces = new Core.ChangeTrackingList<NetworkInterfaces>();
+            NetworkInterfaces = new ChangeTrackingList<NetworkInterfaces>();
         }
 
         /// <summary> Initializes a new instance of NetworkProfile. </summary>

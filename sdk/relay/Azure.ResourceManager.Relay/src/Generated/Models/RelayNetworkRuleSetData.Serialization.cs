@@ -13,24 +13,24 @@ using Azure.ResourceManager.Relay.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    public partial class RelayNetworkRuleSetData : Core.IUtf8JsonSerializable
+    public partial class RelayNetworkRuleSetData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DefaultAction))
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(IPRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.Relay
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<RelayNetworkRuleSetDefaultAction> defaultAction = default;
-            Core.Optional<RelayPublicNetworkAccess> publicNetworkAccess = default;
-            Core.Optional<IList<RelayNetworkRuleSetIPRule>> ipRules = default;
+            Optional<SystemData> systemData = default;
+            Optional<RelayNetworkRuleSetDefaultAction> defaultAction = default;
+            Optional<RelayPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<IList<RelayNetworkRuleSetIPRule>> ipRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Relay
                     continue;
                 }
             }
-            return new RelayNetworkRuleSetData(id, name, type, systemData.Value, Core.Optional.ToNullable(defaultAction), Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToList(ipRules));
+            return new RelayNetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(defaultAction), Optional.ToNullable(publicNetworkAccess), Optional.ToList(ipRules));
         }
     }
 }

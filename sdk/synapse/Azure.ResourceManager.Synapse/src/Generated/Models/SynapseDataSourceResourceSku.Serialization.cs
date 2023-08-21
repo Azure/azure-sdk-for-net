@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<string> resourceType = default;
-            Core.Optional<SynapseDataSourceSku> sku = default;
-            Core.Optional<SynapseDataSourceCapacity> capacity = default;
+            Optional<string> resourceType = default;
+            Optional<SynapseDataSourceSku> sku = default;
+            Optional<SynapseDataSourceCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))

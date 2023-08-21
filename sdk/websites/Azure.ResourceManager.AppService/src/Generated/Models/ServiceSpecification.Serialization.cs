@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<MetricSpecification>> metricSpecifications = default;
-            Core.Optional<IReadOnlyList<LogSpecification>> logSpecifications = default;
+            Optional<IReadOnlyList<MetricSpecification>> metricSpecifications = default;
+            Optional<IReadOnlyList<LogSpecification>> logSpecifications = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricSpecifications"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ServiceSpecification(Core.Optional.ToList(metricSpecifications), Core.Optional.ToList(logSpecifications));
+            return new ServiceSpecification(Optional.ToList(metricSpecifications), Optional.ToList(logSpecifications));
         }
     }
 }

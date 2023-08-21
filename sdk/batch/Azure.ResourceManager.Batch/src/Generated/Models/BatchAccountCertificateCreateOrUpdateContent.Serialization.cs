@@ -13,29 +13,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountCertificateCreateOrUpdateContent : Core.IUtf8JsonSerializable
+    public partial class BatchAccountCertificateCreateOrUpdateContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ThumbprintAlgorithm))
+            if (Optional.IsDefined(ThumbprintAlgorithm))
             {
                 writer.WritePropertyName("thumbprintAlgorithm"u8);
                 writer.WriteStringValue(ThumbprintAlgorithm);
             }
-            if (Core.Optional.IsDefined(ThumbprintString))
+            if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (Core.Optional.IsDefined(Format))
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(Data))
+            if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
 #if NET6_0_OR_GREATER
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Data.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> thumbprintAlgorithm = default;
-            Core.Optional<string> thumbprint = default;
-            Core.Optional<BatchAccountCertificateFormat> format = default;
-            Core.Optional<BinaryData> data = default;
-            Core.Optional<string> password = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> thumbprintAlgorithm = default;
+            Optional<string> thumbprint = default;
+            Optional<BatchAccountCertificateFormat> format = default;
+            Optional<BinaryData> data = default;
+            Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchAccountCertificateCreateOrUpdateContent(id, name, type, systemData.Value, thumbprintAlgorithm.Value, thumbprint.Value, Core.Optional.ToNullable(format), data.Value, password.Value, Core.Optional.ToNullable(etag));
+            return new BatchAccountCertificateCreateOrUpdateContent(id, name, type, systemData.Value, thumbprintAlgorithm.Value, thumbprint.Value, Optional.ToNullable(format), data.Value, password.Value, Optional.ToNullable(etag));
         }
     }
 }

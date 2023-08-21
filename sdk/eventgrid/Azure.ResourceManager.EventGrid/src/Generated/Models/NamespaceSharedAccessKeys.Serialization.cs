@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Core.Optional<string> key1 = default;
-            Core.Optional<string> key2 = default;
+            Optional<string> key1 = default;
+            Optional<string> key2 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key1"u8))

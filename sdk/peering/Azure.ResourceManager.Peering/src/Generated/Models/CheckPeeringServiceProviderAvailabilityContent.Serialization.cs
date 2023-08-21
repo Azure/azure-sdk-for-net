@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class CheckPeeringServiceProviderAvailabilityContent : Core.IUtf8JsonSerializable
+    public partial class CheckPeeringServiceProviderAvailabilityContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PeeringServiceLocation))
+            if (Optional.IsDefined(PeeringServiceLocation))
             {
                 writer.WritePropertyName("peeringServiceLocation"u8);
                 writer.WriteStringValue(PeeringServiceLocation);
             }
-            if (Core.Optional.IsDefined(PeeringServiceProvider))
+            if (Optional.IsDefined(PeeringServiceProvider))
             {
                 writer.WritePropertyName("peeringServiceProvider"u8);
                 writer.WriteStringValue(PeeringServiceProvider);

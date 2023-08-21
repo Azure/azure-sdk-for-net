@@ -12,24 +12,24 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    public partial class MySqlFlexibleServerConfigurationData : Core.IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerConfigurationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Core.Optional.IsDefined(CurrentValue))
+            if (Optional.IsDefined(CurrentValue))
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteStringValue(CurrentValue);
             }
-            if (Core.Optional.IsDefined(Source))
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
@@ -47,18 +47,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> value = default;
-            Core.Optional<string> currentValue = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> documentationLink = default;
-            Core.Optional<string> defaultValue = default;
-            Core.Optional<string> dataType = default;
-            Core.Optional<string> allowedValues = default;
-            Core.Optional<MySqlFlexibleServerConfigurationSource> source = default;
-            Core.Optional<MySqlFlexibleServerConfigReadOnlyState> isReadOnly = default;
-            Core.Optional<MySqlFlexibleServerConfigPendingRestartState> isConfigPendingRestart = default;
-            Core.Optional<MySqlFlexibleServerConfigDynamicState> isDynamicConfig = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> value = default;
+            Optional<string> currentValue = default;
+            Optional<string> description = default;
+            Optional<string> documentationLink = default;
+            Optional<string> defaultValue = default;
+            Optional<string> dataType = default;
+            Optional<string> allowedValues = default;
+            Optional<MySqlFlexibleServerConfigurationSource> source = default;
+            Optional<MySqlFlexibleServerConfigReadOnlyState> isReadOnly = default;
+            Optional<MySqlFlexibleServerConfigPendingRestartState> isConfigPendingRestart = default;
+            Optional<MySqlFlexibleServerConfigDynamicState> isDynamicConfig = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     continue;
                 }
             }
-            return new MySqlFlexibleServerConfigurationData(id, name, type, systemData.Value, value.Value, currentValue.Value, description.Value, documentationLink.Value, defaultValue.Value, dataType.Value, allowedValues.Value, Core.Optional.ToNullable(source), Core.Optional.ToNullable(isReadOnly), Core.Optional.ToNullable(isConfigPendingRestart), Core.Optional.ToNullable(isDynamicConfig));
+            return new MySqlFlexibleServerConfigurationData(id, name, type, systemData.Value, value.Value, currentValue.Value, description.Value, documentationLink.Value, defaultValue.Value, dataType.Value, allowedValues.Value, Optional.ToNullable(source), Optional.ToNullable(isReadOnly), Optional.ToNullable(isConfigPendingRestart), Optional.ToNullable(isDynamicConfig));
         }
     }
 }

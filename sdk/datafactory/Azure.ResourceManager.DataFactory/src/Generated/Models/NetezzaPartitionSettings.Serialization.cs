@@ -11,22 +11,22 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class NetezzaPartitionSettings : Core.IUtf8JsonSerializable
+    public partial class NetezzaPartitionSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PartitionColumnName))
+            if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
                 JsonSerializer.Serialize(writer, PartitionColumnName);
             }
-            if (Core.Optional.IsDefined(PartitionUpperBound))
+            if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
                 JsonSerializer.Serialize(writer, PartitionUpperBound);
             }
-            if (Core.Optional.IsDefined(PartitionLowerBound))
+            if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
                 JsonSerializer.Serialize(writer, PartitionLowerBound);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<DataFactoryElement<string>> partitionColumnName = default;
-            Core.Optional<DataFactoryElement<string>> partitionUpperBound = default;
-            Core.Optional<DataFactoryElement<string>> partitionLowerBound = default;
+            Optional<DataFactoryElement<string>> partitionColumnName = default;
+            Optional<DataFactoryElement<string>> partitionUpperBound = default;
+            Optional<DataFactoryElement<string>> partitionLowerBound = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionColumnName"u8))

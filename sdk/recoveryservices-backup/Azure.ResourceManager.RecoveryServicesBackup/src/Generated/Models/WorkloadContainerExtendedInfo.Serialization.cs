@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadContainerExtendedInfo : Core.IUtf8JsonSerializable
+    public partial class WorkloadContainerExtendedInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HostServerName))
+            if (Optional.IsDefined(HostServerName))
             {
                 writer.WritePropertyName("hostServerName"u8);
                 writer.WriteStringValue(HostServerName);
             }
-            if (Core.Optional.IsDefined(InquiryInfo))
+            if (Optional.IsDefined(InquiryInfo))
             {
                 writer.WritePropertyName("inquiryInfo"u8);
                 writer.WriteObjectValue(InquiryInfo);
             }
-            if (Core.Optional.IsCollectionDefined(NodesList))
+            if (Optional.IsCollectionDefined(NodesList))
             {
                 writer.WritePropertyName("nodesList"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<string> hostServerName = default;
-            Core.Optional<WorkloadContainerInquiryInfo> inquiryInfo = default;
-            Core.Optional<IList<DistributedNodesInfo>> nodesList = default;
+            Optional<string> hostServerName = default;
+            Optional<WorkloadContainerInquiryInfo> inquiryInfo = default;
+            Optional<IList<DistributedNodesInfo>> nodesList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostServerName"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new WorkloadContainerExtendedInfo(hostServerName.Value, inquiryInfo.Value, Core.Optional.ToList(nodesList));
+            return new WorkloadContainerExtendedInfo(hostServerName.Value, inquiryInfo.Value, Optional.ToList(nodesList));
         }
     }
 }

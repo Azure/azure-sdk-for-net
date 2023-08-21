@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.GraphServices
 {
-    internal class GraphServicesAccountResourceOperationSource : Core.IOperationSource<GraphServicesAccountResource>
+    internal class GraphServicesAccountResourceOperationSource : IOperationSource<GraphServicesAccountResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.GraphServices
             _client = client;
         }
 
-        GraphServicesAccountResource Core.IOperationSource<GraphServicesAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        GraphServicesAccountResource IOperationSource<GraphServicesAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(document.RootElement);
             return new GraphServicesAccountResource(_client, data);
         }
 
-        async ValueTask<GraphServicesAccountResource> Core.IOperationSource<GraphServicesAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GraphServicesAccountResource> IOperationSource<GraphServicesAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(document.RootElement);

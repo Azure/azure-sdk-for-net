@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaServicesStorageAccount : Core.IUtf8JsonSerializable
+    public partial class MediaServicesStorageAccount : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(AccountType.ToString());
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
+            Optional<ResourceIdentifier> id = default;
             MediaServicesStorageAccountType type = default;
-            Core.Optional<ResourceIdentity> identity = default;
-            Core.Optional<string> status = default;
+            Optional<ResourceIdentity> identity = default;
+            Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

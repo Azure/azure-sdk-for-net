@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class SecretAuthInfo : Core.IUtf8JsonSerializable
+    public partial class SecretAuthInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 if (Name != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("name");
                 }
             }
-            if (Core.Optional.IsDefined(SecretInfo))
+            if (Optional.IsDefined(SecretInfo))
             {
                 if (SecretInfo != null)
                 {
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<SecretBaseInfo> secretInfo = default;
+            Optional<string> name = default;
+            Optional<SecretBaseInfo> secretInfo = default;
             LinkerAuthType authType = default;
             foreach (var property in element.EnumerateObject())
             {

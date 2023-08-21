@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetworkFunction
             try
             {
                 var response = await _azureTrafficCollectorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkFunctionArmOperation<AzureTrafficCollectorResource>(new AzureTrafficCollectorOperationSource(Client), _azureTrafficCollectorClientDiagnostics, Pipeline, _azureTrafficCollectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkFunctionArmOperation<AzureTrafficCollectorResource>(new AzureTrafficCollectorOperationSource(Client), _azureTrafficCollectorClientDiagnostics, Pipeline, _azureTrafficCollectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.NetworkFunction
             try
             {
                 var response = _azureTrafficCollectorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, data, cancellationToken);
-                var operation = new NetworkFunctionArmOperation<AzureTrafficCollectorResource>(new AzureTrafficCollectorOperationSource(Client), _azureTrafficCollectorClientDiagnostics, Pipeline, _azureTrafficCollectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkFunctionArmOperation<AzureTrafficCollectorResource>(new AzureTrafficCollectorOperationSource(Client), _azureTrafficCollectorClientDiagnostics, Pipeline, _azureTrafficCollectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureTrafficCollectorAzureTrafficCollectorsByResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureTrafficCollectorAzureTrafficCollectorsByResourceGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureTrafficCollectorResource(Client, AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(e)), _azureTrafficCollectorAzureTrafficCollectorsByResourceGroupClientDiagnostics, Pipeline, "AzureTrafficCollectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureTrafficCollectorResource(Client, AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(e)), _azureTrafficCollectorAzureTrafficCollectorsByResourceGroupClientDiagnostics, Pipeline, "AzureTrafficCollectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureTrafficCollectorAzureTrafficCollectorsByResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureTrafficCollectorAzureTrafficCollectorsByResourceGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureTrafficCollectorResource(Client, AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(e)), _azureTrafficCollectorAzureTrafficCollectorsByResourceGroupClientDiagnostics, Pipeline, "AzureTrafficCollectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureTrafficCollectorResource(Client, AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(e)), _azureTrafficCollectorAzureTrafficCollectorsByResourceGroupClientDiagnostics, Pipeline, "AzureTrafficCollectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

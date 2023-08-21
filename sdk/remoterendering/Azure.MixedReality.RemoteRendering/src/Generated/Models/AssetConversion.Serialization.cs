@@ -21,7 +21,7 @@ namespace Azure.MixedReality.RemoteRendering
             }
             string id = default;
             AssetConversionOptions settings = default;
-            Core.Optional<AssetConversionOutput> output = default;
+            Optional<AssetConversionOutput> output = default;
             RemoteRenderingServiceError error = default;
             AssetConversionStatus status = default;
             DateTimeOffset creationTime = default;

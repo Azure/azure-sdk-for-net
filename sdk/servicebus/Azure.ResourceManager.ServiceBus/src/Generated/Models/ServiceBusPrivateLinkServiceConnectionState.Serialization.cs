@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class ServiceBusPrivateLinkServiceConnectionState : Core.IUtf8JsonSerializable
+    public partial class ServiceBusPrivateLinkServiceConnectionState : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Core.Optional<ServiceBusPrivateLinkConnectionStatus> status = default;
-            Core.Optional<string> description = default;
+            Optional<ServiceBusPrivateLinkConnectionStatus> status = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new ServiceBusPrivateLinkServiceConnectionState(Core.Optional.ToNullable(status), description.Value);
+            return new ServiceBusPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value);
         }
     }
 }

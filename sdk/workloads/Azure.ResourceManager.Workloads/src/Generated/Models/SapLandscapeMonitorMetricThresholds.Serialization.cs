@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapLandscapeMonitorMetricThresholds : Core.IUtf8JsonSerializable
+    public partial class SapLandscapeMonitorMetricThresholds : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Green))
+            if (Optional.IsDefined(Green))
             {
                 writer.WritePropertyName("green"u8);
                 writer.WriteNumberValue(Green.Value);
             }
-            if (Core.Optional.IsDefined(Yellow))
+            if (Optional.IsDefined(Yellow))
             {
                 writer.WritePropertyName("yellow"u8);
                 writer.WriteNumberValue(Yellow.Value);
             }
-            if (Core.Optional.IsDefined(Red))
+            if (Optional.IsDefined(Red))
             {
                 writer.WritePropertyName("red"u8);
                 writer.WriteNumberValue(Red.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<float> green = default;
-            Core.Optional<float> yellow = default;
-            Core.Optional<float> red = default;
+            Optional<string> name = default;
+            Optional<float> green = default;
+            Optional<float> yellow = default;
+            Optional<float> red = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SapLandscapeMonitorMetricThresholds(name.Value, Core.Optional.ToNullable(green), Core.Optional.ToNullable(yellow), Core.Optional.ToNullable(red));
+            return new SapLandscapeMonitorMetricThresholds(name.Value, Optional.ToNullable(green), Optional.ToNullable(yellow), Optional.ToNullable(red));
         }
     }
 }

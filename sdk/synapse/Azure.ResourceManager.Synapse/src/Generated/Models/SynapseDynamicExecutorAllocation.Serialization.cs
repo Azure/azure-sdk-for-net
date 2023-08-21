@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseDynamicExecutorAllocation : Core.IUtf8JsonSerializable
+    public partial class SynapseDynamicExecutorAllocation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(MinExecutors))
+            if (Optional.IsDefined(MinExecutors))
             {
                 writer.WritePropertyName("minExecutors"u8);
                 writer.WriteNumberValue(MinExecutors.Value);
             }
-            if (Core.Optional.IsDefined(MaxExecutors))
+            if (Optional.IsDefined(MaxExecutors))
             {
                 writer.WritePropertyName("maxExecutors"u8);
                 writer.WriteNumberValue(MaxExecutors.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<int> minExecutors = default;
-            Core.Optional<int> maxExecutors = default;
+            Optional<bool> enabled = default;
+            Optional<int> minExecutors = default;
+            Optional<int> maxExecutors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseDynamicExecutorAllocation(Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(minExecutors), Core.Optional.ToNullable(maxExecutors));
+            return new SynapseDynamicExecutorAllocation(Optional.ToNullable(enabled), Optional.ToNullable(minExecutors), Optional.ToNullable(maxExecutors));
         }
     }
 }

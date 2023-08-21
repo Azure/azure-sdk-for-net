@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of SapLandscapeMonitorSidMapping. </summary>
         public SapLandscapeMonitorSidMapping()
         {
-            TopSid = new Core.ChangeTrackingList<string>();
+            TopSid = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SapLandscapeMonitorSidMapping. </summary>

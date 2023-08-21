@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of ContainerCpuUsage. </summary>
         public ContainerCpuUsage()
         {
-            PerCpuUsage = new Core.ChangeTrackingList<long>();
+            PerCpuUsage = new ChangeTrackingList<long>();
         }
 
         /// <summary> Initializes a new instance of ContainerCpuUsage. </summary>

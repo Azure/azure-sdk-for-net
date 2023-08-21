@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ScriptLogData>> value = default;
+            Optional<IReadOnlyList<ScriptLogData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ScriptLogsList(Core.Optional.ToList(value));
+            return new ScriptLogsList(Optional.ToList(value));
         }
     }
 }

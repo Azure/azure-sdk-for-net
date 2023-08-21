@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of ConnectorMappingListResult. </summary>
         internal ConnectorMappingListResult()
         {
-            Value = new Core.ChangeTrackingList<ConnectorMappingResourceFormatData>();
+            Value = new ChangeTrackingList<ConnectorMappingResourceFormatData>();
         }
 
         /// <summary> Initializes a new instance of ConnectorMappingListResult. </summary>

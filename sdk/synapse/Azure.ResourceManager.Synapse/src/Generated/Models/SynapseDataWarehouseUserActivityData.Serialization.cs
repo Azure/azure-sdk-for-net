@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseDataWarehouseUserActivityData : Core.IUtf8JsonSerializable
+    public partial class SynapseDataWarehouseUserActivityData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<int> activeQueriesCount = default;
+            Optional<SystemData> systemData = default;
+            Optional<int> activeQueriesCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseDataWarehouseUserActivityData(id, name, type, systemData.Value, Core.Optional.ToNullable(activeQueriesCount));
+            return new SynapseDataWarehouseUserActivityData(id, name, type, systemData.Value, Optional.ToNullable(activeQueriesCount));
         }
     }
 }

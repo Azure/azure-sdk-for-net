@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of CostManagementDimensionsListResult. </summary>
         internal CostManagementDimensionsListResult()
         {
-            Value = new Core.ChangeTrackingList<CostManagementDimension>();
+            Value = new ChangeTrackingList<CostManagementDimension>();
         }
 
         /// <summary> Initializes a new instance of CostManagementDimensionsListResult. </summary>

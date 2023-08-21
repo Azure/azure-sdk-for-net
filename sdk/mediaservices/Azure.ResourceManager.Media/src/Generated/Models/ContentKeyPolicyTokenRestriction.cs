@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Media.Models
             Issuer = issuer;
             Audience = audience;
             PrimaryVerificationKey = primaryVerificationKey;
-            AlternateVerificationKeys = new Core.ChangeTrackingList<ContentKeyPolicyRestrictionTokenKey>();
-            RequiredClaims = new Core.ChangeTrackingList<ContentKeyPolicyTokenClaim>();
+            AlternateVerificationKeys = new ChangeTrackingList<ContentKeyPolicyRestrictionTokenKey>();
+            RequiredClaims = new ChangeTrackingList<ContentKeyPolicyTokenClaim>();
             RestrictionTokenType = restrictionTokenType;
             OdataType = "#Microsoft.Media.ContentKeyPolicyTokenRestriction";
         }

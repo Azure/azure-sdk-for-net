@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIotHubDataConnection : Core.IUtf8JsonSerializable
+    public partial class SynapseIotHubDataConnection : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IotHubResourceId))
+            if (Optional.IsDefined(IotHubResourceId))
             {
                 writer.WritePropertyName("iotHubResourceId"u8);
                 writer.WriteStringValue(IotHubResourceId);
             }
-            if (Core.Optional.IsDefined(ConsumerGroup))
+            if (Optional.IsDefined(ConsumerGroup))
             {
                 writer.WritePropertyName("consumerGroup"u8);
                 writer.WriteStringValue(ConsumerGroup);
             }
-            if (Core.Optional.IsDefined(TableName))
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (Core.Optional.IsDefined(MappingRuleName))
+            if (Optional.IsDefined(MappingRuleName))
             {
                 writer.WritePropertyName("mappingRuleName"u8);
                 writer.WriteStringValue(MappingRuleName);
             }
-            if (Core.Optional.IsDefined(DataFormat))
+            if (Optional.IsDefined(DataFormat))
             {
                 writer.WritePropertyName("dataFormat"u8);
                 writer.WriteStringValue(DataFormat.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(EventSystemProperties))
+            if (Optional.IsCollectionDefined(EventSystemProperties))
             {
                 writer.WritePropertyName("eventSystemProperties"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SharedAccessPolicyName))
+            if (Optional.IsDefined(SharedAccessPolicyName))
             {
                 writer.WritePropertyName("sharedAccessPolicyName"u8);
                 writer.WriteStringValue(SharedAccessPolicyName);
@@ -76,20 +76,20 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             SynapseDataConnectionKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> iotHubResourceId = default;
-            Core.Optional<string> consumerGroup = default;
-            Core.Optional<string> tableName = default;
-            Core.Optional<string> mappingRuleName = default;
-            Core.Optional<SynapseIotHubDataFormat> dataFormat = default;
-            Core.Optional<IList<string>> eventSystemProperties = default;
-            Core.Optional<string> sharedAccessPolicyName = default;
-            Core.Optional<ResourceProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> iotHubResourceId = default;
+            Optional<string> consumerGroup = default;
+            Optional<string> tableName = default;
+            Optional<string> mappingRuleName = default;
+            Optional<SynapseIotHubDataFormat> dataFormat = default;
+            Optional<IList<string>> eventSystemProperties = default;
+            Optional<string> sharedAccessPolicyName = default;
+            Optional<ResourceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseIotHubDataConnection(id, name, type, systemData.Value, Core.Optional.ToNullable(location), kind, iotHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Core.Optional.ToNullable(dataFormat), Core.Optional.ToList(eventSystemProperties), sharedAccessPolicyName.Value, Core.Optional.ToNullable(provisioningState));
+            return new SynapseIotHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, iotHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToList(eventSystemProperties), sharedAccessPolicyName.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

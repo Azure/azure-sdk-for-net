@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    public partial class PrivateLinkData : Core.IUtf8JsonSerializable
+    public partial class PrivateLinkData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(RequiredZoneNames))
+            if (Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> groupId = default;
-            Core.Optional<IReadOnlyList<string>> requiredMembers = default;
-            Core.Optional<IList<string>> requiredZoneNames = default;
-            Core.Optional<GroupIdProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> groupId = default;
+            Optional<IReadOnlyList<string>> requiredMembers = default;
+            Optional<IList<string>> requiredZoneNames = default;
+            Optional<GroupIdProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     continue;
                 }
             }
-            return new PrivateLinkData(id, name, type, systemData.Value, groupId.Value, Core.Optional.ToList(requiredMembers), Core.Optional.ToList(requiredZoneNames), Core.Optional.ToNullable(provisioningState));
+            return new PrivateLinkData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToNullable(provisioningState));
         }
     }
 }

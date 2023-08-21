@@ -13,19 +13,19 @@ using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class BotProperties : Core.IUtf8JsonSerializable
+    public partial class BotProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(IconUri))
+            if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("iconUrl"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 writer.WriteNull("endpoint");
             }
-            if (Core.Optional.IsCollectionDefined(AllSettings))
+            if (Optional.IsCollectionDefined(AllSettings))
             {
                 writer.WritePropertyName("allSettings"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -61,44 +61,44 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(ManifestUri))
+            if (Optional.IsDefined(ManifestUri))
             {
                 writer.WritePropertyName("manifestUrl"u8);
                 writer.WriteStringValue(ManifestUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(MsaAppType))
+            if (Optional.IsDefined(MsaAppType))
             {
                 writer.WritePropertyName("msaAppType"u8);
                 writer.WriteStringValue(MsaAppType.Value.ToString());
             }
             writer.WritePropertyName("msaAppId"u8);
             writer.WriteStringValue(MsaAppId);
-            if (Core.Optional.IsDefined(MsaAppTenantId))
+            if (Optional.IsDefined(MsaAppTenantId))
             {
                 writer.WritePropertyName("msaAppTenantId"u8);
                 writer.WriteStringValue(MsaAppTenantId);
             }
-            if (Core.Optional.IsDefined(MsaAppMSIResourceId))
+            if (Optional.IsDefined(MsaAppMSIResourceId))
             {
                 writer.WritePropertyName("msaAppMSIResourceId"u8);
                 writer.WriteStringValue(MsaAppMSIResourceId);
             }
-            if (Core.Optional.IsDefined(DeveloperAppInsightKey))
+            if (Optional.IsDefined(DeveloperAppInsightKey))
             {
                 writer.WritePropertyName("developerAppInsightKey"u8);
                 writer.WriteStringValue(DeveloperAppInsightKey);
             }
-            if (Core.Optional.IsDefined(DeveloperAppInsightsApiKey))
+            if (Optional.IsDefined(DeveloperAppInsightsApiKey))
             {
                 writer.WritePropertyName("developerAppInsightsApiKey"u8);
                 writer.WriteStringValue(DeveloperAppInsightsApiKey);
             }
-            if (Core.Optional.IsDefined(DeveloperAppInsightsApplicationId))
+            if (Optional.IsDefined(DeveloperAppInsightsApplicationId))
             {
                 writer.WritePropertyName("developerAppInsightsApplicationId"u8);
                 writer.WriteStringValue(DeveloperAppInsightsApplicationId);
             }
-            if (Core.Optional.IsCollectionDefined(LuisAppIds))
+            if (Optional.IsCollectionDefined(LuisAppIds))
             {
                 writer.WritePropertyName("luisAppIds"u8);
                 writer.WriteStartArray();
@@ -108,42 +108,42 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(LuisKey))
+            if (Optional.IsDefined(LuisKey))
             {
                 writer.WritePropertyName("luisKey"u8);
                 writer.WriteStringValue(LuisKey);
             }
-            if (Core.Optional.IsDefined(IsCmekEnabled))
+            if (Optional.IsDefined(IsCmekEnabled))
             {
                 writer.WritePropertyName("isCmekEnabled"u8);
                 writer.WriteBooleanValue(IsCmekEnabled.Value);
             }
-            if (Core.Optional.IsDefined(CmekKeyVaultUri))
+            if (Optional.IsDefined(CmekKeyVaultUri))
             {
                 writer.WritePropertyName("cmekKeyVaultUrl"u8);
                 writer.WriteStringValue(CmekKeyVaultUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IsStreamingSupported))
+            if (Optional.IsDefined(IsStreamingSupported))
             {
                 writer.WritePropertyName("isStreamingSupported"u8);
                 writer.WriteBooleanValue(IsStreamingSupported.Value);
             }
-            if (Core.Optional.IsDefined(IsLocalAuthDisabled))
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
-            if (Core.Optional.IsDefined(SchemaTransformationVersion))
+            if (Optional.IsDefined(SchemaTransformationVersion))
             {
                 if (SchemaTransformationVersion != null)
                 {
@@ -155,22 +155,22 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("schemaTransformationVersion");
                 }
             }
-            if (Core.Optional.IsDefined(StorageResourceId))
+            if (Optional.IsDefined(StorageResourceId))
             {
                 writer.WritePropertyName("storageResourceId"u8);
                 writer.WriteStringValue(StorageResourceId);
             }
-            if (Core.Optional.IsDefined(OpenWithHint))
+            if (Optional.IsDefined(OpenWithHint))
             {
                 writer.WritePropertyName("openWithHint"u8);
                 writer.WriteStringValue(OpenWithHint);
             }
-            if (Core.Optional.IsDefined(AppPasswordHint))
+            if (Optional.IsDefined(AppPasswordHint))
             {
                 writer.WritePropertyName("appPasswordHint"u8);
                 writer.WriteStringValue(AppPasswordHint);
             }
-            if (Core.Optional.IsDefined(PublishingCredentials))
+            if (Optional.IsDefined(PublishingCredentials))
             {
                 writer.WritePropertyName("publishingCredentials"u8);
                 writer.WriteStringValue(PublishingCredentials);
@@ -185,40 +185,40 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             string displayName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<Uri> iconUrl = default;
+            Optional<string> description = default;
+            Optional<Uri> iconUrl = default;
             Uri endpoint = default;
-            Core.Optional<string> endpointVersion = default;
-            Core.Optional<IDictionary<string, string>> allSettings = default;
-            Core.Optional<IDictionary<string, string>> parameters = default;
-            Core.Optional<Uri> manifestUrl = default;
-            Core.Optional<BotMsaAppType> msaAppType = default;
+            Optional<string> endpointVersion = default;
+            Optional<IDictionary<string, string>> allSettings = default;
+            Optional<IDictionary<string, string>> parameters = default;
+            Optional<Uri> manifestUrl = default;
+            Optional<BotMsaAppType> msaAppType = default;
             string msaAppId = default;
-            Core.Optional<string> msaAppTenantId = default;
-            Core.Optional<ResourceIdentifier> msaAppMSIResourceId = default;
-            Core.Optional<IReadOnlyList<string>> configuredChannels = default;
-            Core.Optional<IReadOnlyList<string>> enabledChannels = default;
-            Core.Optional<string> developerAppInsightKey = default;
-            Core.Optional<string> developerAppInsightsApiKey = default;
-            Core.Optional<string> developerAppInsightsApplicationId = default;
-            Core.Optional<IList<string>> luisAppIds = default;
-            Core.Optional<string> luisKey = default;
-            Core.Optional<bool> isCmekEnabled = default;
-            Core.Optional<Uri> cmekKeyVaultUrl = default;
-            Core.Optional<string> cmekEncryptionStatus = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<BotServicePublicNetworkAccess> publicNetworkAccess = default;
-            Core.Optional<bool> isStreamingSupported = default;
-            Core.Optional<bool> isDeveloperAppInsightsApiKeySet = default;
-            Core.Optional<string> migrationToken = default;
-            Core.Optional<bool> disableLocalAuth = default;
-            Core.Optional<string> schemaTransformationVersion = default;
-            Core.Optional<ResourceIdentifier> storageResourceId = default;
-            Core.Optional<IReadOnlyList<BotServicePrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Core.Optional<string> openWithHint = default;
-            Core.Optional<string> appPasswordHint = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<string> publishingCredentials = default;
+            Optional<string> msaAppTenantId = default;
+            Optional<ResourceIdentifier> msaAppMSIResourceId = default;
+            Optional<IReadOnlyList<string>> configuredChannels = default;
+            Optional<IReadOnlyList<string>> enabledChannels = default;
+            Optional<string> developerAppInsightKey = default;
+            Optional<string> developerAppInsightsApiKey = default;
+            Optional<string> developerAppInsightsApplicationId = default;
+            Optional<IList<string>> luisAppIds = default;
+            Optional<string> luisKey = default;
+            Optional<bool> isCmekEnabled = default;
+            Optional<Uri> cmekKeyVaultUrl = default;
+            Optional<string> cmekEncryptionStatus = default;
+            Optional<Guid> tenantId = default;
+            Optional<BotServicePublicNetworkAccess> publicNetworkAccess = default;
+            Optional<bool> isStreamingSupported = default;
+            Optional<bool> isDeveloperAppInsightsApiKeySet = default;
+            Optional<string> migrationToken = default;
+            Optional<bool> disableLocalAuth = default;
+            Optional<string> schemaTransformationVersion = default;
+            Optional<ResourceIdentifier> storageResourceId = default;
+            Optional<IReadOnlyList<BotServicePrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<string> openWithHint = default;
+            Optional<string> appPasswordHint = default;
+            Optional<string> provisioningState = default;
+            Optional<string> publishingCredentials = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new BotProperties(displayName, description.Value, iconUrl.Value, endpoint, endpointVersion.Value, Core.Optional.ToDictionary(allSettings), Core.Optional.ToDictionary(parameters), manifestUrl.Value, Core.Optional.ToNullable(msaAppType), msaAppId, msaAppTenantId.Value, msaAppMSIResourceId.Value, Core.Optional.ToList(configuredChannels), Core.Optional.ToList(enabledChannels), developerAppInsightKey.Value, developerAppInsightsApiKey.Value, developerAppInsightsApplicationId.Value, Core.Optional.ToList(luisAppIds), luisKey.Value, Core.Optional.ToNullable(isCmekEnabled), cmekKeyVaultUrl.Value, cmekEncryptionStatus.Value, Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToNullable(isStreamingSupported), Core.Optional.ToNullable(isDeveloperAppInsightsApiKeySet), migrationToken.Value, Core.Optional.ToNullable(disableLocalAuth), schemaTransformationVersion.Value, storageResourceId.Value, Core.Optional.ToList(privateEndpointConnections), openWithHint.Value, appPasswordHint.Value, provisioningState.Value, publishingCredentials.Value);
+            return new BotProperties(displayName, description.Value, iconUrl.Value, endpoint, endpointVersion.Value, Optional.ToDictionary(allSettings), Optional.ToDictionary(parameters), manifestUrl.Value, Optional.ToNullable(msaAppType), msaAppId, msaAppTenantId.Value, msaAppMSIResourceId.Value, Optional.ToList(configuredChannels), Optional.ToList(enabledChannels), developerAppInsightKey.Value, developerAppInsightsApiKey.Value, developerAppInsightsApplicationId.Value, Optional.ToList(luisAppIds), luisKey.Value, Optional.ToNullable(isCmekEnabled), cmekKeyVaultUrl.Value, cmekEncryptionStatus.Value, Optional.ToNullable(tenantId), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(isStreamingSupported), Optional.ToNullable(isDeveloperAppInsightsApiKeySet), migrationToken.Value, Optional.ToNullable(disableLocalAuth), schemaTransformationVersion.Value, storageResourceId.Value, Optional.ToList(privateEndpointConnections), openWithHint.Value, appPasswordHint.Value, provisioningState.Value, publishingCredentials.Value);
         }
     }
 }

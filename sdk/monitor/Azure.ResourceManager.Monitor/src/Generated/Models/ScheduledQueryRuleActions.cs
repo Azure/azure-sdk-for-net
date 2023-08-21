@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of ScheduledQueryRuleActions. </summary>
         public ScheduledQueryRuleActions()
         {
-            ActionGroups = new Core.ChangeTrackingList<string>();
-            CustomProperties = new Core.ChangeTrackingDictionary<string, string>();
+            ActionGroups = new ChangeTrackingList<string>();
+            CustomProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ScheduledQueryRuleActions. </summary>

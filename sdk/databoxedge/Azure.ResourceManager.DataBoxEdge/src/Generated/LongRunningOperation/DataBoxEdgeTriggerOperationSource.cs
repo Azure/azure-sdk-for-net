@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    internal class DataBoxEdgeTriggerOperationSource : Core.IOperationSource<DataBoxEdgeTriggerResource>
+    internal class DataBoxEdgeTriggerOperationSource : IOperationSource<DataBoxEdgeTriggerResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             _client = client;
         }
 
-        DataBoxEdgeTriggerResource Core.IOperationSource<DataBoxEdgeTriggerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DataBoxEdgeTriggerResource IOperationSource<DataBoxEdgeTriggerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(document.RootElement);
             return new DataBoxEdgeTriggerResource(_client, data);
         }
 
-        async ValueTask<DataBoxEdgeTriggerResource> Core.IOperationSource<DataBoxEdgeTriggerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DataBoxEdgeTriggerResource> IOperationSource<DataBoxEdgeTriggerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(document.RootElement);

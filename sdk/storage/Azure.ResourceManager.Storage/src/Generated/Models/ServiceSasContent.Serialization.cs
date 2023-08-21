@@ -10,94 +10,94 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ServiceSasContent : Core.IUtf8JsonSerializable
+    public partial class ServiceSasContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("canonicalizedResource"u8);
             writer.WriteStringValue(CanonicalizedResource);
-            if (Core.Optional.IsDefined(Resource))
+            if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("signedResource"u8);
                 writer.WriteStringValue(Resource.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Permissions))
+            if (Optional.IsDefined(Permissions))
             {
                 writer.WritePropertyName("signedPermission"u8);
                 writer.WriteStringValue(Permissions.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IPAddressOrRange))
+            if (Optional.IsDefined(IPAddressOrRange))
             {
                 writer.WritePropertyName("signedIp"u8);
                 writer.WriteStringValue(IPAddressOrRange);
             }
-            if (Core.Optional.IsDefined(Protocols))
+            if (Optional.IsDefined(Protocols))
             {
                 writer.WritePropertyName("signedProtocol"u8);
                 writer.WriteStringValue(Protocols.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(SharedAccessStartOn))
+            if (Optional.IsDefined(SharedAccessStartOn))
             {
                 writer.WritePropertyName("signedStart"u8);
                 writer.WriteStringValue(SharedAccessStartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(SharedAccessExpiryOn))
+            if (Optional.IsDefined(SharedAccessExpiryOn))
             {
                 writer.WritePropertyName("signedExpiry"u8);
                 writer.WriteStringValue(SharedAccessExpiryOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Identifier))
+            if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("signedIdentifier"u8);
                 writer.WriteStringValue(Identifier);
             }
-            if (Core.Optional.IsDefined(PartitionKeyStart))
+            if (Optional.IsDefined(PartitionKeyStart))
             {
                 writer.WritePropertyName("startPk"u8);
                 writer.WriteStringValue(PartitionKeyStart);
             }
-            if (Core.Optional.IsDefined(PartitionKeyEnd))
+            if (Optional.IsDefined(PartitionKeyEnd))
             {
                 writer.WritePropertyName("endPk"u8);
                 writer.WriteStringValue(PartitionKeyEnd);
             }
-            if (Core.Optional.IsDefined(RowKeyStart))
+            if (Optional.IsDefined(RowKeyStart))
             {
                 writer.WritePropertyName("startRk"u8);
                 writer.WriteStringValue(RowKeyStart);
             }
-            if (Core.Optional.IsDefined(RowKeyEnd))
+            if (Optional.IsDefined(RowKeyEnd))
             {
                 writer.WritePropertyName("endRk"u8);
                 writer.WriteStringValue(RowKeyEnd);
             }
-            if (Core.Optional.IsDefined(KeyToSign))
+            if (Optional.IsDefined(KeyToSign))
             {
                 writer.WritePropertyName("keyToSign"u8);
                 writer.WriteStringValue(KeyToSign);
             }
-            if (Core.Optional.IsDefined(CacheControl))
+            if (Optional.IsDefined(CacheControl))
             {
                 writer.WritePropertyName("rscc"u8);
                 writer.WriteStringValue(CacheControl);
             }
-            if (Core.Optional.IsDefined(ContentDisposition))
+            if (Optional.IsDefined(ContentDisposition))
             {
                 writer.WritePropertyName("rscd"u8);
                 writer.WriteStringValue(ContentDisposition);
             }
-            if (Core.Optional.IsDefined(ContentEncoding))
+            if (Optional.IsDefined(ContentEncoding))
             {
                 writer.WritePropertyName("rsce"u8);
                 writer.WriteStringValue(ContentEncoding);
             }
-            if (Core.Optional.IsDefined(ContentLanguage))
+            if (Optional.IsDefined(ContentLanguage))
             {
                 writer.WritePropertyName("rscl"u8);
                 writer.WriteStringValue(ContentLanguage);
             }
-            if (Core.Optional.IsDefined(ContentType))
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("rsct"u8);
                 writer.WriteStringValue(ContentType);

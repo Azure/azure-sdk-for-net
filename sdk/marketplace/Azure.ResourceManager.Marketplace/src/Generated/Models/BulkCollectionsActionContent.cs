@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of BulkCollectionsActionContent. </summary>
         public BulkCollectionsActionContent()
         {
-            CollectionIds = new Core.ChangeTrackingList<Guid>();
+            CollectionIds = new ChangeTrackingList<Guid>();
         }
 
         /// <summary> collection ids list that the action is performed on. </summary>

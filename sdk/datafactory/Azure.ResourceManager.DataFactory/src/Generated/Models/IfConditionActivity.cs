@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(expression, nameof(expression));
 
             Expression = expression;
-            IfTrueActivities = new Core.ChangeTrackingList<PipelineActivity>();
-            IfFalseActivities = new Core.ChangeTrackingList<PipelineActivity>();
+            IfTrueActivities = new ChangeTrackingList<PipelineActivity>();
+            IfFalseActivities = new ChangeTrackingList<PipelineActivity>();
             ActivityType = "IfCondition";
         }
 

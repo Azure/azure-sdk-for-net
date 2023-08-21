@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class X509Thumbprint : Core.IUtf8JsonSerializable
+    public partial class X509Thumbprint : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrimaryThumbprint))
+            if (Optional.IsDefined(PrimaryThumbprint))
             {
                 writer.WritePropertyName("primaryThumbprint"u8);
                 writer.WriteStringValue(PrimaryThumbprint);
             }
-            if (Core.Optional.IsDefined(SecondaryThumbprint))
+            if (Optional.IsDefined(SecondaryThumbprint))
             {
                 writer.WritePropertyName("secondaryThumbprint"u8);
                 writer.WriteStringValue(SecondaryThumbprint);
@@ -34,8 +34,8 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Core.Optional<string> primaryThumbprint = default;
-            Core.Optional<string> secondaryThumbprint = default;
+            Optional<string> primaryThumbprint = default;
+            Optional<string> secondaryThumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryThumbprint"u8))

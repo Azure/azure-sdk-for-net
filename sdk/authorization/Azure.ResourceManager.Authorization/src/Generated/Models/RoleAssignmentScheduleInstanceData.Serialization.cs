@@ -24,24 +24,24 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> scope = default;
-            Core.Optional<ResourceIdentifier> roleDefinitionId = default;
-            Core.Optional<Guid> principalId = default;
-            Core.Optional<RoleManagementPrincipalType> principalType = default;
-            Core.Optional<ResourceIdentifier> roleAssignmentScheduleId = default;
-            Core.Optional<ResourceIdentifier> originRoleAssignmentId = default;
-            Core.Optional<RoleManagementScheduleStatus> status = default;
-            Core.Optional<DateTimeOffset> startDateTime = default;
-            Core.Optional<DateTimeOffset> endDateTime = default;
-            Core.Optional<ResourceIdentifier> linkedRoleEligibilityScheduleId = default;
-            Core.Optional<ResourceIdentifier> linkedRoleEligibilityScheduleInstanceId = default;
-            Core.Optional<RoleAssignmentScheduleAssignmentType> assignmentType = default;
-            Core.Optional<RoleManagementScheduleMemberType> memberType = default;
-            Core.Optional<string> condition = default;
-            Core.Optional<string> conditionVersion = default;
-            Core.Optional<DateTimeOffset> createdOn = default;
-            Core.Optional<RoleManagementExpandedProperties> expandedProperties = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> scope = default;
+            Optional<ResourceIdentifier> roleDefinitionId = default;
+            Optional<Guid> principalId = default;
+            Optional<RoleManagementPrincipalType> principalType = default;
+            Optional<ResourceIdentifier> roleAssignmentScheduleId = default;
+            Optional<ResourceIdentifier> originRoleAssignmentId = default;
+            Optional<RoleManagementScheduleStatus> status = default;
+            Optional<DateTimeOffset> startDateTime = default;
+            Optional<DateTimeOffset> endDateTime = default;
+            Optional<ResourceIdentifier> linkedRoleEligibilityScheduleId = default;
+            Optional<ResourceIdentifier> linkedRoleEligibilityScheduleInstanceId = default;
+            Optional<RoleAssignmentScheduleAssignmentType> assignmentType = default;
+            Optional<RoleManagementScheduleMemberType> memberType = default;
+            Optional<string> condition = default;
+            Optional<string> conditionVersion = default;
+            Optional<DateTimeOffset> createdOn = default;
+            Optional<RoleManagementExpandedProperties> expandedProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Authorization
                     continue;
                 }
             }
-            return new RoleAssignmentScheduleInstanceData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Core.Optional.ToNullable(principalId), Core.Optional.ToNullable(principalType), roleAssignmentScheduleId.Value, originRoleAssignmentId.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(startDateTime), Core.Optional.ToNullable(endDateTime), linkedRoleEligibilityScheduleId.Value, linkedRoleEligibilityScheduleInstanceId.Value, Core.Optional.ToNullable(assignmentType), Core.Optional.ToNullable(memberType), condition.Value, conditionVersion.Value, Core.Optional.ToNullable(createdOn), expandedProperties.Value);
+            return new RoleAssignmentScheduleInstanceData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), roleAssignmentScheduleId.Value, originRoleAssignmentId.Value, Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), linkedRoleEligibilityScheduleId.Value, linkedRoleEligibilityScheduleInstanceId.Value, Optional.ToNullable(assignmentType), Optional.ToNullable(memberType), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), expandedProperties.Value);
         }
     }
 }

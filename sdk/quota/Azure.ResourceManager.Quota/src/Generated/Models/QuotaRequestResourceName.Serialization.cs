@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    public partial class QuotaRequestResourceName : Core.IUtf8JsonSerializable
+    public partial class QuotaRequestResourceName : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Core.Optional<string> value = default;
-            Core.Optional<string> localizedValue = default;
+            Optional<string> value = default;
+            Optional<string> localizedValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))

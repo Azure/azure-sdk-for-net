@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmBackupContent : Core.IUtf8JsonSerializable
+    public partial class IaasVmBackupContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RecoveryPointExpireOn))
+            if (Optional.IsDefined(RecoveryPointExpireOn))
             {
                 writer.WritePropertyName("recoveryPointExpiryTimeInUTC"u8);
                 writer.WriteStringValue(RecoveryPointExpireOn.Value, "O");
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> recoveryPointExpiryTimeInUTC = default;
+            Optional<DateTimeOffset> recoveryPointExpiryTimeInUTC = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new IaasVmBackupContent(objectType, Core.Optional.ToNullable(recoveryPointExpiryTimeInUTC));
+            return new IaasVmBackupContent(objectType, Optional.ToNullable(recoveryPointExpiryTimeInUTC));
         }
     }
 }

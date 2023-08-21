@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightDiskEncryptionProperties : Core.IUtf8JsonSerializable
+    public partial class HDInsightDiskEncryptionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VaultUri))
+            if (Optional.IsDefined(VaultUri))
             {
                 writer.WritePropertyName("vaultUri"u8);
                 writer.WriteStringValue(VaultUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(KeyName))
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (Core.Optional.IsDefined(KeyVersion))
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (Core.Optional.IsDefined(EncryptionAlgorithm))
+            if (Optional.IsDefined(EncryptionAlgorithm))
             {
                 if (EncryptionAlgorithm != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     writer.WriteNull("encryptionAlgorithm");
                 }
             }
-            if (Core.Optional.IsDefined(MsiResourceId))
+            if (Optional.IsDefined(MsiResourceId))
             {
                 if (MsiResourceId != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     writer.WriteNull("msiResourceId");
                 }
             }
-            if (Core.Optional.IsDefined(IsEncryptionAtHostEnabled))
+            if (Optional.IsDefined(IsEncryptionAtHostEnabled))
             {
                 writer.WritePropertyName("encryptionAtHost"u8);
                 writer.WriteBooleanValue(IsEncryptionAtHostEnabled.Value);
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<Uri> vaultUri = default;
-            Core.Optional<string> keyName = default;
-            Core.Optional<string> keyVersion = default;
-            Core.Optional<JsonWebKeyEncryptionAlgorithm?> encryptionAlgorithm = default;
-            Core.Optional<ResourceIdentifier> msiResourceId = default;
-            Core.Optional<bool> encryptionAtHost = default;
+            Optional<Uri> vaultUri = default;
+            Optional<string> keyName = default;
+            Optional<string> keyVersion = default;
+            Optional<JsonWebKeyEncryptionAlgorithm?> encryptionAlgorithm = default;
+            Optional<ResourceIdentifier> msiResourceId = default;
+            Optional<bool> encryptionAtHost = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vaultUri"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightDiskEncryptionProperties(vaultUri.Value, keyName.Value, keyVersion.Value, Core.Optional.ToNullable(encryptionAlgorithm), msiResourceId.Value, Core.Optional.ToNullable(encryptionAtHost));
+            return new HDInsightDiskEncryptionProperties(vaultUri.Value, keyName.Value, keyVersion.Value, Optional.ToNullable(encryptionAlgorithm), msiResourceId.Value, Optional.ToNullable(encryptionAtHost));
         }
     }
 }

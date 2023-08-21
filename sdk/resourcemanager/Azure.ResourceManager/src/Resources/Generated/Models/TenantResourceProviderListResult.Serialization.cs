@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<TenantResourceProvider>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<TenantResourceProvider>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new TenantResourceProviderListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new TenantResourceProviderListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    internal partial class AvailabilityGroupConfiguration : Core.IUtf8JsonSerializable
+    internal partial class AvailabilityGroupConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Replicas))
+            if (Optional.IsCollectionDefined(Replicas))
             {
                 writer.WritePropertyName("replicas"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Core.Optional<IList<AvailabilityGroupReplica>> replicas = default;
+            Optional<IList<AvailabilityGroupReplica>> replicas = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replicas"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new AvailabilityGroupConfiguration(Core.Optional.ToList(replicas));
+            return new AvailabilityGroupConfiguration(Optional.ToList(replicas));
         }
     }
 }

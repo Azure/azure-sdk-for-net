@@ -10,31 +10,31 @@ using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class PageViewData : Core.IUtf8JsonSerializable
+    internal partial class PageViewData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Url))
+            if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url);
             }
-            if (Core.Optional.IsDefined(Duration))
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration);
             }
-            if (Core.Optional.IsDefined(ReferredUri))
+            if (Optional.IsDefined(ReferredUri))
             {
                 writer.WritePropertyName("referredUri"u8);
                 writer.WriteStringValue(ReferredUri);
             }
-            if (Core.Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Measurements))
+            if (Optional.IsCollectionDefined(Measurements))
             {
                 writer.WritePropertyName("measurements"u8);
                 writer.WriteStartObject();

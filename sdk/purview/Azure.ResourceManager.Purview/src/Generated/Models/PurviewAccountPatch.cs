@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> Initializes a new instance of PurviewAccountPatch. </summary>
         public PurviewAccountPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Identity related info to add/remove userAssignedIdentities. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>

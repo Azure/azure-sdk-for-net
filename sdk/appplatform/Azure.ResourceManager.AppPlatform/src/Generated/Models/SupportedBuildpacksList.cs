@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of SupportedBuildpacksList. </summary>
         internal SupportedBuildpacksList()
         {
-            Value = new Core.ChangeTrackingList<AppPlatformSupportedBuildpackData>();
+            Value = new ChangeTrackingList<AppPlatformSupportedBuildpackData>();
         }
 
         /// <summary> Initializes a new instance of SupportedBuildpacksList. </summary>

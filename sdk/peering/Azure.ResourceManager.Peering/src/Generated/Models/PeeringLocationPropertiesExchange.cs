@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of PeeringLocationPropertiesExchange. </summary>
         public PeeringLocationPropertiesExchange()
         {
-            PeeringFacilities = new Core.ChangeTrackingList<ExchangePeeringFacility>();
+            PeeringFacilities = new ChangeTrackingList<ExchangePeeringFacility>();
         }
 
         /// <summary> Initializes a new instance of PeeringLocationPropertiesExchange. </summary>

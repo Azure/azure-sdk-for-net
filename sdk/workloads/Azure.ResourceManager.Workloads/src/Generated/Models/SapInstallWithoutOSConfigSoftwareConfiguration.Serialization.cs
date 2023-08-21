@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapInstallWithoutOSConfigSoftwareConfiguration : Core.IUtf8JsonSerializable
+    public partial class SapInstallWithoutOSConfigSoftwareConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("bomUrl"u8);
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStringValue(SapBitsStorageAccountId);
             writer.WritePropertyName("softwareVersion"u8);
             writer.WriteStringValue(SoftwareVersion);
-            if (Core.Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
+            if (Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
             {
                 writer.WritePropertyName("highAvailabilitySoftwareConfiguration"u8);
                 writer.WriteObjectValue(HighAvailabilitySoftwareConfiguration);
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Uri bomUrl = default;
             string sapBitsStorageAccountId = default;
             string softwareVersion = default;
-            Core.Optional<HighAvailabilitySoftwareConfiguration> highAvailabilitySoftwareConfiguration = default;
+            Optional<HighAvailabilitySoftwareConfiguration> highAvailabilitySoftwareConfiguration = default;
             SapSoftwareInstallationType softwareInstallationType = default;
             foreach (var property in element.EnumerateObject())
             {

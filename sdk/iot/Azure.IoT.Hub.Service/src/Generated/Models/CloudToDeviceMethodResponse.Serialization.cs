@@ -18,8 +18,8 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Core.Optional<int> status = default;
-            Core.Optional<object> payload = default;
+            Optional<int> status = default;
+            Optional<object> payload = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -41,7 +41,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new CloudToDeviceMethodResponse(Core.Optional.ToNullable(status), payload.Value);
+            return new CloudToDeviceMethodResponse(Optional.ToNullable(status), payload.Value);
         }
     }
 }

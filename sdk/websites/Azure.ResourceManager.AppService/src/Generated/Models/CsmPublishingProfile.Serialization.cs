@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class CsmPublishingProfile : Core.IUtf8JsonSerializable
+    public partial class CsmPublishingProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Format))
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IsIncludeDisasterRecoveryEndpoints))
+            if (Optional.IsDefined(IsIncludeDisasterRecoveryEndpoints))
             {
                 writer.WritePropertyName("includeDisasterRecoveryEndpoints"u8);
                 writer.WriteBooleanValue(IsIncludeDisasterRecoveryEndpoints.Value);

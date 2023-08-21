@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of BenefitRecommendationsListResult. </summary>
         internal BenefitRecommendationsListResult()
         {
-            Value = new Core.ChangeTrackingList<BenefitRecommendationModel>();
+            Value = new ChangeTrackingList<BenefitRecommendationModel>();
         }
 
         /// <summary> Initializes a new instance of BenefitRecommendationsListResult. </summary>

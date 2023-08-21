@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrationValidationOptions : Core.IUtf8JsonSerializable
+    public partial class MigrationValidationOptions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EnableSchemaValidation))
+            if (Optional.IsDefined(EnableSchemaValidation))
             {
                 writer.WritePropertyName("enableSchemaValidation"u8);
                 writer.WriteBooleanValue(EnableSchemaValidation.Value);
             }
-            if (Core.Optional.IsDefined(EnableDataIntegrityValidation))
+            if (Optional.IsDefined(EnableDataIntegrityValidation))
             {
                 writer.WritePropertyName("enableDataIntegrityValidation"u8);
                 writer.WriteBooleanValue(EnableDataIntegrityValidation.Value);
             }
-            if (Core.Optional.IsDefined(EnableQueryAnalysisValidation))
+            if (Optional.IsDefined(EnableQueryAnalysisValidation))
             {
                 writer.WritePropertyName("enableQueryAnalysisValidation"u8);
                 writer.WriteBooleanValue(EnableQueryAnalysisValidation.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<bool> enableSchemaValidation = default;
-            Core.Optional<bool> enableDataIntegrityValidation = default;
-            Core.Optional<bool> enableQueryAnalysisValidation = default;
+            Optional<bool> enableSchemaValidation = default;
+            Optional<bool> enableDataIntegrityValidation = default;
+            Optional<bool> enableQueryAnalysisValidation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableSchemaValidation"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrationValidationOptions(Core.Optional.ToNullable(enableSchemaValidation), Core.Optional.ToNullable(enableDataIntegrityValidation), Core.Optional.ToNullable(enableQueryAnalysisValidation));
+            return new MigrationValidationOptions(Optional.ToNullable(enableSchemaValidation), Optional.ToNullable(enableDataIntegrityValidation), Optional.ToNullable(enableQueryAnalysisValidation));
         }
     }
 }

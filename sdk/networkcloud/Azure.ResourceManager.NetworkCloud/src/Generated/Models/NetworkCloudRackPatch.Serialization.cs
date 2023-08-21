@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class NetworkCloudRackPatch : Core.IUtf8JsonSerializable
+    public partial class NetworkCloudRackPatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RackLocation))
+            if (Optional.IsDefined(RackLocation))
             {
                 writer.WritePropertyName("rackLocation"u8);
                 writer.WriteStringValue(RackLocation);
             }
-            if (Core.Optional.IsDefined(RackSerialNumber))
+            if (Optional.IsDefined(RackSerialNumber))
             {
                 writer.WritePropertyName("rackSerialNumber"u8);
                 writer.WriteStringValue(RackSerialNumber);

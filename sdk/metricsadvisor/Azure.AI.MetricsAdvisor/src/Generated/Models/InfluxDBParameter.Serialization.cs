@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class InfluxDBParameter : Core.IUtf8JsonSerializable
+    internal partial class InfluxDBParameter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ConnectionString))
+            if (Optional.IsDefined(ConnectionString))
             {
                 if (ConnectionString != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("connectionString");
                 }
             }
-            if (Core.Optional.IsDefined(Database))
+            if (Optional.IsDefined(Database))
             {
                 if (Database != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("database");
                 }
             }
-            if (Core.Optional.IsDefined(UserName))
+            if (Optional.IsDefined(UserName))
             {
                 if (UserName != null)
                 {
@@ -51,7 +51,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("userName");
                 }
             }
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 if (Password != null)
                 {
@@ -81,10 +81,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Core.Optional<string> connectionString = default;
-            Core.Optional<string> database = default;
-            Core.Optional<string> userName = default;
-            Core.Optional<string> password = default;
+            Optional<string> connectionString = default;
+            Optional<string> database = default;
+            Optional<string> userName = default;
+            Optional<string> password = default;
             string query = default;
             foreach (var property in element.EnumerateObject())
             {

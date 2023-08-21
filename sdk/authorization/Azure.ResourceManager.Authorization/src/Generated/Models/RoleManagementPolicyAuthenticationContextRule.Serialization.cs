@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementPolicyAuthenticationContextRule : Core.IUtf8JsonSerializable
+    public partial class RoleManagementPolicyAuthenticationContextRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(ClaimValue))
+            if (Optional.IsDefined(ClaimValue))
             {
                 writer.WritePropertyName("claimValue"u8);
                 writer.WriteStringValue(ClaimValue);
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Core.Optional.IsDefined(Target))
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Core.Optional<bool> isEnabled = default;
-            Core.Optional<string> claimValue = default;
-            Core.Optional<string> id = default;
+            Optional<bool> isEnabled = default;
+            Optional<string> claimValue = default;
+            Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
-            Core.Optional<RoleManagementPolicyRuleTarget> target = default;
+            Optional<RoleManagementPolicyRuleTarget> target = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isEnabled"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleManagementPolicyAuthenticationContextRule(id.Value, ruleType, target.Value, Core.Optional.ToNullable(isEnabled), claimValue.Value);
+            return new RoleManagementPolicyAuthenticationContextRule(id.Value, ruleType, target.Value, Optional.ToNullable(isEnabled), claimValue.Value);
         }
     }
 }

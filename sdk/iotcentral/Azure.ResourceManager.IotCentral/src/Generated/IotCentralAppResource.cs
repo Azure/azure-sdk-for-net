@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.IotCentral
             try
             {
                 var response = await _iotCentralAppAppsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new IotCentralArmOperation(_iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new IotCentralArmOperation(_iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.IotCentral
             try
             {
                 var response = _iotCentralAppAppsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new IotCentralArmOperation(_iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new IotCentralArmOperation(_iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.IotCentral
             try
             {
                 var response = await _iotCentralAppAppsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new IotCentralArmOperation(_iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new IotCentralArmOperation(_iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.IotCentral
             try
             {
                 var response = _iotCentralAppAppsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new IotCentralArmOperation(_iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new IotCentralArmOperation(_iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

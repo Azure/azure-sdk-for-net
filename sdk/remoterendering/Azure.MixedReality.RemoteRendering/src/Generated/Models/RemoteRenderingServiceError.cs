@@ -25,7 +25,7 @@ namespace Azure.MixedReality.RemoteRendering
 
             Code = code;
             Message = message;
-            Details = new Core.ChangeTrackingList<RemoteRenderingServiceError>();
+            Details = new ChangeTrackingList<RemoteRenderingServiceError>();
         }
 
         /// <summary> Initializes a new instance of RemoteRenderingServiceError. </summary>

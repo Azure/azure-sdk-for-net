@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<long> id = default;
-            Core.Optional<string> environmentFolderName = default;
-            Core.Optional<string> environmentName = default;
-            Core.Optional<string> referenceType = default;
+            Optional<long> id = default;
+            Optional<string> environmentFolderName = default;
+            Optional<string> environmentName = default;
+            Optional<string> referenceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new SsisEnvironmentReference(Core.Optional.ToNullable(id), environmentFolderName.Value, environmentName.Value, referenceType.Value);
+            return new SsisEnvironmentReference(Optional.ToNullable(id), environmentFolderName.Value, environmentName.Value, referenceType.Value);
         }
     }
 }

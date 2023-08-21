@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<BackupProtectionStatus> protectionStatus = default;
-            Core.Optional<ResourceIdentifier> vaultId = default;
-            Core.Optional<BackupFabricName> fabricName = default;
-            Core.Optional<string> containerName = default;
-            Core.Optional<string> protectedItemName = default;
-            Core.Optional<string> errorCode = default;
-            Core.Optional<string> errorMessage = default;
-            Core.Optional<string> policyName = default;
-            Core.Optional<string> registrationStatus = default;
+            Optional<BackupProtectionStatus> protectionStatus = default;
+            Optional<ResourceIdentifier> vaultId = default;
+            Optional<BackupFabricName> fabricName = default;
+            Optional<string> containerName = default;
+            Optional<string> protectedItemName = default;
+            Optional<string> errorCode = default;
+            Optional<string> errorMessage = default;
+            Optional<string> policyName = default;
+            Optional<string> registrationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectionStatus"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new BackupStatusResult(Core.Optional.ToNullable(protectionStatus), vaultId.Value, Core.Optional.ToNullable(fabricName), containerName.Value, protectedItemName.Value, errorCode.Value, errorMessage.Value, policyName.Value, registrationStatus.Value);
+            return new BackupStatusResult(Optional.ToNullable(protectionStatus), vaultId.Value, Optional.ToNullable(fabricName), containerName.Value, protectedItemName.Value, errorCode.Value, errorMessage.Value, policyName.Value, registrationStatus.Value);
         }
     }
 }

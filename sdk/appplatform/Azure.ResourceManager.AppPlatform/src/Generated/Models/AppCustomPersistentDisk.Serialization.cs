@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppCustomPersistentDisk : Core.IUtf8JsonSerializable
+    public partial class AppCustomPersistentDisk : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CustomPersistentDiskProperties))
+            if (Optional.IsDefined(CustomPersistentDiskProperties))
             {
                 writer.WritePropertyName("customPersistentDiskProperties"u8);
                 writer.WriteObjectValue(CustomPersistentDiskProperties);
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<AppCustomPersistentDiskProperties> customPersistentDiskProperties = default;
+            Optional<AppCustomPersistentDiskProperties> customPersistentDiskProperties = default;
             string storageId = default;
             foreach (var property in element.EnumerateObject())
             {

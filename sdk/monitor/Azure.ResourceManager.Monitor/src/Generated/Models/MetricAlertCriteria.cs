@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MetricAlertCriteria. </summary>
         public MetricAlertCriteria()
         {
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of MetricAlertCriteria. </summary>

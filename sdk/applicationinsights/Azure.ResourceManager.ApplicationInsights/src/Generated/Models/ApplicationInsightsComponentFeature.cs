@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of ApplicationInsightsComponentFeature. </summary>
         internal ApplicationInsightsComponentFeature()
         {
-            Capabilities = new Core.ChangeTrackingList<ApplicationInsightsComponentFeatureCapability>();
+            Capabilities = new ChangeTrackingList<ApplicationInsightsComponentFeatureCapability>();
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsComponentFeature. </summary>

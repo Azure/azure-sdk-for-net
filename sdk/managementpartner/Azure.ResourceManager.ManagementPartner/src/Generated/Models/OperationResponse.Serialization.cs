@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<OperationDisplay> display = default;
-            Core.Optional<string> origin = default;
+            Optional<string> name = default;
+            Optional<OperationDisplay> display = default;
+            Optional<string> origin = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

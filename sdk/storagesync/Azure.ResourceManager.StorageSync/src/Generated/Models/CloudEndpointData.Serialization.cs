@@ -13,49 +13,49 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    public partial class CloudEndpointData : Core.IUtf8JsonSerializable
+    public partial class CloudEndpointData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StorageAccountResourceId))
+            if (Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (Core.Optional.IsDefined(AzureFileShareName))
+            if (Optional.IsDefined(AzureFileShareName))
             {
                 writer.WritePropertyName("azureFileShareName"u8);
                 writer.WriteStringValue(AzureFileShareName);
             }
-            if (Core.Optional.IsDefined(StorageAccountTenantId))
+            if (Optional.IsDefined(StorageAccountTenantId))
             {
                 writer.WritePropertyName("storageAccountTenantId"u8);
                 writer.WriteStringValue(StorageAccountTenantId.Value);
             }
-            if (Core.Optional.IsDefined(PartnershipId))
+            if (Optional.IsDefined(PartnershipId))
             {
                 writer.WritePropertyName("partnershipId"u8);
                 writer.WriteStringValue(PartnershipId);
             }
-            if (Core.Optional.IsDefined(FriendlyName))
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Core.Optional.IsDefined(LastWorkflowId))
+            if (Optional.IsDefined(LastWorkflowId))
             {
                 writer.WritePropertyName("lastWorkflowId"u8);
                 writer.WriteStringValue(LastWorkflowId);
             }
-            if (Core.Optional.IsDefined(LastOperationName))
+            if (Optional.IsDefined(LastOperationName))
             {
                 writer.WritePropertyName("lastOperationName"u8);
                 writer.WriteStringValue(LastOperationName);
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.StorageSync
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Core.Optional<string> azureFileShareName = default;
-            Core.Optional<Guid> storageAccountTenantId = default;
-            Core.Optional<string> partnershipId = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<string> backupEnabled = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<string> lastWorkflowId = default;
-            Core.Optional<string> lastOperationName = default;
-            Core.Optional<CloudEndpointChangeEnumerationStatus> changeEnumerationStatus = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> storageAccountResourceId = default;
+            Optional<string> azureFileShareName = default;
+            Optional<Guid> storageAccountTenantId = default;
+            Optional<string> partnershipId = default;
+            Optional<string> friendlyName = default;
+            Optional<string> backupEnabled = default;
+            Optional<string> provisioningState = default;
+            Optional<string> lastWorkflowId = default;
+            Optional<string> lastOperationName = default;
+            Optional<CloudEndpointChangeEnumerationStatus> changeEnumerationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.StorageSync
                     continue;
                 }
             }
-            return new CloudEndpointData(id, name, type, systemData.Value, storageAccountResourceId.Value, azureFileShareName.Value, Core.Optional.ToNullable(storageAccountTenantId), partnershipId.Value, friendlyName.Value, backupEnabled.Value, provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, changeEnumerationStatus.Value);
+            return new CloudEndpointData(id, name, type, systemData.Value, storageAccountResourceId.Value, azureFileShareName.Value, Optional.ToNullable(storageAccountTenantId), partnershipId.Value, friendlyName.Value, backupEnabled.Value, provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, changeEnumerationStatus.Value);
         }
     }
 }

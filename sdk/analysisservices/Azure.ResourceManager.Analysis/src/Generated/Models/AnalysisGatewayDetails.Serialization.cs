@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    public partial class AnalysisGatewayDetails : Core.IUtf8JsonSerializable
+    public partial class AnalysisGatewayDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(GatewayResourceId))
+            if (Optional.IsDefined(GatewayResourceId))
             {
                 writer.WritePropertyName("gatewayResourceId"u8);
                 writer.WriteStringValue(GatewayResourceId);
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 return null;
             }
-            Core.Optional<string> gatewayResourceId = default;
-            Core.Optional<string> gatewayObjectId = default;
-            Core.Optional<Uri> dmtsClusterUri = default;
+            Optional<string> gatewayResourceId = default;
+            Optional<string> gatewayObjectId = default;
+            Optional<Uri> dmtsClusterUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("gatewayResourceId"u8))

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    internal partial class FileDestination : Core.IUtf8JsonSerializable
+    internal partial class FileDestination : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(FileFormats))
+            if (Optional.IsCollectionDefined(FileFormats))
             {
                 writer.WritePropertyName("fileFormats"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<IList<ScheduledActionFileFormat>> fileFormats = default;
+            Optional<IList<ScheduledActionFileFormat>> fileFormats = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileFormats"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new FileDestination(Core.Optional.ToList(fileFormats));
+            return new FileDestination(Optional.ToList(fileFormats));
         }
     }
 }

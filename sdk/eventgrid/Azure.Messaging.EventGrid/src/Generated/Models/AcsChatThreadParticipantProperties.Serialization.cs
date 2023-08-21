@@ -18,8 +18,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<string> displayName = default;
-            Core.Optional<CommunicationIdentifierModel> participantCommunicationIdentifier = default;
+            Optional<string> displayName = default;
+            Optional<CommunicationIdentifierModel> participantCommunicationIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))

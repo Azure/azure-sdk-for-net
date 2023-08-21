@@ -20,8 +20,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Core.Optional<string> nextLink = default;
-            Core.Optional<IReadOnlyList<MetricFeedback>> value = default;
+            Optional<string> nextLink = default;
+            Optional<IReadOnlyList<MetricFeedback>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@nextLink"u8))
@@ -44,7 +44,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricFeedbackList(nextLink.Value, Core.Optional.ToList(value));
+            return new MetricFeedbackList(nextLink.Value, Optional.ToList(value));
         }
     }
 }

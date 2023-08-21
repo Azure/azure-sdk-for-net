@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AgFoodPlatform
 {
-    public partial class FarmBeatData : Core.IUtf8JsonSerializable
+    public partial class FarmBeatData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.AgFoodPlatform
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SensorIntegration))
+            if (Optional.IsDefined(SensorIntegration))
             {
                 writer.WritePropertyName("sensorIntegration"u8);
                 writer.WriteObjectValue(SensorIntegration);
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -59,18 +59,18 @@ namespace Azure.ResourceManager.AgFoodPlatform
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Uri> instanceUri = default;
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<SensorIntegration> sensorIntegration = default;
-            Core.Optional<PublicNetworkAccess> publicNetworkAccess = default;
-            Core.Optional<AgFoodPlatformPrivateEndpointConnectionData> privateEndpointConnections = default;
+            Optional<SystemData> systemData = default;
+            Optional<Uri> instanceUri = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<SensorIntegration> sensorIntegration = default;
+            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<AgFoodPlatformPrivateEndpointConnectionData> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                     continue;
                 }
             }
-            return new FarmBeatData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, instanceUri.Value, Core.Optional.ToNullable(provisioningState), sensorIntegration.Value, Core.Optional.ToNullable(publicNetworkAccess), privateEndpointConnections.Value);
+            return new FarmBeatData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, instanceUri.Value, Optional.ToNullable(provisioningState), sensorIntegration.Value, Optional.ToNullable(publicNetworkAccess), privateEndpointConnections.Value);
         }
     }
 }

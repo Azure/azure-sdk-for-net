@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsMailMessageEntity. </summary>
         public SecurityInsightsMailMessageEntity()
         {
-            AdditionalData = new Core.ChangeTrackingDictionary<string, BinaryData>();
-            FileEntityIds = new Core.ChangeTrackingList<string>();
-            Uris = new Core.ChangeTrackingList<Uri>();
-            Threats = new Core.ChangeTrackingList<string>();
-            ThreatDetectionMethods = new Core.ChangeTrackingList<string>();
+            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
+            FileEntityIds = new ChangeTrackingList<string>();
+            Uris = new ChangeTrackingList<Uri>();
+            Threats = new ChangeTrackingList<string>();
+            ThreatDetectionMethods = new ChangeTrackingList<string>();
             Kind = SecurityInsightsEntityKind.MailMessage;
         }
 

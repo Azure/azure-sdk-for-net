@@ -26,8 +26,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Method = method;
             Url = url;
-            Datasets = new Core.ChangeTrackingList<DatasetReference>();
-            LinkedServices = new Core.ChangeTrackingList<LinkedServiceReference>();
+            Datasets = new ChangeTrackingList<DatasetReference>();
+            LinkedServices = new ChangeTrackingList<LinkedServiceReference>();
             Type = "WebActivity";
         }
 

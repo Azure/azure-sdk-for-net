@@ -13,27 +13,27 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MongoDBCursorMethodsProperties : Core.IUtf8JsonSerializable
+    public partial class MongoDBCursorMethodsProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Project))
+            if (Optional.IsDefined(Project))
             {
                 writer.WritePropertyName("project"u8);
                 JsonSerializer.Serialize(writer, Project);
             }
-            if (Core.Optional.IsDefined(Sort))
+            if (Optional.IsDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
                 JsonSerializer.Serialize(writer, Sort);
             }
-            if (Core.Optional.IsDefined(Skip))
+            if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("skip"u8);
                 JsonSerializer.Serialize(writer, Skip);
             }
-            if (Core.Optional.IsDefined(Limit))
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 JsonSerializer.Serialize(writer, Limit);
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<DataFactoryElement<string>> project = default;
-            Core.Optional<DataFactoryElement<string>> sort = default;
-            Core.Optional<DataFactoryElement<int>> skip = default;
-            Core.Optional<DataFactoryElement<int>> limit = default;
+            Optional<DataFactoryElement<string>> project = default;
+            Optional<DataFactoryElement<string>> sort = default;
+            Optional<DataFactoryElement<int>> skip = default;
+            Optional<DataFactoryElement<int>> limit = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

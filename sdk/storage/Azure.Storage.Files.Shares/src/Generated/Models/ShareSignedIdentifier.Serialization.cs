@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareSignedIdentifier : Core.IXmlSerializable
+    public partial class ShareSignedIdentifier : IXmlSerializable
     {
-        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "SignedIdentifier");
             writer.WriteStartElement("Id");
             writer.WriteValue(Id);
             writer.WriteEndElement();
-            if (Core.Optional.IsDefined(AccessPolicy))
+            if (Optional.IsDefined(AccessPolicy))
             {
                 writer.WriteObjectValue(AccessPolicy, "AccessPolicy");
             }

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<StopSellNotifications>> stopSellNotifications = default;
-            Core.Optional<IReadOnlyList<NewPlanNotification>> newNotifications = default;
-            Core.Optional<IReadOnlyList<RequestApprovalsDetails>> approvalRequests = default;
+            Optional<IReadOnlyList<StopSellNotifications>> stopSellNotifications = default;
+            Optional<IReadOnlyList<NewPlanNotification>> newNotifications = default;
+            Optional<IReadOnlyList<RequestApprovalsDetails>> approvalRequests = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stopSellNotifications"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new PrivateStoreNotificationsState(Core.Optional.ToList(stopSellNotifications), Core.Optional.ToList(newNotifications), Core.Optional.ToList(approvalRequests));
+            return new PrivateStoreNotificationsState(Optional.ToList(stopSellNotifications), Optional.ToList(newNotifications), Optional.ToList(approvalRequests));
         }
     }
 }

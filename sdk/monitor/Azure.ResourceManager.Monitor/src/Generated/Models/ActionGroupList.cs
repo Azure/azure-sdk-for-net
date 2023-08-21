@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of ActionGroupList. </summary>
         internal ActionGroupList()
         {
-            Value = new Core.ChangeTrackingList<ActionGroupData>();
+            Value = new ChangeTrackingList<ActionGroupData>();
         }
 
         /// <summary> Initializes a new instance of ActionGroupList. </summary>

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string name = default;
             string type = default;
-            Core.Optional<string> defaultValue = default;
-            Core.Optional<bool> required = default;
+            Optional<string> defaultValue = default;
+            Optional<bool> required = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RunCommandParameterDefinition(name, type, defaultValue.Value, Core.Optional.ToNullable(required));
+            return new RunCommandParameterDefinition(name, type, defaultValue.Value, Optional.ToNullable(required));
         }
     }
 }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformGatewayApiRoute. </summary>
         public AppPlatformGatewayApiRoute()
         {
-            Predicates = new Core.ChangeTrackingList<string>();
-            Filters = new Core.ChangeTrackingList<string>();
-            Tags = new Core.ChangeTrackingList<string>();
+            Predicates = new ChangeTrackingList<string>();
+            Filters = new ChangeTrackingList<string>();
+            Tags = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformGatewayApiRoute. </summary>

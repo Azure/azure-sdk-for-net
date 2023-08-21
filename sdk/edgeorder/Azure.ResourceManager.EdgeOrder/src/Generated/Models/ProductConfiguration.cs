@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of ProductConfiguration. </summary>
         internal ProductConfiguration()
         {
-            ImageInformation = new Core.ChangeTrackingList<EdgeOrderProductImageInformation>();
-            FilterableProperties = new Core.ChangeTrackingList<FilterableProperty>();
-            Specifications = new Core.ChangeTrackingList<ProductSpecification>();
+            ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
+            FilterableProperties = new ChangeTrackingList<FilterableProperty>();
+            Specifications = new ChangeTrackingList<ProductSpecification>();
         }
 
         /// <summary> Initializes a new instance of ProductConfiguration. </summary>

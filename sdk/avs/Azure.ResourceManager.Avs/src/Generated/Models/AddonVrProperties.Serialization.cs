@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class AddonVrProperties : Core.IUtf8JsonSerializable
+    public partial class AddonVrProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("vrsCount"u8);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
             int vrsCount = default;
             AddonType addonType = default;
-            Core.Optional<AddonProvisioningState> provisioningState = default;
+            Optional<AddonProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vrsCount"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new AddonVrProperties(addonType, Core.Optional.ToNullable(provisioningState), vrsCount);
+            return new AddonVrProperties(addonType, Optional.ToNullable(provisioningState), vrsCount);
         }
     }
 }

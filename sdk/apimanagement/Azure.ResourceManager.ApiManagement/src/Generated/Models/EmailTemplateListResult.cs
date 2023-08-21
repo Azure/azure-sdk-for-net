@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of EmailTemplateListResult. </summary>
         internal EmailTemplateListResult()
         {
-            Value = new Core.ChangeTrackingList<ApiManagementEmailTemplateData>();
+            Value = new ChangeTrackingList<ApiManagementEmailTemplateData>();
         }
 
         /// <summary> Initializes a new instance of EmailTemplateListResult. </summary>

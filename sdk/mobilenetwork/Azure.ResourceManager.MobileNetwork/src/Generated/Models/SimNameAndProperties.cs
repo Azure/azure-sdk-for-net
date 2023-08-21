@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Argument.AssertNotNull(internationalMobileSubscriberIdentity, nameof(internationalMobileSubscriberIdentity));
 
             Name = name;
-            SiteProvisioningState = new Core.ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>();
+            SiteProvisioningState = new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>();
             InternationalMobileSubscriberIdentity = internationalMobileSubscriberIdentity;
-            StaticIPConfiguration = new Core.ChangeTrackingList<SimStaticIPProperties>();
+            StaticIPConfiguration = new ChangeTrackingList<SimStaticIPProperties>();
         }
 
         /// <summary> The name of the SIM. </summary>

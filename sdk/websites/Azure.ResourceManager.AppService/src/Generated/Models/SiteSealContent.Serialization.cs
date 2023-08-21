@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteSealContent : Core.IUtf8JsonSerializable
+    public partial class SiteSealContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsLightTheme))
+            if (Optional.IsDefined(IsLightTheme))
             {
                 writer.WritePropertyName("lightTheme"u8);
                 writer.WriteBooleanValue(IsLightTheme.Value);
             }
-            if (Core.Optional.IsDefined(Locale))
+            if (Optional.IsDefined(Locale))
             {
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);

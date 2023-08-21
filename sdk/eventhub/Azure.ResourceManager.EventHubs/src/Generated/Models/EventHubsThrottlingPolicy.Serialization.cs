@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsThrottlingPolicy : Core.IUtf8JsonSerializable
+    public partial class EventHubsThrottlingPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("rateLimitThreshold"u8);

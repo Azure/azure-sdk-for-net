@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    internal partial class ManagedIdentitySettings : Core.IUtf8JsonSerializable
+    internal partial class ManagedIdentitySettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Resource))
+            if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteStringValue(Resource);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Core.Optional<string> resource = default;
+            Optional<string> resource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resource"u8))

@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementViewsViewsRestClient.CreateListByScopeRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _costManagementViewsViewsRestClient.CreateListByScopeNextPageRequest(nextLink, Id);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CostManagementViewsResource(Client, CostManagementViewData.DeserializeCostManagementViewData(e)), _costManagementViewsViewsClientDiagnostics, Pipeline, "CostManagementViewsCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CostManagementViewsResource(Client, CostManagementViewData.DeserializeCostManagementViewData(e)), _costManagementViewsViewsClientDiagnostics, Pipeline, "CostManagementViewsCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementViewsViewsRestClient.CreateListByScopeRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _costManagementViewsViewsRestClient.CreateListByScopeNextPageRequest(nextLink, Id);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CostManagementViewsResource(Client, CostManagementViewData.DeserializeCostManagementViewData(e)), _costManagementViewsViewsClientDiagnostics, Pipeline, "CostManagementViewsCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CostManagementViewsResource(Client, CostManagementViewData.DeserializeCostManagementViewData(e)), _costManagementViewsViewsClientDiagnostics, Pipeline, "CostManagementViewsCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

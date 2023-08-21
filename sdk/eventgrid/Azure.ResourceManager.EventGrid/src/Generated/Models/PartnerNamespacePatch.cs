@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of PartnerNamespacePatch. </summary>
         public PartnerNamespacePatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            InboundIPRules = new Core.ChangeTrackingList<EventGridInboundIPRule>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            InboundIPRules = new ChangeTrackingList<EventGridInboundIPRule>();
         }
 
         /// <summary> Tags of the Partner Namespace. </summary>

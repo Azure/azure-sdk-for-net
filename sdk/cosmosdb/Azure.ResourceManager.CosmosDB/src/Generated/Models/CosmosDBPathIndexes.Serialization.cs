@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBPathIndexes : Core.IUtf8JsonSerializable
+    public partial class CosmosDBPathIndexes : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DataType))
+            if (Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Precision))
+            if (Optional.IsDefined(Precision))
             {
                 writer.WritePropertyName("precision"u8);
                 writer.WriteNumberValue(Precision.Value);
             }
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<CosmosDBDataType> dataType = default;
-            Core.Optional<int> precision = default;
-            Core.Optional<CosmosDBIndexKind> kind = default;
+            Optional<CosmosDBDataType> dataType = default;
+            Optional<int> precision = default;
+            Optional<CosmosDBIndexKind> kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataType"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBPathIndexes(Core.Optional.ToNullable(dataType), Core.Optional.ToNullable(precision), Core.Optional.ToNullable(kind));
+            return new CosmosDBPathIndexes(Optional.ToNullable(dataType), Optional.ToNullable(precision), Optional.ToNullable(kind));
         }
     }
 }

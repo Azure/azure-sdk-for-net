@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <summary> Initializes a new instance of SubscriptionAliasAdditionalProperties. </summary>
         public SubscriptionAliasAdditionalProperties()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Management group Id for the subscription. </summary>

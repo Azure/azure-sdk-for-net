@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class NetworkInterfaceResourceNames : Core.IUtf8JsonSerializable
+    public partial class NetworkInterfaceResourceNames : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NetworkInterfaceName))
+            if (Optional.IsDefined(NetworkInterfaceName))
             {
                 writer.WritePropertyName("networkInterfaceName"u8);
                 writer.WriteStringValue(NetworkInterfaceName);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<string> networkInterfaceName = default;
+            Optional<string> networkInterfaceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaceName"u8))

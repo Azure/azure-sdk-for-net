@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    public partial class MySqlRecoverableServerResourceData : Core.IUtf8JsonSerializable
+    public partial class MySqlRecoverableServerResourceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.MySql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> lastAvailableBackupDateTime = default;
-            Core.Optional<string> serviceLevelObjective = default;
-            Core.Optional<string> edition = default;
-            Core.Optional<int> vCore = default;
-            Core.Optional<string> hardwareGeneration = default;
-            Core.Optional<string> version = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> lastAvailableBackupDateTime = default;
+            Optional<string> serviceLevelObjective = default;
+            Optional<string> edition = default;
+            Optional<int> vCore = default;
+            Optional<string> hardwareGeneration = default;
+            Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlRecoverableServerResourceData(id, name, type, systemData.Value, Core.Optional.ToNullable(lastAvailableBackupDateTime), serviceLevelObjective.Value, edition.Value, Core.Optional.ToNullable(vCore), hardwareGeneration.Value, version.Value);
+            return new MySqlRecoverableServerResourceData(id, name, type, systemData.Value, Optional.ToNullable(lastAvailableBackupDateTime), serviceLevelObjective.Value, edition.Value, Optional.ToNullable(vCore), hardwareGeneration.Value, version.Value);
         }
     }
 }

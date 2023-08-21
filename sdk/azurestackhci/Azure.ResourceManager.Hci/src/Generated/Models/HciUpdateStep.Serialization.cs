@@ -12,47 +12,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciUpdateStep : Core.IUtf8JsonSerializable
+    public partial class HciUpdateStep : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(ErrorMessage))
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Core.Optional.IsDefined(StartTimeUtc))
+            if (Optional.IsDefined(StartTimeUtc))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartTimeUtc.Value, "O");
             }
-            if (Core.Optional.IsDefined(EndTimeUtc))
+            if (Optional.IsDefined(EndTimeUtc))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndTimeUtc.Value, "O");
             }
-            if (Core.Optional.IsDefined(LastUpdatedTimeUtc))
+            if (Optional.IsDefined(LastUpdatedTimeUtc))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
             }
-            if (Core.Optional.IsCollectionDefined(Steps))
+            if (Optional.IsCollectionDefined(Steps))
             {
                 writer.WritePropertyName("steps"u8);
                 writer.WriteStartArray();
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> errorMessage = default;
-            Core.Optional<string> status = default;
-            Core.Optional<DateTimeOffset> startTimeUtc = default;
-            Core.Optional<DateTimeOffset> endTimeUtc = default;
-            Core.Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Core.Optional<IList<HciUpdateStep>> steps = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<string> errorMessage = default;
+            Optional<string> status = default;
+            Optional<DateTimeOffset> startTimeUtc = default;
+            Optional<DateTimeOffset> endTimeUtc = default;
+            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
+            Optional<IList<HciUpdateStep>> steps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new HciUpdateStep(name.Value, description.Value, errorMessage.Value, status.Value, Core.Optional.ToNullable(startTimeUtc), Core.Optional.ToNullable(endTimeUtc), Core.Optional.ToNullable(lastUpdatedTimeUtc), Core.Optional.ToList(steps));
+            return new HciUpdateStep(name.Value, description.Value, errorMessage.Value, status.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToList(steps));
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AzureDataLakeStorageGen2Parameter : Core.IUtf8JsonSerializable
+    internal partial class AzureDataLakeStorageGen2Parameter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AccountName))
+            if (Optional.IsDefined(AccountName))
             {
                 if (AccountName != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("accountName");
                 }
             }
-            if (Core.Optional.IsDefined(AccountKey))
+            if (Optional.IsDefined(AccountKey))
             {
                 if (AccountKey != null)
                 {
@@ -75,8 +75,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Core.Optional<string> accountName = default;
-            Core.Optional<string> accountKey = default;
+            Optional<string> accountName = default;
+            Optional<string> accountKey = default;
             string fileSystemName = default;
             string directoryTemplate = default;
             string fileTemplate = default;

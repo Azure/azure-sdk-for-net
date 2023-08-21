@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<BinaryData> template = default;
-            Core.Optional<BinaryData> parameters = default;
+            Optional<BinaryData> template = default;
+            Optional<BinaryData> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("template"u8))

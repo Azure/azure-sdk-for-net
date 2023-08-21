@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of AppServiceVirtualNetworkData. </summary>
         public AppServiceVirtualNetworkData()
         {
-            Routes = new Core.ChangeTrackingList<AppServiceVirtualNetworkRoute>();
+            Routes = new ChangeTrackingList<AppServiceVirtualNetworkRoute>();
         }
 
         /// <summary> Initializes a new instance of AppServiceVirtualNetworkData. </summary>

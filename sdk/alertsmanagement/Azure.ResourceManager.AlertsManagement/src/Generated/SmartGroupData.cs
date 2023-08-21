@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <summary> Initializes a new instance of SmartGroupData. </summary>
         public SmartGroupData()
         {
-            Resources = new Core.ChangeTrackingList<SmartGroupAggregatedProperty>();
-            ResourceTypes = new Core.ChangeTrackingList<SmartGroupAggregatedProperty>();
-            ResourceGroups = new Core.ChangeTrackingList<SmartGroupAggregatedProperty>();
-            MonitorServices = new Core.ChangeTrackingList<SmartGroupAggregatedProperty>();
-            MonitorConditions = new Core.ChangeTrackingList<SmartGroupAggregatedProperty>();
-            AlertStates = new Core.ChangeTrackingList<SmartGroupAggregatedProperty>();
-            AlertSeverities = new Core.ChangeTrackingList<SmartGroupAggregatedProperty>();
+            Resources = new ChangeTrackingList<SmartGroupAggregatedProperty>();
+            ResourceTypes = new ChangeTrackingList<SmartGroupAggregatedProperty>();
+            ResourceGroups = new ChangeTrackingList<SmartGroupAggregatedProperty>();
+            MonitorServices = new ChangeTrackingList<SmartGroupAggregatedProperty>();
+            MonitorConditions = new ChangeTrackingList<SmartGroupAggregatedProperty>();
+            AlertStates = new ChangeTrackingList<SmartGroupAggregatedProperty>();
+            AlertSeverities = new ChangeTrackingList<SmartGroupAggregatedProperty>();
         }
 
         /// <summary> Initializes a new instance of SmartGroupData. </summary>

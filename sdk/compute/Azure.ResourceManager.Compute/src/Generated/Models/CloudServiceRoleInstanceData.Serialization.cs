@@ -21,15 +21,15 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Core.Optional<InstanceSku> sku = default;
+            Optional<AzureLocation> location = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<InstanceSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<RoleInstanceNetworkProfile> networkProfile = default;
-            Core.Optional<RoleInstanceView> instanceView = default;
+            Optional<SystemData> systemData = default;
+            Optional<RoleInstanceNetworkProfile> networkProfile = default;
+            Optional<RoleInstanceView> instanceView = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new CloudServiceRoleInstanceData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), sku.Value, networkProfile.Value, instanceView.Value);
+            return new CloudServiceRoleInstanceData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), sku.Value, networkProfile.Value, instanceView.Value);
         }
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class MaterializedViewDefinition : Core.IUtf8JsonSerializable
+    public partial class MaterializedViewDefinition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceCollectionId"u8);
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<string> sourceCollectionRid = default;
+            Optional<string> sourceCollectionRid = default;
             string sourceCollectionId = default;
             string definition = default;
             foreach (var property in element.EnumerateObject())

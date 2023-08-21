@@ -16,8 +16,8 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Initializes a new instance of PageList. </summary>
         internal PageList()
         {
-            PageRange = new Core.ChangeTrackingList<PageRange>();
-            ClearRange = new Core.ChangeTrackingList<ClearRange>();
+            PageRange = new ChangeTrackingList<PageRange>();
+            ClearRange = new ChangeTrackingList<ClearRange>();
         }
 
         /// <summary> Initializes a new instance of PageList. </summary>

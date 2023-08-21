@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppBackupPolicyPatch : Core.IUtf8JsonSerializable
+    public partial class NetAppBackupPolicyPatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DailyBackupsToKeep))
+            if (Optional.IsDefined(DailyBackupsToKeep))
             {
                 writer.WritePropertyName("dailyBackupsToKeep"u8);
                 writer.WriteNumberValue(DailyBackupsToKeep.Value);
             }
-            if (Core.Optional.IsDefined(WeeklyBackupsToKeep))
+            if (Optional.IsDefined(WeeklyBackupsToKeep))
             {
                 writer.WritePropertyName("weeklyBackupsToKeep"u8);
                 writer.WriteNumberValue(WeeklyBackupsToKeep.Value);
             }
-            if (Core.Optional.IsDefined(MonthlyBackupsToKeep))
+            if (Optional.IsDefined(MonthlyBackupsToKeep))
             {
                 writer.WritePropertyName("monthlyBackupsToKeep"u8);
                 writer.WriteNumberValue(MonthlyBackupsToKeep.Value);
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);

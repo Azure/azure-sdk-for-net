@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncDatabaseInput. </summary>
         public MigrateSqlServerSqlDBSyncDatabaseInput()
         {
-            TableMap = new Core.ChangeTrackingDictionary<string, string>();
-            MigrationSetting = new Core.ChangeTrackingDictionary<string, string>();
-            SourceSetting = new Core.ChangeTrackingDictionary<string, string>();
-            TargetSetting = new Core.ChangeTrackingDictionary<string, string>();
+            TableMap = new ChangeTrackingDictionary<string, string>();
+            MigrationSetting = new ChangeTrackingDictionary<string, string>();
+            SourceSetting = new ChangeTrackingDictionary<string, string>();
+            TargetSetting = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncDatabaseInput. </summary>

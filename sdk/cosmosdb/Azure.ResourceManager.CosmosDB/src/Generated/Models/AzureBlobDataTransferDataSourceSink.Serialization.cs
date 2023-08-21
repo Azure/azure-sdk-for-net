@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class AzureBlobDataTransferDataSourceSink : Core.IUtf8JsonSerializable
+    public partial class AzureBlobDataTransferDataSourceSink : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (Core.Optional.IsDefined(EndpointUri))
+            if (Optional.IsDefined(EndpointUri))
             {
                 writer.WritePropertyName("endpointUrl"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string containerName = default;
-            Core.Optional<Uri> endpointUrl = default;
+            Optional<Uri> endpointUrl = default;
             DataTransferComponent component = default;
             foreach (var property in element.EnumerateObject())
             {

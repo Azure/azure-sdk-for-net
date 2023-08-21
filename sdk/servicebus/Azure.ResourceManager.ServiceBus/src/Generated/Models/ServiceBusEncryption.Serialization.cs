@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class ServiceBusEncryption : Core.IUtf8JsonSerializable
+    public partial class ServiceBusEncryption : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(KeyVaultProperties))
+            if (Optional.IsCollectionDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteStartArray();
@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(KeySource))
+            if (Optional.IsDefined(KeySource))
             {
                 writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RequireInfrastructureEncryption))
+            if (Optional.IsDefined(RequireInfrastructureEncryption))
             {
                 writer.WritePropertyName("requireInfrastructureEncryption"u8);
                 writer.WriteBooleanValue(RequireInfrastructureEncryption.Value);
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Core.Optional<IList<ServiceBusKeyVaultProperties>> keyVaultProperties = default;
-            Core.Optional<ServiceBusEncryptionKeySource> keySource = default;
-            Core.Optional<bool> requireInfrastructureEncryption = default;
+            Optional<IList<ServiceBusKeyVaultProperties>> keyVaultProperties = default;
+            Optional<ServiceBusEncryptionKeySource> keySource = default;
+            Optional<bool> requireInfrastructureEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultProperties"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new ServiceBusEncryption(Core.Optional.ToList(keyVaultProperties), Core.Optional.ToNullable(keySource), Core.Optional.ToNullable(requireInfrastructureEncryption));
+            return new ServiceBusEncryption(Optional.ToList(keyVaultProperties), Optional.ToNullable(keySource), Optional.ToNullable(requireInfrastructureEncryption));
         }
     }
 }

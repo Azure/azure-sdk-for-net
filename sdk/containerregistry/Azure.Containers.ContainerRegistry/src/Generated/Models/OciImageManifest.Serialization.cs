@@ -14,17 +14,17 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     [JsonConverter(typeof(OciImageManifestConverter))]
-    public partial class OciImageManifest : Core.IUtf8JsonSerializable
+    public partial class OciImageManifest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Configuration))
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("config"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Core.Optional.IsCollectionDefined(Layers))
+            if (Optional.IsCollectionDefined(Layers))
             {
                 writer.WritePropertyName("layers"u8);
                 writer.WriteStartArray();
@@ -34,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Annotations))
+            if (Optional.IsDefined(Annotations))
             {
                 if (Annotations != null)
                 {
@@ -57,9 +57,9 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Core.Optional<OciDescriptor> config = default;
-            Core.Optional<IList<OciDescriptor>> layers = default;
-            Core.Optional<OciAnnotations> annotations = default;
+            Optional<OciDescriptor> config = default;
+            Optional<IList<OciDescriptor>> layers = default;
+            Optional<OciAnnotations> annotations = default;
             int schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -102,7 +102,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new OciImageManifest(config.Value, Core.Optional.ToList(layers), annotations.Value, schemaVersion);
+            return new OciImageManifest(config.Value, Optional.ToList(layers), annotations.Value, schemaVersion);
         }
 
         internal partial class OciImageManifestConverter : JsonConverter<OciImageManifest>

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _networkDeviceRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkDeviceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceResource>(new NetworkDeviceOperationSource(Client), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkDeviceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceResource>(new NetworkDeviceOperationSource(Client), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkDeviceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _networkDeviceRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, networkDeviceName, data, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceResource>(new NetworkDeviceOperationSource(Client), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkDeviceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceResource>(new NetworkDeviceOperationSource(Client), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkDeviceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkDeviceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkDeviceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceResource(Client, NetworkDeviceData.DeserializeNetworkDeviceData(e)), _networkDeviceClientDiagnostics, Pipeline, "NetworkDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceResource(Client, NetworkDeviceData.DeserializeNetworkDeviceData(e)), _networkDeviceClientDiagnostics, Pipeline, "NetworkDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkDeviceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkDeviceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceResource(Client, NetworkDeviceData.DeserializeNetworkDeviceData(e)), _networkDeviceClientDiagnostics, Pipeline, "NetworkDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceResource(Client, NetworkDeviceData.DeserializeNetworkDeviceData(e)), _networkDeviceClientDiagnostics, Pipeline, "NetworkDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

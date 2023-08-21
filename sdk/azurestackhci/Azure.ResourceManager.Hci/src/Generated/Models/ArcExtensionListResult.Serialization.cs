@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ArcExtensionData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ArcExtensionData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new ArcExtensionListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ArcExtensionListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

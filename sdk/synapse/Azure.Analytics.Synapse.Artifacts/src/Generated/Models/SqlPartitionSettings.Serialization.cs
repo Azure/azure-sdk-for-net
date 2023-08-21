@@ -13,22 +13,22 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlPartitionSettingsConverter))]
-    public partial class SqlPartitionSettings : Core.IUtf8JsonSerializable
+    public partial class SqlPartitionSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PartitionColumnName))
+            if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
                 writer.WriteObjectValue(PartitionColumnName);
             }
-            if (Core.Optional.IsDefined(PartitionUpperBound))
+            if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
                 writer.WriteObjectValue(PartitionUpperBound);
             }
-            if (Core.Optional.IsDefined(PartitionLowerBound))
+            if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
                 writer.WriteObjectValue(PartitionLowerBound);
@@ -42,9 +42,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<object> partitionColumnName = default;
-            Core.Optional<object> partitionUpperBound = default;
-            Core.Optional<object> partitionLowerBound = default;
+            Optional<object> partitionColumnName = default;
+            Optional<object> partitionUpperBound = default;
+            Optional<object> partitionLowerBound = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionColumnName"u8))

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueSignedIdentifier : Core.IXmlSerializable
+    public partial class QueueSignedIdentifier : IXmlSerializable
     {
-        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "SignedIdentifier");
             writer.WriteStartElement("Id");

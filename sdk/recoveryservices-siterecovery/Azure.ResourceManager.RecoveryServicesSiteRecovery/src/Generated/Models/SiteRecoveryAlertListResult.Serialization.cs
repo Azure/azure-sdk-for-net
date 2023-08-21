@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SiteRecoveryAlertData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<SiteRecoveryAlertData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryAlertListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new SiteRecoveryAlertListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

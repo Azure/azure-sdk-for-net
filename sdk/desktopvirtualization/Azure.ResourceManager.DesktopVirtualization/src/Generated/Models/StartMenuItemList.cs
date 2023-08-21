@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of StartMenuItemList. </summary>
         internal StartMenuItemList()
         {
-            Value = new Core.ChangeTrackingList<DesktopVirtualizationStartMenuItem>();
+            Value = new ChangeTrackingList<DesktopVirtualizationStartMenuItem>();
         }
 
         /// <summary> Initializes a new instance of StartMenuItemList. </summary>

@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryEncodedTaskStep : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryEncodedTaskStep : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("encodedTaskContent"u8);
             writer.WriteStringValue(EncodedTaskContent);
-            if (Core.Optional.IsDefined(EncodedValuesContent))
+            if (Optional.IsDefined(EncodedValuesContent))
             {
                 writer.WritePropertyName("encodedValuesContent"u8);
                 writer.WriteStringValue(EncodedValuesContent);
             }
-            if (Core.Optional.IsCollectionDefined(Values))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ContainerRegistryTaskStepType.ToString());
-            if (Core.Optional.IsDefined(ContextPath))
+            if (Optional.IsDefined(ContextPath))
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (Core.Optional.IsDefined(ContextAccessToken))
+            if (Optional.IsDefined(ContextAccessToken))
             {
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             string encodedTaskContent = default;
-            Core.Optional<string> encodedValuesContent = default;
-            Core.Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
+            Optional<string> encodedValuesContent = default;
+            Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
             ContainerRegistryTaskStepType type = default;
-            Core.Optional<IReadOnlyList<ContainerRegistryBaseImageDependency>> baseImageDependencies = default;
-            Core.Optional<string> contextPath = default;
-            Core.Optional<string> contextAccessToken = default;
+            Optional<IReadOnlyList<ContainerRegistryBaseImageDependency>> baseImageDependencies = default;
+            Optional<string> contextPath = default;
+            Optional<string> contextAccessToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encodedTaskContent"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryEncodedTaskStep(type, Core.Optional.ToList(baseImageDependencies), contextPath.Value, contextAccessToken.Value, encodedTaskContent, encodedValuesContent.Value, Core.Optional.ToList(values));
+            return new ContainerRegistryEncodedTaskStep(type, Optional.ToList(baseImageDependencies), contextPath.Value, contextAccessToken.Value, encodedTaskContent, encodedValuesContent.Value, Optional.ToList(values));
         }
     }
 }

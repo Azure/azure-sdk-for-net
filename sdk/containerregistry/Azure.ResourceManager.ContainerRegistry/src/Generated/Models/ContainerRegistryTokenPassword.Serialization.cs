@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryTokenPassword : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryTokenPassword : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiry"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<DateTimeOffset> expiry = default;
-            Core.Optional<ContainerRegistryTokenPasswordName> name = default;
-            Core.Optional<string> value = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<DateTimeOffset> expiry = default;
+            Optional<ContainerRegistryTokenPasswordName> name = default;
+            Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("creationTime"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryTokenPassword(Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(expiry), Core.Optional.ToNullable(name), value.Value);
+            return new ContainerRegistryTokenPassword(Optional.ToNullable(creationTime), Optional.ToNullable(expiry), Optional.ToNullable(name), value.Value);
         }
     }
 }

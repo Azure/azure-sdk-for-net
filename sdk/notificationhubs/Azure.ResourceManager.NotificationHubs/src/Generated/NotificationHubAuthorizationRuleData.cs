@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="location"> The location. </param>
         public NotificationHubAuthorizationRuleData(AzureLocation location) : base(location)
         {
-            Rights = new Core.ChangeTrackingList<AuthorizationRuleAccessRight>();
+            Rights = new ChangeTrackingList<AuthorizationRuleAccessRight>();
         }
 
         /// <summary> Initializes a new instance of NotificationHubAuthorizationRuleData. </summary>

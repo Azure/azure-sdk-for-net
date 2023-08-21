@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<TransportShipmentType> shipmentType = default;
+            Optional<TransportShipmentType> shipmentType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("shipmentType"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new TransportAvailabilityDetails(Core.Optional.ToNullable(shipmentType));
+            return new TransportAvailabilityDetails(Optional.ToNullable(shipmentType));
         }
     }
 }

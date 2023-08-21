@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CognitiveServicesSkuAvailabilityListResult. </summary>
         internal CognitiveServicesSkuAvailabilityListResult()
         {
-            Value = new Core.ChangeTrackingList<CognitiveServicesSkuAvailabilityList>();
+            Value = new ChangeTrackingList<CognitiveServicesSkuAvailabilityList>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesSkuAvailabilityListResult. </summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> Initializes a new instance of PurviewAccountProperties. </summary>
         public PurviewAccountProperties()
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<PurviewPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<PurviewPrivateEndpointConnectionData>();
         }
 
         /// <summary>

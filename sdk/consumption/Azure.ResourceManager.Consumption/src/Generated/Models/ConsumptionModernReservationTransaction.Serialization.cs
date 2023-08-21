@@ -21,31 +21,31 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> tags = default;
+            Optional<IReadOnlyList<string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<decimal> amount = default;
-            Core.Optional<string> armSkuName = default;
-            Core.Optional<string> billingFrequency = default;
-            Core.Optional<ResourceIdentifier> billingProfileId = default;
-            Core.Optional<string> billingProfileName = default;
-            Core.Optional<string> currency = default;
-            Core.Optional<string> description = default;
-            Core.Optional<DateTimeOffset> eventDate = default;
-            Core.Optional<string> eventType = default;
-            Core.Optional<string> invoice = default;
-            Core.Optional<ResourceIdentifier> invoiceId = default;
-            Core.Optional<ResourceIdentifier> invoiceSectionId = default;
-            Core.Optional<string> invoiceSectionName = default;
-            Core.Optional<Guid> purchasingSubscriptionGuid = default;
-            Core.Optional<string> purchasingSubscriptionName = default;
-            Core.Optional<decimal> quantity = default;
-            Core.Optional<string> region = default;
-            Core.Optional<string> reservationOrderId = default;
-            Core.Optional<string> reservationOrderName = default;
-            Core.Optional<string> term = default;
+            Optional<SystemData> systemData = default;
+            Optional<decimal> amount = default;
+            Optional<string> armSkuName = default;
+            Optional<string> billingFrequency = default;
+            Optional<ResourceIdentifier> billingProfileId = default;
+            Optional<string> billingProfileName = default;
+            Optional<string> currency = default;
+            Optional<string> description = default;
+            Optional<DateTimeOffset> eventDate = default;
+            Optional<string> eventType = default;
+            Optional<string> invoice = default;
+            Optional<ResourceIdentifier> invoiceId = default;
+            Optional<ResourceIdentifier> invoiceSectionId = default;
+            Optional<string> invoiceSectionName = default;
+            Optional<Guid> purchasingSubscriptionGuid = default;
+            Optional<string> purchasingSubscriptionName = default;
+            Optional<decimal> quantity = default;
+            Optional<string> region = default;
+            Optional<string> reservationOrderId = default;
+            Optional<string> reservationOrderName = default;
+            Optional<string> term = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionModernReservationTransaction(id, name, type, systemData.Value, Core.Optional.ToNullable(amount), armSkuName.Value, billingFrequency.Value, billingProfileId.Value, billingProfileName.Value, currency.Value, description.Value, Core.Optional.ToNullable(eventDate), eventType.Value, invoice.Value, invoiceId.Value, invoiceSectionId.Value, invoiceSectionName.Value, Core.Optional.ToNullable(purchasingSubscriptionGuid), purchasingSubscriptionName.Value, Core.Optional.ToNullable(quantity), region.Value, reservationOrderId.Value, reservationOrderName.Value, term.Value, Core.Optional.ToList(tags));
+            return new ConsumptionModernReservationTransaction(id, name, type, systemData.Value, Optional.ToNullable(amount), armSkuName.Value, billingFrequency.Value, billingProfileId.Value, billingProfileName.Value, currency.Value, description.Value, Optional.ToNullable(eventDate), eventType.Value, invoice.Value, invoiceId.Value, invoiceSectionId.Value, invoiceSectionName.Value, Optional.ToNullable(purchasingSubscriptionGuid), purchasingSubscriptionName.Value, Optional.ToNullable(quantity), region.Value, reservationOrderId.Value, reservationOrderName.Value, term.Value, Optional.ToList(tags));
         }
     }
 }

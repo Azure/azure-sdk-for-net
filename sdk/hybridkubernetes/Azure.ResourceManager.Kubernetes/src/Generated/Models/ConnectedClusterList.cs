@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <summary> Initializes a new instance of ConnectedClusterList. </summary>
         internal ConnectedClusterList()
         {
-            Value = new Core.ChangeTrackingList<ConnectedClusterData>();
+            Value = new ChangeTrackingList<ConnectedClusterData>();
         }
 
         /// <summary> Initializes a new instance of ConnectedClusterList. </summary>

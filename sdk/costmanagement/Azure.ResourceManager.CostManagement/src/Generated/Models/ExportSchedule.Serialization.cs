@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ExportSchedule : Core.IUtf8JsonSerializable
+    public partial class ExportSchedule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Recurrence))
+            if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteStringValue(Recurrence.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RecurrencePeriod))
+            if (Optional.IsDefined(RecurrencePeriod))
             {
                 writer.WritePropertyName("recurrencePeriod"u8);
                 writer.WriteObjectValue(RecurrencePeriod);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<ExportScheduleStatusType> status = default;
-            Core.Optional<ExportScheduleRecurrenceType> recurrence = default;
-            Core.Optional<ExportRecurrencePeriod> recurrencePeriod = default;
+            Optional<ExportScheduleStatusType> status = default;
+            Optional<ExportScheduleRecurrenceType> recurrence = default;
+            Optional<ExportRecurrencePeriod> recurrencePeriod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new ExportSchedule(Core.Optional.ToNullable(status), Core.Optional.ToNullable(recurrence), recurrencePeriod.Value);
+            return new ExportSchedule(Optional.ToNullable(status), Optional.ToNullable(recurrence), recurrencePeriod.Value);
         }
     }
 }

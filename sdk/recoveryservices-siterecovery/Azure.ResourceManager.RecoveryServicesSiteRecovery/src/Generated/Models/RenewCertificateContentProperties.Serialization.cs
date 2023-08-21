@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    internal partial class RenewCertificateContentProperties : Core.IUtf8JsonSerializable
+    internal partial class RenewCertificateContentProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RenewCertificateType))
+            if (Optional.IsDefined(RenewCertificateType))
             {
                 writer.WritePropertyName("renewCertificateType"u8);
                 writer.WriteStringValue(RenewCertificateType);

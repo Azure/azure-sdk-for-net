@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of StreamingPolicyListResult. </summary>
         internal StreamingPolicyListResult()
         {
-            Value = new Core.ChangeTrackingList<StreamingPolicyData>();
+            Value = new ChangeTrackingList<StreamingPolicyData>();
         }
 
         /// <summary> Initializes a new instance of StreamingPolicyListResult. </summary>

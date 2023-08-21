@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of ClusterListResult. </summary>
         internal ClusterListResult()
         {
-            Value = new Core.ChangeTrackingList<KustoClusterData>();
+            Value = new ChangeTrackingList<KustoClusterData>();
         }
 
         /// <summary> Initializes a new instance of ClusterListResult. </summary>

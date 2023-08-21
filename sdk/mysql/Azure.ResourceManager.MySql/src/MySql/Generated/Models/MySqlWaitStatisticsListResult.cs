@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlWaitStatisticsListResult. </summary>
         internal MySqlWaitStatisticsListResult()
         {
-            Value = new Core.ChangeTrackingList<MySqlWaitStatisticData>();
+            Value = new ChangeTrackingList<MySqlWaitStatisticData>();
         }
 
         /// <summary> Initializes a new instance of MySqlWaitStatisticsListResult. </summary>

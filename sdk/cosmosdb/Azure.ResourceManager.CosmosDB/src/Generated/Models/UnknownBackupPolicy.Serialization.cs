@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class UnknownBackupPolicy : Core.IUtf8JsonSerializable
+    internal partial class UnknownBackupPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(BackupPolicyType.ToString());
-            if (Core.Optional.IsDefined(MigrationState))
+            if (Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteObjectValue(MigrationState);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             BackupPolicyType type = "Unknown";
-            Core.Optional<BackupPolicyMigrationState> migrationState = default;
+            Optional<BackupPolicyMigrationState> migrationState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

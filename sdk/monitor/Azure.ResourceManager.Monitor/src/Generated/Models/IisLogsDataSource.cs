@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Argument.AssertNotNull(streams, nameof(streams));
 
             Streams = streams.ToList();
-            LogDirectories = new Core.ChangeTrackingList<string>();
+            LogDirectories = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of IisLogsDataSource. </summary>

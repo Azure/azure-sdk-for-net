@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             IsSnapshotVolumesEnabled = isSnapshotVolumesEnabled;
             IsClusterScopeResourcesIncluded = isClusterScopeResourcesIncluded;
-            IncludedNamespaces = new Core.ChangeTrackingList<string>();
-            ExcludedNamespaces = new Core.ChangeTrackingList<string>();
-            IncludedResourceTypes = new Core.ChangeTrackingList<string>();
-            ExcludedResourceTypes = new Core.ChangeTrackingList<string>();
-            LabelSelectors = new Core.ChangeTrackingList<string>();
+            IncludedNamespaces = new ChangeTrackingList<string>();
+            ExcludedNamespaces = new ChangeTrackingList<string>();
+            IncludedResourceTypes = new ChangeTrackingList<string>();
+            ExcludedResourceTypes = new ChangeTrackingList<string>();
+            LabelSelectors = new ChangeTrackingList<string>();
             ObjectType = "KubernetesClusterBackupDatasourceParameters";
         }
 

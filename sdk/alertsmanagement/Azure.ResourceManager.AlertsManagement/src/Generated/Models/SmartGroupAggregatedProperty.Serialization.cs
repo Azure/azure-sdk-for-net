@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class SmartGroupAggregatedProperty : Core.IUtf8JsonSerializable
+    public partial class SmartGroupAggregatedProperty : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Count))
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<long> count = default;
+            Optional<string> name = default;
+            Optional<long> count = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new SmartGroupAggregatedProperty(name.Value, Core.Optional.ToNullable(count));
+            return new SmartGroupAggregatedProperty(name.Value, Optional.ToNullable(count));
         }
     }
 }

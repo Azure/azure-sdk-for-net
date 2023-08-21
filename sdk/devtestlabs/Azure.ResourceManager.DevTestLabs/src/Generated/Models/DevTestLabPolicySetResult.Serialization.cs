@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<bool> hasError = default;
-            Core.Optional<IReadOnlyList<DevTestLabPolicyViolation>> policyViolations = default;
+            Optional<bool> hasError = default;
+            Optional<IReadOnlyList<DevTestLabPolicyViolation>> policyViolations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hasError"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabPolicySetResult(Core.Optional.ToNullable(hasError), Core.Optional.ToList(policyViolations));
+            return new DevTestLabPolicySetResult(Optional.ToNullable(hasError), Optional.ToList(policyViolations));
         }
     }
 }

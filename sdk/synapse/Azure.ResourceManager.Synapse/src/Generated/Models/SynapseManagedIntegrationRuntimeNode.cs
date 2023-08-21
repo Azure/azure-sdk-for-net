@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntimeNode. </summary>
         internal SynapseManagedIntegrationRuntimeNode()
         {
-            Errors = new Core.ChangeTrackingList<SynapseManagedIntegrationRuntimeError>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Errors = new ChangeTrackingList<SynapseManagedIntegrationRuntimeError>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntimeNode. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of SapDiskConfigurationsResult. </summary>
         internal SapDiskConfigurationsResult()
         {
-            VolumeConfigurations = new Core.ChangeTrackingDictionary<string, SapDiskConfiguration>();
+            VolumeConfigurations = new ChangeTrackingDictionary<string, SapDiskConfiguration>();
         }
 
         /// <summary> Initializes a new instance of SapDiskConfigurationsResult. </summary>

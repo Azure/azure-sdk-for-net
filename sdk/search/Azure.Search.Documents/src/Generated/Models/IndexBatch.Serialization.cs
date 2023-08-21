@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class IndexBatch : Core.IUtf8JsonSerializable
+    internal partial class IndexBatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);

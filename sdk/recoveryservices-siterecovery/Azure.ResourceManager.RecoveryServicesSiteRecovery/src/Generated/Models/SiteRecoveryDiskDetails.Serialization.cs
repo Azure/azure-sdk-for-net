@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<long> maxSizeMB = default;
-            Core.Optional<string> vhdType = default;
-            Core.Optional<string> vhdId = default;
-            Core.Optional<string> vhdName = default;
+            Optional<long> maxSizeMB = default;
+            Optional<string> vhdType = default;
+            Optional<string> vhdId = default;
+            Optional<string> vhdName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxSizeMB"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryDiskDetails(Core.Optional.ToNullable(maxSizeMB), vhdType.Value, vhdId.Value, vhdName.Value);
+            return new SiteRecoveryDiskDetails(Optional.ToNullable(maxSizeMB), vhdType.Value, vhdId.Value, vhdName.Value);
         }
     }
 }

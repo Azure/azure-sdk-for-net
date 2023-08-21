@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SelfHelp
 {
-    internal class SelfHelpDiagnosticOperationSource : Core.IOperationSource<SelfHelpDiagnosticResource>
+    internal class SelfHelpDiagnosticOperationSource : IOperationSource<SelfHelpDiagnosticResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.SelfHelp
             _client = client;
         }
 
-        SelfHelpDiagnosticResource Core.IOperationSource<SelfHelpDiagnosticResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SelfHelpDiagnosticResource IOperationSource<SelfHelpDiagnosticResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SelfHelpDiagnosticData.DeserializeSelfHelpDiagnosticData(document.RootElement);
             return new SelfHelpDiagnosticResource(_client, data);
         }
 
-        async ValueTask<SelfHelpDiagnosticResource> Core.IOperationSource<SelfHelpDiagnosticResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SelfHelpDiagnosticResource> IOperationSource<SelfHelpDiagnosticResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SelfHelpDiagnosticData.DeserializeSelfHelpDiagnosticData(document.RootElement);

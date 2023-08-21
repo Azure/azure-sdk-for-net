@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningComputeProperties. </summary>
         protected MachineLearningComputeProperties()
         {
-            ProvisioningErrors = new Core.ChangeTrackingList<MachineLearningError>();
+            ProvisioningErrors = new ChangeTrackingList<MachineLearningError>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningComputeProperties. </summary>

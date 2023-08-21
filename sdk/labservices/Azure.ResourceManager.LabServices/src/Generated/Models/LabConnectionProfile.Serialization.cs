@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabConnectionProfile : Core.IUtf8JsonSerializable
+    public partial class LabConnectionProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(WebSshAccess))
+            if (Optional.IsDefined(WebSshAccess))
             {
                 writer.WritePropertyName("webSshAccess"u8);
                 writer.WriteStringValue(WebSshAccess.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(WebRdpAccess))
+            if (Optional.IsDefined(WebRdpAccess))
             {
                 writer.WritePropertyName("webRdpAccess"u8);
                 writer.WriteStringValue(WebRdpAccess.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(ClientSshAccess))
+            if (Optional.IsDefined(ClientSshAccess))
             {
                 writer.WritePropertyName("clientSshAccess"u8);
                 writer.WriteStringValue(ClientSshAccess.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(ClientRdpAccess))
+            if (Optional.IsDefined(ClientRdpAccess))
             {
                 writer.WritePropertyName("clientRdpAccess"u8);
                 writer.WriteStringValue(ClientRdpAccess.Value.ToSerialString());
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Core.Optional<LabVirtualMachineConnectionType> webSshAccess = default;
-            Core.Optional<LabVirtualMachineConnectionType> webRdpAccess = default;
-            Core.Optional<LabVirtualMachineConnectionType> clientSshAccess = default;
-            Core.Optional<LabVirtualMachineConnectionType> clientRdpAccess = default;
+            Optional<LabVirtualMachineConnectionType> webSshAccess = default;
+            Optional<LabVirtualMachineConnectionType> webRdpAccess = default;
+            Optional<LabVirtualMachineConnectionType> clientSshAccess = default;
+            Optional<LabVirtualMachineConnectionType> clientRdpAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("webSshAccess"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     continue;
                 }
             }
-            return new LabConnectionProfile(Core.Optional.ToNullable(webSshAccess), Core.Optional.ToNullable(webRdpAccess), Core.Optional.ToNullable(clientSshAccess), Core.Optional.ToNullable(clientRdpAccess));
+            return new LabConnectionProfile(Optional.ToNullable(webSshAccess), Optional.ToNullable(webRdpAccess), Optional.ToNullable(clientSshAccess), Optional.ToNullable(clientRdpAccess));
         }
     }
 }

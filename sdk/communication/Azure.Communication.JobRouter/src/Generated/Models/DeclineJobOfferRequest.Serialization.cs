@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class DeclineJobOfferRequest : Core.IUtf8JsonSerializable
+    public partial class DeclineJobOfferRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RetryOfferAt))
+            if (Optional.IsDefined(RetryOfferAt))
             {
                 writer.WritePropertyName("retryOfferAt"u8);
                 writer.WriteStringValue(RetryOfferAt.Value, "O");

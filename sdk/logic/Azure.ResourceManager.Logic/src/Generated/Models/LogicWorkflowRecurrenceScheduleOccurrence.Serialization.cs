@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowRecurrenceScheduleOccurrence : Core.IUtf8JsonSerializable
+    public partial class LogicWorkflowRecurrenceScheduleOccurrence : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Day))
+            if (Optional.IsDefined(Day))
             {
                 writer.WritePropertyName("day"u8);
                 writer.WriteStringValue(Day.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(Occurrence))
+            if (Optional.IsDefined(Occurrence))
             {
                 writer.WritePropertyName("occurrence"u8);
                 writer.WriteNumberValue(Occurrence.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<LogicWorkflowDayOfWeek> day = default;
-            Core.Optional<int> occurrence = default;
+            Optional<LogicWorkflowDayOfWeek> day = default;
+            Optional<int> occurrence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("day"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicWorkflowRecurrenceScheduleOccurrence(Core.Optional.ToNullable(day), Core.Optional.ToNullable(occurrence));
+            return new LogicWorkflowRecurrenceScheduleOccurrence(Optional.ToNullable(day), Optional.ToNullable(occurrence));
         }
     }
 }

@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class RemoveParticipantRequestInternal : Core.IUtf8JsonSerializable
+    internal partial class RemoveParticipantRequestInternal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("participantToRemove"u8);
             writer.WriteObjectValue(ParticipantToRemove);
-            if (Core.Optional.IsDefined(OperationContext))
+            if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (Core.Optional.IsDefined(CallbackUri))
+            if (Optional.IsDefined(CallbackUri))
             {
                 writer.WritePropertyName("callbackUri"u8);
                 writer.WriteStringValue(CallbackUri);

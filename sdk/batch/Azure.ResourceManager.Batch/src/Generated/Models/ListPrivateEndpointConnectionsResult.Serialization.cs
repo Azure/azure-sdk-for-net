@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<BatchPrivateEndpointConnectionData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<BatchPrivateEndpointConnectionData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new ListPrivateEndpointConnectionsResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ListPrivateEndpointConnectionsResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBDatabaseInput : Core.IUtf8JsonSerializable
+    public partial class MigrateSqlServerSqlDBDatabaseInput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(TargetDatabaseName))
+            if (Optional.IsDefined(TargetDatabaseName))
             {
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (Core.Optional.IsDefined(MakeSourceDBReadOnly))
+            if (Optional.IsDefined(MakeSourceDBReadOnly))
             {
                 writer.WritePropertyName("makeSourceDbReadOnly"u8);
                 writer.WriteBooleanValue(MakeSourceDBReadOnly.Value);
             }
-            if (Core.Optional.IsCollectionDefined(TableMap))
+            if (Optional.IsCollectionDefined(TableMap))
             {
                 writer.WritePropertyName("tableMap"u8);
                 writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(SchemaSetting))
+            if (Optional.IsDefined(SchemaSetting))
             {
                 writer.WritePropertyName("schemaSetting"u8);
 #if NET6_0_OR_GREATER
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(SchemaSetting.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> targetDatabaseName = default;
-            Core.Optional<bool> makeSourceDBReadOnly = default;
-            Core.Optional<IDictionary<string, string>> tableMap = default;
-            Core.Optional<BinaryData> schemaSetting = default;
-            Core.Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> targetDatabaseName = default;
+            Optional<bool> makeSourceDBReadOnly = default;
+            Optional<IDictionary<string, string>> tableMap = default;
+            Optional<BinaryData> schemaSetting = default;
+            Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSqlServerSqlDBDatabaseInput(name.Value, targetDatabaseName.Value, Core.Optional.ToNullable(makeSourceDBReadOnly), Core.Optional.ToDictionary(tableMap), schemaSetting.Value, id.Value);
+            return new MigrateSqlServerSqlDBDatabaseInput(name.Value, targetDatabaseName.Value, Optional.ToNullable(makeSourceDBReadOnly), Optional.ToDictionary(tableMap), schemaSetting.Value, id.Value);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string name = default;
-            Core.Optional<MachineLearningSkuTier> tier = default;
+            Optional<MachineLearningSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningSkuSetting(name, Core.Optional.ToNullable(tier));
+            return new MachineLearningSkuSetting(name, Optional.ToNullable(tier));
         }
     }
 }

@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkRackData : Core.IUtf8JsonSerializable
+    public partial class NetworkRackData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Annotation))
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Core.Optional.IsDefined(NetworkRackType))
+            if (Optional.IsDefined(NetworkRackType))
             {
                 writer.WritePropertyName("networkRackType"u8);
                 writer.WriteStringValue(NetworkRackType.Value.ToString());
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> annotation = default;
-            Core.Optional<NetworkRackType> networkRackType = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> annotation = default;
+            Optional<NetworkRackType> networkRackType = default;
             ResourceIdentifier networkFabricId = default;
-            Core.Optional<IReadOnlyList<ResourceIdentifier>> networkDevices = default;
-            Core.Optional<NetworkFabricProvisioningState> provisioningState = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> networkDevices = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     continue;
                 }
             }
-            return new NetworkRackData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, annotation.Value, Core.Optional.ToNullable(networkRackType), networkFabricId, Core.Optional.ToList(networkDevices), Core.Optional.ToNullable(provisioningState));
+            return new NetworkRackData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(networkRackType), networkFabricId, Optional.ToList(networkDevices), Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -14,15 +14,15 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class ReplaceAllFirewallRulesOperationResultOperationSource : Core.IOperationSource<ReplaceAllFirewallRulesOperationResult>
+    internal class ReplaceAllFirewallRulesOperationResultOperationSource : IOperationSource<ReplaceAllFirewallRulesOperationResult>
     {
-        ReplaceAllFirewallRulesOperationResult Core.IOperationSource<ReplaceAllFirewallRulesOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        ReplaceAllFirewallRulesOperationResult IOperationSource<ReplaceAllFirewallRulesOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ReplaceAllFirewallRulesOperationResult.DeserializeReplaceAllFirewallRulesOperationResult(document.RootElement);
         }
 
-        async ValueTask<ReplaceAllFirewallRulesOperationResult> Core.IOperationSource<ReplaceAllFirewallRulesOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ReplaceAllFirewallRulesOperationResult> IOperationSource<ReplaceAllFirewallRulesOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ReplaceAllFirewallRulesOperationResult.DeserializeReplaceAllFirewallRulesOperationResult(document.RootElement);

@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of MediaJobCanceledEventData. </summary>
         internal MediaJobCanceledEventData()
         {
-            Outputs = new Core.ChangeTrackingList<MediaJobOutput>();
+            Outputs = new ChangeTrackingList<MediaJobOutput>();
         }
 
         /// <summary> Initializes a new instance of MediaJobCanceledEventData. </summary>

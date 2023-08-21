@@ -14,15 +14,15 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    internal class PostgreSqlFlexibleServerLtrBackupResultOperationSource : Core.IOperationSource<PostgreSqlFlexibleServerLtrBackupResult>
+    internal class PostgreSqlFlexibleServerLtrBackupResultOperationSource : IOperationSource<PostgreSqlFlexibleServerLtrBackupResult>
     {
-        PostgreSqlFlexibleServerLtrBackupResult Core.IOperationSource<PostgreSqlFlexibleServerLtrBackupResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        PostgreSqlFlexibleServerLtrBackupResult IOperationSource<PostgreSqlFlexibleServerLtrBackupResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return PostgreSqlFlexibleServerLtrBackupResult.DeserializePostgreSqlFlexibleServerLtrBackupResult(document.RootElement);
         }
 
-        async ValueTask<PostgreSqlFlexibleServerLtrBackupResult> Core.IOperationSource<PostgreSqlFlexibleServerLtrBackupResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PostgreSqlFlexibleServerLtrBackupResult> IOperationSource<PostgreSqlFlexibleServerLtrBackupResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return PostgreSqlFlexibleServerLtrBackupResult.DeserializePostgreSqlFlexibleServerLtrBackupResult(document.RootElement);

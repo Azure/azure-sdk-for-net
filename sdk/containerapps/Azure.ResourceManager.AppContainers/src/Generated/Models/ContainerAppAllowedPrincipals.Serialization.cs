@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppAllowedPrincipals : Core.IUtf8JsonSerializable
+    public partial class ContainerAppAllowedPrincipals : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Groups))
+            if (Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Identities))
+            if (Optional.IsCollectionDefined(Identities))
             {
                 writer.WritePropertyName("identities"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> groups = default;
-            Core.Optional<IList<string>> identities = default;
+            Optional<IList<string>> groups = default;
+            Optional<IList<string>> identities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groups"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppAllowedPrincipals(Core.Optional.ToList(groups), Core.Optional.ToList(identities));
+            return new ContainerAppAllowedPrincipals(Optional.ToList(groups), Optional.ToList(identities));
         }
     }
 }

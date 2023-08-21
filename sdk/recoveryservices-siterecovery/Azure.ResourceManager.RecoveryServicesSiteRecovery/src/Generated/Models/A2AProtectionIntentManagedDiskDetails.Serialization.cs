@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AProtectionIntentManagedDiskDetails : Core.IUtf8JsonSerializable
+    public partial class A2AProtectionIntentManagedDiskDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
-            if (Core.Optional.IsDefined(PrimaryStagingStorageAccountCustomContent))
+            if (Optional.IsDefined(PrimaryStagingStorageAccountCustomContent))
             {
                 writer.WritePropertyName("primaryStagingStorageAccountCustomInput"u8);
                 writer.WriteObjectValue(PrimaryStagingStorageAccountCustomContent);
             }
-            if (Core.Optional.IsDefined(RecoveryResourceGroupCustomContent))
+            if (Optional.IsDefined(RecoveryResourceGroupCustomContent))
             {
                 writer.WritePropertyName("recoveryResourceGroupCustomInput"u8);
                 writer.WriteObjectValue(RecoveryResourceGroupCustomContent);
             }
-            if (Core.Optional.IsDefined(RecoveryReplicaDiskAccountType))
+            if (Optional.IsDefined(RecoveryReplicaDiskAccountType))
             {
                 writer.WritePropertyName("recoveryReplicaDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryReplicaDiskAccountType);
             }
-            if (Core.Optional.IsDefined(RecoveryTargetDiskAccountType))
+            if (Optional.IsDefined(RecoveryTargetDiskAccountType))
             {
                 writer.WritePropertyName("recoveryTargetDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryTargetDiskAccountType);
             }
-            if (Core.Optional.IsDefined(RecoveryDiskEncryptionSetId))
+            if (Optional.IsDefined(RecoveryDiskEncryptionSetId))
             {
                 writer.WritePropertyName("recoveryDiskEncryptionSetId"u8);
                 writer.WriteStringValue(RecoveryDiskEncryptionSetId);
             }
-            if (Core.Optional.IsDefined(DiskEncryptionInfo))
+            if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionInfo);
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string diskId = default;
-            Core.Optional<StorageAccountCustomDetails> primaryStagingStorageAccountCustomContent = default;
-            Core.Optional<RecoveryResourceGroupCustomDetails> recoveryResourceGroupCustomContent = default;
-            Core.Optional<string> recoveryReplicaDiskAccountType = default;
-            Core.Optional<string> recoveryTargetDiskAccountType = default;
-            Core.Optional<ResourceIdentifier> recoveryDiskEncryptionSetId = default;
-            Core.Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
+            Optional<StorageAccountCustomDetails> primaryStagingStorageAccountCustomContent = default;
+            Optional<RecoveryResourceGroupCustomDetails> recoveryResourceGroupCustomContent = default;
+            Optional<string> recoveryReplicaDiskAccountType = default;
+            Optional<string> recoveryTargetDiskAccountType = default;
+            Optional<ResourceIdentifier> recoveryDiskEncryptionSetId = default;
+            Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))

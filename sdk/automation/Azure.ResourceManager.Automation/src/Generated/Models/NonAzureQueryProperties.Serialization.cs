@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class NonAzureQueryProperties : Core.IUtf8JsonSerializable
+    public partial class NonAzureQueryProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FunctionAlias))
+            if (Optional.IsDefined(FunctionAlias))
             {
                 writer.WritePropertyName("functionAlias"u8);
                 writer.WriteStringValue(FunctionAlias);
             }
-            if (Core.Optional.IsDefined(WorkspaceId))
+            if (Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<string> functionAlias = default;
-            Core.Optional<string> workspaceId = default;
+            Optional<string> functionAlias = default;
+            Optional<string> workspaceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("functionAlias"u8))

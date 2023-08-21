@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="location"> The location. </param>
         public QuantumWorkspaceData(AzureLocation location) : base(location)
         {
-            Providers = new Core.ChangeTrackingList<Provider>();
+            Providers = new ChangeTrackingList<Provider>();
         }
 
         /// <summary> Initializes a new instance of QuantumWorkspaceData. </summary>

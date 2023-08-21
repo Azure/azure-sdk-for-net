@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class LiveEventTranscription : Core.IUtf8JsonSerializable
+    public partial class LiveEventTranscription : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Language))
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Core.Optional.IsCollectionDefined(InputTrackSelection))
+            if (Optional.IsCollectionDefined(InputTrackSelection))
             {
                 writer.WritePropertyName("inputTrackSelection"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(OutputTranscriptionTrack))
+            if (Optional.IsDefined(OutputTranscriptionTrack))
             {
                 writer.WritePropertyName("outputTranscriptionTrack"u8);
                 writer.WriteObjectValue(OutputTranscriptionTrack);
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<string> language = default;
-            Core.Optional<IList<LiveEventInputTrackSelection>> inputTrackSelection = default;
-            Core.Optional<LiveEventOutputTranscriptionTrack> outputTranscriptionTrack = default;
+            Optional<string> language = default;
+            Optional<IList<LiveEventInputTrackSelection>> inputTrackSelection = default;
+            Optional<LiveEventOutputTranscriptionTrack> outputTranscriptionTrack = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("language"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new LiveEventTranscription(language.Value, Core.Optional.ToList(inputTrackSelection), outputTranscriptionTrack.Value);
+            return new LiveEventTranscription(language.Value, Optional.ToList(inputTrackSelection), outputTranscriptionTrack.Value);
         }
     }
 }

@@ -14,24 +14,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    public partial class BatchAccountCertificateData : Core.IUtf8JsonSerializable
+    public partial class BatchAccountCertificateData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ThumbprintAlgorithm))
+            if (Optional.IsDefined(ThumbprintAlgorithm))
             {
                 writer.WritePropertyName("thumbprintAlgorithm"u8);
                 writer.WriteStringValue(ThumbprintAlgorithm);
             }
-            if (Core.Optional.IsDefined(ThumbprintString))
+            if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (Core.Optional.IsDefined(Format))
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToSerialString());
@@ -46,20 +46,20 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> thumbprintAlgorithm = default;
-            Core.Optional<string> thumbprint = default;
-            Core.Optional<BatchAccountCertificateFormat> format = default;
-            Core.Optional<BatchAccountCertificateProvisioningState> provisioningState = default;
-            Core.Optional<DateTimeOffset> provisioningStateTransitionTime = default;
-            Core.Optional<BatchAccountCertificateProvisioningState> previousProvisioningState = default;
-            Core.Optional<DateTimeOffset> previousProvisioningStateTransitionTime = default;
-            Core.Optional<string> publicData = default;
-            Core.Optional<ResponseError> deleteCertificateError = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> thumbprintAlgorithm = default;
+            Optional<string> thumbprint = default;
+            Optional<BatchAccountCertificateFormat> format = default;
+            Optional<BatchAccountCertificateProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> provisioningStateTransitionTime = default;
+            Optional<BatchAccountCertificateProvisioningState> previousProvisioningState = default;
+            Optional<DateTimeOffset> previousProvisioningStateTransitionTime = default;
+            Optional<string> publicData = default;
+            Optional<ResponseError> deleteCertificateError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Batch
                     continue;
                 }
             }
-            return new BatchAccountCertificateData(id, name, type, systemData.Value, thumbprintAlgorithm.Value, thumbprint.Value, Core.Optional.ToNullable(format), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(provisioningStateTransitionTime), Core.Optional.ToNullable(previousProvisioningState), Core.Optional.ToNullable(previousProvisioningStateTransitionTime), publicData.Value, deleteCertificateError.Value, Core.Optional.ToNullable(etag));
+            return new BatchAccountCertificateData(id, name, type, systemData.Value, thumbprintAlgorithm.Value, thumbprint.Value, Optional.ToNullable(format), Optional.ToNullable(provisioningState), Optional.ToNullable(provisioningStateTransitionTime), Optional.ToNullable(previousProvisioningState), Optional.ToNullable(previousProvisioningStateTransitionTime), publicData.Value, deleteCertificateError.Value, Optional.ToNullable(etag));
         }
     }
 }

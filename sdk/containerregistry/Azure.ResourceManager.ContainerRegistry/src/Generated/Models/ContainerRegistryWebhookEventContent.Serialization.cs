@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<Guid> id = default;
-            Core.Optional<DateTimeOffset> timestamp = default;
-            Core.Optional<string> action = default;
-            Core.Optional<ContainerRegistryWebhookEventTarget> target = default;
-            Core.Optional<ContainerRegistryWebhookEventRequestContent> request = default;
-            Core.Optional<ContainerRegistryWebhookEventActor> actor = default;
-            Core.Optional<ContainerRegistryWebhookEventSource> source = default;
+            Optional<Guid> id = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<string> action = default;
+            Optional<ContainerRegistryWebhookEventTarget> target = default;
+            Optional<ContainerRegistryWebhookEventRequestContent> request = default;
+            Optional<ContainerRegistryWebhookEventActor> actor = default;
+            Optional<ContainerRegistryWebhookEventSource> source = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryWebhookEventContent(Core.Optional.ToNullable(id), Core.Optional.ToNullable(timestamp), action.Value, target.Value, request.Value, actor.Value, source.Value);
+            return new ContainerRegistryWebhookEventContent(Optional.ToNullable(id), Optional.ToNullable(timestamp), action.Value, target.Value, request.Value, actor.Value, source.Value);
         }
     }
 }

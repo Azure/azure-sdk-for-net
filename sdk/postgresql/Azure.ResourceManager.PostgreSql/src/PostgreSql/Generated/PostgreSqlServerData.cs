@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="location"> The location. </param>
         public PostgreSqlServerData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<PostgreSqlServerPrivateEndpointConnection>();
+            PrivateEndpointConnections = new ChangeTrackingList<PostgreSqlServerPrivateEndpointConnection>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlServerData. </summary>

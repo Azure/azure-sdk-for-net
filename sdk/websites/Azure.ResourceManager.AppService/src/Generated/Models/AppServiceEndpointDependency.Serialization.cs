@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> domainName = default;
-            Core.Optional<IReadOnlyList<AppServiceEndpointDetail>> endpointDetails = default;
+            Optional<string> domainName = default;
+            Optional<IReadOnlyList<AppServiceEndpointDetail>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceEndpointDependency(domainName.Value, Core.Optional.ToList(endpointDetails));
+            return new AppServiceEndpointDependency(domainName.Value, Optional.ToList(endpointDetails));
         }
     }
 }

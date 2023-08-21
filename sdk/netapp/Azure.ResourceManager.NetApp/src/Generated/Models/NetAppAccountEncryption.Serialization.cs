@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppAccountEncryption : Core.IUtf8JsonSerializable
+    public partial class NetAppAccountEncryption : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeySource))
+            if (Optional.IsDefined(KeySource))
             {
                 writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToString());
             }
-            if (Core.Optional.IsDefined(KeyVaultProperties))
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<NetAppKeySource> keySource = default;
-            Core.Optional<NetAppKeyVaultProperties> keyVaultProperties = default;
-            Core.Optional<NetAppEncryptionIdentity> identity = default;
+            Optional<NetAppKeySource> keySource = default;
+            Optional<NetAppKeyVaultProperties> keyVaultProperties = default;
+            Optional<NetAppEncryptionIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keySource"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppAccountEncryption(Core.Optional.ToNullable(keySource), keyVaultProperties.Value, identity.Value);
+            return new NetAppAccountEncryption(Optional.ToNullable(keySource), keyVaultProperties.Value, identity.Value);
         }
     }
 }

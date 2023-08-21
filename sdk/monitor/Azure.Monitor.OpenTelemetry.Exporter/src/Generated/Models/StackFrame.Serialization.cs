@@ -10,26 +10,26 @@ using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class StackFrame : Core.IUtf8JsonSerializable
+    internal partial class StackFrame : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("level"u8);
             writer.WriteNumberValue(Level);
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method);
-            if (Core.Optional.IsDefined(Assembly))
+            if (Optional.IsDefined(Assembly))
             {
                 writer.WritePropertyName("assembly"u8);
                 writer.WriteStringValue(Assembly);
             }
-            if (Core.Optional.IsDefined(FileName))
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Core.Optional.IsDefined(Line))
+            if (Optional.IsDefined(Line))
             {
                 writer.WritePropertyName("line"u8);
                 writer.WriteNumberValue(Line.Value);

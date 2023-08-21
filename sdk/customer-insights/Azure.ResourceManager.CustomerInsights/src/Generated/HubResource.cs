@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = await _hubRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation(_hubClientDiagnostics, Pipeline, _hubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation(_hubClientDiagnostics, Pipeline, _hubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -859,7 +859,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = _hubRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CustomerInsightsArmOperation(_hubClientDiagnostics, Pipeline, _hubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation(_hubClientDiagnostics, Pipeline, _hubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rolesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _rolesRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RoleResourceFormat.DeserializeRoleResourceFormat, _rolesClientDiagnostics, Pipeline, "HubResource.GetRoles", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RoleResourceFormat.DeserializeRoleResourceFormat, _rolesClientDiagnostics, Pipeline, "HubResource.GetRoles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -980,7 +980,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rolesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _rolesRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RoleResourceFormat.DeserializeRoleResourceFormat, _rolesClientDiagnostics, Pipeline, "HubResource.GetRoles", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RoleResourceFormat.DeserializeRoleResourceFormat, _rolesClientDiagnostics, Pipeline, "HubResource.GetRoles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

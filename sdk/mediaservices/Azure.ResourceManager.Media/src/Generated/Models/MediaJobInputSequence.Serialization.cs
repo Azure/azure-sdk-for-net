@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaJobInputSequence : Core.IUtf8JsonSerializable
+    public partial class MediaJobInputSequence : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Inputs))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<IList<MediaJobInputClip>> inputs = default;
+            Optional<IList<MediaJobInputClip>> inputs = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaJobInputSequence(odataType, Core.Optional.ToList(inputs));
+            return new MediaJobInputSequence(odataType, Optional.ToList(inputs));
         }
     }
 }

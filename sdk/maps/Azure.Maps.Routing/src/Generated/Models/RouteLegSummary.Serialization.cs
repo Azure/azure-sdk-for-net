@@ -19,16 +19,16 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Core.Optional<int> lengthInMeters = default;
-            Core.Optional<int> travelTimeInSeconds = default;
-            Core.Optional<int> trafficDelayInSeconds = default;
-            Core.Optional<DateTimeOffset> departureTime = default;
-            Core.Optional<DateTimeOffset> arrivalTime = default;
-            Core.Optional<int> noTrafficTravelTimeInSeconds = default;
-            Core.Optional<int> historicTrafficTravelTimeInSeconds = default;
-            Core.Optional<int> liveTrafficIncidentsTravelTimeInSeconds = default;
-            Core.Optional<double> fuelConsumptionInLiters = default;
-            Core.Optional<double> batteryConsumptionInkWh = default;
+            Optional<int> lengthInMeters = default;
+            Optional<int> travelTimeInSeconds = default;
+            Optional<int> trafficDelayInSeconds = default;
+            Optional<DateTimeOffset> departureTime = default;
+            Optional<DateTimeOffset> arrivalTime = default;
+            Optional<int> noTrafficTravelTimeInSeconds = default;
+            Optional<int> historicTrafficTravelTimeInSeconds = default;
+            Optional<int> liveTrafficIncidentsTravelTimeInSeconds = default;
+            Optional<double> fuelConsumptionInLiters = default;
+            Optional<double> batteryConsumptionInkWh = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lengthInMeters"u8))
@@ -122,7 +122,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteLegSummary(Core.Optional.ToNullable(lengthInMeters), Core.Optional.ToNullable(travelTimeInSeconds), Core.Optional.ToNullable(trafficDelayInSeconds), Core.Optional.ToNullable(departureTime), Core.Optional.ToNullable(arrivalTime), Core.Optional.ToNullable(noTrafficTravelTimeInSeconds), Core.Optional.ToNullable(historicTrafficTravelTimeInSeconds), Core.Optional.ToNullable(liveTrafficIncidentsTravelTimeInSeconds), Core.Optional.ToNullable(fuelConsumptionInLiters), Core.Optional.ToNullable(batteryConsumptionInkWh));
+            return new RouteLegSummary(Optional.ToNullable(lengthInMeters), Optional.ToNullable(travelTimeInSeconds), Optional.ToNullable(trafficDelayInSeconds), Optional.ToNullable(departureTime), Optional.ToNullable(arrivalTime), Optional.ToNullable(noTrafficTravelTimeInSeconds), Optional.ToNullable(historicTrafficTravelTimeInSeconds), Optional.ToNullable(liveTrafficIncidentsTravelTimeInSeconds), Optional.ToNullable(fuelConsumptionInLiters), Optional.ToNullable(batteryConsumptionInkWh));
         }
     }
 }

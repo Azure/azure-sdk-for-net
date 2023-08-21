@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SemanticField : Core.IUtf8JsonSerializable
+    public partial class SemanticField : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FieldName))
+            if (Optional.IsDefined(FieldName))
             {
                 writer.WritePropertyName("fieldName"u8);
                 writer.WriteStringValue(FieldName);
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<string> fieldName = default;
+            Optional<string> fieldName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fieldName"u8))

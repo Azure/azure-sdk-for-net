@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of EdgeNode. </summary>
         public EdgeNode()
         {
-            IPAddressGroups = new Core.ChangeTrackingList<IPAddressGroup>();
+            IPAddressGroups = new ChangeTrackingList<IPAddressGroup>();
         }
 
         /// <summary> Initializes a new instance of EdgeNode. </summary>

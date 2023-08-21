@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of ScheduledQueryRuleCondition. </summary>
         public ScheduledQueryRuleCondition()
         {
-            Dimensions = new Core.ChangeTrackingList<MonitorDimension>();
+            Dimensions = new ChangeTrackingList<MonitorDimension>();
         }
 
         /// <summary> Initializes a new instance of ScheduledQueryRuleCondition. </summary>

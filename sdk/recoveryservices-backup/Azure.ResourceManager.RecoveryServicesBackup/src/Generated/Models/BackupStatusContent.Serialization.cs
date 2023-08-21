@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupStatusContent : Core.IUtf8JsonSerializable
+    public partial class BackupStatusContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ResourceType))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Core.Optional.IsDefined(PoLogicalName))
+            if (Optional.IsDefined(PoLogicalName))
             {
                 writer.WritePropertyName("poLogicalName"u8);
                 writer.WriteStringValue(PoLogicalName);

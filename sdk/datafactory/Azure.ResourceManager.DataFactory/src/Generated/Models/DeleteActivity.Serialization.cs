@@ -13,17 +13,17 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DeleteActivity : Core.IUtf8JsonSerializable
+    public partial class DeleteActivity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LinkedServiceName))
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Core.Optional.IsDefined(Policy))
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsDefined(OnInactiveMarkAs))
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(DependsOn))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(UserProperties))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -69,29 +69,29 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Recursive))
+            if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
                 JsonSerializer.Serialize(writer, Recursive);
             }
-            if (Core.Optional.IsDefined(MaxConcurrentConnections))
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteNumberValue(MaxConcurrentConnections.Value);
             }
-            if (Core.Optional.IsDefined(EnableLogging))
+            if (Optional.IsDefined(EnableLogging))
             {
                 writer.WritePropertyName("enableLogging"u8);
                 JsonSerializer.Serialize(writer, EnableLogging);
             }
-            if (Core.Optional.IsDefined(LogStorageSettings))
+            if (Optional.IsDefined(LogStorageSettings))
             {
                 writer.WritePropertyName("logStorageSettings"u8);
                 writer.WriteObjectValue(LogStorageSettings);
             }
             writer.WritePropertyName("dataset"u8);
             writer.WriteObjectValue(Dataset);
-            if (Core.Optional.IsDefined(StoreSettings))
+            if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
                 writer.WriteObjectValue(StoreSettings);
@@ -115,21 +115,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Core.Optional<PipelineActivityPolicy> policy = default;
+            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
+            Optional<PipelineActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            Core.Optional<string> description = default;
-            Core.Optional<PipelineActivityState> state = default;
-            Core.Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Core.Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Core.Optional<IList<PipelineActivityUserProperty>> userProperties = default;
-            Core.Optional<DataFactoryElement<bool>> recursive = default;
-            Core.Optional<int> maxConcurrentConnections = default;
-            Core.Optional<DataFactoryElement<bool>> enableLogging = default;
-            Core.Optional<LogStorageSettings> logStorageSettings = default;
+            Optional<string> description = default;
+            Optional<PipelineActivityState> state = default;
+            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Optional<IList<PipelineActivityDependency>> dependsOn = default;
+            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            Optional<DataFactoryElement<bool>> recursive = default;
+            Optional<int> maxConcurrentConnections = default;
+            Optional<DataFactoryElement<bool>> enableLogging = default;
+            Optional<LogStorageSettings> logStorageSettings = default;
             DatasetReference dataset = default;
-            Core.Optional<StoreReadSettings> storeSettings = default;
+            Optional<StoreReadSettings> storeSettings = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DeleteActivity(name, type, description.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(onInactiveMarkAs), Core.Optional.ToList(dependsOn), Core.Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, recursive.Value, Core.Optional.ToNullable(maxConcurrentConnections), enableLogging.Value, logStorageSettings.Value, dataset, storeSettings.Value);
+            return new DeleteActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, recursive.Value, Optional.ToNullable(maxConcurrentConnections), enableLogging.Value, logStorageSettings.Value, dataset, storeSettings.Value);
         }
     }
 }

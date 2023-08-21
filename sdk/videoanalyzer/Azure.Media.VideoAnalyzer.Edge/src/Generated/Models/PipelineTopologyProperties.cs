@@ -16,10 +16,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of PipelineTopologyProperties. </summary>
         public PipelineTopologyProperties()
         {
-            Parameters = new Core.ChangeTrackingList<ParameterDeclaration>();
-            Sources = new Core.ChangeTrackingList<SourceNodeBase>();
-            Processors = new Core.ChangeTrackingList<ProcessorNodeBase>();
-            Sinks = new Core.ChangeTrackingList<SinkNodeBase>();
+            Parameters = new ChangeTrackingList<ParameterDeclaration>();
+            Sources = new ChangeTrackingList<SourceNodeBase>();
+            Processors = new ChangeTrackingList<ProcessorNodeBase>();
+            Sinks = new ChangeTrackingList<SinkNodeBase>();
         }
 
         /// <summary> Initializes a new instance of PipelineTopologyProperties. </summary>

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupVaultProperties : Core.IUtf8JsonSerializable
+    public partial class DataProtectionBackupVaultProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MonitoringSettings))
+            if (Optional.IsDefined(MonitoringSettings))
             {
                 writer.WritePropertyName("monitoringSettings"u8);
                 writer.WriteObjectValue(MonitoringSettings);
             }
-            if (Core.Optional.IsDefined(SecuritySettings))
+            if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(FeatureSettings))
+            if (Optional.IsDefined(FeatureSettings))
             {
                 writer.WritePropertyName("featureSettings"u8);
                 writer.WriteObjectValue(FeatureSettings);
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<MonitoringSettings> monitoringSettings = default;
-            Core.Optional<DataProtectionBackupProvisioningState> provisioningState = default;
-            Core.Optional<BackupVaultResourceMoveState> resourceMoveState = default;
-            Core.Optional<BackupVaultResourceMoveDetails> resourceMoveDetails = default;
-            Core.Optional<BackupVaultSecuritySettings> securitySettings = default;
+            Optional<MonitoringSettings> monitoringSettings = default;
+            Optional<DataProtectionBackupProvisioningState> provisioningState = default;
+            Optional<BackupVaultResourceMoveState> resourceMoveState = default;
+            Optional<BackupVaultResourceMoveDetails> resourceMoveDetails = default;
+            Optional<BackupVaultSecuritySettings> securitySettings = default;
             IList<DataProtectionBackupStorageSetting> storageSettings = default;
-            Core.Optional<bool> isVaultProtectedByResourceGuard = default;
-            Core.Optional<FeatureSettings> featureSettings = default;
+            Optional<bool> isVaultProtectedByResourceGuard = default;
+            Optional<FeatureSettings> featureSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("monitoringSettings"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new DataProtectionBackupVaultProperties(monitoringSettings.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(resourceMoveState), resourceMoveDetails.Value, securitySettings.Value, storageSettings, Core.Optional.ToNullable(isVaultProtectedByResourceGuard), featureSettings.Value);
+            return new DataProtectionBackupVaultProperties(monitoringSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceMoveState), resourceMoveDetails.Value, securitySettings.Value, storageSettings, Optional.ToNullable(isVaultProtectedByResourceGuard), featureSettings.Value);
         }
     }
 }

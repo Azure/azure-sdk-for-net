@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ReportConfigFilter : Core.IUtf8JsonSerializable
+    public partial class ReportConfigFilter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(And))
+            if (Optional.IsCollectionDefined(And))
             {
                 writer.WritePropertyName("and"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Or))
+            if (Optional.IsCollectionDefined(Or))
             {
                 writer.WritePropertyName("or"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Dimensions))
+            if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);
             }
-            if (Core.Optional.IsDefined(Tags))
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<IList<ReportConfigFilter>> and = default;
-            Core.Optional<IList<ReportConfigFilter>> or = default;
-            Core.Optional<ReportConfigComparisonExpression> dimensions = default;
-            Core.Optional<ReportConfigComparisonExpression> tags = default;
+            Optional<IList<ReportConfigFilter>> and = default;
+            Optional<IList<ReportConfigFilter>> or = default;
+            Optional<ReportConfigComparisonExpression> dimensions = default;
+            Optional<ReportConfigComparisonExpression> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("and"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new ReportConfigFilter(Core.Optional.ToList(and), Core.Optional.ToList(or), dimensions.Value, tags.Value);
+            return new ReportConfigFilter(Optional.ToList(and), Optional.ToList(or), dimensions.Value, tags.Value);
         }
     }
 }

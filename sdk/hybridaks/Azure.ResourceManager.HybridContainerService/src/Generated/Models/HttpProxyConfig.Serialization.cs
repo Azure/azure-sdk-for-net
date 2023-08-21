@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class HttpProxyConfig : Core.IUtf8JsonSerializable
+    public partial class HttpProxyConfig : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Core.Optional.IsDefined(HttpProxy))
+            if (Optional.IsDefined(HttpProxy))
             {
                 writer.WritePropertyName("httpProxy"u8);
                 writer.WriteStringValue(HttpProxy);
             }
-            if (Core.Optional.IsDefined(HttpsProxy))
+            if (Optional.IsDefined(HttpsProxy))
             {
                 writer.WritePropertyName("httpsProxy"u8);
                 writer.WriteStringValue(HttpsProxy);
             }
-            if (Core.Optional.IsCollectionDefined(NoProxy))
+            if (Optional.IsCollectionDefined(NoProxy))
             {
                 writer.WritePropertyName("noProxy"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TrustedCa))
+            if (Optional.IsDefined(TrustedCa))
             {
                 writer.WritePropertyName("trustedCa"u8);
                 writer.WriteStringValue(TrustedCa);
             }
-            if (Core.Optional.IsDefined(Username))
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<string> password = default;
-            Core.Optional<string> httpProxy = default;
-            Core.Optional<string> httpsProxy = default;
-            Core.Optional<IList<string>> noProxy = default;
-            Core.Optional<string> trustedCa = default;
-            Core.Optional<string> username = default;
+            Optional<string> password = default;
+            Optional<string> httpProxy = default;
+            Optional<string> httpsProxy = default;
+            Optional<IList<string>> noProxy = default;
+            Optional<string> trustedCa = default;
+            Optional<string> username = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("password"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new HttpProxyConfig(httpProxy.Value, httpsProxy.Value, Core.Optional.ToList(noProxy), trustedCa.Value, username.Value, password.Value);
+            return new HttpProxyConfig(httpProxy.Value, httpsProxy.Value, Optional.ToList(noProxy), trustedCa.Value, username.Value, password.Value);
         }
     }
 }

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class RtmpOutput : Core.IUtf8JsonSerializable
+    public partial class RtmpOutput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("streamKey"u8);
@@ -22,7 +22,7 @@ namespace Azure.Communication.MediaComposition
             writer.WriteObjectValue(Resolution);
             writer.WritePropertyName("streamUrl"u8);
             writer.WriteStringValue(StreamUrl);
-            if (Core.Optional.IsDefined(Mode))
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
@@ -41,7 +41,7 @@ namespace Azure.Communication.MediaComposition
             string streamKey = default;
             LayoutResolution resolution = default;
             string streamUrl = default;
-            Core.Optional<RtmpMode> mode = default;
+            Optional<RtmpMode> mode = default;
             MediaOutputType kind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -75,7 +75,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new RtmpOutput(kind, streamKey, resolution, streamUrl, Core.Optional.ToNullable(mode));
+            return new RtmpOutput(kind, streamKey, resolution, streamUrl, Optional.ToNullable(mode));
         }
     }
 }

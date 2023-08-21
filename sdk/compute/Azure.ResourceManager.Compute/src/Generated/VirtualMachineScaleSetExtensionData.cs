@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionData. </summary>
         public VirtualMachineScaleSetExtensionData()
         {
-            ProvisionAfterExtensions = new Core.ChangeTrackingList<string>();
+            ProvisionAfterExtensions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionData. </summary>

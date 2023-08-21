@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class FirmwarePatch : Core.IUtf8JsonSerializable
+    public partial class FirmwarePatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FileName))
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Core.Optional.IsDefined(Vendor))
+            if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (Core.Optional.IsDefined(Model))
+            if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (Core.Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(FileSize))
+            if (Optional.IsDefined(FileSize))
             {
                 if (FileSize != null)
                 {
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("fileSize");
                 }
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(StatusMessages))
+            if (Optional.IsCollectionDefined(StatusMessages))
             {
                 writer.WritePropertyName("statusMessages"u8);
                 writer.WriteStartArray();

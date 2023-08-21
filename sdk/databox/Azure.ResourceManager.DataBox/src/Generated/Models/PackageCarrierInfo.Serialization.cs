@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class PackageCarrierInfo : Core.IUtf8JsonSerializable
+    public partial class PackageCarrierInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CarrierName))
+            if (Optional.IsDefined(CarrierName))
             {
                 writer.WritePropertyName("carrierName"u8);
                 writer.WriteStringValue(CarrierName);
             }
-            if (Core.Optional.IsDefined(TrackingId))
+            if (Optional.IsDefined(TrackingId))
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<string> carrierName = default;
-            Core.Optional<string> trackingId = default;
+            Optional<string> carrierName = default;
+            Optional<string> trackingId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("carrierName"u8))

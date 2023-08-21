@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBSqlClientEncryptionKeySqlResourcesRestClient.CreateUpdateClientEncryptionKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlClientEncryptionKeyResource>(new CosmosDBSqlClientEncryptionKeyOperationSource(Client), _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlClientEncryptionKeySqlResourcesRestClient.CreateCreateUpdateClientEncryptionKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlClientEncryptionKeyResource>(new CosmosDBSqlClientEncryptionKeyOperationSource(Client), _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlClientEncryptionKeySqlResourcesRestClient.CreateCreateUpdateClientEncryptionKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBSqlClientEncryptionKeySqlResourcesRestClient.CreateUpdateClientEncryptionKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlClientEncryptionKeyResource>(new CosmosDBSqlClientEncryptionKeyOperationSource(Client), _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlClientEncryptionKeySqlResourcesRestClient.CreateCreateUpdateClientEncryptionKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlClientEncryptionKeyResource>(new CosmosDBSqlClientEncryptionKeyOperationSource(Client), _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlClientEncryptionKeySqlResourcesRestClient.CreateCreateUpdateClientEncryptionKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

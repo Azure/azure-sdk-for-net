@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public DiskEncryptionSetData(AzureLocation location) : base(location)
         {
-            PreviousKeys = new Core.ChangeTrackingList<KeyForDiskEncryptionSet>();
+            PreviousKeys = new ChangeTrackingList<KeyForDiskEncryptionSet>();
         }
 
         /// <summary> Initializes a new instance of DiskEncryptionSetData. </summary>

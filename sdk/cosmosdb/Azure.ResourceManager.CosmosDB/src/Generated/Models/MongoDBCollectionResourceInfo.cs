@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(collectionName, nameof(collectionName));
 
             CollectionName = collectionName;
-            ShardKey = new Core.ChangeTrackingDictionary<string, string>();
-            Indexes = new Core.ChangeTrackingList<MongoDBIndex>();
+            ShardKey = new ChangeTrackingDictionary<string, string>();
+            Indexes = new ChangeTrackingList<MongoDBIndex>();
         }
 
         /// <summary> Initializes a new instance of MongoDBCollectionResourceInfo. </summary>

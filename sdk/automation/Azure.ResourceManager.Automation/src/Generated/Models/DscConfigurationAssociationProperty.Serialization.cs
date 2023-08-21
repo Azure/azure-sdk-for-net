@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class DscConfigurationAssociationProperty : Core.IUtf8JsonSerializable
+    public partial class DscConfigurationAssociationProperty : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ConfigurationName))
+            if (Optional.IsDefined(ConfigurationName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(ConfigurationName);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
+            Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

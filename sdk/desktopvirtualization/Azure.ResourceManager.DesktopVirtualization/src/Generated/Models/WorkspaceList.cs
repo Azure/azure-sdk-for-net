@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of WorkspaceList. </summary>
         internal WorkspaceList()
         {
-            Value = new Core.ChangeTrackingList<VirtualWorkspaceData>();
+            Value = new ChangeTrackingList<VirtualWorkspaceData>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceList. </summary>

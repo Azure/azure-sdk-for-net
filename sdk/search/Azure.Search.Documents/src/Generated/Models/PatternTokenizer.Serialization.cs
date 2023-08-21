@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class PatternTokenizer : Core.IUtf8JsonSerializable
+    public partial class PatternTokenizer : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Pattern))
+            if (Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (Core.Optional.IsDefined(FlagsInternal))
+            if (Optional.IsDefined(FlagsInternal))
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteStringValue(FlagsInternal);
             }
-            if (Core.Optional.IsDefined(Group))
+            if (Optional.IsDefined(Group))
             {
                 writer.WritePropertyName("group"u8);
                 writer.WriteNumberValue(Group.Value);
@@ -43,9 +43,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<string> pattern = default;
-            Core.Optional<string> flags = default;
-            Core.Optional<int> group = default;
+            Optional<string> pattern = default;
+            Optional<string> flags = default;
+            Optional<int> group = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PatternTokenizer(odataType, name, pattern.Value, flags.Value, Core.Optional.ToNullable(group));
+            return new PatternTokenizer(odataType, name, pattern.Value, flags.Value, Optional.ToNullable(group));
         }
     }
 }

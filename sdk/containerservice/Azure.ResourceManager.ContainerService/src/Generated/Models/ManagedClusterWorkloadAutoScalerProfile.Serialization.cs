@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterWorkloadAutoScalerProfile : Core.IUtf8JsonSerializable
+    public partial class ManagedClusterWorkloadAutoScalerProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Keda))
+            if (Optional.IsDefined(Keda))
             {
                 writer.WritePropertyName("keda"u8);
                 writer.WriteObjectValue(Keda);
             }
-            if (Core.Optional.IsDefined(VerticalPodAutoscaler))
+            if (Optional.IsDefined(VerticalPodAutoscaler))
             {
                 writer.WritePropertyName("verticalPodAutoscaler"u8);
                 writer.WriteObjectValue(VerticalPodAutoscaler);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<ManagedClusterWorkloadAutoScalerProfileKeda> keda = default;
-            Core.Optional<ManagedClusterVerticalPodAutoscaler> verticalPodAutoscaler = default;
+            Optional<ManagedClusterWorkloadAutoScalerProfileKeda> keda = default;
+            Optional<ManagedClusterVerticalPodAutoscaler> verticalPodAutoscaler = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keda"u8))

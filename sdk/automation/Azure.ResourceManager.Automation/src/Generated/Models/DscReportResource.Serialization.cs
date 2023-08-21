@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<string> resourceId = default;
-            Core.Optional<string> sourceInfo = default;
-            Core.Optional<IReadOnlyList<DscReportResourceNavigation>> dependsOn = default;
-            Core.Optional<string> moduleName = default;
-            Core.Optional<string> moduleVersion = default;
-            Core.Optional<string> resourceName = default;
-            Core.Optional<string> error = default;
-            Core.Optional<string> status = default;
-            Core.Optional<double> durationInSeconds = default;
-            Core.Optional<DateTimeOffset> startDate = default;
+            Optional<string> resourceId = default;
+            Optional<string> sourceInfo = default;
+            Optional<IReadOnlyList<DscReportResourceNavigation>> dependsOn = default;
+            Optional<string> moduleName = default;
+            Optional<string> moduleVersion = default;
+            Optional<string> resourceName = default;
+            Optional<string> error = default;
+            Optional<string> status = default;
+            Optional<double> durationInSeconds = default;
+            Optional<DateTimeOffset> startDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new DscReportResource(resourceId.Value, sourceInfo.Value, Core.Optional.ToList(dependsOn), moduleName.Value, moduleVersion.Value, resourceName.Value, error.Value, status.Value, Core.Optional.ToNullable(durationInSeconds), Core.Optional.ToNullable(startDate));
+            return new DscReportResource(resourceId.Value, sourceInfo.Value, Optional.ToList(dependsOn), moduleName.Value, moduleVersion.Value, resourceName.Value, error.Value, status.Value, Optional.ToNullable(durationInSeconds), Optional.ToNullable(startDate));
         }
     }
 }

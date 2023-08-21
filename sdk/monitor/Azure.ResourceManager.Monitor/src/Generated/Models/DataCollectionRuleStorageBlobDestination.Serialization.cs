@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DataCollectionRuleStorageBlobDestination : Core.IUtf8JsonSerializable
+    public partial class DataCollectionRuleStorageBlobDestination : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ContainerName))
+            if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (Core.Optional.IsDefined(StorageAccountResourceId))
+            if (Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<string> containerName = default;
-            Core.Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Core.Optional<string> name = default;
+            Optional<string> containerName = default;
+            Optional<ResourceIdentifier> storageAccountResourceId = default;
+            Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerName"u8))

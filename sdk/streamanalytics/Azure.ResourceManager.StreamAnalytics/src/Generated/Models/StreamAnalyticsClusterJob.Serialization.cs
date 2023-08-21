@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<int> streamingUnits = default;
-            Core.Optional<StreamingJobState> jobState = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<int> streamingUnits = default;
+            Optional<StreamingJobState> jobState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamAnalyticsClusterJob(id.Value, Core.Optional.ToNullable(streamingUnits), Core.Optional.ToNullable(jobState));
+            return new StreamAnalyticsClusterJob(id.Value, Optional.ToNullable(streamingUnits), Optional.ToNullable(jobState));
         }
     }
 }

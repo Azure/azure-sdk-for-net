@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class UserInfo : Core.IUtf8JsonSerializable
+    public partial class UserInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(EmailAddress))
+            if (Optional.IsDefined(EmailAddress))
             {
                 writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
-            if (Core.Optional.IsDefined(PhoneNumber))
+            if (Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> emailAddress = default;
-            Core.Optional<string> phoneNumber = default;
+            Optional<string> name = default;
+            Optional<string> emailAddress = default;
+            Optional<string> phoneNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

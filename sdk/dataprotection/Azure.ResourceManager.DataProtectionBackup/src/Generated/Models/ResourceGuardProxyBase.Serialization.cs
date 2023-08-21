@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class ResourceGuardProxyBase : Core.IUtf8JsonSerializable
+    public partial class ResourceGuardProxyBase : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ResourceGuardResourceId))
+            if (Optional.IsDefined(ResourceGuardResourceId))
             {
                 writer.WritePropertyName("resourceGuardResourceId"u8);
                 writer.WriteStringValue(ResourceGuardResourceId);
             }
-            if (Core.Optional.IsCollectionDefined(ResourceGuardOperationDetails))
+            if (Optional.IsCollectionDefined(ResourceGuardOperationDetails))
             {
                 writer.WritePropertyName("resourceGuardOperationDetails"u8);
                 writer.WriteStartArray();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(LastUpdatedTime))
+            if (Optional.IsDefined(LastUpdatedTime))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedTime);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<string> resourceGuardResourceId = default;
-            Core.Optional<IList<ResourceGuardOperationDetail>> resourceGuardOperationDetails = default;
-            Core.Optional<string> lastUpdatedTime = default;
-            Core.Optional<string> description = default;
+            Optional<string> resourceGuardResourceId = default;
+            Optional<IList<ResourceGuardOperationDetail>> resourceGuardOperationDetails = default;
+            Optional<string> lastUpdatedTime = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceGuardResourceId"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new ResourceGuardProxyBase(resourceGuardResourceId.Value, Core.Optional.ToList(resourceGuardOperationDetails), lastUpdatedTime.Value, description.Value);
+            return new ResourceGuardProxyBase(resourceGuardResourceId.Value, Optional.ToList(resourceGuardOperationDetails), lastUpdatedTime.Value, description.Value);
         }
     }
 }

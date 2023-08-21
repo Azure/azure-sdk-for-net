@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> actions = default;
-            Core.Optional<IReadOnlyList<string>> notActions = default;
-            Core.Optional<IReadOnlyList<string>> dataActions = default;
-            Core.Optional<IReadOnlyList<string>> notDataActions = default;
+            Optional<IReadOnlyList<string>> actions = default;
+            Optional<IReadOnlyList<string>> notActions = default;
+            Optional<IReadOnlyList<string>> dataActions = default;
+            Optional<IReadOnlyList<string>> notDataActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new Permission(Core.Optional.ToList(actions), Core.Optional.ToList(notActions), Core.Optional.ToList(dataActions), Core.Optional.ToList(notDataActions));
+            return new Permission(Optional.ToList(actions), Optional.ToList(notActions), Optional.ToList(dataActions), Optional.ToList(notDataActions));
         }
     }
 }

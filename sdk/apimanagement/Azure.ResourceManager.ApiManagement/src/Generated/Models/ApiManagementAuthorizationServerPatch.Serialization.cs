@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementAuthorizationServerPatch : Core.IUtf8JsonSerializable
+    public partial class ApiManagementAuthorizationServerPatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(AuthorizationMethods))
+            if (Optional.IsCollectionDefined(AuthorizationMethods))
             {
                 writer.WritePropertyName("authorizationMethods"u8);
                 writer.WriteStartArray();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ClientAuthenticationMethods))
+            if (Optional.IsCollectionDefined(ClientAuthenticationMethods))
             {
                 writer.WritePropertyName("clientAuthenticationMethod"u8);
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(TokenBodyParameters))
+            if (Optional.IsCollectionDefined(TokenBodyParameters))
             {
                 writer.WritePropertyName("tokenBodyParameters"u8);
                 writer.WriteStartArray();
@@ -54,22 +54,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TokenEndpoint))
+            if (Optional.IsDefined(TokenEndpoint))
             {
                 writer.WritePropertyName("tokenEndpoint"u8);
                 writer.WriteStringValue(TokenEndpoint);
             }
-            if (Core.Optional.IsDefined(DoesSupportState))
+            if (Optional.IsDefined(DoesSupportState))
             {
                 writer.WritePropertyName("supportState"u8);
                 writer.WriteBooleanValue(DoesSupportState.Value);
             }
-            if (Core.Optional.IsDefined(DefaultScope))
+            if (Optional.IsDefined(DefaultScope))
             {
                 writer.WritePropertyName("defaultScope"u8);
                 writer.WriteStringValue(DefaultScope);
             }
-            if (Core.Optional.IsCollectionDefined(BearerTokenSendingMethods))
+            if (Optional.IsCollectionDefined(BearerTokenSendingMethods))
             {
                 writer.WritePropertyName("bearerTokenSendingMethods"u8);
                 writer.WriteStartArray();
@@ -79,32 +79,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ResourceOwnerUsername))
+            if (Optional.IsDefined(ResourceOwnerUsername))
             {
                 writer.WritePropertyName("resourceOwnerUsername"u8);
                 writer.WriteStringValue(ResourceOwnerUsername);
             }
-            if (Core.Optional.IsDefined(ResourceOwnerPassword))
+            if (Optional.IsDefined(ResourceOwnerPassword))
             {
                 writer.WritePropertyName("resourceOwnerPassword"u8);
                 writer.WriteStringValue(ResourceOwnerPassword);
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(ClientRegistrationEndpoint))
+            if (Optional.IsDefined(ClientRegistrationEndpoint))
             {
                 writer.WritePropertyName("clientRegistrationEndpoint"u8);
                 writer.WriteStringValue(ClientRegistrationEndpoint);
             }
-            if (Core.Optional.IsDefined(AuthorizationEndpoint))
+            if (Optional.IsDefined(AuthorizationEndpoint))
             {
                 writer.WritePropertyName("authorizationEndpoint"u8);
                 writer.WriteStringValue(AuthorizationEndpoint);
             }
-            if (Core.Optional.IsCollectionDefined(GrantTypes))
+            if (Optional.IsCollectionDefined(GrantTypes))
             {
                 writer.WritePropertyName("grantTypes"u8);
                 writer.WriteStartArray();
@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Core.Optional.IsDefined(ClientSecret))
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
@@ -137,23 +137,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IList<AuthorizationMethod>> authorizationMethods = default;
-            Core.Optional<IList<ClientAuthenticationMethod>> clientAuthenticationMethod = default;
-            Core.Optional<IList<TokenBodyParameterContract>> tokenBodyParameters = default;
-            Core.Optional<string> tokenEndpoint = default;
-            Core.Optional<bool> supportState = default;
-            Core.Optional<string> defaultScope = default;
-            Core.Optional<IList<BearerTokenSendingMethod>> bearerTokenSendingMethods = default;
-            Core.Optional<string> resourceOwnerUsername = default;
-            Core.Optional<string> resourceOwnerPassword = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> clientRegistrationEndpoint = default;
-            Core.Optional<string> authorizationEndpoint = default;
-            Core.Optional<IList<GrantType>> grantTypes = default;
-            Core.Optional<string> clientId = default;
-            Core.Optional<string> clientSecret = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<IList<AuthorizationMethod>> authorizationMethods = default;
+            Optional<IList<ClientAuthenticationMethod>> clientAuthenticationMethod = default;
+            Optional<IList<TokenBodyParameterContract>> tokenBodyParameters = default;
+            Optional<string> tokenEndpoint = default;
+            Optional<bool> supportState = default;
+            Optional<string> defaultScope = default;
+            Optional<IList<BearerTokenSendingMethod>> bearerTokenSendingMethods = default;
+            Optional<string> resourceOwnerUsername = default;
+            Optional<string> resourceOwnerPassword = default;
+            Optional<string> displayName = default;
+            Optional<string> clientRegistrationEndpoint = default;
+            Optional<string> authorizationEndpoint = default;
+            Optional<IList<GrantType>> grantTypes = default;
+            Optional<string> clientId = default;
+            Optional<string> clientSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiManagementAuthorizationServerPatch(id, name, type, systemData.Value, description.Value, Core.Optional.ToList(authorizationMethods), Core.Optional.ToList(clientAuthenticationMethod), Core.Optional.ToList(tokenBodyParameters), tokenEndpoint.Value, Core.Optional.ToNullable(supportState), defaultScope.Value, Core.Optional.ToList(bearerTokenSendingMethods), resourceOwnerUsername.Value, resourceOwnerPassword.Value, displayName.Value, clientRegistrationEndpoint.Value, authorizationEndpoint.Value, Core.Optional.ToList(grantTypes), clientId.Value, clientSecret.Value);
+            return new ApiManagementAuthorizationServerPatch(id, name, type, systemData.Value, description.Value, Optional.ToList(authorizationMethods), Optional.ToList(clientAuthenticationMethod), Optional.ToList(tokenBodyParameters), tokenEndpoint.Value, Optional.ToNullable(supportState), defaultScope.Value, Optional.ToList(bearerTokenSendingMethods), resourceOwnerUsername.Value, resourceOwnerPassword.Value, displayName.Value, clientRegistrationEndpoint.Value, authorizationEndpoint.Value, Optional.ToList(grantTypes), clientId.Value, clientSecret.Value);
         }
     }
 }

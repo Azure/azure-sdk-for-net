@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of DataSourceCredentialList. </summary>
         internal DataSourceCredentialList()
         {
-            Value = new Core.ChangeTrackingList<DataSourceCredentialEntity>();
+            Value = new ChangeTrackingList<DataSourceCredentialEntity>();
         }
 
         /// <summary> Initializes a new instance of DataSourceCredentialList. </summary>

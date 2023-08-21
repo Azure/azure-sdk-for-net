@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterApiServerAccessProfile : Core.IUtf8JsonSerializable
+    public partial class ManagedClusterApiServerAccessProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AuthorizedIPRanges))
+            if (Optional.IsCollectionDefined(AuthorizedIPRanges))
             {
                 writer.WritePropertyName("authorizedIPRanges"u8);
                 writer.WriteStartArray();
@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(EnablePrivateCluster))
+            if (Optional.IsDefined(EnablePrivateCluster))
             {
                 writer.WritePropertyName("enablePrivateCluster"u8);
                 writer.WriteBooleanValue(EnablePrivateCluster.Value);
             }
-            if (Core.Optional.IsDefined(PrivateDnsZone))
+            if (Optional.IsDefined(PrivateDnsZone))
             {
                 writer.WritePropertyName("privateDNSZone"u8);
                 writer.WriteStringValue(PrivateDnsZone);
             }
-            if (Core.Optional.IsDefined(EnablePrivateClusterPublicFqdn))
+            if (Optional.IsDefined(EnablePrivateClusterPublicFqdn))
             {
                 writer.WritePropertyName("enablePrivateClusterPublicFQDN"u8);
                 writer.WriteBooleanValue(EnablePrivateClusterPublicFqdn.Value);
             }
-            if (Core.Optional.IsDefined(DisableRunCommand))
+            if (Optional.IsDefined(DisableRunCommand))
             {
                 writer.WritePropertyName("disableRunCommand"u8);
                 writer.WriteBooleanValue(DisableRunCommand.Value);
             }
-            if (Core.Optional.IsDefined(EnableVnetIntegration))
+            if (Optional.IsDefined(EnableVnetIntegration))
             {
                 writer.WritePropertyName("enableVnetIntegration"u8);
                 writer.WriteBooleanValue(EnableVnetIntegration.Value);
             }
-            if (Core.Optional.IsDefined(SubnetId))
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
@@ -65,13 +65,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> authorizedIPRanges = default;
-            Core.Optional<bool> enablePrivateCluster = default;
-            Core.Optional<string> privateDnsZone = default;
-            Core.Optional<bool> enablePrivateClusterPublicFQDN = default;
-            Core.Optional<bool> disableRunCommand = default;
-            Core.Optional<bool> enableVnetIntegration = default;
-            Core.Optional<ResourceIdentifier> subnetId = default;
+            Optional<IList<string>> authorizedIPRanges = default;
+            Optional<bool> enablePrivateCluster = default;
+            Optional<string> privateDnsZone = default;
+            Optional<bool> enablePrivateClusterPublicFQDN = default;
+            Optional<bool> disableRunCommand = default;
+            Optional<bool> enableVnetIntegration = default;
+            Optional<ResourceIdentifier> subnetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizedIPRanges"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterApiServerAccessProfile(Core.Optional.ToList(authorizedIPRanges), Core.Optional.ToNullable(enablePrivateCluster), privateDnsZone.Value, Core.Optional.ToNullable(enablePrivateClusterPublicFQDN), Core.Optional.ToNullable(disableRunCommand), Core.Optional.ToNullable(enableVnetIntegration), subnetId.Value);
+            return new ManagedClusterApiServerAccessProfile(Optional.ToList(authorizedIPRanges), Optional.ToNullable(enablePrivateCluster), privateDnsZone.Value, Optional.ToNullable(enablePrivateClusterPublicFQDN), Optional.ToNullable(disableRunCommand), Optional.ToNullable(enableVnetIntegration), subnetId.Value);
         }
     }
 }

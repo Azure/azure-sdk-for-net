@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DataFactoryPrivateLinkResourceProperties. </summary>
         public DataFactoryPrivateLinkResourceProperties()
         {
-            RequiredMembers = new Core.ChangeTrackingList<string>();
-            RequiredZoneNames = new Core.ChangeTrackingList<string>();
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DataFactoryPrivateLinkResourceProperties. </summary>

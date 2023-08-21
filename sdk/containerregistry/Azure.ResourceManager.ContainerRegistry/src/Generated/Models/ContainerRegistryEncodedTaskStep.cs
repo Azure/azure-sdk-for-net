@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Argument.AssertNotNull(encodedTaskContent, nameof(encodedTaskContent));
 
             EncodedTaskContent = encodedTaskContent;
-            Values = new Core.ChangeTrackingList<ContainerRegistryTaskOverridableValue>();
+            Values = new ChangeTrackingList<ContainerRegistryTaskOverridableValue>();
             ContainerRegistryTaskStepType = ContainerRegistryTaskStepType.EncodedTask;
         }
 

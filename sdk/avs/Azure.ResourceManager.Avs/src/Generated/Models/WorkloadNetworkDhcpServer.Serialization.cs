@@ -11,29 +11,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class WorkloadNetworkDhcpServer : Core.IUtf8JsonSerializable
+    public partial class WorkloadNetworkDhcpServer : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServerAddress))
+            if (Optional.IsDefined(ServerAddress))
             {
                 writer.WritePropertyName("serverAddress"u8);
                 writer.WriteStringValue(ServerAddress);
             }
-            if (Core.Optional.IsDefined(LeaseTime))
+            if (Optional.IsDefined(LeaseTime))
             {
                 writer.WritePropertyName("leaseTime"u8);
                 writer.WriteNumberValue(LeaseTime.Value);
             }
             writer.WritePropertyName("dhcpType"u8);
             writer.WriteStringValue(DhcpType.ToString());
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Revision))
+            if (Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Core.Optional<string> serverAddress = default;
-            Core.Optional<long> leaseTime = default;
+            Optional<string> serverAddress = default;
+            Optional<long> leaseTime = default;
             DhcpTypeEnum dhcpType = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<IReadOnlyList<string>> segments = default;
-            Core.Optional<WorkloadNetworkDhcpProvisioningState> provisioningState = default;
-            Core.Optional<long> revision = default;
+            Optional<string> displayName = default;
+            Optional<IReadOnlyList<string>> segments = default;
+            Optional<WorkloadNetworkDhcpProvisioningState> provisioningState = default;
+            Optional<long> revision = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverAddress"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new WorkloadNetworkDhcpServer(dhcpType, displayName.Value, Core.Optional.ToList(segments), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(revision), serverAddress.Value, Core.Optional.ToNullable(leaseTime));
+            return new WorkloadNetworkDhcpServer(dhcpType, displayName.Value, Optional.ToList(segments), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serverAddress.Value, Optional.ToNullable(leaseTime));
         }
     }
 }

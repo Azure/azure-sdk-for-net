@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Initializes a new instance of ComplianceResult. </summary>
         internal ComplianceResult()
         {
-            Categories = new Core.ChangeTrackingList<Category>();
+            Categories = new ChangeTrackingList<Category>();
         }
 
         /// <summary> Initializes a new instance of ComplianceResult. </summary>

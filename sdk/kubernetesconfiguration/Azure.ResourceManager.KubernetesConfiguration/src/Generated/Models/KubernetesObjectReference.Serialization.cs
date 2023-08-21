@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> @namespace = default;
+            Optional<string> name = default;
+            Optional<string> @namespace = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

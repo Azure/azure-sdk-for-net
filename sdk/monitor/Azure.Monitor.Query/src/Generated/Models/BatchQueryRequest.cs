@@ -26,7 +26,7 @@ namespace Azure.Monitor.Query.Models
             Argument.AssertNotNull(workspace, nameof(workspace));
 
             Id = id;
-            Headers = new Core.ChangeTrackingDictionary<string, string>();
+            Headers = new ChangeTrackingDictionary<string, string>();
             Body = body;
             Path = "/query";
             Method = "POST";

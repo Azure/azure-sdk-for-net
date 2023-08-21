@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <summary> Initializes a new instance of MapsAccountProperties. </summary>
         public MapsAccountProperties()
         {
-            LinkedResources = new Core.ChangeTrackingList<MapsLinkedResource>();
+            LinkedResources = new ChangeTrackingList<MapsLinkedResource>();
         }
 
         /// <summary> Initializes a new instance of MapsAccountProperties. </summary>

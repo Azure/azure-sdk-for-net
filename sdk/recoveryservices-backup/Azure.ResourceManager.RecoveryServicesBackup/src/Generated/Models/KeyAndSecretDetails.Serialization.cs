@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class KeyAndSecretDetails : Core.IUtf8JsonSerializable
+    public partial class KeyAndSecretDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KekDetails))
+            if (Optional.IsDefined(KekDetails))
             {
                 writer.WritePropertyName("kekDetails"u8);
                 writer.WriteObjectValue(KekDetails);
             }
-            if (Core.Optional.IsDefined(BekDetails))
+            if (Optional.IsDefined(BekDetails))
             {
                 writer.WritePropertyName("bekDetails"u8);
                 writer.WriteObjectValue(BekDetails);
             }
-            if (Core.Optional.IsDefined(EncryptionMechanism))
+            if (Optional.IsDefined(EncryptionMechanism))
             {
                 writer.WritePropertyName("encryptionMechanism"u8);
                 writer.WriteStringValue(EncryptionMechanism);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<KekDetails> kekDetails = default;
-            Core.Optional<BekDetails> bekDetails = default;
-            Core.Optional<string> encryptionMechanism = default;
+            Optional<KekDetails> kekDetails = default;
+            Optional<BekDetails> bekDetails = default;
+            Optional<string> encryptionMechanism = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kekDetails"u8))

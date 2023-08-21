@@ -14,17 +14,17 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class StorageInsightData : Core.IUtf8JsonSerializable
+    public partial class StorageInsightData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Containers))
+            if (Optional.IsCollectionDefined(Containers))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Tables))
+            if (Optional.IsCollectionDefined(Tables))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(StorageAccount))
+            if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteObjectValue(StorageAccount);
@@ -72,16 +72,16 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Core.Optional<ETag> eTag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ETag> eTag = default;
+            Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IList<string>> containers = default;
-            Core.Optional<IList<string>> tables = default;
-            Core.Optional<OperationalInsightsStorageAccount> storageAccount = default;
-            Core.Optional<StorageInsightStatus> status = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<string>> containers = default;
+            Optional<IList<string>> tables = default;
+            Optional<OperationalInsightsStorageAccount> storageAccount = default;
+            Optional<StorageInsightStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     continue;
                 }
             }
-            return new StorageInsightData(id, name, type, systemData.Value, Core.Optional.ToNullable(eTag), Core.Optional.ToDictionary(tags), Core.Optional.ToList(containers), Core.Optional.ToList(tables), storageAccount.Value, status.Value);
+            return new StorageInsightData(id, name, type, systemData.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags), Optional.ToList(containers), Optional.ToList(tables), storageAccount.Value, status.Value);
         }
     }
 }

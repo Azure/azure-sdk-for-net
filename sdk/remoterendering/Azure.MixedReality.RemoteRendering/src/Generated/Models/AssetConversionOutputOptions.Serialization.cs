@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    public partial class AssetConversionOutputOptions : Core.IUtf8JsonSerializable
+    public partial class AssetConversionOutputOptions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageContainerUri"u8);
             writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
-            if (Core.Optional.IsDefined(StorageContainerWriteSas))
+            if (Optional.IsDefined(StorageContainerWriteSas))
             {
                 writer.WritePropertyName("storageContainerWriteSas"u8);
                 writer.WriteStringValue(StorageContainerWriteSas);
             }
-            if (Core.Optional.IsDefined(BlobPrefix))
+            if (Optional.IsDefined(BlobPrefix))
             {
                 writer.WritePropertyName("blobPrefix"u8);
                 writer.WriteStringValue(BlobPrefix);
             }
-            if (Core.Optional.IsDefined(OutputAssetFilename))
+            if (Optional.IsDefined(OutputAssetFilename))
             {
                 writer.WritePropertyName("outputAssetFilename"u8);
                 writer.WriteStringValue(OutputAssetFilename);
@@ -43,9 +43,9 @@ namespace Azure.MixedReality.RemoteRendering
                 return null;
             }
             Uri storageContainerUri = default;
-            Core.Optional<string> storageContainerWriteSas = default;
-            Core.Optional<string> blobPrefix = default;
-            Core.Optional<string> outputAssetFilename = default;
+            Optional<string> storageContainerWriteSas = default;
+            Optional<string> blobPrefix = default;
+            Optional<string> outputAssetFilename = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageContainerUri"u8))

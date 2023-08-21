@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class ServiceBusCorrelationFilter : Core.IUtf8JsonSerializable
+    public partial class ServiceBusCorrelationFilter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ApplicationProperties))
+            if (Optional.IsCollectionDefined(ApplicationProperties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -32,47 +32,47 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(CorrelationId))
+            if (Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (Core.Optional.IsDefined(MessageId))
+            if (Optional.IsDefined(MessageId))
             {
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
-            if (Core.Optional.IsDefined(SendTo))
+            if (Optional.IsDefined(SendTo))
             {
                 writer.WritePropertyName("to"u8);
                 writer.WriteStringValue(SendTo);
             }
-            if (Core.Optional.IsDefined(ReplyTo))
+            if (Optional.IsDefined(ReplyTo))
             {
                 writer.WritePropertyName("replyTo"u8);
                 writer.WriteStringValue(ReplyTo);
             }
-            if (Core.Optional.IsDefined(Subject))
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (Core.Optional.IsDefined(SessionId))
+            if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId);
             }
-            if (Core.Optional.IsDefined(ReplyToSessionId))
+            if (Optional.IsDefined(ReplyToSessionId))
             {
                 writer.WritePropertyName("replyToSessionId"u8);
                 writer.WriteStringValue(ReplyToSessionId);
             }
-            if (Core.Optional.IsDefined(ContentType))
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Core.Optional.IsDefined(RequiresPreprocessing))
+            if (Optional.IsDefined(RequiresPreprocessing))
             {
                 writer.WritePropertyName("requiresPreprocessing"u8);
                 writer.WriteBooleanValue(RequiresPreprocessing.Value);
@@ -86,16 +86,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, object>> properties = default;
-            Core.Optional<string> correlationId = default;
-            Core.Optional<string> messageId = default;
-            Core.Optional<string> to = default;
-            Core.Optional<string> replyTo = default;
-            Core.Optional<string> label = default;
-            Core.Optional<string> sessionId = default;
-            Core.Optional<string> replyToSessionId = default;
-            Core.Optional<string> contentType = default;
-            Core.Optional<bool> requiresPreprocessing = default;
+            Optional<IDictionary<string, object>> properties = default;
+            Optional<string> correlationId = default;
+            Optional<string> messageId = default;
+            Optional<string> to = default;
+            Optional<string> replyTo = default;
+            Optional<string> label = default;
+            Optional<string> sessionId = default;
+            Optional<string> replyToSessionId = default;
+            Optional<string> contentType = default;
+            Optional<bool> requiresPreprocessing = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new ServiceBusCorrelationFilter(Core.Optional.ToDictionary(properties), correlationId.Value, messageId.Value, to.Value, replyTo.Value, label.Value, sessionId.Value, replyToSessionId.Value, contentType.Value, Core.Optional.ToNullable(requiresPreprocessing));
+            return new ServiceBusCorrelationFilter(Optional.ToDictionary(properties), correlationId.Value, messageId.Value, to.Value, replyTo.Value, label.Value, sessionId.Value, replyToSessionId.Value, contentType.Value, Optional.ToNullable(requiresPreprocessing));
         }
     }
 }

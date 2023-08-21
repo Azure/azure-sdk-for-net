@@ -14,12 +14,12 @@ using Azure.ResourceManager.Orbital.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
-    public partial class OrbitalSpacecraftData : Core.IUtf8JsonSerializable
+    public partial class OrbitalSpacecraftData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,32 +34,32 @@ namespace Azure.ResourceManager.Orbital
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(NoradId))
+            if (Optional.IsDefined(NoradId))
             {
                 writer.WritePropertyName("noradId"u8);
                 writer.WriteStringValue(NoradId);
             }
-            if (Core.Optional.IsDefined(TitleLine))
+            if (Optional.IsDefined(TitleLine))
             {
                 writer.WritePropertyName("titleLine"u8);
                 writer.WriteStringValue(TitleLine);
             }
-            if (Core.Optional.IsDefined(TleLine1))
+            if (Optional.IsDefined(TleLine1))
             {
                 writer.WritePropertyName("tleLine1"u8);
                 writer.WriteStringValue(TleLine1);
             }
-            if (Core.Optional.IsDefined(TleLine2))
+            if (Optional.IsDefined(TleLine2))
             {
                 writer.WritePropertyName("tleLine2"u8);
                 writer.WriteStringValue(TleLine2);
             }
-            if (Core.Optional.IsCollectionDefined(Links))
+            if (Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.Orbital
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<OrbitalProvisioningState> provisioningState = default;
-            Core.Optional<string> noradId = default;
-            Core.Optional<string> titleLine = default;
-            Core.Optional<string> tleLine1 = default;
-            Core.Optional<string> tleLine2 = default;
-            Core.Optional<IList<OrbitalSpacecraftLink>> links = default;
+            Optional<SystemData> systemData = default;
+            Optional<OrbitalProvisioningState> provisioningState = default;
+            Optional<string> noradId = default;
+            Optional<string> titleLine = default;
+            Optional<string> tleLine1 = default;
+            Optional<string> tleLine2 = default;
+            Optional<IList<OrbitalSpacecraftLink>> links = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Orbital
                     continue;
                 }
             }
-            return new OrbitalSpacecraftData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), Core.Optional.ToNullable(provisioningState), noradId.Value, titleLine.Value, tleLine1.Value, tleLine2.Value, Core.Optional.ToList(links));
+            return new OrbitalSpacecraftData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), noradId.Value, titleLine.Value, tleLine1.Value, tleLine2.Value, Optional.ToList(links));
         }
     }
 }

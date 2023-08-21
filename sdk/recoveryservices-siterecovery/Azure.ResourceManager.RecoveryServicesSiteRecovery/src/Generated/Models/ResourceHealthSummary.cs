@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ResourceHealthSummary. </summary>
         internal ResourceHealthSummary()
         {
-            Issues = new Core.ChangeTrackingList<HealthErrorSummary>();
-            CategorizedResourceCounts = new Core.ChangeTrackingDictionary<string, int>();
+            Issues = new ChangeTrackingList<HealthErrorSummary>();
+            CategorizedResourceCounts = new ChangeTrackingDictionary<string, int>();
         }
 
         /// <summary> Initializes a new instance of ResourceHealthSummary. </summary>

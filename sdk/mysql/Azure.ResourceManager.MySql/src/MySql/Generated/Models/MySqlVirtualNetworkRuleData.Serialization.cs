@@ -12,19 +12,19 @@ using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    public partial class MySqlVirtualNetworkRuleData : Core.IUtf8JsonSerializable
+    public partial class MySqlVirtualNetworkRuleData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VirtualNetworkSubnetId))
+            if (Optional.IsDefined(VirtualNetworkSubnetId))
             {
                 writer.WritePropertyName("virtualNetworkSubnetId"u8);
                 writer.WriteStringValue(VirtualNetworkSubnetId);
             }
-            if (Core.Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
+            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
             {
                 writer.WritePropertyName("ignoreMissingVnetServiceEndpoint"u8);
                 writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.MySql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> virtualNetworkSubnetId = default;
-            Core.Optional<bool> ignoreMissingVnetServiceEndpoint = default;
-            Core.Optional<MySqlVirtualNetworkRuleState> state = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> virtualNetworkSubnetId = default;
+            Optional<bool> ignoreMissingVnetServiceEndpoint = default;
+            Optional<MySqlVirtualNetworkRuleState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MySql
                     continue;
                 }
             }
-            return new MySqlVirtualNetworkRuleData(id, name, type, systemData.Value, virtualNetworkSubnetId.Value, Core.Optional.ToNullable(ignoreMissingVnetServiceEndpoint), Core.Optional.ToNullable(state));
+            return new MySqlVirtualNetworkRuleData(id, name, type, systemData.Value, virtualNetworkSubnetId.Value, Optional.ToNullable(ignoreMissingVnetServiceEndpoint), Optional.ToNullable(state));
         }
     }
 }

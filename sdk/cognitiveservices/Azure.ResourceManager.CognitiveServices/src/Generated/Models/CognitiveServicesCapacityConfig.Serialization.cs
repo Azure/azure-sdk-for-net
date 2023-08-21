@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesCapacityConfig : Core.IUtf8JsonSerializable
+    public partial class CognitiveServicesCapacityConfig : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Minimum))
+            if (Optional.IsDefined(Minimum))
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (Core.Optional.IsDefined(Maximum))
+            if (Optional.IsDefined(Maximum))
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (Core.Optional.IsDefined(Step))
+            if (Optional.IsDefined(Step))
             {
                 writer.WritePropertyName("step"u8);
                 writer.WriteNumberValue(Step.Value);
             }
-            if (Core.Optional.IsDefined(Default))
+            if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Core.Optional<int> minimum = default;
-            Core.Optional<int> maximum = default;
-            Core.Optional<int> step = default;
-            Core.Optional<int> @default = default;
+            Optional<int> minimum = default;
+            Optional<int> maximum = default;
+            Optional<int> step = default;
+            Optional<int> @default = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesCapacityConfig(Core.Optional.ToNullable(minimum), Core.Optional.ToNullable(maximum), Core.Optional.ToNullable(step), Core.Optional.ToNullable(@default));
+            return new CognitiveServicesCapacityConfig(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(step), Optional.ToNullable(@default));
         }
     }
 }

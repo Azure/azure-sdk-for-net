@@ -10,52 +10,52 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppGitHubActionConfiguration : Core.IUtf8JsonSerializable
+    public partial class ContainerAppGitHubActionConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RegistryInfo))
+            if (Optional.IsDefined(RegistryInfo))
             {
                 writer.WritePropertyName("registryInfo"u8);
                 writer.WriteObjectValue(RegistryInfo);
             }
-            if (Core.Optional.IsDefined(AzureCredentials))
+            if (Optional.IsDefined(AzureCredentials))
             {
                 writer.WritePropertyName("azureCredentials"u8);
                 writer.WriteObjectValue(AzureCredentials);
             }
-            if (Core.Optional.IsDefined(ContextPath))
+            if (Optional.IsDefined(ContextPath))
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (Core.Optional.IsDefined(GitHubPersonalAccessToken))
+            if (Optional.IsDefined(GitHubPersonalAccessToken))
             {
                 writer.WritePropertyName("githubPersonalAccessToken"u8);
                 writer.WriteStringValue(GitHubPersonalAccessToken);
             }
-            if (Core.Optional.IsDefined(Image))
+            if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (Core.Optional.IsDefined(PublishType))
+            if (Optional.IsDefined(PublishType))
             {
                 writer.WritePropertyName("publishType"u8);
                 writer.WriteStringValue(PublishType);
             }
-            if (Core.Optional.IsDefined(OS))
+            if (Optional.IsDefined(OS))
             {
                 writer.WritePropertyName("os"u8);
                 writer.WriteStringValue(OS);
             }
-            if (Core.Optional.IsDefined(RuntimeStack))
+            if (Optional.IsDefined(RuntimeStack))
             {
                 writer.WritePropertyName("runtimeStack"u8);
                 writer.WriteStringValue(RuntimeStack);
             }
-            if (Core.Optional.IsDefined(RuntimeVersion))
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<ContainerAppRegistryInfo> registryInfo = default;
-            Core.Optional<ContainerAppCredentials> azureCredentials = default;
-            Core.Optional<string> contextPath = default;
-            Core.Optional<string> gitHubPersonalAccessToken = default;
-            Core.Optional<string> image = default;
-            Core.Optional<string> publishType = default;
-            Core.Optional<string> os = default;
-            Core.Optional<string> runtimeStack = default;
-            Core.Optional<string> runtimeVersion = default;
+            Optional<ContainerAppRegistryInfo> registryInfo = default;
+            Optional<ContainerAppCredentials> azureCredentials = default;
+            Optional<string> contextPath = default;
+            Optional<string> gitHubPersonalAccessToken = default;
+            Optional<string> image = default;
+            Optional<string> publishType = default;
+            Optional<string> os = default;
+            Optional<string> runtimeStack = default;
+            Optional<string> runtimeVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registryInfo"u8))

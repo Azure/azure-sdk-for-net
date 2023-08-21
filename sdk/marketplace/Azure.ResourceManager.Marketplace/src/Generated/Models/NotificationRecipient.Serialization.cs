@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class NotificationRecipient : Core.IUtf8JsonSerializable
+    public partial class NotificationRecipient : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrincipalId))
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Core.Optional<Guid> principalId = default;
-            Core.Optional<string> emailAddress = default;
-            Core.Optional<string> displayName = default;
+            Optional<Guid> principalId = default;
+            Optional<string> emailAddress = default;
+            Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new NotificationRecipient(Core.Optional.ToNullable(principalId), emailAddress.Value, displayName.Value);
+            return new NotificationRecipient(Optional.ToNullable(principalId), emailAddress.Value, displayName.Value);
         }
     }
 }

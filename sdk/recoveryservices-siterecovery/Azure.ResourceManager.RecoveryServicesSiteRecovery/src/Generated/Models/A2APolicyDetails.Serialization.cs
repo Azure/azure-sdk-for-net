@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<int> recoveryPointThresholdInMinutes = default;
-            Core.Optional<int> recoveryPointHistory = default;
-            Core.Optional<int> appConsistentFrequencyInMinutes = default;
-            Core.Optional<string> multiVmSyncStatus = default;
-            Core.Optional<int> crashConsistentFrequencyInMinutes = default;
+            Optional<int> recoveryPointThresholdInMinutes = default;
+            Optional<int> recoveryPointHistory = default;
+            Optional<int> appConsistentFrequencyInMinutes = default;
+            Optional<string> multiVmSyncStatus = default;
+            Optional<int> crashConsistentFrequencyInMinutes = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new A2APolicyDetails(instanceType, Core.Optional.ToNullable(recoveryPointThresholdInMinutes), Core.Optional.ToNullable(recoveryPointHistory), Core.Optional.ToNullable(appConsistentFrequencyInMinutes), multiVmSyncStatus.Value, Core.Optional.ToNullable(crashConsistentFrequencyInMinutes));
+            return new A2APolicyDetails(instanceType, Optional.ToNullable(recoveryPointThresholdInMinutes), Optional.ToNullable(recoveryPointHistory), Optional.ToNullable(appConsistentFrequencyInMinutes), multiVmSyncStatus.Value, Optional.ToNullable(crashConsistentFrequencyInMinutes));
         }
     }
 }

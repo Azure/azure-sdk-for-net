@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<NetworkFabricConfigurationState> configurationState = default;
-            Core.Optional<Uri> url = default;
-            Core.Optional<ResponseError> error = default;
+            Optional<NetworkFabricConfigurationState> configurationState = default;
+            Optional<Uri> url = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurationState"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new ValidateConfigurationResult(error.Value, Core.Optional.ToNullable(configurationState), url.Value);
+            return new ValidateConfigurationResult(error.Value, Optional.ToNullable(configurationState), url.Value);
         }
     }
 }

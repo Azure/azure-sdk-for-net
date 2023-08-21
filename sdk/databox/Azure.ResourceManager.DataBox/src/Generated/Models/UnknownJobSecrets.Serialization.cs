@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataBoxOrderType jobSecretsType = default;
-            Core.Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
-            Core.Optional<ResponseError> error = default;
+            Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobSecretsType"u8))

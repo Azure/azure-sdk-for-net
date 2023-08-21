@@ -11,57 +11,57 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class SingleSignOnIdentitySource : Core.IUtf8JsonSerializable
+    public partial class SingleSignOnIdentitySource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Alias))
+            if (Optional.IsDefined(Alias))
             {
                 writer.WritePropertyName("alias"u8);
                 writer.WriteStringValue(Alias);
             }
-            if (Core.Optional.IsDefined(Domain))
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (Core.Optional.IsDefined(BaseUserDN))
+            if (Optional.IsDefined(BaseUserDN))
             {
                 writer.WritePropertyName("baseUserDN"u8);
                 writer.WriteStringValue(BaseUserDN);
             }
-            if (Core.Optional.IsDefined(BaseGroupDN))
+            if (Optional.IsDefined(BaseGroupDN))
             {
                 writer.WritePropertyName("baseGroupDN"u8);
                 writer.WriteStringValue(BaseGroupDN);
             }
-            if (Core.Optional.IsDefined(PrimaryServer))
+            if (Optional.IsDefined(PrimaryServer))
             {
                 writer.WritePropertyName("primaryServer"u8);
                 writer.WriteStringValue(PrimaryServer.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(SecondaryServer))
+            if (Optional.IsDefined(SecondaryServer))
             {
                 writer.WritePropertyName("secondaryServer"u8);
                 writer.WriteStringValue(SecondaryServer.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(Ssl))
+            if (Optional.IsDefined(Ssl))
             {
                 writer.WritePropertyName("ssl"u8);
                 writer.WriteStringValue(Ssl.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Username))
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> @alias = default;
-            Core.Optional<string> domain = default;
-            Core.Optional<string> baseUserDN = default;
-            Core.Optional<string> baseGroupDN = default;
-            Core.Optional<Uri> primaryServer = default;
-            Core.Optional<Uri> secondaryServer = default;
-            Core.Optional<SslCertificateStatus> ssl = default;
-            Core.Optional<string> username = default;
-            Core.Optional<string> password = default;
+            Optional<string> name = default;
+            Optional<string> @alias = default;
+            Optional<string> domain = default;
+            Optional<string> baseUserDN = default;
+            Optional<string> baseGroupDN = default;
+            Optional<Uri> primaryServer = default;
+            Optional<Uri> secondaryServer = default;
+            Optional<SslCertificateStatus> ssl = default;
+            Optional<string> username = default;
+            Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new SingleSignOnIdentitySource(name.Value, @alias.Value, domain.Value, baseUserDN.Value, baseGroupDN.Value, primaryServer.Value, secondaryServer.Value, Core.Optional.ToNullable(ssl), username.Value, password.Value);
+            return new SingleSignOnIdentitySource(name.Value, @alias.Value, domain.Value, baseUserDN.Value, baseGroupDN.Value, primaryServer.Value, secondaryServer.Value, Optional.ToNullable(ssl), username.Value, password.Value);
         }
     }
 }

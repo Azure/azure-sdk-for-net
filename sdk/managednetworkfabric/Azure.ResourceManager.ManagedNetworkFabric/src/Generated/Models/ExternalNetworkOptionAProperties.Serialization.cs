@@ -10,57 +10,57 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ExternalNetworkOptionAProperties : Core.IUtf8JsonSerializable
+    public partial class ExternalNetworkOptionAProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Mtu))
+            if (Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (Core.Optional.IsDefined(VlanId))
+            if (Optional.IsDefined(VlanId))
             {
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
             }
-            if (Core.Optional.IsDefined(PeerAsn))
+            if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerASN"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (Core.Optional.IsDefined(BfdConfiguration))
+            if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
                 writer.WriteObjectValue(BfdConfiguration);
             }
-            if (Core.Optional.IsDefined(IngressAclId))
+            if (Optional.IsDefined(IngressAclId))
             {
                 writer.WritePropertyName("ingressAclId"u8);
                 writer.WriteStringValue(IngressAclId);
             }
-            if (Core.Optional.IsDefined(EgressAclId))
+            if (Optional.IsDefined(EgressAclId))
             {
                 writer.WritePropertyName("egressAclId"u8);
                 writer.WriteStringValue(EgressAclId);
             }
-            if (Core.Optional.IsDefined(PrimaryIPv4Prefix))
+            if (Optional.IsDefined(PrimaryIPv4Prefix))
             {
                 writer.WritePropertyName("primaryIpv4Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv4Prefix);
             }
-            if (Core.Optional.IsDefined(PrimaryIPv6Prefix))
+            if (Optional.IsDefined(PrimaryIPv6Prefix))
             {
                 writer.WritePropertyName("primaryIpv6Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv6Prefix);
             }
-            if (Core.Optional.IsDefined(SecondaryIPv4Prefix))
+            if (Optional.IsDefined(SecondaryIPv4Prefix))
             {
                 writer.WritePropertyName("secondaryIpv4Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv4Prefix);
             }
-            if (Core.Optional.IsDefined(SecondaryIPv6Prefix))
+            if (Optional.IsDefined(SecondaryIPv6Prefix))
             {
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);
@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<int> mtu = default;
-            Core.Optional<int> vlanId = default;
-            Core.Optional<long> fabricAsn = default;
-            Core.Optional<long> peerAsn = default;
-            Core.Optional<BfdConfiguration> bfdConfiguration = default;
-            Core.Optional<ResourceIdentifier> ingressAclId = default;
-            Core.Optional<ResourceIdentifier> egressAclId = default;
-            Core.Optional<string> primaryIPv4Prefix = default;
-            Core.Optional<string> primaryIPv6Prefix = default;
-            Core.Optional<string> secondaryIPv4Prefix = default;
-            Core.Optional<string> secondaryIPv6Prefix = default;
+            Optional<int> mtu = default;
+            Optional<int> vlanId = default;
+            Optional<long> fabricAsn = default;
+            Optional<long> peerAsn = default;
+            Optional<BfdConfiguration> bfdConfiguration = default;
+            Optional<ResourceIdentifier> ingressAclId = default;
+            Optional<ResourceIdentifier> egressAclId = default;
+            Optional<string> primaryIPv4Prefix = default;
+            Optional<string> primaryIPv6Prefix = default;
+            Optional<string> secondaryIPv4Prefix = default;
+            Optional<string> secondaryIPv6Prefix = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mtu"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new ExternalNetworkOptionAProperties(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, Core.Optional.ToNullable(mtu), Core.Optional.ToNullable(vlanId), Core.Optional.ToNullable(fabricAsn), Core.Optional.ToNullable(peerAsn), bfdConfiguration.Value, ingressAclId.Value, egressAclId.Value);
+            return new ExternalNetworkOptionAProperties(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, Optional.ToNullable(mtu), Optional.ToNullable(vlanId), Optional.ToNullable(fabricAsn), Optional.ToNullable(peerAsn), bfdConfiguration.Value, ingressAclId.Value, egressAclId.Value);
         }
     }
 }

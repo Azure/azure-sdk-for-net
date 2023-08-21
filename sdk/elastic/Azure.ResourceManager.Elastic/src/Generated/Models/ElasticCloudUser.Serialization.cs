@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class ElasticCloudUser : Core.IUtf8JsonSerializable
+    public partial class ElasticCloudUser : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Core.Optional<string> emailAddress = default;
-            Core.Optional<string> id = default;
-            Core.Optional<Uri> elasticCloudSsoDefaultUrl = default;
+            Optional<string> emailAddress = default;
+            Optional<string> id = default;
+            Optional<Uri> elasticCloudSsoDefaultUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("emailAddress"u8))

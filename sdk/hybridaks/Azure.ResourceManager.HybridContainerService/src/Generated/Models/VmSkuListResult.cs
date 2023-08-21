@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of VmSkuListResult. </summary>
         internal VmSkuListResult()
         {
-            VmSKUs = new Core.ChangeTrackingList<string>();
+            VmSKUs = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VmSkuListResult. </summary>

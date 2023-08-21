@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class LinuxPatchSettings : Core.IUtf8JsonSerializable
+    public partial class LinuxPatchSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PatchMode))
+            if (Optional.IsDefined(PatchMode))
             {
                 writer.WritePropertyName("patchMode"u8);
                 writer.WriteStringValue(PatchMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AssessmentMode))
+            if (Optional.IsDefined(AssessmentMode))
             {
                 writer.WritePropertyName("assessmentMode"u8);
                 writer.WriteStringValue(AssessmentMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AutomaticByPlatformSettings))
+            if (Optional.IsDefined(AutomaticByPlatformSettings))
             {
                 writer.WritePropertyName("automaticByPlatformSettings"u8);
                 writer.WriteObjectValue(AutomaticByPlatformSettings);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<LinuxVmGuestPatchMode> patchMode = default;
-            Core.Optional<LinuxPatchAssessmentMode> assessmentMode = default;
-            Core.Optional<LinuxVmGuestPatchAutomaticByPlatformSettings> automaticByPlatformSettings = default;
+            Optional<LinuxVmGuestPatchMode> patchMode = default;
+            Optional<LinuxPatchAssessmentMode> assessmentMode = default;
+            Optional<LinuxVmGuestPatchAutomaticByPlatformSettings> automaticByPlatformSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patchMode"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new LinuxPatchSettings(Core.Optional.ToNullable(patchMode), Core.Optional.ToNullable(assessmentMode), automaticByPlatformSettings.Value);
+            return new LinuxPatchSettings(Optional.ToNullable(patchMode), Optional.ToNullable(assessmentMode), automaticByPlatformSettings.Value);
         }
     }
 }

@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class ImageRepositoryCredential : Core.IUtf8JsonSerializable
+    public partial class ImageRepositoryCredential : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("imageRepositoryUrl"u8);
             writer.WriteStringValue(ImageRepositoryUri.AbsoluteUri);
             writer.WritePropertyName("userName"u8);
             writer.WriteStringValue(UserName);
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             Uri imageRepositoryUrl = default;
             string userName = default;
-            Core.Optional<AsymmetricEncryptedSecret> password = default;
+            Optional<AsymmetricEncryptedSecret> password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageRepositoryUrl"u8))

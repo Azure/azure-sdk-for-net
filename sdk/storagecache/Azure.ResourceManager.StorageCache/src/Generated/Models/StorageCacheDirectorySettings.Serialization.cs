@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheDirectorySettings : Core.IUtf8JsonSerializable
+    public partial class StorageCacheDirectorySettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ActiveDirectory))
+            if (Optional.IsDefined(ActiveDirectory))
             {
                 writer.WritePropertyName("activeDirectory"u8);
                 writer.WriteObjectValue(ActiveDirectory);
             }
-            if (Core.Optional.IsDefined(UsernameDownload))
+            if (Optional.IsDefined(UsernameDownload))
             {
                 writer.WritePropertyName("usernameDownload"u8);
                 writer.WriteObjectValue(UsernameDownload);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<StorageCacheActiveDirectorySettings> activeDirectory = default;
-            Core.Optional<StorageCacheUsernameDownloadSettings> usernameDownload = default;
+            Optional<StorageCacheActiveDirectorySettings> activeDirectory = default;
+            Optional<StorageCacheUsernameDownloadSettings> usernameDownload = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activeDirectory"u8))

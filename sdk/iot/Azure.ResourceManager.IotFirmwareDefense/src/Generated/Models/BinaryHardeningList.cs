@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of BinaryHardeningList. </summary>
         internal BinaryHardeningList()
         {
-            Value = new Core.ChangeTrackingList<BinaryHardening>();
+            Value = new ChangeTrackingList<BinaryHardening>();
         }
 
         /// <summary> Initializes a new instance of BinaryHardeningList. </summary>

@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.Chaos
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> status = default;
-            Core.Optional<DateTimeOffset> createdDateUtc = default;
-            Core.Optional<DateTimeOffset?> endDateUtc = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> status = default;
+            Optional<DateTimeOffset> createdDateUtc = default;
+            Optional<DateTimeOffset?> endDateUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Chaos
                     continue;
                 }
             }
-            return new ExperimentStatusData(id, name, type, systemData.Value, status.Value, Core.Optional.ToNullable(createdDateUtc), Core.Optional.ToNullable(endDateUtc));
+            return new ExperimentStatusData(id, name, type, systemData.Value, status.Value, Optional.ToNullable(createdDateUtc), Optional.ToNullable(endDateUtc));
         }
     }
 }

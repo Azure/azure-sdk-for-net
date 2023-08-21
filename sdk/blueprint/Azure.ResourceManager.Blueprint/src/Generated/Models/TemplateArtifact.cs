@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Argument.AssertNotNull(template, nameof(template));
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            DependsOn = new Core.ChangeTrackingList<string>();
+            DependsOn = new ChangeTrackingList<string>();
             Template = template;
             Parameters = parameters;
             Kind = ArtifactKind.Template;

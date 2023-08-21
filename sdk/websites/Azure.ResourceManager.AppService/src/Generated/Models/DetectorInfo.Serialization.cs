@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DetectorInfo : Core.IUtf8JsonSerializable
+    public partial class DetectorInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> author = default;
-            Core.Optional<string> category = default;
-            Core.Optional<IReadOnlyList<DetectorSupportTopic>> supportTopicList = default;
-            Core.Optional<IReadOnlyList<string>> analysisType = default;
-            Core.Optional<DetectorType> type = default;
-            Core.Optional<float> score = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<string> author = default;
+            Optional<string> category = default;
+            Optional<IReadOnlyList<DetectorSupportTopic>> supportTopicList = default;
+            Optional<IReadOnlyList<string>> analysisType = default;
+            Optional<DetectorType> type = default;
+            Optional<float> score = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DetectorInfo(id.Value, name.Value, description.Value, author.Value, category.Value, Core.Optional.ToList(supportTopicList), Core.Optional.ToList(analysisType), Core.Optional.ToNullable(type), Core.Optional.ToNullable(score));
+            return new DetectorInfo(id.Value, name.Value, description.Value, author.Value, category.Value, Optional.ToList(supportTopicList), Optional.ToList(analysisType), Optional.ToNullable(type), Optional.ToNullable(score));
         }
     }
 }

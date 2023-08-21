@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    internal partial class UpdatePolicyContentProperties : Core.IUtf8JsonSerializable
+    internal partial class UpdatePolicyContentProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ReplicationProviderSettings))
+            if (Optional.IsDefined(ReplicationProviderSettings))
             {
                 writer.WritePropertyName("replicationProviderSettings"u8);
                 writer.WriteObjectValue(ReplicationProviderSettings);

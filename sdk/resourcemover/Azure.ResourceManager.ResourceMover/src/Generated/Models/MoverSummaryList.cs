@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of MoverSummaryList. </summary>
         internal MoverSummaryList()
         {
-            Summary = new Core.ChangeTrackingList<MoverSummaryItemInfo>();
+            Summary = new ChangeTrackingList<MoverSummaryItemInfo>();
         }
 
         /// <summary> Initializes a new instance of MoverSummaryList. </summary>

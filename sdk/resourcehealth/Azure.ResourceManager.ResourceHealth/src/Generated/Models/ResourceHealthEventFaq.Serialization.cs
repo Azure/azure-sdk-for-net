@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Core.Optional<string> question = default;
-            Core.Optional<string> answer = default;
-            Core.Optional<string> localeCode = default;
+            Optional<string> question = default;
+            Optional<string> answer = default;
+            Optional<string> localeCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("question"u8))

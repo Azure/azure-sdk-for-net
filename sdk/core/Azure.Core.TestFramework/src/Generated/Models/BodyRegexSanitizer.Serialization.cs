@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
-    public partial class BodyRegexSanitizer : Core.IUtf8JsonSerializable
+    public partial class BodyRegexSanitizer : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("regex"u8);
             writer.WriteStringValue(Regex);
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (Core.Optional.IsDefined(GroupForReplace))
+            if (Optional.IsDefined(GroupForReplace))
             {
                 writer.WritePropertyName("groupForReplace"u8);
                 writer.WriteStringValue(GroupForReplace);
             }
-            if (Core.Optional.IsDefined(Condition))
+            if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteObjectValue(Condition);

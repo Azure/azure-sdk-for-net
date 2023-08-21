@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class AccessControlListAction : Core.IUtf8JsonSerializable
+    public partial class AccessControlListAction : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AclActionType))
+            if (Optional.IsDefined(AclActionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AclActionType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(CounterName))
+            if (Optional.IsDefined(CounterName))
             {
                 writer.WritePropertyName("counterName"u8);
                 writer.WriteStringValue(CounterName);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<AclActionType> type = default;
-            Core.Optional<string> counterName = default;
+            Optional<AclActionType> type = default;
+            Optional<string> counterName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new AccessControlListAction(Core.Optional.ToNullable(type), counterName.Value);
+            return new AccessControlListAction(Optional.ToNullable(type), counterName.Value);
         }
     }
 }

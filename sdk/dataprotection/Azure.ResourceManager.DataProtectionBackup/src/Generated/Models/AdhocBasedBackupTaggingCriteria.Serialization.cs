@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    internal partial class AdhocBasedBackupTaggingCriteria : Core.IUtf8JsonSerializable
+    internal partial class AdhocBasedBackupTaggingCriteria : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TagInfo))
+            if (Optional.IsDefined(TagInfo))
             {
                 writer.WritePropertyName("tagInfo"u8);
                 writer.WriteObjectValue(TagInfo);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<DataProtectionBackupRetentionTag> tagInfo = default;
+            Optional<DataProtectionBackupRetentionTag> tagInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tagInfo"u8))

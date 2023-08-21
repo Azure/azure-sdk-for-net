@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class BlobContainerDataSet : Core.IUtf8JsonSerializable
+    public partial class BlobContainerDataSet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             string containerName = default;
-            Core.Optional<Guid> dataSetId = default;
+            Optional<Guid> dataSetId = default;
             string resourceGroup = default;
             string storageAccountName = default;
             string subscriptionId = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new BlobContainerDataSet(id, name, type, systemData.Value, kind, containerName, Core.Optional.ToNullable(dataSetId), resourceGroup, storageAccountName, subscriptionId);
+            return new BlobContainerDataSet(id, name, type, systemData.Value, kind, containerName, Optional.ToNullable(dataSetId), resourceGroup, storageAccountName, subscriptionId);
         }
     }
 }

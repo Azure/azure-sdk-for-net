@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeKubernetesRoleStorage : Core.IUtf8JsonSerializable
+    public partial class EdgeKubernetesRoleStorage : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Endpoints))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<EdgeKubernetesRoleStorageClassInfo>> storageClasses = default;
-            Core.Optional<IList<DataBoxEdgeMountPointMap>> endpoints = default;
+            Optional<IReadOnlyList<EdgeKubernetesRoleStorageClassInfo>> storageClasses = default;
+            Optional<IList<DataBoxEdgeMountPointMap>> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageClasses"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new EdgeKubernetesRoleStorage(Core.Optional.ToList(storageClasses), Core.Optional.ToList(endpoints));
+            return new EdgeKubernetesRoleStorage(Optional.ToList(storageClasses), Optional.ToList(endpoints));
         }
     }
 }

@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
-    public partial class AutoScaleConfiguration : Core.IUtf8JsonSerializable
+    public partial class AutoScaleConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(MinReplicas))
+            if (Optional.IsDefined(MinReplicas))
             {
                 writer.WritePropertyName("minReplicas"u8);
                 writer.WriteNumberValue(MinReplicas.Value);
             }
-            if (Core.Optional.IsDefined(MaxReplicas))
+            if (Optional.IsDefined(MaxReplicas))
             {
                 writer.WritePropertyName("maxReplicas"u8);
                 writer.WriteNumberValue(MaxReplicas.Value);
             }
-            if (Core.Optional.IsDefined(TargetUtilization))
+            if (Optional.IsDefined(TargetUtilization))
             {
                 writer.WritePropertyName("targetUtilization"u8);
                 writer.WriteNumberValue(TargetUtilization.Value);
             }
-            if (Core.Optional.IsDefined(RefreshPeriodInSeconds))
+            if (Optional.IsDefined(RefreshPeriodInSeconds))
             {
                 writer.WritePropertyName("refreshPeriodInSeconds"u8);
                 writer.WriteNumberValue(RefreshPeriodInSeconds.Value);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Core.Optional<Status> status = default;
-            Core.Optional<int> minReplicas = default;
-            Core.Optional<int> maxReplicas = default;
-            Core.Optional<float> targetUtilization = default;
-            Core.Optional<int> refreshPeriodInSeconds = default;
+            Optional<Status> status = default;
+            Optional<int> minReplicas = default;
+            Optional<int> maxReplicas = default;
+            Optional<float> targetUtilization = default;
+            Optional<int> refreshPeriodInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     continue;
                 }
             }
-            return new AutoScaleConfiguration(Core.Optional.ToNullable(status), Core.Optional.ToNullable(minReplicas), Core.Optional.ToNullable(maxReplicas), Core.Optional.ToNullable(targetUtilization), Core.Optional.ToNullable(refreshPeriodInSeconds));
+            return new AutoScaleConfiguration(Optional.ToNullable(status), Optional.ToNullable(minReplicas), Optional.ToNullable(maxReplicas), Optional.ToNullable(targetUtilization), Optional.ToNullable(refreshPeriodInSeconds));
         }
     }
 }

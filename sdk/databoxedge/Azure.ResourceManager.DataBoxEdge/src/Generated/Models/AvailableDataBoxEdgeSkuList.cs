@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of AvailableDataBoxEdgeSkuList. </summary>
         internal AvailableDataBoxEdgeSkuList()
         {
-            Value = new Core.ChangeTrackingList<AvailableDataBoxEdgeSku>();
+            Value = new ChangeTrackingList<AvailableDataBoxEdgeSku>();
         }
 
         /// <summary> Initializes a new instance of AvailableDataBoxEdgeSkuList. </summary>

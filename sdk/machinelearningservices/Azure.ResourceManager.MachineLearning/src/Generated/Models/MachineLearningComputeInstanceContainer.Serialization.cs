@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<MachineLearningComputeInstanceAutosave> autosave = default;
-            Core.Optional<string> gpu = default;
-            Core.Optional<MachineLearningNetwork> network = default;
-            Core.Optional<MachineLearningComputeInstanceEnvironmentInfo> environment = default;
-            Core.Optional<IReadOnlyList<BinaryData>> services = default;
+            Optional<string> name = default;
+            Optional<MachineLearningComputeInstanceAutosave> autosave = default;
+            Optional<string> gpu = default;
+            Optional<MachineLearningNetwork> network = default;
+            Optional<MachineLearningComputeInstanceEnvironmentInfo> environment = default;
+            Optional<IReadOnlyList<BinaryData>> services = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningComputeInstanceContainer(name.Value, Core.Optional.ToNullable(autosave), gpu.Value, Core.Optional.ToNullable(network), environment.Value, Core.Optional.ToList(services));
+            return new MachineLearningComputeInstanceContainer(name.Value, Optional.ToNullable(autosave), gpu.Value, Optional.ToNullable(network), environment.Value, Optional.ToList(services));
         }
     }
 }

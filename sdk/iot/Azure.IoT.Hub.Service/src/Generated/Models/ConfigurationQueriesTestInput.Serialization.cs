@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class ConfigurationQueriesTestInput : Core.IUtf8JsonSerializable
+    public partial class ConfigurationQueriesTestInput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TargetCondition))
+            if (Optional.IsDefined(TargetCondition))
             {
                 writer.WritePropertyName("targetCondition"u8);
                 writer.WriteStringValue(TargetCondition);
             }
-            if (Core.Optional.IsCollectionDefined(CustomMetricQueries))
+            if (Optional.IsCollectionDefined(CustomMetricQueries))
             {
                 writer.WritePropertyName("customMetricQueries"u8);
                 writer.WriteStartObject();

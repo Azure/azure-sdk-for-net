@@ -11,42 +11,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class SlackChannelProperties : Core.IUtf8JsonSerializable
+    public partial class SlackChannelProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Core.Optional.IsDefined(ClientSecret))
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            if (Core.Optional.IsDefined(VerificationToken))
+            if (Optional.IsDefined(VerificationToken))
             {
                 writer.WritePropertyName("verificationToken"u8);
                 writer.WriteStringValue(VerificationToken);
             }
-            if (Core.Optional.IsDefined(Scopes))
+            if (Optional.IsDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStringValue(Scopes);
             }
-            if (Core.Optional.IsDefined(LandingPageUri))
+            if (Optional.IsDefined(LandingPageUri))
             {
                 writer.WritePropertyName("landingPageUrl"u8);
                 writer.WriteStringValue(LandingPageUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(RegisterBeforeOAuthFlow))
+            if (Optional.IsDefined(RegisterBeforeOAuthFlow))
             {
                 writer.WritePropertyName("registerBeforeOAuthFlow"u8);
                 writer.WriteBooleanValue(RegisterBeforeOAuthFlow.Value);
             }
-            if (Core.Optional.IsDefined(SigningSecret))
+            if (Optional.IsDefined(SigningSecret))
             {
                 writer.WritePropertyName("signingSecret"u8);
                 writer.WriteStringValue(SigningSecret);
@@ -62,16 +62,16 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<string> clientId = default;
-            Core.Optional<string> clientSecret = default;
-            Core.Optional<string> verificationToken = default;
-            Core.Optional<string> scopes = default;
-            Core.Optional<Uri> landingPageUrl = default;
-            Core.Optional<string> redirectAction = default;
-            Core.Optional<string> lastSubmissionId = default;
-            Core.Optional<bool> registerBeforeOAuthFlow = default;
-            Core.Optional<bool> isValidated = default;
-            Core.Optional<string> signingSecret = default;
+            Optional<string> clientId = default;
+            Optional<string> clientSecret = default;
+            Optional<string> verificationToken = default;
+            Optional<string> scopes = default;
+            Optional<Uri> landingPageUrl = default;
+            Optional<string> redirectAction = default;
+            Optional<string> lastSubmissionId = default;
+            Optional<bool> registerBeforeOAuthFlow = default;
+            Optional<bool> isValidated = default;
+            Optional<string> signingSecret = default;
             bool isEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new SlackChannelProperties(clientId.Value, clientSecret.Value, verificationToken.Value, scopes.Value, landingPageUrl.Value, redirectAction.Value, lastSubmissionId.Value, Core.Optional.ToNullable(registerBeforeOAuthFlow), Core.Optional.ToNullable(isValidated), signingSecret.Value, isEnabled);
+            return new SlackChannelProperties(clientId.Value, clientSecret.Value, verificationToken.Value, scopes.Value, landingPageUrl.Value, redirectAction.Value, lastSubmissionId.Value, Optional.ToNullable(registerBeforeOAuthFlow), Optional.ToNullable(isValidated), signingSecret.Value, isEnabled);
         }
     }
 }

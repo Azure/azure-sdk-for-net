@@ -10,34 +10,34 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineGalleryApplication : Core.IUtf8JsonSerializable
+    public partial class VirtualMachineGalleryApplication : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Tags))
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStringValue(Tags);
             }
-            if (Core.Optional.IsDefined(Order))
+            if (Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
             writer.WritePropertyName("packageReferenceId"u8);
             writer.WriteStringValue(PackageReferenceId);
-            if (Core.Optional.IsDefined(ConfigurationReference))
+            if (Optional.IsDefined(ConfigurationReference))
             {
                 writer.WritePropertyName("configurationReference"u8);
                 writer.WriteStringValue(ConfigurationReference);
             }
-            if (Core.Optional.IsDefined(TreatFailureAsDeploymentFailure))
+            if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
             {
                 writer.WritePropertyName("treatFailureAsDeploymentFailure"u8);
                 writer.WriteBooleanValue(TreatFailureAsDeploymentFailure.Value);
             }
-            if (Core.Optional.IsDefined(EnableAutomaticUpgrade))
+            if (Optional.IsDefined(EnableAutomaticUpgrade))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<string> tags = default;
-            Core.Optional<int> order = default;
+            Optional<string> tags = default;
+            Optional<int> order = default;
             string packageReferenceId = default;
-            Core.Optional<string> configurationReference = default;
-            Core.Optional<bool> treatFailureAsDeploymentFailure = default;
-            Core.Optional<bool> enableAutomaticUpgrade = default;
+            Optional<string> configurationReference = default;
+            Optional<bool> treatFailureAsDeploymentFailure = default;
+            Optional<bool> enableAutomaticUpgrade = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineGalleryApplication(tags.Value, Core.Optional.ToNullable(order), packageReferenceId, configurationReference.Value, Core.Optional.ToNullable(treatFailureAsDeploymentFailure), Core.Optional.ToNullable(enableAutomaticUpgrade));
+            return new VirtualMachineGalleryApplication(tags.Value, Optional.ToNullable(order), packageReferenceId, configurationReference.Value, Optional.ToNullable(treatFailureAsDeploymentFailure), Optional.ToNullable(enableAutomaticUpgrade));
         }
     }
 }

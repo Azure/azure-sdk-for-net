@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkFabricIPPrefixPatch. </summary>
         public NetworkFabricIPPrefixPatch()
         {
-            IPPrefixRules = new Core.ChangeTrackingList<IPPrefixRule>();
+            IPPrefixRules = new ChangeTrackingList<IPPrefixRule>();
         }
 
         /// <summary> Switch configuration description. </summary>

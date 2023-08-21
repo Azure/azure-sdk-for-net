@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<CreateEmailSignInUrlResponseProperties> properties = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<AzureLocation> location = default;
+            Optional<CreateEmailSignInUrlResponseProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new BotCreateEmailSignInUriResult(id.Value, Core.Optional.ToNullable(location), properties.Value);
+            return new BotCreateEmailSignInUriResult(id.Value, Optional.ToNullable(location), properties.Value);
         }
     }
 }

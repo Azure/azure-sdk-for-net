@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMISyncTaskProperties. </summary>
         public ValidateMigrationInputSqlServerSqlMISyncTaskProperties()
         {
-            Output = new Core.ChangeTrackingList<ValidateMigrationInputSqlServerSqlMISyncTaskOutput>();
+            Output = new ChangeTrackingList<ValidateMigrationInputSqlServerSqlMISyncTaskOutput>();
             TaskType = TaskType.ValidateMigrationInputSqlServerAzureSqlDBMISyncLRS;
         }
 

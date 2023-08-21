@@ -13,14 +13,14 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    public partial class SphereDeviceData : Core.IUtf8JsonSerializable
+    public partial class SphereDeviceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DeviceId))
+            if (Optional.IsDefined(DeviceId))
             {
                 writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.Sphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> deviceId = default;
-            Core.Optional<string> chipSku = default;
-            Core.Optional<string> lastAvailableOSVersion = default;
-            Core.Optional<string> lastInstalledOSVersion = default;
-            Core.Optional<DateTimeOffset> lastOSUpdateUtc = default;
-            Core.Optional<DateTimeOffset> lastUpdateRequestUtc = default;
-            Core.Optional<SphereProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> deviceId = default;
+            Optional<string> chipSku = default;
+            Optional<string> lastAvailableOSVersion = default;
+            Optional<string> lastInstalledOSVersion = default;
+            Optional<DateTimeOffset> lastOSUpdateUtc = default;
+            Optional<DateTimeOffset> lastUpdateRequestUtc = default;
+            Optional<SphereProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sphere
                     continue;
                 }
             }
-            return new SphereDeviceData(id, name, type, systemData.Value, deviceId.Value, chipSku.Value, lastAvailableOSVersion.Value, lastInstalledOSVersion.Value, Core.Optional.ToNullable(lastOSUpdateUtc), Core.Optional.ToNullable(lastUpdateRequestUtc), Core.Optional.ToNullable(provisioningState));
+            return new SphereDeviceData(id, name, type, systemData.Value, deviceId.Value, chipSku.Value, lastAvailableOSVersion.Value, lastInstalledOSVersion.Value, Optional.ToNullable(lastOSUpdateUtc), Optional.ToNullable(lastUpdateRequestUtc), Optional.ToNullable(provisioningState));
         }
     }
 }

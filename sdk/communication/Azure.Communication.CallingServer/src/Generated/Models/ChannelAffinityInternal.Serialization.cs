@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class ChannelAffinityInternal : Core.IUtf8JsonSerializable
+    internal partial class ChannelAffinityInternal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Channel))
+            if (Optional.IsDefined(Channel))
             {
                 writer.WritePropertyName("channel"u8);
                 writer.WriteNumberValue(Channel.Value);
             }
-            if (Core.Optional.IsDefined(Participant))
+            if (Optional.IsDefined(Participant))
             {
                 writer.WritePropertyName("participant"u8);
                 writer.WriteObjectValue(Participant);

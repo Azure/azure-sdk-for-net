@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<ServiceProviderParameterMetadataConstraints> constraints = default;
+            Optional<ServiceProviderParameterMetadataConstraints> constraints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("constraints"u8))

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class StopVirtualMachineContent : Core.IUtf8JsonSerializable
+    public partial class StopVirtualMachineContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SkipShutdown))
+            if (Optional.IsDefined(SkipShutdown))
             {
                 writer.WritePropertyName("skipShutdown"u8);
                 writer.WriteBooleanValue(SkipShutdown.Value);

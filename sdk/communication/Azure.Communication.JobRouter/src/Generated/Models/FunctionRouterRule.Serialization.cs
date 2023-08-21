@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class FunctionRouterRule : Core.IUtf8JsonSerializable
+    public partial class FunctionRouterRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("functionUri"u8);
             writer.WriteStringValue(FunctionUri.AbsoluteUri);
-            if (Core.Optional.IsDefined(Credential))
+            if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
@@ -35,7 +35,7 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             Uri functionUri = default;
-            Core.Optional<FunctionRouterRuleCredential> credential = default;
+            Optional<FunctionRouterRuleCredential> credential = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SwaggerCustomDynamicTreeSettings : Core.IUtf8JsonSerializable
+    public partial class SwaggerCustomDynamicTreeSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CanSelectParentNodes))
+            if (Optional.IsDefined(CanSelectParentNodes))
             {
                 writer.WritePropertyName("CanSelectParentNodes"u8);
                 writer.WriteBooleanValue(CanSelectParentNodes.Value);
             }
-            if (Core.Optional.IsDefined(CanSelectLeafNodes))
+            if (Optional.IsDefined(CanSelectLeafNodes))
             {
                 writer.WritePropertyName("CanSelectLeafNodes"u8);
                 writer.WriteBooleanValue(CanSelectLeafNodes.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<bool> canSelectParentNodes = default;
-            Core.Optional<bool> canSelectLeafNodes = default;
+            Optional<bool> canSelectParentNodes = default;
+            Optional<bool> canSelectLeafNodes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("CanSelectParentNodes"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new SwaggerCustomDynamicTreeSettings(Core.Optional.ToNullable(canSelectParentNodes), Core.Optional.ToNullable(canSelectLeafNodes));
+            return new SwaggerCustomDynamicTreeSettings(Optional.ToNullable(canSelectParentNodes), Optional.ToNullable(canSelectLeafNodes));
         }
     }
 }

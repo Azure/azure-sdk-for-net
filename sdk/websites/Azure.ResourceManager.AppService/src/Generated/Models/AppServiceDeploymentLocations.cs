@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceDeploymentLocations. </summary>
         internal AppServiceDeploymentLocations()
         {
-            Locations = new Core.ChangeTrackingList<AppServiceGeoRegion>();
-            HostingEnvironments = new Core.ChangeTrackingList<AppServiceEnvironmentProperties>();
-            HostingEnvironmentDeploymentInfos = new Core.ChangeTrackingList<HostingEnvironmentDeploymentInfo>();
+            Locations = new ChangeTrackingList<AppServiceGeoRegion>();
+            HostingEnvironments = new ChangeTrackingList<AppServiceEnvironmentProperties>();
+            HostingEnvironmentDeploymentInfos = new ChangeTrackingList<HostingEnvironmentDeploymentInfo>();
         }
 
         /// <summary> Initializes a new instance of AppServiceDeploymentLocations. </summary>

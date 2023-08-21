@@ -12,54 +12,54 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    public partial class MySqlWaitStatisticData : Core.IUtf8JsonSerializable
+    public partial class MySqlWaitStatisticData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(EventName))
+            if (Optional.IsDefined(EventName))
             {
                 writer.WritePropertyName("eventName"u8);
                 writer.WriteStringValue(EventName);
             }
-            if (Core.Optional.IsDefined(EventTypeName))
+            if (Optional.IsDefined(EventTypeName))
             {
                 writer.WritePropertyName("eventTypeName"u8);
                 writer.WriteStringValue(EventTypeName);
             }
-            if (Core.Optional.IsDefined(QueryId))
+            if (Optional.IsDefined(QueryId))
             {
                 writer.WritePropertyName("queryId"u8);
                 writer.WriteNumberValue(QueryId.Value);
             }
-            if (Core.Optional.IsDefined(DatabaseName))
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Core.Optional.IsDefined(UserId))
+            if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteNumberValue(UserId.Value);
             }
-            if (Core.Optional.IsDefined(Count))
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Core.Optional.IsDefined(TotalTimeInMinutes))
+            if (Optional.IsDefined(TotalTimeInMinutes))
             {
                 writer.WritePropertyName("totalTimeInMs"u8);
                 writer.WriteNumberValue(TotalTimeInMinutes.Value);
@@ -77,16 +77,16 @@ namespace Azure.ResourceManager.MySql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<string> eventName = default;
-            Core.Optional<string> eventTypeName = default;
-            Core.Optional<long> queryId = default;
-            Core.Optional<string> databaseName = default;
-            Core.Optional<long> userId = default;
-            Core.Optional<long> count = default;
-            Core.Optional<double> totalTimeInMs = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<string> eventName = default;
+            Optional<string> eventTypeName = default;
+            Optional<long> queryId = default;
+            Optional<string> databaseName = default;
+            Optional<long> userId = default;
+            Optional<long> count = default;
+            Optional<double> totalTimeInMs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.MySql
                     continue;
                 }
             }
-            return new MySqlWaitStatisticData(id, name, type, systemData.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), eventName.Value, eventTypeName.Value, Core.Optional.ToNullable(queryId), databaseName.Value, Core.Optional.ToNullable(userId), Core.Optional.ToNullable(count), Core.Optional.ToNullable(totalTimeInMs));
+            return new MySqlWaitStatisticData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), eventName.Value, eventTypeName.Value, Optional.ToNullable(queryId), databaseName.Value, Optional.ToNullable(userId), Optional.ToNullable(count), Optional.ToNullable(totalTimeInMs));
         }
     }
 }

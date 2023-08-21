@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorExperimentEndpointProperties : Core.IUtf8JsonSerializable
+    public partial class FrontDoorExperimentEndpointProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Endpoint))
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> endpoint = default;
+            Optional<string> name = default;
+            Optional<string> endpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

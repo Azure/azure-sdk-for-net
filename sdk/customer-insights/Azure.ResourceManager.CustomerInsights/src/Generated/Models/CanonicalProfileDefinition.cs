@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of CanonicalProfileDefinition. </summary>
         internal CanonicalProfileDefinition()
         {
-            Properties = new Core.ChangeTrackingList<CanonicalProfileDefinitionPropertiesItem>();
+            Properties = new ChangeTrackingList<CanonicalProfileDefinitionPropertiesItem>();
         }
 
         /// <summary> Initializes a new instance of CanonicalProfileDefinition. </summary>

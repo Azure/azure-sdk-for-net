@@ -11,9 +11,9 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class CustomHttpsConfiguration : Core.IUtf8JsonSerializable
+    public partial class CustomHttpsConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("certificateSource"u8);
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStringValue(MinimumTlsVersion.ToString());
             writer.WritePropertyName("frontDoorCertificateSourceParameters"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CertificateType))
+            if (Optional.IsDefined(CertificateType))
             {
                 writer.WritePropertyName("certificateType"u8);
                 writer.WriteStringValue(CertificateType.Value.ToString());
@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteEndObject();
             writer.WritePropertyName("keyVaultCertificateSourceParameters"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Vault))
+            if (Optional.IsDefined(Vault))
             {
                 writer.WritePropertyName("vault"u8);
                 JsonSerializer.Serialize(writer, Vault);
             }
-            if (Core.Optional.IsDefined(SecretName))
+            if (Optional.IsDefined(SecretName))
             {
                 writer.WritePropertyName("secretName"u8);
                 writer.WriteStringValue(SecretName);
             }
-            if (Core.Optional.IsDefined(SecretVersion))
+            if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             FrontDoorCertificateSource certificateSource = default;
             FrontDoorTlsProtocolType protocolType = default;
             FrontDoorRequiredMinimumTlsVersion minimumTlsVersion = default;
-            Core.Optional<FrontDoorEndpointConnectionCertificateType> certificateType = default;
-            Core.Optional<WritableSubResource> vault = default;
-            Core.Optional<string> secretName = default;
-            Core.Optional<string> secretVersion = default;
+            Optional<FrontDoorEndpointConnectionCertificateType> certificateType = default;
+            Optional<WritableSubResource> vault = default;
+            Optional<string> secretName = default;
+            Optional<string> secretVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateSource"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new CustomHttpsConfiguration(certificateSource, protocolType, minimumTlsVersion, Core.Optional.ToNullable(certificateType), vault, secretName.Value, secretVersion.Value);
+            return new CustomHttpsConfiguration(certificateSource, protocolType, minimumTlsVersion, Optional.ToNullable(certificateType), vault, secretName.Value, secretVersion.Value);
         }
     }
 }

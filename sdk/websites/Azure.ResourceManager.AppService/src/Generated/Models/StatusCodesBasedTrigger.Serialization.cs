@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StatusCodesBasedTrigger : Core.IUtf8JsonSerializable
+    public partial class StatusCodesBasedTrigger : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteNumberValue(Status.Value);
             }
-            if (Core.Optional.IsDefined(SubStatus))
+            if (Optional.IsDefined(SubStatus))
             {
                 writer.WritePropertyName("subStatus"u8);
                 writer.WriteNumberValue(SubStatus.Value);
             }
-            if (Core.Optional.IsDefined(Win32Status))
+            if (Optional.IsDefined(Win32Status))
             {
                 writer.WritePropertyName("win32Status"u8);
                 writer.WriteNumberValue(Win32Status.Value);
             }
-            if (Core.Optional.IsDefined(Count))
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Core.Optional.IsDefined(TimeInterval))
+            if (Optional.IsDefined(TimeInterval))
             {
                 writer.WritePropertyName("timeInterval"u8);
                 writer.WriteStringValue(TimeInterval);
             }
-            if (Core.Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<int> status = default;
-            Core.Optional<int> subStatus = default;
-            Core.Optional<int> win32Status = default;
-            Core.Optional<int> count = default;
-            Core.Optional<string> timeInterval = default;
-            Core.Optional<string> path = default;
+            Optional<int> status = default;
+            Optional<int> subStatus = default;
+            Optional<int> win32Status = default;
+            Optional<int> count = default;
+            Optional<string> timeInterval = default;
+            Optional<string> path = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StatusCodesBasedTrigger(Core.Optional.ToNullable(status), Core.Optional.ToNullable(subStatus), Core.Optional.ToNullable(win32Status), Core.Optional.ToNullable(count), timeInterval.Value, path.Value);
+            return new StatusCodesBasedTrigger(Optional.ToNullable(status), Optional.ToNullable(subStatus), Optional.ToNullable(win32Status), Optional.ToNullable(count), timeInterval.Value, path.Value);
         }
     }
 }

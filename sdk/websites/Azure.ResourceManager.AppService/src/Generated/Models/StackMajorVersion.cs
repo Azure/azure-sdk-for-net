@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of StackMajorVersion. </summary>
         public StackMajorVersion()
         {
-            MinorVersions = new Core.ChangeTrackingList<StackMinorVersion>();
-            AppSettingsDictionary = new Core.ChangeTrackingDictionary<string, BinaryData>();
-            SiteConfigPropertiesDictionary = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            MinorVersions = new ChangeTrackingList<StackMinorVersion>();
+            AppSettingsDictionary = new ChangeTrackingDictionary<string, BinaryData>();
+            SiteConfigPropertiesDictionary = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of StackMajorVersion. </summary>

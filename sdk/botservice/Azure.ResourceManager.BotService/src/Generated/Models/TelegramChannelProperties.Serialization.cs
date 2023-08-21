@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class TelegramChannelProperties : Core.IUtf8JsonSerializable
+    public partial class TelegramChannelProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AccessToken))
+            if (Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
                 writer.WriteStringValue(AccessToken);
             }
-            if (Core.Optional.IsDefined(IsValidated))
+            if (Optional.IsDefined(IsValidated))
             {
                 writer.WritePropertyName("isValidated"u8);
                 writer.WriteBooleanValue(IsValidated.Value);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<string> accessToken = default;
-            Core.Optional<bool> isValidated = default;
+            Optional<string> accessToken = default;
+            Optional<bool> isValidated = default;
             bool isEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new TelegramChannelProperties(accessToken.Value, Core.Optional.ToNullable(isValidated), isEnabled);
+            return new TelegramChannelProperties(accessToken.Value, Optional.ToNullable(isValidated), isEnabled);
         }
     }
 }

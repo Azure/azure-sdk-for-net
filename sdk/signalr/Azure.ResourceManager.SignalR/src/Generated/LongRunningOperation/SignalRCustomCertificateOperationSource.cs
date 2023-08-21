@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SignalR
 {
-    internal class SignalRCustomCertificateOperationSource : Core.IOperationSource<SignalRCustomCertificateResource>
+    internal class SignalRCustomCertificateOperationSource : IOperationSource<SignalRCustomCertificateResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.SignalR
             _client = client;
         }
 
-        SignalRCustomCertificateResource Core.IOperationSource<SignalRCustomCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SignalRCustomCertificateResource IOperationSource<SignalRCustomCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(document.RootElement);
             return new SignalRCustomCertificateResource(_client, data);
         }
 
-        async ValueTask<SignalRCustomCertificateResource> Core.IOperationSource<SignalRCustomCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SignalRCustomCertificateResource> IOperationSource<SignalRCustomCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(document.RootElement);

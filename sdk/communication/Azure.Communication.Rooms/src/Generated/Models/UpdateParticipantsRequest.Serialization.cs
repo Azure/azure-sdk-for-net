@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Communication.Rooms
 {
-    internal partial class UpdateParticipantsRequest : Core.IUtf8JsonSerializable
+    internal partial class UpdateParticipantsRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Participants))
+            if (Optional.IsCollectionDefined(Participants))
             {
                 writer.WritePropertyName("participants"u8);
                 writer.WriteStartObject();

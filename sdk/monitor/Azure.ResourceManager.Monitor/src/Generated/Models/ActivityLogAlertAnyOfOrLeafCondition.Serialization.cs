@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ActivityLogAlertAnyOfOrLeafCondition : Core.IUtf8JsonSerializable
+    public partial class ActivityLogAlertAnyOfOrLeafCondition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AnyOf))
+            if (Optional.IsCollectionDefined(AnyOf))
             {
                 writer.WritePropertyName("anyOf"u8);
                 writer.WriteStartArray();
@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Field))
+            if (Optional.IsDefined(Field))
             {
                 writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field);
             }
-            if (Core.Optional.IsDefined(EqualsValue))
+            if (Optional.IsDefined(EqualsValue))
             {
                 writer.WritePropertyName("equals"u8);
                 writer.WriteStringValue(EqualsValue);
             }
-            if (Core.Optional.IsCollectionDefined(ContainsAny))
+            if (Optional.IsCollectionDefined(ContainsAny))
             {
                 writer.WritePropertyName("containsAny"u8);
                 writer.WriteStartArray();
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<IList<AlertRuleLeafCondition>> anyOf = default;
-            Core.Optional<string> field = default;
-            Core.Optional<string> @equals = default;
-            Core.Optional<IList<string>> containsAny = default;
+            Optional<IList<AlertRuleLeafCondition>> anyOf = default;
+            Optional<string> field = default;
+            Optional<string> @equals = default;
+            Optional<IList<string>> containsAny = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("anyOf"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new ActivityLogAlertAnyOfOrLeafCondition(field.Value, @equals.Value, Core.Optional.ToList(containsAny), Core.Optional.ToList(anyOf));
+            return new ActivityLogAlertAnyOfOrLeafCondition(field.Value, @equals.Value, Optional.ToList(containsAny), Optional.ToList(anyOf));
         }
     }
 }

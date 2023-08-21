@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of SBSubscriptionListResult. </summary>
         internal SBSubscriptionListResult()
         {
-            Value = new Core.ChangeTrackingList<ServiceBusSubscriptionData>();
+            Value = new ChangeTrackingList<ServiceBusSubscriptionData>();
         }
 
         /// <summary> Initializes a new instance of SBSubscriptionListResult. </summary>

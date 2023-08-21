@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
-    public partial class ContainerHostMapping : Core.IUtf8JsonSerializable
+    public partial class ContainerHostMapping : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ContainerHostResourceId))
+            if (Optional.IsDefined(ContainerHostResourceId))
             {
                 writer.WritePropertyName("containerHostResourceId"u8);
                 writer.WriteStringValue(ContainerHostResourceId);
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.DevSpaces.Models
             {
                 return null;
             }
-            Core.Optional<string> containerHostResourceId = default;
-            Core.Optional<string> mappedControllerResourceId = default;
+            Optional<string> containerHostResourceId = default;
+            Optional<string> mappedControllerResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerHostResourceId"u8))

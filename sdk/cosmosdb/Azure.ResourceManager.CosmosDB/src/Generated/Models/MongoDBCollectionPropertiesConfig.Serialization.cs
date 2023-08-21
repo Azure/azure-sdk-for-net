@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class MongoDBCollectionPropertiesConfig : Core.IUtf8JsonSerializable
+    public partial class MongoDBCollectionPropertiesConfig : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Throughput))
+            if (Optional.IsDefined(Throughput))
             {
                 writer.WritePropertyName("throughput"u8);
                 writer.WriteNumberValue(Throughput.Value);
             }
-            if (Core.Optional.IsDefined(AutoscaleSettings))
+            if (Optional.IsDefined(AutoscaleSettings))
             {
                 writer.WritePropertyName("autoscaleSettings"u8);
                 writer.WriteObjectValue(AutoscaleSettings);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<int> throughput = default;
-            Core.Optional<AutoscaleSettings> autoscaleSettings = default;
+            Optional<int> throughput = default;
+            Optional<AutoscaleSettings> autoscaleSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("throughput"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new MongoDBCollectionPropertiesConfig(Core.Optional.ToNullable(throughput), autoscaleSettings.Value);
+            return new MongoDBCollectionPropertiesConfig(Optional.ToNullable(throughput), autoscaleSettings.Value);
         }
     }
 }

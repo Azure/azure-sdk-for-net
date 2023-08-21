@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SwitchCase. </summary>
         public SwitchCase()
         {
-            Activities = new Core.ChangeTrackingList<Activity>();
+            Activities = new ChangeTrackingList<Activity>();
         }
 
         /// <summary> Initializes a new instance of SwitchCase. </summary>

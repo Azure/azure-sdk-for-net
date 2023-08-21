@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class SmsChannelProperties : Core.IUtf8JsonSerializable
+    public partial class SmsChannelProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
             writer.WritePropertyName("accountSID"u8);
             writer.WriteStringValue(AccountSID);
-            if (Core.Optional.IsDefined(AuthToken))
+            if (Optional.IsDefined(AuthToken))
             {
                 writer.WritePropertyName("authToken"u8);
                 writer.WriteStringValue(AuthToken);
             }
-            if (Core.Optional.IsDefined(IsValidated))
+            if (Optional.IsDefined(IsValidated))
             {
                 writer.WritePropertyName("isValidated"u8);
                 writer.WriteBooleanValue(IsValidated.Value);
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.BotService.Models
             }
             string phone = default;
             string accountSID = default;
-            Core.Optional<string> authToken = default;
-            Core.Optional<bool> isValidated = default;
+            Optional<string> authToken = default;
+            Optional<bool> isValidated = default;
             bool isEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new SmsChannelProperties(phone, accountSID, authToken.Value, Core.Optional.ToNullable(isValidated), isEnabled);
+            return new SmsChannelProperties(phone, accountSID, authToken.Value, Optional.ToNullable(isValidated), isEnabled);
         }
     }
 }

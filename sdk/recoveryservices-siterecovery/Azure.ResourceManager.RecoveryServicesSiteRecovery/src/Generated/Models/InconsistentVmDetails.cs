@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InconsistentVmDetails. </summary>
         internal InconsistentVmDetails()
         {
-            Details = new Core.ChangeTrackingList<string>();
-            ErrorIds = new Core.ChangeTrackingList<string>();
+            Details = new ChangeTrackingList<string>();
+            ErrorIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of InconsistentVmDetails. </summary>

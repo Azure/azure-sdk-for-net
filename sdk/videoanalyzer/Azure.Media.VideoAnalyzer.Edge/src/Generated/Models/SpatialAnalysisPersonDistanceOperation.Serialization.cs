@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SpatialAnalysisPersonDistanceOperation : Core.IUtf8JsonSerializable
+    public partial class SpatialAnalysisPersonDistanceOperation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("zones"u8);
@@ -23,37 +23,37 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(Debug))
+            if (Optional.IsDefined(Debug))
             {
                 writer.WritePropertyName("debug"u8);
                 writer.WriteStringValue(Debug);
             }
-            if (Core.Optional.IsDefined(CalibrationConfiguration))
+            if (Optional.IsDefined(CalibrationConfiguration))
             {
                 writer.WritePropertyName("calibrationConfiguration"u8);
                 writer.WriteStringValue(CalibrationConfiguration);
             }
-            if (Core.Optional.IsDefined(CameraConfiguration))
+            if (Optional.IsDefined(CameraConfiguration))
             {
                 writer.WritePropertyName("cameraConfiguration"u8);
                 writer.WriteStringValue(CameraConfiguration);
             }
-            if (Core.Optional.IsDefined(CameraCalibratorNodeConfiguration))
+            if (Optional.IsDefined(CameraCalibratorNodeConfiguration))
             {
                 writer.WritePropertyName("cameraCalibratorNodeConfiguration"u8);
                 writer.WriteStringValue(CameraCalibratorNodeConfiguration);
             }
-            if (Core.Optional.IsDefined(DetectorNodeConfiguration))
+            if (Optional.IsDefined(DetectorNodeConfiguration))
             {
                 writer.WritePropertyName("detectorNodeConfiguration"u8);
                 writer.WriteStringValue(DetectorNodeConfiguration);
             }
-            if (Core.Optional.IsDefined(TrackerNodeConfiguration))
+            if (Optional.IsDefined(TrackerNodeConfiguration))
             {
                 writer.WritePropertyName("trackerNodeConfiguration"u8);
                 writer.WriteStringValue(TrackerNodeConfiguration);
             }
-            if (Core.Optional.IsDefined(EnableFaceMaskClassifier))
+            if (Optional.IsDefined(EnableFaceMaskClassifier))
             {
                 writer.WritePropertyName("enableFaceMaskClassifier"u8);
                 writer.WriteStringValue(EnableFaceMaskClassifier);
@@ -70,13 +70,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             IList<SpatialAnalysisPersonDistanceZoneEvents> zones = default;
-            Core.Optional<string> debug = default;
-            Core.Optional<string> calibrationConfiguration = default;
-            Core.Optional<string> cameraConfiguration = default;
-            Core.Optional<string> cameraCalibratorNodeConfiguration = default;
-            Core.Optional<string> detectorNodeConfiguration = default;
-            Core.Optional<string> trackerNodeConfiguration = default;
-            Core.Optional<string> enableFaceMaskClassifier = default;
+            Optional<string> debug = default;
+            Optional<string> calibrationConfiguration = default;
+            Optional<string> cameraConfiguration = default;
+            Optional<string> cameraCalibratorNodeConfiguration = default;
+            Optional<string> detectorNodeConfiguration = default;
+            Optional<string> trackerNodeConfiguration = default;
+            Optional<string> enableFaceMaskClassifier = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {

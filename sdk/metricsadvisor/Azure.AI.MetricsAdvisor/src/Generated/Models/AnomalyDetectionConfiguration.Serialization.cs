@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class AnomalyDetectionConfiguration : Core.IUtf8JsonSerializable
+    public partial class AnomalyDetectionConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("wholeMetricConfiguration"u8);
             writer.WriteObjectValue(WholeSeriesDetectionConditions);
-            if (Core.Optional.IsCollectionDefined(SeriesGroupDetectionConditions))
+            if (Optional.IsCollectionDefined(SeriesGroupDetectionConditions))
             {
                 writer.WritePropertyName("dimensionGroupOverrideConfigurations"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(SeriesDetectionConditions))
+            if (Optional.IsCollectionDefined(SeriesDetectionConditions))
             {
                 writer.WritePropertyName("seriesOverrideConfigurations"u8);
                 writer.WriteStartArray();
@@ -56,13 +56,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Core.Optional<string> anomalyDetectionConfigurationId = default;
+            Optional<string> anomalyDetectionConfigurationId = default;
             string name = default;
-            Core.Optional<string> description = default;
+            Optional<string> description = default;
             string metricId = default;
             MetricWholeSeriesDetectionCondition wholeMetricConfiguration = default;
-            Core.Optional<IList<MetricSeriesGroupDetectionCondition>> dimensionGroupOverrideConfigurations = default;
-            Core.Optional<IList<MetricSingleSeriesDetectionCondition>> seriesOverrideConfigurations = default;
+            Optional<IList<MetricSeriesGroupDetectionCondition>> dimensionGroupOverrideConfigurations = default;
+            Optional<IList<MetricSingleSeriesDetectionCondition>> seriesOverrideConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("anomalyDetectionConfigurationId"u8))
@@ -119,7 +119,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyDetectionConfiguration(anomalyDetectionConfigurationId.Value, name, description.Value, metricId, wholeMetricConfiguration, Core.Optional.ToList(dimensionGroupOverrideConfigurations), Core.Optional.ToList(seriesOverrideConfigurations));
+            return new AnomalyDetectionConfiguration(anomalyDetectionConfigurationId.Value, name, description.Value, metricId, wholeMetricConfiguration, Optional.ToList(dimensionGroupOverrideConfigurations), Optional.ToList(seriesOverrideConfigurations));
         }
     }
 }

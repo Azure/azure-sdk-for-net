@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseWorkspaceKeyDetails : Core.IUtf8JsonSerializable
+    public partial class SynapseWorkspaceKeyDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(KeyVaultUri))
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUrl"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<Uri> keyVaultUrl = default;
+            Optional<string> name = default;
+            Optional<Uri> keyVaultUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

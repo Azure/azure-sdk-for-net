@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyDictionary<string, HDInsightVersionsCapability>> versions = default;
-            Core.Optional<IReadOnlyDictionary<string, RegionsCapability>> regions = default;
-            Core.Optional<IReadOnlyList<string>> features = default;
-            Core.Optional<QuotaCapability> quota = default;
+            Optional<IReadOnlyDictionary<string, HDInsightVersionsCapability>> versions = default;
+            Optional<IReadOnlyDictionary<string, RegionsCapability>> regions = default;
+            Optional<IReadOnlyList<string>> features = default;
+            Optional<QuotaCapability> quota = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("versions"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightCapabilitiesResult(Core.Optional.ToDictionary(versions), Core.Optional.ToDictionary(regions), Core.Optional.ToList(features), quota.Value);
+            return new HDInsightCapabilitiesResult(Optional.ToDictionary(versions), Optional.ToDictionary(regions), Optional.ToList(features), quota.Value);
         }
     }
 }

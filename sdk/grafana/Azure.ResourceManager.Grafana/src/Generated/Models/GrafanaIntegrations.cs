@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <summary> Initializes a new instance of GrafanaIntegrations. </summary>
         public GrafanaIntegrations()
         {
-            MonitorWorkspaceIntegrations = new Core.ChangeTrackingList<MonitorWorkspaceIntegration>();
+            MonitorWorkspaceIntegrations = new ChangeTrackingList<MonitorWorkspaceIntegration>();
         }
 
         /// <summary> Initializes a new instance of GrafanaIntegrations. </summary>

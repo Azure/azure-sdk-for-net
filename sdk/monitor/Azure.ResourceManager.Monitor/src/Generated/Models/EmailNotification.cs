@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of EmailNotification. </summary>
         public EmailNotification()
         {
-            CustomEmails = new Core.ChangeTrackingList<string>();
+            CustomEmails = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of EmailNotification. </summary>

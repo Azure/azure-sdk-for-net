@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.IotCentral.Models
             {
                 return null;
             }
-            Core.Optional<string> manifestId = default;
-            Core.Optional<string> manifestVersion = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> title = default;
-            Core.Optional<int> order = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> industry = default;
-            Core.Optional<IReadOnlyList<IotCentralAppTemplateLocation>> locations = default;
+            Optional<string> manifestId = default;
+            Optional<string> manifestVersion = default;
+            Optional<string> name = default;
+            Optional<string> title = default;
+            Optional<int> order = default;
+            Optional<string> description = default;
+            Optional<string> industry = default;
+            Optional<IReadOnlyList<IotCentralAppTemplateLocation>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("manifestId"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     continue;
                 }
             }
-            return new IotCentralAppTemplate(manifestId.Value, manifestVersion.Value, name.Value, title.Value, Core.Optional.ToNullable(order), description.Value, industry.Value, Core.Optional.ToList(locations));
+            return new IotCentralAppTemplate(manifestId.Value, manifestVersion.Value, name.Value, title.Value, Optional.ToNullable(order), description.Value, industry.Value, Optional.ToList(locations));
         }
     }
 }

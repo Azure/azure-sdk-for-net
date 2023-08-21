@@ -13,17 +13,17 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class WebActivity : Core.IUtf8JsonSerializable
+    public partial class WebActivity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LinkedServiceName))
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Core.Optional.IsDefined(Policy))
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsDefined(OnInactiveMarkAs))
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(DependsOn))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(UserProperties))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -73,27 +73,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("url"u8);
             JsonSerializer.Serialize(writer, Uri);
-            if (Core.Optional.IsDefined(Headers))
+            if (Optional.IsDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 JsonSerializer.Serialize(writer, Headers);
             }
-            if (Core.Optional.IsDefined(Body))
+            if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 JsonSerializer.Serialize(writer, Body);
             }
-            if (Core.Optional.IsDefined(Authentication))
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (Core.Optional.IsDefined(DisableCertValidation))
+            if (Optional.IsDefined(DisableCertValidation))
             {
                 writer.WritePropertyName("disableCertValidation"u8);
                 writer.WriteBooleanValue(DisableCertValidation.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Datasets))
+            if (Optional.IsCollectionDefined(Datasets))
             {
                 writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(LinkedServices))
+            if (Optional.IsCollectionDefined(LinkedServices))
             {
                 writer.WritePropertyName("linkedServices"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ConnectVia))
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
@@ -137,24 +137,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Core.Optional<PipelineActivityPolicy> policy = default;
+            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
+            Optional<PipelineActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            Core.Optional<string> description = default;
-            Core.Optional<PipelineActivityState> state = default;
-            Core.Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Core.Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Core.Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            Optional<string> description = default;
+            Optional<PipelineActivityState> state = default;
+            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Optional<IList<PipelineActivityDependency>> dependsOn = default;
+            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
             WebActivityMethod method = default;
             DataFactoryElement<string> url = default;
-            Core.Optional<DataFactoryElement<string>> headers = default;
-            Core.Optional<DataFactoryElement<string>> body = default;
-            Core.Optional<WebActivityAuthentication> authentication = default;
-            Core.Optional<bool> disableCertValidation = default;
-            Core.Optional<IList<DatasetReference>> datasets = default;
-            Core.Optional<IList<DataFactoryLinkedServiceReference>> linkedServices = default;
-            Core.Optional<IntegrationRuntimeReference> connectVia = default;
+            Optional<DataFactoryElement<string>> headers = default;
+            Optional<DataFactoryElement<string>> body = default;
+            Optional<WebActivityAuthentication> authentication = default;
+            Optional<bool> disableCertValidation = default;
+            Optional<IList<DatasetReference>> datasets = default;
+            Optional<IList<DataFactoryLinkedServiceReference>> linkedServices = default;
+            Optional<IntegrationRuntimeReference> connectVia = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new WebActivity(name, type, description.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(onInactiveMarkAs), Core.Optional.ToList(dependsOn), Core.Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, method, url, headers.Value, body.Value, authentication.Value, Core.Optional.ToNullable(disableCertValidation), Core.Optional.ToList(datasets), Core.Optional.ToList(linkedServices), connectVia.Value);
+            return new WebActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, method, url, headers.Value, body.Value, authentication.Value, Optional.ToNullable(disableCertValidation), Optional.ToList(datasets), Optional.ToList(linkedServices), connectVia.Value);
         }
     }
 }

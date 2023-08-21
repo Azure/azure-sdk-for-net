@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<string> region = default;
-            Core.Optional<SharingState> state = default;
-            Core.Optional<string> details = default;
+            Optional<string> region = default;
+            Optional<SharingState> state = default;
+            Optional<string> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("region"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RegionalSharingStatus(region.Value, Core.Optional.ToNullable(state), details.Value);
+            return new RegionalSharingStatus(region.Value, Optional.ToNullable(state), details.Value);
         }
     }
 }

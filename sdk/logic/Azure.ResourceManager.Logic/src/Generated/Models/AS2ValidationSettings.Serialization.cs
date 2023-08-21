@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class AS2ValidationSettings : Core.IUtf8JsonSerializable
+    public partial class AS2ValidationSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("overrideMessageProperties"u8);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(CheckCertificateRevocationListOnReceive);
             writer.WritePropertyName("encryptionAlgorithm"u8);
             writer.WriteStringValue(EncryptionAlgorithm.ToString());
-            if (Core.Optional.IsDefined(SigningAlgorithm))
+            if (Optional.IsDefined(SigningAlgorithm))
             {
                 writer.WritePropertyName("signingAlgorithm"u8);
                 writer.WriteStringValue(SigningAlgorithm.Value.ToString());
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Logic.Models
             bool checkCertificateRevocationListOnSend = default;
             bool checkCertificateRevocationListOnReceive = default;
             AS2EncryptionAlgorithm encryptionAlgorithm = default;
-            Core.Optional<AS2SigningAlgorithm> signingAlgorithm = default;
+            Optional<AS2SigningAlgorithm> signingAlgorithm = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("overrideMessageProperties"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new AS2ValidationSettings(overrideMessageProperties, encryptMessage, signMessage, compressMessage, checkDuplicateMessage, interchangeDuplicatesValidityDays, checkCertificateRevocationListOnSend, checkCertificateRevocationListOnReceive, encryptionAlgorithm, Core.Optional.ToNullable(signingAlgorithm));
+            return new AS2ValidationSettings(overrideMessageProperties, encryptMessage, signMessage, compressMessage, checkDuplicateMessage, interchangeDuplicatesValidityDays, checkCertificateRevocationListOnSend, checkCertificateRevocationListOnReceive, encryptionAlgorithm, Optional.ToNullable(signingAlgorithm));
         }
     }
 }

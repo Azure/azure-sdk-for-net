@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactFramingSettings : Core.IUtf8JsonSerializable
+    public partial class EdifactFramingSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServiceCodeListDirectoryVersion))
+            if (Optional.IsDefined(ServiceCodeListDirectoryVersion))
             {
                 writer.WritePropertyName("serviceCodeListDirectoryVersion"u8);
                 writer.WriteStringValue(ServiceCodeListDirectoryVersion);
             }
-            if (Core.Optional.IsDefined(CharacterEncoding))
+            if (Optional.IsDefined(CharacterEncoding))
             {
                 writer.WritePropertyName("characterEncoding"u8);
                 writer.WriteStringValue(CharacterEncoding);
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<string> serviceCodeListDirectoryVersion = default;
-            Core.Optional<string> characterEncoding = default;
+            Optional<string> serviceCodeListDirectoryVersion = default;
+            Optional<string> characterEncoding = default;
             int protocolVersion = default;
             int dataElementSeparator = default;
             int componentSeparator = default;

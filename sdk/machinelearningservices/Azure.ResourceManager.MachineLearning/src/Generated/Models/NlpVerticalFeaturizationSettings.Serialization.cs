@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class NlpVerticalFeaturizationSettings : Core.IUtf8JsonSerializable
+    internal partial class NlpVerticalFeaturizationSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DatasetLanguage))
+            if (Optional.IsDefined(DatasetLanguage))
             {
                 if (DatasetLanguage != null)
                 {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> datasetLanguage = default;
+            Optional<string> datasetLanguage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datasetLanguage"u8))

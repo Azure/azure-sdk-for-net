@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class UserAssignedServiceIdentity : Core.IUtf8JsonSerializable
+    public partial class UserAssignedServiceIdentity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ManagedServiceIdentityType.ToString());
-            if (Core.Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 return null;
             }
             ManagedServiceIdentityType type = default;
-            Core.Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new UserAssignedServiceIdentity(type, Core.Optional.ToDictionary(userAssignedIdentities));
+            return new UserAssignedServiceIdentity(type, Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

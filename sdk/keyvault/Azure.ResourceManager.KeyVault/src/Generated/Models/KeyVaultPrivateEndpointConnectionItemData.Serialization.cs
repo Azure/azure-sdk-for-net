@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<SubResource> privateEndpoint = default;
-            Core.Optional<KeyVaultPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Core.Optional<KeyVaultPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<string> id = default;
+            Optional<ETag> etag = default;
+            Optional<SubResource> privateEndpoint = default;
+            Optional<KeyVaultPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<KeyVaultPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new KeyVaultPrivateEndpointConnectionItemData(id.Value, Core.Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Core.Optional.ToNullable(provisioningState));
+            return new KeyVaultPrivateEndpointConnectionItemData(id.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

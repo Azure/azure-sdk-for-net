@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class CorsOptions : Core.IUtf8JsonSerializable
+    public partial class CorsOptions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("allowedOrigins"u8);
@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(MaxAgeInSeconds))
+            if (Optional.IsDefined(MaxAgeInSeconds))
             {
                 if (MaxAgeInSeconds != null)
                 {
@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<string> allowedOrigins = default;
-            Core.Optional<long?> maxAgeInSeconds = default;
+            Optional<long?> maxAgeInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedOrigins"u8))
@@ -69,7 +69,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CorsOptions(allowedOrigins, Core.Optional.ToNullable(maxAgeInSeconds));
+            return new CorsOptions(allowedOrigins, Optional.ToNullable(maxAgeInSeconds));
         }
     }
 }

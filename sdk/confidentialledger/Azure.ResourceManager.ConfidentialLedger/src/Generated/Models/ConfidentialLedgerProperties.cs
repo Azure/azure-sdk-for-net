@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Initializes a new instance of ConfidentialLedgerProperties. </summary>
         public ConfidentialLedgerProperties()
         {
-            AadBasedSecurityPrincipals = new Core.ChangeTrackingList<AadBasedSecurityPrincipal>();
-            CertBasedSecurityPrincipals = new Core.ChangeTrackingList<CertBasedSecurityPrincipal>();
+            AadBasedSecurityPrincipals = new ChangeTrackingList<AadBasedSecurityPrincipal>();
+            CertBasedSecurityPrincipals = new ChangeTrackingList<CertBasedSecurityPrincipal>();
         }
 
         /// <summary> Initializes a new instance of ConfidentialLedgerProperties. </summary>

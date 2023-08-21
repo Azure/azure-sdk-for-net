@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    public partial class RestResponse : Core.IUtf8JsonSerializable
+    public partial class RestResponse : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(SuccessStatusCodes))
+            if (Optional.IsCollectionDefined(SuccessStatusCodes))
             {
                 writer.WritePropertyName("successStatusCodes"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Regex))
+            if (Optional.IsDefined(Regex))
             {
                 writer.WritePropertyName("regex"u8);
                 writer.WriteObjectValue(Regex);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> successStatusCodes = default;
-            Core.Optional<RestResponseRegex> regex = default;
+            Optional<IList<string>> successStatusCodes = default;
+            Optional<RestResponseRegex> regex = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("successStatusCodes"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     continue;
                 }
             }
-            return new RestResponse(Core.Optional.ToList(successStatusCodes), regex.Value);
+            return new RestResponse(Optional.ToList(successStatusCodes), regex.Value);
         }
     }
 }

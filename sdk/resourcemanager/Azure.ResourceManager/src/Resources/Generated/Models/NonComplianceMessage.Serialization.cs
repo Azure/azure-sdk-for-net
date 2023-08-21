@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class NonComplianceMessage : Core.IUtf8JsonSerializable
+    public partial class NonComplianceMessage : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Core.Optional.IsDefined(PolicyDefinitionReferenceId))
+            if (Optional.IsDefined(PolicyDefinitionReferenceId))
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string message = default;
-            Core.Optional<string> policyDefinitionReferenceId = default;
+            Optional<string> policyDefinitionReferenceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))

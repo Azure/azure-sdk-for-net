@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<CosmosDBForPostgreSqlConfigurationData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<CosmosDBForPostgreSqlConfigurationData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     continue;
                 }
             }
-            return new CosmosDBForPostgreSqlClusterConfigurationListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new CosmosDBForPostgreSqlClusterConfigurationListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

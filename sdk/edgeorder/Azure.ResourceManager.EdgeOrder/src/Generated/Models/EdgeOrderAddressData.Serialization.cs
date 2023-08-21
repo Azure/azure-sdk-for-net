@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    public partial class EdgeOrderAddressData : Core.IUtf8JsonSerializable
+    public partial class EdgeOrderAddressData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ShippingAddress))
+            if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
@@ -50,15 +50,15 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<EdgeOrderShippingAddress> shippingAddress = default;
+            Optional<SystemData> systemData = default;
+            Optional<EdgeOrderShippingAddress> shippingAddress = default;
             EdgeOrderAddressContactDetails contactDetails = default;
-            Core.Optional<EdgeOrderAddressValidationStatus> addressValidationStatus = default;
+            Optional<EdgeOrderAddressValidationStatus> addressValidationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.EdgeOrder
                     continue;
                 }
             }
-            return new EdgeOrderAddressData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, shippingAddress.Value, contactDetails, Core.Optional.ToNullable(addressValidationStatus));
+            return new EdgeOrderAddressData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, shippingAddress.Value, contactDetails, Optional.ToNullable(addressValidationStatus));
         }
     }
 }

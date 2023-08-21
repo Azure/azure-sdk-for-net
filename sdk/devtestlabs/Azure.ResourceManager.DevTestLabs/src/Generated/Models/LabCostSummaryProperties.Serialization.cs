@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<double> estimatedLabCost = default;
+            Optional<double> estimatedLabCost = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("estimatedLabCost"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new LabCostSummaryProperties(Core.Optional.ToNullable(estimatedLabCost));
+            return new LabCostSummaryProperties(Optional.ToNullable(estimatedLabCost));
         }
     }
 }

@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Initializes a new instance of UpdateSummaryData. </summary>
         public UpdateSummaryData()
         {
-            PackageVersions = new Core.ChangeTrackingList<HciPackageVersionInfo>();
-            HealthCheckResult = new Core.ChangeTrackingList<HciPrecheckResult>();
+            PackageVersions = new ChangeTrackingList<HciPackageVersionInfo>();
+            HealthCheckResult = new ChangeTrackingList<HciPrecheckResult>();
         }
 
         /// <summary> Initializes a new instance of UpdateSummaryData. </summary>

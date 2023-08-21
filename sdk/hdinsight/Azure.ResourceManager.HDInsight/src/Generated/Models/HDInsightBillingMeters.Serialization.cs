@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<string> meterParameter = default;
-            Core.Optional<string> meter = default;
-            Core.Optional<string> unit = default;
+            Optional<string> meterParameter = default;
+            Optional<string> meter = default;
+            Optional<string> unit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterParameter"u8))

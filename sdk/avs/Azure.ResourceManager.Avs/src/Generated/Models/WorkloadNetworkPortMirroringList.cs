@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of WorkloadNetworkPortMirroringList. </summary>
         internal WorkloadNetworkPortMirroringList()
         {
-            Value = new Core.ChangeTrackingList<WorkloadNetworkPortMirroringProfileData>();
+            Value = new ChangeTrackingList<WorkloadNetworkPortMirroringProfileData>();
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkPortMirroringList. </summary>

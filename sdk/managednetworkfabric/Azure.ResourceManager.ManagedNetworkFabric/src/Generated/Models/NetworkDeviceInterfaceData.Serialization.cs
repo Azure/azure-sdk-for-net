@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkDeviceInterfaceData : Core.IUtf8JsonSerializable
+    public partial class NetworkDeviceInterfaceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Annotation))
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> annotation = default;
-            Core.Optional<string> physicalIdentifier = default;
-            Core.Optional<string> connectedTo = default;
-            Core.Optional<NetworkDeviceInterfaceType> interfaceType = default;
-            Core.Optional<IPAddress> ipv4Address = default;
-            Core.Optional<string> ipv6Address = default;
-            Core.Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Core.Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> annotation = default;
+            Optional<string> physicalIdentifier = default;
+            Optional<string> connectedTo = default;
+            Optional<NetworkDeviceInterfaceType> interfaceType = default;
+            Optional<IPAddress> ipv4Address = default;
+            Optional<string> ipv6Address = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            Optional<NetworkFabricAdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     continue;
                 }
             }
-            return new NetworkDeviceInterfaceData(id, name, type, systemData.Value, annotation.Value, physicalIdentifier.Value, connectedTo.Value, Core.Optional.ToNullable(interfaceType), ipv4Address.Value, ipv6Address.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(administrativeState));
+            return new NetworkDeviceInterfaceData(id, name, type, systemData.Value, annotation.Value, physicalIdentifier.Value, connectedTo.Value, Optional.ToNullable(interfaceType), ipv4Address.Value, ipv6Address.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
         }
     }
 }

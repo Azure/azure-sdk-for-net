@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IReadOnlyList<MySqlFlexibleServerSkuCapability>> supportedSkus = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<MySqlFlexibleServerSkuCapability>> supportedSkus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MySqlFlexibleServerServerVersionCapability(name.Value, Core.Optional.ToList(supportedSkus));
+            return new MySqlFlexibleServerServerVersionCapability(name.Value, Optional.ToList(supportedSkus));
         }
     }
 }

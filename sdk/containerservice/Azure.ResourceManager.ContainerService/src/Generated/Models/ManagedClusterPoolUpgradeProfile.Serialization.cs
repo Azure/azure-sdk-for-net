@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             string kubernetesVersion = default;
-            Core.Optional<string> name = default;
+            Optional<string> name = default;
             ContainerServiceOSType osType = default;
-            Core.Optional<IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem>> upgrades = default;
+            Optional<IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem>> upgrades = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubernetesVersion"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterPoolUpgradeProfile(kubernetesVersion, name.Value, osType, Core.Optional.ToList(upgrades));
+            return new ManagedClusterPoolUpgradeProfile(kubernetesVersion, name.Value, osType, Optional.ToList(upgrades));
         }
     }
 }

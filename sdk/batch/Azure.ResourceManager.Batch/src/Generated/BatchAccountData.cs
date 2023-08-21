@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Initializes a new instance of BatchAccountData. </summary>
         public BatchAccountData()
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<BatchPrivateEndpointConnectionData>();
-            DedicatedCoreQuotaPerVmFamily = new Core.ChangeTrackingList<BatchVmFamilyCoreQuota>();
-            AllowedAuthenticationModes = new Core.ChangeTrackingList<BatchAuthenticationMode>();
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            PrivateEndpointConnections = new ChangeTrackingList<BatchPrivateEndpointConnectionData>();
+            DedicatedCoreQuotaPerVmFamily = new ChangeTrackingList<BatchVmFamilyCoreQuota>();
+            AllowedAuthenticationModes = new ChangeTrackingList<BatchAuthenticationMode>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of BatchAccountData. </summary>

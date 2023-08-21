@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Core.Optional<string> meterName = default;
-            Core.Optional<string> meterCategory = default;
-            Core.Optional<string> meterSubCategory = default;
-            Core.Optional<string> unit = default;
-            Core.Optional<string> meterLocation = default;
-            Core.Optional<decimal> totalIncludedQuantity = default;
-            Core.Optional<decimal> pretaxStandardRate = default;
-            Core.Optional<string> serviceName = default;
-            Core.Optional<string> serviceTier = default;
+            Optional<string> meterName = default;
+            Optional<string> meterCategory = default;
+            Optional<string> meterSubCategory = default;
+            Optional<string> unit = default;
+            Optional<string> meterLocation = default;
+            Optional<decimal> totalIncludedQuantity = default;
+            Optional<decimal> pretaxStandardRate = default;
+            Optional<string> serviceName = default;
+            Optional<string> serviceTier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterName"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionMeterDetails(meterName.Value, meterCategory.Value, meterSubCategory.Value, unit.Value, meterLocation.Value, Core.Optional.ToNullable(totalIncludedQuantity), Core.Optional.ToNullable(pretaxStandardRate), serviceName.Value, serviceTier.Value);
+            return new ConsumptionMeterDetails(meterName.Value, meterCategory.Value, meterSubCategory.Value, unit.Value, meterLocation.Value, Optional.ToNullable(totalIncludedQuantity), Optional.ToNullable(pretaxStandardRate), serviceName.Value, serviceTier.Value);
         }
     }
 }

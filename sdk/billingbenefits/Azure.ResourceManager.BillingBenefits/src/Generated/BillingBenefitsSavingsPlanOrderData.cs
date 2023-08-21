@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.BillingBenefits
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
-            SavingsPlans = new Core.ChangeTrackingList<string>();
+            SavingsPlans = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanOrderData. </summary>

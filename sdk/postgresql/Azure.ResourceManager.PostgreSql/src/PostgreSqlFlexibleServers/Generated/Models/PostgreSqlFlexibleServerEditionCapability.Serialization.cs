@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> defaultSkuName = default;
-            Core.Optional<IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability>> supportedStorageEditions = default;
-            Core.Optional<IReadOnlyList<PostgreSqlFlexibleServerSkuCapability>> supportedServerSkus = default;
-            Core.Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Core.Optional<string> reason = default;
+            Optional<string> name = default;
+            Optional<string> defaultSkuName = default;
+            Optional<IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability>> supportedStorageEditions = default;
+            Optional<IReadOnlyList<PostgreSqlFlexibleServerSkuCapability>> supportedServerSkus = default;
+            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerEditionCapability(Core.Optional.ToNullable(status), reason.Value, name.Value, defaultSkuName.Value, Core.Optional.ToList(supportedStorageEditions), Core.Optional.ToList(supportedServerSkus));
+            return new PostgreSqlFlexibleServerEditionCapability(Optional.ToNullable(status), reason.Value, name.Value, defaultSkuName.Value, Optional.ToList(supportedStorageEditions), Optional.ToList(supportedServerSkus));
         }
     }
 }

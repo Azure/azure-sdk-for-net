@@ -10,34 +10,34 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    internal partial class UnknownProtectionIntent : Core.IUtf8JsonSerializable
+    internal partial class UnknownProtectionIntent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("protectionIntentItemType"u8);
             writer.WriteStringValue(ProtectionIntentItemType.ToString());
-            if (Core.Optional.IsDefined(BackupManagementType))
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SourceResourceId))
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Core.Optional.IsDefined(ItemId))
+            if (Optional.IsDefined(ItemId))
             {
                 writer.WritePropertyName("itemId"u8);
                 writer.WriteStringValue(ItemId);
             }
-            if (Core.Optional.IsDefined(PolicyId))
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (Core.Optional.IsDefined(ProtectionState))
+            if (Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             ProtectionIntentItemType protectionIntentItemType = "Unknown";
-            Core.Optional<BackupManagementType> backupManagementType = default;
-            Core.Optional<ResourceIdentifier> sourceResourceId = default;
-            Core.Optional<ResourceIdentifier> itemId = default;
-            Core.Optional<ResourceIdentifier> policyId = default;
-            Core.Optional<BackupProtectionStatus> protectionState = default;
+            Optional<BackupManagementType> backupManagementType = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<ResourceIdentifier> itemId = default;
+            Optional<ResourceIdentifier> policyId = default;
+            Optional<BackupProtectionStatus> protectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectionIntentItemType"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new UnknownProtectionIntent(protectionIntentItemType, Core.Optional.ToNullable(backupManagementType), sourceResourceId.Value, itemId.Value, policyId.Value, Core.Optional.ToNullable(protectionState));
+            return new UnknownProtectionIntent(protectionIntentItemType, Optional.ToNullable(backupManagementType), sourceResourceId.Value, itemId.Value, policyId.Value, Optional.ToNullable(protectionState));
         }
     }
 }

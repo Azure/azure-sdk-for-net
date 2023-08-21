@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AwsOrganizationalDataMember : Core.IUtf8JsonSerializable
+    public partial class AwsOrganizationalDataMember : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ParentHierarchyId))
+            if (Optional.IsDefined(ParentHierarchyId))
             {
                 writer.WritePropertyName("parentHierarchyId"u8);
                 writer.WriteStringValue(ParentHierarchyId);
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<string> parentHierarchyId = default;
+            Optional<string> parentHierarchyId = default;
             OrganizationMembershipType organizationMembershipType = default;
             foreach (var property in element.EnumerateObject())
             {

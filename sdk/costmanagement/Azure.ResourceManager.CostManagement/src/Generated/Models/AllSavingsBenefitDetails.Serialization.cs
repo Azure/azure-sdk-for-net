@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class AllSavingsBenefitDetails : Core.IUtf8JsonSerializable
+    public partial class AllSavingsBenefitDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<decimal> overageCost = default;
-            Core.Optional<decimal> benefitCost = default;
-            Core.Optional<decimal> totalCost = default;
-            Core.Optional<decimal> savingsAmount = default;
-            Core.Optional<decimal> savingsPercentage = default;
-            Core.Optional<decimal> coveragePercentage = default;
-            Core.Optional<decimal> commitmentAmount = default;
-            Core.Optional<decimal> averageUtilizationPercentage = default;
-            Core.Optional<decimal> wastageCost = default;
+            Optional<decimal> overageCost = default;
+            Optional<decimal> benefitCost = default;
+            Optional<decimal> totalCost = default;
+            Optional<decimal> savingsAmount = default;
+            Optional<decimal> savingsPercentage = default;
+            Optional<decimal> coveragePercentage = default;
+            Optional<decimal> commitmentAmount = default;
+            Optional<decimal> averageUtilizationPercentage = default;
+            Optional<decimal> wastageCost = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("overageCost"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new AllSavingsBenefitDetails(Core.Optional.ToNullable(overageCost), Core.Optional.ToNullable(benefitCost), Core.Optional.ToNullable(totalCost), Core.Optional.ToNullable(savingsAmount), Core.Optional.ToNullable(savingsPercentage), Core.Optional.ToNullable(coveragePercentage), Core.Optional.ToNullable(commitmentAmount), Core.Optional.ToNullable(averageUtilizationPercentage), Core.Optional.ToNullable(wastageCost));
+            return new AllSavingsBenefitDetails(Optional.ToNullable(overageCost), Optional.ToNullable(benefitCost), Optional.ToNullable(totalCost), Optional.ToNullable(savingsAmount), Optional.ToNullable(savingsPercentage), Optional.ToNullable(coveragePercentage), Optional.ToNullable(commitmentAmount), Optional.ToNullable(averageUtilizationPercentage), Optional.ToNullable(wastageCost));
         }
     }
 }

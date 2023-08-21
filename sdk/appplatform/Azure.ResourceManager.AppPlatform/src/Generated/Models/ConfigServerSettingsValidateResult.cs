@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ConfigServerSettingsValidateResult. </summary>
         internal ConfigServerSettingsValidateResult()
         {
-            Details = new Core.ChangeTrackingList<ConfigServerSettingsErrorRecord>();
+            Details = new ChangeTrackingList<ConfigServerSettingsErrorRecord>();
         }
 
         /// <summary> Initializes a new instance of ConfigServerSettingsValidateResult. </summary>

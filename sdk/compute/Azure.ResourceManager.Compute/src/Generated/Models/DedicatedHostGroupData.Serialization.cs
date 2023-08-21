@@ -14,12 +14,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class DedicatedHostGroupData : Core.IUtf8JsonSerializable
+    public partial class DedicatedHostGroupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Zones))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PlatformFaultDomainCount))
+            if (Optional.IsDefined(PlatformFaultDomainCount))
             {
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
-            if (Core.Optional.IsDefined(SupportAutomaticPlacement))
+            if (Optional.IsDefined(SupportAutomaticPlacement))
             {
                 writer.WritePropertyName("supportAutomaticPlacement"u8);
                 writer.WriteBooleanValue(SupportAutomaticPlacement.Value);
             }
-            if (Core.Optional.IsDefined(AdditionalCapabilities))
+            if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteObjectValue(AdditionalCapabilities);
@@ -69,18 +69,18 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Core.Optional<IList<string>> zones = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<string>> zones = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<int> platformFaultDomainCount = default;
-            Core.Optional<IReadOnlyList<SubResource>> hosts = default;
-            Core.Optional<DedicatedHostGroupInstanceView> instanceView = default;
-            Core.Optional<bool> supportAutomaticPlacement = default;
-            Core.Optional<DedicatedHostGroupPropertiesAdditionalCapabilities> additionalCapabilities = default;
+            Optional<SystemData> systemData = default;
+            Optional<int> platformFaultDomainCount = default;
+            Optional<IReadOnlyList<SubResource>> hosts = default;
+            Optional<DedicatedHostGroupInstanceView> instanceView = default;
+            Optional<bool> supportAutomaticPlacement = default;
+            Optional<DedicatedHostGroupPropertiesAdditionalCapabilities> additionalCapabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new DedicatedHostGroupData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToList(zones), Core.Optional.ToNullable(platformFaultDomainCount), Core.Optional.ToList(hosts), instanceView.Value, Core.Optional.ToNullable(supportAutomaticPlacement), additionalCapabilities.Value);
+            return new DedicatedHostGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(hosts), instanceView.Value, Optional.ToNullable(supportAutomaticPlacement), additionalCapabilities.Value);
         }
     }
 }

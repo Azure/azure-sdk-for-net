@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<MySqlFlexibleServerData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<MySqlFlexibleServerData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MySqlFlexibleServerListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new MySqlFlexibleServerListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

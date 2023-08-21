@@ -17,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of Availability. </summary>
         internal Availability()
         {
-            Distribution = new Core.ChangeTrackingDictionary<string, int>();
+            Distribution = new ChangeTrackingDictionary<string, int>();
         }
 
         /// <summary> Initializes a new instance of Availability. </summary>

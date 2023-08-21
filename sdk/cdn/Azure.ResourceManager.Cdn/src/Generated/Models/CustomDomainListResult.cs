@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of CustomDomainListResult. </summary>
         internal CustomDomainListResult()
         {
-            Value = new Core.ChangeTrackingList<CdnCustomDomainData>();
+            Value = new ChangeTrackingList<CdnCustomDomainData>();
         }
 
         /// <summary> Initializes a new instance of CustomDomainListResult. </summary>

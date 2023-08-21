@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _cloudServiceRoleInstanceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_cloudServiceRoleInstanceClientDiagnostics, Pipeline, _cloudServiceRoleInstanceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_cloudServiceRoleInstanceClientDiagnostics, Pipeline, _cloudServiceRoleInstanceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _cloudServiceRoleInstanceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ComputeArmOperation(_cloudServiceRoleInstanceClientDiagnostics, Pipeline, _cloudServiceRoleInstanceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_cloudServiceRoleInstanceClientDiagnostics, Pipeline, _cloudServiceRoleInstanceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _cloudServiceRoleInstanceRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_cloudServiceRoleInstanceClientDiagnostics, Pipeline, _cloudServiceRoleInstanceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_cloudServiceRoleInstanceClientDiagnostics, Pipeline, _cloudServiceRoleInstanceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _cloudServiceRoleInstanceRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ComputeArmOperation(_cloudServiceRoleInstanceClientDiagnostics, Pipeline, _cloudServiceRoleInstanceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_cloudServiceRoleInstanceClientDiagnostics, Pipeline, _cloudServiceRoleInstanceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _cloudServiceRoleInstanceRestClient.ReimageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_cloudServiceRoleInstanceClientDiagnostics, Pipeline, _cloudServiceRoleInstanceRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_cloudServiceRoleInstanceClientDiagnostics, Pipeline, _cloudServiceRoleInstanceRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _cloudServiceRoleInstanceRestClient.Reimage(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ComputeArmOperation(_cloudServiceRoleInstanceClientDiagnostics, Pipeline, _cloudServiceRoleInstanceRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_cloudServiceRoleInstanceClientDiagnostics, Pipeline, _cloudServiceRoleInstanceRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _cloudServiceRoleInstanceRestClient.RebuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_cloudServiceRoleInstanceClientDiagnostics, Pipeline, _cloudServiceRoleInstanceRestClient.CreateRebuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_cloudServiceRoleInstanceClientDiagnostics, Pipeline, _cloudServiceRoleInstanceRestClient.CreateRebuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _cloudServiceRoleInstanceRestClient.Rebuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ComputeArmOperation(_cloudServiceRoleInstanceClientDiagnostics, Pipeline, _cloudServiceRoleInstanceRestClient.CreateRebuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation(_cloudServiceRoleInstanceClientDiagnostics, Pipeline, _cloudServiceRoleInstanceRestClient.CreateRebuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Storage.Models
         /// <summary> Initializes a new instance of SasDefinitionBundle. </summary>
         internal SasDefinitionBundle()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of SasDefinitionBundle. </summary>

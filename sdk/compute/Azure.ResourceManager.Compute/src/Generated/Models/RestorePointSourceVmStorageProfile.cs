@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RestorePointSourceVmStorageProfile. </summary>
         public RestorePointSourceVmStorageProfile()
         {
-            DataDiskList = new Core.ChangeTrackingList<RestorePointSourceVmDataDisk>();
+            DataDiskList = new ChangeTrackingList<RestorePointSourceVmDataDisk>();
         }
 
         /// <summary> Initializes a new instance of RestorePointSourceVmStorageProfile. </summary>

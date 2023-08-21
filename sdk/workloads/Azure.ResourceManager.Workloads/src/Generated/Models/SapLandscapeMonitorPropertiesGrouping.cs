@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of SapLandscapeMonitorPropertiesGrouping. </summary>
         public SapLandscapeMonitorPropertiesGrouping()
         {
-            Landscape = new Core.ChangeTrackingList<SapLandscapeMonitorSidMapping>();
-            SapApplication = new Core.ChangeTrackingList<SapLandscapeMonitorSidMapping>();
+            Landscape = new ChangeTrackingList<SapLandscapeMonitorSidMapping>();
+            SapApplication = new ChangeTrackingList<SapLandscapeMonitorSidMapping>();
         }
 
         /// <summary> Initializes a new instance of SapLandscapeMonitorPropertiesGrouping. </summary>

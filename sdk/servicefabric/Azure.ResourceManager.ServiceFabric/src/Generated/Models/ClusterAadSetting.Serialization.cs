@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterAadSetting : Core.IUtf8JsonSerializable
+    public partial class ClusterAadSetting : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Core.Optional.IsDefined(ClusterApplication))
+            if (Optional.IsDefined(ClusterApplication))
             {
                 writer.WritePropertyName("clusterApplication"u8);
                 writer.WriteStringValue(ClusterApplication);
             }
-            if (Core.Optional.IsDefined(ClientApplication))
+            if (Optional.IsDefined(ClientApplication))
             {
                 writer.WritePropertyName("clientApplication"u8);
                 writer.WriteStringValue(ClientApplication);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<string> clusterApplication = default;
-            Core.Optional<string> clientApplication = default;
+            Optional<Guid> tenantId = default;
+            Optional<string> clusterApplication = default;
+            Optional<string> clientApplication = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ClusterAadSetting(Core.Optional.ToNullable(tenantId), clusterApplication.Value, clientApplication.Value);
+            return new ClusterAadSetting(Optional.ToNullable(tenantId), clusterApplication.Value, clientApplication.Value);
         }
     }
 }

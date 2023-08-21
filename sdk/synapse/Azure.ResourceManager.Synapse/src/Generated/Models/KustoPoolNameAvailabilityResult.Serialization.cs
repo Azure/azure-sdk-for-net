@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<bool> nameAvailable = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> message = default;
-            Core.Optional<KustoPoolNameUnavailableReason> reason = default;
+            Optional<bool> nameAvailable = default;
+            Optional<string> name = default;
+            Optional<string> message = default;
+            Optional<KustoPoolNameUnavailableReason> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new KustoPoolNameAvailabilityResult(Core.Optional.ToNullable(nameAvailable), name.Value, message.Value, Core.Optional.ToNullable(reason));
+            return new KustoPoolNameAvailabilityResult(Optional.ToNullable(nameAvailable), name.Value, message.Value, Optional.ToNullable(reason));
         }
     }
 }

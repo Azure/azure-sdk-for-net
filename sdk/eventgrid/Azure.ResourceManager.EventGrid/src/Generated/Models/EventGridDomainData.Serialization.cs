@@ -14,22 +14,22 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class EventGridDomainData : Core.IUtf8JsonSerializable
+    public partial class EventGridDomainData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,32 +44,32 @@ namespace Azure.ResourceManager.EventGrid
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MinimumTlsVersionAllowed))
+            if (Optional.IsDefined(MinimumTlsVersionAllowed))
             {
                 writer.WritePropertyName("minimumTlsVersionAllowed"u8);
                 writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
             }
-            if (Core.Optional.IsDefined(InputSchema))
+            if (Optional.IsDefined(InputSchema))
             {
                 writer.WritePropertyName("inputSchema"u8);
                 writer.WriteStringValue(InputSchema.Value.ToString());
             }
-            if (Core.Optional.IsDefined(EventTypeInfo))
+            if (Optional.IsDefined(EventTypeInfo))
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
                 writer.WriteObjectValue(EventTypeInfo);
             }
-            if (Core.Optional.IsDefined(InputSchemaMapping))
+            if (Optional.IsDefined(InputSchemaMapping))
             {
                 writer.WritePropertyName("inputSchemaMapping"u8);
                 writer.WriteObjectValue(InputSchemaMapping);
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(InboundIPRules))
+            if (Optional.IsCollectionDefined(InboundIPRules))
             {
                 writer.WritePropertyName("inboundIpRules"u8);
                 writer.WriteStartArray();
@@ -79,22 +79,22 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsLocalAuthDisabled))
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
-            if (Core.Optional.IsDefined(AutoCreateTopicWithFirstSubscription))
+            if (Optional.IsDefined(AutoCreateTopicWithFirstSubscription))
             {
                 writer.WritePropertyName("autoCreateTopicWithFirstSubscription"u8);
                 writer.WriteBooleanValue(AutoCreateTopicWithFirstSubscription.Value);
             }
-            if (Core.Optional.IsDefined(AutoDeleteTopicWithLastSubscription))
+            if (Optional.IsDefined(AutoDeleteTopicWithLastSubscription))
             {
                 writer.WritePropertyName("autoDeleteTopicWithLastSubscription"u8);
                 writer.WriteBooleanValue(AutoDeleteTopicWithLastSubscription.Value);
             }
-            if (Core.Optional.IsDefined(DataResidencyBoundary))
+            if (Optional.IsDefined(DataResidencyBoundary))
             {
                 writer.WritePropertyName("dataResidencyBoundary"u8);
                 writer.WriteStringValue(DataResidencyBoundary.Value.ToString());
@@ -109,28 +109,28 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return null;
             }
-            Core.Optional<ResourceSku> sku = default;
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ResourceSku> sku = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyList<EventGridPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Core.Optional<EventGridDomainProvisioningState> provisioningState = default;
-            Core.Optional<TlsVersion> minimumTlsVersionAllowed = default;
-            Core.Optional<Uri> endpoint = default;
-            Core.Optional<EventGridInputSchema> inputSchema = default;
-            Core.Optional<PartnerTopicEventTypeInfo> eventTypeInfo = default;
-            Core.Optional<EventGridInputSchemaMapping> inputSchemaMapping = default;
-            Core.Optional<string> metricResourceId = default;
-            Core.Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
-            Core.Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
-            Core.Optional<bool> disableLocalAuth = default;
-            Core.Optional<bool> autoCreateTopicWithFirstSubscription = default;
-            Core.Optional<bool> autoDeleteTopicWithLastSubscription = default;
-            Core.Optional<DataResidencyBoundary> dataResidencyBoundary = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyList<EventGridPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<EventGridDomainProvisioningState> provisioningState = default;
+            Optional<TlsVersion> minimumTlsVersionAllowed = default;
+            Optional<Uri> endpoint = default;
+            Optional<EventGridInputSchema> inputSchema = default;
+            Optional<PartnerTopicEventTypeInfo> eventTypeInfo = default;
+            Optional<EventGridInputSchemaMapping> inputSchemaMapping = default;
+            Optional<string> metricResourceId = default;
+            Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
+            Optional<bool> disableLocalAuth = default;
+            Optional<bool> autoCreateTopicWithFirstSubscription = default;
+            Optional<bool> autoDeleteTopicWithLastSubscription = default;
+            Optional<DataResidencyBoundary> dataResidencyBoundary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new EventGridDomainData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, identity, Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(minimumTlsVersionAllowed), endpoint.Value, Core.Optional.ToNullable(inputSchema), eventTypeInfo.Value, inputSchemaMapping.Value, metricResourceId.Value, Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToList(inboundIPRules), Core.Optional.ToNullable(disableLocalAuth), Core.Optional.ToNullable(autoCreateTopicWithFirstSubscription), Core.Optional.ToNullable(autoDeleteTopicWithLastSubscription), Core.Optional.ToNullable(dataResidencyBoundary));
+            return new EventGridDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), Optional.ToNullable(minimumTlsVersionAllowed), endpoint.Value, Optional.ToNullable(inputSchema), eventTypeInfo.Value, inputSchemaMapping.Value, metricResourceId.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(autoCreateTopicWithFirstSubscription), Optional.ToNullable(autoDeleteTopicWithLastSubscription), Optional.ToNullable(dataResidencyBoundary));
         }
     }
 }

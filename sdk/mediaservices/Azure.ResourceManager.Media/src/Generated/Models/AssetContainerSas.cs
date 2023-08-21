@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of AssetContainerSas. </summary>
         internal AssetContainerSas()
         {
-            AssetContainerSasUris = new Core.ChangeTrackingList<Uri>();
+            AssetContainerSasUris = new ChangeTrackingList<Uri>();
         }
 
         /// <summary> Initializes a new instance of AssetContainerSas. </summary>

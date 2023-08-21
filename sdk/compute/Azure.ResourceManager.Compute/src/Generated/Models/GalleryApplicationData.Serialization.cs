@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class GalleryApplicationData : Core.IUtf8JsonSerializable
+    public partial class GalleryApplicationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,37 +34,37 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(Eula))
+            if (Optional.IsDefined(Eula))
             {
                 writer.WritePropertyName("eula"u8);
                 writer.WriteStringValue(Eula);
             }
-            if (Core.Optional.IsDefined(PrivacyStatementUri))
+            if (Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri"u8);
                 writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(ReleaseNoteUri))
+            if (Optional.IsDefined(ReleaseNoteUri))
             {
                 writer.WritePropertyName("releaseNoteUri"u8);
                 writer.WriteStringValue(ReleaseNoteUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(EndOfLifeOn))
+            if (Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(SupportedOSType))
+            if (Optional.IsDefined(SupportedOSType))
             {
                 writer.WritePropertyName("supportedOSType"u8);
                 writer.WriteStringValue(SupportedOSType.Value.ToSerialString());
             }
-            if (Core.Optional.IsCollectionDefined(CustomActions))
+            if (Optional.IsCollectionDefined(CustomActions))
             {
                 writer.WritePropertyName("customActions"u8);
                 writer.WriteStartArray();
@@ -84,19 +84,19 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> eula = default;
-            Core.Optional<Uri> privacyStatementUri = default;
-            Core.Optional<Uri> releaseNoteUri = default;
-            Core.Optional<DateTimeOffset> endOfLifeDate = default;
-            Core.Optional<SupportedOperatingSystemType> supportedOSType = default;
-            Core.Optional<IList<GalleryApplicationCustomAction>> customActions = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<string> eula = default;
+            Optional<Uri> privacyStatementUri = default;
+            Optional<Uri> releaseNoteUri = default;
+            Optional<DateTimeOffset> endOfLifeDate = default;
+            Optional<SupportedOperatingSystemType> supportedOSType = default;
+            Optional<IList<GalleryApplicationCustomAction>> customActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new GalleryApplicationData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Core.Optional.ToNullable(endOfLifeDate), Core.Optional.ToNullable(supportedOSType), Core.Optional.ToList(customActions));
+            return new GalleryApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(endOfLifeDate), Optional.ToNullable(supportedOSType), Optional.ToList(customActions));
         }
     }
 }

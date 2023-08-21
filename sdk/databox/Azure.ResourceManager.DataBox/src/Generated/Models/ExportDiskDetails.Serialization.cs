@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<string> manifestFile = default;
-            Core.Optional<string> manifestHash = default;
-            Core.Optional<string> backupManifestCloudPath = default;
+            Optional<string> manifestFile = default;
+            Optional<string> manifestHash = default;
+            Optional<string> backupManifestCloudPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("manifestFile"u8))

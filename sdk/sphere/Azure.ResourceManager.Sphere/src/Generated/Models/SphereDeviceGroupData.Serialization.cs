@@ -12,34 +12,34 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    public partial class SphereDeviceGroupData : Core.IUtf8JsonSerializable
+    public partial class SphereDeviceGroupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(OSFeedType))
+            if (Optional.IsDefined(OSFeedType))
             {
                 writer.WritePropertyName("osFeedType"u8);
                 writer.WriteStringValue(OSFeedType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(UpdatePolicy))
+            if (Optional.IsDefined(UpdatePolicy))
             {
                 writer.WritePropertyName("updatePolicy"u8);
                 writer.WriteStringValue(UpdatePolicy.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AllowCrashDumpsCollection))
+            if (Optional.IsDefined(AllowCrashDumpsCollection))
             {
                 writer.WritePropertyName("allowCrashDumpsCollection"u8);
                 writer.WriteStringValue(AllowCrashDumpsCollection.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RegionalDataBoundary))
+            if (Optional.IsDefined(RegionalDataBoundary))
             {
                 writer.WritePropertyName("regionalDataBoundary"u8);
                 writer.WriteStringValue(RegionalDataBoundary.Value.ToString());
@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.Sphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<SphereOSFeedType> osFeedType = default;
-            Core.Optional<SphereUpdatePolicy> updatePolicy = default;
-            Core.Optional<SphereAllowCrashDumpCollectionStatus> allowCrashDumpsCollection = default;
-            Core.Optional<RegionalDataBoundary> regionalDataBoundary = default;
-            Core.Optional<bool> hasDeployment = default;
-            Core.Optional<SphereProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<SphereOSFeedType> osFeedType = default;
+            Optional<SphereUpdatePolicy> updatePolicy = default;
+            Optional<SphereAllowCrashDumpCollectionStatus> allowCrashDumpsCollection = default;
+            Optional<RegionalDataBoundary> regionalDataBoundary = default;
+            Optional<bool> hasDeployment = default;
+            Optional<SphereProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sphere
                     continue;
                 }
             }
-            return new SphereDeviceGroupData(id, name, type, systemData.Value, description.Value, Core.Optional.ToNullable(osFeedType), Core.Optional.ToNullable(updatePolicy), Core.Optional.ToNullable(allowCrashDumpsCollection), Core.Optional.ToNullable(regionalDataBoundary), Core.Optional.ToNullable(hasDeployment), Core.Optional.ToNullable(provisioningState));
+            return new SphereDeviceGroupData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(osFeedType), Optional.ToNullable(updatePolicy), Optional.ToNullable(allowCrashDumpsCollection), Optional.ToNullable(regionalDataBoundary), Optional.ToNullable(hasDeployment), Optional.ToNullable(provisioningState));
         }
     }
 }

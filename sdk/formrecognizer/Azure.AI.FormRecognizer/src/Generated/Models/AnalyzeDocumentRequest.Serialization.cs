@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class AnalyzeDocumentRequest : Core.IUtf8JsonSerializable
+    internal partial class AnalyzeDocumentRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(UrlSource))
+            if (Optional.IsDefined(UrlSource))
             {
                 writer.WritePropertyName("urlSource"u8);
                 writer.WriteStringValue(UrlSource.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(Base64Source))
+            if (Optional.IsDefined(Base64Source))
             {
                 writer.WritePropertyName("base64Source"u8);
                 writer.WriteBase64StringValue(Base64Source, "D");

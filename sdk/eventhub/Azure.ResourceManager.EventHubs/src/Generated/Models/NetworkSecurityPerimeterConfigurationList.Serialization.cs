@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<EventHubsNetworkSecurityPerimeterConfiguration>> value = default;
+            Optional<IReadOnlyList<EventHubsNetworkSecurityPerimeterConfiguration>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new NetworkSecurityPerimeterConfigurationList(Core.Optional.ToList(value));
+            return new NetworkSecurityPerimeterConfigurationList(Optional.ToList(value));
         }
     }
 }

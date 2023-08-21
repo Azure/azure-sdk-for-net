@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    internal partial class StorageAccountCreateParameters : Core.IUtf8JsonSerializable
+    internal partial class StorageAccountCreateParameters : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
@@ -21,17 +21,17 @@ namespace Azure.Security.KeyVault.Storage.Models
             writer.WriteStringValue(ActiveKeyName);
             writer.WritePropertyName("autoRegenerateKey"u8);
             writer.WriteBooleanValue(AutoRegenerateKey);
-            if (Core.Optional.IsDefined(RegenerationPeriod))
+            if (Optional.IsDefined(RegenerationPeriod))
             {
                 writer.WritePropertyName("regenerationPeriod"u8);
                 writer.WriteStringValue(RegenerationPeriod);
             }
-            if (Core.Optional.IsDefined(StorageAccountAttributes))
+            if (Optional.IsDefined(StorageAccountAttributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(StorageAccountAttributes);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionProfile. </summary>
         public VirtualMachineScaleSetExtensionProfile()
         {
-            Extensions = new Core.ChangeTrackingList<VirtualMachineScaleSetExtensionData>();
+            Extensions = new ChangeTrackingList<VirtualMachineScaleSetExtensionData>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionProfile. </summary>

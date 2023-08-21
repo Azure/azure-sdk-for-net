@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<string> action = default;
-            Core.Optional<string> role = default;
-            Core.Optional<string> scope = default;
+            Optional<string> action = default;
+            Optional<string> role = default;
+            Optional<string> scope = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))

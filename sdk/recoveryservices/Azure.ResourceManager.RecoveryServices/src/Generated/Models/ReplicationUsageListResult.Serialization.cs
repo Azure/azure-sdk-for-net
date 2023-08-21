@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ReplicationUsage>> value = default;
+            Optional<IReadOnlyList<ReplicationUsage>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new ReplicationUsageListResult(Core.Optional.ToList(value));
+            return new ReplicationUsageListResult(Optional.ToList(value));
         }
     }
 }

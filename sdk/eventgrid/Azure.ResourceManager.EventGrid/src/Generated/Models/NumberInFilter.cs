@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of NumberInFilter. </summary>
         public NumberInFilter()
         {
-            Values = new Core.ChangeTrackingList<double>();
+            Values = new ChangeTrackingList<double>();
             OperatorType = FilterOperatorType.NumberIn;
         }
 

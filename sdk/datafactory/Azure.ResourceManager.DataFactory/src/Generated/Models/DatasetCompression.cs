@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(datasetCompressionType, nameof(datasetCompressionType));
 
             DatasetCompressionType = datasetCompressionType;
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DatasetCompression. </summary>

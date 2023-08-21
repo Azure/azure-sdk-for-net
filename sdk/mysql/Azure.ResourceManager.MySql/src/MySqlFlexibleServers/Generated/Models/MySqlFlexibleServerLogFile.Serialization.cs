@@ -12,34 +12,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerLogFile : Core.IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerLogFile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SizeInKB))
+            if (Optional.IsDefined(SizeInKB))
             {
                 writer.WritePropertyName("sizeInKB"u8);
                 writer.WriteNumberValue(SizeInKB.Value);
             }
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(TypePropertiesType))
+            if (Optional.IsDefined(TypePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypePropertiesType);
             }
-            if (Core.Optional.IsDefined(LastModifiedOn))
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<long> sizeInKB = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<string> type0 = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<Uri> url = default;
+            Optional<SystemData> systemData = default;
+            Optional<long> sizeInKB = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<string> type0 = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<Uri> url = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MySqlFlexibleServerLogFile(id, name, type, systemData.Value, Core.Optional.ToNullable(sizeInKB), Core.Optional.ToNullable(createdTime), type0.Value, Core.Optional.ToNullable(lastModifiedTime), url.Value);
+            return new MySqlFlexibleServerLogFile(id, name, type, systemData.Value, Optional.ToNullable(sizeInKB), Optional.ToNullable(createdTime), type0.Value, Optional.ToNullable(lastModifiedTime), url.Value);
         }
     }
 }

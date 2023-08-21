@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<DiskVolumeConfiguration> recommendedConfiguration = default;
-            Core.Optional<IReadOnlyList<SupportedConfigurationsDiskDetails>> supportedConfigurations = default;
+            Optional<DiskVolumeConfiguration> recommendedConfiguration = default;
+            Optional<IReadOnlyList<SupportedConfigurationsDiskDetails>> supportedConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recommendedConfiguration"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SapDiskConfiguration(recommendedConfiguration.Value, Core.Optional.ToList(supportedConfigurations));
+            return new SapDiskConfiguration(recommendedConfiguration.Value, Optional.ToList(supportedConfigurations));
         }
     }
 }

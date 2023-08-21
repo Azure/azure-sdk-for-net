@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             FailoverDirection = failoverDirection;
             NetworkType = networkType;
-            ProviderSpecificDetails = new Core.ChangeTrackingList<RecoveryPlanProviderSpecificFailoverContent>();
+            ProviderSpecificDetails = new ChangeTrackingList<RecoveryPlanProviderSpecificFailoverContent>();
         }
 
         /// <summary> The failover direction. </summary>

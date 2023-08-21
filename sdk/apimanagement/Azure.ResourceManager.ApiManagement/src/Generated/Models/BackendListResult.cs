@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of BackendListResult. </summary>
         internal BackendListResult()
         {
-            Value = new Core.ChangeTrackingList<ApiManagementBackendData>();
+            Value = new ChangeTrackingList<ApiManagementBackendData>();
         }
 
         /// <summary> Initializes a new instance of BackendListResult. </summary>

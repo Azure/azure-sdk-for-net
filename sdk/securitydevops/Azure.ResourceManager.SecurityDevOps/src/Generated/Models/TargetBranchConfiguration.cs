@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <summary> Initializes a new instance of TargetBranchConfiguration. </summary>
         public TargetBranchConfiguration()
         {
-            Names = new Core.ChangeTrackingList<string>();
+            Names = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of TargetBranchConfiguration. </summary>

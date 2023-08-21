@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountAutoScaleSettings : Core.IUtf8JsonSerializable
+    public partial class BatchAccountAutoScaleSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("formula"u8);
             writer.WriteStringValue(Formula);
-            if (Core.Optional.IsDefined(EvaluationInterval))
+            if (Optional.IsDefined(EvaluationInterval))
             {
                 writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteStringValue(EvaluationInterval.Value, "P");
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             string formula = default;
-            Core.Optional<TimeSpan> evaluationInterval = default;
+            Optional<TimeSpan> evaluationInterval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("formula"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchAccountAutoScaleSettings(formula, Core.Optional.ToNullable(evaluationInterval));
+            return new BatchAccountAutoScaleSettings(formula, Optional.ToNullable(evaluationInterval));
         }
     }
 }

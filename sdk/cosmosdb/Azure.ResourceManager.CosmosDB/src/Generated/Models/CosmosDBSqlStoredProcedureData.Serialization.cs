@@ -13,18 +13,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class CosmosDBSqlStoredProcedureData : Core.IUtf8JsonSerializable
+    public partial class CosmosDBSqlStoredProcedureData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Resource))
+            if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteObjectValue(Resource);
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ExtendedCosmosDBSqlStoredProcedureResourceInfo> resource = default;
+            Optional<SystemData> systemData = default;
+            Optional<ExtendedCosmosDBSqlStoredProcedureResourceInfo> resource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new CosmosDBSqlStoredProcedureData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, resource.Value, identity);
+            return new CosmosDBSqlStoredProcedureData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource.Value, identity);
         }
     }
 }

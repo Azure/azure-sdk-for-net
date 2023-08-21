@@ -14,39 +14,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Advisor
 {
-    public partial class ResourceRecommendationBaseData : Core.IUtf8JsonSerializable
+    public partial class ResourceRecommendationBaseData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Category))
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Impact))
+            if (Optional.IsDefined(Impact))
             {
                 writer.WritePropertyName("impact"u8);
                 writer.WriteStringValue(Impact.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ImpactedField))
+            if (Optional.IsDefined(ImpactedField))
             {
                 writer.WritePropertyName("impactedField"u8);
                 writer.WriteStringValue(ImpactedField);
             }
-            if (Core.Optional.IsDefined(ImpactedValue))
+            if (Optional.IsDefined(ImpactedValue))
             {
                 writer.WritePropertyName("impactedValue"u8);
                 writer.WriteStringValue(ImpactedValue);
             }
-            if (Core.Optional.IsDefined(LastUpdated))
+            if (Optional.IsDefined(LastUpdated))
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");
             }
-            if (Core.Optional.IsCollectionDefined(Metadata))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(RecommendationTypeId))
+            if (Optional.IsDefined(RecommendationTypeId))
             {
                 writer.WritePropertyName("recommendationTypeId"u8);
                 writer.WriteStringValue(RecommendationTypeId);
             }
-            if (Core.Optional.IsDefined(Risk))
+            if (Optional.IsDefined(Risk))
             {
                 writer.WritePropertyName("risk"u8);
                 writer.WriteStringValue(Risk.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ShortDescription))
+            if (Optional.IsDefined(ShortDescription))
             {
                 writer.WritePropertyName("shortDescription"u8);
                 writer.WriteObjectValue(ShortDescription);
             }
-            if (Core.Optional.IsCollectionDefined(SuppressionIds))
+            if (Optional.IsCollectionDefined(SuppressionIds))
             {
                 writer.WritePropertyName("suppressionIds"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ExtendedProperties))
+            if (Optional.IsCollectionDefined(ExtendedProperties))
             {
                 writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteStartObject();
@@ -102,32 +102,32 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(ResourceMetadata))
+            if (Optional.IsDefined(ResourceMetadata))
             {
                 writer.WritePropertyName("resourceMetadata"u8);
                 writer.WriteObjectValue(ResourceMetadata);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(Label))
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Core.Optional.IsDefined(LearnMoreLink))
+            if (Optional.IsDefined(LearnMoreLink))
             {
                 writer.WritePropertyName("learnMoreLink"u8);
                 writer.WriteStringValue(LearnMoreLink);
             }
-            if (Core.Optional.IsDefined(PotentialBenefits))
+            if (Optional.IsDefined(PotentialBenefits))
             {
                 writer.WritePropertyName("potentialBenefits"u8);
                 writer.WriteStringValue(PotentialBenefits);
             }
-            if (Core.Optional.IsCollectionDefined(Actions))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Remediation))
+            if (Optional.IsCollectionDefined(Remediation))
             {
                 writer.WritePropertyName("remediation"u8);
                 writer.WriteStartObject();
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(ExposedMetadataProperties))
+            if (Optional.IsCollectionDefined(ExposedMetadataProperties))
             {
                 writer.WritePropertyName("exposedMetadataProperties"u8);
                 writer.WriteStartObject();
@@ -210,26 +210,26 @@ namespace Azure.ResourceManager.Advisor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Category> category = default;
-            Core.Optional<Impact> impact = default;
-            Core.Optional<string> impactedField = default;
-            Core.Optional<string> impactedValue = default;
-            Core.Optional<DateTimeOffset> lastUpdated = default;
-            Core.Optional<IDictionary<string, BinaryData>> metadata = default;
-            Core.Optional<string> recommendationTypeId = default;
-            Core.Optional<Risk> risk = default;
-            Core.Optional<ShortDescription> shortDescription = default;
-            Core.Optional<IList<Guid>> suppressionIds = default;
-            Core.Optional<IDictionary<string, string>> extendedProperties = default;
-            Core.Optional<ResourceMetadata> resourceMetadata = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> label = default;
-            Core.Optional<string> learnMoreLink = default;
-            Core.Optional<string> potentialBenefits = default;
-            Core.Optional<IList<IDictionary<string, BinaryData>>> actions = default;
-            Core.Optional<IDictionary<string, BinaryData>> remediation = default;
-            Core.Optional<IDictionary<string, BinaryData>> exposedMetadataProperties = default;
+            Optional<SystemData> systemData = default;
+            Optional<Category> category = default;
+            Optional<Impact> impact = default;
+            Optional<string> impactedField = default;
+            Optional<string> impactedValue = default;
+            Optional<DateTimeOffset> lastUpdated = default;
+            Optional<IDictionary<string, BinaryData>> metadata = default;
+            Optional<string> recommendationTypeId = default;
+            Optional<Risk> risk = default;
+            Optional<ShortDescription> shortDescription = default;
+            Optional<IList<Guid>> suppressionIds = default;
+            Optional<IDictionary<string, string>> extendedProperties = default;
+            Optional<ResourceMetadata> resourceMetadata = default;
+            Optional<string> description = default;
+            Optional<string> label = default;
+            Optional<string> learnMoreLink = default;
+            Optional<string> potentialBenefits = default;
+            Optional<IList<IDictionary<string, BinaryData>>> actions = default;
+            Optional<IDictionary<string, BinaryData>> remediation = default;
+            Optional<IDictionary<string, BinaryData>> exposedMetadataProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Advisor
                     continue;
                 }
             }
-            return new ResourceRecommendationBaseData(id, name, type, systemData.Value, Core.Optional.ToNullable(category), Core.Optional.ToNullable(impact), impactedField.Value, impactedValue.Value, Core.Optional.ToNullable(lastUpdated), Core.Optional.ToDictionary(metadata), recommendationTypeId.Value, Core.Optional.ToNullable(risk), shortDescription.Value, Core.Optional.ToList(suppressionIds), Core.Optional.ToDictionary(extendedProperties), resourceMetadata.Value, description.Value, label.Value, learnMoreLink.Value, potentialBenefits.Value, Core.Optional.ToList(actions), Core.Optional.ToDictionary(remediation), Core.Optional.ToDictionary(exposedMetadataProperties));
+            return new ResourceRecommendationBaseData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(impact), impactedField.Value, impactedValue.Value, Optional.ToNullable(lastUpdated), Optional.ToDictionary(metadata), recommendationTypeId.Value, Optional.ToNullable(risk), shortDescription.Value, Optional.ToList(suppressionIds), Optional.ToDictionary(extendedProperties), resourceMetadata.Value, description.Value, label.Value, learnMoreLink.Value, potentialBenefits.Value, Optional.ToList(actions), Optional.ToDictionary(remediation), Optional.ToDictionary(exposedMetadataProperties));
         }
     }
 }

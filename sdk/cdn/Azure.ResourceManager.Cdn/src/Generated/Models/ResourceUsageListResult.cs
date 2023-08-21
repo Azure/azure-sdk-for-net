@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of ResourceUsageListResult. </summary>
         internal ResourceUsageListResult()
         {
-            Value = new Core.ChangeTrackingList<CdnUsage>();
+            Value = new ChangeTrackingList<CdnUsage>();
         }
 
         /// <summary> Initializes a new instance of ResourceUsageListResult. </summary>

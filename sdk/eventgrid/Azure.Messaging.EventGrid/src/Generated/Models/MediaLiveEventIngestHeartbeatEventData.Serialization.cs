@@ -21,22 +21,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<string> trackType = default;
-            Core.Optional<string> trackName = default;
-            Core.Optional<string> transcriptionLanguage = default;
-            Core.Optional<string> transcriptionState = default;
-            Core.Optional<long> bitrate = default;
-            Core.Optional<long> incomingBitrate = default;
-            Core.Optional<string> ingestDriftValue = default;
-            Core.Optional<DateTimeOffset> lastFragmentArrivalTime = default;
-            Core.Optional<string> lastTimestamp = default;
-            Core.Optional<string> timescale = default;
-            Core.Optional<long> overlapCount = default;
-            Core.Optional<long> discontinuityCount = default;
-            Core.Optional<long> nonincreasingCount = default;
-            Core.Optional<bool> unexpectedBitrate = default;
-            Core.Optional<string> state = default;
-            Core.Optional<bool> healthy = default;
+            Optional<string> trackType = default;
+            Optional<string> trackName = default;
+            Optional<string> transcriptionLanguage = default;
+            Optional<string> transcriptionState = default;
+            Optional<long> bitrate = default;
+            Optional<long> incomingBitrate = default;
+            Optional<string> ingestDriftValue = default;
+            Optional<DateTimeOffset> lastFragmentArrivalTime = default;
+            Optional<string> lastTimestamp = default;
+            Optional<string> timescale = default;
+            Optional<long> overlapCount = default;
+            Optional<long> discontinuityCount = default;
+            Optional<long> nonincreasingCount = default;
+            Optional<bool> unexpectedBitrate = default;
+            Optional<string> state = default;
+            Optional<bool> healthy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trackType"u8))
@@ -152,7 +152,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaLiveEventIngestHeartbeatEventData(trackType.Value, trackName.Value, transcriptionLanguage.Value, transcriptionState.Value, Core.Optional.ToNullable(bitrate), Core.Optional.ToNullable(incomingBitrate), ingestDriftValue.Value, Core.Optional.ToNullable(lastFragmentArrivalTime), lastTimestamp.Value, timescale.Value, Core.Optional.ToNullable(overlapCount), Core.Optional.ToNullable(discontinuityCount), Core.Optional.ToNullable(nonincreasingCount), Core.Optional.ToNullable(unexpectedBitrate), state.Value, Core.Optional.ToNullable(healthy));
+            return new MediaLiveEventIngestHeartbeatEventData(trackType.Value, trackName.Value, transcriptionLanguage.Value, transcriptionState.Value, Optional.ToNullable(bitrate), Optional.ToNullable(incomingBitrate), ingestDriftValue.Value, Optional.ToNullable(lastFragmentArrivalTime), lastTimestamp.Value, timescale.Value, Optional.ToNullable(overlapCount), Optional.ToNullable(discontinuityCount), Optional.ToNullable(nonincreasingCount), Optional.ToNullable(unexpectedBitrate), state.Value, Optional.ToNullable(healthy));
         }
 
         internal partial class MediaLiveEventIngestHeartbeatEventDataConverter : JsonConverter<MediaLiveEventIngestHeartbeatEventData>

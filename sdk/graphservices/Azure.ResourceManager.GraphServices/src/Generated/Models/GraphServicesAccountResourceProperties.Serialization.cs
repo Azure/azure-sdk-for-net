@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GraphServices.Models
 {
-    public partial class GraphServicesAccountResourceProperties : Core.IUtf8JsonSerializable
+    public partial class GraphServicesAccountResourceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("appId"u8);
@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.GraphServices.Models
             {
                 return null;
             }
-            Core.Optional<GraphServicesProvisioningState> provisioningState = default;
+            Optional<GraphServicesProvisioningState> provisioningState = default;
             string appId = default;
-            Core.Optional<string> billingPlanId = default;
+            Optional<string> billingPlanId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                     continue;
                 }
             }
-            return new GraphServicesAccountResourceProperties(Core.Optional.ToNullable(provisioningState), appId, billingPlanId.Value);
+            return new GraphServicesAccountResourceProperties(Optional.ToNullable(provisioningState), appId, billingPlanId.Value);
         }
     }
 }

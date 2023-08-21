@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class LogRules : Core.IUtf8JsonSerializable
+    public partial class LogRules : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SendAadLogs))
+            if (Optional.IsDefined(SendAadLogs))
             {
                 writer.WritePropertyName("sendAadLogs"u8);
                 writer.WriteBooleanValue(SendAadLogs.Value);
             }
-            if (Core.Optional.IsDefined(SendSubscriptionLogs))
+            if (Optional.IsDefined(SendSubscriptionLogs))
             {
                 writer.WritePropertyName("sendSubscriptionLogs"u8);
                 writer.WriteBooleanValue(SendSubscriptionLogs.Value);
             }
-            if (Core.Optional.IsDefined(SendResourceLogs))
+            if (Optional.IsDefined(SendResourceLogs))
             {
                 writer.WritePropertyName("sendResourceLogs"u8);
                 writer.WriteBooleanValue(SendResourceLogs.Value);
             }
-            if (Core.Optional.IsCollectionDefined(FilteringTags))
+            if (Optional.IsCollectionDefined(FilteringTags))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Core.Optional<bool> sendAadLogs = default;
-            Core.Optional<bool> sendSubscriptionLogs = default;
-            Core.Optional<bool> sendResourceLogs = default;
-            Core.Optional<IList<FilteringTag>> filteringTags = default;
+            Optional<bool> sendAadLogs = default;
+            Optional<bool> sendSubscriptionLogs = default;
+            Optional<bool> sendResourceLogs = default;
+            Optional<IList<FilteringTag>> filteringTags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sendAadLogs"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     continue;
                 }
             }
-            return new LogRules(Core.Optional.ToNullable(sendAadLogs), Core.Optional.ToNullable(sendSubscriptionLogs), Core.Optional.ToNullable(sendResourceLogs), Core.Optional.ToList(filteringTags));
+            return new LogRules(Optional.ToNullable(sendAadLogs), Optional.ToNullable(sendSubscriptionLogs), Optional.ToNullable(sendResourceLogs), Optional.ToList(filteringTags));
         }
     }
 }

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
-    public partial class GitHubOwnerProperties : Core.IUtf8JsonSerializable
+    public partial class GitHubOwnerProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(OwnerUri))
+            if (Optional.IsDefined(OwnerUri))
             {
                 writer.WritePropertyName("ownerUrl"u8);
                 writer.WriteStringValue(OwnerUri.AbsoluteUri);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<Uri> ownerUrl = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<Uri> ownerUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     continue;
                 }
             }
-            return new GitHubOwnerProperties(Core.Optional.ToNullable(provisioningState), ownerUrl.Value);
+            return new GitHubOwnerProperties(Optional.ToNullable(provisioningState), ownerUrl.Value);
         }
     }
 }

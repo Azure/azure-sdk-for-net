@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Logic.Models
             AcknowledgementSettings = acknowledgementSettings;
             MessageFilter = messageFilter;
             ProcessingSettings = processingSettings;
-            EnvelopeOverrides = new Core.ChangeTrackingList<EdifactEnvelopeOverride>();
-            MessageFilterList = new Core.ChangeTrackingList<EdifactMessageIdentifier>();
+            EnvelopeOverrides = new ChangeTrackingList<EdifactEnvelopeOverride>();
+            MessageFilterList = new ChangeTrackingList<EdifactMessageIdentifier>();
             SchemaReferences = schemaReferences.ToList();
-            ValidationOverrides = new Core.ChangeTrackingList<EdifactValidationOverride>();
-            EdifactDelimiterOverrides = new Core.ChangeTrackingList<EdifactDelimiterOverride>();
+            ValidationOverrides = new ChangeTrackingList<EdifactValidationOverride>();
+            EdifactDelimiterOverrides = new ChangeTrackingList<EdifactDelimiterOverride>();
         }
 
         /// <summary> Initializes a new instance of EdifactProtocolSettings. </summary>

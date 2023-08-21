@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Initializes a new instance of EventGridSubscriptionData. </summary>
         public EventGridSubscriptionData()
         {
-            Labels = new Core.ChangeTrackingList<string>();
+            Labels = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of EventGridSubscriptionData. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<RedisEnterprisePrivateLinkResource>> value = default;
+            Optional<IReadOnlyList<RedisEnterprisePrivateLinkResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     continue;
                 }
             }
-            return new RedisEnterprisePrivateLinkResourceListResult(Core.Optional.ToList(value));
+            return new RedisEnterprisePrivateLinkResourceListResult(Optional.ToList(value));
         }
     }
 }

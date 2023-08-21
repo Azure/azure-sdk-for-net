@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ConfidentialLedgerData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ConfidentialLedgerData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     continue;
                 }
             }
-            return new ConfidentialLedgerList(Core.Optional.ToList(value), nextLink.Value);
+            return new ConfidentialLedgerList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class HnswVectorSearchAlgorithmConfiguration : Core.IUtf8JsonSerializable
+    public partial class HnswVectorSearchAlgorithmConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Parameters))
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("hnswParameters"u8);
                 writer.WriteObjectValue(Parameters);
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<HnswParameters> hnswParameters = default;
+            Optional<HnswParameters> hnswParameters = default;
             string name = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())

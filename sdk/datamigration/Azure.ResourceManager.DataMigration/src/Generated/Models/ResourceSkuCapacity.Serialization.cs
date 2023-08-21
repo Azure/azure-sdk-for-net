@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<long> minimum = default;
-            Core.Optional<long> maximum = default;
-            Core.Optional<long> @default = default;
-            Core.Optional<ResourceSkuCapacityScaleType> scaleType = default;
+            Optional<long> minimum = default;
+            Optional<long> maximum = default;
+            Optional<long> @default = default;
+            Optional<ResourceSkuCapacityScaleType> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ResourceSkuCapacity(Core.Optional.ToNullable(minimum), Core.Optional.ToNullable(maximum), Core.Optional.ToNullable(@default), Core.Optional.ToNullable(scaleType));
+            return new ResourceSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType));
         }
     }
 }

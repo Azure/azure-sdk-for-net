@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyDictionary<string, int>> hostsRemaining = default;
-            Core.Optional<AvsSubscriptionQuotaEnabled> quotaEnabled = default;
+            Optional<IReadOnlyDictionary<string, int>> hostsRemaining = default;
+            Optional<AvsSubscriptionQuotaEnabled> quotaEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostsRemaining"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new AvsSubscriptionQuotaAvailabilityResult(Core.Optional.ToDictionary(hostsRemaining), Core.Optional.ToNullable(quotaEnabled));
+            return new AvsSubscriptionQuotaAvailabilityResult(Optional.ToDictionary(hostsRemaining), Optional.ToNullable(quotaEnabled));
         }
     }
 }

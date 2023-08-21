@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of AccessControlListMatchConfiguration. </summary>
         public AccessControlListMatchConfiguration()
         {
-            MatchConditions = new Core.ChangeTrackingList<AccessControlListMatchCondition>();
-            Actions = new Core.ChangeTrackingList<AccessControlListAction>();
+            MatchConditions = new ChangeTrackingList<AccessControlListMatchCondition>();
+            Actions = new ChangeTrackingList<AccessControlListAction>();
         }
 
         /// <summary> Initializes a new instance of AccessControlListMatchConfiguration. </summary>

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of HciClusterReportedProperties. </summary>
         internal HciClusterReportedProperties()
         {
-            Nodes = new Core.ChangeTrackingList<HciClusterNode>();
-            SupportedCapabilities = new Core.ChangeTrackingList<string>();
+            Nodes = new ChangeTrackingList<HciClusterNode>();
+            SupportedCapabilities = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HciClusterReportedProperties. </summary>

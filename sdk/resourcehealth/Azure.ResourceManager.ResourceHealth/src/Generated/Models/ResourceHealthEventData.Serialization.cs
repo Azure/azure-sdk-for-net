@@ -25,35 +25,35 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceHealthEventTypeValue> eventType = default;
-            Core.Optional<ResourceHealthEventSourceValue> eventSource = default;
-            Core.Optional<ResourceHealthEventStatusValue> status = default;
-            Core.Optional<string> title = default;
-            Core.Optional<string> summary = default;
-            Core.Optional<string> header = default;
-            Core.Optional<ResourceHealthEventInsightLevelValue> level = default;
-            Core.Optional<ResourceHealthEventLevelValue> eventLevel = default;
-            Core.Optional<string> externalIncidentId = default;
-            Core.Optional<string> reason = default;
-            Core.Optional<ResourceHealthEventArticle> article = default;
-            Core.Optional<IReadOnlyList<ResourceHealthEventLink>> links = default;
-            Core.Optional<DateTimeOffset> impactStartTime = default;
-            Core.Optional<DateTimeOffset> impactMitigationTime = default;
-            Core.Optional<IReadOnlyList<ResourceHealthEventImpact>> impact = default;
-            Core.Optional<ResourceHealthEventRecommendedActions> recommendedActions = default;
-            Core.Optional<IReadOnlyList<ResourceHealthEventFaq>> faqs = default;
-            Core.Optional<bool> isHIR = default;
-            Core.Optional<bool> enableMicrosoftSupport = default;
-            Core.Optional<string> description = default;
-            Core.Optional<bool> platformInitiated = default;
-            Core.Optional<bool> enableChatWithUs = default;
-            Core.Optional<int> priority = default;
-            Core.Optional<DateTimeOffset> lastUpdateTime = default;
-            Core.Optional<string> hirStage = default;
-            Core.Optional<ResourceHealthEventAdditionalInformation> additionalInformation = default;
-            Core.Optional<int> duration = default;
-            Core.Optional<string> impactType = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceHealthEventTypeValue> eventType = default;
+            Optional<ResourceHealthEventSourceValue> eventSource = default;
+            Optional<ResourceHealthEventStatusValue> status = default;
+            Optional<string> title = default;
+            Optional<string> summary = default;
+            Optional<string> header = default;
+            Optional<ResourceHealthEventInsightLevelValue> level = default;
+            Optional<ResourceHealthEventLevelValue> eventLevel = default;
+            Optional<string> externalIncidentId = default;
+            Optional<string> reason = default;
+            Optional<ResourceHealthEventArticle> article = default;
+            Optional<IReadOnlyList<ResourceHealthEventLink>> links = default;
+            Optional<DateTimeOffset> impactStartTime = default;
+            Optional<DateTimeOffset> impactMitigationTime = default;
+            Optional<IReadOnlyList<ResourceHealthEventImpact>> impact = default;
+            Optional<ResourceHealthEventRecommendedActions> recommendedActions = default;
+            Optional<IReadOnlyList<ResourceHealthEventFaq>> faqs = default;
+            Optional<bool> isHIR = default;
+            Optional<bool> enableMicrosoftSupport = default;
+            Optional<string> description = default;
+            Optional<bool> platformInitiated = default;
+            Optional<bool> enableChatWithUs = default;
+            Optional<int> priority = default;
+            Optional<DateTimeOffset> lastUpdateTime = default;
+            Optional<string> hirStage = default;
+            Optional<ResourceHealthEventAdditionalInformation> additionalInformation = default;
+            Optional<int> duration = default;
+            Optional<string> impactType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ResourceHealth
                     continue;
                 }
             }
-            return new ResourceHealthEventData(id, name, type, systemData.Value, Core.Optional.ToNullable(eventType), Core.Optional.ToNullable(eventSource), Core.Optional.ToNullable(status), title.Value, summary.Value, header.Value, Core.Optional.ToNullable(level), Core.Optional.ToNullable(eventLevel), externalIncidentId.Value, reason.Value, article.Value, Core.Optional.ToList(links), Core.Optional.ToNullable(impactStartTime), Core.Optional.ToNullable(impactMitigationTime), Core.Optional.ToList(impact), recommendedActions.Value, Core.Optional.ToList(faqs), Core.Optional.ToNullable(isHIR), Core.Optional.ToNullable(enableMicrosoftSupport), description.Value, Core.Optional.ToNullable(platformInitiated), Core.Optional.ToNullable(enableChatWithUs), Core.Optional.ToNullable(priority), Core.Optional.ToNullable(lastUpdateTime), hirStage.Value, additionalInformation.Value, Core.Optional.ToNullable(duration), impactType.Value);
+            return new ResourceHealthEventData(id, name, type, systemData.Value, Optional.ToNullable(eventType), Optional.ToNullable(eventSource), Optional.ToNullable(status), title.Value, summary.Value, header.Value, Optional.ToNullable(level), Optional.ToNullable(eventLevel), externalIncidentId.Value, reason.Value, article.Value, Optional.ToList(links), Optional.ToNullable(impactStartTime), Optional.ToNullable(impactMitigationTime), Optional.ToList(impact), recommendedActions.Value, Optional.ToList(faqs), Optional.ToNullable(isHIR), Optional.ToNullable(enableMicrosoftSupport), description.Value, Optional.ToNullable(platformInitiated), Optional.ToNullable(enableChatWithUs), Optional.ToNullable(priority), Optional.ToNullable(lastUpdateTime), hirStage.Value, additionalInformation.Value, Optional.ToNullable(duration), impactType.Value);
         }
     }
 }

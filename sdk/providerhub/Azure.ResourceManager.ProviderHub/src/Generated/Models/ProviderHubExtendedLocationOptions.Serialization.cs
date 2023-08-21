@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ProviderHubExtendedLocationOptions : Core.IUtf8JsonSerializable
+    public partial class ProviderHubExtendedLocationOptions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExtendedLocationOptionsType))
+            if (Optional.IsDefined(ExtendedLocationOptionsType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExtendedLocationOptionsType);
             }
-            if (Core.Optional.IsDefined(SupportedPolicy))
+            if (Optional.IsDefined(SupportedPolicy))
             {
                 writer.WritePropertyName("supportedPolicy"u8);
                 writer.WriteStringValue(SupportedPolicy);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<string> supportedPolicy = default;
+            Optional<string> type = default;
+            Optional<string> supportedPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

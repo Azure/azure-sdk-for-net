@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of SearchQueryVector. </summary>
         public SearchQueryVector()
         {
-            Value = new Core.ChangeTrackingList<float>();
+            Value = new ChangeTrackingList<float>();
         }
 
         /// <summary> Initializes a new instance of SearchQueryVector. </summary>

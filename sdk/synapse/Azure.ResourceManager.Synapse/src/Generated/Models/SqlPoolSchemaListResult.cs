@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SqlPoolSchemaListResult. </summary>
         internal SqlPoolSchemaListResult()
         {
-            Value = new Core.ChangeTrackingList<SynapseSqlPoolSchemaData>();
+            Value = new ChangeTrackingList<SynapseSqlPoolSchemaData>();
         }
 
         /// <summary> Initializes a new instance of SqlPoolSchemaListResult. </summary>

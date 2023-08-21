@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of KustoPrivateLinkResourceListResult. </summary>
         internal KustoPrivateLinkResourceListResult()
         {
-            Value = new Core.ChangeTrackingList<KustoPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<KustoPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of KustoPrivateLinkResourceListResult. </summary>

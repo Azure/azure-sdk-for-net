@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of StringContainsAdvancedFilter. </summary>
         public StringContainsAdvancedFilter()
         {
-            Values = new Core.ChangeTrackingList<string>();
+            Values = new ChangeTrackingList<string>();
             OperatorType = AdvancedFilterOperatorType.StringContains;
         }
 

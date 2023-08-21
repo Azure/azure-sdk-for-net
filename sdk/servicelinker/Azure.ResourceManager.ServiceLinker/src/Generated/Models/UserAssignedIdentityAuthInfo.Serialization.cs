@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class UserAssignedIdentityAuthInfo : Core.IUtf8JsonSerializable
+    public partial class UserAssignedIdentityAuthInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Core.Optional.IsDefined(SubscriptionId))
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Core.Optional<string> clientId = default;
-            Core.Optional<string> subscriptionId = default;
+            Optional<string> clientId = default;
+            Optional<string> subscriptionId = default;
             LinkerAuthType authType = default;
             foreach (var property in element.EnumerateObject())
             {

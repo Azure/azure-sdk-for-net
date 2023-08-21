@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(outputs, nameof(outputs));
 
-            Configuration = new Core.ChangeTrackingDictionary<string, object>();
+            Configuration = new ChangeTrackingDictionary<string, object>();
             ODataType = "#Microsoft.Skills.Util.DocumentExtractionSkill";
         }
 

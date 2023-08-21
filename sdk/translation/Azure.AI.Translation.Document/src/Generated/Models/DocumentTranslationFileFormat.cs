@@ -29,7 +29,7 @@ namespace Azure.AI.Translation.Document
             Format = format;
             FileExtensions = fileExtensions.ToList();
             ContentTypes = contentTypes.ToList();
-            FormatVersions = new Core.ChangeTrackingList<string>();
+            FormatVersions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DocumentTranslationFileFormat. </summary>

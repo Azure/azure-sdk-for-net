@@ -20,10 +20,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             DocumentFieldType type = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> example = default;
-            Core.Optional<DocumentFieldSchema> items = default;
-            Core.Optional<IReadOnlyDictionary<string, DocumentFieldSchema>> properties = default;
+            Optional<string> description = default;
+            Optional<string> example = default;
+            Optional<DocumentFieldSchema> items = default;
+            Optional<IReadOnlyDictionary<string, DocumentFieldSchema>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -65,7 +65,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentFieldSchema(type, description.Value, example.Value, items.Value, Core.Optional.ToDictionary(properties));
+            return new DocumentFieldSchema(type, description.Value, example.Value, items.Value, Optional.ToDictionary(properties));
         }
     }
 }

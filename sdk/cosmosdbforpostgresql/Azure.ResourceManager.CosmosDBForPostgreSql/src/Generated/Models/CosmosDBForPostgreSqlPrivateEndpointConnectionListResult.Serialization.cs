@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<CosmosDBForPostgreSqlPrivateEndpointConnectionData>> value = default;
+            Optional<IReadOnlyList<CosmosDBForPostgreSqlPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     continue;
                 }
             }
-            return new CosmosDBForPostgreSqlPrivateEndpointConnectionListResult(Core.Optional.ToList(value));
+            return new CosmosDBForPostgreSqlPrivateEndpointConnectionListResult(Optional.ToList(value));
         }
     }
 }

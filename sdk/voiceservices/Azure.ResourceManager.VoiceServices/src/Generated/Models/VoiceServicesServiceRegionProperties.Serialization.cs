@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    public partial class VoiceServicesServiceRegionProperties : Core.IUtf8JsonSerializable
+    public partial class VoiceServicesServiceRegionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);

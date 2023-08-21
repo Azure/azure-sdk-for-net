@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of StorageEncryptedAssetDecryptionInfo. </summary>
         internal StorageEncryptedAssetDecryptionInfo()
         {
-            AssetFileEncryptionMetadata = new Core.ChangeTrackingList<MediaAssetFileEncryptionMetadata>();
+            AssetFileEncryptionMetadata = new ChangeTrackingList<MediaAssetFileEncryptionMetadata>();
         }
 
         /// <summary> Initializes a new instance of StorageEncryptedAssetDecryptionInfo. </summary>

@@ -12,37 +12,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class NicIPConfigurationResourceSettings : Core.IUtf8JsonSerializable
+    public partial class NicIPConfigurationResourceSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(PrivateIPAddress))
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
-            if (Core.Optional.IsDefined(PrivateIPAllocationMethod))
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIpAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod);
             }
-            if (Core.Optional.IsDefined(Subnet))
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
-            if (Core.Optional.IsDefined(IsPrimary))
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(IsPrimary.Value);
             }
-            if (Core.Optional.IsCollectionDefined(LoadBalancerBackendAddressPools))
+            if (Optional.IsCollectionDefined(LoadBalancerBackendAddressPools))
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPools"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(LoadBalancerNatRules))
+            if (Optional.IsCollectionDefined(LoadBalancerNatRules))
             {
                 writer.WritePropertyName("loadBalancerNatRules"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(PublicIP))
+            if (Optional.IsDefined(PublicIP))
             {
                 writer.WritePropertyName("publicIp"u8);
                 writer.WriteObjectValue(PublicIP);
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IPAddress> privateIPAddress = default;
-            Core.Optional<string> privateIPAllocationMethod = default;
-            Core.Optional<SubnetReferenceInfo> subnet = default;
-            Core.Optional<bool> primary = default;
-            Core.Optional<IList<LoadBalancerBackendAddressPoolReferenceInfo>> loadBalancerBackendAddressPools = default;
-            Core.Optional<IList<LoadBalancerNatRuleReferenceInfo>> loadBalancerNatRules = default;
-            Core.Optional<PublicIPReferenceInfo> publicIP = default;
+            Optional<string> name = default;
+            Optional<IPAddress> privateIPAddress = default;
+            Optional<string> privateIPAllocationMethod = default;
+            Optional<SubnetReferenceInfo> subnet = default;
+            Optional<bool> primary = default;
+            Optional<IList<LoadBalancerBackendAddressPoolReferenceInfo>> loadBalancerBackendAddressPools = default;
+            Optional<IList<LoadBalancerNatRuleReferenceInfo>> loadBalancerNatRules = default;
+            Optional<PublicIPReferenceInfo> publicIP = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new NicIPConfigurationResourceSettings(name.Value, privateIPAddress.Value, privateIPAllocationMethod.Value, subnet.Value, Core.Optional.ToNullable(primary), Core.Optional.ToList(loadBalancerBackendAddressPools), Core.Optional.ToList(loadBalancerNatRules), publicIP.Value);
+            return new NicIPConfigurationResourceSettings(name.Value, privateIPAddress.Value, privateIPAllocationMethod.Value, subnet.Value, Optional.ToNullable(primary), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerNatRules), publicIP.Value);
         }
     }
 }

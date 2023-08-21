@@ -12,31 +12,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ForEachActivity : Core.IUtf8JsonSerializable
+    public partial class ForEachActivity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsDefined(OnInactiveMarkAs))
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(DependsOn))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(UserProperties))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsSequential))
+            if (Optional.IsDefined(IsSequential))
             {
                 writer.WritePropertyName("isSequential"u8);
                 writer.WriteBooleanValue(IsSequential.Value);
             }
-            if (Core.Optional.IsDefined(BatchCount))
+            if (Optional.IsDefined(BatchCount))
             {
                 writer.WritePropertyName("batchCount"u8);
                 writer.WriteNumberValue(BatchCount.Value);
@@ -98,13 +98,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string name = default;
             string type = default;
-            Core.Optional<string> description = default;
-            Core.Optional<PipelineActivityState> state = default;
-            Core.Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Core.Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Core.Optional<IList<PipelineActivityUserProperty>> userProperties = default;
-            Core.Optional<bool> isSequential = default;
-            Core.Optional<int> batchCount = default;
+            Optional<string> description = default;
+            Optional<PipelineActivityState> state = default;
+            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Optional<IList<PipelineActivityDependency>> dependsOn = default;
+            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            Optional<bool> isSequential = default;
+            Optional<int> batchCount = default;
             DataFactoryExpression items = default;
             IList<PipelineActivity> activities = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ForEachActivity(name, type, description.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(onInactiveMarkAs), Core.Optional.ToList(dependsOn), Core.Optional.ToList(userProperties), additionalProperties, Core.Optional.ToNullable(isSequential), Core.Optional.ToNullable(batchCount), items, activities);
+            return new ForEachActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, Optional.ToNullable(isSequential), Optional.ToNullable(batchCount), items, activities);
         }
     }
 }

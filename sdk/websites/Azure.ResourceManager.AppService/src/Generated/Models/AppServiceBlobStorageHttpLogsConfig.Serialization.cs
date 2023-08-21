@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceBlobStorageHttpLogsConfig : Core.IUtf8JsonSerializable
+    public partial class AppServiceBlobStorageHttpLogsConfig : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SasUri))
+            if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUrl"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(RetentionInDays))
+            if (Optional.IsDefined(RetentionInDays))
             {
                 writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<Uri> sasUrl = default;
-            Core.Optional<int> retentionInDays = default;
-            Core.Optional<bool> enabled = default;
+            Optional<Uri> sasUrl = default;
+            Optional<int> retentionInDays = default;
+            Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sasUrl"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceBlobStorageHttpLogsConfig(sasUrl.Value, Core.Optional.ToNullable(retentionInDays), Core.Optional.ToNullable(enabled));
+            return new AppServiceBlobStorageHttpLogsConfig(sasUrl.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(enabled));
         }
     }
 }

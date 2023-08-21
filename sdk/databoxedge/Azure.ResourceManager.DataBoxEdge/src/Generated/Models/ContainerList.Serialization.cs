@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DataBoxEdgeStorageContainerData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DataBoxEdgeStorageContainerData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new ContainerList(Core.Optional.ToList(value), nextLink.Value);
+            return new ContainerList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

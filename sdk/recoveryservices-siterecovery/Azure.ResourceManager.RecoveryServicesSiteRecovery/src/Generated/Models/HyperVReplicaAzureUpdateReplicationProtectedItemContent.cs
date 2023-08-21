@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of HyperVReplicaAzureUpdateReplicationProtectedItemContent. </summary>
         public HyperVReplicaAzureUpdateReplicationProtectedItemContent()
         {
-            DiskIdToDiskEncryptionMap = new Core.ChangeTrackingDictionary<string, string>();
-            TargetVmTags = new Core.ChangeTrackingDictionary<string, string>();
-            TargetManagedDiskTags = new Core.ChangeTrackingDictionary<string, string>();
-            TargetNicTags = new Core.ChangeTrackingDictionary<string, string>();
-            VmDisks = new Core.ChangeTrackingList<UpdateDiskContent>();
+            DiskIdToDiskEncryptionMap = new ChangeTrackingDictionary<string, string>();
+            TargetVmTags = new ChangeTrackingDictionary<string, string>();
+            TargetManagedDiskTags = new ChangeTrackingDictionary<string, string>();
+            TargetNicTags = new ChangeTrackingDictionary<string, string>();
+            VmDisks = new ChangeTrackingList<UpdateDiskContent>();
             InstanceType = "HyperVReplicaAzure";
         }
 

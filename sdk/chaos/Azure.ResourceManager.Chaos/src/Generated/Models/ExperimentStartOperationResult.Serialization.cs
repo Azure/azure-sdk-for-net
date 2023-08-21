@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> statusUrl = default;
+            Optional<string> name = default;
+            Optional<string> statusUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DataProviderMetadata. </summary>
         public DataProviderMetadata()
         {
-            PropertyBag = new Core.ChangeTrackingList<DataProviderKeyValuePair>();
+            PropertyBag = new ChangeTrackingList<DataProviderKeyValuePair>();
         }
 
         /// <summary> Initializes a new instance of DataProviderMetadata. </summary>

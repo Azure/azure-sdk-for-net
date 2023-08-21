@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Core.Optional<string> metric = default;
-            Core.Optional<long> value = default;
-            Core.Optional<double> percentage = default;
+            Optional<string> metric = default;
+            Optional<long> value = default;
+            Optional<double> percentage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metric"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(metric.Value, Core.Optional.ToNullable(value), Core.Optional.ToNullable(percentage));
+            return new ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(metric.Value, Optional.ToNullable(value), Optional.ToNullable(percentage));
         }
     }
 }

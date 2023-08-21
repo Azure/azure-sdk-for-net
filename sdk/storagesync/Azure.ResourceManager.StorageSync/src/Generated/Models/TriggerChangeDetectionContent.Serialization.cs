@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class TriggerChangeDetectionContent : Core.IUtf8JsonSerializable
+    public partial class TriggerChangeDetectionContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DirectoryPath))
+            if (Optional.IsDefined(DirectoryPath))
             {
                 writer.WritePropertyName("directoryPath"u8);
                 writer.WriteStringValue(DirectoryPath);
             }
-            if (Core.Optional.IsDefined(ChangeDetectionMode))
+            if (Optional.IsDefined(ChangeDetectionMode))
             {
                 writer.WritePropertyName("changeDetectionMode"u8);
                 writer.WriteStringValue(ChangeDetectionMode.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Paths))
+            if (Optional.IsCollectionDefined(Paths))
             {
                 writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();

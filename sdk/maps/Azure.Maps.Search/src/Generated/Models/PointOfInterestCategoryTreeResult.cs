@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of PointOfInterestCategoryTreeResult. </summary>
         internal PointOfInterestCategoryTreeResult()
         {
-            Categories = new Core.ChangeTrackingList<PointOfInterestCategory>();
+            Categories = new ChangeTrackingList<PointOfInterestCategory>();
         }
 
         /// <summary> Initializes a new instance of PointOfInterestCategoryTreeResult. </summary>

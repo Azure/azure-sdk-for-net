@@ -23,8 +23,8 @@ namespace Azure.Monitor.Query.Models
             Argument.AssertNotNull(workspaces, nameof(workspaces));
 
             Workspaces = workspaces.ToList();
-            Resources = new Core.ChangeTrackingList<MetadataPermissionsResourcesItem>();
-            Applications = new Core.ChangeTrackingList<MetadataPermissionsApplicationsItem>();
+            Resources = new ChangeTrackingList<MetadataPermissionsResourcesItem>();
+            Applications = new ChangeTrackingList<MetadataPermissionsApplicationsItem>();
         }
 
         /// <summary> The permission indication for the workspaces on the metadata request. </summary>

@@ -13,14 +13,14 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class StorageAccountLocalUserData : Core.IUtf8JsonSerializable
+    public partial class StorageAccountLocalUserData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(PermissionScopes))
+            if (Optional.IsCollectionDefined(PermissionScopes))
             {
                 writer.WritePropertyName("permissionScopes"u8);
                 writer.WriteStartArray();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Storage
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(HomeDirectory))
+            if (Optional.IsDefined(HomeDirectory))
             {
                 writer.WritePropertyName("homeDirectory"u8);
                 writer.WriteStringValue(HomeDirectory);
             }
-            if (Core.Optional.IsCollectionDefined(SshAuthorizedKeys))
+            if (Optional.IsCollectionDefined(SshAuthorizedKeys))
             {
                 writer.WritePropertyName("sshAuthorizedKeys"u8);
                 writer.WriteStartArray();
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Storage
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(HasSharedKey))
+            if (Optional.IsDefined(HasSharedKey))
             {
                 writer.WritePropertyName("hasSharedKey"u8);
                 writer.WriteBooleanValue(HasSharedKey.Value);
             }
-            if (Core.Optional.IsDefined(HasSshKey))
+            if (Optional.IsDefined(HasSshKey))
             {
                 writer.WritePropertyName("hasSshKey"u8);
                 writer.WriteBooleanValue(HasSshKey.Value);
             }
-            if (Core.Optional.IsDefined(HasSshPassword))
+            if (Optional.IsDefined(HasSshPassword))
             {
                 writer.WritePropertyName("hasSshPassword"u8);
                 writer.WriteBooleanValue(HasSshPassword.Value);
@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IList<StoragePermissionScope>> permissionScopes = default;
-            Core.Optional<string> homeDirectory = default;
-            Core.Optional<IList<StorageSshPublicKey>> sshAuthorizedKeys = default;
-            Core.Optional<string> sid = default;
-            Core.Optional<bool> hasSharedKey = default;
-            Core.Optional<bool> hasSshKey = default;
-            Core.Optional<bool> hasSshPassword = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<StoragePermissionScope>> permissionScopes = default;
+            Optional<string> homeDirectory = default;
+            Optional<IList<StorageSshPublicKey>> sshAuthorizedKeys = default;
+            Optional<string> sid = default;
+            Optional<bool> hasSharedKey = default;
+            Optional<bool> hasSshKey = default;
+            Optional<bool> hasSshPassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new StorageAccountLocalUserData(id, name, type, systemData.Value, Core.Optional.ToList(permissionScopes), homeDirectory.Value, Core.Optional.ToList(sshAuthorizedKeys), sid.Value, Core.Optional.ToNullable(hasSharedKey), Core.Optional.ToNullable(hasSshKey), Core.Optional.ToNullable(hasSshPassword));
+            return new StorageAccountLocalUserData(id, name, type, systemData.Value, Optional.ToList(permissionScopes), homeDirectory.Value, Optional.ToList(sshAuthorizedKeys), sid.Value, Optional.ToNullable(hasSharedKey), Optional.ToNullable(hasSshKey), Optional.ToNullable(hasSshPassword));
         }
     }
 }

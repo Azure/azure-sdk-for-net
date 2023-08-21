@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IndexerStatus status = default;
-            Core.Optional<IndexerExecutionResult> lastResult = default;
+            Optional<IndexerExecutionResult> lastResult = default;
             IReadOnlyList<IndexerExecutionResult> executionHistory = default;
             SearchIndexerLimits limits = default;
             foreach (var property in element.EnumerateObject())

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Core.Optional<int> failedJobs = default;
-            Core.Optional<int> suspendedJobs = default;
-            Core.Optional<int> inProgressJobs = default;
+            Optional<int> failedJobs = default;
+            Optional<int> suspendedJobs = default;
+            Optional<int> inProgressJobs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failedJobs"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new ReplicationJobSummary(Core.Optional.ToNullable(failedJobs), Core.Optional.ToNullable(suspendedJobs), Core.Optional.ToNullable(inProgressJobs));
+            return new ReplicationJobSummary(Optional.ToNullable(failedJobs), Optional.ToNullable(suspendedJobs), Optional.ToNullable(inProgressJobs));
         }
     }
 }

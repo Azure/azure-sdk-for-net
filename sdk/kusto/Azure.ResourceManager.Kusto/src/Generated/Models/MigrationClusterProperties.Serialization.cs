@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<Uri> uri = default;
-            Core.Optional<Uri> dataIngestionUri = default;
-            Core.Optional<MigrationClusterRole> role = default;
+            Optional<string> id = default;
+            Optional<Uri> uri = default;
+            Optional<Uri> dataIngestionUri = default;
+            Optional<MigrationClusterRole> role = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new MigrationClusterProperties(id.Value, uri.Value, dataIngestionUri.Value, Core.Optional.ToNullable(role));
+            return new MigrationClusterProperties(id.Value, uri.Value, dataIngestionUri.Value, Optional.ToNullable(role));
         }
     }
 }

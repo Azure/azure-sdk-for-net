@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterOidcIssuerProfile : Core.IUtf8JsonSerializable
+    public partial class ManagedClusterOidcIssuerProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<string> issuerUrl = default;
-            Core.Optional<bool> enabled = default;
+            Optional<string> issuerUrl = default;
+            Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("issuerURL"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterOidcIssuerProfile(issuerUrl.Value, Core.Optional.ToNullable(enabled));
+            return new ManagedClusterOidcIssuerProfile(issuerUrl.Value, Optional.ToNullable(enabled));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of PolicyOverride. </summary>
         public PolicyOverride()
         {
-            Selectors = new Core.ChangeTrackingList<ResourceSelectorExpression>();
+            Selectors = new ChangeTrackingList<ResourceSelectorExpression>();
         }
 
         /// <summary> Initializes a new instance of PolicyOverride. </summary>

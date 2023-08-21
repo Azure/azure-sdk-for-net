@@ -13,74 +13,74 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceRecommendation : Core.IUtf8JsonSerializable
+    public partial class AppServiceRecommendation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(RecommendationId))
+            if (Optional.IsDefined(RecommendationId))
             {
                 writer.WritePropertyName("recommendationId"u8);
                 writer.WriteStringValue(RecommendationId.Value);
             }
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Core.Optional.IsDefined(ResourceScope))
+            if (Optional.IsDefined(ResourceScope))
             {
                 writer.WritePropertyName("resourceScope"u8);
                 writer.WriteStringValue(ResourceScope.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RuleName))
+            if (Optional.IsDefined(RuleName))
             {
                 writer.WritePropertyName("ruleName"u8);
                 writer.WriteStringValue(RuleName);
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Message))
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Core.Optional.IsDefined(Level))
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(Channels))
+            if (Optional.IsDefined(Channels))
             {
                 writer.WritePropertyName("channels"u8);
                 writer.WriteStringValue(Channels.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(ActionName))
+            if (Optional.IsDefined(ActionName))
             {
                 writer.WritePropertyName("actionName"u8);
                 writer.WriteStringValue(ActionName);
             }
-            if (Core.Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteNumberValue(Enabled.Value);
             }
-            if (Core.Optional.IsCollectionDefined(States))
+            if (Optional.IsCollectionDefined(States))
             {
                 writer.WritePropertyName("states"u8);
                 writer.WriteStartArray();
@@ -90,52 +90,52 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(NextNotificationOn))
+            if (Optional.IsDefined(NextNotificationOn))
             {
                 writer.WritePropertyName("nextNotificationTime"u8);
                 writer.WriteStringValue(NextNotificationOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(NotificationExpirationOn))
+            if (Optional.IsDefined(NotificationExpirationOn))
             {
                 writer.WritePropertyName("notificationExpirationTime"u8);
                 writer.WriteStringValue(NotificationExpirationOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(NotifiedOn))
+            if (Optional.IsDefined(NotifiedOn))
             {
                 writer.WritePropertyName("notifiedTime"u8);
                 writer.WriteStringValue(NotifiedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Score))
+            if (Optional.IsDefined(Score))
             {
                 writer.WritePropertyName("score"u8);
                 writer.WriteNumberValue(Score.Value);
             }
-            if (Core.Optional.IsDefined(IsDynamic))
+            if (Optional.IsDefined(IsDynamic))
             {
                 writer.WritePropertyName("isDynamic"u8);
                 writer.WriteBooleanValue(IsDynamic.Value);
             }
-            if (Core.Optional.IsDefined(ExtensionName))
+            if (Optional.IsDefined(ExtensionName))
             {
                 writer.WritePropertyName("extensionName"u8);
                 writer.WriteStringValue(ExtensionName);
             }
-            if (Core.Optional.IsDefined(BladeName))
+            if (Optional.IsDefined(BladeName))
             {
                 writer.WritePropertyName("bladeName"u8);
                 writer.WriteStringValue(BladeName);
             }
-            if (Core.Optional.IsDefined(ForwardLink))
+            if (Optional.IsDefined(ForwardLink))
             {
                 writer.WritePropertyName("forwardLink"u8);
                 writer.WriteStringValue(ForwardLink);
@@ -150,34 +150,34 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<Guid> recommendationId = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<ResourceScopeType> resourceScope = default;
-            Core.Optional<string> ruleName = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> message = default;
-            Core.Optional<NotificationLevel> level = default;
-            Core.Optional<RecommendationChannel> channels = default;
-            Core.Optional<IReadOnlyList<string>> categoryTags = default;
-            Core.Optional<string> actionName = default;
-            Core.Optional<int> enabled = default;
-            Core.Optional<IList<string>> states = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<DateTimeOffset> nextNotificationTime = default;
-            Core.Optional<DateTimeOffset> notificationExpirationTime = default;
-            Core.Optional<DateTimeOffset> notifiedTime = default;
-            Core.Optional<double> score = default;
-            Core.Optional<bool> isDynamic = default;
-            Core.Optional<string> extensionName = default;
-            Core.Optional<string> bladeName = default;
-            Core.Optional<string> forwardLink = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<Guid> recommendationId = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<ResourceScopeType> resourceScope = default;
+            Optional<string> ruleName = default;
+            Optional<string> displayName = default;
+            Optional<string> message = default;
+            Optional<NotificationLevel> level = default;
+            Optional<RecommendationChannel> channels = default;
+            Optional<IReadOnlyList<string>> categoryTags = default;
+            Optional<string> actionName = default;
+            Optional<int> enabled = default;
+            Optional<IList<string>> states = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<DateTimeOffset> nextNotificationTime = default;
+            Optional<DateTimeOffset> notificationExpirationTime = default;
+            Optional<DateTimeOffset> notifiedTime = default;
+            Optional<double> score = default;
+            Optional<bool> isDynamic = default;
+            Optional<string> extensionName = default;
+            Optional<string> bladeName = default;
+            Optional<string> forwardLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceRecommendation(id, name, type, systemData.Value, Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(recommendationId), resourceId.Value, Core.Optional.ToNullable(resourceScope), ruleName.Value, displayName.Value, message.Value, Core.Optional.ToNullable(level), Core.Optional.ToNullable(channels), Core.Optional.ToList(categoryTags), actionName.Value, Core.Optional.ToNullable(enabled), Core.Optional.ToList(states), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(nextNotificationTime), Core.Optional.ToNullable(notificationExpirationTime), Core.Optional.ToNullable(notifiedTime), Core.Optional.ToNullable(score), Core.Optional.ToNullable(isDynamic), extensionName.Value, bladeName.Value, forwardLink.Value, kind.Value);
+            return new AppServiceRecommendation(id, name, type, systemData.Value, Optional.ToNullable(creationTime), Optional.ToNullable(recommendationId), resourceId.Value, Optional.ToNullable(resourceScope), ruleName.Value, displayName.Value, message.Value, Optional.ToNullable(level), Optional.ToNullable(channels), Optional.ToList(categoryTags), actionName.Value, Optional.ToNullable(enabled), Optional.ToList(states), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(nextNotificationTime), Optional.ToNullable(notificationExpirationTime), Optional.ToNullable(notifiedTime), Optional.ToNullable(score), Optional.ToNullable(isDynamic), extensionName.Value, bladeName.Value, forwardLink.Value, kind.Value);
         }
     }
 }

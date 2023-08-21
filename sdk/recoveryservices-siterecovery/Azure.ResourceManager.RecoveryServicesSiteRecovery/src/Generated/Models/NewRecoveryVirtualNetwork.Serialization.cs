@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class NewRecoveryVirtualNetwork : Core.IUtf8JsonSerializable
+    public partial class NewRecoveryVirtualNetwork : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RecoveryVirtualNetworkResourceGroupName))
+            if (Optional.IsDefined(RecoveryVirtualNetworkResourceGroupName))
             {
                 writer.WritePropertyName("recoveryVirtualNetworkResourceGroupName"u8);
                 writer.WriteStringValue(RecoveryVirtualNetworkResourceGroupName);
             }
-            if (Core.Optional.IsDefined(RecoveryVirtualNetworkName))
+            if (Optional.IsDefined(RecoveryVirtualNetworkName))
             {
                 writer.WritePropertyName("recoveryVirtualNetworkName"u8);
                 writer.WriteStringValue(RecoveryVirtualNetworkName);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> recoveryVirtualNetworkResourceGroupName = default;
-            Core.Optional<string> recoveryVirtualNetworkName = default;
+            Optional<string> recoveryVirtualNetworkResourceGroupName = default;
+            Optional<string> recoveryVirtualNetworkName = default;
             string resourceType = default;
             foreach (var property in element.EnumerateObject())
             {

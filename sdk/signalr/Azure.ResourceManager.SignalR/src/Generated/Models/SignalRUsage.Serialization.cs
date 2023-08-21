@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<long> currentValue = default;
-            Core.Optional<long> limit = default;
-            Core.Optional<SignalRUsageName> name = default;
-            Core.Optional<string> unit = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<long> currentValue = default;
+            Optional<long> limit = default;
+            Optional<SignalRUsageName> name = default;
+            Optional<string> unit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     continue;
                 }
             }
-            return new SignalRUsage(id.Value, Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit), name.Value, unit.Value);
+            return new SignalRUsage(id.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, unit.Value);
         }
     }
 }

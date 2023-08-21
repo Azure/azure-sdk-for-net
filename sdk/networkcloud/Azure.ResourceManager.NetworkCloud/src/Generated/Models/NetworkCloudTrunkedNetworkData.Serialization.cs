@@ -13,14 +13,14 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudTrunkedNetworkData : Core.IUtf8JsonSerializable
+    public partial class NetworkCloudTrunkedNetworkData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HybridAksPluginType))
+            if (Optional.IsDefined(HybridAksPluginType))
             {
                 writer.WritePropertyName("hybridAksPluginType"u8);
                 writer.WriteStringValue(HybridAksPluginType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(InterfaceName))
+            if (Optional.IsDefined(InterfaceName))
             {
                 writer.WritePropertyName("interfaceName"u8);
                 writer.WriteStringValue(InterfaceName);
@@ -75,22 +75,22 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyList<string>> associatedResourceIds = default;
-            Core.Optional<ResourceIdentifier> clusterId = default;
-            Core.Optional<TrunkedNetworkDetailedStatus> detailedStatus = default;
-            Core.Optional<string> detailedStatusMessage = default;
-            Core.Optional<IReadOnlyList<ResourceIdentifier>> hybridAksClustersAssociatedIds = default;
-            Core.Optional<HybridAksPluginType> hybridAksPluginType = default;
-            Core.Optional<string> interfaceName = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyList<string>> associatedResourceIds = default;
+            Optional<ResourceIdentifier> clusterId = default;
+            Optional<TrunkedNetworkDetailedStatus> detailedStatus = default;
+            Optional<string> detailedStatusMessage = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> hybridAksClustersAssociatedIds = default;
+            Optional<HybridAksPluginType> hybridAksPluginType = default;
+            Optional<string> interfaceName = default;
             IList<ResourceIdentifier> isolationDomainIds = default;
-            Core.Optional<TrunkedNetworkProvisioningState> provisioningState = default;
-            Core.Optional<IReadOnlyList<ResourceIdentifier>> virtualMachinesAssociatedIds = default;
+            Optional<TrunkedNetworkProvisioningState> provisioningState = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> virtualMachinesAssociatedIds = default;
             IList<long> vlans = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new NetworkCloudTrunkedNetworkData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, Core.Optional.ToList(associatedResourceIds), clusterId.Value, Core.Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Core.Optional.ToList(hybridAksClustersAssociatedIds), Core.Optional.ToNullable(hybridAksPluginType), interfaceName.Value, isolationDomainIds, Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(virtualMachinesAssociatedIds), vlans);
+            return new NetworkCloudTrunkedNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(associatedResourceIds), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToList(hybridAksClustersAssociatedIds), Optional.ToNullable(hybridAksPluginType), interfaceName.Value, isolationDomainIds, Optional.ToNullable(provisioningState), Optional.ToList(virtualMachinesAssociatedIds), vlans);
         }
     }
 }

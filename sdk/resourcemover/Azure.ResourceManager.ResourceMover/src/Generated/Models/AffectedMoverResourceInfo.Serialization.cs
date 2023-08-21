@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<ResourceIdentifier> sourceId = default;
-            Core.Optional<IReadOnlyList<AffectedMoverResourceInfo>> moveResources = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<ResourceIdentifier> sourceId = default;
+            Optional<IReadOnlyList<AffectedMoverResourceInfo>> moveResources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new AffectedMoverResourceInfo(id.Value, sourceId.Value, Core.Optional.ToList(moveResources));
+            return new AffectedMoverResourceInfo(id.Value, sourceId.Value, Optional.ToList(moveResources));
         }
     }
 }

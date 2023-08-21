@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Core.Optional<string> accountName = default;
-            Core.Optional<string> primary = default;
-            Core.Optional<string> secondary = default;
+            Optional<string> accountName = default;
+            Optional<string> primary = default;
+            Optional<string> secondary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))

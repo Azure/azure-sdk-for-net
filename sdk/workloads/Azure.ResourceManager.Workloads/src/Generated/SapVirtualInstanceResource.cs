@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = await _sapVirtualInstanceSapVirtualInstancesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = _sapVirtualInstanceSapVirtualInstancesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = await _sapVirtualInstanceSapVirtualInstancesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = _sapVirtualInstanceSapVirtualInstancesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = await _sapVirtualInstanceSapVirtualInstancesRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = _sapVirtualInstanceSapVirtualInstancesRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

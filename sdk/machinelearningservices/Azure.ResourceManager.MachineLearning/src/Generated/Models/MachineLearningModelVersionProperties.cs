@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningModelVersionProperties. </summary>
         public MachineLearningModelVersionProperties()
         {
-            Flavors = new Core.ChangeTrackingDictionary<string, MachineLearningFlavorData>();
+            Flavors = new ChangeTrackingDictionary<string, MachineLearningFlavorData>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningModelVersionProperties. </summary>

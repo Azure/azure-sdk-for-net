@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of WorkloadItemResourceList. </summary>
         internal WorkloadItemResourceList()
         {
-            Value = new Core.ChangeTrackingList<WorkloadItemResource>();
+            Value = new ChangeTrackingList<WorkloadItemResource>();
         }
 
         /// <summary> Initializes a new instance of WorkloadItemResourceList. </summary>

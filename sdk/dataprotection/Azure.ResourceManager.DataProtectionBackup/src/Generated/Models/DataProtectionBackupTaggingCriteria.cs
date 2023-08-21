@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             Argument.AssertNotNull(tagInfo, nameof(tagInfo));
 
-            Criteria = new Core.ChangeTrackingList<DataProtectionBackupCriteria>();
+            Criteria = new ChangeTrackingList<DataProtectionBackupCriteria>();
             IsDefault = isDefault;
             TaggingPriority = taggingPriority;
             TagInfo = tagInfo;

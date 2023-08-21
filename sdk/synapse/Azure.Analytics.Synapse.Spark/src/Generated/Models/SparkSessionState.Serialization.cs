@@ -19,17 +19,17 @@ namespace Azure.Analytics.Synapse.Spark.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset?> notStartedAt = default;
-            Core.Optional<DateTimeOffset?> startingAt = default;
-            Core.Optional<DateTimeOffset?> idleAt = default;
-            Core.Optional<DateTimeOffset?> deadAt = default;
-            Core.Optional<DateTimeOffset?> shuttingDownAt = default;
-            Core.Optional<DateTimeOffset?> killedAt = default;
-            Core.Optional<DateTimeOffset?> recoveringAt = default;
-            Core.Optional<DateTimeOffset?> busyAt = default;
-            Core.Optional<DateTimeOffset?> errorAt = default;
-            Core.Optional<string> currentState = default;
-            Core.Optional<SparkRequest> jobCreationRequest = default;
+            Optional<DateTimeOffset?> notStartedAt = default;
+            Optional<DateTimeOffset?> startingAt = default;
+            Optional<DateTimeOffset?> idleAt = default;
+            Optional<DateTimeOffset?> deadAt = default;
+            Optional<DateTimeOffset?> shuttingDownAt = default;
+            Optional<DateTimeOffset?> killedAt = default;
+            Optional<DateTimeOffset?> recoveringAt = default;
+            Optional<DateTimeOffset?> busyAt = default;
+            Optional<DateTimeOffset?> errorAt = default;
+            Optional<string> currentState = default;
+            Optional<SparkRequest> jobCreationRequest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notStartedAt"u8))
@@ -137,7 +137,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkSessionState(Core.Optional.ToNullable(notStartedAt), Core.Optional.ToNullable(startingAt), Core.Optional.ToNullable(idleAt), Core.Optional.ToNullable(deadAt), Core.Optional.ToNullable(shuttingDownAt), Core.Optional.ToNullable(killedAt), Core.Optional.ToNullable(recoveringAt), Core.Optional.ToNullable(busyAt), Core.Optional.ToNullable(errorAt), currentState.Value, jobCreationRequest.Value);
+            return new SparkSessionState(Optional.ToNullable(notStartedAt), Optional.ToNullable(startingAt), Optional.ToNullable(idleAt), Optional.ToNullable(deadAt), Optional.ToNullable(shuttingDownAt), Optional.ToNullable(killedAt), Optional.ToNullable(recoveringAt), Optional.ToNullable(busyAt), Optional.ToNullable(errorAt), currentState.Value, jobCreationRequest.Value);
         }
     }
 }

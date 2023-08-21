@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(fabricControllerId, nameof(fabricControllerId));
 
-            AvailabilityZones = new Core.ChangeTrackingList<string>();
-            ClusterVersions = new Core.ChangeTrackingList<ClusterAvailableVersion>();
+            AvailabilityZones = new ChangeTrackingList<string>();
+            ClusterVersions = new ChangeTrackingList<ClusterAvailableVersion>();
             FabricControllerId = fabricControllerId;
         }
 

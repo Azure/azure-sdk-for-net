@@ -14,17 +14,17 @@ using Azure.ResourceManager.NotificationHubs.Models;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
-    public partial class NotificationHubAuthorizationRuleData : Core.IUtf8JsonSerializable
+    public partial class NotificationHubAuthorizationRuleData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NotificationHubs
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Rights))
+            if (Optional.IsCollectionDefined(Rights))
             {
                 writer.WritePropertyName("rights"u8);
                 writer.WriteStartArray();
@@ -59,22 +59,22 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 return null;
             }
-            Core.Optional<NotificationHubSku> sku = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<NotificationHubSku> sku = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IList<AuthorizationRuleAccessRight>> rights = default;
-            Core.Optional<string> primaryKey = default;
-            Core.Optional<string> secondaryKey = default;
-            Core.Optional<string> keyName = default;
-            Core.Optional<string> claimType = default;
-            Core.Optional<string> claimValue = default;
-            Core.Optional<DateTimeOffset> modifiedTime = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<int> revision = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<AuthorizationRuleAccessRight>> rights = default;
+            Optional<string> primaryKey = default;
+            Optional<string> secondaryKey = default;
+            Optional<string> keyName = default;
+            Optional<string> claimType = default;
+            Optional<string> claimValue = default;
+            Optional<DateTimeOffset> modifiedTime = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<int> revision = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     continue;
                 }
             }
-            return new NotificationHubAuthorizationRuleData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToList(rights), primaryKey.Value, secondaryKey.Value, keyName.Value, claimType.Value, claimValue.Value, Core.Optional.ToNullable(modifiedTime), Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(revision), sku.Value);
+            return new NotificationHubAuthorizationRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(rights), primaryKey.Value, secondaryKey.Value, keyName.Value, claimType.Value, claimValue.Value, Optional.ToNullable(modifiedTime), Optional.ToNullable(createdTime), Optional.ToNullable(revision), sku.Value);
         }
     }
 }

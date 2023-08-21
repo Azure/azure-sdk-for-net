@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DeletedAppConfigurationStoreData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DeletedAppConfigurationStoreData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new DeletedConfigurationStoreListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new DeletedConfigurationStoreListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

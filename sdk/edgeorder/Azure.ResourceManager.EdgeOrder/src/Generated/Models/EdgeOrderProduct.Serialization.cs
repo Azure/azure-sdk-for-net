@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Core.Optional<string> displayName = default;
-            Core.Optional<ProductDescription> description = default;
-            Core.Optional<IReadOnlyList<EdgeOrderProductImageInformation>> imageInformation = default;
-            Core.Optional<EdgeOrderProductCostInformation> costInformation = default;
-            Core.Optional<ProductAvailabilityInformation> availabilityInformation = default;
-            Core.Optional<HierarchyInformation> hierarchyInformation = default;
-            Core.Optional<IReadOnlyList<FilterableProperty>> filterableProperties = default;
-            Core.Optional<IReadOnlyList<ProductConfiguration>> configurations = default;
+            Optional<string> displayName = default;
+            Optional<ProductDescription> description = default;
+            Optional<IReadOnlyList<EdgeOrderProductImageInformation>> imageInformation = default;
+            Optional<EdgeOrderProductCostInformation> costInformation = default;
+            Optional<ProductAvailabilityInformation> availabilityInformation = default;
+            Optional<HierarchyInformation> hierarchyInformation = default;
+            Optional<IReadOnlyList<FilterableProperty>> filterableProperties = default;
+            Optional<IReadOnlyList<ProductConfiguration>> configurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new EdgeOrderProduct(displayName.Value, description.Value, Core.Optional.ToList(imageInformation), costInformation.Value, availabilityInformation.Value, hierarchyInformation.Value, Core.Optional.ToList(filterableProperties), Core.Optional.ToList(configurations));
+            return new EdgeOrderProduct(displayName.Value, description.Value, Optional.ToList(imageInformation), costInformation.Value, availabilityInformation.Value, hierarchyInformation.Value, Optional.ToList(filterableProperties), Optional.ToList(configurations));
         }
     }
 }

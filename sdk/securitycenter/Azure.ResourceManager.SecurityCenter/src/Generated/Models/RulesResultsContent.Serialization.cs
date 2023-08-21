@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class RulesResultsContent : Core.IUtf8JsonSerializable
+    public partial class RulesResultsContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LatestScan))
+            if (Optional.IsDefined(LatestScan))
             {
                 writer.WritePropertyName("latestScan"u8);
                 writer.WriteBooleanValue(LatestScan.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Results))
+            if (Optional.IsCollectionDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartObject();

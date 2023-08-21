@@ -21,15 +21,15 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> subscriptionId = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<SubscriptionState> state = default;
-            Core.Optional<SubscriptionPolicies> subscriptionPolicies = default;
-            Core.Optional<string> authorizationSource = default;
-            Core.Optional<IReadOnlyList<ManagedByTenant>> managedByTenants = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> subscriptionId = default;
+            Optional<string> displayName = default;
+            Optional<Guid> tenantId = default;
+            Optional<SubscriptionState> state = default;
+            Optional<SubscriptionPolicies> subscriptionPolicies = default;
+            Optional<string> authorizationSource = default;
+            Optional<IReadOnlyList<ManagedByTenant>> managedByTenants = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new SubscriptionData(id.Value, subscriptionId.Value, displayName.Value, Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(state), subscriptionPolicies.Value, authorizationSource.Value, Core.Optional.ToList(managedByTenants), Core.Optional.ToDictionary(tags));
+            return new SubscriptionData(id.Value, subscriptionId.Value, displayName.Value, Optional.ToNullable(tenantId), Optional.ToNullable(state), subscriptionPolicies.Value, authorizationSource.Value, Optional.ToList(managedByTenants), Optional.ToDictionary(tags));
         }
     }
 }

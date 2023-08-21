@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    internal class ContainerAppManagedCertificateOperationSource : Core.IOperationSource<ContainerAppManagedCertificateResource>
+    internal class ContainerAppManagedCertificateOperationSource : IOperationSource<ContainerAppManagedCertificateResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppContainers
             _client = client;
         }
 
-        ContainerAppManagedCertificateResource Core.IOperationSource<ContainerAppManagedCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ContainerAppManagedCertificateResource IOperationSource<ContainerAppManagedCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ContainerAppManagedCertificateData.DeserializeContainerAppManagedCertificateData(document.RootElement);
             return new ContainerAppManagedCertificateResource(_client, data);
         }
 
-        async ValueTask<ContainerAppManagedCertificateResource> Core.IOperationSource<ContainerAppManagedCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ContainerAppManagedCertificateResource> IOperationSource<ContainerAppManagedCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ContainerAppManagedCertificateData.DeserializeContainerAppManagedCertificateData(document.RootElement);

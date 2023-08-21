@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<string> mediaType = default;
-            Core.Optional<long> size = default;
-            Core.Optional<string> digest = default;
-            Core.Optional<long> length = default;
-            Core.Optional<string> repository = default;
-            Core.Optional<Uri> url = default;
-            Core.Optional<string> tag = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> version = default;
+            Optional<string> mediaType = default;
+            Optional<long> size = default;
+            Optional<string> digest = default;
+            Optional<long> length = default;
+            Optional<string> repository = default;
+            Optional<Uri> url = default;
+            Optional<string> tag = default;
+            Optional<string> name = default;
+            Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryWebhookEventTarget(mediaType.Value, Core.Optional.ToNullable(size), digest.Value, Core.Optional.ToNullable(length), repository.Value, url.Value, tag.Value, name.Value, version.Value);
+            return new ContainerRegistryWebhookEventTarget(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToNullable(length), repository.Value, url.Value, tag.Value, name.Value, version.Value);
         }
     }
 }

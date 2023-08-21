@@ -14,24 +14,24 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureBlobFSLocationConverter))]
-    public partial class AzureBlobFSLocation : Core.IUtf8JsonSerializable
+    public partial class AzureBlobFSLocation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FileSystem))
+            if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
                 writer.WriteObjectValue(FileSystem);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Core.Optional.IsDefined(FolderPath))
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteObjectValue(FolderPath);
             }
-            if (Core.Optional.IsDefined(FileName))
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteObjectValue(FileName);
@@ -50,10 +50,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<object> fileSystem = default;
+            Optional<object> fileSystem = default;
             string type = default;
-            Core.Optional<object> folderPath = default;
-            Core.Optional<object> fileName = default;
+            Optional<object> folderPath = default;
+            Optional<object> fileName = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

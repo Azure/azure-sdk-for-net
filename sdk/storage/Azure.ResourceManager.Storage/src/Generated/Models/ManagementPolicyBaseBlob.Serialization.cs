@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ManagementPolicyBaseBlob : Core.IUtf8JsonSerializable
+    public partial class ManagementPolicyBaseBlob : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TierToCool))
+            if (Optional.IsDefined(TierToCool))
             {
                 writer.WritePropertyName("tierToCool"u8);
                 writer.WriteObjectValue(TierToCool);
             }
-            if (Core.Optional.IsDefined(TierToArchive))
+            if (Optional.IsDefined(TierToArchive))
             {
                 writer.WritePropertyName("tierToArchive"u8);
                 writer.WriteObjectValue(TierToArchive);
             }
-            if (Core.Optional.IsDefined(TierToCold))
+            if (Optional.IsDefined(TierToCold))
             {
                 writer.WritePropertyName("tierToCold"u8);
                 writer.WriteObjectValue(TierToCold);
             }
-            if (Core.Optional.IsDefined(TierToHot))
+            if (Optional.IsDefined(TierToHot))
             {
                 writer.WritePropertyName("tierToHot"u8);
                 writer.WriteObjectValue(TierToHot);
             }
-            if (Core.Optional.IsDefined(Delete))
+            if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
                 writer.WriteObjectValue(Delete);
             }
-            if (Core.Optional.IsDefined(EnableAutoTierToHotFromCool))
+            if (Optional.IsDefined(EnableAutoTierToHotFromCool))
             {
                 writer.WritePropertyName("enableAutoTierToHotFromCool"u8);
                 writer.WriteBooleanValue(EnableAutoTierToHotFromCool.Value);
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<DateAfterModification> tierToCool = default;
-            Core.Optional<DateAfterModification> tierToArchive = default;
-            Core.Optional<DateAfterModification> tierToCold = default;
-            Core.Optional<DateAfterModification> tierToHot = default;
-            Core.Optional<DateAfterModification> delete = default;
-            Core.Optional<bool> enableAutoTierToHotFromCool = default;
+            Optional<DateAfterModification> tierToCool = default;
+            Optional<DateAfterModification> tierToArchive = default;
+            Optional<DateAfterModification> tierToCold = default;
+            Optional<DateAfterModification> tierToHot = default;
+            Optional<DateAfterModification> delete = default;
+            Optional<bool> enableAutoTierToHotFromCool = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tierToCool"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ManagementPolicyBaseBlob(tierToCool.Value, tierToArchive.Value, tierToCold.Value, tierToHot.Value, delete.Value, Core.Optional.ToNullable(enableAutoTierToHotFromCool));
+            return new ManagementPolicyBaseBlob(tierToCool.Value, tierToArchive.Value, tierToCold.Value, tierToHot.Value, delete.Value, Optional.ToNullable(enableAutoTierToHotFromCool));
         }
     }
 }

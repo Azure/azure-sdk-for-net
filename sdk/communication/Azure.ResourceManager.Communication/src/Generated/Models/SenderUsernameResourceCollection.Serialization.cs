@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SenderUsernameResourceData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<SenderUsernameResourceData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Communication.Models
                     continue;
                 }
             }
-            return new SenderUsernameResourceCollection(Core.Optional.ToList(value), nextLink.Value);
+            return new SenderUsernameResourceCollection(Optional.ToList(value), nextLink.Value);
         }
     }
 }

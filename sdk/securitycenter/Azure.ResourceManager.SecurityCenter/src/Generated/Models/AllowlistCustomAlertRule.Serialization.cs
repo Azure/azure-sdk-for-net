@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AllowlistCustomAlertRule : Core.IUtf8JsonSerializable
+    public partial class AllowlistCustomAlertRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("allowlistValues"u8);
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             IList<string> allowlistValues = default;
-            Core.Optional<SecurityValueType> valueType = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> description = default;
+            Optional<SecurityValueType> valueType = default;
+            Optional<string> displayName = default;
+            Optional<string> description = default;
             bool isEnabled = default;
             string ruleType = "AllowlistCustomAlertRule";
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new AllowlistCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, Core.Optional.ToNullable(valueType), allowlistValues);
+            return new AllowlistCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, Optional.ToNullable(valueType), allowlistValues);
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<ScheduleAvailabilityResponse> scheduleAvailabilityResponse = default;
-            Core.Optional<TransportAvailabilityResponse> transportAvailabilityResponse = default;
-            Core.Optional<DataCenterAddressResult> dataCenterAddressResponse = default;
+            Optional<ScheduleAvailabilityResponse> scheduleAvailabilityResponse = default;
+            Optional<TransportAvailabilityResponse> transportAvailabilityResponse = default;
+            Optional<DataCenterAddressResult> dataCenterAddressResponse = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleAvailabilityResponse"u8))

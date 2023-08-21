@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> description = default;
-            Core.Optional<string> terms = default;
-            Core.Optional<bool> subscriptionRequired = default;
-            Core.Optional<bool> approvalRequired = default;
-            Core.Optional<int> subscriptionsLimit = default;
-            Core.Optional<ApiManagementProductState> state = default;
+            Optional<string> description = default;
+            Optional<string> terms = default;
+            Optional<bool> subscriptionRequired = default;
+            Optional<bool> approvalRequired = default;
+            Optional<int> subscriptionsLimit = default;
+            Optional<ApiManagementProductState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ProductEntityBaseProperties(description.Value, terms.Value, Core.Optional.ToNullable(subscriptionRequired), Core.Optional.ToNullable(approvalRequired), Core.Optional.ToNullable(subscriptionsLimit), Core.Optional.ToNullable(state));
+            return new ProductEntityBaseProperties(description.Value, terms.Value, Optional.ToNullable(subscriptionRequired), Optional.ToNullable(approvalRequired), Optional.ToNullable(subscriptionsLimit), Optional.ToNullable(state));
         }
     }
 }

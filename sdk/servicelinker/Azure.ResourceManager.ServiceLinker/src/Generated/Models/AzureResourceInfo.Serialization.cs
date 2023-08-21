@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class AzureResourceInfo : Core.IUtf8JsonSerializable
+    public partial class AzureResourceInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(ResourceProperties))
+            if (Optional.IsDefined(ResourceProperties))
             {
                 if (ResourceProperties != null)
                 {
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<AzureResourceBaseProperties> resourceProperties = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<AzureResourceBaseProperties> resourceProperties = default;
             TargetServiceType type = default;
             foreach (var property in element.EnumerateObject())
             {

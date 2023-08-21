@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> trackedResourceId = default;
-            Core.Optional<PolicyDetails> policyDetails = default;
-            Core.Optional<TrackedResourceModificationDetails> createdBy = default;
-            Core.Optional<TrackedResourceModificationDetails> lastModifiedBy = default;
-            Core.Optional<DateTimeOffset> lastUpdateUtc = default;
+            Optional<ResourceIdentifier> trackedResourceId = default;
+            Optional<PolicyDetails> policyDetails = default;
+            Optional<TrackedResourceModificationDetails> createdBy = default;
+            Optional<TrackedResourceModificationDetails> lastModifiedBy = default;
+            Optional<DateTimeOffset> lastUpdateUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trackedResourceId"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new PolicyTrackedResourceRecord(trackedResourceId.Value, policyDetails.Value, createdBy.Value, lastModifiedBy.Value, Core.Optional.ToNullable(lastUpdateUtc));
+            return new PolicyTrackedResourceRecord(trackedResourceId.Value, policyDetails.Value, createdBy.Value, lastModifiedBy.Value, Optional.ToNullable(lastUpdateUtc));
         }
     }
 }

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBMigrationSettings : Core.IUtf8JsonSerializable
+    public partial class MongoDBMigrationSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BoostRUs))
+            if (Optional.IsDefined(BoostRUs))
             {
                 writer.WritePropertyName("boostRUs"u8);
                 writer.WriteNumberValue(BoostRUs.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Core.Optional.IsDefined(Replication))
+            if (Optional.IsDefined(Replication))
             {
                 writer.WritePropertyName("replication"u8);
                 writer.WriteStringValue(Replication.Value.ToString());
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteObjectValue(Source);
             writer.WritePropertyName("target"u8);
             writer.WriteObjectValue(Target);
-            if (Core.Optional.IsDefined(Throttling))
+            if (Optional.IsDefined(Throttling))
             {
                 writer.WritePropertyName("throttling"u8);
                 writer.WriteObjectValue(Throttling);
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<int> boostRUs = default;
+            Optional<int> boostRUs = default;
             IDictionary<string, MongoDBDatabaseSettings> databases = default;
-            Core.Optional<MongoDBReplication> replication = default;
+            Optional<MongoDBReplication> replication = default;
             MongoDBConnectionInfo source = default;
             MongoDBConnectionInfo target = default;
-            Core.Optional<MongoDBThrottlingSettings> throttling = default;
+            Optional<MongoDBThrottlingSettings> throttling = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("boostRUs"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MongoDBMigrationSettings(Core.Optional.ToNullable(boostRUs), databases, Core.Optional.ToNullable(replication), source, target, throttling.Value);
+            return new MongoDBMigrationSettings(Optional.ToNullable(boostRUs), databases, Optional.ToNullable(replication), source, target, throttling.Value);
         }
     }
 }

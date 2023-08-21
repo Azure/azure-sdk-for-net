@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of RackList. </summary>
         internal RackList()
         {
-            Value = new Core.ChangeTrackingList<NetworkCloudRackData>();
+            Value = new ChangeTrackingList<NetworkCloudRackData>();
         }
 
         /// <summary> Initializes a new instance of RackList. </summary>

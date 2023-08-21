@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class AutomationVariableData : Core.IUtf8JsonSerializable
+    public partial class AutomationVariableData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Core.Optional.IsDefined(IsEncrypted))
+            if (Optional.IsDefined(IsEncrypted))
             {
                 if (IsEncrypted != null)
                 {
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("isEncrypted");
                 }
             }
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(LastModifiedOn))
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> value = default;
-            Core.Optional<bool?> isEncrypted = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<string> description = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> value = default;
+            Optional<bool?> isEncrypted = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Automation
                     continue;
                 }
             }
-            return new AutomationVariableData(id, name, type, systemData.Value, value.Value, Core.Optional.ToNullable(isEncrypted), Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime), description.Value);
+            return new AutomationVariableData(id, name, type, systemData.Value, value.Value, Optional.ToNullable(isEncrypted), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value);
         }
     }
 }

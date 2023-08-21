@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicObservabilityAccountInfo : Core.IUtf8JsonSerializable
+    public partial class NewRelicObservabilityAccountInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AccountId))
+            if (Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (Core.Optional.IsDefined(IngestionKey))
+            if (Optional.IsDefined(IngestionKey))
             {
                 writer.WritePropertyName("ingestionKey"u8);
                 writer.WriteStringValue(IngestionKey);
             }
-            if (Core.Optional.IsDefined(Region))
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Core.Optional<string> accountId = default;
-            Core.Optional<string> ingestionKey = default;
-            Core.Optional<AzureLocation> region = default;
+            Optional<string> accountId = default;
+            Optional<string> ingestionKey = default;
+            Optional<AzureLocation> region = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountId"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new NewRelicObservabilityAccountInfo(accountId.Value, ingestionKey.Value, Core.Optional.ToNullable(region));
+            return new NewRelicObservabilityAccountInfo(accountId.Value, ingestionKey.Value, Optional.ToNullable(region));
         }
     }
 }

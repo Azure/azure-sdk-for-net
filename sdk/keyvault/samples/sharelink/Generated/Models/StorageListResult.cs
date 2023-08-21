@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Storage.Models
         /// <summary> Initializes a new instance of StorageListResult. </summary>
         internal StorageListResult()
         {
-            Value = new Core.ChangeTrackingList<StorageAccountItem>();
+            Value = new ChangeTrackingList<StorageAccountItem>();
         }
 
         /// <summary> Initializes a new instance of StorageListResult. </summary>

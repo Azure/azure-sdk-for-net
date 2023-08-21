@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AuthorizationProviderOperationsMetadataData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<AuthorizationProviderOperationsMetadataData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new AuthorizationProviderOperationsMetadataListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new AuthorizationProviderOperationsMetadataListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of CopySink. </summary>
         public CopySink()
         {
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of CopySink. </summary>

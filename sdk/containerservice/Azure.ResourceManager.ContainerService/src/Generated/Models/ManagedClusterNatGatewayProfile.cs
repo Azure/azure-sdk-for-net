@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ManagedClusterNatGatewayProfile. </summary>
         public ManagedClusterNatGatewayProfile()
         {
-            EffectiveOutboundIPs = new Core.ChangeTrackingList<WritableSubResource>();
+            EffectiveOutboundIPs = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterNatGatewayProfile. </summary>

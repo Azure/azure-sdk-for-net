@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Core.Optional<string> collectionName = default;
-            Core.Optional<Guid> collectionId = default;
+            Optional<string> collectionName = default;
+            Optional<Guid> collectionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("collectionName"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new PrivateStoreCollectionDetails(collectionName.Value, Core.Optional.ToNullable(collectionId));
+            return new PrivateStoreCollectionDetails(collectionName.Value, Optional.ToNullable(collectionId));
         }
     }
 }

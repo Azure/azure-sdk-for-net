@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class BillingBenefitsPrice : Core.IUtf8JsonSerializable
+    public partial class BillingBenefitsPrice : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CurrencyCode))
+            if (Optional.IsDefined(CurrencyCode))
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (Core.Optional.IsDefined(Amount))
+            if (Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Core.Optional<string> currencyCode = default;
-            Core.Optional<double> amount = default;
+            Optional<string> currencyCode = default;
+            Optional<double> amount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currencyCode"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     continue;
                 }
             }
-            return new BillingBenefitsPrice(currencyCode.Value, Core.Optional.ToNullable(amount));
+            return new BillingBenefitsPrice(currencyCode.Value, Optional.ToNullable(amount));
         }
     }
 }

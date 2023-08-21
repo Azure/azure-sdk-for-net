@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class OfflineConfiguration : Core.IUtf8JsonSerializable
+    public partial class OfflineConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Offline))
+            if (Optional.IsDefined(Offline))
             {
                 writer.WritePropertyName("offline"u8);
                 writer.WriteBooleanValue(Offline.Value);
             }
-            if (Core.Optional.IsDefined(LastBackupName))
+            if (Optional.IsDefined(LastBackupName))
             {
                 writer.WritePropertyName("lastBackupName"u8);
                 writer.WriteStringValue(LastBackupName);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<bool> offline = default;
-            Core.Optional<string> lastBackupName = default;
+            Optional<bool> offline = default;
+            Optional<string> lastBackupName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offline"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new OfflineConfiguration(Core.Optional.ToNullable(offline), lastBackupName.Value);
+            return new OfflineConfiguration(Optional.ToNullable(offline), lastBackupName.Value);
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
-    public partial class GitHubConnectorProperties : Core.IUtf8JsonSerializable
+    public partial class GitHubConnectorProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Code))
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<string> code = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> code = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     continue;
                 }
             }
-            return new GitHubConnectorProperties(Core.Optional.ToNullable(provisioningState), code.Value);
+            return new GitHubConnectorProperties(Optional.ToNullable(provisioningState), code.Value);
         }
     }
 }

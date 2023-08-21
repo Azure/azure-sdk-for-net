@@ -22,7 +22,7 @@ namespace Azure.Communication.Chat
             Argument.AssertNotNull(content, nameof(content));
 
             Content = content;
-            Metadata = new Core.ChangeTrackingDictionary<string, string>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Chat message content. </summary>

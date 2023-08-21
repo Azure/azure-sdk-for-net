@@ -11,22 +11,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class SimStaticIPProperties : Core.IUtf8JsonSerializable
+    public partial class SimStaticIPProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AttachedDataNetwork))
+            if (Optional.IsDefined(AttachedDataNetwork))
             {
                 writer.WritePropertyName("attachedDataNetwork"u8);
                 JsonSerializer.Serialize(writer, AttachedDataNetwork);
             }
-            if (Core.Optional.IsDefined(Slice))
+            if (Optional.IsDefined(Slice))
             {
                 writer.WritePropertyName("slice"u8);
                 JsonSerializer.Serialize(writer, Slice);
             }
-            if (Core.Optional.IsDefined(StaticIP))
+            if (Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIp"u8);
                 writer.WriteObjectValue(StaticIP);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Core.Optional<WritableSubResource> attachedDataNetwork = default;
-            Core.Optional<WritableSubResource> slice = default;
-            Core.Optional<SimStaticIPPropertiesStaticIP> staticIP = default;
+            Optional<WritableSubResource> attachedDataNetwork = default;
+            Optional<WritableSubResource> slice = default;
+            Optional<SimStaticIPPropertiesStaticIP> staticIP = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("attachedDataNetwork"u8))

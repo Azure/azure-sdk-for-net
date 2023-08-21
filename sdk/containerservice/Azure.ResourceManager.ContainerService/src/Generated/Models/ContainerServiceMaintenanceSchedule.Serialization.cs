@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceMaintenanceSchedule : Core.IUtf8JsonSerializable
+    public partial class ContainerServiceMaintenanceSchedule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Daily))
+            if (Optional.IsDefined(Daily))
             {
                 writer.WritePropertyName("daily"u8);
                 writer.WriteObjectValue(Daily);
             }
-            if (Core.Optional.IsDefined(Weekly))
+            if (Optional.IsDefined(Weekly))
             {
                 writer.WritePropertyName("weekly"u8);
                 writer.WriteObjectValue(Weekly);
             }
-            if (Core.Optional.IsDefined(AbsoluteMonthly))
+            if (Optional.IsDefined(AbsoluteMonthly))
             {
                 writer.WritePropertyName("absoluteMonthly"u8);
                 writer.WriteObjectValue(AbsoluteMonthly);
             }
-            if (Core.Optional.IsDefined(RelativeMonthly))
+            if (Optional.IsDefined(RelativeMonthly))
             {
                 writer.WritePropertyName("relativeMonthly"u8);
                 writer.WriteObjectValue(RelativeMonthly);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<DailySchedule> daily = default;
-            Core.Optional<ContainerServiceMaintenanceWeeklySchedule> weekly = default;
-            Core.Optional<ContainerServiceMaintenanceAbsoluteMonthlySchedule> absoluteMonthly = default;
-            Core.Optional<ContainerServiceMaintenanceRelativeMonthlySchedule> relativeMonthly = default;
+            Optional<DailySchedule> daily = default;
+            Optional<ContainerServiceMaintenanceWeeklySchedule> weekly = default;
+            Optional<ContainerServiceMaintenanceAbsoluteMonthlySchedule> absoluteMonthly = default;
+            Optional<ContainerServiceMaintenanceRelativeMonthlySchedule> relativeMonthly = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daily"u8))

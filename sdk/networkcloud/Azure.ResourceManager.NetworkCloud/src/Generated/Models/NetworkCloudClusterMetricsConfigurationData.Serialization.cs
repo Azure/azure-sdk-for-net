@@ -13,14 +13,14 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudClusterMetricsConfigurationData : Core.IUtf8JsonSerializable
+    public partial class NetworkCloudClusterMetricsConfigurationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("collectionInterval"u8);
             writer.WriteNumberValue(CollectionInterval);
-            if (Core.Optional.IsCollectionDefined(EnabledMetrics))
+            if (Optional.IsCollectionDefined(EnabledMetrics))
             {
                 writer.WritePropertyName("enabledMetrics"u8);
                 writer.WriteStartArray();
@@ -58,18 +58,18 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             long collectionInterval = default;
-            Core.Optional<ClusterMetricsConfigurationDetailedStatus> detailedStatus = default;
-            Core.Optional<string> detailedStatusMessage = default;
-            Core.Optional<IReadOnlyList<string>> disabledMetrics = default;
-            Core.Optional<IList<string>> enabledMetrics = default;
-            Core.Optional<ClusterMetricsConfigurationProvisioningState> provisioningState = default;
+            Optional<ClusterMetricsConfigurationDetailedStatus> detailedStatus = default;
+            Optional<string> detailedStatusMessage = default;
+            Optional<IReadOnlyList<string>> disabledMetrics = default;
+            Optional<IList<string>> enabledMetrics = default;
+            Optional<ClusterMetricsConfigurationProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new NetworkCloudClusterMetricsConfigurationData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, collectionInterval, Core.Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Core.Optional.ToList(disabledMetrics), Core.Optional.ToList(enabledMetrics), Core.Optional.ToNullable(provisioningState));
+            return new NetworkCloudClusterMetricsConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, collectionInterval, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToList(disabledMetrics), Optional.ToList(enabledMetrics), Optional.ToNullable(provisioningState));
         }
     }
 }

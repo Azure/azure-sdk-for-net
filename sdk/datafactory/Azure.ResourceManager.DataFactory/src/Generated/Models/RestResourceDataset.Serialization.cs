@@ -13,30 +13,30 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class RestResourceDataset : Core.IUtf8JsonSerializable
+    public partial class RestResourceDataset : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(Structure))
+            if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
                 JsonSerializer.Serialize(writer, Structure);
             }
-            if (Core.Optional.IsDefined(Schema))
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName); if (Core.Optional.IsCollectionDefined(Parameters))
+            JsonSerializer.Serialize(writer, LinkedServiceName); if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Annotations))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -66,29 +66,29 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Folder))
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RelativeUri))
+            if (Optional.IsDefined(RelativeUri))
             {
                 writer.WritePropertyName("relativeUrl"u8);
                 JsonSerializer.Serialize(writer, RelativeUri);
             }
-            if (Core.Optional.IsDefined(RequestMethod))
+            if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
                 JsonSerializer.Serialize(writer, RequestMethod);
             }
-            if (Core.Optional.IsDefined(RequestBody))
+            if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
                 JsonSerializer.Serialize(writer, RequestBody);
             }
-            if (Core.Optional.IsCollectionDefined(AdditionalHeaders))
+            if (Optional.IsCollectionDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
                 writer.WriteStartObject();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(PaginationRules))
+            if (Optional.IsCollectionDefined(PaginationRules))
             {
                 writer.WritePropertyName("paginationRules"u8);
                 writer.WriteStartObject();
@@ -148,18 +148,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Core.Optional<string> description = default;
-            Core.Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
-            Core.Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
+            Optional<string> description = default;
+            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
+            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
-            Core.Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Core.Optional<IList<BinaryData>> annotations = default;
-            Core.Optional<DatasetFolder> folder = default;
-            Core.Optional<DataFactoryElement<string>> relativeUrl = default;
-            Core.Optional<DataFactoryElement<string>> requestMethod = default;
-            Core.Optional<DataFactoryElement<string>> requestBody = default;
-            Core.Optional<IDictionary<string, BinaryData>> additionalHeaders = default;
-            Core.Optional<IDictionary<string, BinaryData>> paginationRules = default;
+            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            Optional<IList<BinaryData>> annotations = default;
+            Optional<DatasetFolder> folder = default;
+            Optional<DataFactoryElement<string>> relativeUrl = default;
+            Optional<DataFactoryElement<string>> requestMethod = default;
+            Optional<DataFactoryElement<string>> requestBody = default;
+            Optional<IDictionary<string, BinaryData>> additionalHeaders = default;
+            Optional<IDictionary<string, BinaryData>> paginationRules = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestResourceDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(annotations), folder.Value, additionalProperties, relativeUrl.Value, requestMethod.Value, requestBody.Value, Core.Optional.ToDictionary(additionalHeaders), Core.Optional.ToDictionary(paginationRules));
+            return new RestResourceDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, relativeUrl.Value, requestMethod.Value, requestBody.Value, Optional.ToDictionary(additionalHeaders), Optional.ToDictionary(paginationRules));
         }
     }
 }

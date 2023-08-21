@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseIPFirewallRuleInfoListResult. </summary>
         internal SynapseIPFirewallRuleInfoListResult()
         {
-            Value = new Core.ChangeTrackingList<SynapseIPFirewallRuleInfoData>();
+            Value = new ChangeTrackingList<SynapseIPFirewallRuleInfoData>();
         }
 
         /// <summary> Initializes a new instance of SynapseIPFirewallRuleInfoListResult. </summary>

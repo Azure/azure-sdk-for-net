@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class CosmosDBUniqueKeyPolicy : Core.IUtf8JsonSerializable
+    internal partial class CosmosDBUniqueKeyPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(UniqueKeys))
+            if (Optional.IsCollectionDefined(UniqueKeys))
             {
                 writer.WritePropertyName("uniqueKeys"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<IList<CosmosDBUniqueKey>> uniqueKeys = default;
+            Optional<IList<CosmosDBUniqueKey>> uniqueKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uniqueKeys"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBUniqueKeyPolicy(Core.Optional.ToList(uniqueKeys));
+            return new CosmosDBUniqueKeyPolicy(Optional.ToList(uniqueKeys));
         }
     }
 }

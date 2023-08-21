@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementIdentityProviderPatch : Core.IUtf8JsonSerializable
+    public partial class ApiManagementIdentityProviderPatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IdentityProviderType))
+            if (Optional.IsDefined(IdentityProviderType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityProviderType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SignInTenant))
+            if (Optional.IsDefined(SignInTenant))
             {
                 writer.WritePropertyName("signinTenant"u8);
                 writer.WriteStringValue(SignInTenant);
             }
-            if (Core.Optional.IsCollectionDefined(AllowedTenants))
+            if (Optional.IsCollectionDefined(AllowedTenants))
             {
                 writer.WritePropertyName("allowedTenants"u8);
                 writer.WriteStartArray();
@@ -37,37 +37,37 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Authority))
+            if (Optional.IsDefined(Authority))
             {
                 writer.WritePropertyName("authority"u8);
                 writer.WriteStringValue(Authority);
             }
-            if (Core.Optional.IsDefined(SignUpPolicyName))
+            if (Optional.IsDefined(SignUpPolicyName))
             {
                 writer.WritePropertyName("signupPolicyName"u8);
                 writer.WriteStringValue(SignUpPolicyName);
             }
-            if (Core.Optional.IsDefined(SignInPolicyName))
+            if (Optional.IsDefined(SignInPolicyName))
             {
                 writer.WritePropertyName("signinPolicyName"u8);
                 writer.WriteStringValue(SignInPolicyName);
             }
-            if (Core.Optional.IsDefined(ProfileEditingPolicyName))
+            if (Optional.IsDefined(ProfileEditingPolicyName))
             {
                 writer.WritePropertyName("profileEditingPolicyName"u8);
                 writer.WriteStringValue(ProfileEditingPolicyName);
             }
-            if (Core.Optional.IsDefined(PasswordResetPolicyName))
+            if (Optional.IsDefined(PasswordResetPolicyName))
             {
                 writer.WritePropertyName("passwordResetPolicyName"u8);
                 writer.WriteStringValue(PasswordResetPolicyName);
             }
-            if (Core.Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Core.Optional.IsDefined(ClientSecret))
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);

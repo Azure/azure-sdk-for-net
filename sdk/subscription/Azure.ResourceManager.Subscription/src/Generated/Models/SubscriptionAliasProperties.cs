@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <summary> Initializes a new instance of SubscriptionAliasProperties. </summary>
         internal SubscriptionAliasProperties()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of SubscriptionAliasProperties. </summary>

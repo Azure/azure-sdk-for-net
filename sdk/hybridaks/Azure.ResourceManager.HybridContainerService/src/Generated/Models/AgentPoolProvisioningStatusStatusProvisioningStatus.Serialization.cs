@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class AgentPoolProvisioningStatusStatusProvisioningStatus : Core.IUtf8JsonSerializable
+    public partial class AgentPoolProvisioningStatusStatusProvisioningStatus : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Error))
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (Core.Optional.IsDefined(OperationId))
+            if (Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (Core.Optional.IsDefined(Phase))
+            if (Optional.IsDefined(Phase))
             {
                 writer.WritePropertyName("phase"u8);
                 writer.WriteStringValue(Phase);
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<AgentPoolProvisioningStatusError> error = default;
-            Core.Optional<string> operationId = default;
-            Core.Optional<string> phase = default;
-            Core.Optional<string> status = default;
+            Optional<AgentPoolProvisioningStatusError> error = default;
+            Optional<string> operationId = default;
+            Optional<string> phase = default;
+            Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))

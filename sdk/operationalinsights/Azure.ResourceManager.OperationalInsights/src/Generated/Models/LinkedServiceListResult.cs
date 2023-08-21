@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of LinkedServiceListResult. </summary>
         internal LinkedServiceListResult()
         {
-            Value = new Core.ChangeTrackingList<OperationalInsightsLinkedServiceData>();
+            Value = new ChangeTrackingList<OperationalInsightsLinkedServiceData>();
         }
 
         /// <summary> Initializes a new instance of LinkedServiceListResult. </summary>

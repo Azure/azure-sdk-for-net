@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    internal partial class ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment : Core.IUtf8JsonSerializable
+    internal partial class ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Roles))
+            if (Optional.IsCollectionDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, DevCenterEnvironmentRole>> roles = default;
+            Optional<IDictionary<string, DevCenterEnvironmentRole>> roles = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("roles"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     continue;
                 }
             }
-            return new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(Core.Optional.ToDictionary(roles));
+            return new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(Optional.ToDictionary(roles));
         }
     }
 }

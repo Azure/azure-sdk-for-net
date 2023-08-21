@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of UpdateSummariesList. </summary>
         internal UpdateSummariesList()
         {
-            Value = new Core.ChangeTrackingList<UpdateSummaryData>();
+            Value = new ChangeTrackingList<UpdateSummaryData>();
         }
 
         /// <summary> Initializes a new instance of UpdateSummariesList. </summary>

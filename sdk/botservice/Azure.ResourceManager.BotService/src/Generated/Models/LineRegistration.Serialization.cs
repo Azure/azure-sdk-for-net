@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class LineRegistration : Core.IUtf8JsonSerializable
+    public partial class LineRegistration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ChannelSecret))
+            if (Optional.IsDefined(ChannelSecret))
             {
                 writer.WritePropertyName("channelSecret"u8);
                 writer.WriteStringValue(ChannelSecret);
             }
-            if (Core.Optional.IsDefined(ChannelAccessToken))
+            if (Optional.IsDefined(ChannelAccessToken))
             {
                 writer.WritePropertyName("channelAccessToken"u8);
                 writer.WriteStringValue(ChannelAccessToken);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<string> generatedId = default;
-            Core.Optional<string> channelSecret = default;
-            Core.Optional<string> channelAccessToken = default;
+            Optional<string> generatedId = default;
+            Optional<string> channelSecret = default;
+            Optional<string> channelAccessToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("generatedId"u8))

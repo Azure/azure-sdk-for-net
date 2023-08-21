@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class ManagedClusterNodeResourceGroupProfile : Core.IUtf8JsonSerializable
+    internal partial class ManagedClusterNodeResourceGroupProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RestrictionLevel))
+            if (Optional.IsDefined(RestrictionLevel))
             {
                 writer.WritePropertyName("restrictionLevel"u8);
                 writer.WriteStringValue(RestrictionLevel.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<ManagedClusterNodeResourceGroupRestrictionLevel> restrictionLevel = default;
+            Optional<ManagedClusterNodeResourceGroupRestrictionLevel> restrictionLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("restrictionLevel"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterNodeResourceGroupProfile(Core.Optional.ToNullable(restrictionLevel));
+            return new ManagedClusterNodeResourceGroupProfile(Optional.ToNullable(restrictionLevel));
         }
     }
 }

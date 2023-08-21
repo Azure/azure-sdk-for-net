@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class CustomOpenIdConnectProvider : Core.IUtf8JsonSerializable
+    public partial class CustomOpenIdConnectProvider : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(Registration))
+            if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
             }
-            if (Core.Optional.IsDefined(Login))
+            if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<OpenIdConnectRegistration> registration = default;
-            Core.Optional<OpenIdConnectLogin> login = default;
+            Optional<bool> enabled = default;
+            Optional<OpenIdConnectRegistration> registration = default;
+            Optional<OpenIdConnectLogin> login = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new CustomOpenIdConnectProvider(Core.Optional.ToNullable(enabled), registration.Value, login.Value);
+            return new CustomOpenIdConnectProvider(Optional.ToNullable(enabled), registration.Value, login.Value);
         }
     }
 }

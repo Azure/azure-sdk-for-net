@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapLandscapeMonitorPropertiesGrouping : Core.IUtf8JsonSerializable
+    public partial class SapLandscapeMonitorPropertiesGrouping : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Landscape))
+            if (Optional.IsCollectionDefined(Landscape))
             {
                 writer.WritePropertyName("landscape"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(SapApplication))
+            if (Optional.IsCollectionDefined(SapApplication))
             {
                 writer.WritePropertyName("sapApplication"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<IList<SapLandscapeMonitorSidMapping>> landscape = default;
-            Core.Optional<IList<SapLandscapeMonitorSidMapping>> sapApplication = default;
+            Optional<IList<SapLandscapeMonitorSidMapping>> landscape = default;
+            Optional<IList<SapLandscapeMonitorSidMapping>> sapApplication = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("landscape"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SapLandscapeMonitorPropertiesGrouping(Core.Optional.ToList(landscape), Core.Optional.ToList(sapApplication));
+            return new SapLandscapeMonitorPropertiesGrouping(Optional.ToList(landscape), Optional.ToList(sapApplication));
         }
     }
 }

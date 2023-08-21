@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppCustomDomainConfiguration : Core.IUtf8JsonSerializable
+    public partial class ContainerAppCustomDomainConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DnsSuffix))
+            if (Optional.IsDefined(DnsSuffix))
             {
                 writer.WritePropertyName("dnsSuffix"u8);
                 writer.WriteStringValue(DnsSuffix);
             }
-            if (Core.Optional.IsDefined(CertificateValue))
+            if (Optional.IsDefined(CertificateValue))
             {
                 writer.WritePropertyName("certificateValue"u8);
                 writer.WriteBase64StringValue(CertificateValue, "D");
             }
-            if (Core.Optional.IsDefined(CertificatePassword))
+            if (Optional.IsDefined(CertificatePassword))
             {
                 writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
@@ -40,13 +40,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> customDomainVerificationId = default;
-            Core.Optional<string> dnsSuffix = default;
-            Core.Optional<byte[]> certificateValue = default;
-            Core.Optional<string> certificatePassword = default;
-            Core.Optional<DateTimeOffset> expirationDate = default;
-            Core.Optional<string> thumbprint = default;
-            Core.Optional<string> subjectName = default;
+            Optional<string> customDomainVerificationId = default;
+            Optional<string> dnsSuffix = default;
+            Optional<byte[]> certificateValue = default;
+            Optional<string> certificatePassword = default;
+            Optional<DateTimeOffset> expirationDate = default;
+            Optional<string> thumbprint = default;
+            Optional<string> subjectName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customDomainVerificationId"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppCustomDomainConfiguration(customDomainVerificationId.Value, dnsSuffix.Value, certificateValue.Value, certificatePassword.Value, Core.Optional.ToNullable(expirationDate), thumbprint.Value, subjectName.Value);
+            return new ContainerAppCustomDomainConfiguration(customDomainVerificationId.Value, dnsSuffix.Value, certificateValue.Value, certificatePassword.Value, Optional.ToNullable(expirationDate), thumbprint.Value, subjectName.Value);
         }
     }
 }

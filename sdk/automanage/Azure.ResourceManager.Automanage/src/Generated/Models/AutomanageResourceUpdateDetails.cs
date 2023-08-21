@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automanage.Models
         /// <summary> Initializes a new instance of AutomanageResourceUpdateDetails. </summary>
         public AutomanageResourceUpdateDetails()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The tags of the resource. </summary>

@@ -14,12 +14,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(RunNotebookSparkSessionOptionsConverter))]
-    public partial class RunNotebookSparkSessionOptions : Core.IUtf8JsonSerializable
+    public partial class RunNotebookSparkSessionOptions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -30,22 +30,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Core.Optional.IsDefined(ProxyUser))
+            if (Optional.IsDefined(ProxyUser))
             {
                 writer.WritePropertyName("proxyUser"u8);
                 writer.WriteStringValue(ProxyUser);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsCollectionDefined(Jars))
+            if (Optional.IsCollectionDefined(Jars))
             {
                 writer.WritePropertyName("jars"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(PythonFiles))
+            if (Optional.IsCollectionDefined(PythonFiles))
             {
                 writer.WritePropertyName("pyFiles"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Files))
+            if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Archives))
+            if (Optional.IsCollectionDefined(Archives))
             {
                 writer.WritePropertyName("archives"u8);
                 writer.WriteStartArray();
@@ -85,12 +85,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Queue))
+            if (Optional.IsDefined(Queue))
             {
                 writer.WritePropertyName("queue"u8);
                 writer.WriteObjectValue(Queue);
             }
-            if (Core.Optional.IsCollectionDefined(Configuration))
+            if (Optional.IsCollectionDefined(Configuration))
             {
                 writer.WritePropertyName("conf"u8);
                 writer.WriteStartObject();
@@ -101,37 +101,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(DriverMemory))
+            if (Optional.IsDefined(DriverMemory))
             {
                 writer.WritePropertyName("driverMemory"u8);
                 writer.WriteStringValue(DriverMemory);
             }
-            if (Core.Optional.IsDefined(DriverCores))
+            if (Optional.IsDefined(DriverCores))
             {
                 writer.WritePropertyName("driverCores"u8);
                 writer.WriteNumberValue(DriverCores.Value);
             }
-            if (Core.Optional.IsDefined(ExecutorMemory))
+            if (Optional.IsDefined(ExecutorMemory))
             {
                 writer.WritePropertyName("executorMemory"u8);
                 writer.WriteStringValue(ExecutorMemory);
             }
-            if (Core.Optional.IsDefined(ExecutorCores))
+            if (Optional.IsDefined(ExecutorCores))
             {
                 writer.WritePropertyName("executorCores"u8);
                 writer.WriteNumberValue(ExecutorCores.Value);
             }
-            if (Core.Optional.IsDefined(ExecutorCount))
+            if (Optional.IsDefined(ExecutorCount))
             {
                 writer.WritePropertyName("numExecutors"u8);
                 writer.WriteNumberValue(ExecutorCount.Value);
             }
-            if (Core.Optional.IsDefined(IsQueueable))
+            if (Optional.IsDefined(IsQueueable))
             {
                 writer.WritePropertyName("isQueueable"u8);
                 writer.WriteBooleanValue(IsQueueable.Value);
             }
-            if (Core.Optional.IsDefined(HeartbeatTimeoutInSecond))
+            if (Optional.IsDefined(HeartbeatTimeoutInSecond))
             {
                 writer.WritePropertyName("heartbeatTimeoutInSecond"u8);
                 writer.WriteNumberValue(HeartbeatTimeoutInSecond.Value);
@@ -145,23 +145,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<string> kind = default;
-            Core.Optional<string> proxyUser = default;
-            Core.Optional<string> name = default;
-            Core.Optional<IList<string>> jars = default;
-            Core.Optional<IList<string>> pyFiles = default;
-            Core.Optional<IList<string>> files = default;
-            Core.Optional<IList<string>> archives = default;
-            Core.Optional<object> queue = default;
-            Core.Optional<IDictionary<string, string>> conf = default;
-            Core.Optional<string> driverMemory = default;
-            Core.Optional<int> driverCores = default;
-            Core.Optional<string> executorMemory = default;
-            Core.Optional<int> executorCores = default;
-            Core.Optional<int> numExecutors = default;
-            Core.Optional<bool> isQueueable = default;
-            Core.Optional<int> heartbeatTimeoutInSecond = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> kind = default;
+            Optional<string> proxyUser = default;
+            Optional<string> name = default;
+            Optional<IList<string>> jars = default;
+            Optional<IList<string>> pyFiles = default;
+            Optional<IList<string>> files = default;
+            Optional<IList<string>> archives = default;
+            Optional<object> queue = default;
+            Optional<IDictionary<string, string>> conf = default;
+            Optional<string> driverMemory = default;
+            Optional<int> driverCores = default;
+            Optional<string> executorMemory = default;
+            Optional<int> executorCores = default;
+            Optional<int> numExecutors = default;
+            Optional<bool> isQueueable = default;
+            Optional<int> heartbeatTimeoutInSecond = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -328,7 +328,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new RunNotebookSparkSessionOptions(Core.Optional.ToDictionary(tags), kind.Value, proxyUser.Value, name.Value, Core.Optional.ToList(jars), Core.Optional.ToList(pyFiles), Core.Optional.ToList(files), Core.Optional.ToList(archives), queue.Value, Core.Optional.ToDictionary(conf), driverMemory.Value, Core.Optional.ToNullable(driverCores), executorMemory.Value, Core.Optional.ToNullable(executorCores), Core.Optional.ToNullable(numExecutors), Core.Optional.ToNullable(isQueueable), Core.Optional.ToNullable(heartbeatTimeoutInSecond));
+            return new RunNotebookSparkSessionOptions(Optional.ToDictionary(tags), kind.Value, proxyUser.Value, name.Value, Optional.ToList(jars), Optional.ToList(pyFiles), Optional.ToList(files), Optional.ToList(archives), queue.Value, Optional.ToDictionary(conf), driverMemory.Value, Optional.ToNullable(driverCores), executorMemory.Value, Optional.ToNullable(executorCores), Optional.ToNullable(numExecutors), Optional.ToNullable(isQueueable), Optional.ToNullable(heartbeatTimeoutInSecond));
         }
 
         internal partial class RunNotebookSparkSessionOptionsConverter : JsonConverter<RunNotebookSparkSessionOptions>

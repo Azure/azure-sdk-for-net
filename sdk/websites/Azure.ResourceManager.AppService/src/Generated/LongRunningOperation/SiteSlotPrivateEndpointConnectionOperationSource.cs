@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class SiteSlotPrivateEndpointConnectionOperationSource : Core.IOperationSource<SiteSlotPrivateEndpointConnectionResource>
+    internal class SiteSlotPrivateEndpointConnectionOperationSource : IOperationSource<SiteSlotPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppService
             _client = client;
         }
 
-        SiteSlotPrivateEndpointConnectionResource Core.IOperationSource<SiteSlotPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SiteSlotPrivateEndpointConnectionResource IOperationSource<SiteSlotPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RemotePrivateEndpointConnectionARMResourceData.DeserializeRemotePrivateEndpointConnectionARMResourceData(document.RootElement);
             return new SiteSlotPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<SiteSlotPrivateEndpointConnectionResource> Core.IOperationSource<SiteSlotPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SiteSlotPrivateEndpointConnectionResource> IOperationSource<SiteSlotPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RemotePrivateEndpointConnectionARMResourceData.DeserializeRemotePrivateEndpointConnectionARMResourceData(document.RootElement);

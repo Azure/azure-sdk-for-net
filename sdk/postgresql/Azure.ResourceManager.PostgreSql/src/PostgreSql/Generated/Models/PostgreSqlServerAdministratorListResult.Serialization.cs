@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<PostgreSqlServerAdministratorData>> value = default;
+            Optional<IReadOnlyList<PostgreSqlServerAdministratorData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     continue;
                 }
             }
-            return new PostgreSqlServerAdministratorListResult(Core.Optional.ToList(value));
+            return new PostgreSqlServerAdministratorListResult(Optional.ToList(value));
         }
     }
 }

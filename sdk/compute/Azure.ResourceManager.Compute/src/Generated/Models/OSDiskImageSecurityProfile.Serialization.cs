@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class OSDiskImageSecurityProfile : Core.IUtf8JsonSerializable
+    public partial class OSDiskImageSecurityProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ConfidentialVmEncryptionType))
+            if (Optional.IsDefined(ConfidentialVmEncryptionType))
             {
                 writer.WritePropertyName("confidentialVMEncryptionType"u8);
                 writer.WriteStringValue(ConfidentialVmEncryptionType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SecureVmDiskEncryptionSetId))
+            if (Optional.IsDefined(SecureVmDiskEncryptionSetId))
             {
                 writer.WritePropertyName("secureVMDiskEncryptionSetId"u8);
                 writer.WriteStringValue(SecureVmDiskEncryptionSetId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<ConfidentialVmEncryptionType> confidentialVmEncryptionType = default;
-            Core.Optional<string> secureVmDiskEncryptionSetId = default;
+            Optional<ConfidentialVmEncryptionType> confidentialVmEncryptionType = default;
+            Optional<string> secureVmDiskEncryptionSetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("confidentialVMEncryptionType"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new OSDiskImageSecurityProfile(Core.Optional.ToNullable(confidentialVmEncryptionType), secureVmDiskEncryptionSetId.Value);
+            return new OSDiskImageSecurityProfile(Optional.ToNullable(confidentialVmEncryptionType), secureVmDiskEncryptionSetId.Value);
         }
     }
 }

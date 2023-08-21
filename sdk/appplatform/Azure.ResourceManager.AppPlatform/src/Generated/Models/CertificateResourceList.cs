@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of CertificateResourceList. </summary>
         internal CertificateResourceList()
         {
-            Value = new Core.ChangeTrackingList<AppPlatformCertificateData>();
+            Value = new ChangeTrackingList<AppPlatformCertificateData>();
         }
 
         /// <summary> Initializes a new instance of CertificateResourceList. </summary>

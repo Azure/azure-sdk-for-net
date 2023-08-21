@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> Initializes a new instance of AvailabilityGroupListenerListResult. </summary>
         internal AvailabilityGroupListenerListResult()
         {
-            Value = new Core.ChangeTrackingList<AvailabilityGroupListenerData>();
+            Value = new ChangeTrackingList<AvailabilityGroupListenerData>();
         }
 
         /// <summary> Initializes a new instance of AvailabilityGroupListenerListResult. </summary>

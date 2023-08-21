@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class PatchSettings : Core.IUtf8JsonSerializable
+    public partial class PatchSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PatchMode))
+            if (Optional.IsDefined(PatchMode))
             {
                 writer.WritePropertyName("patchMode"u8);
                 writer.WriteStringValue(PatchMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(EnableHotpatching))
+            if (Optional.IsDefined(EnableHotpatching))
             {
                 writer.WritePropertyName("enableHotpatching"u8);
                 writer.WriteBooleanValue(EnableHotpatching.Value);
             }
-            if (Core.Optional.IsDefined(AssessmentMode))
+            if (Optional.IsDefined(AssessmentMode))
             {
                 writer.WritePropertyName("assessmentMode"u8);
                 writer.WriteStringValue(AssessmentMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AutomaticByPlatformSettings))
+            if (Optional.IsDefined(AutomaticByPlatformSettings))
             {
                 writer.WritePropertyName("automaticByPlatformSettings"u8);
                 writer.WriteObjectValue(AutomaticByPlatformSettings);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<WindowsVmGuestPatchMode> patchMode = default;
-            Core.Optional<bool> enableHotpatching = default;
-            Core.Optional<WindowsPatchAssessmentMode> assessmentMode = default;
-            Core.Optional<WindowsVmGuestPatchAutomaticByPlatformSettings> automaticByPlatformSettings = default;
+            Optional<WindowsVmGuestPatchMode> patchMode = default;
+            Optional<bool> enableHotpatching = default;
+            Optional<WindowsPatchAssessmentMode> assessmentMode = default;
+            Optional<WindowsVmGuestPatchAutomaticByPlatformSettings> automaticByPlatformSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patchMode"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new PatchSettings(Core.Optional.ToNullable(patchMode), Core.Optional.ToNullable(enableHotpatching), Core.Optional.ToNullable(assessmentMode), automaticByPlatformSettings.Value);
+            return new PatchSettings(Optional.ToNullable(patchMode), Optional.ToNullable(enableHotpatching), Optional.ToNullable(assessmentMode), automaticByPlatformSettings.Value);
         }
     }
 }

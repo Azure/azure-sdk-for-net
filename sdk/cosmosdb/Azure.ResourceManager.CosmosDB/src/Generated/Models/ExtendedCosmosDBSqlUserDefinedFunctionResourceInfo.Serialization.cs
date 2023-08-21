@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo : Core.IUtf8JsonSerializable
+    public partial class ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(FunctionName);
-            if (Core.Optional.IsDefined(Body))
+            if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<string> rid = default;
-            Core.Optional<float> ts = default;
-            Core.Optional<ETag> etag = default;
+            Optional<string> rid = default;
+            Optional<float> ts = default;
+            Optional<ETag> etag = default;
             string id = default;
-            Core.Optional<string> body = default;
+            Optional<string> body = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(id, body.Value, rid.Value, Core.Optional.ToNullable(ts), Core.Optional.ToNullable(etag));
+            return new ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(id, body.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
     }
 }

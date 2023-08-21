@@ -14,22 +14,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    public partial class VirtualMachineTemplateData : Core.IUtf8JsonSerializable
+    public partial class VirtualMachineTemplateData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExtendedLocation))
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VCenterId))
+            if (Optional.IsDefined(VCenterId))
             {
                 writer.WritePropertyName("vCenterId"u8);
                 writer.WriteStringValue(VCenterId);
             }
-            if (Core.Optional.IsDefined(MoRefId))
+            if (Optional.IsDefined(MoRefId))
             {
                 writer.WritePropertyName("moRefId"u8);
                 writer.WriteStringValue(MoRefId);
             }
-            if (Core.Optional.IsDefined(InventoryItemId))
+            if (Optional.IsDefined(InventoryItemId))
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
@@ -69,33 +69,33 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 return null;
             }
-            Core.Optional<ExtendedLocation> extendedLocation = default;
-            Core.Optional<string> kind = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<string> kind = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> uuid = default;
-            Core.Optional<string> vCenterId = default;
-            Core.Optional<string> moRefId = default;
-            Core.Optional<string> inventoryItemId = default;
-            Core.Optional<string> moName = default;
-            Core.Optional<int> memorySizeMB = default;
-            Core.Optional<int> numCpus = default;
-            Core.Optional<int> numCoresPerSocket = default;
-            Core.Optional<OSType> osType = default;
-            Core.Optional<string> osName = default;
-            Core.Optional<string> folderPath = default;
-            Core.Optional<IReadOnlyList<NetworkInterface>> networkInterfaces = default;
-            Core.Optional<IReadOnlyList<VirtualDisk>> disks = default;
-            Core.Optional<string> customResourceName = default;
-            Core.Optional<string> toolsVersionStatus = default;
-            Core.Optional<string> toolsVersion = default;
-            Core.Optional<FirmwareType> firmwareType = default;
-            Core.Optional<IReadOnlyList<ResourceStatus>> statuses = default;
-            Core.Optional<string> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> uuid = default;
+            Optional<string> vCenterId = default;
+            Optional<string> moRefId = default;
+            Optional<string> inventoryItemId = default;
+            Optional<string> moName = default;
+            Optional<int> memorySizeMB = default;
+            Optional<int> numCpus = default;
+            Optional<int> numCoresPerSocket = default;
+            Optional<OSType> osType = default;
+            Optional<string> osName = default;
+            Optional<string> folderPath = default;
+            Optional<IReadOnlyList<NetworkInterface>> networkInterfaces = default;
+            Optional<IReadOnlyList<VirtualDisk>> disks = default;
+            Optional<string> customResourceName = default;
+            Optional<string> toolsVersionStatus = default;
+            Optional<string> toolsVersion = default;
+            Optional<FirmwareType> firmwareType = default;
+            Optional<IReadOnlyList<ResourceStatus>> statuses = default;
+            Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     continue;
                 }
             }
-            return new VirtualMachineTemplateData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Core.Optional.ToNullable(memorySizeMB), Core.Optional.ToNullable(numCpus), Core.Optional.ToNullable(numCoresPerSocket), Core.Optional.ToNullable(osType), osName.Value, folderPath.Value, Core.Optional.ToList(networkInterfaces), Core.Optional.ToList(disks), customResourceName.Value, toolsVersionStatus.Value, toolsVersion.Value, Core.Optional.ToNullable(firmwareType), Core.Optional.ToList(statuses), provisioningState.Value);
+            return new VirtualMachineTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToNullable(memorySizeMB), Optional.ToNullable(numCpus), Optional.ToNullable(numCoresPerSocket), Optional.ToNullable(osType), osName.Value, folderPath.Value, Optional.ToList(networkInterfaces), Optional.ToList(disks), customResourceName.Value, toolsVersionStatus.Value, toolsVersion.Value, Optional.ToNullable(firmwareType), Optional.ToList(statuses), provisioningState.Value);
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupVaultSecuritySettings : Core.IUtf8JsonSerializable
+    public partial class BackupVaultSecuritySettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SoftDeleteSettings))
+            if (Optional.IsDefined(SoftDeleteSettings))
             {
                 writer.WritePropertyName("softDeleteSettings"u8);
                 writer.WriteObjectValue(SoftDeleteSettings);
             }
-            if (Core.Optional.IsDefined(ImmutabilitySettings))
+            if (Optional.IsDefined(ImmutabilitySettings))
             {
                 writer.WritePropertyName("immutabilitySettings"u8);
                 writer.WriteObjectValue(ImmutabilitySettings);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<BackupVaultSoftDeleteSettings> softDeleteSettings = default;
-            Core.Optional<ImmutabilitySettings> immutabilitySettings = default;
+            Optional<BackupVaultSoftDeleteSettings> softDeleteSettings = default;
+            Optional<ImmutabilitySettings> immutabilitySettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("softDeleteSettings"u8))

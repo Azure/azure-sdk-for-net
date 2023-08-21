@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class LogFilesDataSource : Core.IUtf8JsonSerializable
+    public partial class LogFilesDataSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("streams"u8);
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndArray();
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format.ToString());
-            if (Core.Optional.IsDefined(Settings))
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<string> streams = default;
             IList<string> filePatterns = default;
             LogFilesDataSourceFormat format = default;
-            Core.Optional<LogFilesDataSourceSettings> settings = default;
-            Core.Optional<string> name = default;
+            Optional<LogFilesDataSourceSettings> settings = default;
+            Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"u8))

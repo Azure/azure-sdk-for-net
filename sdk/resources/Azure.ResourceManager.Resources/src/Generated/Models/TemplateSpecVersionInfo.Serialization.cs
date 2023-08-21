@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<string> description = default;
-            Core.Optional<DateTimeOffset> timeCreated = default;
-            Core.Optional<DateTimeOffset> timeModified = default;
+            Optional<string> description = default;
+            Optional<DateTimeOffset> timeCreated = default;
+            Optional<DateTimeOffset> timeModified = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new TemplateSpecVersionInfo(description.Value, Core.Optional.ToNullable(timeCreated), Core.Optional.ToNullable(timeModified));
+            return new TemplateSpecVersionInfo(description.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified));
         }
     }
 }

@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="location"> The location. </param>
         public AutomationRunbookData(AzureLocation location) : base(location)
         {
-            Parameters = new Core.ChangeTrackingDictionary<string, RunbookParameterDefinition>();
-            OutputTypes = new Core.ChangeTrackingList<string>();
+            Parameters = new ChangeTrackingDictionary<string, RunbookParameterDefinition>();
+            OutputTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AutomationRunbookData. </summary>

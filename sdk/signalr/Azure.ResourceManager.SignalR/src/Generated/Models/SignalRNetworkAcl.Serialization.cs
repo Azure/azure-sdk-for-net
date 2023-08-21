@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    public partial class SignalRNetworkAcl : Core.IUtf8JsonSerializable
+    public partial class SignalRNetworkAcl : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Allow))
+            if (Optional.IsCollectionDefined(Allow))
             {
                 writer.WritePropertyName("allow"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Deny))
+            if (Optional.IsCollectionDefined(Deny))
             {
                 writer.WritePropertyName("deny"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Core.Optional<IList<SignalRRequestType>> allow = default;
-            Core.Optional<IList<SignalRRequestType>> deny = default;
+            Optional<IList<SignalRRequestType>> allow = default;
+            Optional<IList<SignalRRequestType>> deny = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allow"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     continue;
                 }
             }
-            return new SignalRNetworkAcl(Core.Optional.ToList(allow), Core.Optional.ToList(deny));
+            return new SignalRNetworkAcl(Optional.ToList(allow), Optional.ToList(deny));
         }
     }
 }

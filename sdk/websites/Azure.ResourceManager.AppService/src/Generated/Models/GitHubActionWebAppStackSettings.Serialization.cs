@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<bool> isSupported = default;
-            Core.Optional<string> supportedVersion = default;
+            Optional<bool> isSupported = default;
+            Optional<string> supportedVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSupported"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new GitHubActionWebAppStackSettings(Core.Optional.ToNullable(isSupported), supportedVersion.Value);
+            return new GitHubActionWebAppStackSettings(Optional.ToNullable(isSupported), supportedVersion.Value);
         }
     }
 }

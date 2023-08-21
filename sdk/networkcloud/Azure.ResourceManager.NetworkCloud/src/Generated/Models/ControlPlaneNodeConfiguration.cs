@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             Argument.AssertNotNull(vmSkuName, nameof(vmSkuName));
 
-            AvailabilityZones = new Core.ChangeTrackingList<string>();
+            AvailabilityZones = new ChangeTrackingList<string>();
             Count = count;
             VmSkuName = vmSkuName;
         }

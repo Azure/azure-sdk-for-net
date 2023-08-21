@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of VmNicDetails. </summary>
         internal VmNicDetails()
         {
-            IPConfigs = new Core.ChangeTrackingList<HyperVIPConfigDetails>();
+            IPConfigs = new ChangeTrackingList<HyperVIPConfigDetails>();
         }
 
         /// <summary> Initializes a new instance of VmNicDetails. </summary>

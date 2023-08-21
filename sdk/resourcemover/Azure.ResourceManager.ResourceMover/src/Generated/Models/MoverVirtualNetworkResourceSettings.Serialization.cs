@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoverVirtualNetworkResourceSettings : Core.IUtf8JsonSerializable
+    public partial class MoverVirtualNetworkResourceSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("tags");
                 }
             }
-            if (Core.Optional.IsDefined(EnableDdosProtection))
+            if (Optional.IsDefined(EnableDdosProtection))
             {
                 if (EnableDdosProtection != null)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("enableDdosProtection");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(AddressSpace))
+            if (Optional.IsCollectionDefined(AddressSpace))
             {
                 if (AddressSpace != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("addressSpace");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(DnsServers))
+            if (Optional.IsCollectionDefined(DnsServers))
             {
                 if (DnsServers != null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("dnsServers");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Subnets))
+            if (Optional.IsCollectionDefined(Subnets))
             {
                 if (Subnets != null)
                 {
@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<bool?> enableDdosProtection = default;
-            Core.Optional<IList<string>> addressSpace = default;
-            Core.Optional<IList<string>> dnsServers = default;
-            Core.Optional<IList<SubnetResourceSettings>> subnets = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<bool?> enableDdosProtection = default;
+            Optional<IList<string>> addressSpace = default;
+            Optional<IList<string>> dnsServers = default;
+            Optional<IList<SubnetResourceSettings>> subnets = default;
             string resourceType = default;
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverVirtualNetworkResourceSettings(resourceType, targetResourceName, Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(enableDdosProtection), Core.Optional.ToList(addressSpace), Core.Optional.ToList(dnsServers), Core.Optional.ToList(subnets));
+            return new MoverVirtualNetworkResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), Optional.ToNullable(enableDdosProtection), Optional.ToList(addressSpace), Optional.ToList(dnsServers), Optional.ToList(subnets));
         }
     }
 }

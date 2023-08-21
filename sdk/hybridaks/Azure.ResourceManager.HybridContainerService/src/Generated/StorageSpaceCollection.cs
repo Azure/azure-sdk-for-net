@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HybridContainerService
             try
             {
                 var response = await _storageSpacestorageSpacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, storageSpacesName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation<StorageSpaceResource>(new StorageSpaceOperationSource(Client), _storageSpacestorageSpacesClientDiagnostics, Pipeline, _storageSpacestorageSpacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, storageSpacesName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HybridContainerServiceArmOperation<StorageSpaceResource>(new StorageSpaceOperationSource(Client), _storageSpacestorageSpacesClientDiagnostics, Pipeline, _storageSpacestorageSpacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, storageSpacesName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HybridContainerService
             try
             {
                 var response = _storageSpacestorageSpacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, storageSpacesName, data, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation<StorageSpaceResource>(new StorageSpaceOperationSource(Client), _storageSpacestorageSpacesClientDiagnostics, Pipeline, _storageSpacestorageSpacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, storageSpacesName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HybridContainerServiceArmOperation<StorageSpaceResource>(new StorageSpaceOperationSource(Client), _storageSpacestorageSpacesClientDiagnostics, Pipeline, _storageSpacestorageSpacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, storageSpacesName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSpacestorageSpacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageSpacestorageSpacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageSpaceResource(Client, StorageSpaceData.DeserializeStorageSpaceData(e)), _storageSpacestorageSpacesClientDiagnostics, Pipeline, "StorageSpaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageSpaceResource(Client, StorageSpaceData.DeserializeStorageSpaceData(e)), _storageSpacestorageSpacesClientDiagnostics, Pipeline, "StorageSpaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSpacestorageSpacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageSpacestorageSpacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageSpaceResource(Client, StorageSpaceData.DeserializeStorageSpaceData(e)), _storageSpacestorageSpacesClientDiagnostics, Pipeline, "StorageSpaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageSpaceResource(Client, StorageSpaceData.DeserializeStorageSpaceData(e)), _storageSpacestorageSpacesClientDiagnostics, Pipeline, "StorageSpaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

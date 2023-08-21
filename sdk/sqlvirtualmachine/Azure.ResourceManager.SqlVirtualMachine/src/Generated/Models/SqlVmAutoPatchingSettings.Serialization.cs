@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlVmAutoPatchingSettings : Core.IUtf8JsonSerializable
+    public partial class SqlVmAutoPatchingSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(DayOfWeek))
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(MaintenanceWindowStartingHour))
+            if (Optional.IsDefined(MaintenanceWindowStartingHour))
             {
                 writer.WritePropertyName("maintenanceWindowStartingHour"u8);
                 writer.WriteNumberValue(MaintenanceWindowStartingHour.Value);
             }
-            if (Core.Optional.IsDefined(MaintenanceWindowDurationInMinutes))
+            if (Optional.IsDefined(MaintenanceWindowDurationInMinutes))
             {
                 writer.WritePropertyName("maintenanceWindowDuration"u8);
                 writer.WriteNumberValue(MaintenanceWindowDurationInMinutes.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Core.Optional<bool> enable = default;
-            Core.Optional<SqlVmAutoPatchingDayOfWeek> dayOfWeek = default;
-            Core.Optional<int> maintenanceWindowStartingHour = default;
-            Core.Optional<int> maintenanceWindowDuration = default;
+            Optional<bool> enable = default;
+            Optional<SqlVmAutoPatchingDayOfWeek> dayOfWeek = default;
+            Optional<int> maintenanceWindowStartingHour = default;
+            Optional<int> maintenanceWindowDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enable"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new SqlVmAutoPatchingSettings(Core.Optional.ToNullable(enable), Core.Optional.ToNullable(dayOfWeek), Core.Optional.ToNullable(maintenanceWindowStartingHour), Core.Optional.ToNullable(maintenanceWindowDuration));
+            return new SqlVmAutoPatchingSettings(Optional.ToNullable(enable), Optional.ToNullable(dayOfWeek), Optional.ToNullable(maintenanceWindowStartingHour), Optional.ToNullable(maintenanceWindowDuration));
         }
     }
 }

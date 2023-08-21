@@ -12,14 +12,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabServicesRecurrencePattern : Core.IUtf8JsonSerializable
+    public partial class LabServicesRecurrencePattern : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToSerialString());
-            if (Core.Optional.IsCollectionDefined(WeekDays))
+            if (Optional.IsCollectionDefined(WeekDays))
             {
                 writer.WritePropertyName("weekDays"u8);
                 writer.WriteStartArray();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Interval))
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.LabServices.Models
                 return null;
             }
             LabServicesRecurrenceFrequency frequency = default;
-            Core.Optional<IList<LabServicesDayOfWeek>> weekDays = default;
-            Core.Optional<int> interval = default;
+            Optional<IList<LabServicesDayOfWeek>> weekDays = default;
+            Optional<int> interval = default;
             DateTimeOffset expirationDate = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     continue;
                 }
             }
-            return new LabServicesRecurrencePattern(frequency, Core.Optional.ToList(weekDays), Core.Optional.ToNullable(interval), expirationDate);
+            return new LabServicesRecurrencePattern(frequency, Optional.ToList(weekDays), Optional.ToNullable(interval), expirationDate);
         }
     }
 }

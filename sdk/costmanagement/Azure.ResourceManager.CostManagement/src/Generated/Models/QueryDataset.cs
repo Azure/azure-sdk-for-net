@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of QueryDataset. </summary>
         public QueryDataset()
         {
-            Aggregation = new Core.ChangeTrackingDictionary<string, QueryAggregation>();
-            Grouping = new Core.ChangeTrackingList<QueryGrouping>();
+            Aggregation = new ChangeTrackingDictionary<string, QueryAggregation>();
+            Grouping = new ChangeTrackingList<QueryGrouping>();
         }
 
         /// <summary> The granularity of rows in the query. </summary>

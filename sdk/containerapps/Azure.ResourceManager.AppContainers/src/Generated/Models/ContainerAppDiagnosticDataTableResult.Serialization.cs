@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppDiagnosticDataTableResult : Core.IUtf8JsonSerializable
+    public partial class ContainerAppDiagnosticDataTableResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TableName))
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (Core.Optional.IsCollectionDefined(Columns))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Rows))
+            if (Optional.IsCollectionDefined(Rows))
             {
                 writer.WritePropertyName("rows"u8);
                 writer.WriteStartArray();
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> tableName = default;
-            Core.Optional<IList<ContainerAppDiagnosticDataColumn>> columns = default;
-            Core.Optional<IList<BinaryData>> rows = default;
+            Optional<string> tableName = default;
+            Optional<IList<ContainerAppDiagnosticDataColumn>> columns = default;
+            Optional<IList<BinaryData>> rows = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tableName"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppDiagnosticDataTableResult(tableName.Value, Core.Optional.ToList(columns), Core.Optional.ToList(rows));
+            return new ContainerAppDiagnosticDataTableResult(tableName.Value, Optional.ToList(columns), Optional.ToList(rows));
         }
     }
 }

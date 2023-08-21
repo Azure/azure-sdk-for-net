@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Location = location;
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
             Properties = properties;
         }
 

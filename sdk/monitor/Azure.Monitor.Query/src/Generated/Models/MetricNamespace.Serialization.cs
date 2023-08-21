@@ -18,11 +18,11 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> type = default;
-            Core.Optional<string> name = default;
-            Core.Optional<MetricNamespaceClassification> classification = default;
-            Core.Optional<MetricNamespaceName> properties = default;
+            Optional<string> id = default;
+            Optional<string> type = default;
+            Optional<string> name = default;
+            Optional<MetricNamespaceClassification> classification = default;
+            Optional<MetricNamespaceName> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -59,7 +59,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricNamespace(id.Value, type.Value, name.Value, Core.Optional.ToNullable(classification), properties.Value);
+            return new MetricNamespace(id.Value, type.Value, name.Value, Optional.ToNullable(classification), properties.Value);
         }
     }
 }

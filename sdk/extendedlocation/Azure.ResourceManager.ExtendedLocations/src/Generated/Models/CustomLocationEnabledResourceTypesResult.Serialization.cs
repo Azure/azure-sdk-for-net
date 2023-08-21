@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             {
                 return null;
             }
-            Core.Optional<string> nextLink = default;
-            Core.Optional<IReadOnlyList<CustomLocationEnabledResourceType>> value = default;
+            Optional<string> nextLink = default;
+            Optional<IReadOnlyList<CustomLocationEnabledResourceType>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     continue;
                 }
             }
-            return new CustomLocationEnabledResourceTypesResult(nextLink.Value, Core.Optional.ToList(value));
+            return new CustomLocationEnabledResourceTypesResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

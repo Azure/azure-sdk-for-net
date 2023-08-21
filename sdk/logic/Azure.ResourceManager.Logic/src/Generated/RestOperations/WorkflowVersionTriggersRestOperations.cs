@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Logic
             if (info != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Core.Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(info);
                 request.Content = content;
             }

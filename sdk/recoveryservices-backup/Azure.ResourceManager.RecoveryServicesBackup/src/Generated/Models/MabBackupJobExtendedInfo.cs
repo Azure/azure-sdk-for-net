@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of MabBackupJobExtendedInfo. </summary>
         public MabBackupJobExtendedInfo()
         {
-            TasksList = new Core.ChangeTrackingList<MabBackupJobTaskDetails>();
-            PropertyBag = new Core.ChangeTrackingDictionary<string, string>();
+            TasksList = new ChangeTrackingList<MabBackupJobTaskDetails>();
+            PropertyBag = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of MabBackupJobExtendedInfo. </summary>

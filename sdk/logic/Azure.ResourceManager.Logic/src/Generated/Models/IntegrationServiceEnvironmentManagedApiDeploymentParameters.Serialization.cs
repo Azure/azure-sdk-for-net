@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    internal partial class IntegrationServiceEnvironmentManagedApiDeploymentParameters : Core.IUtf8JsonSerializable
+    internal partial class IntegrationServiceEnvironmentManagedApiDeploymentParameters : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ContentLinkDefinition))
+            if (Optional.IsDefined(ContentLinkDefinition))
             {
                 writer.WritePropertyName("contentLinkDefinition"u8);
                 writer.WriteObjectValue(ContentLinkDefinition);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<LogicContentLink> contentLinkDefinition = default;
+            Optional<LogicContentLink> contentLinkDefinition = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contentLinkDefinition"u8))

@@ -12,12 +12,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkInstallation : Core.IUtf8JsonSerializable
+    public partial class MobileNetworkInstallation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DesiredState))
+            if (Optional.IsDefined(DesiredState))
             {
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToString());
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Core.Optional<DesiredInstallationState> desiredState = default;
-            Core.Optional<MobileNetworkInstallationState> state = default;
-            Core.Optional<MobileNetworkReinstallRequired> reinstallRequired = default;
-            Core.Optional<IReadOnlyList<MobileNetworkInstallationReason>> reasons = default;
-            Core.Optional<SubResource> operation = default;
+            Optional<DesiredInstallationState> desiredState = default;
+            Optional<MobileNetworkInstallationState> state = default;
+            Optional<MobileNetworkReinstallRequired> reinstallRequired = default;
+            Optional<IReadOnlyList<MobileNetworkInstallationReason>> reasons = default;
+            Optional<SubResource> operation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("desiredState"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new MobileNetworkInstallation(Core.Optional.ToNullable(desiredState), Core.Optional.ToNullable(state), Core.Optional.ToNullable(reinstallRequired), Core.Optional.ToList(reasons), operation);
+            return new MobileNetworkInstallation(Optional.ToNullable(desiredState), Optional.ToNullable(state), Optional.ToNullable(reinstallRequired), Optional.ToList(reasons), operation);
         }
     }
 }

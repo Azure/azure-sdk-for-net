@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class CustomClrFormatSerialization : Core.IUtf8JsonSerializable
+    public partial class CustomClrFormatSerialization : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(EventSerializationType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SerializationDllPath))
+            if (Optional.IsDefined(SerializationDllPath))
             {
                 writer.WritePropertyName("serializationDllPath"u8);
                 writer.WriteStringValue(SerializationDllPath);
             }
-            if (Core.Optional.IsDefined(SerializationClassName))
+            if (Optional.IsDefined(SerializationClassName))
             {
                 writer.WritePropertyName("serializationClassName"u8);
                 writer.WriteStringValue(SerializationClassName);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             EventSerializationType type = default;
-            Core.Optional<string> serializationDllPath = default;
-            Core.Optional<string> serializationClassName = default;
+            Optional<string> serializationDllPath = default;
+            Optional<string> serializationClassName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

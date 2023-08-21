@@ -13,22 +13,22 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    public partial class AmlFileSystemData : Core.IUtf8JsonSerializable
+    public partial class AmlFileSystemData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsCollectionDefined(Zones))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StorageCache
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -53,27 +53,27 @@ namespace Azure.ResourceManager.StorageCache
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StorageCapacityTiB))
+            if (Optional.IsDefined(StorageCapacityTiB))
             {
                 writer.WritePropertyName("storageCapacityTiB"u8);
                 writer.WriteNumberValue(StorageCapacityTiB.Value);
             }
-            if (Core.Optional.IsDefined(FilesystemSubnet))
+            if (Optional.IsDefined(FilesystemSubnet))
             {
                 writer.WritePropertyName("filesystemSubnet"u8);
                 writer.WriteStringValue(FilesystemSubnet);
             }
-            if (Core.Optional.IsDefined(EncryptionSettings))
+            if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
                 writer.WriteObjectValue(EncryptionSettings);
             }
-            if (Core.Optional.IsDefined(MaintenanceWindow))
+            if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteObjectValue(MaintenanceWindow);
             }
-            if (Core.Optional.IsDefined(Hsm))
+            if (Optional.IsDefined(Hsm))
             {
                 writer.WritePropertyName("hsm"u8);
                 writer.WriteObjectValue(Hsm);
@@ -88,24 +88,24 @@ namespace Azure.ResourceManager.StorageCache
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<StorageCacheSkuName> sku = default;
-            Core.Optional<IList<string>> zones = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<StorageCacheSkuName> sku = default;
+            Optional<IList<string>> zones = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<float> storageCapacityTiB = default;
-            Core.Optional<AmlFileSystemHealth> health = default;
-            Core.Optional<AmlFileSystemProvisioningStateType> provisioningState = default;
-            Core.Optional<string> filesystemSubnet = default;
-            Core.Optional<AmlFileSystemClientInfo> clientInfo = default;
-            Core.Optional<int> throughputProvisionedMBps = default;
-            Core.Optional<AmlFileSystemEncryptionSettings> encryptionSettings = default;
-            Core.Optional<AmlFileSystemPropertiesMaintenanceWindow> maintenanceWindow = default;
-            Core.Optional<AmlFileSystemPropertiesHsm> hsm = default;
+            Optional<SystemData> systemData = default;
+            Optional<float> storageCapacityTiB = default;
+            Optional<AmlFileSystemHealth> health = default;
+            Optional<AmlFileSystemProvisioningStateType> provisioningState = default;
+            Optional<string> filesystemSubnet = default;
+            Optional<AmlFileSystemClientInfo> clientInfo = default;
+            Optional<int> throughputProvisionedMBps = default;
+            Optional<AmlFileSystemEncryptionSettings> encryptionSettings = default;
+            Optional<AmlFileSystemPropertiesMaintenanceWindow> maintenanceWindow = default;
+            Optional<AmlFileSystemPropertiesHsm> hsm = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.StorageCache
                     continue;
                 }
             }
-            return new AmlFileSystemData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, sku.Value, Core.Optional.ToList(zones), Core.Optional.ToNullable(storageCapacityTiB), health.Value, Core.Optional.ToNullable(provisioningState), filesystemSubnet.Value, clientInfo.Value, Core.Optional.ToNullable(throughputProvisionedMBps), encryptionSettings.Value, maintenanceWindow.Value, hsm.Value);
+            return new AmlFileSystemData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToList(zones), Optional.ToNullable(storageCapacityTiB), health.Value, Optional.ToNullable(provisioningState), filesystemSubnet.Value, clientInfo.Value, Optional.ToNullable(throughputProvisionedMBps), encryptionSettings.Value, maintenanceWindow.Value, hsm.Value);
         }
     }
 }

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Core.Optional<Uri> webSocketUri = default;
-            Core.Optional<string> password = default;
+            Optional<Uri> webSocketUri = default;
+            Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("webSocketUri"u8))

@@ -13,39 +13,39 @@ using Azure.ResourceManager.RedisEnterprise.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
-    public partial class RedisEnterpriseDatabaseData : Core.IUtf8JsonSerializable
+    public partial class RedisEnterpriseDatabaseData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ClientProtocol))
+            if (Optional.IsDefined(ClientProtocol))
             {
                 writer.WritePropertyName("clientProtocol"u8);
                 writer.WriteStringValue(ClientProtocol.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Port))
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Core.Optional.IsDefined(ClusteringPolicy))
+            if (Optional.IsDefined(ClusteringPolicy))
             {
                 writer.WritePropertyName("clusteringPolicy"u8);
                 writer.WriteStringValue(ClusteringPolicy.Value.ToString());
             }
-            if (Core.Optional.IsDefined(EvictionPolicy))
+            if (Optional.IsDefined(EvictionPolicy))
             {
                 writer.WritePropertyName("evictionPolicy"u8);
                 writer.WriteStringValue(EvictionPolicy.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Persistence))
+            if (Optional.IsDefined(Persistence))
             {
                 writer.WritePropertyName("persistence"u8);
                 writer.WriteObjectValue(Persistence);
             }
-            if (Core.Optional.IsCollectionDefined(Modules))
+            if (Optional.IsCollectionDefined(Modules))
             {
                 writer.WritePropertyName("modules"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(GeoReplication))
+            if (Optional.IsDefined(GeoReplication))
             {
                 writer.WritePropertyName("geoReplication"u8);
                 writer.WriteObjectValue(GeoReplication);
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.RedisEnterprise
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<RedisEnterpriseClientProtocol> clientProtocol = default;
-            Core.Optional<int> port = default;
-            Core.Optional<RedisEnterpriseProvisioningStatus> provisioningState = default;
-            Core.Optional<RedisEnterpriseClusterResourceState> resourceState = default;
-            Core.Optional<RedisEnterpriseClusteringPolicy> clusteringPolicy = default;
-            Core.Optional<RedisEnterpriseEvictionPolicy> evictionPolicy = default;
-            Core.Optional<RedisPersistenceSettings> persistence = default;
-            Core.Optional<IList<RedisEnterpriseModule>> modules = default;
-            Core.Optional<RedisEnterpriseDatabaseGeoReplication> geoReplication = default;
+            Optional<SystemData> systemData = default;
+            Optional<RedisEnterpriseClientProtocol> clientProtocol = default;
+            Optional<int> port = default;
+            Optional<RedisEnterpriseProvisioningStatus> provisioningState = default;
+            Optional<RedisEnterpriseClusterResourceState> resourceState = default;
+            Optional<RedisEnterpriseClusteringPolicy> clusteringPolicy = default;
+            Optional<RedisEnterpriseEvictionPolicy> evictionPolicy = default;
+            Optional<RedisPersistenceSettings> persistence = default;
+            Optional<IList<RedisEnterpriseModule>> modules = default;
+            Optional<RedisEnterpriseDatabaseGeoReplication> geoReplication = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     continue;
                 }
             }
-            return new RedisEnterpriseDatabaseData(id, name, type, systemData.Value, Core.Optional.ToNullable(clientProtocol), Core.Optional.ToNullable(port), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(resourceState), Core.Optional.ToNullable(clusteringPolicy), Core.Optional.ToNullable(evictionPolicy), persistence.Value, Core.Optional.ToList(modules), geoReplication.Value);
+            return new RedisEnterpriseDatabaseData(id, name, type, systemData.Value, Optional.ToNullable(clientProtocol), Optional.ToNullable(port), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), Optional.ToNullable(clusteringPolicy), Optional.ToNullable(evictionPolicy), persistence.Value, Optional.ToList(modules), geoReplication.Value);
         }
     }
 }

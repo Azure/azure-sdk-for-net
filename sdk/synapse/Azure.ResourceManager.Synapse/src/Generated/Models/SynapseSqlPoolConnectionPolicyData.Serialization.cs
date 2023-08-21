@@ -11,44 +11,44 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseSqlPoolConnectionPolicyData : Core.IUtf8JsonSerializable
+    public partial class SynapseSqlPoolConnectionPolicyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SecurityEnabledAccess))
+            if (Optional.IsDefined(SecurityEnabledAccess))
             {
                 writer.WritePropertyName("securityEnabledAccess"u8);
                 writer.WriteStringValue(SecurityEnabledAccess);
             }
-            if (Core.Optional.IsDefined(ProxyDnsName))
+            if (Optional.IsDefined(ProxyDnsName))
             {
                 writer.WritePropertyName("proxyDnsName"u8);
                 writer.WriteStringValue(ProxyDnsName);
             }
-            if (Core.Optional.IsDefined(ProxyPort))
+            if (Optional.IsDefined(ProxyPort))
             {
                 writer.WritePropertyName("proxyPort"u8);
                 writer.WriteStringValue(ProxyPort);
             }
-            if (Core.Optional.IsDefined(Visibility))
+            if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility);
             }
-            if (Core.Optional.IsDefined(UseServerDefault))
+            if (Optional.IsDefined(UseServerDefault))
             {
                 writer.WritePropertyName("useServerDefault"u8);
                 writer.WriteStringValue(UseServerDefault);
             }
-            if (Core.Optional.IsDefined(RedirectionState))
+            if (Optional.IsDefined(RedirectionState))
             {
                 writer.WritePropertyName("redirectionState"u8);
                 writer.WriteStringValue(RedirectionState);
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
-            Core.Optional<AzureLocation> location = default;
+            Optional<string> kind = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> securityEnabledAccess = default;
-            Core.Optional<string> proxyDnsName = default;
-            Core.Optional<string> proxyPort = default;
-            Core.Optional<string> visibility = default;
-            Core.Optional<string> useServerDefault = default;
-            Core.Optional<string> redirectionState = default;
-            Core.Optional<string> state = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> securityEnabledAccess = default;
+            Optional<string> proxyDnsName = default;
+            Optional<string> proxyPort = default;
+            Optional<string> visibility = default;
+            Optional<string> useServerDefault = default;
+            Optional<string> redirectionState = default;
+            Optional<string> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseSqlPoolConnectionPolicyData(id, name, type, systemData.Value, kind.Value, Core.Optional.ToNullable(location), securityEnabledAccess.Value, proxyDnsName.Value, proxyPort.Value, visibility.Value, useServerDefault.Value, redirectionState.Value, state.Value);
+            return new SynapseSqlPoolConnectionPolicyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), securityEnabledAccess.Value, proxyDnsName.Value, proxyPort.Value, visibility.Value, useServerDefault.Value, redirectionState.Value, state.Value);
         }
     }
 }

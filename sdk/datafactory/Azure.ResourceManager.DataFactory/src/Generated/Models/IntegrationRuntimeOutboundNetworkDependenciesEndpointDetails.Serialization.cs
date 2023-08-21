@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<int> port = default;
+            Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(Core.Optional.ToNullable(port));
+            return new IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(Optional.ToNullable(port));
         }
     }
 }

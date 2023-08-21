@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Core.Optional<string> trend = default;
-            Core.Optional<IReadOnlyList<BillingBenefitsSavingsPlanUtilizationAggregate>> aggregates = default;
+            Optional<string> trend = default;
+            Optional<IReadOnlyList<BillingBenefitsSavingsPlanUtilizationAggregate>> aggregates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trend"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     continue;
                 }
             }
-            return new BillingBenefitsSavingsPlanUtilization(trend.Value, Core.Optional.ToList(aggregates));
+            return new BillingBenefitsSavingsPlanUtilization(trend.Value, Optional.ToList(aggregates));
         }
     }
 }

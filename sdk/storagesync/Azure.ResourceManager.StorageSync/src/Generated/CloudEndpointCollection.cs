@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = await _cloudEndpointRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cloudEndpointName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation<CloudEndpointResource>(new CloudEndpointOperationSource(Client), _cloudEndpointClientDiagnostics, Pipeline, _cloudEndpointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cloudEndpointName, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation<CloudEndpointResource>(new CloudEndpointOperationSource(Client), _cloudEndpointClientDiagnostics, Pipeline, _cloudEndpointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cloudEndpointName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = _cloudEndpointRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cloudEndpointName, content, cancellationToken);
-                var operation = new StorageSyncArmOperation<CloudEndpointResource>(new CloudEndpointOperationSource(Client), _cloudEndpointClientDiagnostics, Pipeline, _cloudEndpointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cloudEndpointName, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation<CloudEndpointResource>(new CloudEndpointOperationSource(Client), _cloudEndpointClientDiagnostics, Pipeline, _cloudEndpointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cloudEndpointName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual AsyncPageable<CloudEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudEndpointRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CloudEndpointResource(Client, CloudEndpointData.DeserializeCloudEndpointData(e)), _cloudEndpointClientDiagnostics, Pipeline, "CloudEndpointCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CloudEndpointResource(Client, CloudEndpointData.DeserializeCloudEndpointData(e)), _cloudEndpointClientDiagnostics, Pipeline, "CloudEndpointCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual Pageable<CloudEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudEndpointRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CloudEndpointResource(Client, CloudEndpointData.DeserializeCloudEndpointData(e)), _cloudEndpointClientDiagnostics, Pipeline, "CloudEndpointCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CloudEndpointResource(Client, CloudEndpointData.DeserializeCloudEndpointData(e)), _cloudEndpointClientDiagnostics, Pipeline, "CloudEndpointCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

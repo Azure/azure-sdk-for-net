@@ -16,9 +16,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of MapsGeofenceEventProperties. </summary>
         internal MapsGeofenceEventProperties()
         {
-            ExpiredGeofenceGeometryId = new Core.ChangeTrackingList<string>();
-            Geometries = new Core.ChangeTrackingList<MapsGeofenceGeometry>();
-            InvalidPeriodGeofenceGeometryId = new Core.ChangeTrackingList<string>();
+            ExpiredGeofenceGeometryId = new ChangeTrackingList<string>();
+            Geometries = new ChangeTrackingList<MapsGeofenceGeometry>();
+            InvalidPeriodGeofenceGeometryId = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MapsGeofenceEventProperties. </summary>

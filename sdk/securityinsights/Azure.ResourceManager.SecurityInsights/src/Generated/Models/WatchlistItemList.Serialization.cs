@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> nextLink = default;
+            Optional<string> nextLink = default;
             IReadOnlyList<SecurityInsightsWatchlistItemData> value = default;
             foreach (var property in element.EnumerateObject())
             {

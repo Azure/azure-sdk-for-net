@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningRecurrenceTrigger : Core.IUtf8JsonSerializable
+    public partial class MachineLearningRecurrenceTrigger : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToString());
             writer.WritePropertyName("interval"u8);
             writer.WriteNumberValue(Interval);
-            if (Core.Optional.IsDefined(Schedule))
+            if (Optional.IsDefined(Schedule))
             {
                 if (Schedule != null)
                 {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("schedule");
                 }
             }
-            if (Core.Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndTime))
             {
                 if (EndTime != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (Core.Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartTime))
             {
                 if (StartTime != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (Core.Optional.IsDefined(TimeZone))
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             MachineLearningRecurrenceFrequency frequency = default;
             int interval = default;
-            Core.Optional<MachineLearningRecurrenceSchedule> schedule = default;
-            Core.Optional<string> endTime = default;
-            Core.Optional<string> startTime = default;
-            Core.Optional<string> timeZone = default;
+            Optional<MachineLearningRecurrenceSchedule> schedule = default;
+            Optional<string> endTime = default;
+            Optional<string> startTime = default;
+            Optional<string> timeZone = default;
             MachineLearningTriggerType triggerType = default;
             foreach (var property in element.EnumerateObject())
             {

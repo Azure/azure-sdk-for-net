@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of ListContentKeysResponse. </summary>
         internal ListContentKeysResponse()
         {
-            ContentKeys = new Core.ChangeTrackingList<StreamingLocatorContentKey>();
+            ContentKeys = new ChangeTrackingList<StreamingLocatorContentKey>();
         }
 
         /// <summary> Initializes a new instance of ListContentKeysResponse. </summary>

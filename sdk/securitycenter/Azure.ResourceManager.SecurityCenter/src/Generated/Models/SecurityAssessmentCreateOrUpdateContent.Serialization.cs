@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAssessmentCreateOrUpdateContent : Core.IUtf8JsonSerializable
+    public partial class SecurityAssessmentCreateOrUpdateContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ResourceDetails))
+            if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
                 writer.WriteObjectValue(ResourceDetails);
             }
-            if (Core.Optional.IsCollectionDefined(AdditionalData))
+            if (Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -35,17 +35,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(Metadata))
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (Core.Optional.IsDefined(PartnersData))
+            if (Optional.IsDefined(PartnersData))
             {
                 writer.WritePropertyName("partnersData"u8);
                 writer.WriteObjectValue(PartnersData);
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SecurityCenterResourceDetails> resourceDetails = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<IDictionary<string, string>> additionalData = default;
-            Core.Optional<AssessmentLinks> links = default;
-            Core.Optional<SecurityAssessmentMetadataProperties> metadata = default;
-            Core.Optional<SecurityAssessmentPartner> partnersData = default;
-            Core.Optional<SecurityAssessmentStatus> status = default;
+            Optional<SystemData> systemData = default;
+            Optional<SecurityCenterResourceDetails> resourceDetails = default;
+            Optional<string> displayName = default;
+            Optional<IDictionary<string, string>> additionalData = default;
+            Optional<AssessmentLinks> links = default;
+            Optional<SecurityAssessmentMetadataProperties> metadata = default;
+            Optional<SecurityAssessmentPartner> partnersData = default;
+            Optional<SecurityAssessmentStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecurityAssessmentCreateOrUpdateContent(id, name, type, systemData.Value, resourceDetails.Value, displayName.Value, Core.Optional.ToDictionary(additionalData), links.Value, metadata.Value, partnersData.Value, status.Value);
+            return new SecurityAssessmentCreateOrUpdateContent(id, name, type, systemData.Value, resourceDetails.Value, displayName.Value, Optional.ToDictionary(additionalData), links.Value, metadata.Value, partnersData.Value, status.Value);
         }
     }
 }

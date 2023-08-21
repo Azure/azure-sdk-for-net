@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class HttpSettingsRoutes : Core.IUtf8JsonSerializable
+    internal partial class HttpSettingsRoutes : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ApiPrefix))
+            if (Optional.IsDefined(ApiPrefix))
             {
                 writer.WritePropertyName("apiPrefix"u8);
                 writer.WriteStringValue(ApiPrefix);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> apiPrefix = default;
+            Optional<string> apiPrefix = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiPrefix"u8))

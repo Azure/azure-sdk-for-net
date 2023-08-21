@@ -15,22 +15,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    public partial class ManagedHsmPrivateEndpointConnectionData : Core.IUtf8JsonSerializable
+    public partial class ManagedHsmPrivateEndpointConnectionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.KeyVault
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Core.Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.KeyVault
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ManagedHsmSku> sku = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ETag> etag = default;
+            Optional<ManagedHsmSku> sku = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SubResource> privateEndpoint = default;
-            Core.Optional<ManagedHsmPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Core.Optional<ManagedHsmPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<SubResource> privateEndpoint = default;
+            Optional<ManagedHsmPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<ManagedHsmPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.KeyVault
                     continue;
                 }
             }
-            return new ManagedHsmPrivateEndpointConnectionData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Core.Optional.ToNullable(provisioningState), sku.Value);
+            return new ManagedHsmPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), sku.Value);
         }
     }
 }

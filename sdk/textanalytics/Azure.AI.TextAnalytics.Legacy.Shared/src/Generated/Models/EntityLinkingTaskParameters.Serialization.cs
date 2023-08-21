@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
-    internal partial class EntityLinkingTaskParameters : Core.IUtf8JsonSerializable
+    internal partial class EntityLinkingTaskParameters : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ModelVersion))
+            if (Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("model-version"u8);
                 writer.WriteStringValue(ModelVersion);
             }
-            if (Core.Optional.IsDefined(LoggingOptOut))
+            if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
-            if (Core.Optional.IsDefined(StringIndexType))
+            if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());

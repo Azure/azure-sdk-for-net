@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ConnectToSourceOracleSyncTaskProperties. </summary>
         public ConnectToSourceOracleSyncTaskProperties()
         {
-            Output = new Core.ChangeTrackingList<ConnectToSourceOracleSyncTaskOutput>();
+            Output = new ChangeTrackingList<ConnectToSourceOracleSyncTaskOutput>();
             TaskType = TaskType.ConnectToSourceOracleSync;
         }
 

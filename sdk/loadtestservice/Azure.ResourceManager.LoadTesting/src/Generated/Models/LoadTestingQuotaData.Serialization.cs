@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting
 {
-    public partial class LoadTestingQuotaData : Core.IUtf8JsonSerializable
+    public partial class LoadTestingQuotaData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Limit))
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Core.Optional.IsDefined(Usage))
+            if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteNumberValue(Usage.Value);
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.LoadTesting
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<int> limit = default;
-            Core.Optional<int> usage = default;
-            Core.Optional<LoadTestingProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<int> limit = default;
+            Optional<int> usage = default;
+            Optional<LoadTestingProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.LoadTesting
                     continue;
                 }
             }
-            return new LoadTestingQuotaData(id, name, type, systemData.Value, Core.Optional.ToNullable(limit), Core.Optional.ToNullable(usage), Core.Optional.ToNullable(provisioningState));
+            return new LoadTestingQuotaData(id, name, type, systemData.Value, Optional.ToNullable(limit), Optional.ToNullable(usage), Optional.ToNullable(provisioningState));
         }
     }
 }

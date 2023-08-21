@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyFairPlayConfiguration : Core.IUtf8JsonSerializable
+    public partial class ContentKeyPolicyFairPlayConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (ApplicationSecretKey != null)
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(RentalAndLeaseKeyType.ToString());
             writer.WritePropertyName("rentalDuration"u8);
             writer.WriteNumberValue(RentalDuration);
-            if (Core.Optional.IsDefined(OfflineRentalConfiguration))
+            if (Optional.IsDefined(OfflineRentalConfiguration))
             {
                 writer.WritePropertyName("offlineRentalConfiguration"u8);
                 writer.WriteObjectValue(OfflineRentalConfiguration);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Media.Models
             string fairPlayPfx = default;
             ContentKeyPolicyFairPlayRentalAndLeaseKeyType rentalAndLeaseKeyType = default;
             long rentalDuration = default;
-            Core.Optional<ContentKeyPolicyFairPlayOfflineRentalConfiguration> offlineRentalConfiguration = default;
+            Optional<ContentKeyPolicyFairPlayOfflineRentalConfiguration> offlineRentalConfiguration = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {

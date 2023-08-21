@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceVirtualNetworkProfile : Core.IUtf8JsonSerializable
+    public partial class AppServiceVirtualNetworkProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Core.Optional.IsDefined(Subnet))
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<string> subnet = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<string> subnet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceVirtualNetworkProfile(id, name.Value, Core.Optional.ToNullable(type), subnet.Value);
+            return new AppServiceVirtualNetworkProfile(id, name.Value, Optional.ToNullable(type), subnet.Value);
         }
     }
 }

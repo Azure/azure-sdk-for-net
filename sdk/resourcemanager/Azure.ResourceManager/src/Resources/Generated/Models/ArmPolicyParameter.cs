@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmPolicyParameter. </summary>
         public ArmPolicyParameter()
         {
-            AllowedValues = new Core.ChangeTrackingList<BinaryData>();
+            AllowedValues = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ArmPolicyParameter. </summary>

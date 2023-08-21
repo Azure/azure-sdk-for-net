@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<MySqlServerPrivateEndpointConnectionProperties> properties = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<MySqlServerPrivateEndpointConnectionProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

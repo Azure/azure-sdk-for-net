@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class VmPlacementRequestResult : Core.IUtf8JsonSerializable
+    public partial class VmPlacementRequestResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(VmSize))
+            if (Optional.IsCollectionDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStartArray();
@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsFeasible))
+            if (Optional.IsDefined(IsFeasible))
             {
                 writer.WritePropertyName("isFeasible"u8);
                 writer.WriteBooleanValue(IsFeasible.Value);
             }
-            if (Core.Optional.IsDefined(MessageCode))
+            if (Optional.IsDefined(MessageCode))
             {
                 writer.WritePropertyName("messageCode"u8);
                 writer.WriteStringValue(MessageCode);
             }
-            if (Core.Optional.IsDefined(Message))
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

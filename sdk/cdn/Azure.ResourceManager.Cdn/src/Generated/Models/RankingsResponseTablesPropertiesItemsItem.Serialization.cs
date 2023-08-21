@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IReadOnlyList<RankingsResponseTablesPropertiesItemsMetricsItem>> metrics = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<RankingsResponseTablesPropertiesItemsMetricsItem>> metrics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new RankingsResponseTablesPropertiesItemsItem(name.Value, Core.Optional.ToList(metrics));
+            return new RankingsResponseTablesPropertiesItemsItem(name.Value, Optional.ToList(metrics));
         }
     }
 }

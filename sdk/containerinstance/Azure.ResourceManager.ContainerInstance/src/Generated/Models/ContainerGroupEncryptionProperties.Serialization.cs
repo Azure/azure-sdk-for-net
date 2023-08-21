@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerGroupEncryptionProperties : Core.IUtf8JsonSerializable
+    public partial class ContainerGroupEncryptionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("vaultBaseUrl"u8);
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStringValue(KeyName);
             writer.WritePropertyName("keyVersion"u8);
             writer.WriteStringValue(KeyVersion);
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Uri vaultBaseUrl = default;
             string keyName = default;
             string keyVersion = default;
-            Core.Optional<string> identity = default;
+            Optional<string> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vaultBaseUrl"u8))

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightAzureMonitorSelectedConfigurations : Core.IUtf8JsonSerializable
+    public partial class HDInsightAzureMonitorSelectedConfigurations : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ConfigurationVersion))
+            if (Optional.IsDefined(ConfigurationVersion))
             {
                 writer.WritePropertyName("configurationVersion"u8);
                 writer.WriteStringValue(ConfigurationVersion);
             }
-            if (Core.Optional.IsCollectionDefined(GlobalConfigurations))
+            if (Optional.IsCollectionDefined(GlobalConfigurations))
             {
                 writer.WritePropertyName("globalConfigurations"u8);
                 writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(TableList))
+            if (Optional.IsCollectionDefined(TableList))
             {
                 writer.WritePropertyName("tableList"u8);
                 writer.WriteStartArray();
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<string> configurationVersion = default;
-            Core.Optional<IDictionary<string, string>> globalConfigurations = default;
-            Core.Optional<IList<HDInsightAzureMonitorTableConfiguration>> tableList = default;
+            Optional<string> configurationVersion = default;
+            Optional<IDictionary<string, string>> globalConfigurations = default;
+            Optional<IList<HDInsightAzureMonitorTableConfiguration>> tableList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurationVersion"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightAzureMonitorSelectedConfigurations(configurationVersion.Value, Core.Optional.ToDictionary(globalConfigurations), Core.Optional.ToList(tableList));
+            return new HDInsightAzureMonitorSelectedConfigurations(configurationVersion.Value, Optional.ToDictionary(globalConfigurations), Optional.ToList(tableList));
         }
     }
 }

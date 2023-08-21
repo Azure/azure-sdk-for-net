@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningAksNetworkingConfiguration : Core.IUtf8JsonSerializable
+    public partial class MachineLearningAksNetworkingConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SubnetId))
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Core.Optional.IsDefined(ServiceCidr))
+            if (Optional.IsDefined(ServiceCidr))
             {
                 writer.WritePropertyName("serviceCidr"u8);
                 writer.WriteStringValue(ServiceCidr);
             }
-            if (Core.Optional.IsDefined(DnsServiceIP))
+            if (Optional.IsDefined(DnsServiceIP))
             {
                 writer.WritePropertyName("dnsServiceIP"u8);
                 writer.WriteStringValue(DnsServiceIP);
             }
-            if (Core.Optional.IsDefined(DockerBridgeCidr))
+            if (Optional.IsDefined(DockerBridgeCidr))
             {
                 writer.WritePropertyName("dockerBridgeCidr"u8);
                 writer.WriteStringValue(DockerBridgeCidr);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> subnetId = default;
-            Core.Optional<string> serviceCidr = default;
-            Core.Optional<string> dnsServiceIP = default;
-            Core.Optional<string> dockerBridgeCidr = default;
+            Optional<ResourceIdentifier> subnetId = default;
+            Optional<string> serviceCidr = default;
+            Optional<string> dnsServiceIP = default;
+            Optional<string> dockerBridgeCidr = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))

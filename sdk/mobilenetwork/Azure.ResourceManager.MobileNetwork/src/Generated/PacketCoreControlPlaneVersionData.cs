@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary> Initializes a new instance of PacketCoreControlPlaneVersionData. </summary>
         public PacketCoreControlPlaneVersionData()
         {
-            Platforms = new Core.ChangeTrackingList<MobileNetworkPlatform>();
+            Platforms = new ChangeTrackingList<MobileNetworkPlatform>();
         }
 
         /// <summary> Initializes a new instance of PacketCoreControlPlaneVersionData. </summary>

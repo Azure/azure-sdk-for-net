@@ -22,9 +22,9 @@ namespace Azure.Monitor.Query.Models
             string id = default;
             string type = default;
             LocalizableString name = default;
-            Core.Optional<string> displayDescription = default;
-            Core.Optional<string> errorCode = default;
-            Core.Optional<string> errorMessage = default;
+            Optional<string> displayDescription = default;
+            Optional<string> errorCode = default;
+            Optional<string> errorMessage = default;
             MetricUnit unit = default;
             IReadOnlyList<MetricTimeSeriesElement> timeseries = default;
             foreach (var property in element.EnumerateObject())

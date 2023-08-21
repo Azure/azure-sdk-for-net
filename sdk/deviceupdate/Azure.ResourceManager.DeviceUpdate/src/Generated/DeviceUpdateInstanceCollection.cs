@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             try
             {
                 var response = await _deviceUpdateInstanceInstancesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceUpdateArmOperation<DeviceUpdateInstanceResource>(new DeviceUpdateInstanceOperationSource(Client), _deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, _deviceUpdateInstanceInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DeviceUpdateArmOperation<DeviceUpdateInstanceResource>(new DeviceUpdateInstanceOperationSource(Client), _deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, _deviceUpdateInstanceInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             try
             {
                 var response = _deviceUpdateInstanceInstancesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, data, cancellationToken);
-                var operation = new DeviceUpdateArmOperation<DeviceUpdateInstanceResource>(new DeviceUpdateInstanceOperationSource(Client), _deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, _deviceUpdateInstanceInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DeviceUpdateArmOperation<DeviceUpdateInstanceResource>(new DeviceUpdateInstanceOperationSource(Client), _deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, _deviceUpdateInstanceInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceUpdateInstanceInstancesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceUpdateInstanceInstancesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceUpdateInstanceResource(Client, DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(e)), _deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, "DeviceUpdateInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceUpdateInstanceResource(Client, DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(e)), _deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, "DeviceUpdateInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceUpdateInstanceInstancesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceUpdateInstanceInstancesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceUpdateInstanceResource(Client, DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(e)), _deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, "DeviceUpdateInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceUpdateInstanceResource(Client, DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(e)), _deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, "DeviceUpdateInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

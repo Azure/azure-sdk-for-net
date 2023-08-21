@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal class NetAppVolumeQuotaRuleOperationSource : Core.IOperationSource<NetAppVolumeQuotaRuleResource>
+    internal class NetAppVolumeQuotaRuleOperationSource : IOperationSource<NetAppVolumeQuotaRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.NetApp
             _client = client;
         }
 
-        NetAppVolumeQuotaRuleResource Core.IOperationSource<NetAppVolumeQuotaRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetAppVolumeQuotaRuleResource IOperationSource<NetAppVolumeQuotaRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetAppVolumeQuotaRuleData.DeserializeNetAppVolumeQuotaRuleData(document.RootElement);
             return new NetAppVolumeQuotaRuleResource(_client, data);
         }
 
-        async ValueTask<NetAppVolumeQuotaRuleResource> Core.IOperationSource<NetAppVolumeQuotaRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetAppVolumeQuotaRuleResource> IOperationSource<NetAppVolumeQuotaRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetAppVolumeQuotaRuleData.DeserializeNetAppVolumeQuotaRuleData(document.RootElement);

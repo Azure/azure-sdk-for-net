@@ -14,22 +14,22 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    public partial class StorageCacheData : Core.IUtf8JsonSerializable
+    public partial class StorageCacheData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,42 +44,42 @@ namespace Azure.ResourceManager.StorageCache
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CacheSizeGB))
+            if (Optional.IsDefined(CacheSizeGB))
             {
                 writer.WritePropertyName("cacheSizeGB"u8);
                 writer.WriteNumberValue(CacheSizeGB.Value);
             }
-            if (Core.Optional.IsDefined(Subnet))
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
             }
-            if (Core.Optional.IsDefined(UpgradeSettings))
+            if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
                 writer.WriteObjectValue(UpgradeSettings);
             }
-            if (Core.Optional.IsDefined(NetworkSettings))
+            if (Optional.IsDefined(NetworkSettings))
             {
                 writer.WritePropertyName("networkSettings"u8);
                 writer.WriteObjectValue(NetworkSettings);
             }
-            if (Core.Optional.IsDefined(EncryptionSettings))
+            if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
                 writer.WriteObjectValue(EncryptionSettings);
             }
-            if (Core.Optional.IsDefined(SecuritySettings))
+            if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings);
             }
-            if (Core.Optional.IsDefined(DirectoryServicesSettings))
+            if (Optional.IsDefined(DirectoryServicesSettings))
             {
                 writer.WritePropertyName("directoryServicesSettings"u8);
                 writer.WriteObjectValue(DirectoryServicesSettings);
             }
-            if (Core.Optional.IsCollectionDefined(Zones))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -99,28 +99,28 @@ namespace Azure.ResourceManager.StorageCache
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<StorageCacheSkuInfo> sku = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<StorageCacheSkuInfo> sku = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<int> cacheSizeGB = default;
-            Core.Optional<StorageCacheHealth> health = default;
-            Core.Optional<IReadOnlyList<IPAddress>> mountAddresses = default;
-            Core.Optional<StorageCacheProvisioningStateType> provisioningState = default;
-            Core.Optional<ResourceIdentifier> subnet = default;
-            Core.Optional<StorageCacheUpgradeStatus> upgradeStatus = default;
-            Core.Optional<StorageCacheUpgradeSettings> upgradeSettings = default;
-            Core.Optional<StorageCacheNetworkSettings> networkSettings = default;
-            Core.Optional<StorageCacheEncryptionSettings> encryptionSettings = default;
-            Core.Optional<StorageCacheSecuritySettings> securitySettings = default;
-            Core.Optional<StorageCacheDirectorySettings> directoryServicesSettings = default;
-            Core.Optional<IList<string>> zones = default;
-            Core.Optional<IReadOnlyList<PrimingJob>> primingJobs = default;
-            Core.Optional<IReadOnlyList<StorageTargetSpaceAllocation>> spaceAllocation = default;
+            Optional<SystemData> systemData = default;
+            Optional<int> cacheSizeGB = default;
+            Optional<StorageCacheHealth> health = default;
+            Optional<IReadOnlyList<IPAddress>> mountAddresses = default;
+            Optional<StorageCacheProvisioningStateType> provisioningState = default;
+            Optional<ResourceIdentifier> subnet = default;
+            Optional<StorageCacheUpgradeStatus> upgradeStatus = default;
+            Optional<StorageCacheUpgradeSettings> upgradeSettings = default;
+            Optional<StorageCacheNetworkSettings> networkSettings = default;
+            Optional<StorageCacheEncryptionSettings> encryptionSettings = default;
+            Optional<StorageCacheSecuritySettings> securitySettings = default;
+            Optional<StorageCacheDirectorySettings> directoryServicesSettings = default;
+            Optional<IList<string>> zones = default;
+            Optional<IReadOnlyList<PrimingJob>> primingJobs = default;
+            Optional<IReadOnlyList<StorageTargetSpaceAllocation>> spaceAllocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.StorageCache
                     continue;
                 }
             }
-            return new StorageCacheData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, sku.Value, Core.Optional.ToNullable(cacheSizeGB), health.Value, Core.Optional.ToList(mountAddresses), Core.Optional.ToNullable(provisioningState), subnet.Value, upgradeStatus.Value, upgradeSettings.Value, networkSettings.Value, encryptionSettings.Value, securitySettings.Value, directoryServicesSettings.Value, Core.Optional.ToList(zones), Core.Optional.ToList(primingJobs), Core.Optional.ToList(spaceAllocation));
+            return new StorageCacheData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(cacheSizeGB), health.Value, Optional.ToList(mountAddresses), Optional.ToNullable(provisioningState), subnet.Value, upgradeStatus.Value, upgradeSettings.Value, networkSettings.Value, encryptionSettings.Value, securitySettings.Value, directoryServicesSettings.Value, Optional.ToList(zones), Optional.ToList(primingJobs), Optional.ToList(spaceAllocation));
         }
     }
 }

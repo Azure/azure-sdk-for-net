@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageRcmFabricSpecificDetails. </summary>
         internal InMageRcmFabricSpecificDetails()
         {
-            ProcessServers = new Core.ChangeTrackingList<SiteRecoveryProcessServerDetails>();
-            RcmProxies = new Core.ChangeTrackingList<RcmProxyDetails>();
-            PushInstallers = new Core.ChangeTrackingList<PushInstallerDetails>();
-            ReplicationAgents = new Core.ChangeTrackingList<ReplicationAgentDetails>();
-            ReprotectAgents = new Core.ChangeTrackingList<ReprotectAgentDetails>();
-            MarsAgents = new Core.ChangeTrackingList<MarsAgentDetails>();
-            Dras = new Core.ChangeTrackingList<SiteRecoveryDraDetails>();
-            AgentDetails = new Core.ChangeTrackingList<SiteRecoveryAgentDetails>();
+            ProcessServers = new ChangeTrackingList<SiteRecoveryProcessServerDetails>();
+            RcmProxies = new ChangeTrackingList<RcmProxyDetails>();
+            PushInstallers = new ChangeTrackingList<PushInstallerDetails>();
+            ReplicationAgents = new ChangeTrackingList<ReplicationAgentDetails>();
+            ReprotectAgents = new ChangeTrackingList<ReprotectAgentDetails>();
+            MarsAgents = new ChangeTrackingList<MarsAgentDetails>();
+            Dras = new ChangeTrackingList<SiteRecoveryDraDetails>();
+            AgentDetails = new ChangeTrackingList<SiteRecoveryAgentDetails>();
             InstanceType = "InMageRcm";
         }
 

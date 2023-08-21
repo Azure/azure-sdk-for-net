@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Core.Optional<ScriptParameterType> type = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
-            Core.Optional<ParameterVisibilityStatus> visibility = default;
-            Core.Optional<ParameterOptionalityStatus> optional = default;
+            Optional<ScriptParameterType> type = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<ParameterVisibilityStatus> visibility = default;
+            Optional<ParameterOptionalityStatus> optional = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

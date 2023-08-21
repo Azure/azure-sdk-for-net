@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset?> preparationStartedAt = default;
-            Core.Optional<DateTimeOffset?> resourceAcquisitionStartedAt = default;
-            Core.Optional<DateTimeOffset?> submissionStartedAt = default;
-            Core.Optional<DateTimeOffset?> monitoringStartedAt = default;
-            Core.Optional<DateTimeOffset?> cleanupStartedAt = default;
-            Core.Optional<PluginCurrentState> currentState = default;
+            Optional<DateTimeOffset?> preparationStartedAt = default;
+            Optional<DateTimeOffset?> resourceAcquisitionStartedAt = default;
+            Optional<DateTimeOffset?> submissionStartedAt = default;
+            Optional<DateTimeOffset?> monitoringStartedAt = default;
+            Optional<DateTimeOffset?> cleanupStartedAt = default;
+            Optional<PluginCurrentState> currentState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preparationStartedAt"u8))
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SparkServicePlugin(Core.Optional.ToNullable(preparationStartedAt), Core.Optional.ToNullable(resourceAcquisitionStartedAt), Core.Optional.ToNullable(submissionStartedAt), Core.Optional.ToNullable(monitoringStartedAt), Core.Optional.ToNullable(cleanupStartedAt), Core.Optional.ToNullable(currentState));
+            return new SparkServicePlugin(Optional.ToNullable(preparationStartedAt), Optional.ToNullable(resourceAcquisitionStartedAt), Optional.ToNullable(submissionStartedAt), Optional.ToNullable(monitoringStartedAt), Optional.ToNullable(cleanupStartedAt), Optional.ToNullable(currentState));
         }
 
         internal partial class SparkServicePluginConverter : JsonConverter<SparkServicePlugin>

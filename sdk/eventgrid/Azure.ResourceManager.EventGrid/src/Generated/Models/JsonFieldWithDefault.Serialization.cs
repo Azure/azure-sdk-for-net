@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class JsonFieldWithDefault : Core.IUtf8JsonSerializable
+    public partial class JsonFieldWithDefault : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SourceField))
+            if (Optional.IsDefined(SourceField))
             {
                 writer.WritePropertyName("sourceField"u8);
                 writer.WriteStringValue(SourceField);
             }
-            if (Core.Optional.IsDefined(DefaultValue))
+            if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Core.Optional<string> sourceField = default;
-            Core.Optional<string> defaultValue = default;
+            Optional<string> sourceField = default;
+            Optional<string> defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceField"u8))

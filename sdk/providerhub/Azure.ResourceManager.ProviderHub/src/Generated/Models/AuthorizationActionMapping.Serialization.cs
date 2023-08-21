@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class AuthorizationActionMapping : Core.IUtf8JsonSerializable
+    public partial class AuthorizationActionMapping : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Original))
+            if (Optional.IsDefined(Original))
             {
                 writer.WritePropertyName("original"u8);
                 writer.WriteStringValue(Original);
             }
-            if (Core.Optional.IsDefined(Desired))
+            if (Optional.IsDefined(Desired))
             {
                 writer.WritePropertyName("desired"u8);
                 writer.WriteStringValue(Desired);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<string> original = default;
-            Core.Optional<string> desired = default;
+            Optional<string> original = default;
+            Optional<string> desired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("original"u8))

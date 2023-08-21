@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceProperties. </summary>
         public MachineLearningComputeInstanceProperties()
         {
-            Applications = new Core.ChangeTrackingList<MachineLearningComputeInstanceApplication>();
-            Errors = new Core.ChangeTrackingList<MachineLearningError>();
-            Containers = new Core.ChangeTrackingList<MachineLearningComputeInstanceContainer>();
-            DataDisks = new Core.ChangeTrackingList<MachineLearningComputeInstanceDataDisk>();
-            DataMounts = new Core.ChangeTrackingList<MachineLearningComputeInstanceDataMount>();
+            Applications = new ChangeTrackingList<MachineLearningComputeInstanceApplication>();
+            Errors = new ChangeTrackingList<MachineLearningError>();
+            Containers = new ChangeTrackingList<MachineLearningComputeInstanceContainer>();
+            DataDisks = new ChangeTrackingList<MachineLearningComputeInstanceDataDisk>();
+            DataMounts = new ChangeTrackingList<MachineLearningComputeInstanceDataMount>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceProperties. </summary>

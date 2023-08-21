@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of ReverseSearchCrossStreetAddressResult. </summary>
         internal ReverseSearchCrossStreetAddressResult()
         {
-            Addresses = new Core.ChangeTrackingList<ReverseSearchCrossStreetAddressResultItem>();
+            Addresses = new ChangeTrackingList<ReverseSearchCrossStreetAddressResultItem>();
         }
 
         /// <summary> Initializes a new instance of ReverseSearchCrossStreetAddressResult. </summary>

@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class WebhookNotification : Core.IUtf8JsonSerializable
+    public partial class WebhookNotification : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServiceUri))
+            if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUri"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (Core.Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<Uri> serviceUri = default;
-            Core.Optional<IDictionary<string, string>> properties = default;
+            Optional<Uri> serviceUri = default;
+            Optional<IDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceUri"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new WebhookNotification(serviceUri.Value, Core.Optional.ToDictionary(properties));
+            return new WebhookNotification(serviceUri.Value, Optional.ToDictionary(properties));
         }
     }
 }

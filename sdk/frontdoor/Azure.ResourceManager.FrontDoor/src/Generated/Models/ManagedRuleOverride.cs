@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Argument.AssertNotNull(ruleId, nameof(ruleId));
 
             RuleId = ruleId;
-            Exclusions = new Core.ChangeTrackingList<ManagedRuleExclusion>();
+            Exclusions = new ChangeTrackingList<ManagedRuleExclusion>();
         }
 
         /// <summary> Initializes a new instance of ManagedRuleOverride. </summary>

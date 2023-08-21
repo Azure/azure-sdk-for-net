@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class WindowsProfileResponse : Core.IUtf8JsonSerializable
+    public partial class WindowsProfileResponse : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AdminUsername))
+            if (Optional.IsDefined(AdminUsername))
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (Core.Optional.IsDefined(EnableCsiProxy))
+            if (Optional.IsDefined(EnableCsiProxy))
             {
                 writer.WritePropertyName("enableCsiProxy"u8);
                 writer.WriteBooleanValue(EnableCsiProxy.Value);
             }
-            if (Core.Optional.IsDefined(LicenseType))
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<string> adminUsername = default;
-            Core.Optional<bool> enableCsiProxy = default;
-            Core.Optional<LicenseType> licenseType = default;
+            Optional<string> adminUsername = default;
+            Optional<bool> enableCsiProxy = default;
+            Optional<LicenseType> licenseType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminUsername"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new WindowsProfileResponse(adminUsername.Value, Core.Optional.ToNullable(enableCsiProxy), Core.Optional.ToNullable(licenseType));
+            return new WindowsProfileResponse(adminUsername.Value, Optional.ToNullable(enableCsiProxy), Optional.ToNullable(licenseType));
         }
     }
 }

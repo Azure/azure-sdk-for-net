@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> serverPlatform = default;
-            Core.Optional<string> serverName = default;
-            Core.Optional<string> serverVersion = default;
-            Core.Optional<string> serverEdition = default;
-            Core.Optional<string> serverOperatingSystemVersion = default;
-            Core.Optional<int> serverDatabaseCount = default;
+            Optional<string> serverPlatform = default;
+            Optional<string> serverName = default;
+            Optional<string> serverVersion = default;
+            Optional<string> serverEdition = default;
+            Optional<string> serverOperatingSystemVersion = default;
+            Optional<int> serverDatabaseCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverPlatform"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ServerProperties(serverPlatform.Value, serverName.Value, serverVersion.Value, serverEdition.Value, serverOperatingSystemVersion.Value, Core.Optional.ToNullable(serverDatabaseCount));
+            return new ServerProperties(serverPlatform.Value, serverName.Value, serverVersion.Value, serverEdition.Value, serverOperatingSystemVersion.Value, Optional.ToNullable(serverDatabaseCount));
         }
     }
 }

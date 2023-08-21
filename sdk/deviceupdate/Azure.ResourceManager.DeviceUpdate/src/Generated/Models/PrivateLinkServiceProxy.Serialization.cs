@@ -12,27 +12,27 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    public partial class PrivateLinkServiceProxy : Core.IUtf8JsonSerializable
+    public partial class PrivateLinkServiceProxy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(RemotePrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(RemotePrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("remotePrivateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(RemotePrivateLinkServiceConnectionState);
             }
-            if (Core.Optional.IsDefined(RemotePrivateEndpointConnection))
+            if (Optional.IsDefined(RemotePrivateEndpointConnection))
             {
                 writer.WritePropertyName("remotePrivateEndpointConnection"u8);
                 JsonSerializer.Serialize(writer, RemotePrivateEndpointConnection);
             }
-            if (Core.Optional.IsCollectionDefined(GroupConnectivityInformation))
+            if (Optional.IsCollectionDefined(GroupConnectivityInformation))
             {
                 writer.WritePropertyName("groupConnectivityInformation"u8);
                 writer.WriteStartArray();
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<DeviceUpdatePrivateLinkServiceConnectionState> remotePrivateLinkServiceConnectionState = default;
-            Core.Optional<SubResource> remotePrivateEndpointConnection = default;
-            Core.Optional<IList<GroupConnectivityInformation>> groupConnectivityInformation = default;
+            Optional<string> id = default;
+            Optional<DeviceUpdatePrivateLinkServiceConnectionState> remotePrivateLinkServiceConnectionState = default;
+            Optional<SubResource> remotePrivateEndpointConnection = default;
+            Optional<IList<GroupConnectivityInformation>> groupConnectivityInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     continue;
                 }
             }
-            return new PrivateLinkServiceProxy(id.Value, remotePrivateLinkServiceConnectionState.Value, remotePrivateEndpointConnection, Core.Optional.ToList(groupConnectivityInformation));
+            return new PrivateLinkServiceProxy(id.Value, remotePrivateLinkServiceConnectionState.Value, remotePrivateEndpointConnection, Optional.ToList(groupConnectivityInformation));
         }
     }
 }

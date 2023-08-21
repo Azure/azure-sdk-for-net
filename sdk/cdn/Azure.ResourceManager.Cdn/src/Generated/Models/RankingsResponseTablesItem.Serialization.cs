@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Core.Optional<string> ranking = default;
-            Core.Optional<IReadOnlyList<RankingsResponseTablesPropertiesItemsItem>> data = default;
+            Optional<string> ranking = default;
+            Optional<IReadOnlyList<RankingsResponseTablesPropertiesItemsItem>> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ranking"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new RankingsResponseTablesItem(ranking.Value, Core.Optional.ToList(data));
+            return new RankingsResponseTablesItem(ranking.Value, Optional.ToList(data));
         }
     }
 }

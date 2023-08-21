@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<GuestConfigurationAssignmentReport>> value = default;
+            Optional<IReadOnlyList<GuestConfigurationAssignmentReport>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     continue;
                 }
             }
-            return new GuestConfigurationAssignmentReportList(Core.Optional.ToList(value));
+            return new GuestConfigurationAssignmentReportList(Optional.ToList(value));
         }
     }
 }

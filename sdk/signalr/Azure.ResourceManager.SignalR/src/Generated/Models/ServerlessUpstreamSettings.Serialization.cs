@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    internal partial class ServerlessUpstreamSettings : Core.IUtf8JsonSerializable
+    internal partial class ServerlessUpstreamSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Templates))
+            if (Optional.IsCollectionDefined(Templates))
             {
                 writer.WritePropertyName("templates"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Core.Optional<IList<SignalRUpstreamTemplate>> templates = default;
+            Optional<IList<SignalRUpstreamTemplate>> templates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("templates"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     continue;
                 }
             }
-            return new ServerlessUpstreamSettings(Core.Optional.ToList(templates));
+            return new ServerlessUpstreamSettings(Optional.ToList(templates));
         }
     }
 }

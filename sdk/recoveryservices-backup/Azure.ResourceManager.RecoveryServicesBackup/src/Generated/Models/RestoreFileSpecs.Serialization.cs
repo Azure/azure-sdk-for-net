@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class RestoreFileSpecs : Core.IUtf8JsonSerializable
+    public partial class RestoreFileSpecs : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Core.Optional.IsDefined(FileSpecType))
+            if (Optional.IsDefined(FileSpecType))
             {
                 writer.WritePropertyName("fileSpecType"u8);
                 writer.WriteStringValue(FileSpecType);
             }
-            if (Core.Optional.IsDefined(TargetFolderPath))
+            if (Optional.IsDefined(TargetFolderPath))
             {
                 writer.WritePropertyName("targetFolderPath"u8);
                 writer.WriteStringValue(TargetFolderPath);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<string> path = default;
-            Core.Optional<string> fileSpecType = default;
-            Core.Optional<string> targetFolderPath = default;
+            Optional<string> path = default;
+            Optional<string> fileSpecType = default;
+            Optional<string> targetFolderPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class VirtualNetworksProperties : Core.IUtf8JsonSerializable
+    public partial class VirtualNetworksProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(InfraVnetProfile))
+            if (Optional.IsDefined(InfraVnetProfile))
             {
                 writer.WritePropertyName("infraVnetProfile"u8);
                 writer.WriteObjectValue(InfraVnetProfile);
             }
-            if (Core.Optional.IsCollectionDefined(VipPool))
+            if (Optional.IsCollectionDefined(VipPool))
             {
                 writer.WritePropertyName("vipPool"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(VmipPool))
+            if (Optional.IsCollectionDefined(VmipPool))
             {
                 writer.WritePropertyName("vmipPool"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DnsServers))
+            if (Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Gateway))
+            if (Optional.IsDefined(Gateway))
             {
                 writer.WritePropertyName("gateway"u8);
                 writer.WriteStringValue(Gateway);
             }
-            if (Core.Optional.IsDefined(IPAddressPrefix))
+            if (Optional.IsDefined(IPAddressPrefix))
             {
                 writer.WritePropertyName("ipAddressPrefix"u8);
                 writer.WriteStringValue(IPAddressPrefix);
@@ -70,16 +70,16 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<VirtualNetworksPropertiesInfraVnetProfile> infraVnetProfile = default;
-            Core.Optional<IList<VirtualNetworksPropertiesVipPoolItem>> vipPool = default;
-            Core.Optional<IList<VirtualNetworksPropertiesVmipPoolItem>> vmipPool = default;
-            Core.Optional<IReadOnlyList<string>> dhcpServers = default;
-            Core.Optional<IList<string>> dnsServers = default;
-            Core.Optional<string> gateway = default;
-            Core.Optional<string> ipAddressPrefix = default;
-            Core.Optional<string> vlanId = default;
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<VirtualNetworksPropertiesStatus> status = default;
+            Optional<VirtualNetworksPropertiesInfraVnetProfile> infraVnetProfile = default;
+            Optional<IList<VirtualNetworksPropertiesVipPoolItem>> vipPool = default;
+            Optional<IList<VirtualNetworksPropertiesVmipPoolItem>> vmipPool = default;
+            Optional<IReadOnlyList<string>> dhcpServers = default;
+            Optional<IList<string>> dnsServers = default;
+            Optional<string> gateway = default;
+            Optional<string> ipAddressPrefix = default;
+            Optional<string> vlanId = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<VirtualNetworksPropertiesStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("infraVnetProfile"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new VirtualNetworksProperties(infraVnetProfile.Value, Core.Optional.ToList(vipPool), Core.Optional.ToList(vmipPool), Core.Optional.ToList(dhcpServers), Core.Optional.ToList(dnsServers), gateway.Value, ipAddressPrefix.Value, vlanId.Value, Core.Optional.ToNullable(provisioningState), status.Value);
+            return new VirtualNetworksProperties(infraVnetProfile.Value, Optional.ToList(vipPool), Optional.ToList(vmipPool), Optional.ToList(dhcpServers), Optional.ToList(dnsServers), gateway.Value, ipAddressPrefix.Value, vlanId.Value, Optional.ToNullable(provisioningState), status.Value);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<CostManagementDimension>> value = default;
+            Optional<IReadOnlyList<CostManagementDimension>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new CostManagementDimensionsListResult(Core.Optional.ToList(value));
+            return new CostManagementDimensionsListResult(Optional.ToList(value));
         }
     }
 }

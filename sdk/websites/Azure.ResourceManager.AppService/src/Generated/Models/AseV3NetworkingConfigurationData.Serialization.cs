@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AseV3NetworkingConfigurationData : Core.IUtf8JsonSerializable
+    public partial class AseV3NetworkingConfigurationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AllowNewPrivateEndpointConnections))
+            if (Optional.IsDefined(AllowNewPrivateEndpointConnections))
             {
                 writer.WritePropertyName("allowNewPrivateEndpointConnections"u8);
                 writer.WriteBooleanValue(AllowNewPrivateEndpointConnections.Value);
@@ -40,16 +40,16 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyList<IPAddress>> windowsOutboundIPAddresses = default;
-            Core.Optional<IReadOnlyList<IPAddress>> linuxOutboundIPAddresses = default;
-            Core.Optional<IReadOnlyList<IPAddress>> externalInboundIPAddresses = default;
-            Core.Optional<IReadOnlyList<IPAddress>> internalInboundIPAddresses = default;
-            Core.Optional<bool> allowNewPrivateEndpointConnections = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyList<IPAddress>> windowsOutboundIPAddresses = default;
+            Optional<IReadOnlyList<IPAddress>> linuxOutboundIPAddresses = default;
+            Optional<IReadOnlyList<IPAddress>> externalInboundIPAddresses = default;
+            Optional<IReadOnlyList<IPAddress>> internalInboundIPAddresses = default;
+            Optional<bool> allowNewPrivateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new AseV3NetworkingConfigurationData(id, name, type, systemData.Value, Core.Optional.ToList(windowsOutboundIPAddresses), Core.Optional.ToList(linuxOutboundIPAddresses), Core.Optional.ToList(externalInboundIPAddresses), Core.Optional.ToList(internalInboundIPAddresses), Core.Optional.ToNullable(allowNewPrivateEndpointConnections), kind.Value);
+            return new AseV3NetworkingConfigurationData(id, name, type, systemData.Value, Optional.ToList(windowsOutboundIPAddresses), Optional.ToList(linuxOutboundIPAddresses), Optional.ToList(externalInboundIPAddresses), Optional.ToList(internalInboundIPAddresses), Optional.ToNullable(allowNewPrivateEndpointConnections), kind.Value);
         }
     }
 }

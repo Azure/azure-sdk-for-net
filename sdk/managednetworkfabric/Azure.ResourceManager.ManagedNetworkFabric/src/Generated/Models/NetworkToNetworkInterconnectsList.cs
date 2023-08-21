@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkToNetworkInterconnectsList. </summary>
         internal NetworkToNetworkInterconnectsList()
         {
-            Value = new Core.ChangeTrackingList<NetworkToNetworkInterconnectData>();
+            Value = new ChangeTrackingList<NetworkToNetworkInterconnectData>();
         }
 
         /// <summary> Initializes a new instance of NetworkToNetworkInterconnectsList. </summary>

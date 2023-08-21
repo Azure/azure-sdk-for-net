@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of CustomRuleList. </summary>
         public CustomRuleList()
         {
-            Rules = new Core.ChangeTrackingList<CustomRule>();
+            Rules = new ChangeTrackingList<CustomRule>();
         }
 
         /// <summary> Initializes a new instance of CustomRuleList. </summary>

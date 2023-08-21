@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ContainerServiceOutboundEnvironmentEndpoint. </summary>
         internal ContainerServiceOutboundEnvironmentEndpoint()
         {
-            Endpoints = new Core.ChangeTrackingList<ContainerServiceEndpointDependency>();
+            Endpoints = new ChangeTrackingList<ContainerServiceEndpointDependency>();
         }
 
         /// <summary> Initializes a new instance of ContainerServiceOutboundEnvironmentEndpoint. </summary>

@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             IntegrationRuntimeType type = default;
-            Core.Optional<string> dataFactoryName = default;
-            Core.Optional<SynapseIntegrationRuntimeState> state = default;
-            Core.Optional<DateTimeOffset> createTime = default;
-            Core.Optional<IReadOnlyList<SynapseManagedIntegrationRuntimeNode>> nodes = default;
-            Core.Optional<IReadOnlyList<SynapseManagedIntegrationRuntimeError>> otherErrors = default;
-            Core.Optional<SynapseManagedIntegrationRuntimeOperationResult> lastOperation = default;
+            Optional<string> dataFactoryName = default;
+            Optional<SynapseIntegrationRuntimeState> state = default;
+            Optional<DateTimeOffset> createTime = default;
+            Optional<IReadOnlyList<SynapseManagedIntegrationRuntimeNode>> nodes = default;
+            Optional<IReadOnlyList<SynapseManagedIntegrationRuntimeError>> otherErrors = default;
+            Optional<SynapseManagedIntegrationRuntimeOperationResult> lastOperation = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseManagedIntegrationRuntimeStatus(type, dataFactoryName.Value, Core.Optional.ToNullable(state), additionalProperties, Core.Optional.ToNullable(createTime), Core.Optional.ToList(nodes), Core.Optional.ToList(otherErrors), lastOperation.Value);
+            return new SynapseManagedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToList(nodes), Optional.ToList(otherErrors), lastOperation.Value);
         }
     }
 }

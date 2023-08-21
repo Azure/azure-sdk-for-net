@@ -12,12 +12,12 @@ using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
-    public partial class AssetConversionConfiguration : Core.IUtf8JsonSerializable
+    public partial class AssetConversionConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AssetDimensionsWrapper))
+            if (Optional.IsDefined(AssetDimensionsWrapper))
             {
                 if (AssetDimensionsWrapper != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     writer.WriteNull("dimensions");
                 }
             }
-            if (Core.Optional.IsDefined(BoundingBoxCenterWrapper))
+            if (Optional.IsDefined(BoundingBoxCenterWrapper))
             {
                 if (BoundingBoxCenterWrapper != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             }
             writer.WritePropertyName("gravity"u8);
             writer.WriteObjectValue(GravityWrapper);
-            if (Core.Optional.IsCollectionDefined(KeyFrameIndexes))
+            if (Optional.IsCollectionDefined(KeyFrameIndexes))
             {
                 if (KeyFrameIndexes != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     writer.WriteNull("keyFrameIndexes");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(GroundTruthTrajectoryCameraPoses))
+            if (Optional.IsCollectionDefined(GroundTruthTrajectoryCameraPoses))
             {
                 writer.WritePropertyName("gtTrajectory"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(PrincipalAxisWrapper))
+            if (Optional.IsDefined(PrincipalAxisWrapper))
             {
                 if (PrincipalAxisWrapper != null)
                 {
@@ -84,12 +84,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             }
             writer.WritePropertyName("scale"u8);
             writer.WriteNumberValue(Scale);
-            if (Core.Optional.IsDefined(DisableDetectScaleUnits))
+            if (Optional.IsDefined(DisableDetectScaleUnits))
             {
                 writer.WritePropertyName("disableDetectScaleUnits"u8);
                 writer.WriteBooleanValue(DisableDetectScaleUnits);
             }
-            if (Core.Optional.IsDefined(SupportingPlaneWrapper))
+            if (Optional.IsDefined(SupportingPlaneWrapper))
             {
                 if (SupportingPlaneWrapper != null)
                 {
@@ -101,7 +101,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     writer.WriteNull("supportingPlane");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(TestTrajectoryCameraPoses))
+            if (Optional.IsCollectionDefined(TestTrajectoryCameraPoses))
             {
                 writer.WritePropertyName("testTrajectory"u8);
                 writer.WriteStartArray();
@@ -120,16 +120,16 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             {
                 return null;
             }
-            Core.Optional<Vector3> dimensions = default;
-            Core.Optional<Vector3> boundingBoxCenter = default;
+            Optional<Vector3> dimensions = default;
+            Optional<Vector3> boundingBoxCenter = default;
             Vector3 gravity = default;
-            Core.Optional<IReadOnlyList<int>> keyFrameIndexes = default;
-            Core.Optional<IReadOnlyList<TrajectoryPose>> gtTrajectory = default;
-            Core.Optional<Quaternion> principalAxis = default;
+            Optional<IReadOnlyList<int>> keyFrameIndexes = default;
+            Optional<IReadOnlyList<TrajectoryPose>> gtTrajectory = default;
+            Optional<Quaternion> principalAxis = default;
             float scale = default;
-            Core.Optional<bool> disableDetectScaleUnits = default;
-            Core.Optional<Vector4> supportingPlane = default;
-            Core.Optional<IReadOnlyList<TrajectoryPose>> testTrajectory = default;
+            Optional<bool> disableDetectScaleUnits = default;
+            Optional<Vector4> supportingPlane = default;
+            Optional<IReadOnlyList<TrajectoryPose>> testTrajectory = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimensions"u8))
@@ -234,7 +234,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     continue;
                 }
             }
-            return new AssetConversionConfiguration(dimensions.Value, boundingBoxCenter.Value, gravity, Core.Optional.ToList(keyFrameIndexes), Core.Optional.ToList(gtTrajectory), principalAxis.Value, scale, disableDetectScaleUnits, supportingPlane.Value, Core.Optional.ToList(testTrajectory));
+            return new AssetConversionConfiguration(dimensions.Value, boundingBoxCenter.Value, gravity, Optional.ToList(keyFrameIndexes), Optional.ToList(gtTrajectory), principalAxis.Value, scale, disableDetectScaleUnits, supportingPlane.Value, Optional.ToList(testTrajectory));
         }
     }
 }

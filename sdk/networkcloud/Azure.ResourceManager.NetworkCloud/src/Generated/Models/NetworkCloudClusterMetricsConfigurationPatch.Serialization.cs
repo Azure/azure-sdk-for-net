@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class NetworkCloudClusterMetricsConfigurationPatch : Core.IUtf8JsonSerializable
+    public partial class NetworkCloudClusterMetricsConfigurationPatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CollectionInterval))
+            if (Optional.IsDefined(CollectionInterval))
             {
                 writer.WritePropertyName("collectionInterval"u8);
                 writer.WriteNumberValue(CollectionInterval.Value);
             }
-            if (Core.Optional.IsCollectionDefined(EnabledMetrics))
+            if (Optional.IsCollectionDefined(EnabledMetrics))
             {
                 writer.WritePropertyName("enabledMetrics"u8);
                 writer.WriteStartArray();

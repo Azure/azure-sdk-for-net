@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of ReservationPurchaseContent. </summary>
         public ReservationPurchaseContent()
         {
-            AppliedScopes = new Core.ChangeTrackingList<string>();
+            AppliedScopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ReservationPurchaseContent. </summary>

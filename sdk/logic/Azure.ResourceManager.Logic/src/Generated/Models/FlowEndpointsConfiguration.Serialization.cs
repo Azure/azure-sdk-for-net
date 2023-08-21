@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class FlowEndpointsConfiguration : Core.IUtf8JsonSerializable
+    public partial class FlowEndpointsConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Workflow))
+            if (Optional.IsDefined(Workflow))
             {
                 writer.WritePropertyName("workflow"u8);
                 writer.WriteObjectValue(Workflow);
             }
-            if (Core.Optional.IsDefined(Connector))
+            if (Optional.IsDefined(Connector))
             {
                 writer.WritePropertyName("connector"u8);
                 writer.WriteObjectValue(Connector);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<FlowEndpoints> workflow = default;
-            Core.Optional<FlowEndpoints> connector = default;
+            Optional<FlowEndpoints> workflow = default;
+            Optional<FlowEndpoints> connector = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workflow"u8))

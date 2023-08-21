@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of ListPrivateEndpointConnectionsResult. </summary>
         internal ListPrivateEndpointConnectionsResult()
         {
-            Value = new Core.ChangeTrackingList<BatchPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<BatchPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ListPrivateEndpointConnectionsResult. </summary>

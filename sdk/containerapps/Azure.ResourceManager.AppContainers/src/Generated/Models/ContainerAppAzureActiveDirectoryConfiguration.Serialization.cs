@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppAzureActiveDirectoryConfiguration : Core.IUtf8JsonSerializable
+    public partial class ContainerAppAzureActiveDirectoryConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(Registration))
+            if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
             }
-            if (Core.Optional.IsDefined(Login))
+            if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
             }
-            if (Core.Optional.IsDefined(Validation))
+            if (Optional.IsDefined(Validation))
             {
                 writer.WritePropertyName("validation"u8);
                 writer.WriteObjectValue(Validation);
             }
-            if (Core.Optional.IsDefined(IsAutoProvisioned))
+            if (Optional.IsDefined(IsAutoProvisioned))
             {
                 writer.WritePropertyName("isAutoProvisioned"u8);
                 writer.WriteBooleanValue(IsAutoProvisioned.Value);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<ContainerAppAzureActiveDirectoryRegistrationConfiguration> registration = default;
-            Core.Optional<ContainerAppAzureActiveDirectoryLoginConfiguration> login = default;
-            Core.Optional<ContainerAppAzureActiveDirectoryValidationConfiguration> validation = default;
-            Core.Optional<bool> isAutoProvisioned = default;
+            Optional<bool> enabled = default;
+            Optional<ContainerAppAzureActiveDirectoryRegistrationConfiguration> registration = default;
+            Optional<ContainerAppAzureActiveDirectoryLoginConfiguration> login = default;
+            Optional<ContainerAppAzureActiveDirectoryValidationConfiguration> validation = default;
+            Optional<bool> isAutoProvisioned = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppAzureActiveDirectoryConfiguration(Core.Optional.ToNullable(enabled), registration.Value, login.Value, validation.Value, Core.Optional.ToNullable(isAutoProvisioned));
+            return new ContainerAppAzureActiveDirectoryConfiguration(Optional.ToNullable(enabled), registration.Value, login.Value, validation.Value, Optional.ToNullable(isAutoProvisioned));
         }
     }
 }

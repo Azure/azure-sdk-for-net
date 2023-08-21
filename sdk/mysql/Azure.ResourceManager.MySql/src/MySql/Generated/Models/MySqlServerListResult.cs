@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlServerListResult. </summary>
         internal MySqlServerListResult()
         {
-            Value = new Core.ChangeTrackingList<MySqlServerData>();
+            Value = new ChangeTrackingList<MySqlServerData>();
         }
 
         /// <summary> Initializes a new instance of MySqlServerListResult. </summary>

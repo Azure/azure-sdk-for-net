@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class NginxCertificateProperties : Core.IUtf8JsonSerializable
+    public partial class NginxCertificateProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeyVirtualPath))
+            if (Optional.IsDefined(KeyVirtualPath))
             {
                 writer.WritePropertyName("keyVirtualPath"u8);
                 writer.WriteStringValue(KeyVirtualPath);
             }
-            if (Core.Optional.IsDefined(CertificateVirtualPath))
+            if (Optional.IsDefined(CertificateVirtualPath))
             {
                 writer.WritePropertyName("certificateVirtualPath"u8);
                 writer.WriteStringValue(CertificateVirtualPath);
             }
-            if (Core.Optional.IsDefined(KeyVaultSecretId))
+            if (Optional.IsDefined(KeyVaultSecretId))
             {
                 writer.WritePropertyName("keyVaultSecretId"u8);
                 writer.WriteStringValue(KeyVaultSecretId);
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<string> keyVirtualPath = default;
-            Core.Optional<string> certificateVirtualPath = default;
-            Core.Optional<string> keyVaultSecretId = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> keyVirtualPath = default;
+            Optional<string> certificateVirtualPath = default;
+            Optional<string> keyVaultSecretId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     continue;
                 }
             }
-            return new NginxCertificateProperties(Core.Optional.ToNullable(provisioningState), keyVirtualPath.Value, certificateVirtualPath.Value, keyVaultSecretId.Value);
+            return new NginxCertificateProperties(Optional.ToNullable(provisioningState), keyVirtualPath.Value, certificateVirtualPath.Value, keyVaultSecretId.Value);
         }
     }
 }

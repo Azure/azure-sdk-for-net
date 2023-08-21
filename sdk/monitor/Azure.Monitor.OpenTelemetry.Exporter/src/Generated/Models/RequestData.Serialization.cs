@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class RequestData : Core.IUtf8JsonSerializable
+    internal partial class RequestData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -28,17 +28,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteBooleanValue(Success);
             writer.WritePropertyName("responseCode"u8);
             writer.WriteStringValue(ResponseCode);
-            if (Core.Optional.IsDefined(Source))
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Core.Optional.IsDefined(Url))
+            if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url);
             }
-            if (Core.Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Measurements))
+            if (Optional.IsCollectionDefined(Measurements))
             {
                 writer.WritePropertyName("measurements"u8);
                 writer.WriteStartObject();

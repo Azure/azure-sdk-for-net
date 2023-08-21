@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class PrioritizedFields : Core.IUtf8JsonSerializable
+    public partial class PrioritizedFields : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TitleField))
+            if (Optional.IsDefined(TitleField))
             {
                 writer.WritePropertyName("titleField"u8);
                 writer.WriteObjectValue(TitleField);
             }
-            if (Core.Optional.IsCollectionDefined(ContentFields))
+            if (Optional.IsCollectionDefined(ContentFields))
             {
                 writer.WritePropertyName("prioritizedContentFields"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(KeywordFields))
+            if (Optional.IsCollectionDefined(KeywordFields))
             {
                 writer.WritePropertyName("prioritizedKeywordsFields"u8);
                 writer.WriteStartArray();
@@ -50,9 +50,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<SemanticField> titleField = default;
-            Core.Optional<IList<SemanticField>> prioritizedContentFields = default;
-            Core.Optional<IList<SemanticField>> prioritizedKeywordsFields = default;
+            Optional<SemanticField> titleField = default;
+            Optional<IList<SemanticField>> prioritizedContentFields = default;
+            Optional<IList<SemanticField>> prioritizedKeywordsFields = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("titleField"u8))
@@ -93,7 +93,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PrioritizedFields(titleField.Value, Core.Optional.ToList(prioritizedContentFields), Core.Optional.ToList(prioritizedKeywordsFields));
+            return new PrioritizedFields(titleField.Value, Optional.ToList(prioritizedContentFields), Optional.ToList(prioritizedKeywordsFields));
         }
     }
 }

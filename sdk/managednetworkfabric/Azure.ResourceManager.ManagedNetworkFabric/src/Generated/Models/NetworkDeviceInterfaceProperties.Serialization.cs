@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkDeviceInterfaceProperties : Core.IUtf8JsonSerializable
+    public partial class NetworkDeviceInterfaceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identifier))
+            if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteStringValue(Identifier);
             }
-            if (Core.Optional.IsDefined(InterfaceType))
+            if (Optional.IsDefined(InterfaceType))
             {
                 writer.WritePropertyName("interfaceType"u8);
                 writer.WriteStringValue(InterfaceType);
             }
-            if (Core.Optional.IsCollectionDefined(SupportedConnectorTypes))
+            if (Optional.IsCollectionDefined(SupportedConnectorTypes))
             {
                 writer.WritePropertyName("supportedConnectorTypes"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<string> identifier = default;
-            Core.Optional<string> interfaceType = default;
-            Core.Optional<IList<SupportedConnectorProperties>> supportedConnectorTypes = default;
+            Optional<string> identifier = default;
+            Optional<string> interfaceType = default;
+            Optional<IList<SupportedConnectorProperties>> supportedConnectorTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identifier"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new NetworkDeviceInterfaceProperties(identifier.Value, interfaceType.Value, Core.Optional.ToList(supportedConnectorTypes));
+            return new NetworkDeviceInterfaceProperties(identifier.Value, interfaceType.Value, Optional.ToList(supportedConnectorTypes));
         }
     }
 }

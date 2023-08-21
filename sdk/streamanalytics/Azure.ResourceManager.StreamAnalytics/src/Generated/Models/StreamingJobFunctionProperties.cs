@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of StreamingJobFunctionProperties. </summary>
         protected StreamingJobFunctionProperties()
         {
-            Inputs = new Core.ChangeTrackingList<StreamingJobFunctionInput>();
+            Inputs = new ChangeTrackingList<StreamingJobFunctionInput>();
         }
 
         /// <summary> Initializes a new instance of StreamingJobFunctionProperties. </summary>

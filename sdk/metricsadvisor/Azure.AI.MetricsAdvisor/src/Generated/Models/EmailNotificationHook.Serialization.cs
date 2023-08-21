@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
-    public partial class EmailNotificationHook : Core.IUtf8JsonSerializable
+    public partial class EmailNotificationHook : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("hookParameter"u8);
@@ -23,17 +23,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
             writer.WriteStringValue(HookKind.ToString());
             writer.WritePropertyName("hookName"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(InternalExternalLink))
+            if (Optional.IsDefined(InternalExternalLink))
             {
                 writer.WritePropertyName("externalLink"u8);
                 writer.WriteStringValue(InternalExternalLink);
             }
-            if (Core.Optional.IsCollectionDefined(Administrators))
+            if (Optional.IsCollectionDefined(Administrators))
             {
                 writer.WritePropertyName("admins"u8);
                 writer.WriteStartArray();
@@ -54,11 +54,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
             EmailHookParameter hookParameter = default;
             NotificationHookKind hookType = default;
-            Core.Optional<string> hookId = default;
+            Optional<string> hookId = default;
             string hookName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> externalLink = default;
-            Core.Optional<IList<string>> admins = default;
+            Optional<string> description = default;
+            Optional<string> externalLink = default;
+            Optional<IList<string>> admins = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hookParameter"u8))
@@ -106,7 +106,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     continue;
                 }
             }
-            return new EmailNotificationHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Core.Optional.ToList(admins), hookParameter);
+            return new EmailNotificationHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins), hookParameter);
         }
     }
 }

@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class NetworkFeatureData : Core.IUtf8JsonSerializable
+    public partial class NetworkFeatureData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> virtualNetworkName = default;
-            Core.Optional<AppServiceVirtualNetworkProperties> virtualNetworkConnection = default;
-            Core.Optional<IReadOnlyList<RelayServiceConnectionEntityData>> hybridConnections = default;
-            Core.Optional<IReadOnlyList<HybridConnectionData>> hybridConnectionsV2 = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> virtualNetworkName = default;
+            Optional<AppServiceVirtualNetworkProperties> virtualNetworkConnection = default;
+            Optional<IReadOnlyList<RelayServiceConnectionEntityData>> hybridConnections = default;
+            Optional<IReadOnlyList<HybridConnectionData>> hybridConnectionsV2 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new NetworkFeatureData(id, name, type, systemData.Value, virtualNetworkName.Value, virtualNetworkConnection.Value, Core.Optional.ToList(hybridConnections), Core.Optional.ToList(hybridConnectionsV2), kind.Value);
+            return new NetworkFeatureData(id, name, type, systemData.Value, virtualNetworkName.Value, virtualNetworkConnection.Value, Optional.ToList(hybridConnections), Optional.ToList(hybridConnectionsV2), kind.Value);
         }
     }
 }

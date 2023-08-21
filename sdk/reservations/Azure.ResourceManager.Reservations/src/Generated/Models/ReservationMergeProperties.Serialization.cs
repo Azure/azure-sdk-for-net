@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Core.Optional<string> mergeDestination = default;
-            Core.Optional<IReadOnlyList<string>> mergeSources = default;
+            Optional<string> mergeDestination = default;
+            Optional<IReadOnlyList<string>> mergeSources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mergeDestination"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ReservationMergeProperties(mergeDestination.Value, Core.Optional.ToList(mergeSources));
+            return new ReservationMergeProperties(mergeDestination.Value, Optional.ToList(mergeSources));
         }
     }
 }

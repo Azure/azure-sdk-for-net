@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> definition = default;
-            Core.Optional<IReadOnlyList<AutomationActivityParameterSet>> parameterSets = default;
-            Core.Optional<IReadOnlyList<AutomationActivityOutputType>> outputTypes = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<string> description = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<string> definition = default;
+            Optional<IReadOnlyList<AutomationActivityParameterSet>> parameterSets = default;
+            Optional<IReadOnlyList<AutomationActivityOutputType>> outputTypes = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationActivity(id.Value, name.Value, definition.Value, Core.Optional.ToList(parameterSets), Core.Optional.ToList(outputTypes), Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime), description.Value);
+            return new AutomationActivity(id.Value, name.Value, definition.Value, Optional.ToList(parameterSets), Optional.ToList(outputTypes), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of ProtectedItemResourceList. </summary>
         internal ProtectedItemResourceList()
         {
-            Value = new Core.ChangeTrackingList<BackupProtectedItemData>();
+            Value = new ChangeTrackingList<BackupProtectedItemData>();
         }
 
         /// <summary> Initializes a new instance of ProtectedItemResourceList. </summary>

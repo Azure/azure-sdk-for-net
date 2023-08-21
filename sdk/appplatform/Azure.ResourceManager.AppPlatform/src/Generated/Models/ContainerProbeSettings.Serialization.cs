@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class ContainerProbeSettings : Core.IUtf8JsonSerializable
+    internal partial class ContainerProbeSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsProbeDisabled))
+            if (Optional.IsDefined(IsProbeDisabled))
             {
                 writer.WritePropertyName("disableProbe"u8);
                 writer.WriteBooleanValue(IsProbeDisabled.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<bool> disableProbe = default;
+            Optional<bool> disableProbe = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disableProbe"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new ContainerProbeSettings(Core.Optional.ToNullable(disableProbe));
+            return new ContainerProbeSettings(Optional.ToNullable(disableProbe));
         }
     }
 }

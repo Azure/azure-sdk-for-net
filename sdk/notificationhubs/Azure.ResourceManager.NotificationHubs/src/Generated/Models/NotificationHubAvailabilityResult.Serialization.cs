@@ -12,22 +12,22 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubAvailabilityResult : Core.IUtf8JsonSerializable
+    public partial class NotificationHubAvailabilityResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsAvailiable))
+            if (Optional.IsDefined(IsAvailiable))
             {
                 writer.WritePropertyName("isAvailiable"u8);
                 writer.WriteBooleanValue(IsAvailiable.Value);
             }
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Core.Optional<bool> isAvailiable = default;
-            Core.Optional<NotificationHubSku> sku = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<bool> isAvailiable = default;
+            Optional<NotificationHubSku> sku = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isAvailiable"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     continue;
                 }
             }
-            return new NotificationHubAvailabilityResult(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(isAvailiable), sku.Value);
+            return new NotificationHubAvailabilityResult(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(isAvailiable), sku.Value);
         }
     }
 }

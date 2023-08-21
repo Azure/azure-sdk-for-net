@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<PublicNetworkAccessType> publicNetworkAccess = default;
-            Core.Optional<IReadOnlyList<ConnectionDetail>> connectionDetails = default;
+            Optional<string> id = default;
+            Optional<PublicNetworkAccessType> publicNetworkAccess = default;
+            Optional<IReadOnlyList<ConnectionDetail>> connectionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     continue;
                 }
             }
-            return new PrivateLinkScopeValidationDetails(id.Value, Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToList(connectionDetails));
+            return new PrivateLinkScopeValidationDetails(id.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(connectionDetails));
         }
     }
 }

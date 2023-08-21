@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="location"> The location. </param>
         public JitRequestData(AzureLocation location) : base(location)
         {
-            JitAuthorizationPolicies = new Core.ChangeTrackingList<JitAuthorizationPolicies>();
+            JitAuthorizationPolicies = new ChangeTrackingList<JitAuthorizationPolicies>();
         }
 
         /// <summary> Initializes a new instance of JitRequestData. </summary>

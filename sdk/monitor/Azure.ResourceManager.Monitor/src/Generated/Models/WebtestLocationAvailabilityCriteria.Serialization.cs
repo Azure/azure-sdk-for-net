@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class WebtestLocationAvailabilityCriteria : Core.IUtf8JsonSerializable
+    public partial class WebtestLocationAvailabilityCriteria : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("webTestId"u8);

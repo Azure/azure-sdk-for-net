@@ -18,11 +18,11 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Core.Optional<int> deviceCount = default;
-            Core.Optional<int> failedCount = default;
-            Core.Optional<int> succeededCount = default;
-            Core.Optional<int> runningCount = default;
-            Core.Optional<int> pendingCount = default;
+            Optional<int> deviceCount = default;
+            Optional<int> failedCount = default;
+            Optional<int> succeededCount = default;
+            Optional<int> runningCount = default;
+            Optional<int> pendingCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceCount"u8))
@@ -71,7 +71,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new DeviceJobStatistics(Core.Optional.ToNullable(deviceCount), Core.Optional.ToNullable(failedCount), Core.Optional.ToNullable(succeededCount), Core.Optional.ToNullable(runningCount), Core.Optional.ToNullable(pendingCount));
+            return new DeviceJobStatistics(Optional.ToNullable(deviceCount), Optional.ToNullable(failedCount), Optional.ToNullable(succeededCount), Optional.ToNullable(runningCount), Optional.ToNullable(pendingCount));
         }
     }
 }

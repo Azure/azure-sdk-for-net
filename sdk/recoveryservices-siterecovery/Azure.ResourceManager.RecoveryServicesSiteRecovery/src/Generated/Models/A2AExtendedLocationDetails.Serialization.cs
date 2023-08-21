@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
-            Core.Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
+            Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
+            Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryExtendedLocation"u8))

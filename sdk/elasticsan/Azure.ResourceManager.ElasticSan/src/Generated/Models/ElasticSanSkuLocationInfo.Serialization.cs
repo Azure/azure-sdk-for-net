@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IReadOnlyList<string>> zones = default;
+            Optional<AzureLocation> location = default;
+            Optional<IReadOnlyList<string>> zones = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new ElasticSanSkuLocationInfo(Core.Optional.ToNullable(location), Core.Optional.ToList(zones));
+            return new ElasticSanSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones));
         }
     }
 }

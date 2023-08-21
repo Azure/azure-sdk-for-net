@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<OperationalInsightsLinkedServiceData>> value = default;
+            Optional<IReadOnlyList<OperationalInsightsLinkedServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new LinkedServiceListResult(Core.Optional.ToList(value));
+            return new LinkedServiceListResult(Optional.ToList(value));
         }
     }
 }

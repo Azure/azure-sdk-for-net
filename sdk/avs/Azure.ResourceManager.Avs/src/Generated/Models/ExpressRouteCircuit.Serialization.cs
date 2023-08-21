@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class ExpressRouteCircuit : Core.IUtf8JsonSerializable
+    public partial class ExpressRouteCircuit : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Core.Optional<string> primarySubnet = default;
-            Core.Optional<string> secondarySubnet = default;
-            Core.Optional<ResourceIdentifier> expressRouteId = default;
-            Core.Optional<ResourceIdentifier> expressRoutePrivatePeeringId = default;
+            Optional<string> primarySubnet = default;
+            Optional<string> secondarySubnet = default;
+            Optional<ResourceIdentifier> expressRouteId = default;
+            Optional<ResourceIdentifier> expressRoutePrivatePeeringId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primarySubnet"u8))

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

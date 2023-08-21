@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsIncidentConfiguration : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsIncidentConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("createIncident"u8);
             writer.WriteBooleanValue(IsIncidentCreated);
-            if (Core.Optional.IsDefined(GroupingConfiguration))
+            if (Optional.IsDefined(GroupingConfiguration))
             {
                 writer.WritePropertyName("groupingConfiguration"u8);
                 writer.WriteObjectValue(GroupingConfiguration);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             bool createIncident = default;
-            Core.Optional<SecurityInsightsGroupingConfiguration> groupingConfiguration = default;
+            Optional<SecurityInsightsGroupingConfiguration> groupingConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createIncident"u8))

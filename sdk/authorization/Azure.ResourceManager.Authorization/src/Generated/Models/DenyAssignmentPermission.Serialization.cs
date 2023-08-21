@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> actions = default;
-            Core.Optional<IReadOnlyList<string>> notActions = default;
-            Core.Optional<IReadOnlyList<string>> dataActions = default;
-            Core.Optional<IReadOnlyList<string>> notDataActions = default;
-            Core.Optional<string> condition = default;
-            Core.Optional<string> conditionVersion = default;
+            Optional<IReadOnlyList<string>> actions = default;
+            Optional<IReadOnlyList<string>> notActions = default;
+            Optional<IReadOnlyList<string>> dataActions = default;
+            Optional<IReadOnlyList<string>> notDataActions = default;
+            Optional<string> condition = default;
+            Optional<string> conditionVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new DenyAssignmentPermission(Core.Optional.ToList(actions), Core.Optional.ToList(notActions), Core.Optional.ToList(dataActions), Core.Optional.ToList(notDataActions), condition.Value, conditionVersion.Value);
+            return new DenyAssignmentPermission(Optional.ToList(actions), Optional.ToList(notActions), Optional.ToList(dataActions), Optional.ToList(notDataActions), condition.Value, conditionVersion.Value);
         }
     }
 }

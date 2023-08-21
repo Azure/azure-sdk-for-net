@@ -14,14 +14,14 @@ using Azure.ResourceManager.SelfHelp.Models;
 
 namespace Azure.ResourceManager.SelfHelp
 {
-    public partial class SelfHelpDiagnosticData : Core.IUtf8JsonSerializable
+    public partial class SelfHelpDiagnosticData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(GlobalParameters))
+            if (Optional.IsCollectionDefined(GlobalParameters))
             {
                 writer.WritePropertyName("globalParameters"u8);
                 writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SelfHelp
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Insights))
+            if (Optional.IsCollectionDefined(Insights))
             {
                 writer.WritePropertyName("insights"u8);
                 writer.WriteStartArray();
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.SelfHelp
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IDictionary<string, string>> globalParameters = default;
-            Core.Optional<IList<SelfHelpDiagnosticInvocation>> insights = default;
-            Core.Optional<DateTimeOffset> acceptedAt = default;
-            Core.Optional<SelfHelpProvisioningState> provisioningState = default;
-            Core.Optional<IReadOnlyList<SelfHelpDiagnosticInfo>> diagnostics = default;
+            Optional<SystemData> systemData = default;
+            Optional<IDictionary<string, string>> globalParameters = default;
+            Optional<IList<SelfHelpDiagnosticInvocation>> insights = default;
+            Optional<DateTimeOffset> acceptedAt = default;
+            Optional<SelfHelpProvisioningState> provisioningState = default;
+            Optional<IReadOnlyList<SelfHelpDiagnosticInfo>> diagnostics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.SelfHelp
                     continue;
                 }
             }
-            return new SelfHelpDiagnosticData(id, name, type, systemData.Value, Core.Optional.ToDictionary(globalParameters), Core.Optional.ToList(insights), Core.Optional.ToNullable(acceptedAt), Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(diagnostics));
+            return new SelfHelpDiagnosticData(id, name, type, systemData.Value, Optional.ToDictionary(globalParameters), Optional.ToList(insights), Optional.ToNullable(acceptedAt), Optional.ToNullable(provisioningState), Optional.ToList(diagnostics));
         }
     }
 }

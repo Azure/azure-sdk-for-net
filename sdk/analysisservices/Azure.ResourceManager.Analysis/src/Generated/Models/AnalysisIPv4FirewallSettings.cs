@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// <summary> Initializes a new instance of AnalysisIPv4FirewallSettings. </summary>
         public AnalysisIPv4FirewallSettings()
         {
-            FirewallRules = new Core.ChangeTrackingList<AnalysisIPv4FirewallRule>();
+            FirewallRules = new ChangeTrackingList<AnalysisIPv4FirewallRule>();
         }
 
         /// <summary> Initializes a new instance of AnalysisIPv4FirewallSettings. </summary>

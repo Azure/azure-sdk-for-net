@@ -11,44 +11,44 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubDestination : Core.IUtf8JsonSerializable
+    public partial class EventHubDestination : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StorageAccountResourceId))
+            if (Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (Core.Optional.IsDefined(BlobContainer))
+            if (Optional.IsDefined(BlobContainer))
             {
                 writer.WritePropertyName("blobContainer"u8);
                 writer.WriteStringValue(BlobContainer);
             }
-            if (Core.Optional.IsDefined(ArchiveNameFormat))
+            if (Optional.IsDefined(ArchiveNameFormat))
             {
                 writer.WritePropertyName("archiveNameFormat"u8);
                 writer.WriteStringValue(ArchiveNameFormat);
             }
-            if (Core.Optional.IsDefined(DataLakeSubscriptionId))
+            if (Optional.IsDefined(DataLakeSubscriptionId))
             {
                 writer.WritePropertyName("dataLakeSubscriptionId"u8);
                 writer.WriteStringValue(DataLakeSubscriptionId.Value);
             }
-            if (Core.Optional.IsDefined(DataLakeAccountName))
+            if (Optional.IsDefined(DataLakeAccountName))
             {
                 writer.WritePropertyName("dataLakeAccountName"u8);
                 writer.WriteStringValue(DataLakeAccountName);
             }
-            if (Core.Optional.IsDefined(DataLakeFolderPath))
+            if (Optional.IsDefined(DataLakeFolderPath))
             {
                 writer.WritePropertyName("dataLakeFolderPath"u8);
                 writer.WriteStringValue(DataLakeFolderPath);
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Core.Optional<string> blobContainer = default;
-            Core.Optional<string> archiveNameFormat = default;
-            Core.Optional<Guid> dataLakeSubscriptionId = default;
-            Core.Optional<string> dataLakeAccountName = default;
-            Core.Optional<string> dataLakeFolderPath = default;
+            Optional<string> name = default;
+            Optional<ResourceIdentifier> storageAccountResourceId = default;
+            Optional<string> blobContainer = default;
+            Optional<string> archiveNameFormat = default;
+            Optional<Guid> dataLakeSubscriptionId = default;
+            Optional<string> dataLakeAccountName = default;
+            Optional<string> dataLakeFolderPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new EventHubDestination(name.Value, storageAccountResourceId.Value, blobContainer.Value, archiveNameFormat.Value, Core.Optional.ToNullable(dataLakeSubscriptionId), dataLakeAccountName.Value, dataLakeFolderPath.Value);
+            return new EventHubDestination(name.Value, storageAccountResourceId.Value, blobContainer.Value, archiveNameFormat.Value, Optional.ToNullable(dataLakeSubscriptionId), dataLakeAccountName.Value, dataLakeFolderPath.Value);
         }
     }
 }

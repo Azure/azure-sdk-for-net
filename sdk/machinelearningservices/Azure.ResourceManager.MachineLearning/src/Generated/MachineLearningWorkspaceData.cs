@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location. </param>
         public MachineLearningWorkspaceData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>();
-            SharedPrivateLinkResources = new Core.ChangeTrackingList<MachineLearningSharedPrivateLinkResource>();
+            PrivateEndpointConnections = new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>();
+            SharedPrivateLinkResources = new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningWorkspaceData. </summary>

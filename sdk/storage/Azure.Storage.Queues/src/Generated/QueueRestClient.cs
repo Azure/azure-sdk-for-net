@@ -65,7 +65,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<QueueCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<QueueCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(timeout, metadata);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -74,7 +74,7 @@ namespace Azure.Storage.Queues
             {
                 case 201:
                 case 204:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -84,7 +84,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<QueueCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<QueueCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(timeout, metadata);
             _pipeline.Send(message, cancellationToken);
@@ -93,7 +93,7 @@ namespace Azure.Storage.Queues
             {
                 case 201:
                 case 204:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -119,7 +119,7 @@ namespace Azure.Storage.Queues
         /// <summary> operation permanently deletes the specified queue. </summary>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<QueueDeleteHeaders>> DeleteAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<QueueDeleteHeaders>> DeleteAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteRequest(timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -127,7 +127,7 @@ namespace Azure.Storage.Queues
             switch (message.Response.Status)
             {
                 case 204:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -136,7 +136,7 @@ namespace Azure.Storage.Queues
         /// <summary> operation permanently deletes the specified queue. </summary>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<QueueDeleteHeaders> Delete(int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<QueueDeleteHeaders> Delete(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteRequest(timeout);
             _pipeline.Send(message, cancellationToken);
@@ -144,7 +144,7 @@ namespace Azure.Storage.Queues
             switch (message.Response.Status)
             {
                 case 204:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -171,7 +171,7 @@ namespace Azure.Storage.Queues
         /// <summary> Retrieves user-defined metadata and queue properties on the specified queue. Metadata is associated with the queue as name-values pairs. </summary>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<QueueGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<QueueGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -179,7 +179,7 @@ namespace Azure.Storage.Queues
             switch (message.Response.Status)
             {
                 case 200:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -188,7 +188,7 @@ namespace Azure.Storage.Queues
         /// <summary> Retrieves user-defined metadata and queue properties on the specified queue. Metadata is associated with the queue as name-values pairs. </summary>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<QueueGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<QueueGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout);
             _pipeline.Send(message, cancellationToken);
@@ -196,7 +196,7 @@ namespace Azure.Storage.Queues
             switch (message.Response.Status)
             {
                 case 200:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -228,7 +228,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<QueueSetMetadataHeaders>> SetMetadataAsync(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<QueueSetMetadataHeaders>> SetMetadataAsync(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetMetadataRequest(timeout, metadata);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -236,7 +236,7 @@ namespace Azure.Storage.Queues
             switch (message.Response.Status)
             {
                 case 204:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -246,7 +246,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<QueueSetMetadataHeaders> SetMetadata(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<QueueSetMetadataHeaders> SetMetadata(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetMetadataRequest(timeout, metadata);
             _pipeline.Send(message, cancellationToken);
@@ -254,7 +254,7 @@ namespace Azure.Storage.Queues
             switch (message.Response.Status)
             {
                 case 204:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -281,7 +281,7 @@ namespace Azure.Storage.Queues
         /// <summary> returns details about any stored access policies specified on the queue that may be used with Shared Access Signatures. </summary>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<IReadOnlyList<QueueSignedIdentifier>, QueueGetAccessPolicyHeaders>> GetAccessPolicyAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<IReadOnlyList<QueueSignedIdentifier>, QueueGetAccessPolicyHeaders>> GetAccessPolicyAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAccessPolicyRequest(timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -301,7 +301,7 @@ namespace Azure.Storage.Queues
                             }
                             value = array;
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -311,7 +311,7 @@ namespace Azure.Storage.Queues
         /// <summary> returns details about any stored access policies specified on the queue that may be used with Shared Access Signatures. </summary>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<IReadOnlyList<QueueSignedIdentifier>, QueueGetAccessPolicyHeaders> GetAccessPolicy(int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<IReadOnlyList<QueueSignedIdentifier>, QueueGetAccessPolicyHeaders> GetAccessPolicy(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAccessPolicyRequest(timeout);
             _pipeline.Send(message, cancellationToken);
@@ -331,7 +331,7 @@ namespace Azure.Storage.Queues
                             }
                             value = array;
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -356,7 +356,7 @@ namespace Azure.Storage.Queues
             if (queueAcl != null)
             {
                 request.Headers.Add("Content-Type", "application/xml");
-                var content = new Core.XmlWriterContent();
+                var content = new XmlWriterContent();
                 content.XmlWriter.WriteStartElement("SignedIdentifiers");
                 foreach (var item in queueAcl)
                 {
@@ -372,7 +372,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="queueAcl"> the acls for the queue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<QueueSetAccessPolicyHeaders>> SetAccessPolicyAsync(int? timeout = null, IEnumerable<QueueSignedIdentifier> queueAcl = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<QueueSetAccessPolicyHeaders>> SetAccessPolicyAsync(int? timeout = null, IEnumerable<QueueSignedIdentifier> queueAcl = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetAccessPolicyRequest(timeout, queueAcl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -380,7 +380,7 @@ namespace Azure.Storage.Queues
             switch (message.Response.Status)
             {
                 case 204:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -390,7 +390,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="queueAcl"> the acls for the queue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<QueueSetAccessPolicyHeaders> SetAccessPolicy(int? timeout = null, IEnumerable<QueueSignedIdentifier> queueAcl = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<QueueSetAccessPolicyHeaders> SetAccessPolicy(int? timeout = null, IEnumerable<QueueSignedIdentifier> queueAcl = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetAccessPolicyRequest(timeout, queueAcl);
             _pipeline.Send(message, cancellationToken);
@@ -398,7 +398,7 @@ namespace Azure.Storage.Queues
             switch (message.Response.Status)
             {
                 case 204:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

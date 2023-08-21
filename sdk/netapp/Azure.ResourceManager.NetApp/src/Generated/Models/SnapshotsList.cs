@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of SnapshotsList. </summary>
         internal SnapshotsList()
         {
-            Value = new Core.ChangeTrackingList<NetAppVolumeSnapshotData>();
+            Value = new ChangeTrackingList<NetAppVolumeSnapshotData>();
         }
 
         /// <summary> Initializes a new instance of SnapshotsList. </summary>

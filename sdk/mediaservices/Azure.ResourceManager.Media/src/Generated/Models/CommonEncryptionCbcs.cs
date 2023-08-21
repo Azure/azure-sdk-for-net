@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of CommonEncryptionCbcs. </summary>
         public CommonEncryptionCbcs()
         {
-            ClearTracks = new Core.ChangeTrackingList<MediaTrackSelection>();
+            ClearTracks = new ChangeTrackingList<MediaTrackSelection>();
         }
 
         /// <summary> Initializes a new instance of CommonEncryptionCbcs. </summary>

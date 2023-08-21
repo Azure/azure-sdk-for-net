@@ -11,26 +11,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class DeploymentExtensionSpec : Core.IUtf8JsonSerializable
+    public partial class DeploymentExtensionSpec : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExtensionType))
+            if (Optional.IsDefined(ExtensionType))
             {
                 writer.WritePropertyName("extensionType"u8);
                 writer.WriteStringValue(ExtensionType);
             }
-            if (Core.Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Core.Optional.IsDefined(Settings))
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Settings.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(ProtectedSettings))
+            if (Optional.IsDefined(ProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettings"u8);
 #if NET6_0_OR_GREATER
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             string name = default;
-            Core.Optional<string> extensionType = default;
-            Core.Optional<string> version = default;
-            Core.Optional<BinaryData> settings = default;
-            Core.Optional<BinaryData> protectedSettings = default;
+            Optional<string> extensionType = default;
+            Optional<string> version = default;
+            Optional<BinaryData> settings = default;
+            Optional<BinaryData> protectedSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

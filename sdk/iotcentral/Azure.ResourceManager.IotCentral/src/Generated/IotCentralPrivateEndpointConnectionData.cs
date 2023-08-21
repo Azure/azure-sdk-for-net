@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <summary> Initializes a new instance of IotCentralPrivateEndpointConnectionData. </summary>
         public IotCentralPrivateEndpointConnectionData()
         {
-            GroupIds = new Core.ChangeTrackingList<string>();
+            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of IotCentralPrivateEndpointConnectionData. </summary>

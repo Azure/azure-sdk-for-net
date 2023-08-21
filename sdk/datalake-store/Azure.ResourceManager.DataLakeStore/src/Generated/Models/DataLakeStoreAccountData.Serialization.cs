@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<AzureLocation> location = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> accountId = default;
-            Core.Optional<DataLakeStoreAccountStatus> provisioningState = default;
-            Core.Optional<DataLakeStoreAccountState> state = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<string> endpoint = default;
-            Core.Optional<string> defaultGroup = default;
-            Core.Optional<DataLakeStoreAccountEncryptionConfig> encryptionConfig = default;
-            Core.Optional<DataLakeStoreEncryptionState> encryptionState = default;
-            Core.Optional<DataLakeStoreEncryptionProvisioningState> encryptionProvisioningState = default;
-            Core.Optional<IReadOnlyList<DataLakeStoreFirewallRuleData>> firewallRules = default;
-            Core.Optional<IReadOnlyList<DataLakeStoreVirtualNetworkRuleData>> virtualNetworkRules = default;
-            Core.Optional<DataLakeStoreFirewallState> firewallState = default;
-            Core.Optional<DataLakeStoreFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
-            Core.Optional<IReadOnlyList<DataLakeStoreTrustedIdProviderData>> trustedIdProviders = default;
-            Core.Optional<DataLakeStoreTrustedIdProviderState> trustedIdProviderState = default;
-            Core.Optional<DataLakeStoreCommitmentTierType> newTier = default;
-            Core.Optional<DataLakeStoreCommitmentTierType> currentTier = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> accountId = default;
+            Optional<DataLakeStoreAccountStatus> provisioningState = default;
+            Optional<DataLakeStoreAccountState> state = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<string> endpoint = default;
+            Optional<string> defaultGroup = default;
+            Optional<DataLakeStoreAccountEncryptionConfig> encryptionConfig = default;
+            Optional<DataLakeStoreEncryptionState> encryptionState = default;
+            Optional<DataLakeStoreEncryptionProvisioningState> encryptionProvisioningState = default;
+            Optional<IReadOnlyList<DataLakeStoreFirewallRuleData>> firewallRules = default;
+            Optional<IReadOnlyList<DataLakeStoreVirtualNetworkRuleData>> virtualNetworkRules = default;
+            Optional<DataLakeStoreFirewallState> firewallState = default;
+            Optional<DataLakeStoreFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
+            Optional<IReadOnlyList<DataLakeStoreTrustedIdProviderData>> trustedIdProviders = default;
+            Optional<DataLakeStoreTrustedIdProviderState> trustedIdProviderState = default;
+            Optional<DataLakeStoreCommitmentTierType> newTier = default;
+            Optional<DataLakeStoreCommitmentTierType> currentTier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DataLakeStore
                     continue;
                 }
             }
-            return new DataLakeStoreAccountData(id, name, type, systemData.Value, identity, Core.Optional.ToNullable(accountId), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(state), Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime), endpoint.Value, defaultGroup.Value, encryptionConfig.Value, Core.Optional.ToNullable(encryptionState), Core.Optional.ToNullable(encryptionProvisioningState), Core.Optional.ToList(firewallRules), Core.Optional.ToList(virtualNetworkRules), Core.Optional.ToNullable(firewallState), Core.Optional.ToNullable(firewallAllowAzureIPs), Core.Optional.ToList(trustedIdProviders), Core.Optional.ToNullable(trustedIdProviderState), Core.Optional.ToNullable(newTier), Core.Optional.ToNullable(currentTier), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags));
+            return new DataLakeStoreAccountData(id, name, type, systemData.Value, identity, Optional.ToNullable(accountId), Optional.ToNullable(provisioningState), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), endpoint.Value, defaultGroup.Value, encryptionConfig.Value, Optional.ToNullable(encryptionState), Optional.ToNullable(encryptionProvisioningState), Optional.ToList(firewallRules), Optional.ToList(virtualNetworkRules), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), Optional.ToList(trustedIdProviders), Optional.ToNullable(trustedIdProviderState), Optional.ToNullable(newTier), Optional.ToNullable(currentTier), Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SqlSource. </summary>
         public SqlSource()
         {
-            StoredProcedureParameters = new Core.ChangeTrackingDictionary<string, StoredProcedureParameter>();
+            StoredProcedureParameters = new ChangeTrackingDictionary<string, StoredProcedureParameter>();
             Type = "SqlSource";
         }
 

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<string> code = default;
-            Core.Optional<int> count = default;
+            Optional<string> code = default;
+            Optional<int> count = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineStatusCodeCount(code.Value, Core.Optional.ToNullable(count));
+            return new VirtualMachineStatusCodeCount(code.Value, Optional.ToNullable(count));
         }
     }
 }

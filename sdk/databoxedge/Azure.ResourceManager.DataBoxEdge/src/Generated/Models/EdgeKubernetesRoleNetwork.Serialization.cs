@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<CniConfig> cniConfig = default;
-            Core.Optional<DataBoxEdgeLoadBalancerConfig> loadBalancerConfig = default;
+            Optional<CniConfig> cniConfig = default;
+            Optional<DataBoxEdgeLoadBalancerConfig> loadBalancerConfig = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cniConfig"u8))

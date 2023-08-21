@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<MarketplaceAdminApprovalRequestData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<MarketplaceAdminApprovalRequestData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new MarketplaceAdminApprovalRequestList(Core.Optional.ToList(value), nextLink.Value);
+            return new MarketplaceAdminApprovalRequestList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Initializes a new instance of RedisPrivateLinkResourceListResult. </summary>
         internal RedisPrivateLinkResourceListResult()
         {
-            Value = new Core.ChangeTrackingList<RedisPrivateLinkResource>();
+            Value = new ChangeTrackingList<RedisPrivateLinkResource>();
         }
 
         /// <summary> Initializes a new instance of RedisPrivateLinkResourceListResult. </summary>

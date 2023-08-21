@@ -13,22 +13,22 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class EventGridNamespaceData : Core.IUtf8JsonSerializable
+    public partial class EventGridNamespaceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EventGrid
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -53,27 +53,27 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TopicsConfiguration))
+            if (Optional.IsDefined(TopicsConfiguration))
             {
                 writer.WritePropertyName("topicsConfiguration"u8);
                 writer.WriteObjectValue(TopicsConfiguration);
             }
-            if (Core.Optional.IsDefined(TopicSpacesConfiguration))
+            if (Optional.IsDefined(TopicSpacesConfiguration))
             {
                 writer.WritePropertyName("topicSpacesConfiguration"u8);
                 writer.WriteObjectValue(TopicSpacesConfiguration);
             }
-            if (Core.Optional.IsDefined(IsZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("isZoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(InboundIPRules))
+            if (Optional.IsCollectionDefined(InboundIPRules))
             {
                 writer.WritePropertyName("inboundIpRules"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(MinimumTlsVersionAllowed))
+            if (Optional.IsDefined(MinimumTlsVersionAllowed))
             {
                 writer.WritePropertyName("minimumTlsVersionAllowed"u8);
                 writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
@@ -98,22 +98,22 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return null;
             }
-            Core.Optional<NamespaceSku> sku = default;
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<NamespaceSku> sku = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IList<EventGridPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Core.Optional<NamespaceProvisioningState> provisioningState = default;
-            Core.Optional<TopicsConfiguration> topicsConfiguration = default;
-            Core.Optional<TopicSpacesConfiguration> topicSpacesConfiguration = default;
-            Core.Optional<bool> isZoneRedundant = default;
-            Core.Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
-            Core.Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
-            Core.Optional<TlsVersion> minimumTlsVersionAllowed = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<EventGridPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<NamespaceProvisioningState> provisioningState = default;
+            Optional<TopicsConfiguration> topicsConfiguration = default;
+            Optional<TopicSpacesConfiguration> topicSpacesConfiguration = default;
+            Optional<bool> isZoneRedundant = default;
+            Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
+            Optional<TlsVersion> minimumTlsVersionAllowed = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new EventGridNamespaceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, identity, Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(provisioningState), topicsConfiguration.Value, topicSpacesConfiguration.Value, Core.Optional.ToNullable(isZoneRedundant), Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToList(inboundIPRules), Core.Optional.ToNullable(minimumTlsVersionAllowed));
+            return new EventGridNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), topicsConfiguration.Value, topicSpacesConfiguration.Value, Optional.ToNullable(isZoneRedundant), Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), Optional.ToNullable(minimumTlsVersionAllowed));
         }
     }
 }

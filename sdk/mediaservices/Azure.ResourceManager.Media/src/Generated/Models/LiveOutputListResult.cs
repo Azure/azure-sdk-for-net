@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of LiveOutputListResult. </summary>
         internal LiveOutputListResult()
         {
-            Value = new Core.ChangeTrackingList<MediaLiveOutputData>();
+            Value = new ChangeTrackingList<MediaLiveOutputData>();
         }
 
         /// <summary> Initializes a new instance of LiveOutputListResult. </summary>

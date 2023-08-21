@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class PartnerDestinationData : Core.IUtf8JsonSerializable
+    public partial class PartnerDestinationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,32 +34,32 @@ namespace Azure.ResourceManager.EventGrid
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PartnerRegistrationImmutableId))
+            if (Optional.IsDefined(PartnerRegistrationImmutableId))
             {
                 writer.WritePropertyName("partnerRegistrationImmutableId"u8);
                 writer.WriteStringValue(PartnerRegistrationImmutableId.Value);
             }
-            if (Core.Optional.IsDefined(EndpointServiceContext))
+            if (Optional.IsDefined(EndpointServiceContext))
             {
                 writer.WritePropertyName("endpointServiceContext"u8);
                 writer.WriteStringValue(EndpointServiceContext);
             }
-            if (Core.Optional.IsDefined(ExpirationTimeIfNotActivatedUtc))
+            if (Optional.IsDefined(ExpirationTimeIfNotActivatedUtc))
             {
                 writer.WritePropertyName("expirationTimeIfNotActivatedUtc"u8);
                 writer.WriteStringValue(ExpirationTimeIfNotActivatedUtc.Value, "O");
             }
-            if (Core.Optional.IsDefined(ActivationState))
+            if (Optional.IsDefined(ActivationState))
             {
                 writer.WritePropertyName("activationState"u8);
                 writer.WriteStringValue(ActivationState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(EndpointBaseUri))
+            if (Optional.IsDefined(EndpointBaseUri))
             {
                 writer.WritePropertyName("endpointBaseUrl"u8);
                 writer.WriteStringValue(EndpointBaseUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(MessageForActivation))
+            if (Optional.IsDefined(MessageForActivation))
             {
                 writer.WritePropertyName("messageForActivation"u8);
                 writer.WriteStringValue(MessageForActivation);
@@ -74,19 +74,19 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> partnerRegistrationImmutableId = default;
-            Core.Optional<string> endpointServiceContext = default;
-            Core.Optional<DateTimeOffset> expirationTimeIfNotActivatedUtc = default;
-            Core.Optional<PartnerDestinationProvisioningState> provisioningState = default;
-            Core.Optional<PartnerDestinationActivationState> activationState = default;
-            Core.Optional<Uri> endpointBaseUri = default;
-            Core.Optional<string> messageForActivation = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> partnerRegistrationImmutableId = default;
+            Optional<string> endpointServiceContext = default;
+            Optional<DateTimeOffset> expirationTimeIfNotActivatedUtc = default;
+            Optional<PartnerDestinationProvisioningState> provisioningState = default;
+            Optional<PartnerDestinationActivationState> activationState = default;
+            Optional<Uri> endpointBaseUri = default;
+            Optional<string> messageForActivation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new PartnerDestinationData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(partnerRegistrationImmutableId), endpointServiceContext.Value, Core.Optional.ToNullable(expirationTimeIfNotActivatedUtc), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(activationState), endpointBaseUri.Value, messageForActivation.Value);
+            return new PartnerDestinationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(partnerRegistrationImmutableId), endpointServiceContext.Value, Optional.ToNullable(expirationTimeIfNotActivatedUtc), Optional.ToNullable(provisioningState), Optional.ToNullable(activationState), endpointBaseUri.Value, messageForActivation.Value);
         }
     }
 }

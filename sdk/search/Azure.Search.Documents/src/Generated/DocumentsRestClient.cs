@@ -119,7 +119,7 @@ namespace Azure.Search.Documents
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(searchRequest);
             request.Content = content;
             return message;
@@ -192,7 +192,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/docs('", false);
             uri.AppendPath(key, true);
             uri.AppendPath("')", false);
-            if (selectedFields != null && Core.Optional.IsCollectionDefined(selectedFields))
+            if (selectedFields != null && Optional.IsCollectionDefined(selectedFields))
             {
                 uri.AppendQueryDelimited("$select", selectedFields, ",", true);
             }
@@ -297,7 +297,7 @@ namespace Azure.Search.Documents
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(suggestRequest);
             request.Content = content;
             return message;
@@ -372,7 +372,7 @@ namespace Azure.Search.Documents
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(batch);
             request.Content = content;
             return message;
@@ -449,7 +449,7 @@ namespace Azure.Search.Documents
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(autocompleteRequest);
             request.Content = content;
             return message;

@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    public partial class ServiceFabricApplicationTypeData : Core.IUtf8JsonSerializable
+    public partial class ServiceFabricApplicationTypeData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     continue;
                 }
             }
-            return new ServiceFabricApplicationTypeData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, provisioningState.Value, Core.Optional.ToNullable(etag));
+            return new ServiceFabricApplicationTypeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, Optional.ToNullable(etag));
         }
     }
 }

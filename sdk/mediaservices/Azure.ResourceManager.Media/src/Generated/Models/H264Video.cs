@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of H264Video. </summary>
         public H264Video()
         {
-            Layers = new Core.ChangeTrackingList<H264Layer>();
+            Layers = new ChangeTrackingList<H264Layer>();
             OdataType = "#Microsoft.Media.H264Video";
         }
 

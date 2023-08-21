@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<DateTimeOffset> publishedDate = default;
-            Core.Optional<DateTimeOffset> endOfLifeDate = default;
-            Core.Optional<bool> excludeFromLatest = default;
-            Core.Optional<SharedGalleryImageVersionStorageProfile> storageProfile = default;
-            Core.Optional<string> uniqueId = default;
+            Optional<string> name = default;
+            Optional<AzureLocation> location = default;
+            Optional<DateTimeOffset> publishedDate = default;
+            Optional<DateTimeOffset> endOfLifeDate = default;
+            Optional<bool> excludeFromLatest = default;
+            Optional<SharedGalleryImageVersionStorageProfile> storageProfile = default;
+            Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new SharedGalleryImageVersionData(name.Value, Core.Optional.ToNullable(location), uniqueId.Value, Core.Optional.ToNullable(publishedDate), Core.Optional.ToNullable(endOfLifeDate), Core.Optional.ToNullable(excludeFromLatest), storageProfile.Value);
+            return new SharedGalleryImageVersionData(name.Value, Optional.ToNullable(location), uniqueId.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(excludeFromLatest), storageProfile.Value);
         }
     }
 }

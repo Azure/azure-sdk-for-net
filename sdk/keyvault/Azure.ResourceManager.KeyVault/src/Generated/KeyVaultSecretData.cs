@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.KeyVault
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of KeyVaultSecretData. </summary>

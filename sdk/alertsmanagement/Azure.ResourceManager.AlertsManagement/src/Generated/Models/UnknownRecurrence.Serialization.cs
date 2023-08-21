@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    internal partial class UnknownRecurrence : Core.IUtf8JsonSerializable
+    internal partial class UnknownRecurrence : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("recurrenceType"u8);
             writer.WriteStringValue(RecurrenceType.ToString());
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "T");
             }
-            if (Core.Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "T");
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 return null;
             }
             RecurrenceType recurrenceType = "Unknown";
-            Core.Optional<TimeSpan> startTime = default;
-            Core.Optional<TimeSpan> endTime = default;
+            Optional<TimeSpan> startTime = default;
+            Optional<TimeSpan> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recurrenceType"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new UnknownRecurrence(recurrenceType, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime));
+            return new UnknownRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime));
         }
     }
 }

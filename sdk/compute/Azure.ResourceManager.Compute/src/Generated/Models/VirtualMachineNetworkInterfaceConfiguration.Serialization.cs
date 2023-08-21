@@ -12,56 +12,56 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineNetworkInterfaceConfiguration : Core.IUtf8JsonSerializable
+    public partial class VirtualMachineNetworkInterfaceConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Primary))
+            if (Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(Primary.Value);
             }
-            if (Core.Optional.IsDefined(DeleteOption))
+            if (Optional.IsDefined(DeleteOption))
             {
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
             }
-            if (Core.Optional.IsDefined(EnableAcceleratedNetworking))
+            if (Optional.IsDefined(EnableAcceleratedNetworking))
             {
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
             }
-            if (Core.Optional.IsDefined(IsTcpStateTrackingDisabled))
+            if (Optional.IsDefined(IsTcpStateTrackingDisabled))
             {
                 writer.WritePropertyName("disableTcpStateTracking"u8);
                 writer.WriteBooleanValue(IsTcpStateTrackingDisabled.Value);
             }
-            if (Core.Optional.IsDefined(EnableFpga))
+            if (Optional.IsDefined(EnableFpga))
             {
                 writer.WritePropertyName("enableFpga"u8);
                 writer.WriteBooleanValue(EnableFpga.Value);
             }
-            if (Core.Optional.IsDefined(EnableIPForwarding))
+            if (Optional.IsDefined(EnableIPForwarding))
             {
                 writer.WritePropertyName("enableIPForwarding"u8);
                 writer.WriteBooleanValue(EnableIPForwarding.Value);
             }
-            if (Core.Optional.IsDefined(NetworkSecurityGroup))
+            if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
                 JsonSerializer.Serialize(writer, NetworkSecurityGroup);
             }
-            if (Core.Optional.IsDefined(DnsSettings))
+            if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings);
             }
-            if (Core.Optional.IsCollectionDefined(IPConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DscpConfiguration))
+            if (Optional.IsDefined(DscpConfiguration))
             {
                 writer.WritePropertyName("dscpConfiguration"u8);
                 JsonSerializer.Serialize(writer, DscpConfiguration);
@@ -87,16 +87,16 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            Core.Optional<bool> primary = default;
-            Core.Optional<ComputeDeleteOption> deleteOption = default;
-            Core.Optional<bool> enableAcceleratedNetworking = default;
-            Core.Optional<bool> disableTcpStateTracking = default;
-            Core.Optional<bool> enableFpga = default;
-            Core.Optional<bool> enableIPForwarding = default;
-            Core.Optional<WritableSubResource> networkSecurityGroup = default;
-            Core.Optional<VirtualMachineNetworkInterfaceDnsSettingsConfiguration> dnsSettings = default;
-            Core.Optional<IList<VirtualMachineNetworkInterfaceIPConfiguration>> ipConfigurations = default;
-            Core.Optional<WritableSubResource> dscpConfiguration = default;
+            Optional<bool> primary = default;
+            Optional<ComputeDeleteOption> deleteOption = default;
+            Optional<bool> enableAcceleratedNetworking = default;
+            Optional<bool> disableTcpStateTracking = default;
+            Optional<bool> enableFpga = default;
+            Optional<bool> enableIPForwarding = default;
+            Optional<WritableSubResource> networkSecurityGroup = default;
+            Optional<VirtualMachineNetworkInterfaceDnsSettingsConfiguration> dnsSettings = default;
+            Optional<IList<VirtualMachineNetworkInterfaceIPConfiguration>> ipConfigurations = default;
+            Optional<WritableSubResource> dscpConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineNetworkInterfaceConfiguration(name, Core.Optional.ToNullable(primary), Core.Optional.ToNullable(deleteOption), Core.Optional.ToNullable(enableAcceleratedNetworking), Core.Optional.ToNullable(disableTcpStateTracking), Core.Optional.ToNullable(enableFpga), Core.Optional.ToNullable(enableIPForwarding), networkSecurityGroup, dnsSettings.Value, Core.Optional.ToList(ipConfigurations), dscpConfiguration);
+            return new VirtualMachineNetworkInterfaceConfiguration(name, Optional.ToNullable(primary), Optional.ToNullable(deleteOption), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableFpga), Optional.ToNullable(enableIPForwarding), networkSecurityGroup, dnsSettings.Value, Optional.ToList(ipConfigurations), dscpConfiguration);
         }
     }
 }

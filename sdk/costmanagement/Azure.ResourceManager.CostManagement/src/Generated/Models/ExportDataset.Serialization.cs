@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ExportDataset : Core.IUtf8JsonSerializable
+    public partial class ExportDataset : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Granularity))
+            if (Optional.IsDefined(Granularity))
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Configuration))
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<GranularityType> granularity = default;
-            Core.Optional<ExportDatasetConfiguration> configuration = default;
+            Optional<GranularityType> granularity = default;
+            Optional<ExportDatasetConfiguration> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("granularity"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new ExportDataset(Core.Optional.ToNullable(granularity), configuration.Value);
+            return new ExportDataset(Optional.ToNullable(granularity), configuration.Value);
         }
     }
 }

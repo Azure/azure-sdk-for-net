@@ -18,9 +18,9 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 return null;
             }
-            Core.Optional<string> code = default;
-            Core.Optional<string> message = default;
-            Core.Optional<KeyVaultServiceError> innererror = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<KeyVaultServiceError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))

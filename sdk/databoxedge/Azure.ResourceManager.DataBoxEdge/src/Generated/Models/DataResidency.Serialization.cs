@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    internal partial class DataResidency : Core.IUtf8JsonSerializable
+    internal partial class DataResidency : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ResidencyType))
+            if (Optional.IsDefined(ResidencyType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResidencyType.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<DataBoxEdgeDataResidencyType> type = default;
+            Optional<DataBoxEdgeDataResidencyType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataResidency(Core.Optional.ToNullable(type));
+            return new DataResidency(Optional.ToNullable(type));
         }
     }
 }

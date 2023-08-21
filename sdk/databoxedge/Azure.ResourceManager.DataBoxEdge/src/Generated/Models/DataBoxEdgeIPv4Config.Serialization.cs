@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<IPAddress> ipAddress = default;
-            Core.Optional<string> subnet = default;
-            Core.Optional<string> gateway = default;
+            Optional<IPAddress> ipAddress = default;
+            Optional<string> subnet = default;
+            Optional<string> gateway = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"u8))

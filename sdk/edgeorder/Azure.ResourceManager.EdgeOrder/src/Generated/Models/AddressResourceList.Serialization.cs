@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<EdgeOrderAddressData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<EdgeOrderAddressData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new AddressResourceList(Core.Optional.ToList(value), nextLink.Value);
+            return new AddressResourceList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

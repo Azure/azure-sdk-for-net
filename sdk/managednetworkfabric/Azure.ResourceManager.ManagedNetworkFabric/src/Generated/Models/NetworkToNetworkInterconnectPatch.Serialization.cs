@@ -11,44 +11,44 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkToNetworkInterconnectPatch : Core.IUtf8JsonSerializable
+    public partial class NetworkToNetworkInterconnectPatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Layer2Configuration))
+            if (Optional.IsDefined(Layer2Configuration))
             {
                 writer.WritePropertyName("layer2Configuration"u8);
                 writer.WriteObjectValue(Layer2Configuration);
             }
-            if (Core.Optional.IsDefined(OptionBLayer3Configuration))
+            if (Optional.IsDefined(OptionBLayer3Configuration))
             {
                 writer.WritePropertyName("optionBLayer3Configuration"u8);
                 writer.WriteObjectValue(OptionBLayer3Configuration);
             }
-            if (Core.Optional.IsDefined(NpbStaticRouteConfiguration))
+            if (Optional.IsDefined(NpbStaticRouteConfiguration))
             {
                 writer.WritePropertyName("npbStaticRouteConfiguration"u8);
                 writer.WriteObjectValue(NpbStaticRouteConfiguration);
             }
-            if (Core.Optional.IsDefined(ImportRoutePolicy))
+            if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
                 writer.WriteObjectValue(ImportRoutePolicy);
             }
-            if (Core.Optional.IsDefined(ExportRoutePolicy))
+            if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
                 writer.WriteObjectValue(ExportRoutePolicy);
             }
-            if (Core.Optional.IsDefined(EgressAclId))
+            if (Optional.IsDefined(EgressAclId))
             {
                 writer.WritePropertyName("egressAclId"u8);
                 writer.WriteStringValue(EgressAclId);
             }
-            if (Core.Optional.IsDefined(IngressAclId))
+            if (Optional.IsDefined(IngressAclId))
             {
                 writer.WritePropertyName("ingressAclId"u8);
                 writer.WriteStringValue(IngressAclId);
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Layer2Configuration> layer2Configuration = default;
-            Core.Optional<OptionBLayer3Configuration> optionBLayer3Configuration = default;
-            Core.Optional<NpbStaticRouteConfiguration> npbStaticRouteConfiguration = default;
-            Core.Optional<ImportRoutePolicyInformation> importRoutePolicy = default;
-            Core.Optional<ExportRoutePolicyInformation> exportRoutePolicy = default;
-            Core.Optional<ResourceIdentifier> egressAclId = default;
-            Core.Optional<ResourceIdentifier> ingressAclId = default;
+            Optional<SystemData> systemData = default;
+            Optional<Layer2Configuration> layer2Configuration = default;
+            Optional<OptionBLayer3Configuration> optionBLayer3Configuration = default;
+            Optional<NpbStaticRouteConfiguration> npbStaticRouteConfiguration = default;
+            Optional<ImportRoutePolicyInformation> importRoutePolicy = default;
+            Optional<ExportRoutePolicyInformation> exportRoutePolicy = default;
+            Optional<ResourceIdentifier> egressAclId = default;
+            Optional<ResourceIdentifier> ingressAclId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

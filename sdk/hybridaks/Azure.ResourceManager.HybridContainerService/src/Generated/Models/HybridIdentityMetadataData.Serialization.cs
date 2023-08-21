@@ -11,24 +11,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    public partial class HybridIdentityMetadataData : Core.IUtf8JsonSerializable
+    public partial class HybridIdentityMetadataData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ResourceUid))
+            if (Optional.IsDefined(ResourceUid))
             {
                 writer.WritePropertyName("resourceUid"u8);
                 writer.WriteStringValue(ResourceUid);
             }
-            if (Core.Optional.IsDefined(PublicKey))
+            if (Optional.IsDefined(PublicKey))
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.HybridContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> resourceUid = default;
-            Core.Optional<string> publicKey = default;
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<string> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> resourceUid = default;
+            Optional<string> publicKey = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

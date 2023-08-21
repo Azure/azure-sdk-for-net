@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<Uri> trackingUrl = default;
-            Core.Optional<string> carrierName = default;
-            Core.Optional<string> trackingId = default;
+            Optional<Uri> trackingUrl = default;
+            Optional<string> carrierName = default;
+            Optional<string> trackingId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trackingUrl"u8))

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AzureQueryProperties. </summary>
         public AzureQueryProperties()
         {
-            Scope = new Core.ChangeTrackingList<string>();
-            Locations = new Core.ChangeTrackingList<AzureLocation>();
+            Scope = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of AzureQueryProperties. </summary>

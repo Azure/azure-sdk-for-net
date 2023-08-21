@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class IPMatchCondition : Core.IUtf8JsonSerializable
+    public partial class IPMatchCondition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SourceDestinationType))
+            if (Optional.IsDefined(SourceDestinationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SourceDestinationType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PrefixType))
+            if (Optional.IsDefined(PrefixType))
             {
                 writer.WritePropertyName("prefixType"u8);
                 writer.WriteStringValue(PrefixType.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(IPPrefixValues))
+            if (Optional.IsCollectionDefined(IPPrefixValues))
             {
                 writer.WritePropertyName("ipPrefixValues"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(IPGroupNames))
+            if (Optional.IsCollectionDefined(IPGroupNames))
             {
                 writer.WritePropertyName("ipGroupNames"u8);
                 writer.WriteStartArray();
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<SourceDestinationType> type = default;
-            Core.Optional<IPMatchConditionPrefixType> prefixType = default;
-            Core.Optional<IList<string>> ipPrefixValues = default;
-            Core.Optional<IList<string>> ipGroupNames = default;
+            Optional<SourceDestinationType> type = default;
+            Optional<IPMatchConditionPrefixType> prefixType = default;
+            Optional<IList<string>> ipPrefixValues = default;
+            Optional<IList<string>> ipGroupNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new IPMatchCondition(Core.Optional.ToNullable(type), Core.Optional.ToNullable(prefixType), Core.Optional.ToList(ipPrefixValues), Core.Optional.ToList(ipGroupNames));
+            return new IPMatchCondition(Optional.ToNullable(type), Optional.ToNullable(prefixType), Optional.ToList(ipPrefixValues), Optional.ToList(ipGroupNames));
         }
     }
 }

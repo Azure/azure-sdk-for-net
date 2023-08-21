@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    internal partial class ClfsTarget : Core.IUtf8JsonSerializable
+    internal partial class ClfsTarget : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Target))
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> target = default;
+            Optional<ResourceIdentifier> target = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("target"u8))

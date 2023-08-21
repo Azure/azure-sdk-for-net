@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class BlobContentSource : Core.IUtf8JsonSerializable
+    public partial class BlobContentSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("containerUrl"u8);
             writer.WriteStringValue(ContainerUri.AbsoluteUri);
-            if (Core.Optional.IsDefined(Prefix))
+            if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             Uri containerUrl = default;
-            Core.Optional<string> prefix = default;
+            Optional<string> prefix = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerUrl"u8))

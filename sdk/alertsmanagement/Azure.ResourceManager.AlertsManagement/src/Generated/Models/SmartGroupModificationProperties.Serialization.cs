@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class SmartGroupModificationProperties : Core.IUtf8JsonSerializable
+    public partial class SmartGroupModificationProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Modifications))
+            if (Optional.IsCollectionDefined(Modifications))
             {
                 writer.WritePropertyName("modifications"u8);
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(NextLink))
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Core.Optional<Guid> smartGroupId = default;
-            Core.Optional<IList<SmartGroupModificationItemInfo>> modifications = default;
-            Core.Optional<string> nextLink = default;
+            Optional<Guid> smartGroupId = default;
+            Optional<IList<SmartGroupModificationItemInfo>> modifications = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("smartGroupId"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new SmartGroupModificationProperties(Core.Optional.ToNullable(smartGroupId), Core.Optional.ToList(modifications), nextLink.Value);
+            return new SmartGroupModificationProperties(Optional.ToNullable(smartGroupId), Optional.ToList(modifications), nextLink.Value);
         }
     }
 }

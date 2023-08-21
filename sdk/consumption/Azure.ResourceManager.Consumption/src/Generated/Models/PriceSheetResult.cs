@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of PriceSheetResult. </summary>
         internal PriceSheetResult()
         {
-            Pricesheets = new Core.ChangeTrackingList<PriceSheetProperties>();
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Pricesheets = new ChangeTrackingList<PriceSheetProperties>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of PriceSheetResult. </summary>

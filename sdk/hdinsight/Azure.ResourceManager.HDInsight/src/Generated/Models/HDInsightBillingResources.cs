@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightBillingResources. </summary>
         internal HDInsightBillingResources()
         {
-            BillingMeters = new Core.ChangeTrackingList<HDInsightBillingMeters>();
-            DiskBillingMeters = new Core.ChangeTrackingList<HDInsightDiskBillingMeters>();
+            BillingMeters = new ChangeTrackingList<HDInsightBillingMeters>();
+            DiskBillingMeters = new ChangeTrackingList<HDInsightDiskBillingMeters>();
         }
 
         /// <summary> Initializes a new instance of HDInsightBillingResources. </summary>

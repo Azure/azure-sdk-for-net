@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<EdgeKubernetesNodeType> type = default;
-            Core.Optional<IReadOnlyList<EdgeKubernetesIPConfiguration>> ipConfiguration = default;
+            Optional<string> name = default;
+            Optional<EdgeKubernetesNodeType> type = default;
+            Optional<IReadOnlyList<EdgeKubernetesIPConfiguration>> ipConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new EdgeKubernetesNodeInfo(name.Value, Core.Optional.ToNullable(type), Core.Optional.ToList(ipConfiguration));
+            return new EdgeKubernetesNodeInfo(name.Value, Optional.ToNullable(type), Optional.ToList(ipConfiguration));
         }
     }
 }

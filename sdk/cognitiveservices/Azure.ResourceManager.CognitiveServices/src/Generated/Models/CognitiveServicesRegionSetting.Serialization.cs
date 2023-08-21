@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesRegionSetting : Core.IUtf8JsonSerializable
+    public partial class CognitiveServicesRegionSetting : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
-            if (Core.Optional.IsDefined(Customsubdomain))
+            if (Optional.IsDefined(Customsubdomain))
             {
                 writer.WritePropertyName("customsubdomain"u8);
                 writer.WriteStringValue(Customsubdomain);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<float> value = default;
-            Core.Optional<string> customsubdomain = default;
+            Optional<string> name = default;
+            Optional<float> value = default;
+            Optional<string> customsubdomain = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesRegionSetting(name.Value, Core.Optional.ToNullable(value), customsubdomain.Value);
+            return new CognitiveServicesRegionSetting(name.Value, Optional.ToNullable(value), customsubdomain.Value);
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsIncidentEntitiesResult. </summary>
         internal SecurityInsightsIncidentEntitiesResult()
         {
-            Entities = new Core.ChangeTrackingList<SecurityInsightsEntity>();
-            MetaData = new Core.ChangeTrackingList<SecurityInsightsIncidentEntitiesMetadata>();
+            Entities = new ChangeTrackingList<SecurityInsightsEntity>();
+            MetaData = new ChangeTrackingList<SecurityInsightsIncidentEntitiesMetadata>();
         }
 
         /// <summary> Initializes a new instance of SecurityInsightsIncidentEntitiesResult. </summary>

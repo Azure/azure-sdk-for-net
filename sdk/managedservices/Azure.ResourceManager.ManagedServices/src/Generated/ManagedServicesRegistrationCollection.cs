@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ManagedServices
             try
             {
                 var response = await _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateOrUpdateAsync(Id, registrationId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationResource>(new ManagedServicesRegistrationOperationSource(Client), _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics, Pipeline, _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id, registrationId, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationResource>(new ManagedServicesRegistrationOperationSource(Client), _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics, Pipeline, _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id, registrationId, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ManagedServices
             try
             {
                 var response = _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateOrUpdate(Id, registrationId, data, cancellationToken);
-                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationResource>(new ManagedServicesRegistrationOperationSource(Client), _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics, Pipeline, _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id, registrationId, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationResource>(new ManagedServicesRegistrationOperationSource(Client), _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics, Pipeline, _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id, registrationId, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ManagedServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateListRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id, filter);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedServicesRegistrationResource(Client, ManagedServicesRegistrationData.DeserializeManagedServicesRegistrationData(e)), _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics, Pipeline, "ManagedServicesRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedServicesRegistrationResource(Client, ManagedServicesRegistrationData.DeserializeManagedServicesRegistrationData(e)), _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics, Pipeline, "ManagedServicesRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ManagedServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateListRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id, filter);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedServicesRegistrationResource(Client, ManagedServicesRegistrationData.DeserializeManagedServicesRegistrationData(e)), _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics, Pipeline, "ManagedServicesRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedServicesRegistrationResource(Client, ManagedServicesRegistrationData.DeserializeManagedServicesRegistrationData(e)), _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics, Pipeline, "ManagedServicesRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

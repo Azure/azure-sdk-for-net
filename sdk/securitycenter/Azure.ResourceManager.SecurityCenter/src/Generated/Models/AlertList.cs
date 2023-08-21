@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AlertList. </summary>
         internal AlertList()
         {
-            Value = new Core.ChangeTrackingList<SecurityAlertData>();
+            Value = new ChangeTrackingList<SecurityAlertData>();
         }
 
         /// <summary> Initializes a new instance of AlertList. </summary>

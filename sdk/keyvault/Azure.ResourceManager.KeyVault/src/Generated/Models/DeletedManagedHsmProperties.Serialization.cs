@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> managedHsmId = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<DateTimeOffset> deletionDate = default;
-            Core.Optional<DateTimeOffset> scheduledPurgeDate = default;
-            Core.Optional<bool> purgeProtectionEnabled = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<ResourceIdentifier> managedHsmId = default;
+            Optional<AzureLocation> location = default;
+            Optional<DateTimeOffset> deletionDate = default;
+            Optional<DateTimeOffset> scheduledPurgeDate = default;
+            Optional<bool> purgeProtectionEnabled = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mhsmId"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new DeletedManagedHsmProperties(managedHsmId.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(deletionDate), Core.Optional.ToNullable(scheduledPurgeDate), Core.Optional.ToNullable(purgeProtectionEnabled), Core.Optional.ToDictionary(tags));
+            return new DeletedManagedHsmProperties(managedHsmId.Value, Optional.ToNullable(location), Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(purgeProtectionEnabled), Optional.ToDictionary(tags));
         }
     }
 }

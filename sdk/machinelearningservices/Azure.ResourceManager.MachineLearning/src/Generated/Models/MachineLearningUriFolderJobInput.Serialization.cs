@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningUriFolderJobInput : Core.IUtf8JsonSerializable
+    public partial class MachineLearningUriFolderJobInput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Mode))
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<MachineLearningInputDeliveryMode> mode = default;
+            Optional<MachineLearningInputDeliveryMode> mode = default;
             Uri uri = default;
-            Core.Optional<string> description = default;
+            Optional<string> description = default;
             JobInputType jobInputType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningUriFolderJobInput(description.Value, jobInputType, Core.Optional.ToNullable(mode), uri);
+            return new MachineLearningUriFolderJobInput(description.Value, jobInputType, Optional.ToNullable(mode), uri);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<Uri> azurePortalUri = default;
+            Optional<Uri> azurePortalUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azurePortalUri"u8))

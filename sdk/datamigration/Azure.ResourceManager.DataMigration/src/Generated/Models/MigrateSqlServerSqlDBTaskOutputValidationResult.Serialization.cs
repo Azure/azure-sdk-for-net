@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> migrationId = default;
-            Core.Optional<IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult>> summaryResults = default;
-            Core.Optional<ValidationStatus> status = default;
-            Core.Optional<string> id = default;
+            Optional<string> migrationId = default;
+            Optional<IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult>> summaryResults = default;
+            Optional<ValidationStatus> status = default;
+            Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSqlServerSqlDBTaskOutputValidationResult(id.Value, resultType, migrationId.Value, Core.Optional.ToDictionary(summaryResults), Core.Optional.ToNullable(status));
+            return new MigrateSqlServerSqlDBTaskOutputValidationResult(id.Value, resultType, migrationId.Value, Optional.ToDictionary(summaryResults), Optional.ToNullable(status));
         }
     }
 }

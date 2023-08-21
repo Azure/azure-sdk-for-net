@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToTargetSqlMITaskInput : Core.IUtf8JsonSerializable
+    public partial class ConnectToTargetSqlMITaskInput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
-            if (Core.Optional.IsDefined(CollectLogins))
+            if (Optional.IsDefined(CollectLogins))
             {
                 writer.WritePropertyName("collectLogins"u8);
                 writer.WriteBooleanValue(CollectLogins.Value);
             }
-            if (Core.Optional.IsDefined(CollectAgentJobs))
+            if (Optional.IsDefined(CollectAgentJobs))
             {
                 writer.WritePropertyName("collectAgentJobs"u8);
                 writer.WriteBooleanValue(CollectAgentJobs.Value);
             }
-            if (Core.Optional.IsDefined(ValidateSsisCatalogOnly))
+            if (Optional.IsDefined(ValidateSsisCatalogOnly))
             {
                 writer.WritePropertyName("validateSsisCatalogOnly"u8);
                 writer.WriteBooleanValue(ValidateSsisCatalogOnly.Value);
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             SqlConnectionInfo targetConnectionInfo = default;
-            Core.Optional<bool> collectLogins = default;
-            Core.Optional<bool> collectAgentJobs = default;
-            Core.Optional<bool> validateSsisCatalogOnly = default;
+            Optional<bool> collectLogins = default;
+            Optional<bool> collectAgentJobs = default;
+            Optional<bool> validateSsisCatalogOnly = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetConnectionInfo"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ConnectToTargetSqlMITaskInput(targetConnectionInfo, Core.Optional.ToNullable(collectLogins), Core.Optional.ToNullable(collectAgentJobs), Core.Optional.ToNullable(validateSsisCatalogOnly));
+            return new ConnectToTargetSqlMITaskInput(targetConnectionInfo, Optional.ToNullable(collectLogins), Optional.ToNullable(collectAgentJobs), Optional.ToNullable(validateSsisCatalogOnly));
         }
     }
 }

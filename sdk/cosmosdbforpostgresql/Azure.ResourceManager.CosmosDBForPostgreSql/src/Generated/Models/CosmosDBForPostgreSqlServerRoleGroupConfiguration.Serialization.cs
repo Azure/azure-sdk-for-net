@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    public partial class CosmosDBForPostgreSqlServerRoleGroupConfiguration : Core.IUtf8JsonSerializable
+    public partial class CosmosDBForPostgreSqlServerRoleGroupConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("role"u8);
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
             CosmosDBForPostgreSqlServerRole role = default;
             string value = default;
-            Core.Optional<string> defaultValue = default;
-            Core.Optional<string> source = default;
+            Optional<string> defaultValue = default;
+            Optional<string> source = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("role"u8))

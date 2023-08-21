@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<AvailablePatchSummary> availablePatchSummary = default;
-            Core.Optional<LastPatchInstallationSummary> lastPatchInstallationSummary = default;
-            Core.Optional<IReadOnlyList<InstanceViewStatus>> configurationStatuses = default;
+            Optional<AvailablePatchSummary> availablePatchSummary = default;
+            Optional<LastPatchInstallationSummary> lastPatchInstallationSummary = default;
+            Optional<IReadOnlyList<InstanceViewStatus>> configurationStatuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availablePatchSummary"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachinePatchStatus(availablePatchSummary.Value, lastPatchInstallationSummary.Value, Core.Optional.ToList(configurationStatuses));
+            return new VirtualMachinePatchStatus(availablePatchSummary.Value, lastPatchInstallationSummary.Value, Optional.ToList(configurationStatuses));
         }
     }
 }

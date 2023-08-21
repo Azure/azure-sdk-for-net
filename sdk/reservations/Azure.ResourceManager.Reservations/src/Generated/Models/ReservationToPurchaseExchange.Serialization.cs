@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> reservationOrderId = default;
-            Core.Optional<ResourceIdentifier> reservationId = default;
-            Core.Optional<ReservationPurchaseContent> properties = default;
-            Core.Optional<PurchasePrice> billingCurrencyTotal = default;
-            Core.Optional<ReservationOperationStatus> status = default;
+            Optional<ResourceIdentifier> reservationOrderId = default;
+            Optional<ResourceIdentifier> reservationId = default;
+            Optional<ReservationPurchaseContent> properties = default;
+            Optional<PurchasePrice> billingCurrencyTotal = default;
+            Optional<ReservationOperationStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reservationOrderId"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ReservationToPurchaseExchange(reservationOrderId.Value, reservationId.Value, properties.Value, billingCurrencyTotal.Value, Core.Optional.ToNullable(status));
+            return new ReservationToPurchaseExchange(reservationOrderId.Value, reservationId.Value, properties.Value, billingCurrencyTotal.Value, Optional.ToNullable(status));
         }
     }
 }

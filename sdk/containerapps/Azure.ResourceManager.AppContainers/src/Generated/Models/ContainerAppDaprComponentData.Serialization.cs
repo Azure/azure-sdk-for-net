@@ -13,34 +13,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class ContainerAppDaprComponentData : Core.IUtf8JsonSerializable
+    public partial class ContainerAppDaprComponentData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ComponentType))
+            if (Optional.IsDefined(ComponentType))
             {
                 writer.WritePropertyName("componentType"u8);
                 writer.WriteStringValue(ComponentType);
             }
-            if (Core.Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Core.Optional.IsDefined(IgnoreErrors))
+            if (Optional.IsDefined(IgnoreErrors))
             {
                 writer.WritePropertyName("ignoreErrors"u8);
                 writer.WriteBooleanValue(IgnoreErrors.Value);
             }
-            if (Core.Optional.IsDefined(InitTimeout))
+            if (Optional.IsDefined(InitTimeout))
             {
                 writer.WritePropertyName("initTimeout"u8);
                 writer.WriteStringValue(InitTimeout);
             }
-            if (Core.Optional.IsCollectionDefined(Secrets))
+            if (Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SecretStoreComponent))
+            if (Optional.IsDefined(SecretStoreComponent))
             {
                 writer.WritePropertyName("secretStoreComponent"u8);
                 writer.WriteStringValue(SecretStoreComponent);
             }
-            if (Core.Optional.IsCollectionDefined(Metadata))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Scopes))
+            if (Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -88,15 +88,15 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> componentType = default;
-            Core.Optional<string> version = default;
-            Core.Optional<bool> ignoreErrors = default;
-            Core.Optional<string> initTimeout = default;
-            Core.Optional<IList<ContainerAppWritableSecret>> secrets = default;
-            Core.Optional<string> secretStoreComponent = default;
-            Core.Optional<IList<ContainerAppDaprMetadata>> metadata = default;
-            Core.Optional<IList<string>> scopes = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> componentType = default;
+            Optional<string> version = default;
+            Optional<bool> ignoreErrors = default;
+            Optional<string> initTimeout = default;
+            Optional<IList<ContainerAppWritableSecret>> secrets = default;
+            Optional<string> secretStoreComponent = default;
+            Optional<IList<ContainerAppDaprMetadata>> metadata = default;
+            Optional<IList<string>> scopes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppContainers
                     continue;
                 }
             }
-            return new ContainerAppDaprComponentData(id, name, type, systemData.Value, componentType.Value, version.Value, Core.Optional.ToNullable(ignoreErrors), initTimeout.Value, Core.Optional.ToList(secrets), secretStoreComponent.Value, Core.Optional.ToList(metadata), Core.Optional.ToList(scopes));
+            return new ContainerAppDaprComponentData(id, name, type, systemData.Value, componentType.Value, version.Value, Optional.ToNullable(ignoreErrors), initTimeout.Value, Optional.ToList(secrets), secretStoreComponent.Value, Optional.ToList(metadata), Optional.ToList(scopes));
         }
     }
 }

@@ -20,25 +20,25 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset?> endTime = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<DateTimeOffset?> startTime = default;
-            Core.Optional<string> type = default;
-            Core.Optional<string> reportId = default;
-            Core.Optional<string> status = default;
-            Core.Optional<string> refreshMode = default;
-            Core.Optional<string> rebootRequested = default;
-            Core.Optional<string> reportFormatVersion = default;
-            Core.Optional<string> configurationVersion = default;
-            Core.Optional<string> id = default;
-            Core.Optional<IReadOnlyList<DscReportError>> errors = default;
-            Core.Optional<IReadOnlyList<DscReportResource>> resources = default;
-            Core.Optional<DscMetaConfiguration> metaConfiguration = default;
-            Core.Optional<string> hostName = default;
-            Core.Optional<IReadOnlyList<string>> ipV4Addresses = default;
-            Core.Optional<IReadOnlyList<string>> ipV6Addresses = default;
-            Core.Optional<int> numberOfResources = default;
-            Core.Optional<string> rawErrors = default;
+            Optional<DateTimeOffset?> endTime = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<DateTimeOffset?> startTime = default;
+            Optional<string> type = default;
+            Optional<string> reportId = default;
+            Optional<string> status = default;
+            Optional<string> refreshMode = default;
+            Optional<string> rebootRequested = default;
+            Optional<string> reportFormatVersion = default;
+            Optional<string> configurationVersion = default;
+            Optional<string> id = default;
+            Optional<IReadOnlyList<DscReportError>> errors = default;
+            Optional<IReadOnlyList<DscReportResource>> resources = default;
+            Optional<DscMetaConfiguration> metaConfiguration = default;
+            Optional<string> hostName = default;
+            Optional<IReadOnlyList<string>> ipV4Addresses = default;
+            Optional<IReadOnlyList<string>> ipV6Addresses = default;
+            Optional<int> numberOfResources = default;
+            Optional<string> rawErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endTime"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new DscNodeReport(Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(lastModifiedTime), Core.Optional.ToNullable(startTime), type.Value, reportId.Value, status.Value, refreshMode.Value, rebootRequested.Value, reportFormatVersion.Value, configurationVersion.Value, id.Value, Core.Optional.ToList(errors), Core.Optional.ToList(resources), metaConfiguration.Value, hostName.Value, Core.Optional.ToList(ipV4Addresses), Core.Optional.ToList(ipV6Addresses), Core.Optional.ToNullable(numberOfResources), rawErrors.Value);
+            return new DscNodeReport(Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(startTime), type.Value, reportId.Value, status.Value, refreshMode.Value, rebootRequested.Value, reportFormatVersion.Value, configurationVersion.Value, id.Value, Optional.ToList(errors), Optional.ToList(resources), metaConfiguration.Value, hostName.Value, Optional.ToList(ipV4Addresses), Optional.ToList(ipV6Addresses), Optional.ToNullable(numberOfResources), rawErrors.Value);
         }
     }
 }

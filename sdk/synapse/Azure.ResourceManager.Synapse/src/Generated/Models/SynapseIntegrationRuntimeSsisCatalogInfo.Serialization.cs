@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeSsisCatalogInfo : Core.IUtf8JsonSerializable
+    public partial class SynapseIntegrationRuntimeSsisCatalogInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CatalogServerEndpoint))
+            if (Optional.IsDefined(CatalogServerEndpoint))
             {
                 writer.WritePropertyName("catalogServerEndpoint"u8);
                 writer.WriteStringValue(CatalogServerEndpoint.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(CatalogAdminUserName))
+            if (Optional.IsDefined(CatalogAdminUserName))
             {
                 writer.WritePropertyName("catalogAdminUserName"u8);
                 writer.WriteStringValue(CatalogAdminUserName);
             }
-            if (Core.Optional.IsDefined(CatalogAdminPassword))
+            if (Optional.IsDefined(CatalogAdminPassword))
             {
                 writer.WritePropertyName("catalogAdminPassword"u8);
                 writer.WriteObjectValue(CatalogAdminPassword);
             }
-            if (Core.Optional.IsDefined(CatalogPricingTier))
+            if (Optional.IsDefined(CatalogPricingTier))
             {
                 writer.WritePropertyName("catalogPricingTier"u8);
                 writer.WriteStringValue(CatalogPricingTier.Value.ToString());
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<Uri> catalogServerEndpoint = default;
-            Core.Optional<string> catalogAdminUserName = default;
-            Core.Optional<SynapseSecureString> catalogAdminPassword = default;
-            Core.Optional<SynapseIntegrationRuntimeSsisCatalogPricingTier> catalogPricingTier = default;
+            Optional<Uri> catalogServerEndpoint = default;
+            Optional<string> catalogAdminUserName = default;
+            Optional<SynapseSecureString> catalogAdminPassword = default;
+            Optional<SynapseIntegrationRuntimeSsisCatalogPricingTier> catalogPricingTier = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint.Value, catalogAdminUserName.Value, catalogAdminPassword.Value, Core.Optional.ToNullable(catalogPricingTier), additionalProperties);
+            return new SynapseIntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint.Value, catalogAdminUserName.Value, catalogAdminPassword.Value, Optional.ToNullable(catalogPricingTier), additionalProperties);
         }
     }
 }

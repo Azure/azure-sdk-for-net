@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Core.Optional<EdgeOrderStageStatus> stageStatus = default;
-            Core.Optional<EdgeOrderStageName> stageName = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<DateTimeOffset> startTime = default;
+            Optional<EdgeOrderStageStatus> stageStatus = default;
+            Optional<EdgeOrderStageName> stageName = default;
+            Optional<string> displayName = default;
+            Optional<DateTimeOffset> startTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stageStatus"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new EdgeOrderStageDetails(Core.Optional.ToNullable(stageStatus), Core.Optional.ToNullable(stageName), displayName.Value, Core.Optional.ToNullable(startTime));
+            return new EdgeOrderStageDetails(Optional.ToNullable(stageStatus), Optional.ToNullable(stageName), displayName.Value, Optional.ToNullable(startTime));
         }
     }
 }

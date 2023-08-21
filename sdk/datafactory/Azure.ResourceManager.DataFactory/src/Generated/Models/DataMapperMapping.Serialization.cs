@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataMapperMapping : Core.IUtf8JsonSerializable
+    public partial class DataMapperMapping : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TargetEntityName))
+            if (Optional.IsDefined(TargetEntityName))
             {
                 writer.WritePropertyName("targetEntityName"u8);
                 writer.WriteStringValue(TargetEntityName);
             }
-            if (Core.Optional.IsDefined(SourceEntityName))
+            if (Optional.IsDefined(SourceEntityName))
             {
                 writer.WritePropertyName("sourceEntityName"u8);
                 writer.WriteStringValue(SourceEntityName);
             }
-            if (Core.Optional.IsDefined(SourceConnectionReference))
+            if (Optional.IsDefined(SourceConnectionReference))
             {
                 writer.WritePropertyName("sourceConnectionReference"u8);
                 writer.WriteObjectValue(SourceConnectionReference);
             }
-            if (Core.Optional.IsDefined(AttributeMappingInfo))
+            if (Optional.IsDefined(AttributeMappingInfo))
             {
                 writer.WritePropertyName("attributeMappingInfo"u8);
                 writer.WriteObjectValue(AttributeMappingInfo);
             }
-            if (Core.Optional.IsDefined(SourceDenormalizeInfo))
+            if (Optional.IsDefined(SourceDenormalizeInfo))
             {
                 writer.WritePropertyName("sourceDenormalizeInfo"u8);
 #if NET6_0_OR_GREATER
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<string> targetEntityName = default;
-            Core.Optional<string> sourceEntityName = default;
-            Core.Optional<MapperConnectionReference> sourceConnectionReference = default;
-            Core.Optional<MapperAttributeMappings> attributeMappingInfo = default;
-            Core.Optional<BinaryData> sourceDenormalizeInfo = default;
+            Optional<string> targetEntityName = default;
+            Optional<string> sourceEntityName = default;
+            Optional<MapperConnectionReference> sourceConnectionReference = default;
+            Optional<MapperAttributeMappings> attributeMappingInfo = default;
+            Optional<BinaryData> sourceDenormalizeInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetEntityName"u8))

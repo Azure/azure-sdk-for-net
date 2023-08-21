@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class FrontDoorRuleData : Core.IUtf8JsonSerializable
+    public partial class FrontDoorRuleData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Order))
+            if (Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Conditions))
+            if (Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Actions))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(MatchProcessingBehavior))
+            if (Optional.IsDefined(MatchProcessingBehavior))
             {
                 writer.WritePropertyName("matchProcessingBehavior"u8);
                 writer.WriteStringValue(MatchProcessingBehavior.Value.ToString());
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> ruleSetName = default;
-            Core.Optional<int> order = default;
-            Core.Optional<IList<DeliveryRuleCondition>> conditions = default;
-            Core.Optional<IList<DeliveryRuleAction>> actions = default;
-            Core.Optional<MatchProcessingBehavior> matchProcessingBehavior = default;
-            Core.Optional<FrontDoorProvisioningState> provisioningState = default;
-            Core.Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> ruleSetName = default;
+            Optional<int> order = default;
+            Optional<IList<DeliveryRuleCondition>> conditions = default;
+            Optional<IList<DeliveryRuleAction>> actions = default;
+            Optional<MatchProcessingBehavior> matchProcessingBehavior = default;
+            Optional<FrontDoorProvisioningState> provisioningState = default;
+            Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new FrontDoorRuleData(id, name, type, systemData.Value, ruleSetName.Value, Core.Optional.ToNullable(order), Core.Optional.ToList(conditions), Core.Optional.ToList(actions), Core.Optional.ToNullable(matchProcessingBehavior), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(deploymentStatus));
+            return new FrontDoorRuleData(id, name, type, systemData.Value, ruleSetName.Value, Optional.ToNullable(order), Optional.ToList(conditions), Optional.ToList(actions), Optional.ToNullable(matchProcessingBehavior), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
         }
     }
 }

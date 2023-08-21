@@ -13,17 +13,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    public partial class HealthcareApisIotFhirDestinationData : Core.IUtf8JsonSerializable
+    public partial class HealthcareApisIotFhirDestinationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<ETag> etag = default;
+            Optional<AzureLocation> location = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<HealthcareApisProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<HealthcareApisProvisioningState> provisioningState = default;
             HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType = default;
             ResourceIdentifier fhirServiceResourceId = default;
             HealthcareApisIotMappingProperties fhirMapping = default;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     continue;
                 }
             }
-            return new HealthcareApisIotFhirDestinationData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), resourceIdentityResolutionType, fhirServiceResourceId, fhirMapping, Core.Optional.ToNullable(location), Core.Optional.ToNullable(etag));
+            return new HealthcareApisIotFhirDestinationData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), resourceIdentityResolutionType, fhirServiceResourceId, fhirMapping, Optional.ToNullable(location), Optional.ToNullable(etag));
         }
     }
 }

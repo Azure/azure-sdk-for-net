@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<LocationExpanded>> value = default;
+            Optional<IReadOnlyList<LocationExpanded>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new LocationListResult(Core.Optional.ToList(value));
+            return new LocationListResult(Optional.ToList(value));
         }
     }
 }

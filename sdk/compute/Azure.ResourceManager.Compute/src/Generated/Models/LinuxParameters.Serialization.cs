@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class LinuxParameters : Core.IUtf8JsonSerializable
+    public partial class LinuxParameters : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ClassificationsToInclude))
+            if (Optional.IsCollectionDefined(ClassificationsToInclude))
             {
                 writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(PackageNameMasksToInclude))
+            if (Optional.IsCollectionDefined(PackageNameMasksToInclude))
             {
                 writer.WritePropertyName("packageNameMasksToInclude"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(PackageNameMasksToExclude))
+            if (Optional.IsCollectionDefined(PackageNameMasksToExclude))
             {
                 writer.WritePropertyName("packageNameMasksToExclude"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(MaintenanceRunId))
+            if (Optional.IsDefined(MaintenanceRunId))
             {
                 writer.WritePropertyName("maintenanceRunId"u8);
                 writer.WriteStringValue(MaintenanceRunId);

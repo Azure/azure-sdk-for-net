@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class SqlProtectedItemExtendedInfo : Core.IUtf8JsonSerializable
+    public partial class SqlProtectedItemExtendedInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(OldestRecoverOn))
+            if (Optional.IsDefined(OldestRecoverOn))
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
                 writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(RecoveryPointCount))
+            if (Optional.IsDefined(RecoveryPointCount))
             {
                 writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
-            if (Core.Optional.IsDefined(PolicyState))
+            if (Optional.IsDefined(PolicyState))
             {
                 writer.WritePropertyName("policyState"u8);
                 writer.WriteStringValue(PolicyState);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> oldestRecoveryPoint = default;
-            Core.Optional<int> recoveryPointCount = default;
-            Core.Optional<string> policyState = default;
+            Optional<DateTimeOffset> oldestRecoveryPoint = default;
+            Optional<int> recoveryPointCount = default;
+            Optional<string> policyState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("oldestRecoveryPoint"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new SqlProtectedItemExtendedInfo(Core.Optional.ToNullable(oldestRecoveryPoint), Core.Optional.ToNullable(recoveryPointCount), policyState.Value);
+            return new SqlProtectedItemExtendedInfo(Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(recoveryPointCount), policyState.Value);
         }
     }
 }

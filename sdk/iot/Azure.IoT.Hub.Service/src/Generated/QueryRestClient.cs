@@ -60,7 +60,7 @@ namespace Azure.IoT.Hub.Service
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(querySpecification);
             request.Content = content;
             return message;
@@ -72,7 +72,7 @@ namespace Azure.IoT.Hub.Service
         /// <param name="xMsMaxItemCount"> The maximum number of items returned per page. The service may use a different value if the value specified is not acceptable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="querySpecification"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<IReadOnlyList<TwinData>, QueryGetTwinsHeaders>> GetTwinsAsync(QuerySpecification querySpecification, string xMsContinuation = null, string xMsMaxItemCount = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<IReadOnlyList<TwinData>, QueryGetTwinsHeaders>> GetTwinsAsync(QuerySpecification querySpecification, string xMsContinuation = null, string xMsMaxItemCount = null, CancellationToken cancellationToken = default)
         {
             if (querySpecification == null)
             {
@@ -94,7 +94,7 @@ namespace Azure.IoT.Hub.Service
                             array.Add(TwinData.DeserializeTwinData(item));
                         }
                         value = array;
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -107,7 +107,7 @@ namespace Azure.IoT.Hub.Service
         /// <param name="xMsMaxItemCount"> The maximum number of items returned per page. The service may use a different value if the value specified is not acceptable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="querySpecification"/> is null. </exception>
-        public Core.ResponseWithHeaders<IReadOnlyList<TwinData>, QueryGetTwinsHeaders> GetTwins(QuerySpecification querySpecification, string xMsContinuation = null, string xMsMaxItemCount = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<IReadOnlyList<TwinData>, QueryGetTwinsHeaders> GetTwins(QuerySpecification querySpecification, string xMsContinuation = null, string xMsMaxItemCount = null, CancellationToken cancellationToken = default)
         {
             if (querySpecification == null)
             {
@@ -129,7 +129,7 @@ namespace Azure.IoT.Hub.Service
                             array.Add(TwinData.DeserializeTwinData(item));
                         }
                         value = array;
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

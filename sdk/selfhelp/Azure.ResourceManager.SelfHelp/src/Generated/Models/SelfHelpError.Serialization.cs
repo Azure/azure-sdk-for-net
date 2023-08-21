@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Core.Optional<string> code = default;
-            Core.Optional<string> type = default;
-            Core.Optional<string> message = default;
-            Core.Optional<IReadOnlyList<SelfHelpError>> details = default;
+            Optional<string> code = default;
+            Optional<string> type = default;
+            Optional<string> message = default;
+            Optional<IReadOnlyList<SelfHelpError>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new SelfHelpError(code.Value, type.Value, message.Value, Core.Optional.ToList(details));
+            return new SelfHelpError(code.Value, type.Value, message.Value, Optional.ToList(details));
         }
     }
 }

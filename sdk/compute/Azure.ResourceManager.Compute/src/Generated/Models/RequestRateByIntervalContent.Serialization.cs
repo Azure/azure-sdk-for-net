@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RequestRateByIntervalContent : Core.IUtf8JsonSerializable
+    public partial class RequestRateByIntervalContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("intervalLength"u8);
@@ -23,27 +23,27 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(FromTime, "O");
             writer.WritePropertyName("toTime"u8);
             writer.WriteStringValue(ToTime, "O");
-            if (Core.Optional.IsDefined(GroupByThrottlePolicy))
+            if (Optional.IsDefined(GroupByThrottlePolicy))
             {
                 writer.WritePropertyName("groupByThrottlePolicy"u8);
                 writer.WriteBooleanValue(GroupByThrottlePolicy.Value);
             }
-            if (Core.Optional.IsDefined(GroupByOperationName))
+            if (Optional.IsDefined(GroupByOperationName))
             {
                 writer.WritePropertyName("groupByOperationName"u8);
                 writer.WriteBooleanValue(GroupByOperationName.Value);
             }
-            if (Core.Optional.IsDefined(GroupByResourceName))
+            if (Optional.IsDefined(GroupByResourceName))
             {
                 writer.WritePropertyName("groupByResourceName"u8);
                 writer.WriteBooleanValue(GroupByResourceName.Value);
             }
-            if (Core.Optional.IsDefined(GroupByClientApplicationId))
+            if (Optional.IsDefined(GroupByClientApplicationId))
             {
                 writer.WritePropertyName("groupByClientApplicationId"u8);
                 writer.WriteBooleanValue(GroupByClientApplicationId.Value);
             }
-            if (Core.Optional.IsDefined(GroupByUserAgent))
+            if (Optional.IsDefined(GroupByUserAgent))
             {
                 writer.WritePropertyName("groupByUserAgent"u8);
                 writer.WriteBooleanValue(GroupByUserAgent.Value);

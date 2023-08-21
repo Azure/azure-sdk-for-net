@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> objectName = default;
-            Core.Optional<DateTimeOffset> startedOn = default;
-            Core.Optional<DateTimeOffset> endedOn = default;
-            Core.Optional<MigrationState> state = default;
-            Core.Optional<string> statusMessage = default;
-            Core.Optional<long> itemsCount = default;
-            Core.Optional<long> itemsCompletedCount = default;
-            Core.Optional<string> errorPrefix = default;
-            Core.Optional<string> resultPrefix = default;
-            Core.Optional<string> id = default;
+            Optional<string> objectName = default;
+            Optional<DateTimeOffset> startedOn = default;
+            Optional<DateTimeOffset> endedOn = default;
+            Optional<MigrationState> state = default;
+            Optional<string> statusMessage = default;
+            Optional<long> itemsCount = default;
+            Optional<long> itemsCompletedCount = default;
+            Optional<string> errorPrefix = default;
+            Optional<string> resultPrefix = default;
+            Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSqlServerSqlDBTaskOutputTableLevel(id.Value, resultType, objectName.Value, Core.Optional.ToNullable(startedOn), Core.Optional.ToNullable(endedOn), Core.Optional.ToNullable(state), statusMessage.Value, Core.Optional.ToNullable(itemsCount), Core.Optional.ToNullable(itemsCompletedCount), errorPrefix.Value, resultPrefix.Value);
+            return new MigrateSqlServerSqlDBTaskOutputTableLevel(id.Value, resultType, objectName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(state), statusMessage.Value, Optional.ToNullable(itemsCount), Optional.ToNullable(itemsCompletedCount), errorPrefix.Value, resultPrefix.Value);
         }
     }
 }

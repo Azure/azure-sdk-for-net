@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class CosmosDBFirewallRuleOperationSource : Core.IOperationSource<CosmosDBFirewallRuleResource>
+    internal class CosmosDBFirewallRuleOperationSource : IOperationSource<CosmosDBFirewallRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        CosmosDBFirewallRuleResource Core.IOperationSource<CosmosDBFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CosmosDBFirewallRuleResource IOperationSource<CosmosDBFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CosmosDBFirewallRuleData.DeserializeCosmosDBFirewallRuleData(document.RootElement);
             return new CosmosDBFirewallRuleResource(_client, data);
         }
 
-        async ValueTask<CosmosDBFirewallRuleResource> Core.IOperationSource<CosmosDBFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CosmosDBFirewallRuleResource> IOperationSource<CosmosDBFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CosmosDBFirewallRuleData.DeserializeCosmosDBFirewallRuleData(document.RootElement);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetReimageContent. </summary>
         public VirtualMachineScaleSetReimageContent()
         {
-            InstanceIds = new Core.ChangeTrackingList<string>();
+            InstanceIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual machines in the virtual machine scale set. </summary>

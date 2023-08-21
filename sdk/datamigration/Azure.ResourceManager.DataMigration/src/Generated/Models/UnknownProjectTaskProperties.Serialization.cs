@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownProjectTaskProperties : Core.IUtf8JsonSerializable
+    internal partial class UnknownProjectTaskProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
-            if (Core.Optional.IsCollectionDefined(ClientData))
+            if (Optional.IsCollectionDefined(ClientData))
             {
                 writer.WritePropertyName("clientData"u8);
                 writer.WriteStartObject();
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             TaskType taskType = "Unknown";
-            Core.Optional<IReadOnlyList<ODataError>> errors = default;
-            Core.Optional<TaskState> state = default;
-            Core.Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Core.Optional<IDictionary<string, string>> clientData = default;
+            Optional<IReadOnlyList<ODataError>> errors = default;
+            Optional<TaskState> state = default;
+            Optional<IReadOnlyList<CommandProperties>> commands = default;
+            Optional<IDictionary<string, string>> clientData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("taskType"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new UnknownProjectTaskProperties(taskType, Core.Optional.ToList(errors), Core.Optional.ToNullable(state), Core.Optional.ToList(commands), Core.Optional.ToDictionary(clientData));
+            return new UnknownProjectTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData));
         }
     }
 }

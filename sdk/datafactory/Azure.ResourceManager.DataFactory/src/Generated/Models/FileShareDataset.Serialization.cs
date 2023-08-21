@@ -13,30 +13,30 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class FileShareDataset : Core.IUtf8JsonSerializable
+    public partial class FileShareDataset : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(Structure))
+            if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
                 JsonSerializer.Serialize(writer, Structure);
             }
-            if (Core.Optional.IsDefined(Schema))
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName); if (Core.Optional.IsCollectionDefined(Parameters))
+            JsonSerializer.Serialize(writer, LinkedServiceName); if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Annotations))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -66,44 +66,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Folder))
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FolderPath))
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 JsonSerializer.Serialize(writer, FolderPath);
             }
-            if (Core.Optional.IsDefined(FileName))
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 JsonSerializer.Serialize(writer, FileName);
             }
-            if (Core.Optional.IsDefined(ModifiedDatetimeStart))
+            if (Optional.IsDefined(ModifiedDatetimeStart))
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
                 JsonSerializer.Serialize(writer, ModifiedDatetimeStart);
             }
-            if (Core.Optional.IsDefined(ModifiedDatetimeEnd))
+            if (Optional.IsDefined(ModifiedDatetimeEnd))
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
                 JsonSerializer.Serialize(writer, ModifiedDatetimeEnd);
             }
-            if (Core.Optional.IsDefined(Format))
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format);
             }
-            if (Core.Optional.IsDefined(FileFilter))
+            if (Optional.IsDefined(FileFilter))
             {
                 writer.WritePropertyName("fileFilter"u8);
                 JsonSerializer.Serialize(writer, FileFilter);
             }
-            if (Core.Optional.IsDefined(Compression))
+            if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
                 writer.WriteObjectValue(Compression);
@@ -128,20 +128,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Core.Optional<string> description = default;
-            Core.Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
-            Core.Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
+            Optional<string> description = default;
+            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
+            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
-            Core.Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Core.Optional<IList<BinaryData>> annotations = default;
-            Core.Optional<DatasetFolder> folder = default;
-            Core.Optional<DataFactoryElement<string>> folderPath = default;
-            Core.Optional<DataFactoryElement<string>> fileName = default;
-            Core.Optional<DataFactoryElement<string>> modifiedDatetimeStart = default;
-            Core.Optional<DataFactoryElement<string>> modifiedDatetimeEnd = default;
-            Core.Optional<DatasetStorageFormat> format = default;
-            Core.Optional<DataFactoryElement<string>> fileFilter = default;
-            Core.Optional<DatasetCompression> compression = default;
+            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            Optional<IList<BinaryData>> annotations = default;
+            Optional<DatasetFolder> folder = default;
+            Optional<DataFactoryElement<string>> folderPath = default;
+            Optional<DataFactoryElement<string>> fileName = default;
+            Optional<DataFactoryElement<string>> modifiedDatetimeStart = default;
+            Optional<DataFactoryElement<string>> modifiedDatetimeEnd = default;
+            Optional<DatasetStorageFormat> format = default;
+            Optional<DataFactoryElement<string>> fileFilter = default;
+            Optional<DatasetCompression> compression = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FileShareDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(annotations), folder.Value, additionalProperties, folderPath.Value, fileName.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, format.Value, fileFilter.Value, compression.Value);
+            return new FileShareDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, folderPath.Value, fileName.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, format.Value, fileFilter.Value, compression.Value);
         }
     }
 }

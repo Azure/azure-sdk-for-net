@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class NGramTokenizer : Core.IUtf8JsonSerializable
+    public partial class NGramTokenizer : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MinGram))
+            if (Optional.IsDefined(MinGram))
             {
                 writer.WritePropertyName("minGram"u8);
                 writer.WriteNumberValue(MinGram.Value);
             }
-            if (Core.Optional.IsDefined(MaxGram))
+            if (Optional.IsDefined(MaxGram))
             {
                 writer.WritePropertyName("maxGram"u8);
                 writer.WriteNumberValue(MaxGram.Value);
             }
-            if (Core.Optional.IsCollectionDefined(TokenChars))
+            if (Optional.IsCollectionDefined(TokenChars))
             {
                 writer.WritePropertyName("tokenChars"u8);
                 writer.WriteStartArray();
@@ -49,9 +49,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<int> minGram = default;
-            Core.Optional<int> maxGram = default;
-            Core.Optional<IList<TokenCharacterKind>> tokenChars = default;
+            Optional<int> minGram = default;
+            Optional<int> maxGram = default;
+            Optional<IList<TokenCharacterKind>> tokenChars = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new NGramTokenizer(odataType, name, Core.Optional.ToNullable(minGram), Core.Optional.ToNullable(maxGram), Core.Optional.ToList(tokenChars));
+            return new NGramTokenizer(odataType, name, Optional.ToNullable(minGram), Optional.ToNullable(maxGram), Optional.ToList(tokenChars));
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class StreamingEndpointCurrentSku : Core.IUtf8JsonSerializable
+    public partial class StreamingEndpointCurrentSku : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Capacity))
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<int> capacity = default;
+            Optional<string> name = default;
+            Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new StreamingEndpointCurrentSku(name.Value, Core.Optional.ToNullable(capacity));
+            return new StreamingEndpointCurrentSku(name.Value, Optional.ToNullable(capacity));
         }
     }
 }

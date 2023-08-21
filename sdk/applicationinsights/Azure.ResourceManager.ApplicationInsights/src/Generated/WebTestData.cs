@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="location"> The location. </param>
         public WebTestData(AzureLocation location) : base(location)
         {
-            Locations = new Core.ChangeTrackingList<WebTestGeolocation>();
+            Locations = new ChangeTrackingList<WebTestGeolocation>();
         }
 
         /// <summary> Initializes a new instance of WebTestData. </summary>

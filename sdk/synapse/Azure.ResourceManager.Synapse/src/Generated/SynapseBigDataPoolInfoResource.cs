@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseBigDataPoolInfoBigDataPoolsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics, Pipeline, _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics, Pipeline, _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseBigDataPoolInfoBigDataPoolsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics, Pipeline, _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics, Pipeline, _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

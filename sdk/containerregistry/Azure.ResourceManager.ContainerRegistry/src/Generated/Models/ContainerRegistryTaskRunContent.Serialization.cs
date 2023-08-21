@@ -10,31 +10,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryTaskRunContent : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryTaskRunContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("taskId"u8);
             writer.WriteStringValue(TaskId);
-            if (Core.Optional.IsDefined(OverrideTaskStepProperties))
+            if (Optional.IsDefined(OverrideTaskStepProperties))
             {
                 writer.WritePropertyName("overrideTaskStepProperties"u8);
                 writer.WriteObjectValue(OverrideTaskStepProperties);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);
-            if (Core.Optional.IsDefined(IsArchiveEnabled))
+            if (Optional.IsDefined(IsArchiveEnabled))
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
-            if (Core.Optional.IsDefined(AgentPoolName))
+            if (Optional.IsDefined(AgentPoolName))
             {
                 writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
-            if (Core.Optional.IsDefined(LogTemplate))
+            if (Optional.IsDefined(LogTemplate))
             {
                 writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ResourceIdentifier taskId = default;
-            Core.Optional<ContainerRegistryOverrideTaskStepProperties> overrideTaskStepProperties = default;
+            Optional<ContainerRegistryOverrideTaskStepProperties> overrideTaskStepProperties = default;
             string type = default;
-            Core.Optional<bool> isArchiveEnabled = default;
-            Core.Optional<string> agentPoolName = default;
-            Core.Optional<string> logTemplate = default;
+            Optional<bool> isArchiveEnabled = default;
+            Optional<string> agentPoolName = default;
+            Optional<string> logTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("taskId"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryTaskRunContent(type, Core.Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value, taskId, overrideTaskStepProperties.Value);
+            return new ContainerRegistryTaskRunContent(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value, taskId, overrideTaskStepProperties.Value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of DatastoreList. </summary>
         internal DatastoreList()
         {
-            Value = new Core.ChangeTrackingList<AvsPrivateCloudDatastoreData>();
+            Value = new ChangeTrackingList<AvsPrivateCloudDatastoreData>();
         }
 
         /// <summary> Initializes a new instance of DatastoreList. </summary>

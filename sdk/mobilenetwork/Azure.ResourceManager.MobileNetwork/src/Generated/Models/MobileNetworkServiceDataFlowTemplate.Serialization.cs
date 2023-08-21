@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkServiceDataFlowTemplate : Core.IUtf8JsonSerializable
+    public partial class MobileNetworkServiceDataFlowTemplate : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("templateName"u8);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsCollectionDefined(Ports))
+            if (Optional.IsCollectionDefined(Ports))
             {
                 writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             MobileNetworkSdfDirectionS direction = default;
             IList<string> protocol = default;
             IList<string> remoteIPList = default;
-            Core.Optional<IList<string>> ports = default;
+            Optional<IList<string>> ports = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("templateName"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new MobileNetworkServiceDataFlowTemplate(templateName, direction, protocol, remoteIPList, Core.Optional.ToList(ports));
+            return new MobileNetworkServiceDataFlowTemplate(templateName, direction, protocol, remoteIPList, Optional.ToList(ports));
         }
     }
 }

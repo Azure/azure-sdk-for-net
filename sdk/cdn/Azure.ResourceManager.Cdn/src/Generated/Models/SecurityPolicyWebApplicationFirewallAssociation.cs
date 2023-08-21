@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallAssociation. </summary>
         public SecurityPolicyWebApplicationFirewallAssociation()
         {
-            Domains = new Core.ChangeTrackingList<FrontDoorActivatedResourceInfo>();
-            PatternsToMatch = new Core.ChangeTrackingList<string>();
+            Domains = new ChangeTrackingList<FrontDoorActivatedResourceInfo>();
+            PatternsToMatch = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallAssociation. </summary>

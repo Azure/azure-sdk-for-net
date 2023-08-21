@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IReadOnlyList<string>> acceptedDataFormats = default;
-            Core.Optional<IReadOnlyList<string>> acceptedContentEncodings = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<IReadOnlyList<string>> acceptedDataFormats = default;
+            Optional<IReadOnlyList<string>> acceptedContentEncodings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     continue;
                 }
             }
-            return new TargetDescription(id.Value, name.Value, description.Value, Core.Optional.ToList(acceptedDataFormats), Core.Optional.ToList(acceptedContentEncodings));
+            return new TargetDescription(id.Value, name.Value, description.Value, Optional.ToList(acceptedDataFormats), Optional.ToList(acceptedContentEncodings));
         }
     }
 }

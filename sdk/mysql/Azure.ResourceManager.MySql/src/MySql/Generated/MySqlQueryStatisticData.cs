@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MySql
         /// <summary> Initializes a new instance of MySqlQueryStatisticData. </summary>
         public MySqlQueryStatisticData()
         {
-            DatabaseNames = new Core.ChangeTrackingList<string>();
+            DatabaseNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MySqlQueryStatisticData. </summary>

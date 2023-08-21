@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class UnknownCertificateProperties : Core.IUtf8JsonSerializable
+    internal partial class UnknownCertificateProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             string type = "Unknown";
-            Core.Optional<string> thumbprint = default;
-            Core.Optional<string> issuer = default;
-            Core.Optional<DateTimeOffset> issuedDate = default;
-            Core.Optional<DateTimeOffset> expirationDate = default;
-            Core.Optional<DateTimeOffset> activateDate = default;
-            Core.Optional<string> subjectName = default;
-            Core.Optional<IReadOnlyList<string>> dnsNames = default;
-            Core.Optional<AppPlatformCertificateProvisioningState> provisioningState = default;
+            Optional<string> thumbprint = default;
+            Optional<string> issuer = default;
+            Optional<DateTimeOffset> issuedDate = default;
+            Optional<DateTimeOffset> expirationDate = default;
+            Optional<DateTimeOffset> activateDate = default;
+            Optional<string> subjectName = default;
+            Optional<IReadOnlyList<string>> dnsNames = default;
+            Optional<AppPlatformCertificateProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new UnknownCertificateProperties(type, thumbprint.Value, issuer.Value, Core.Optional.ToNullable(issuedDate), Core.Optional.ToNullable(expirationDate), Core.Optional.ToNullable(activateDate), subjectName.Value, Core.Optional.ToList(dnsNames), Core.Optional.ToNullable(provisioningState));
+            return new UnknownCertificateProperties(type, thumbprint.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), Optional.ToNullable(activateDate), subjectName.Value, Optional.ToList(dnsNames), Optional.ToNullable(provisioningState));
         }
     }
 }

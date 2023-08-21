@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<AppServiceOperationStatus> status = default;
-            Core.Optional<IReadOnlyList<ResponseError>> errors = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<DateTimeOffset> modifiedTime = default;
-            Core.Optional<DateTimeOffset> expirationTime = default;
-            Core.Optional<Guid> geoMasterOperationId = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<AppServiceOperationStatus> status = default;
+            Optional<IReadOnlyList<ResponseError>> errors = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> modifiedTime = default;
+            Optional<DateTimeOffset> expirationTime = default;
+            Optional<Guid> geoMasterOperationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceOperation(id.Value, name.Value, Core.Optional.ToNullable(status), Core.Optional.ToList(errors), Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(modifiedTime), Core.Optional.ToNullable(expirationTime), Core.Optional.ToNullable(geoMasterOperationId));
+            return new AppServiceOperation(id.Value, name.Value, Optional.ToNullable(status), Optional.ToList(errors), Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), Optional.ToNullable(expirationTime), Optional.ToNullable(geoMasterOperationId));
         }
     }
 }

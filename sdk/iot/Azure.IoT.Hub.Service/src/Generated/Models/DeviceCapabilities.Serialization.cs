@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class DeviceCapabilities : Core.IUtf8JsonSerializable
+    public partial class DeviceCapabilities : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsIotEdgeDevice))
+            if (Optional.IsDefined(IsIotEdgeDevice))
             {
                 writer.WritePropertyName("iotEdge"u8);
                 writer.WriteBooleanValue(IsIotEdgeDevice.Value);
@@ -29,7 +29,7 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Core.Optional<bool> iotEdge = default;
+            Optional<bool> iotEdge = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("iotEdge"u8))
@@ -42,7 +42,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new DeviceCapabilities(Core.Optional.ToNullable(iotEdge));
+            return new DeviceCapabilities(Optional.ToNullable(iotEdge));
         }
     }
 }

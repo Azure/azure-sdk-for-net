@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             try
             {
                 var response = await _gitHubOwnerRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gitHubOwnerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityDevOpsArmOperation<GitHubOwnerResource>(new GitHubOwnerOperationSource(Client), _gitHubOwnerClientDiagnostics, Pipeline, _gitHubOwnerRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gitHubOwnerName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SecurityDevOpsArmOperation<GitHubOwnerResource>(new GitHubOwnerOperationSource(Client), _gitHubOwnerClientDiagnostics, Pipeline, _gitHubOwnerRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gitHubOwnerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             try
             {
                 var response = _gitHubOwnerRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gitHubOwnerName, data, cancellationToken);
-                var operation = new SecurityDevOpsArmOperation<GitHubOwnerResource>(new GitHubOwnerOperationSource(Client), _gitHubOwnerClientDiagnostics, Pipeline, _gitHubOwnerRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gitHubOwnerName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SecurityDevOpsArmOperation<GitHubOwnerResource>(new GitHubOwnerOperationSource(Client), _gitHubOwnerClientDiagnostics, Pipeline, _gitHubOwnerRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gitHubOwnerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubOwnerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gitHubOwnerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GitHubOwnerResource(Client, GitHubOwnerData.DeserializeGitHubOwnerData(e)), _gitHubOwnerClientDiagnostics, Pipeline, "GitHubOwnerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GitHubOwnerResource(Client, GitHubOwnerData.DeserializeGitHubOwnerData(e)), _gitHubOwnerClientDiagnostics, Pipeline, "GitHubOwnerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubOwnerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gitHubOwnerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GitHubOwnerResource(Client, GitHubOwnerData.DeserializeGitHubOwnerData(e)), _gitHubOwnerClientDiagnostics, Pipeline, "GitHubOwnerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GitHubOwnerResource(Client, GitHubOwnerData.DeserializeGitHubOwnerData(e)), _gitHubOwnerClientDiagnostics, Pipeline, "GitHubOwnerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

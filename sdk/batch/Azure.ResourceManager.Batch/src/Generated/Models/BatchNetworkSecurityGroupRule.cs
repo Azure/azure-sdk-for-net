@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             Priority = priority;
             Access = access;
             SourceAddressPrefix = sourceAddressPrefix;
-            SourcePortRanges = new Core.ChangeTrackingList<string>();
+            SourcePortRanges = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BatchNetworkSecurityGroupRule. </summary>

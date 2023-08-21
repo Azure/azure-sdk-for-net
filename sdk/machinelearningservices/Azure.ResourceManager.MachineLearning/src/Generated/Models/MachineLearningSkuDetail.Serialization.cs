@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<MachineLearningSkuCapacity> capacity = default;
-            Core.Optional<string> resourceType = default;
-            Core.Optional<MachineLearningSkuSetting> sku = default;
+            Optional<MachineLearningSkuCapacity> capacity = default;
+            Optional<string> resourceType = default;
+            Optional<MachineLearningSkuSetting> sku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("capacity"u8))

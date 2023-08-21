@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    internal partial class CapabilityTypePropertiesRuntimeProperties : Core.IUtf8JsonSerializable
+    internal partial class CapabilityTypePropertiesRuntimeProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))

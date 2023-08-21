@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class MessageDetails : Core.IUtf8JsonSerializable
+    public partial class MessageDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(SupportedProtocols))
+            if (Optional.IsCollectionDefined(SupportedProtocols))
             {
                 writer.WritePropertyName("supportedProtocols"u8);
                 writer.WriteStartArray();
@@ -26,42 +26,42 @@ namespace Azure.Communication.ShortCodes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Recurrence))
+            if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteStringValue(Recurrence.Value.ToString());
             }
-            if (Core.Optional.IsDefined(HelpMessage))
+            if (Optional.IsDefined(HelpMessage))
             {
                 writer.WritePropertyName("helpMessage"u8);
                 writer.WriteStringValue(HelpMessage);
             }
-            if (Core.Optional.IsDefined(OptOutMessage))
+            if (Optional.IsDefined(OptOutMessage))
             {
                 writer.WritePropertyName("optOutMessage"u8);
                 writer.WriteStringValue(OptOutMessage);
             }
-            if (Core.Optional.IsDefined(OptInMessage))
+            if (Optional.IsDefined(OptInMessage))
             {
                 writer.WritePropertyName("optInMessage"u8);
                 writer.WriteStringValue(OptInMessage);
             }
-            if (Core.Optional.IsDefined(OptInReply))
+            if (Optional.IsDefined(OptInReply))
             {
                 writer.WritePropertyName("optInReply"u8);
                 writer.WriteStringValue(OptInReply);
             }
-            if (Core.Optional.IsDefined(ConfirmationMessage))
+            if (Optional.IsDefined(ConfirmationMessage))
             {
                 writer.WritePropertyName("confirmationMessage"u8);
                 writer.WriteStringValue(ConfirmationMessage);
             }
-            if (Core.Optional.IsDefined(Directionality))
+            if (Optional.IsDefined(Directionality))
             {
                 writer.WritePropertyName("directionality"u8);
                 writer.WriteStringValue(Directionality.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(UseCases))
+            if (Optional.IsCollectionDefined(UseCases))
             {
                 writer.WritePropertyName("useCases"u8);
                 writer.WriteStartArray();
@@ -80,15 +80,15 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Core.Optional<IList<MessageProtocol>> supportedProtocols = default;
-            Core.Optional<MessageRecurrence> recurrence = default;
-            Core.Optional<string> helpMessage = default;
-            Core.Optional<string> optOutMessage = default;
-            Core.Optional<string> optInMessage = default;
-            Core.Optional<string> optInReply = default;
-            Core.Optional<string> confirmationMessage = default;
-            Core.Optional<MessageDirectionality> directionality = default;
-            Core.Optional<IList<UseCase>> useCases = default;
+            Optional<IList<MessageProtocol>> supportedProtocols = default;
+            Optional<MessageRecurrence> recurrence = default;
+            Optional<string> helpMessage = default;
+            Optional<string> optOutMessage = default;
+            Optional<string> optInMessage = default;
+            Optional<string> optInReply = default;
+            Optional<string> confirmationMessage = default;
+            Optional<MessageDirectionality> directionality = default;
+            Optional<IList<UseCase>> useCases = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedProtocols"u8))
@@ -163,7 +163,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new MessageDetails(Core.Optional.ToList(supportedProtocols), Core.Optional.ToNullable(recurrence), helpMessage.Value, optOutMessage.Value, optInMessage.Value, optInReply.Value, confirmationMessage.Value, Core.Optional.ToNullable(directionality), Core.Optional.ToList(useCases));
+            return new MessageDetails(Optional.ToList(supportedProtocols), Optional.ToNullable(recurrence), helpMessage.Value, optOutMessage.Value, optInMessage.Value, optInReply.Value, confirmationMessage.Value, Optional.ToNullable(directionality), Optional.ToList(useCases));
         }
     }
 }

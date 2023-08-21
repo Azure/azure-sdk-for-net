@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of BotChannelSettings. </summary>
         public BotChannelSettings()
         {
-            Sites = new Core.ChangeTrackingList<BotChannelSite>();
+            Sites = new ChangeTrackingList<BotChannelSite>();
         }
 
         /// <summary> Initializes a new instance of BotChannelSettings. </summary>

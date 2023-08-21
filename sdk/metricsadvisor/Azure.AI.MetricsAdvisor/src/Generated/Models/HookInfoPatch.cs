@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of HookInfoPatch. </summary>
         public HookInfoPatch()
         {
-            Admins = new Core.ChangeTrackingList<string>();
+            Admins = new ChangeTrackingList<string>();
         }
 
         /// <summary> hook type. </summary>

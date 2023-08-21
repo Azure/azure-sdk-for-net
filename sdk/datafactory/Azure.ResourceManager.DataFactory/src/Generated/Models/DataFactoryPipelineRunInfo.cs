@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DataFactoryPipelineRunInfo. </summary>
         internal DataFactoryPipelineRunInfo()
         {
-            Parameters = new Core.ChangeTrackingDictionary<string, string>();
-            RunDimensions = new Core.ChangeTrackingDictionary<string, string>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Parameters = new ChangeTrackingDictionary<string, string>();
+            RunDimensions = new ChangeTrackingDictionary<string, string>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DataFactoryPipelineRunInfo. </summary>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> operationId = default;
-            Core.Optional<ArmDeploymentOperationProperties> properties = default;
+            Optional<string> id = default;
+            Optional<string> operationId = default;
+            Optional<ArmDeploymentOperationProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

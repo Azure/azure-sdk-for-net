@@ -22,11 +22,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> status = default;
-            Core.Optional<string> code = default;
-            Core.Optional<string> message = default;
-            Core.Optional<string> target = default;
-            Core.Optional<IReadOnlyList<CloudError>> details = default;
+            Optional<string> status = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<string> target = default;
+            Optional<IReadOnlyList<CloudError>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -76,7 +76,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new OperationResult(status.Value, code.Value, message.Value, target.Value, Core.Optional.ToList(details));
+            return new OperationResult(status.Value, code.Value, message.Value, target.Value, Optional.ToList(details));
         }
 
         internal partial class OperationResultConverter : JsonConverter<OperationResult>

@@ -15,17 +15,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    public partial class ProjectData : Core.IUtf8JsonSerializable
+    public partial class ProjectData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,32 +40,32 @@ namespace Azure.ResourceManager.DataMigration
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SourcePlatform))
+            if (Optional.IsDefined(SourcePlatform))
             {
                 writer.WritePropertyName("sourcePlatform"u8);
                 writer.WriteStringValue(SourcePlatform.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AzureAuthenticationInfo))
+            if (Optional.IsDefined(AzureAuthenticationInfo))
             {
                 writer.WritePropertyName("azureAuthenticationInfo"u8);
                 writer.WriteObjectValue(AzureAuthenticationInfo);
             }
-            if (Core.Optional.IsDefined(TargetPlatform))
+            if (Optional.IsDefined(TargetPlatform))
             {
                 writer.WritePropertyName("targetPlatform"u8);
                 writer.WriteStringValue(TargetPlatform.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SourceConnectionInfo))
+            if (Optional.IsDefined(SourceConnectionInfo))
             {
                 writer.WritePropertyName("sourceConnectionInfo"u8);
                 writer.WriteObjectValue(SourceConnectionInfo);
             }
-            if (Core.Optional.IsDefined(TargetConnectionInfo))
+            if (Optional.IsDefined(TargetConnectionInfo))
             {
                 writer.WritePropertyName("targetConnectionInfo"u8);
                 writer.WriteObjectValue(TargetConnectionInfo);
             }
-            if (Core.Optional.IsCollectionDefined(DatabasesInfo))
+            if (Optional.IsCollectionDefined(DatabasesInfo))
             {
                 writer.WritePropertyName("databasesInfo"u8);
                 writer.WriteStartArray();
@@ -85,21 +85,21 @@ namespace Azure.ResourceManager.DataMigration
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             Core.ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ProjectSourcePlatform> sourcePlatform = default;
-            Core.Optional<AzureActiveDirectoryApp> azureAuthenticationInfo = default;
-            Core.Optional<ProjectTargetPlatform> targetPlatform = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<ConnectionInfo> sourceConnectionInfo = default;
-            Core.Optional<ConnectionInfo> targetConnectionInfo = default;
-            Core.Optional<IList<DatabaseInfo>> databasesInfo = default;
-            Core.Optional<ProjectProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<ProjectSourcePlatform> sourcePlatform = default;
+            Optional<AzureActiveDirectoryApp> azureAuthenticationInfo = default;
+            Optional<ProjectTargetPlatform> targetPlatform = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<ConnectionInfo> sourceConnectionInfo = default;
+            Optional<ConnectionInfo> targetConnectionInfo = default;
+            Optional<IList<DatabaseInfo>> databasesInfo = default;
+            Optional<ProjectProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataMigration
                     continue;
                 }
             }
-            return new ProjectData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), Core.Optional.ToNullable(sourcePlatform), azureAuthenticationInfo.Value, Core.Optional.ToNullable(targetPlatform), Core.Optional.ToNullable(creationTime), sourceConnectionInfo.Value, targetConnectionInfo.Value, Core.Optional.ToList(databasesInfo), Core.Optional.ToNullable(provisioningState));
+            return new ProjectData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(sourcePlatform), azureAuthenticationInfo.Value, Optional.ToNullable(targetPlatform), Optional.ToNullable(creationTime), sourceConnectionInfo.Value, targetConnectionInfo.Value, Optional.ToList(databasesInfo), Optional.ToNullable(provisioningState));
         }
     }
 }

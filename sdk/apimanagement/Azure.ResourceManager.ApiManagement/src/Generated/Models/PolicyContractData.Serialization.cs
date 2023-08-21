@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class PolicyContractData : Core.IUtf8JsonSerializable
+    public partial class PolicyContractData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Core.Optional.IsDefined(Format))
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToString());
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> value = default;
-            Core.Optional<PolicyContentFormat> format = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> value = default;
+            Optional<PolicyContentFormat> format = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new PolicyContractData(id, name, type, systemData.Value, value.Value, Core.Optional.ToNullable(format));
+            return new PolicyContractData(id, name, type, systemData.Value, value.Value, Optional.ToNullable(format));
         }
     }
 }

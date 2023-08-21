@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeMonitoringResult. </summary>
         internal SynapseIntegrationRuntimeMonitoringResult()
         {
-            Nodes = new Core.ChangeTrackingList<SynapseIntegrationRuntimeNodeMonitoringResult>();
+            Nodes = new ChangeTrackingList<SynapseIntegrationRuntimeNodeMonitoringResult>();
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeMonitoringResult. </summary>

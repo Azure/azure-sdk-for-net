@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of HybridComputePrivateLinkScopeProperties. </summary>
         public HybridComputePrivateLinkScopeProperties()
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<PrivateEndpointConnectionDataModel>();
+            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionDataModel>();
         }
 
         /// <summary> Initializes a new instance of HybridComputePrivateLinkScopeProperties. </summary>

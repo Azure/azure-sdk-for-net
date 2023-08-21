@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Automation.Models
         {
             Argument.AssertNotNull(contentLink, nameof(contentLink));
 
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
             ContentLink = contentLink;
         }
 

@@ -11,34 +11,34 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBTaskProperties : Core.IUtf8JsonSerializable
+    public partial class MigrateSqlServerSqlDBTaskProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Input))
+            if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (Core.Optional.IsDefined(TaskId))
+            if (Optional.IsDefined(TaskId))
             {
                 writer.WritePropertyName("taskId"u8);
                 writer.WriteStringValue(TaskId);
             }
-            if (Core.Optional.IsDefined(IsCloneable))
+            if (Optional.IsDefined(IsCloneable))
             {
                 writer.WritePropertyName("isCloneable"u8);
                 writer.WriteBooleanValue(IsCloneable.Value);
             }
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn);
             }
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
-            if (Core.Optional.IsCollectionDefined(ClientData))
+            if (Optional.IsCollectionDefined(ClientData))
             {
                 writer.WritePropertyName("clientData"u8);
                 writer.WriteStartObject();
@@ -58,16 +58,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<MigrateSqlServerSqlDBTaskInput> input = default;
-            Core.Optional<IReadOnlyList<MigrateSqlServerSqlDBTaskOutput>> output = default;
-            Core.Optional<string> taskId = default;
-            Core.Optional<bool> isCloneable = default;
-            Core.Optional<string> createdOn = default;
+            Optional<MigrateSqlServerSqlDBTaskInput> input = default;
+            Optional<IReadOnlyList<MigrateSqlServerSqlDBTaskOutput>> output = default;
+            Optional<string> taskId = default;
+            Optional<bool> isCloneable = default;
+            Optional<string> createdOn = default;
             TaskType taskType = default;
-            Core.Optional<IReadOnlyList<ODataError>> errors = default;
-            Core.Optional<TaskState> state = default;
-            Core.Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Core.Optional<IDictionary<string, string>> clientData = default;
+            Optional<IReadOnlyList<ODataError>> errors = default;
+            Optional<TaskState> state = default;
+            Optional<IReadOnlyList<CommandProperties>> commands = default;
+            Optional<IDictionary<string, string>> clientData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSqlServerSqlDBTaskProperties(taskType, Core.Optional.ToList(errors), Core.Optional.ToNullable(state), Core.Optional.ToList(commands), Core.Optional.ToDictionary(clientData), input.Value, Core.Optional.ToList(output), taskId.Value, Core.Optional.ToNullable(isCloneable), createdOn.Value);
+            return new MigrateSqlServerSqlDBTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), input.Value, Optional.ToList(output), taskId.Value, Optional.ToNullable(isCloneable), createdOn.Value);
         }
     }
 }

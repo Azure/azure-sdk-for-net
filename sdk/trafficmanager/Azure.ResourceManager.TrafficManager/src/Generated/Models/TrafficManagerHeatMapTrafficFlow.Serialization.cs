@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerHeatMapTrafficFlow : Core.IUtf8JsonSerializable
+    public partial class TrafficManagerHeatMapTrafficFlow : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SourceIP))
+            if (Optional.IsDefined(SourceIP))
             {
                 writer.WritePropertyName("sourceIp"u8);
                 writer.WriteStringValue(SourceIP.ToString());
             }
-            if (Core.Optional.IsDefined(Latitude))
+            if (Optional.IsDefined(Latitude))
             {
                 writer.WritePropertyName("latitude"u8);
                 writer.WriteNumberValue(Latitude.Value);
             }
-            if (Core.Optional.IsDefined(Longitude))
+            if (Optional.IsDefined(Longitude))
             {
                 writer.WritePropertyName("longitude"u8);
                 writer.WriteNumberValue(Longitude.Value);
             }
-            if (Core.Optional.IsCollectionDefined(QueryExperiences))
+            if (Optional.IsCollectionDefined(QueryExperiences))
             {
                 writer.WritePropertyName("queryExperiences"u8);
                 writer.WriteStartArray();
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Core.Optional<IPAddress> sourceIP = default;
-            Core.Optional<double> latitude = default;
-            Core.Optional<double> longitude = default;
-            Core.Optional<IList<TrafficManagerHeatMapQueryExperience>> queryExperiences = default;
+            Optional<IPAddress> sourceIP = default;
+            Optional<double> latitude = default;
+            Optional<double> longitude = default;
+            Optional<IList<TrafficManagerHeatMapQueryExperience>> queryExperiences = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceIp"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     continue;
                 }
             }
-            return new TrafficManagerHeatMapTrafficFlow(sourceIP.Value, Core.Optional.ToNullable(latitude), Core.Optional.ToNullable(longitude), Core.Optional.ToList(queryExperiences));
+            return new TrafficManagerHeatMapTrafficFlow(sourceIP.Value, Optional.ToNullable(latitude), Optional.ToNullable(longitude), Optional.ToList(queryExperiences));
         }
     }
 }

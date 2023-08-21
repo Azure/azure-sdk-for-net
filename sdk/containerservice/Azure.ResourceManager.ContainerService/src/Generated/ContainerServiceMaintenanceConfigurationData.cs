@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> Initializes a new instance of ContainerServiceMaintenanceConfigurationData. </summary>
         public ContainerServiceMaintenanceConfigurationData()
         {
-            TimesInWeek = new Core.ChangeTrackingList<ContainerServiceTimeInWeek>();
-            NotAllowedTimes = new Core.ChangeTrackingList<ContainerServiceTimeSpan>();
+            TimesInWeek = new ChangeTrackingList<ContainerServiceTimeInWeek>();
+            NotAllowedTimes = new ChangeTrackingList<ContainerServiceTimeSpan>();
         }
 
         /// <summary> Initializes a new instance of ContainerServiceMaintenanceConfigurationData. </summary>

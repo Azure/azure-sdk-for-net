@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    internal partial class UnknownWorkloadNetworkDhcpEntity : Core.IUtf8JsonSerializable
+    internal partial class UnknownWorkloadNetworkDhcpEntity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dhcpType"u8);
             writer.WriteStringValue(DhcpType.ToString());
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Revision))
+            if (Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             DhcpTypeEnum dhcpType = "Unknown";
-            Core.Optional<string> displayName = default;
-            Core.Optional<IReadOnlyList<string>> segments = default;
-            Core.Optional<WorkloadNetworkDhcpProvisioningState> provisioningState = default;
-            Core.Optional<long> revision = default;
+            Optional<string> displayName = default;
+            Optional<IReadOnlyList<string>> segments = default;
+            Optional<WorkloadNetworkDhcpProvisioningState> provisioningState = default;
+            Optional<long> revision = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dhcpType"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new UnknownWorkloadNetworkDhcpEntity(dhcpType, displayName.Value, Core.Optional.ToList(segments), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(revision));
+            return new UnknownWorkloadNetworkDhcpEntity(dhcpType, displayName.Value, Optional.ToList(segments), Optional.ToNullable(provisioningState), Optional.ToNullable(revision));
         }
     }
 }

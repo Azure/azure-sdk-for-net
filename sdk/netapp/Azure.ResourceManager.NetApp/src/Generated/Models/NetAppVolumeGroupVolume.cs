@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.NetApp.Models
             Argument.AssertNotNull(creationToken, nameof(creationToken));
             Argument.AssertNotNull(subnetId, nameof(subnetId));
 
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
             CreationToken = creationToken;
             UsageThreshold = usageThreshold;
-            ProtocolTypes = new Core.ChangeTrackingList<string>();
+            ProtocolTypes = new ChangeTrackingList<string>();
             SubnetId = subnetId;
-            MountTargets = new Core.ChangeTrackingList<NetAppVolumeMountTarget>();
-            DataStoreResourceId = new Core.ChangeTrackingList<ResourceIdentifier>();
-            PlacementRules = new Core.ChangeTrackingList<NetAppVolumePlacementRule>();
+            MountTargets = new ChangeTrackingList<NetAppVolumeMountTarget>();
+            DataStoreResourceId = new ChangeTrackingList<ResourceIdentifier>();
+            PlacementRules = new ChangeTrackingList<NetAppVolumePlacementRule>();
         }
 
         /// <summary> Initializes a new instance of NetAppVolumeGroupVolume. </summary>

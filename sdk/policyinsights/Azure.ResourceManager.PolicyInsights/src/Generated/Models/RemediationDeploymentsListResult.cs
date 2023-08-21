@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of RemediationDeploymentsListResult. </summary>
         internal RemediationDeploymentsListResult()
         {
-            Value = new Core.ChangeTrackingList<RemediationDeployment>();
+            Value = new ChangeTrackingList<RemediationDeployment>();
         }
 
         /// <summary> Initializes a new instance of RemediationDeploymentsListResult. </summary>

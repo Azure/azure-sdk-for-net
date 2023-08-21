@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter.Models
 {
-    public partial class ClassificationPolicy : Core.IUtf8JsonSerializable
+    public partial class ClassificationPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(FallbackQueueId))
+            if (Optional.IsDefined(FallbackQueueId))
             {
                 writer.WritePropertyName("fallbackQueueId"u8);
                 writer.WriteStringValue(FallbackQueueId);
             }
-            if (Core.Optional.IsCollectionDefined(_queueSelectors))
+            if (Optional.IsCollectionDefined(_queueSelectors))
             {
                 writer.WritePropertyName("queueSelectors"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.Communication.JobRouter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(PrioritizationRule))
+            if (Optional.IsDefined(PrioritizationRule))
             {
                 writer.WritePropertyName("prioritizationRule"u8);
                 writer.WriteObjectValue(PrioritizationRule);
             }
-            if (Core.Optional.IsCollectionDefined(_workerSelectors))
+            if (Optional.IsCollectionDefined(_workerSelectors))
             {
                 writer.WritePropertyName("workerSelectors"u8);
                 writer.WriteStartArray();
@@ -61,12 +61,12 @@ namespace Azure.Communication.JobRouter.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> fallbackQueueId = default;
-            Core.Optional<IList<QueueSelectorAttachment>> queueSelectors = default;
-            Core.Optional<RouterRule> prioritizationRule = default;
-            Core.Optional<IList<WorkerSelectorAttachment>> workerSelectors = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> fallbackQueueId = default;
+            Optional<IList<QueueSelectorAttachment>> queueSelectors = default;
+            Optional<RouterRule> prioritizationRule = default;
+            Optional<IList<WorkerSelectorAttachment>> workerSelectors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -122,7 +122,7 @@ namespace Azure.Communication.JobRouter.Models
                     continue;
                 }
             }
-            return new ClassificationPolicy(id.Value, name.Value, fallbackQueueId.Value, Core.Optional.ToList(queueSelectors), prioritizationRule.Value, Core.Optional.ToList(workerSelectors));
+            return new ClassificationPolicy(id.Value, name.Value, fallbackQueueId.Value, Optional.ToList(queueSelectors), prioritizationRule.Value, Optional.ToList(workerSelectors));
         }
     }
 }

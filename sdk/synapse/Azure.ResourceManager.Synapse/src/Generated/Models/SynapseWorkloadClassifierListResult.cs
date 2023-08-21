@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseWorkloadClassifierListResult. </summary>
         internal SynapseWorkloadClassifierListResult()
         {
-            Value = new Core.ChangeTrackingList<SynapseWorkloadClassifierData>();
+            Value = new ChangeTrackingList<SynapseWorkloadClassifierData>();
         }
 
         /// <summary> Initializes a new instance of SynapseWorkloadClassifierListResult. </summary>

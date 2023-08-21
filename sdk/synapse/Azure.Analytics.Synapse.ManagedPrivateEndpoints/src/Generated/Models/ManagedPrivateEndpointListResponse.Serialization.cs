@@ -19,8 +19,8 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ManagedPrivateEndpoint>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ManagedPrivateEndpoint>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                     continue;
                 }
             }
-            return new ManagedPrivateEndpointListResponse(Core.Optional.ToList(value), nextLink.Value);
+            return new ManagedPrivateEndpointListResponse(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Initializes a new instance of HealthCheckStatusDetailData. </summary>
         public HealthCheckStatusDetailData()
         {
-            HealthChecks = new Core.ChangeTrackingList<DevCenterHealthCheck>();
+            HealthChecks = new ChangeTrackingList<DevCenterHealthCheck>();
         }
 
         /// <summary> Initializes a new instance of HealthCheckStatusDetailData. </summary>

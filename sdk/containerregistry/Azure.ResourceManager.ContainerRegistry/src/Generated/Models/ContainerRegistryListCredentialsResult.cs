@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryListCredentialsResult. </summary>
         internal ContainerRegistryListCredentialsResult()
         {
-            Passwords = new Core.ChangeTrackingList<ContainerRegistryPassword>();
+            Passwords = new ChangeTrackingList<ContainerRegistryPassword>();
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryListCredentialsResult. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of SignalRServiceUsageList. </summary>
         internal SignalRServiceUsageList()
         {
-            Value = new Core.ChangeTrackingList<SignalRServiceUsage>();
+            Value = new ChangeTrackingList<SignalRServiceUsage>();
         }
 
         /// <summary> Initializes a new instance of SignalRServiceUsageList. </summary>

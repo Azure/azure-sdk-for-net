@@ -12,16 +12,16 @@ using Azure.ResourceManager.PowerBIDedicated.Models;
 
 namespace Azure.ResourceManager.PowerBIDedicated
 {
-    public partial class AutoScaleVCoreData : Core.IUtf8JsonSerializable
+    public partial class AutoScaleVCoreData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -32,19 +32,19 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(SystemData))
+            if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 writer.WriteObjectValue(SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CapacityLimit))
+            if (Optional.IsDefined(CapacityLimit))
             {
                 writer.WritePropertyName("capacityLimit"u8);
                 writer.WriteNumberValue(CapacityLimit.Value);
             }
-            if (Core.Optional.IsDefined(CapacityObjectId))
+            if (Optional.IsDefined(CapacityObjectId))
             {
                 writer.WritePropertyName("capacityObjectId"u8);
                 writer.WriteStringValue(CapacityObjectId);
@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 return null;
             }
             AutoScaleVCoreSku sku = default;
-            Core.Optional<string> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> type = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             AzureLocation location = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<int> capacityLimit = default;
-            Core.Optional<string> capacityObjectId = default;
-            Core.Optional<VCoreProvisioningState> provisioningState = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<SystemData> systemData = default;
+            Optional<int> capacityLimit = default;
+            Optional<string> capacityObjectId = default;
+            Optional<VCoreProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                     continue;
                 }
             }
-            return new AutoScaleVCoreData(id.Value, name.Value, type.Value, location, Core.Optional.ToDictionary(tags), systemData.Value, sku, Core.Optional.ToNullable(capacityLimit), capacityObjectId.Value, Core.Optional.ToNullable(provisioningState));
+            return new AutoScaleVCoreData(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), systemData.Value, sku, Optional.ToNullable(capacityLimit), capacityObjectId.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

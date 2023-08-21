@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of SecurityAssessmentData. </summary>
         public SecurityAssessmentData()
         {
-            AdditionalData = new Core.ChangeTrackingDictionary<string, string>();
+            AdditionalData = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of SecurityAssessmentData. </summary>

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class WindowsFirewallLogsDataSource : Core.IUtf8JsonSerializable
+    public partial class WindowsFirewallLogsDataSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("streams"u8);
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IList<string> streams = default;
-            Core.Optional<string> name = default;
+            Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"u8))

@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> jobStreamId = default;
-            Core.Optional<DateTimeOffset> time = default;
-            Core.Optional<AutomationJobStreamType> streamType = default;
-            Core.Optional<string> streamText = default;
-            Core.Optional<string> summary = default;
-            Core.Optional<IReadOnlyDictionary<string, BinaryData>> value = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> jobStreamId = default;
+            Optional<DateTimeOffset> time = default;
+            Optional<AutomationJobStreamType> streamType = default;
+            Optional<string> streamText = default;
+            Optional<string> summary = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationJobStream(id.Value, jobStreamId.Value, Core.Optional.ToNullable(time), Core.Optional.ToNullable(streamType), streamText.Value, summary.Value, Core.Optional.ToDictionary(value));
+            return new AutomationJobStream(id.Value, jobStreamId.Value, Optional.ToNullable(time), Optional.ToNullable(streamType), streamText.Value, summary.Value, Optional.ToDictionary(value));
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of ApiManagementTenantSettingData. </summary>
         public ApiManagementTenantSettingData()
         {
-            Settings = new Core.ChangeTrackingDictionary<string, string>();
+            Settings = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ApiManagementTenantSettingData. </summary>

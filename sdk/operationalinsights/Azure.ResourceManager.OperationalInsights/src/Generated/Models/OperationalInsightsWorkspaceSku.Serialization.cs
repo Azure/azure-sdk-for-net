@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsWorkspaceSku : Core.IUtf8JsonSerializable
+    public partial class OperationalInsightsWorkspaceSku : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Core.Optional.IsDefined(CapacityReservationLevel))
+            if (Optional.IsDefined(CapacityReservationLevel))
             {
                 writer.WritePropertyName("capacityReservationLevel"u8);
                 writer.WriteNumberValue((int)CapacityReservationLevel.Value);
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 return null;
             }
             OperationalInsightsWorkspaceSkuName name = default;
-            Core.Optional<OperationalInsightsWorkspaceCapacityReservationLevel> capacityReservationLevel = default;
-            Core.Optional<DateTimeOffset> lastSkuUpdate = default;
+            Optional<OperationalInsightsWorkspaceCapacityReservationLevel> capacityReservationLevel = default;
+            Optional<DateTimeOffset> lastSkuUpdate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new OperationalInsightsWorkspaceSku(name, Core.Optional.ToNullable(capacityReservationLevel), Core.Optional.ToNullable(lastSkuUpdate));
+            return new OperationalInsightsWorkspaceSku(name, Optional.ToNullable(capacityReservationLevel), Optional.ToNullable(lastSkuUpdate));
         }
     }
 }

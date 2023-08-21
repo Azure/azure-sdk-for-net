@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    public partial class MapsAccountProperties : Core.IUtf8JsonSerializable
+    public partial class MapsAccountProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (Core.Optional.IsCollectionDefined(LinkedResources))
+            if (Optional.IsCollectionDefined(LinkedResources))
             {
                 writer.WritePropertyName("linkedResources"u8);
                 writer.WriteStartArray();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Maps.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Cors))
+            if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
                 writer.WriteObjectValue(Cors);
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Core.Optional<Guid> uniqueId = default;
-            Core.Optional<bool> disableLocalAuth = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<IList<MapsLinkedResource>> linkedResources = default;
-            Core.Optional<CorsRules> cors = default;
+            Optional<Guid> uniqueId = default;
+            Optional<bool> disableLocalAuth = default;
+            Optional<string> provisioningState = default;
+            Optional<IList<MapsLinkedResource>> linkedResources = default;
+            Optional<CorsRules> cors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uniqueId"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Maps.Models
                     continue;
                 }
             }
-            return new MapsAccountProperties(Core.Optional.ToNullable(uniqueId), Core.Optional.ToNullable(disableLocalAuth), provisioningState.Value, Core.Optional.ToList(linkedResources), cors.Value);
+            return new MapsAccountProperties(Optional.ToNullable(uniqueId), Optional.ToNullable(disableLocalAuth), provisioningState.Value, Optional.ToList(linkedResources), cors.Value);
         }
     }
 }

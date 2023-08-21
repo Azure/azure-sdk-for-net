@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class NetworkInterfaceResourceSettings : Core.IUtf8JsonSerializable
+    public partial class NetworkInterfaceResourceSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(IPConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(EnableAcceleratedNetworking))
+            if (Optional.IsDefined(EnableAcceleratedNetworking))
             {
                 if (EnableAcceleratedNetworking != null)
                 {
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<IList<NicIPConfigurationResourceSettings>> ipConfigurations = default;
-            Core.Optional<bool?> enableAcceleratedNetworking = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<NicIPConfigurationResourceSettings>> ipConfigurations = default;
+            Optional<bool?> enableAcceleratedNetworking = default;
             string resourceType = default;
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new NetworkInterfaceResourceSettings(resourceType, targetResourceName, Core.Optional.ToDictionary(tags), Core.Optional.ToList(ipConfigurations), Core.Optional.ToNullable(enableAcceleratedNetworking));
+            return new NetworkInterfaceResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), Optional.ToList(ipConfigurations), Optional.ToNullable(enableAcceleratedNetworking));
         }
     }
 }

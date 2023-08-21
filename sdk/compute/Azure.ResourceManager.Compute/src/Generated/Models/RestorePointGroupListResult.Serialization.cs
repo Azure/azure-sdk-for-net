@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<RestorePointGroupData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<RestorePointGroupData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RestorePointGroupListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new RestorePointGroupListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

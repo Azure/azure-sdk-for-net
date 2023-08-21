@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult. </summary>
         internal WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult()
         {
-            Value = new Core.ChangeTrackingList<MachineLearningWorkspaceConnectionData>();
+            Value = new ChangeTrackingList<MachineLearningWorkspaceConnectionData>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult. </summary>

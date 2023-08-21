@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    internal partial class ConfidentialComputeProperties : Core.IUtf8JsonSerializable
+    internal partial class ConfidentialComputeProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CcePolicy))
+            if (Optional.IsDefined(CcePolicy))
             {
                 writer.WritePropertyName("ccePolicy"u8);
                 writer.WriteStringValue(CcePolicy);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Core.Optional<string> ccePolicy = default;
+            Optional<string> ccePolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ccePolicy"u8))

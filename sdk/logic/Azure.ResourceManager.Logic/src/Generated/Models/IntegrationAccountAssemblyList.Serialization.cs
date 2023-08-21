@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<IntegrationAccountAssemblyDefinitionData>> value = default;
+            Optional<IReadOnlyList<IntegrationAccountAssemblyDefinitionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new IntegrationAccountAssemblyList(Core.Optional.ToList(value));
+            return new IntegrationAccountAssemblyList(Optional.ToList(value));
         }
     }
 }

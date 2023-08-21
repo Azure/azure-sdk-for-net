@@ -16,7 +16,7 @@ namespace Azure.Maps.Routing.Models
         /// <summary> Initializes a new instance of BatchRequest. </summary>
         public BatchRequest()
         {
-            BatchItems = new Core.ChangeTrackingList<BatchRequestItem>();
+            BatchItems = new ChangeTrackingList<BatchRequestItem>();
         }
 
         /// <summary> The list of queries to process. </summary>

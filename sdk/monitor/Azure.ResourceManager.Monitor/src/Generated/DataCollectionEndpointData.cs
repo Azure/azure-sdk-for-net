@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         public DataCollectionEndpointData(AzureLocation location) : base(location)
         {
-            PrivateLinkScopedResources = new Core.ChangeTrackingList<DataCollectionRulePrivateLinkScopedResourceInfo>();
+            PrivateLinkScopedResources = new ChangeTrackingList<DataCollectionRulePrivateLinkScopedResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of DataCollectionEndpointData. </summary>

@@ -26,8 +26,8 @@ namespace Azure.Containers.ContainerRegistry
             Digest = digest;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
-            RelatedArtifacts = new Core.ChangeTrackingList<ArtifactManifestPlatform>();
-            Tags = new Core.ChangeTrackingList<string>();
+            RelatedArtifacts = new ChangeTrackingList<ArtifactManifestPlatform>();
+            Tags = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ArtifactManifestProperties. </summary>

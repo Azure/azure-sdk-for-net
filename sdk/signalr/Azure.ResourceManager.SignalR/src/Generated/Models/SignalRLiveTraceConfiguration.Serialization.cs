@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    public partial class SignalRLiveTraceConfiguration : Core.IUtf8JsonSerializable
+    public partial class SignalRLiveTraceConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled);
             }
-            if (Core.Optional.IsCollectionDefined(Categories))
+            if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Core.Optional<string> enabled = default;
-            Core.Optional<IList<SignalRLiveTraceCategory>> categories = default;
+            Optional<string> enabled = default;
+            Optional<IList<SignalRLiveTraceCategory>> categories = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     continue;
                 }
             }
-            return new SignalRLiveTraceConfiguration(enabled.Value, Core.Optional.ToList(categories));
+            return new SignalRLiveTraceConfiguration(enabled.Value, Optional.ToList(categories));
         }
     }
 }

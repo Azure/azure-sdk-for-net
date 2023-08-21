@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Patterns = patterns.ToList();
             Uri = uri;
             Label = label;
-            SearchPaths = new Core.ChangeTrackingList<string>();
+            SearchPaths = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformConfigurationServiceGitRepository. </summary>

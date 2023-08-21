@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<GitHubOwnerData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<GitHubOwnerData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     continue;
                 }
             }
-            return new GitHubOwnerListResponse(Core.Optional.ToList(value), nextLink.Value);
+            return new GitHubOwnerListResponse(Optional.ToList(value), nextLink.Value);
         }
     }
 }

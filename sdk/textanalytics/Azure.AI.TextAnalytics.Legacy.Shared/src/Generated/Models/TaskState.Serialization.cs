@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 return null;
             }
             DateTimeOffset lastUpdateDateTime = default;
-            Core.Optional<string> taskName = default;
+            Optional<string> taskName = default;
             State status = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AutoHealActions : Core.IUtf8JsonSerializable
+    public partial class AutoHealActions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ActionType))
+            if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("actionType"u8);
                 writer.WriteStringValue(ActionType.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(CustomAction))
+            if (Optional.IsDefined(CustomAction))
             {
                 writer.WritePropertyName("customAction"u8);
                 writer.WriteObjectValue(CustomAction);
             }
-            if (Core.Optional.IsDefined(MinProcessExecutionTime))
+            if (Optional.IsDefined(MinProcessExecutionTime))
             {
                 writer.WritePropertyName("minProcessExecutionTime"u8);
                 writer.WriteStringValue(MinProcessExecutionTime);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<AutoHealActionType> actionType = default;
-            Core.Optional<AutoHealCustomAction> customAction = default;
-            Core.Optional<string> minProcessExecutionTime = default;
+            Optional<AutoHealActionType> actionType = default;
+            Optional<AutoHealCustomAction> customAction = default;
+            Optional<string> minProcessExecutionTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionType"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AutoHealActions(Core.Optional.ToNullable(actionType), customAction.Value, minProcessExecutionTime.Value);
+            return new AutoHealActions(Optional.ToNullable(actionType), customAction.Value, minProcessExecutionTime.Value);
         }
     }
 }

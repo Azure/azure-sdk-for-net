@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AzureResourceDetails : Core.IUtf8JsonSerializable
+    public partial class AzureResourceDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
+            Optional<string> id = default;
             Source source = default;
             foreach (var property in element.EnumerateObject())
             {

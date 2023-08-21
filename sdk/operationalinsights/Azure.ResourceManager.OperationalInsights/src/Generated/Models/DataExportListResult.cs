@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of DataExportListResult. </summary>
         internal DataExportListResult()
         {
-            Value = new Core.ChangeTrackingList<OperationalInsightsDataExportData>();
+            Value = new ChangeTrackingList<OperationalInsightsDataExportData>();
         }
 
         /// <summary> Initializes a new instance of DataExportListResult. </summary>

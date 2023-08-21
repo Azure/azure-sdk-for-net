@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of BotConnectionSettingProperties. </summary>
         public BotConnectionSettingProperties()
         {
-            Parameters = new Core.ChangeTrackingList<BotConnectionSettingParameter>();
+            Parameters = new ChangeTrackingList<BotConnectionSettingParameter>();
         }
 
         /// <summary> Initializes a new instance of BotConnectionSettingProperties. </summary>

@@ -18,8 +18,8 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Core.Optional<CallParticipantInternal> participant = default;
-            Core.Optional<string> operationContext = default;
+            Optional<CallParticipantInternal> participant = default;
+            Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("participant"u8))

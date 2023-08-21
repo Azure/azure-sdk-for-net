@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationEncryptionProperties : Core.IUtf8JsonSerializable
+    public partial class AutomationEncryptionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeyVaultProperties))
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Core.Optional.IsDefined(KeySource))
+            if (Optional.IsDefined(KeySource))
             {
                 writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<AutomationKeyVaultProperties> keyVaultProperties = default;
-            Core.Optional<EncryptionKeySourceType> keySource = default;
-            Core.Optional<EncryptionPropertiesIdentity> identity = default;
+            Optional<AutomationKeyVaultProperties> keyVaultProperties = default;
+            Optional<EncryptionKeySourceType> keySource = default;
+            Optional<EncryptionPropertiesIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultProperties"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationEncryptionProperties(keyVaultProperties.Value, Core.Optional.ToNullable(keySource), identity.Value);
+            return new AutomationEncryptionProperties(keyVaultProperties.Value, Optional.ToNullable(keySource), identity.Value);
         }
     }
 }

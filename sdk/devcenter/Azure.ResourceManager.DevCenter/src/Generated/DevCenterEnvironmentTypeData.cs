@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Initializes a new instance of DevCenterEnvironmentTypeData. </summary>
         public DevCenterEnvironmentTypeData()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DevCenterEnvironmentTypeData. </summary>

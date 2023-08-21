@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DscNodeReport>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DscNodeReport>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new DscNodeReportListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new DscNodeReportListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

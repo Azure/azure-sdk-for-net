@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of LiveEventListResult. </summary>
         internal LiveEventListResult()
         {
-            Value = new Core.ChangeTrackingList<MediaLiveEventData>();
+            Value = new ChangeTrackingList<MediaLiveEventData>();
         }
 
         /// <summary> Initializes a new instance of LiveEventListResult. </summary>

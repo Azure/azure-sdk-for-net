@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class RouterQueueSelector : Core.IUtf8JsonSerializable
+    public partial class RouterQueueSelector : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
             writer.WritePropertyName("labelOperator"u8);
             writer.WriteStringValue(LabelOperator.ToString());
-            if (Core.Optional.IsDefined(_value))
+            if (Optional.IsDefined(_value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(_value);
@@ -35,7 +35,7 @@ namespace Azure.Communication.JobRouter
             }
             string key = default;
             LabelOperator labelOperator = default;
-            Core.Optional<object> value = default;
+            Optional<object> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))

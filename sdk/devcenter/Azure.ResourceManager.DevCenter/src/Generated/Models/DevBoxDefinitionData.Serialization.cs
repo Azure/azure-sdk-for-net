@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class DevBoxDefinitionData : Core.IUtf8JsonSerializable
+    public partial class DevBoxDefinitionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,22 +33,22 @@ namespace Azure.ResourceManager.DevCenter
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ImageReference))
+            if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
                 writer.WriteObjectValue(ImageReference);
             }
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsDefined(OSStorageType))
+            if (Optional.IsDefined(OSStorageType))
             {
                 writer.WritePropertyName("osStorageType"u8);
                 writer.WriteStringValue(OSStorageType);
             }
-            if (Core.Optional.IsDefined(HibernateSupport))
+            if (Optional.IsDefined(HibernateSupport))
             {
                 writer.WritePropertyName("hibernateSupport"u8);
                 writer.WriteStringValue(HibernateSupport.Value.ToString());
@@ -63,20 +63,20 @@ namespace Azure.ResourceManager.DevCenter
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DevCenterImageReference> imageReference = default;
-            Core.Optional<DevCenterSku> sku = default;
-            Core.Optional<string> osStorageType = default;
-            Core.Optional<DevCenterHibernateSupport> hibernateSupport = default;
-            Core.Optional<DevCenterProvisioningState> provisioningState = default;
-            Core.Optional<ImageValidationStatus> imageValidationStatus = default;
-            Core.Optional<ImageValidationErrorDetails> imageValidationErrorDetails = default;
-            Core.Optional<DevCenterImageReference> activeImageReference = default;
+            Optional<SystemData> systemData = default;
+            Optional<DevCenterImageReference> imageReference = default;
+            Optional<DevCenterSku> sku = default;
+            Optional<string> osStorageType = default;
+            Optional<DevCenterHibernateSupport> hibernateSupport = default;
+            Optional<DevCenterProvisioningState> provisioningState = default;
+            Optional<ImageValidationStatus> imageValidationStatus = default;
+            Optional<ImageValidationErrorDetails> imageValidationErrorDetails = default;
+            Optional<DevCenterImageReference> activeImageReference = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new DevBoxDefinitionData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, imageReference.Value, sku.Value, osStorageType.Value, Core.Optional.ToNullable(hibernateSupport), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(imageValidationStatus), imageValidationErrorDetails.Value, activeImageReference.Value);
+            return new DevBoxDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, imageReference.Value, sku.Value, osStorageType.Value, Optional.ToNullable(hibernateSupport), Optional.ToNullable(provisioningState), Optional.ToNullable(imageValidationStatus), imageValidationErrorDetails.Value, activeImageReference.Value);
         }
     }
 }

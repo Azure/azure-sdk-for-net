@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBAccountLocation : Core.IUtf8JsonSerializable
+    public partial class CosmosDBAccountLocation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LocationName))
+            if (Optional.IsDefined(LocationName))
             {
                 writer.WritePropertyName("locationName"u8);
                 writer.WriteStringValue(LocationName.Value);
             }
-            if (Core.Optional.IsDefined(FailoverPriority))
+            if (Optional.IsDefined(FailoverPriority))
             {
                 writer.WritePropertyName("failoverPriority"u8);
                 writer.WriteNumberValue(FailoverPriority.Value);
             }
-            if (Core.Optional.IsDefined(IsZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("isZoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<AzureLocation> locationName = default;
-            Core.Optional<string> documentEndpoint = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<int> failoverPriority = default;
-            Core.Optional<bool> isZoneRedundant = default;
+            Optional<string> id = default;
+            Optional<AzureLocation> locationName = default;
+            Optional<string> documentEndpoint = default;
+            Optional<string> provisioningState = default;
+            Optional<int> failoverPriority = default;
+            Optional<bool> isZoneRedundant = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBAccountLocation(id.Value, Core.Optional.ToNullable(locationName), documentEndpoint.Value, provisioningState.Value, Core.Optional.ToNullable(failoverPriority), Core.Optional.ToNullable(isZoneRedundant));
+            return new CosmosDBAccountLocation(id.Value, Optional.ToNullable(locationName), documentEndpoint.Value, provisioningState.Value, Optional.ToNullable(failoverPriority), Optional.ToNullable(isZoneRedundant));
         }
     }
 }

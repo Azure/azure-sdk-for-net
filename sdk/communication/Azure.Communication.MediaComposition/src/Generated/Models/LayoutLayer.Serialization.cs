@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
 {
-    public partial class LayoutLayer : Core.IUtf8JsonSerializable
+    public partial class LayoutLayer : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("zIndex"u8);
             writer.WriteNumberValue(ZIndex);
-            if (Core.Optional.IsDefined(Visibility))
+            if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());
@@ -33,7 +33,7 @@ namespace Azure.Communication.MediaComposition.Models
                 return null;
             }
             int zIndex = default;
-            Core.Optional<LayerVisibility> visibility = default;
+            Optional<LayerVisibility> visibility = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zIndex"u8))
@@ -51,7 +51,7 @@ namespace Azure.Communication.MediaComposition.Models
                     continue;
                 }
             }
-            return new LayoutLayer(zIndex, Core.Optional.ToNullable(visibility));
+            return new LayoutLayer(zIndex, Optional.ToNullable(visibility));
         }
     }
 }

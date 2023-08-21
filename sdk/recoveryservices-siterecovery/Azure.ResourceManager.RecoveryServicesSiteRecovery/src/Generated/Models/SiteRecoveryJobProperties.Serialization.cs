@@ -20,20 +20,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> activityId = default;
-            Core.Optional<string> scenarioName = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<string> state = default;
-            Core.Optional<string> stateDescription = default;
-            Core.Optional<IReadOnlyList<AsrTask>> tasks = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryJobErrorDetails>> errors = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<IReadOnlyList<string>> allowedActions = default;
-            Core.Optional<string> targetObjectId = default;
-            Core.Optional<string> targetObjectName = default;
-            Core.Optional<string> targetInstanceType = default;
-            Core.Optional<SiteRecoveryJobDetails> customDetails = default;
+            Optional<string> activityId = default;
+            Optional<string> scenarioName = default;
+            Optional<string> friendlyName = default;
+            Optional<string> state = default;
+            Optional<string> stateDescription = default;
+            Optional<IReadOnlyList<AsrTask>> tasks = default;
+            Optional<IReadOnlyList<SiteRecoveryJobErrorDetails>> errors = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<IReadOnlyList<string>> allowedActions = default;
+            Optional<string> targetObjectId = default;
+            Optional<string> targetObjectName = default;
+            Optional<string> targetInstanceType = default;
+            Optional<SiteRecoveryJobDetails> customDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activityId"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryJobProperties(activityId.Value, scenarioName.Value, friendlyName.Value, state.Value, stateDescription.Value, Core.Optional.ToList(tasks), Core.Optional.ToList(errors), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToList(allowedActions), targetObjectId.Value, targetObjectName.Value, targetInstanceType.Value, customDetails.Value);
+            return new SiteRecoveryJobProperties(activityId.Value, scenarioName.Value, friendlyName.Value, state.Value, stateDescription.Value, Optional.ToList(tasks), Optional.ToList(errors), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(allowedActions), targetObjectId.Value, targetObjectName.Value, targetInstanceType.Value, customDetails.Value);
         }
     }
 }

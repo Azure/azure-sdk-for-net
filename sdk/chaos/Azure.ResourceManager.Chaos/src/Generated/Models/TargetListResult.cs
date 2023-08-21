@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of TargetListResult. </summary>
         internal TargetListResult()
         {
-            Value = new Core.ChangeTrackingList<TargetData>();
+            Value = new ChangeTrackingList<TargetData>();
         }
 
         /// <summary> Initializes a new instance of TargetListResult. </summary>

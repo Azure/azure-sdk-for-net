@@ -19,18 +19,18 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<DateTimeOffset> lastModified = default;
-            Core.Optional<string> owner = default;
-            Core.Optional<string> group = default;
-            Core.Optional<string> permissions = default;
-            Core.Optional<string> encryptionScope = default;
-            Core.Optional<string> creationTime = default;
-            Core.Optional<string> expiryTime = default;
-            Core.Optional<string> encryptionContext = default;
-            Core.Optional<string> contentLength = default;
-            Core.Optional<string> isDirectory = default;
-            Core.Optional<string> etag = default;
+            Optional<string> name = default;
+            Optional<DateTimeOffset> lastModified = default;
+            Optional<string> owner = default;
+            Optional<string> group = default;
+            Optional<string> permissions = default;
+            Optional<string> encryptionScope = default;
+            Optional<string> creationTime = default;
+            Optional<string> expiryTime = default;
+            Optional<string> encryptionContext = default;
+            Optional<string> contentLength = default;
+            Optional<string> isDirectory = default;
+            Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -98,7 +98,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     continue;
                 }
             }
-            return new Path(name.Value, Core.Optional.ToNullable(lastModified), owner.Value, group.Value, permissions.Value, encryptionScope.Value, creationTime.Value, expiryTime.Value, encryptionContext.Value, contentLength.Value, isDirectory.Value, etag.Value);
+            return new Path(name.Value, Optional.ToNullable(lastModified), owner.Value, group.Value, permissions.Value, encryptionScope.Value, creationTime.Value, expiryTime.Value, encryptionContext.Value, contentLength.Value, isDirectory.Value, etag.Value);
         }
     }
 }

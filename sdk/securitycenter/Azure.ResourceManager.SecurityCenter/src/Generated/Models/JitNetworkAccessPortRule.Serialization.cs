@@ -12,21 +12,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class JitNetworkAccessPortRule : Core.IUtf8JsonSerializable
+    public partial class JitNetworkAccessPortRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("number"u8);
             writer.WriteNumberValue(Number);
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
-            if (Core.Optional.IsDefined(AllowedSourceAddressPrefix))
+            if (Optional.IsDefined(AllowedSourceAddressPrefix))
             {
                 writer.WritePropertyName("allowedSourceAddressPrefix"u8);
                 writer.WriteStringValue(AllowedSourceAddressPrefix);
             }
-            if (Core.Optional.IsCollectionDefined(AllowedSourceAddressPrefixes))
+            if (Optional.IsCollectionDefined(AllowedSourceAddressPrefixes))
             {
                 writer.WritePropertyName("allowedSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             int number = default;
             JitNetworkAccessPortProtocol protocol = default;
-            Core.Optional<string> allowedSourceAddressPrefix = default;
-            Core.Optional<IList<string>> allowedSourceAddressPrefixes = default;
+            Optional<string> allowedSourceAddressPrefix = default;
+            Optional<IList<string>> allowedSourceAddressPrefixes = default;
             TimeSpan maxRequestAccessDuration = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new JitNetworkAccessPortRule(number, protocol, allowedSourceAddressPrefix.Value, Core.Optional.ToList(allowedSourceAddressPrefixes), maxRequestAccessDuration);
+            return new JitNetworkAccessPortRule(number, protocol, allowedSourceAddressPrefix.Value, Optional.ToList(allowedSourceAddressPrefixes), maxRequestAccessDuration);
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class RecoveryPointsRecommendedForMoveContent : Core.IUtf8JsonSerializable
+    public partial class RecoveryPointsRecommendedForMoveContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ObjectType))
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
-            if (Core.Optional.IsCollectionDefined(ExcludedRPList))
+            if (Optional.IsCollectionDefined(ExcludedRPList))
             {
                 writer.WritePropertyName("excludedRPList"u8);
                 writer.WriteStartArray();

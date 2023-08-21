@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of ScriptActionsList. </summary>
         internal ScriptActionsList()
         {
-            Value = new Core.ChangeTrackingList<RuntimeScriptActionDetail>();
+            Value = new ChangeTrackingList<RuntimeScriptActionDetail>();
         }
 
         /// <summary> Initializes a new instance of ScriptActionsList. </summary>

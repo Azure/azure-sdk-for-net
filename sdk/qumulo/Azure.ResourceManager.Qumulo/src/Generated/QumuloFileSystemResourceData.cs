@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Qumulo
             StorageSku = storageSku;
             UserDetails = userDetails;
             DelegatedSubnetId = delegatedSubnetId;
-            PrivateIPs = new Core.ChangeTrackingList<IPAddress>();
+            PrivateIPs = new ChangeTrackingList<IPAddress>();
             AdminPassword = adminPassword;
             InitialCapacity = initialCapacity;
         }

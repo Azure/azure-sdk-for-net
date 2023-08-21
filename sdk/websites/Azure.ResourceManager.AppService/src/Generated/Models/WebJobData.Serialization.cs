@@ -14,49 +14,49 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class WebJobData : Core.IUtf8JsonSerializable
+    public partial class WebJobData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RunCommand))
+            if (Optional.IsDefined(RunCommand))
             {
                 writer.WritePropertyName("run_command"u8);
                 writer.WriteStringValue(RunCommand);
             }
-            if (Core.Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(ExtraInfoUri))
+            if (Optional.IsDefined(ExtraInfoUri))
             {
                 writer.WritePropertyName("extra_info_url"u8);
                 writer.WriteStringValue(ExtraInfoUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(WebJobType))
+            if (Optional.IsDefined(WebJobType))
             {
                 writer.WritePropertyName("web_job_type"u8);
                 writer.WriteStringValue(WebJobType.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(Error))
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
-            if (Core.Optional.IsDefined(IsUsingSdk))
+            if (Optional.IsDefined(IsUsingSdk))
             {
                 writer.WritePropertyName("using_sdk"u8);
                 writer.WriteBooleanValue(IsUsingSdk.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Settings))
+            if (Optional.IsCollectionDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();
@@ -86,18 +86,18 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> runCommand = default;
-            Core.Optional<Uri> url = default;
-            Core.Optional<Uri> extraInfoUrl = default;
-            Core.Optional<WebJobType> webJobType = default;
-            Core.Optional<string> error = default;
-            Core.Optional<bool> usingSdk = default;
-            Core.Optional<IDictionary<string, BinaryData>> settings = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> runCommand = default;
+            Optional<Uri> url = default;
+            Optional<Uri> extraInfoUrl = default;
+            Optional<WebJobType> webJobType = default;
+            Optional<string> error = default;
+            Optional<bool> usingSdk = default;
+            Optional<IDictionary<string, BinaryData>> settings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new WebJobData(id, name, type, systemData.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Core.Optional.ToNullable(webJobType), error.Value, Core.Optional.ToNullable(usingSdk), Core.Optional.ToDictionary(settings), kind.Value);
+            return new WebJobData(id, name, type, systemData.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), Optional.ToDictionary(settings), kind.Value);
         }
     }
 }

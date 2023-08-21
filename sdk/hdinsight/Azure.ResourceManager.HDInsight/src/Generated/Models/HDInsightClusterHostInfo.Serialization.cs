@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> fqdn = default;
-            Core.Optional<Uri> effectiveDiskEncryptionKeyUrl = default;
+            Optional<string> name = default;
+            Optional<string> fqdn = default;
+            Optional<Uri> effectiveDiskEncryptionKeyUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

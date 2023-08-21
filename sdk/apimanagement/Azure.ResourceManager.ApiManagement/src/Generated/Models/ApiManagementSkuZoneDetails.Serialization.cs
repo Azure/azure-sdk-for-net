@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> name = default;
-            Core.Optional<IReadOnlyList<ApiManagementSkuCapabilities>> capabilities = default;
+            Optional<IReadOnlyList<string>> name = default;
+            Optional<IReadOnlyList<ApiManagementSkuCapabilities>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiManagementSkuZoneDetails(Core.Optional.ToList(name), Core.Optional.ToList(capabilities));
+            return new ApiManagementSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities));
         }
     }
 }

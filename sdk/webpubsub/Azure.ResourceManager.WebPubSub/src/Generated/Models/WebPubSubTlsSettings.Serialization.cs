@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    internal partial class WebPubSubTlsSettings : Core.IUtf8JsonSerializable
+    internal partial class WebPubSubTlsSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsClientCertEnabled))
+            if (Optional.IsDefined(IsClientCertEnabled))
             {
                 writer.WritePropertyName("clientCertEnabled"u8);
                 writer.WriteBooleanValue(IsClientCertEnabled.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Core.Optional<bool> clientCertEnabled = default;
+            Optional<bool> clientCertEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientCertEnabled"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new WebPubSubTlsSettings(Core.Optional.ToNullable(clientCertEnabled));
+            return new WebPubSubTlsSettings(Optional.ToNullable(clientCertEnabled));
         }
     }
 }

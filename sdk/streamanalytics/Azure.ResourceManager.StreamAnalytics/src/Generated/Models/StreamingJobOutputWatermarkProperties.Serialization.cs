@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamingJobOutputWatermarkProperties : Core.IUtf8JsonSerializable
+    public partial class StreamingJobOutputWatermarkProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(WatermarkMode))
+            if (Optional.IsDefined(WatermarkMode))
             {
                 writer.WritePropertyName("watermarkMode"u8);
                 writer.WriteStringValue(WatermarkMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(MaxWatermarkDifferenceAcrossPartitions))
+            if (Optional.IsDefined(MaxWatermarkDifferenceAcrossPartitions))
             {
                 writer.WritePropertyName("maxWatermarkDifferenceAcrossPartitions"u8);
                 writer.WriteStringValue(MaxWatermarkDifferenceAcrossPartitions);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Core.Optional<StreamingJobOutputWatermarkMode> watermarkMode = default;
-            Core.Optional<string> maxWatermarkDifferenceAcrossPartitions = default;
+            Optional<StreamingJobOutputWatermarkMode> watermarkMode = default;
+            Optional<string> maxWatermarkDifferenceAcrossPartitions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("watermarkMode"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamingJobOutputWatermarkProperties(Core.Optional.ToNullable(watermarkMode), maxWatermarkDifferenceAcrossPartitions.Value);
+            return new StreamingJobOutputWatermarkProperties(Optional.ToNullable(watermarkMode), maxWatermarkDifferenceAcrossPartitions.Value);
         }
     }
 }

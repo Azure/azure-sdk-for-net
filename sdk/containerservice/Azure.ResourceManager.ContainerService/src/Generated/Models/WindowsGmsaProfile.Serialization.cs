@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class WindowsGmsaProfile : Core.IUtf8JsonSerializable
+    public partial class WindowsGmsaProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(DnsServer))
+            if (Optional.IsDefined(DnsServer))
             {
                 writer.WritePropertyName("dnsServer"u8);
                 writer.WriteStringValue(DnsServer);
             }
-            if (Core.Optional.IsDefined(RootDomainName))
+            if (Optional.IsDefined(RootDomainName))
             {
                 writer.WritePropertyName("rootDomainName"u8);
                 writer.WriteStringValue(RootDomainName);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<string> dnsServer = default;
-            Core.Optional<string> rootDomainName = default;
+            Optional<bool> enabled = default;
+            Optional<string> dnsServer = default;
+            Optional<string> rootDomainName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new WindowsGmsaProfile(Core.Optional.ToNullable(enabled), dnsServer.Value, rootDomainName.Value);
+            return new WindowsGmsaProfile(Optional.ToNullable(enabled), dnsServer.Value, rootDomainName.Value);
         }
     }
 }

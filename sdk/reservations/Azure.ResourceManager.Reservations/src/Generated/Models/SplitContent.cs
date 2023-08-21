@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of SplitContent. </summary>
         public SplitContent()
         {
-            Quantities = new Core.ChangeTrackingList<int>();
+            Quantities = new ChangeTrackingList<int>();
         }
 
         /// <summary> List of the quantities in the new reservations to create. </summary>

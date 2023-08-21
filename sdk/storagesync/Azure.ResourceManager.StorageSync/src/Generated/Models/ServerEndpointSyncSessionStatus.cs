@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Initializes a new instance of ServerEndpointSyncSessionStatus. </summary>
         internal ServerEndpointSyncSessionStatus()
         {
-            FilesNotSyncingErrors = new Core.ChangeTrackingList<ServerEndpointFilesNotSyncingError>();
+            FilesNotSyncingErrors = new ChangeTrackingList<ServerEndpointFilesNotSyncingError>();
         }
 
         /// <summary> Initializes a new instance of ServerEndpointSyncSessionStatus. </summary>

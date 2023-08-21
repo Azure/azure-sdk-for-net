@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of DatabaseRestoreResourceInfo. </summary>
         public DatabaseRestoreResourceInfo()
         {
-            CollectionNames = new Core.ChangeTrackingList<string>();
+            CollectionNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DatabaseRestoreResourceInfo. </summary>

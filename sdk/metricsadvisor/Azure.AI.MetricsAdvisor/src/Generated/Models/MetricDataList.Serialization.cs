@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<MetricSeriesData>> value = default;
+            Optional<IReadOnlyList<MetricSeriesData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricDataList(Core.Optional.ToList(value));
+            return new MetricDataList(Optional.ToList(value));
         }
     }
 }

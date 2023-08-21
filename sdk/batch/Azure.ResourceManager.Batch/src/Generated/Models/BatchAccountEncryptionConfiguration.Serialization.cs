@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountEncryptionConfiguration : Core.IUtf8JsonSerializable
+    public partial class BatchAccountEncryptionConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeySource))
+            if (Optional.IsDefined(KeySource))
             {
                 writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(KeyVaultProperties))
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Core.Optional<BatchAccountKeySource> keySource = default;
-            Core.Optional<KeyVaultProperties> keyVaultProperties = default;
+            Optional<BatchAccountKeySource> keySource = default;
+            Optional<KeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keySource"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchAccountEncryptionConfiguration(Core.Optional.ToNullable(keySource), keyVaultProperties.Value);
+            return new BatchAccountEncryptionConfiguration(Optional.ToNullable(keySource), keyVaultProperties.Value);
         }
     }
 }

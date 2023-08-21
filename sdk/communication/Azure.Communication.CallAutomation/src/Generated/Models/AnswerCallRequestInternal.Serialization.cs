@@ -10,31 +10,31 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class AnswerCallRequestInternal : Core.IUtf8JsonSerializable
+    internal partial class AnswerCallRequestInternal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("incomingCallContext"u8);
             writer.WriteStringValue(IncomingCallContext);
             writer.WritePropertyName("callbackUri"u8);
             writer.WriteStringValue(CallbackUri);
-            if (Core.Optional.IsDefined(OperationContext))
+            if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (Core.Optional.IsDefined(MediaStreamingConfiguration))
+            if (Optional.IsDefined(MediaStreamingConfiguration))
             {
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);
                 writer.WriteObjectValue(MediaStreamingConfiguration);
             }
-            if (Core.Optional.IsDefined(AzureCognitiveServicesEndpointUrl))
+            if (Optional.IsDefined(AzureCognitiveServicesEndpointUrl))
             {
                 writer.WritePropertyName("azureCognitiveServicesEndpointUrl"u8);
                 writer.WriteStringValue(AzureCognitiveServicesEndpointUrl);
             }
-            if (Core.Optional.IsDefined(AnsweredByIdentifier))
+            if (Optional.IsDefined(AnsweredByIdentifier))
             {
                 writer.WritePropertyName("answeredByIdentifier"u8);
                 writer.WriteObjectValue(AnsweredByIdentifier);

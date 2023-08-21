@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of CallConnectionPropertiesInternal. </summary>
         internal CallConnectionPropertiesInternal()
         {
-            Targets = new Core.ChangeTrackingList<CommunicationIdentifierModel>();
+            Targets = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
         /// <summary> Initializes a new instance of CallConnectionPropertiesInternal. </summary>

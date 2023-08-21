@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of DeletedVaultListResult. </summary>
         internal DeletedVaultListResult()
         {
-            Value = new Core.ChangeTrackingList<DeletedKeyVaultData>();
+            Value = new ChangeTrackingList<DeletedKeyVaultData>();
         }
 
         /// <summary> Initializes a new instance of DeletedVaultListResult. </summary>

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<WritableSubResource> virtualNetworkLink = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<WritableSubResource> virtualNetworkLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

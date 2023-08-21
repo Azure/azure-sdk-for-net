@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DataFactoryBlobSink. </summary>
         public DataFactoryBlobSink()
         {
-            Metadata = new Core.ChangeTrackingList<DataFactoryMetadataItemInfo>();
+            Metadata = new ChangeTrackingList<DataFactoryMetadataItemInfo>();
             CopySinkType = "BlobSink";
         }
 

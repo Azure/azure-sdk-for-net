@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceIdentityProviders. </summary>
         public AppServiceIdentityProviders()
         {
-            CustomOpenIdConnectProviders = new Core.ChangeTrackingDictionary<string, CustomOpenIdConnectProvider>();
+            CustomOpenIdConnectProviders = new ChangeTrackingDictionary<string, CustomOpenIdConnectProvider>();
         }
 
         /// <summary> Initializes a new instance of AppServiceIdentityProviders. </summary>

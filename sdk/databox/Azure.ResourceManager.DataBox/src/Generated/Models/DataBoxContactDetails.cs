@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBox.Models
             ContactName = contactName;
             Phone = phone;
             EmailList = emailList.ToList();
-            NotificationPreference = new Core.ChangeTrackingList<NotificationPreference>();
+            NotificationPreference = new ChangeTrackingList<NotificationPreference>();
         }
 
         /// <summary> Initializes a new instance of DataBoxContactDetails. </summary>

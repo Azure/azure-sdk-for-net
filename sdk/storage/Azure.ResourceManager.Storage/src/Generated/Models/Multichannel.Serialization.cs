@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    internal partial class Multichannel : Core.IUtf8JsonSerializable
+    internal partial class Multichannel : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsMultiChannelEnabled))
+            if (Optional.IsDefined(IsMultiChannelEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsMultiChannelEnabled.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
+            Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new Multichannel(Core.Optional.ToNullable(enabled));
+            return new Multichannel(Optional.ToNullable(enabled));
         }
     }
 }

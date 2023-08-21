@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of CatalogsResult. </summary>
         internal CatalogsResult()
         {
-            Value = new Core.ChangeTrackingList<ReservationCatalog>();
+            Value = new ChangeTrackingList<ReservationCatalog>();
         }
 
         /// <summary> Initializes a new instance of CatalogsResult. </summary>

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryTriggerUpdateContent. </summary>
         public ContainerRegistryTriggerUpdateContent()
         {
-            TimerTriggers = new Core.ChangeTrackingList<ContainerRegistryTimerTriggerUpdateContent>();
-            SourceTriggers = new Core.ChangeTrackingList<ContainerRegistrySourceTriggerUpdateContent>();
+            TimerTriggers = new ChangeTrackingList<ContainerRegistryTimerTriggerUpdateContent>();
+            SourceTriggers = new ChangeTrackingList<ContainerRegistrySourceTriggerUpdateContent>();
         }
 
         /// <summary> The collection of timer triggers. </summary>

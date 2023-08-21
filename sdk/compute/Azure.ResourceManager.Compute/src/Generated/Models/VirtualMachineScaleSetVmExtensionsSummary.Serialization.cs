@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IReadOnlyList<VirtualMachineStatusCodeCount>> statusesSummary = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<VirtualMachineStatusCodeCount>> statusesSummary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVmExtensionsSummary(name.Value, Core.Optional.ToList(statusesSummary));
+            return new VirtualMachineScaleSetVmExtensionsSummary(name.Value, Optional.ToList(statusesSummary));
         }
     }
 }

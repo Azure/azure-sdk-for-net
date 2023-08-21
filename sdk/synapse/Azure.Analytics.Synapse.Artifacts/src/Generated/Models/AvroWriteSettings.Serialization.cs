@@ -14,27 +14,27 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AvroWriteSettingsConverter))]
-    public partial class AvroWriteSettings : Core.IUtf8JsonSerializable
+    public partial class AvroWriteSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RecordName))
+            if (Optional.IsDefined(RecordName))
             {
                 writer.WritePropertyName("recordName"u8);
                 writer.WriteStringValue(RecordName);
             }
-            if (Core.Optional.IsDefined(RecordNamespace))
+            if (Optional.IsDefined(RecordNamespace))
             {
                 writer.WritePropertyName("recordNamespace"u8);
                 writer.WriteStringValue(RecordNamespace);
             }
-            if (Core.Optional.IsDefined(MaxRowsPerFile))
+            if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
                 writer.WriteObjectValue(MaxRowsPerFile);
             }
-            if (Core.Optional.IsDefined(FileNamePrefix))
+            if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
                 writer.WriteObjectValue(FileNamePrefix);
@@ -55,10 +55,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> recordName = default;
-            Core.Optional<string> recordNamespace = default;
-            Core.Optional<object> maxRowsPerFile = default;
-            Core.Optional<object> fileNamePrefix = default;
+            Optional<string> recordName = default;
+            Optional<string> recordNamespace = default;
+            Optional<object> maxRowsPerFile = default;
+            Optional<object> fileNamePrefix = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();

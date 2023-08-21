@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<int> numberOfContainers = default;
+            Optional<int> numberOfContainers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MySqlFlexibleServerValidateBackupResult(Core.Optional.ToNullable(numberOfContainers));
+            return new MySqlFlexibleServerValidateBackupResult(Optional.ToNullable(numberOfContainers));
         }
     }
 }

@@ -12,31 +12,31 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class SqlDBTableDataSet : Core.IUtf8JsonSerializable
+    public partial class SqlDBTableDataSet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DatabaseName))
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Core.Optional.IsDefined(SchemaName))
+            if (Optional.IsDefined(SchemaName))
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
-            if (Core.Optional.IsDefined(SqlServerResourceId))
+            if (Optional.IsDefined(SqlServerResourceId))
             {
                 writer.WritePropertyName("sqlServerResourceId"u8);
                 writer.WriteStringValue(SqlServerResourceId);
             }
-            if (Core.Optional.IsDefined(TableName))
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> databaseName = default;
-            Core.Optional<Guid> dataSetId = default;
-            Core.Optional<string> schemaName = default;
-            Core.Optional<ResourceIdentifier> sqlServerResourceId = default;
-            Core.Optional<string> tableName = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> databaseName = default;
+            Optional<Guid> dataSetId = default;
+            Optional<string> schemaName = default;
+            Optional<ResourceIdentifier> sqlServerResourceId = default;
+            Optional<string> tableName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new SqlDBTableDataSet(id, name, type, systemData.Value, kind, databaseName.Value, Core.Optional.ToNullable(dataSetId), schemaName.Value, sqlServerResourceId.Value, tableName.Value);
+            return new SqlDBTableDataSet(id, name, type, systemData.Value, kind, databaseName.Value, Optional.ToNullable(dataSetId), schemaName.Value, sqlServerResourceId.Value, tableName.Value);
         }
     }
 }

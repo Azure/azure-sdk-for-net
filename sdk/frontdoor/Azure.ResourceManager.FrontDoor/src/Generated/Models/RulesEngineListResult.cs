@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of RulesEngineListResult. </summary>
         internal RulesEngineListResult()
         {
-            Value = new Core.ChangeTrackingList<FrontDoorRulesEngineData>();
+            Value = new ChangeTrackingList<FrontDoorRulesEngineData>();
         }
 
         /// <summary> Initializes a new instance of RulesEngineListResult. </summary>

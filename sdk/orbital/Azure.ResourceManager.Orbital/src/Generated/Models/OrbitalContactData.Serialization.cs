@@ -15,34 +15,34 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
-    public partial class OrbitalContactData : Core.IUtf8JsonSerializable
+    public partial class OrbitalContactData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ReservationStartOn))
+            if (Optional.IsDefined(ReservationStartOn))
             {
                 writer.WritePropertyName("reservationStartTime"u8);
                 writer.WriteStringValue(ReservationStartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(ReservationEndOn))
+            if (Optional.IsDefined(ReservationEndOn))
             {
                 writer.WritePropertyName("reservationEndTime"u8);
                 writer.WriteStringValue(ReservationEndOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(GroundStationName))
+            if (Optional.IsDefined(GroundStationName))
             {
                 writer.WritePropertyName("groundStationName"u8);
                 writer.WriteStringValue(GroundStationName);
             }
-            if (Core.Optional.IsDefined(ContactProfile))
+            if (Optional.IsDefined(ContactProfile))
             {
                 writer.WritePropertyName("contactProfile"u8);
                 JsonSerializer.Serialize(writer, ContactProfile);
@@ -57,28 +57,28 @@ namespace Azure.ResourceManager.Orbital
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<OrbitalProvisioningState> provisioningState = default;
-            Core.Optional<OrbitalContactStatus> status = default;
-            Core.Optional<DateTimeOffset> reservationStartTime = default;
-            Core.Optional<DateTimeOffset> reservationEndTime = default;
-            Core.Optional<DateTimeOffset> rxStartTime = default;
-            Core.Optional<DateTimeOffset> rxEndTime = default;
-            Core.Optional<DateTimeOffset> txStartTime = default;
-            Core.Optional<DateTimeOffset> txEndTime = default;
-            Core.Optional<string> errorMessage = default;
-            Core.Optional<float> maximumElevationDegrees = default;
-            Core.Optional<float> startAzimuthDegrees = default;
-            Core.Optional<float> endAzimuthDegrees = default;
-            Core.Optional<string> groundStationName = default;
-            Core.Optional<float> startElevationDegrees = default;
-            Core.Optional<float> endElevationDegrees = default;
-            Core.Optional<OrbitalContactAntennaConfiguration> antennaConfiguration = default;
-            Core.Optional<WritableSubResource> contactProfile = default;
+            Optional<SystemData> systemData = default;
+            Optional<OrbitalProvisioningState> provisioningState = default;
+            Optional<OrbitalContactStatus> status = default;
+            Optional<DateTimeOffset> reservationStartTime = default;
+            Optional<DateTimeOffset> reservationEndTime = default;
+            Optional<DateTimeOffset> rxStartTime = default;
+            Optional<DateTimeOffset> rxEndTime = default;
+            Optional<DateTimeOffset> txStartTime = default;
+            Optional<DateTimeOffset> txEndTime = default;
+            Optional<string> errorMessage = default;
+            Optional<float> maximumElevationDegrees = default;
+            Optional<float> startAzimuthDegrees = default;
+            Optional<float> endAzimuthDegrees = default;
+            Optional<string> groundStationName = default;
+            Optional<float> startElevationDegrees = default;
+            Optional<float> endElevationDegrees = default;
+            Optional<OrbitalContactAntennaConfiguration> antennaConfiguration = default;
+            Optional<WritableSubResource> contactProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Orbital
                     continue;
                 }
             }
-            return new OrbitalContactData(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(status), Core.Optional.ToNullable(reservationStartTime), Core.Optional.ToNullable(reservationEndTime), Core.Optional.ToNullable(rxStartTime), Core.Optional.ToNullable(rxEndTime), Core.Optional.ToNullable(txStartTime), Core.Optional.ToNullable(txEndTime), errorMessage.Value, Core.Optional.ToNullable(maximumElevationDegrees), Core.Optional.ToNullable(startAzimuthDegrees), Core.Optional.ToNullable(endAzimuthDegrees), groundStationName.Value, Core.Optional.ToNullable(startElevationDegrees), Core.Optional.ToNullable(endElevationDegrees), antennaConfiguration.Value, contactProfile);
+            return new OrbitalContactData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(reservationStartTime), Optional.ToNullable(reservationEndTime), Optional.ToNullable(rxStartTime), Optional.ToNullable(rxEndTime), Optional.ToNullable(txStartTime), Optional.ToNullable(txEndTime), errorMessage.Value, Optional.ToNullable(maximumElevationDegrees), Optional.ToNullable(startAzimuthDegrees), Optional.ToNullable(endAzimuthDegrees), groundStationName.Value, Optional.ToNullable(startElevationDegrees), Optional.ToNullable(endElevationDegrees), antennaConfiguration.Value, contactProfile);
         }
     }
 }

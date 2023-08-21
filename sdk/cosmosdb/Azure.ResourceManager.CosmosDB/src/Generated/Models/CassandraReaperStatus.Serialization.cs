@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<bool> healthy = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> repairRunIds = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> repairSchedules = default;
+            Optional<bool> healthy = default;
+            Optional<IReadOnlyDictionary<string, string>> repairRunIds = default;
+            Optional<IReadOnlyDictionary<string, string>> repairSchedules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("healthy"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CassandraReaperStatus(Core.Optional.ToNullable(healthy), Core.Optional.ToDictionary(repairRunIds), Core.Optional.ToDictionary(repairSchedules));
+            return new CassandraReaperStatus(Optional.ToNullable(healthy), Optional.ToDictionary(repairRunIds), Optional.ToDictionary(repairSchedules));
         }
     }
 }

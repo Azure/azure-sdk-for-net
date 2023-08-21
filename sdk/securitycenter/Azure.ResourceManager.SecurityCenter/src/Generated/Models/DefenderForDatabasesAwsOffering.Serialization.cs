@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForDatabasesAwsOffering : Core.IUtf8JsonSerializable
+    public partial class DefenderForDatabasesAwsOffering : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ArcAutoProvisioning))
+            if (Optional.IsDefined(ArcAutoProvisioning))
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
                 writer.WriteObjectValue(ArcAutoProvisioning);
             }
-            if (Core.Optional.IsDefined(Rds))
+            if (Optional.IsDefined(Rds))
             {
                 writer.WritePropertyName("rds"u8);
                 writer.WriteObjectValue(Rds);
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<DefenderForDatabasesAwsOfferingArcAutoProvisioning> arcAutoProvisioning = default;
-            Core.Optional<DefenderForDatabasesAwsOfferingRds> rds = default;
+            Optional<DefenderForDatabasesAwsOfferingArcAutoProvisioning> arcAutoProvisioning = default;
+            Optional<DefenderForDatabasesAwsOfferingRds> rds = default;
             OfferingType offeringType = default;
-            Core.Optional<string> description = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("arcAutoProvisioning"u8))

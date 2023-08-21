@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> Initializes a new instance of HDInsightApplicationData. </summary>
         public HDInsightApplicationData()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of HDInsightApplicationData. </summary>

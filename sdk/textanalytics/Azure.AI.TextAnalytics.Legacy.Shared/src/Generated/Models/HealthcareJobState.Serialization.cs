@@ -21,11 +21,11 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 return null;
             }
-            Core.Optional<HealthcareResult> results = default;
-            Core.Optional<IReadOnlyList<TextAnalyticsError>> errors = default;
-            Core.Optional<string> nextLink = default;
+            Optional<HealthcareResult> results = default;
+            Optional<IReadOnlyList<TextAnalyticsError>> errors = default;
+            Optional<string> nextLink = default;
             DateTimeOffset createdDateTime = default;
-            Core.Optional<DateTimeOffset> expirationDateTime = default;
+            Optional<DateTimeOffset> expirationDateTime = default;
             Guid jobId = default;
             DateTimeOffset lastUpdateDateTime = default;
             State status = default;
@@ -89,7 +89,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new HealthcareJobState(createdDateTime, Core.Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, results.Value, Core.Optional.ToList(errors), nextLink.Value);
+            return new HealthcareJobState(createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, results.Value, Optional.ToList(errors), nextLink.Value);
         }
     }
 }

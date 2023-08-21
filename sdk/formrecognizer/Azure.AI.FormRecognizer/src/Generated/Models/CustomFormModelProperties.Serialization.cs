@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Training
             {
                 return null;
             }
-            Core.Optional<bool> isComposed = default;
+            Optional<bool> isComposed = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isComposed"u8))

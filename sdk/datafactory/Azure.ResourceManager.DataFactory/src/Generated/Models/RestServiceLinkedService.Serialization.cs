@@ -13,24 +13,24 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class RestServiceLinkedService : Core.IUtf8JsonSerializable
+    public partial class RestServiceLinkedService : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (Core.Optional.IsDefined(ConnectVia))
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Annotations))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -64,84 +64,84 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
             JsonSerializer.Serialize(writer, Uri);
-            if (Core.Optional.IsDefined(EnableServerCertificateValidation))
+            if (Optional.IsDefined(EnableServerCertificateValidation))
             {
                 writer.WritePropertyName("enableServerCertificateValidation"u8);
                 JsonSerializer.Serialize(writer, EnableServerCertificateValidation);
             }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
-            if (Core.Optional.IsDefined(UserName))
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 JsonSerializer.Serialize(writer, UserName);
             }
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
-            if (Core.Optional.IsDefined(AuthHeaders))
+            if (Optional.IsDefined(AuthHeaders))
             {
                 writer.WritePropertyName("authHeaders"u8);
                 JsonSerializer.Serialize(writer, AuthHeaders);
             }
-            if (Core.Optional.IsDefined(ServicePrincipalId))
+            if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalId);
             }
-            if (Core.Optional.IsDefined(ServicePrincipalKey))
+            if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalKey);
             }
-            if (Core.Optional.IsDefined(Tenant))
+            if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
                 JsonSerializer.Serialize(writer, Tenant);
             }
-            if (Core.Optional.IsDefined(AzureCloudType))
+            if (Optional.IsDefined(AzureCloudType))
             {
                 writer.WritePropertyName("azureCloudType"u8);
                 JsonSerializer.Serialize(writer, AzureCloudType);
             }
-            if (Core.Optional.IsDefined(AadResourceId))
+            if (Optional.IsDefined(AadResourceId))
             {
                 writer.WritePropertyName("aadResourceId"u8);
                 JsonSerializer.Serialize(writer, AadResourceId);
             }
-            if (Core.Optional.IsDefined(EncryptedCredential))
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
             }
-            if (Core.Optional.IsDefined(Credential))
+            if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
             }
-            if (Core.Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 JsonSerializer.Serialize(writer, ClientId);
             }
-            if (Core.Optional.IsDefined(ClientSecret))
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 JsonSerializer.Serialize(writer, ClientSecret);
             }
-            if (Core.Optional.IsDefined(TokenEndpoint))
+            if (Optional.IsDefined(TokenEndpoint))
             {
                 writer.WritePropertyName("tokenEndpoint"u8);
                 JsonSerializer.Serialize(writer, TokenEndpoint);
             }
-            if (Core.Optional.IsDefined(Resource))
+            if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
                 JsonSerializer.Serialize(writer, Resource);
             }
-            if (Core.Optional.IsDefined(Scope))
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 JsonSerializer.Serialize(writer, Scope);
@@ -166,28 +166,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Core.Optional<IntegrationRuntimeReference> connectVia = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Core.Optional<IList<BinaryData>> annotations = default;
+            Optional<IntegrationRuntimeReference> connectVia = default;
+            Optional<string> description = default;
+            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            Optional<IList<BinaryData>> annotations = default;
             DataFactoryElement<string> url = default;
-            Core.Optional<DataFactoryElement<bool>> enableServerCertificateValidation = default;
+            Optional<DataFactoryElement<bool>> enableServerCertificateValidation = default;
             RestServiceAuthenticationType authenticationType = default;
-            Core.Optional<DataFactoryElement<string>> userName = default;
-            Core.Optional<DataFactorySecretBaseDefinition> password = default;
-            Core.Optional<DataFactoryElement<BinaryData>> authHeaders = default;
-            Core.Optional<DataFactoryElement<string>> servicePrincipalId = default;
-            Core.Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
-            Core.Optional<DataFactoryElement<string>> tenant = default;
-            Core.Optional<DataFactoryElement<string>> azureCloudType = default;
-            Core.Optional<DataFactoryElement<string>> aadResourceId = default;
-            Core.Optional<string> encryptedCredential = default;
-            Core.Optional<DataFactoryCredentialReference> credential = default;
-            Core.Optional<DataFactoryElement<string>> clientId = default;
-            Core.Optional<DataFactorySecretBaseDefinition> clientSecret = default;
-            Core.Optional<DataFactoryElement<string>> tokenEndpoint = default;
-            Core.Optional<DataFactoryElement<string>> resource = default;
-            Core.Optional<DataFactoryElement<string>> scope = default;
+            Optional<DataFactoryElement<string>> userName = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
+            Optional<DataFactoryElement<BinaryData>> authHeaders = default;
+            Optional<DataFactoryElement<string>> servicePrincipalId = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
+            Optional<DataFactoryElement<string>> tenant = default;
+            Optional<DataFactoryElement<string>> azureCloudType = default;
+            Optional<DataFactoryElement<string>> aadResourceId = default;
+            Optional<string> encryptedCredential = default;
+            Optional<DataFactoryCredentialReference> credential = default;
+            Optional<DataFactoryElement<string>> clientId = default;
+            Optional<DataFactorySecretBaseDefinition> clientSecret = default;
+            Optional<DataFactoryElement<string>> tokenEndpoint = default;
+            Optional<DataFactoryElement<string>> resource = default;
+            Optional<DataFactoryElement<string>> scope = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestServiceLinkedService(type, connectVia.Value, description.Value, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(annotations), additionalProperties, url, enableServerCertificateValidation.Value, authenticationType, userName.Value, password, authHeaders.Value, servicePrincipalId.Value, servicePrincipalKey, tenant.Value, azureCloudType.Value, aadResourceId.Value, encryptedCredential.Value, credential.Value, clientId.Value, clientSecret, tokenEndpoint.Value, resource.Value, scope.Value);
+            return new RestServiceLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, enableServerCertificateValidation.Value, authenticationType, userName.Value, password, authHeaders.Value, servicePrincipalId.Value, servicePrincipalKey, tenant.Value, azureCloudType.Value, aadResourceId.Value, encryptedCredential.Value, credential.Value, clientId.Value, clientSecret, tokenEndpoint.Value, resource.Value, scope.Value);
         }
     }
 }

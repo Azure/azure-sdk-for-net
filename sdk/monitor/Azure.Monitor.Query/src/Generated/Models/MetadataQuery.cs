@@ -25,7 +25,7 @@ namespace Azure.Monitor.Query.Models
 
             Id = id;
             Body = body;
-            Labels = new Core.ChangeTrackingList<string>();
+            Labels = new ChangeTrackingList<string>();
         }
 
         /// <summary> The ID of the query. </summary>

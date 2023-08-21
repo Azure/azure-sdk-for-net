@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBAccountPatch. </summary>
         public CosmosDBAccountPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            Locations = new Core.ChangeTrackingList<CosmosDBAccountLocation>();
-            IPRules = new Core.ChangeTrackingList<CosmosDBIPAddressOrRange>();
-            Capabilities = new Core.ChangeTrackingList<CosmosDBAccountCapability>();
-            VirtualNetworkRules = new Core.ChangeTrackingList<CosmosDBVirtualNetworkRule>();
-            Cors = new Core.ChangeTrackingList<CosmosDBAccountCorsPolicy>();
-            NetworkAclBypassResourceIds = new Core.ChangeTrackingList<ResourceIdentifier>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Locations = new ChangeTrackingList<CosmosDBAccountLocation>();
+            IPRules = new ChangeTrackingList<CosmosDBIPAddressOrRange>();
+            Capabilities = new ChangeTrackingList<CosmosDBAccountCapability>();
+            VirtualNetworkRules = new ChangeTrackingList<CosmosDBVirtualNetworkRule>();
+            Cors = new ChangeTrackingList<CosmosDBAccountCorsPolicy>();
+            NetworkAclBypassResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </summary>

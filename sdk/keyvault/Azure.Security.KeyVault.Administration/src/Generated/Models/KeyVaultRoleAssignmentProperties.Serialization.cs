@@ -18,9 +18,9 @@ namespace Azure.Security.KeyVault.Administration
             {
                 return null;
             }
-            Core.Optional<KeyVaultRoleScope> scope = default;
-            Core.Optional<string> roleDefinitionId = default;
-            Core.Optional<string> principalId = default;
+            Optional<KeyVaultRoleScope> scope = default;
+            Optional<string> roleDefinitionId = default;
+            Optional<string> principalId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"u8))
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Administration
                     continue;
                 }
             }
-            return new KeyVaultRoleAssignmentProperties(Core.Optional.ToNullable(scope), roleDefinitionId.Value, principalId.Value);
+            return new KeyVaultRoleAssignmentProperties(Optional.ToNullable(scope), roleDefinitionId.Value, principalId.Value);
         }
     }
 }

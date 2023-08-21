@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class Entity : Core.IUtf8JsonSerializable
+    internal partial class Entity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category);
-            if (Core.Optional.IsDefined(Subcategory))
+            if (Optional.IsDefined(Subcategory))
             {
                 writer.WritePropertyName("subcategory"u8);
                 writer.WriteStringValue(Subcategory);
@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             string text = default;
             string category = default;
-            Core.Optional<string> subcategory = default;
+            Optional<string> subcategory = default;
             int offset = default;
             int length = default;
             double confidenceScore = default;

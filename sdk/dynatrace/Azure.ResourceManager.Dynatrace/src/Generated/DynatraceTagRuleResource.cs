@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Dynatrace
             try
             {
                 var response = await _dynatraceTagRuleTagRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DynatraceArmOperation(_dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, _dynatraceTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DynatraceArmOperation(_dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, _dynatraceTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Dynatrace
             try
             {
                 var response = _dynatraceTagRuleTagRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DynatraceArmOperation(_dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, _dynatraceTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DynatraceArmOperation(_dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, _dynatraceTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

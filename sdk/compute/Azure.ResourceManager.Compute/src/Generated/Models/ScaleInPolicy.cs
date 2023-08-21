@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ScaleInPolicy. </summary>
         public ScaleInPolicy()
         {
-            Rules = new Core.ChangeTrackingList<VirtualMachineScaleSetScaleInRule>();
+            Rules = new ChangeTrackingList<VirtualMachineScaleSetScaleInRule>();
         }
 
         /// <summary> Initializes a new instance of ScaleInPolicy. </summary>

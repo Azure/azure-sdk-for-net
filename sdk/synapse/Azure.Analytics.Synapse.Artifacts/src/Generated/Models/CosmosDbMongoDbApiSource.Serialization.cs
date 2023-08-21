@@ -14,49 +14,49 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CosmosDbMongoDbApiSourceConverter))]
-    public partial class CosmosDbMongoDbApiSource : Core.IUtf8JsonSerializable
+    public partial class CosmosDbMongoDbApiSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Filter))
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
-            if (Core.Optional.IsDefined(CursorMethods))
+            if (Optional.IsDefined(CursorMethods))
             {
                 writer.WritePropertyName("cursorMethods"u8);
                 writer.WriteObjectValue(CursorMethods);
             }
-            if (Core.Optional.IsDefined(BatchSize))
+            if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteObjectValue(BatchSize);
             }
-            if (Core.Optional.IsDefined(QueryTimeout))
+            if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 writer.WriteObjectValue(QueryTimeout);
             }
-            if (Core.Optional.IsDefined(AdditionalColumns))
+            if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
                 writer.WriteObjectValue(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Core.Optional.IsDefined(SourceRetryCount))
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 writer.WriteObjectValue(SourceRetryCount);
             }
-            if (Core.Optional.IsDefined(SourceRetryWait))
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 writer.WriteObjectValue(SourceRetryWait);
             }
-            if (Core.Optional.IsDefined(MaxConcurrentConnections))
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -75,15 +75,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<object> filter = default;
-            Core.Optional<MongoDbCursorMethodsProperties> cursorMethods = default;
-            Core.Optional<object> batchSize = default;
-            Core.Optional<object> queryTimeout = default;
-            Core.Optional<object> additionalColumns = default;
+            Optional<object> filter = default;
+            Optional<MongoDbCursorMethodsProperties> cursorMethods = default;
+            Optional<object> batchSize = default;
+            Optional<object> queryTimeout = default;
+            Optional<object> additionalColumns = default;
             string type = default;
-            Core.Optional<object> sourceRetryCount = default;
-            Core.Optional<object> sourceRetryWait = default;
-            Core.Optional<object> maxConcurrentConnections = default;
+            Optional<object> sourceRetryCount = default;
+            Optional<object> sourceRetryWait = default;
+            Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

@@ -11,28 +11,28 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndexer : Core.IUtf8JsonSerializable
+    public partial class SearchIndexer : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("dataSourceName"u8);
             writer.WriteStringValue(DataSourceName);
-            if (Core.Optional.IsDefined(SkillsetName))
+            if (Optional.IsDefined(SkillsetName))
             {
                 writer.WritePropertyName("skillsetName"u8);
                 writer.WriteStringValue(SkillsetName);
             }
             writer.WritePropertyName("targetIndexName"u8);
             writer.WriteStringValue(TargetIndexName);
-            if (Core.Optional.IsDefined(Schedule))
+            if (Optional.IsDefined(Schedule))
             {
                 if (Schedule != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("schedule");
                 }
             }
-            if (Core.Optional.IsDefined(Parameters))
+            if (Optional.IsDefined(Parameters))
             {
                 if (Parameters != null)
                 {
@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("parameters");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(FieldMappings))
+            if (Optional.IsCollectionDefined(FieldMappings))
             {
                 writer.WritePropertyName("fieldMappings"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(OutputFieldMappings))
+            if (Optional.IsCollectionDefined(OutputFieldMappings))
             {
                 writer.WritePropertyName("outputFieldMappings"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsDisabled))
+            if (Optional.IsDefined(IsDisabled))
             {
                 if (IsDisabled != null)
                 {
@@ -88,12 +88,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("disabled");
                 }
             }
-            if (Core.Optional.IsDefined(_etag))
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
             }
-            if (Core.Optional.IsDefined(EncryptionKey))
+            if (Optional.IsDefined(EncryptionKey))
             {
                 if (EncryptionKey != null)
                 {
@@ -105,7 +105,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("encryptionKey");
                 }
             }
-            if (Core.Optional.IsDefined(Cache))
+            if (Optional.IsDefined(Cache))
             {
                 if (Cache != null)
                 {
@@ -127,18 +127,18 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Core.Optional<string> description = default;
+            Optional<string> description = default;
             string dataSourceName = default;
-            Core.Optional<string> skillsetName = default;
+            Optional<string> skillsetName = default;
             string targetIndexName = default;
-            Core.Optional<IndexingSchedule> schedule = default;
-            Core.Optional<IndexingParameters> parameters = default;
-            Core.Optional<IList<FieldMapping>> fieldMappings = default;
-            Core.Optional<IList<FieldMapping>> outputFieldMappings = default;
-            Core.Optional<bool?> disabled = default;
-            Core.Optional<string> odataEtag = default;
-            Core.Optional<SearchResourceEncryptionKey> encryptionKey = default;
-            Core.Optional<SearchIndexerCache> cache = default;
+            Optional<IndexingSchedule> schedule = default;
+            Optional<IndexingParameters> parameters = default;
+            Optional<IList<FieldMapping>> fieldMappings = default;
+            Optional<IList<FieldMapping>> outputFieldMappings = default;
+            Optional<bool?> disabled = default;
+            Optional<string> odataEtag = default;
+            Optional<SearchResourceEncryptionKey> encryptionKey = default;
+            Optional<SearchIndexerCache> cache = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -250,7 +250,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexer(name, description.Value, dataSourceName, skillsetName.Value, targetIndexName, schedule.Value, parameters.Value, Core.Optional.ToList(fieldMappings), Core.Optional.ToList(outputFieldMappings), Core.Optional.ToNullable(disabled), odataEtag.Value, encryptionKey.Value, cache.Value);
+            return new SearchIndexer(name, description.Value, dataSourceName, skillsetName.Value, targetIndexName, schedule.Value, parameters.Value, Optional.ToList(fieldMappings), Optional.ToList(outputFieldMappings), Optional.ToNullable(disabled), odataEtag.Value, encryptionKey.Value, cache.Value);
         }
     }
 }

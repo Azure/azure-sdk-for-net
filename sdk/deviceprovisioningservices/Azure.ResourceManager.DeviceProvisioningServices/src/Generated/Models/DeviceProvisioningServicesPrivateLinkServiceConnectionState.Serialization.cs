@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class DeviceProvisioningServicesPrivateLinkServiceConnectionState : Core.IUtf8JsonSerializable
+    public partial class DeviceProvisioningServicesPrivateLinkServiceConnectionState : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
-            if (Core.Optional.IsDefined(ActionsRequired))
+            if (Optional.IsDefined(ActionsRequired))
             {
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
             DeviceProvisioningServicesPrivateLinkServiceConnectionStatus status = default;
             string description = default;
-            Core.Optional<string> actionsRequired = default;
+            Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))

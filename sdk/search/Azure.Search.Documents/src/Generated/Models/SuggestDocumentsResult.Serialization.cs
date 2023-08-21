@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             IReadOnlyList<SuggestResult> value = default;
-            Core.Optional<double> searchCoverage = default;
+            Optional<double> searchCoverage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new SuggestDocumentsResult(value, Core.Optional.ToNullable(searchCoverage));
+            return new SuggestDocumentsResult(value, Optional.ToNullable(searchCoverage));
         }
     }
 }

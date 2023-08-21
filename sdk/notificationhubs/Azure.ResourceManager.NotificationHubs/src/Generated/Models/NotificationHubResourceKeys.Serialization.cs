@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Core.Optional<string> primaryConnectionString = default;
-            Core.Optional<string> secondaryConnectionString = default;
-            Core.Optional<string> primaryKey = default;
-            Core.Optional<string> secondaryKey = default;
-            Core.Optional<string> keyName = default;
+            Optional<string> primaryConnectionString = default;
+            Optional<string> secondaryConnectionString = default;
+            Optional<string> primaryKey = default;
+            Optional<string> secondaryKey = default;
+            Optional<string> keyName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryConnectionString"u8))

@@ -13,9 +13,9 @@ using Azure.Core;
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(SystemAssignedServiceIdentityConverter))]
-    public partial class SystemAssignedServiceIdentity : Core.IUtf8JsonSerializable
+    public partial class SystemAssignedServiceIdentity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Models
             {
                 return null;
             }
-            Core.Optional<Guid> principalId = default;
-            Core.Optional<Guid> tenantId = default;
+            Optional<Guid> principalId = default;
+            Optional<Guid> tenantId = default;
             SystemAssignedServiceIdentityType type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new SystemAssignedServiceIdentity(Core.Optional.ToNullable(principalId), Core.Optional.ToNullable(tenantId), type);
+            return new SystemAssignedServiceIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), type);
         }
 
         internal partial class SystemAssignedServiceIdentityConverter : JsonConverter<SystemAssignedServiceIdentity>

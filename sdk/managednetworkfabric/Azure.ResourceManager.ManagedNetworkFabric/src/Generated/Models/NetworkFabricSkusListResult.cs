@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkFabricSkusListResult. </summary>
         internal NetworkFabricSkusListResult()
         {
-            Value = new Core.ChangeTrackingList<NetworkFabricSkuData>();
+            Value = new ChangeTrackingList<NetworkFabricSkuData>();
         }
 
         /// <summary> Initializes a new instance of NetworkFabricSkusListResult. </summary>

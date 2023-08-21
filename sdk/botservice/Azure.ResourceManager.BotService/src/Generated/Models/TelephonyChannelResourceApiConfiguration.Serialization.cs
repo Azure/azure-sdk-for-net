@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class TelephonyChannelResourceApiConfiguration : Core.IUtf8JsonSerializable
+    public partial class TelephonyChannelResourceApiConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(ProviderName))
+            if (Optional.IsDefined(ProviderName))
             {
                 if (ProviderName != null)
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("providerName");
                 }
             }
-            if (Core.Optional.IsDefined(CognitiveServiceSubscriptionKey))
+            if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
             {
                 if (CognitiveServiceSubscriptionKey != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceSubscriptionKey");
                 }
             }
-            if (Core.Optional.IsDefined(CognitiveServiceRegion))
+            if (Optional.IsDefined(CognitiveServiceRegion))
             {
                 if (CognitiveServiceRegion != null)
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceRegion");
                 }
             }
-            if (Core.Optional.IsDefined(CognitiveServiceResourceId))
+            if (Optional.IsDefined(CognitiveServiceResourceId))
             {
                 if (CognitiveServiceResourceId != null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceResourceId");
                 }
             }
-            if (Core.Optional.IsDefined(DefaultLocale))
+            if (Optional.IsDefined(DefaultLocale))
             {
                 if (DefaultLocale != null)
                 {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> providerName = default;
-            Core.Optional<string> cognitiveServiceSubscriptionKey = default;
-            Core.Optional<string> cognitiveServiceRegion = default;
-            Core.Optional<ResourceIdentifier> cognitiveServiceResourceId = default;
-            Core.Optional<string> defaultLocale = default;
+            Optional<string> id = default;
+            Optional<string> providerName = default;
+            Optional<string> cognitiveServiceSubscriptionKey = default;
+            Optional<string> cognitiveServiceRegion = default;
+            Optional<ResourceIdentifier> cognitiveServiceResourceId = default;
+            Optional<string> defaultLocale = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

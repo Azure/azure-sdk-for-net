@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class AvsManagementCluster : Core.IUtf8JsonSerializable
+    public partial class AvsManagementCluster : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ClusterSize))
+            if (Optional.IsDefined(ClusterSize))
             {
                 writer.WritePropertyName("clusterSize"u8);
                 writer.WriteNumberValue(ClusterSize.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Hosts))
+            if (Optional.IsCollectionDefined(Hosts))
             {
                 writer.WritePropertyName("hosts"u8);
                 writer.WriteStartArray();
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Core.Optional<int> clusterSize = default;
-            Core.Optional<AvsPrivateCloudClusterProvisioningState> provisioningState = default;
-            Core.Optional<int> clusterId = default;
-            Core.Optional<IList<string>> hosts = default;
+            Optional<int> clusterSize = default;
+            Optional<AvsPrivateCloudClusterProvisioningState> provisioningState = default;
+            Optional<int> clusterId = default;
+            Optional<IList<string>> hosts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterSize"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new AvsManagementCluster(Core.Optional.ToNullable(clusterSize), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(clusterId), Core.Optional.ToList(hosts));
+            return new AvsManagementCluster(Optional.ToNullable(clusterSize), Optional.ToNullable(provisioningState), Optional.ToNullable(clusterId), Optional.ToList(hosts));
         }
     }
 }

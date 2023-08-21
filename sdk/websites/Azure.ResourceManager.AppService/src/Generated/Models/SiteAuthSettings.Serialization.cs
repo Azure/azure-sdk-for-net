@@ -12,39 +12,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteAuthSettings : Core.IUtf8JsonSerializable
+    public partial class SiteAuthSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(RuntimeVersion))
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (Core.Optional.IsDefined(UnauthenticatedClientAction))
+            if (Optional.IsDefined(UnauthenticatedClientAction))
             {
                 writer.WritePropertyName("unauthenticatedClientAction"u8);
                 writer.WriteStringValue(UnauthenticatedClientAction.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(IsTokenStoreEnabled))
+            if (Optional.IsDefined(IsTokenStoreEnabled))
             {
                 writer.WritePropertyName("tokenStoreEnabled"u8);
                 writer.WriteBooleanValue(IsTokenStoreEnabled.Value);
             }
-            if (Core.Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
+            if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
             {
                 writer.WritePropertyName("allowedExternalRedirectUrls"u8);
                 writer.WriteStartArray();
@@ -54,47 +54,47 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DefaultProvider))
+            if (Optional.IsDefined(DefaultProvider))
             {
                 writer.WritePropertyName("defaultProvider"u8);
                 writer.WriteStringValue(DefaultProvider.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(TokenRefreshExtensionHours))
+            if (Optional.IsDefined(TokenRefreshExtensionHours))
             {
                 writer.WritePropertyName("tokenRefreshExtensionHours"u8);
                 writer.WriteNumberValue(TokenRefreshExtensionHours.Value);
             }
-            if (Core.Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Core.Optional.IsDefined(ClientSecret))
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            if (Core.Optional.IsDefined(ClientSecretSettingName))
+            if (Optional.IsDefined(ClientSecretSettingName))
             {
                 writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
-            if (Core.Optional.IsDefined(ClientSecretCertificateThumbprintString))
+            if (Optional.IsDefined(ClientSecretCertificateThumbprintString))
             {
                 writer.WritePropertyName("clientSecretCertificateThumbprint"u8);
                 writer.WriteStringValue(ClientSecretCertificateThumbprintString);
             }
-            if (Core.Optional.IsDefined(Issuer))
+            if (Optional.IsDefined(Issuer))
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (Core.Optional.IsDefined(ValidateIssuer))
+            if (Optional.IsDefined(ValidateIssuer))
             {
                 writer.WritePropertyName("validateIssuer"u8);
                 writer.WriteBooleanValue(ValidateIssuer.Value);
             }
-            if (Core.Optional.IsCollectionDefined(AllowedAudiences))
+            if (Optional.IsCollectionDefined(AllowedAudiences))
             {
                 writer.WritePropertyName("allowedAudiences"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(AdditionalLoginParams))
+            if (Optional.IsCollectionDefined(AdditionalLoginParams))
             {
                 writer.WritePropertyName("additionalLoginParams"u8);
                 writer.WriteStartArray();
@@ -114,27 +114,27 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(AadClaimsAuthorization))
+            if (Optional.IsDefined(AadClaimsAuthorization))
             {
                 writer.WritePropertyName("aadClaimsAuthorization"u8);
                 writer.WriteStringValue(AadClaimsAuthorization);
             }
-            if (Core.Optional.IsDefined(GoogleClientId))
+            if (Optional.IsDefined(GoogleClientId))
             {
                 writer.WritePropertyName("googleClientId"u8);
                 writer.WriteStringValue(GoogleClientId);
             }
-            if (Core.Optional.IsDefined(GoogleClientSecret))
+            if (Optional.IsDefined(GoogleClientSecret))
             {
                 writer.WritePropertyName("googleClientSecret"u8);
                 writer.WriteStringValue(GoogleClientSecret);
             }
-            if (Core.Optional.IsDefined(GoogleClientSecretSettingName))
+            if (Optional.IsDefined(GoogleClientSecretSettingName))
             {
                 writer.WritePropertyName("googleClientSecretSettingName"u8);
                 writer.WriteStringValue(GoogleClientSecretSettingName);
             }
-            if (Core.Optional.IsCollectionDefined(GoogleOAuthScopes))
+            if (Optional.IsCollectionDefined(GoogleOAuthScopes))
             {
                 writer.WritePropertyName("googleOAuthScopes"u8);
                 writer.WriteStartArray();
@@ -144,22 +144,22 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(FacebookAppId))
+            if (Optional.IsDefined(FacebookAppId))
             {
                 writer.WritePropertyName("facebookAppId"u8);
                 writer.WriteStringValue(FacebookAppId);
             }
-            if (Core.Optional.IsDefined(FacebookAppSecret))
+            if (Optional.IsDefined(FacebookAppSecret))
             {
                 writer.WritePropertyName("facebookAppSecret"u8);
                 writer.WriteStringValue(FacebookAppSecret);
             }
-            if (Core.Optional.IsDefined(FacebookAppSecretSettingName))
+            if (Optional.IsDefined(FacebookAppSecretSettingName))
             {
                 writer.WritePropertyName("facebookAppSecretSettingName"u8);
                 writer.WriteStringValue(FacebookAppSecretSettingName);
             }
-            if (Core.Optional.IsCollectionDefined(FacebookOAuthScopes))
+            if (Optional.IsCollectionDefined(FacebookOAuthScopes))
             {
                 writer.WritePropertyName("facebookOAuthScopes"u8);
                 writer.WriteStartArray();
@@ -169,22 +169,22 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(GitHubClientId))
+            if (Optional.IsDefined(GitHubClientId))
             {
                 writer.WritePropertyName("gitHubClientId"u8);
                 writer.WriteStringValue(GitHubClientId);
             }
-            if (Core.Optional.IsDefined(GitHubClientSecret))
+            if (Optional.IsDefined(GitHubClientSecret))
             {
                 writer.WritePropertyName("gitHubClientSecret"u8);
                 writer.WriteStringValue(GitHubClientSecret);
             }
-            if (Core.Optional.IsDefined(GitHubClientSecretSettingName))
+            if (Optional.IsDefined(GitHubClientSecretSettingName))
             {
                 writer.WritePropertyName("gitHubClientSecretSettingName"u8);
                 writer.WriteStringValue(GitHubClientSecretSettingName);
             }
-            if (Core.Optional.IsCollectionDefined(GitHubOAuthScopes))
+            if (Optional.IsCollectionDefined(GitHubOAuthScopes))
             {
                 writer.WritePropertyName("gitHubOAuthScopes"u8);
                 writer.WriteStartArray();
@@ -194,37 +194,37 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TwitterConsumerKey))
+            if (Optional.IsDefined(TwitterConsumerKey))
             {
                 writer.WritePropertyName("twitterConsumerKey"u8);
                 writer.WriteStringValue(TwitterConsumerKey);
             }
-            if (Core.Optional.IsDefined(TwitterConsumerSecret))
+            if (Optional.IsDefined(TwitterConsumerSecret))
             {
                 writer.WritePropertyName("twitterConsumerSecret"u8);
                 writer.WriteStringValue(TwitterConsumerSecret);
             }
-            if (Core.Optional.IsDefined(TwitterConsumerSecretSettingName))
+            if (Optional.IsDefined(TwitterConsumerSecretSettingName))
             {
                 writer.WritePropertyName("twitterConsumerSecretSettingName"u8);
                 writer.WriteStringValue(TwitterConsumerSecretSettingName);
             }
-            if (Core.Optional.IsDefined(MicrosoftAccountClientId))
+            if (Optional.IsDefined(MicrosoftAccountClientId))
             {
                 writer.WritePropertyName("microsoftAccountClientId"u8);
                 writer.WriteStringValue(MicrosoftAccountClientId);
             }
-            if (Core.Optional.IsDefined(MicrosoftAccountClientSecret))
+            if (Optional.IsDefined(MicrosoftAccountClientSecret))
             {
                 writer.WritePropertyName("microsoftAccountClientSecret"u8);
                 writer.WriteStringValue(MicrosoftAccountClientSecret);
             }
-            if (Core.Optional.IsDefined(MicrosoftAccountClientSecretSettingName))
+            if (Optional.IsDefined(MicrosoftAccountClientSecretSettingName))
             {
                 writer.WritePropertyName("microsoftAccountClientSecretSettingName"u8);
                 writer.WriteStringValue(MicrosoftAccountClientSecretSettingName);
             }
-            if (Core.Optional.IsCollectionDefined(MicrosoftAccountOAuthScopes))
+            if (Optional.IsCollectionDefined(MicrosoftAccountOAuthScopes))
             {
                 writer.WritePropertyName("microsoftAccountOAuthScopes"u8);
                 writer.WriteStartArray();
@@ -234,17 +234,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsAuthFromFile))
+            if (Optional.IsDefined(IsAuthFromFile))
             {
                 writer.WritePropertyName("isAuthFromFile"u8);
                 writer.WriteStringValue(IsAuthFromFile);
             }
-            if (Core.Optional.IsDefined(AuthFilePath))
+            if (Optional.IsDefined(AuthFilePath))
             {
                 writer.WritePropertyName("authFilePath"u8);
                 writer.WriteStringValue(AuthFilePath);
             }
-            if (Core.Optional.IsDefined(ConfigVersion))
+            if (Optional.IsDefined(ConfigVersion))
             {
                 writer.WritePropertyName("configVersion"u8);
                 writer.WriteStringValue(ConfigVersion);
@@ -259,49 +259,49 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<bool> enabled = default;
-            Core.Optional<string> runtimeVersion = default;
-            Core.Optional<UnauthenticatedClientAction> unauthenticatedClientAction = default;
-            Core.Optional<bool> tokenStoreEnabled = default;
-            Core.Optional<IList<string>> allowedExternalRedirectUrls = default;
-            Core.Optional<BuiltInAuthenticationProvider> defaultProvider = default;
-            Core.Optional<double> tokenRefreshExtensionHours = default;
-            Core.Optional<string> clientId = default;
-            Core.Optional<string> clientSecret = default;
-            Core.Optional<string> clientSecretSettingName = default;
-            Core.Optional<string> clientSecretCertificateThumbprint = default;
-            Core.Optional<string> issuer = default;
-            Core.Optional<bool> validateIssuer = default;
-            Core.Optional<IList<string>> allowedAudiences = default;
-            Core.Optional<IList<string>> additionalLoginParams = default;
-            Core.Optional<string> aadClaimsAuthorization = default;
-            Core.Optional<string> googleClientId = default;
-            Core.Optional<string> googleClientSecret = default;
-            Core.Optional<string> googleClientSecretSettingName = default;
-            Core.Optional<IList<string>> googleOAuthScopes = default;
-            Core.Optional<string> facebookAppId = default;
-            Core.Optional<string> facebookAppSecret = default;
-            Core.Optional<string> facebookAppSecretSettingName = default;
-            Core.Optional<IList<string>> facebookOAuthScopes = default;
-            Core.Optional<string> gitHubClientId = default;
-            Core.Optional<string> gitHubClientSecret = default;
-            Core.Optional<string> gitHubClientSecretSettingName = default;
-            Core.Optional<IList<string>> gitHubOAuthScopes = default;
-            Core.Optional<string> twitterConsumerKey = default;
-            Core.Optional<string> twitterConsumerSecret = default;
-            Core.Optional<string> twitterConsumerSecretSettingName = default;
-            Core.Optional<string> microsoftAccountClientId = default;
-            Core.Optional<string> microsoftAccountClientSecret = default;
-            Core.Optional<string> microsoftAccountClientSecretSettingName = default;
-            Core.Optional<IList<string>> microsoftAccountOAuthScopes = default;
-            Core.Optional<string> isAuthFromFile = default;
-            Core.Optional<string> authFilePath = default;
-            Core.Optional<string> configVersion = default;
+            Optional<SystemData> systemData = default;
+            Optional<bool> enabled = default;
+            Optional<string> runtimeVersion = default;
+            Optional<UnauthenticatedClientAction> unauthenticatedClientAction = default;
+            Optional<bool> tokenStoreEnabled = default;
+            Optional<IList<string>> allowedExternalRedirectUrls = default;
+            Optional<BuiltInAuthenticationProvider> defaultProvider = default;
+            Optional<double> tokenRefreshExtensionHours = default;
+            Optional<string> clientId = default;
+            Optional<string> clientSecret = default;
+            Optional<string> clientSecretSettingName = default;
+            Optional<string> clientSecretCertificateThumbprint = default;
+            Optional<string> issuer = default;
+            Optional<bool> validateIssuer = default;
+            Optional<IList<string>> allowedAudiences = default;
+            Optional<IList<string>> additionalLoginParams = default;
+            Optional<string> aadClaimsAuthorization = default;
+            Optional<string> googleClientId = default;
+            Optional<string> googleClientSecret = default;
+            Optional<string> googleClientSecretSettingName = default;
+            Optional<IList<string>> googleOAuthScopes = default;
+            Optional<string> facebookAppId = default;
+            Optional<string> facebookAppSecret = default;
+            Optional<string> facebookAppSecretSettingName = default;
+            Optional<IList<string>> facebookOAuthScopes = default;
+            Optional<string> gitHubClientId = default;
+            Optional<string> gitHubClientSecret = default;
+            Optional<string> gitHubClientSecretSettingName = default;
+            Optional<IList<string>> gitHubOAuthScopes = default;
+            Optional<string> twitterConsumerKey = default;
+            Optional<string> twitterConsumerSecret = default;
+            Optional<string> twitterConsumerSecretSettingName = default;
+            Optional<string> microsoftAccountClientId = default;
+            Optional<string> microsoftAccountClientSecret = default;
+            Optional<string> microsoftAccountClientSecretSettingName = default;
+            Optional<IList<string>> microsoftAccountOAuthScopes = default;
+            Optional<string> isAuthFromFile = default;
+            Optional<string> authFilePath = default;
+            Optional<string> configVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new SiteAuthSettings(id, name, type, systemData.Value, Core.Optional.ToNullable(enabled), runtimeVersion.Value, Core.Optional.ToNullable(unauthenticatedClientAction), Core.Optional.ToNullable(tokenStoreEnabled), Core.Optional.ToList(allowedExternalRedirectUrls), Core.Optional.ToNullable(defaultProvider), Core.Optional.ToNullable(tokenRefreshExtensionHours), clientId.Value, clientSecret.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, issuer.Value, Core.Optional.ToNullable(validateIssuer), Core.Optional.ToList(allowedAudiences), Core.Optional.ToList(additionalLoginParams), aadClaimsAuthorization.Value, googleClientId.Value, googleClientSecret.Value, googleClientSecretSettingName.Value, Core.Optional.ToList(googleOAuthScopes), facebookAppId.Value, facebookAppSecret.Value, facebookAppSecretSettingName.Value, Core.Optional.ToList(facebookOAuthScopes), gitHubClientId.Value, gitHubClientSecret.Value, gitHubClientSecretSettingName.Value, Core.Optional.ToList(gitHubOAuthScopes), twitterConsumerKey.Value, twitterConsumerSecret.Value, twitterConsumerSecretSettingName.Value, microsoftAccountClientId.Value, microsoftAccountClientSecret.Value, microsoftAccountClientSecretSettingName.Value, Core.Optional.ToList(microsoftAccountOAuthScopes), isAuthFromFile.Value, authFilePath.Value, configVersion.Value, kind.Value);
+            return new SiteAuthSettings(id, name, type, systemData.Value, Optional.ToNullable(enabled), runtimeVersion.Value, Optional.ToNullable(unauthenticatedClientAction), Optional.ToNullable(tokenStoreEnabled), Optional.ToList(allowedExternalRedirectUrls), Optional.ToNullable(defaultProvider), Optional.ToNullable(tokenRefreshExtensionHours), clientId.Value, clientSecret.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, issuer.Value, Optional.ToNullable(validateIssuer), Optional.ToList(allowedAudiences), Optional.ToList(additionalLoginParams), aadClaimsAuthorization.Value, googleClientId.Value, googleClientSecret.Value, googleClientSecretSettingName.Value, Optional.ToList(googleOAuthScopes), facebookAppId.Value, facebookAppSecret.Value, facebookAppSecretSettingName.Value, Optional.ToList(facebookOAuthScopes), gitHubClientId.Value, gitHubClientSecret.Value, gitHubClientSecretSettingName.Value, Optional.ToList(gitHubOAuthScopes), twitterConsumerKey.Value, twitterConsumerSecret.Value, twitterConsumerSecretSettingName.Value, microsoftAccountClientId.Value, microsoftAccountClientSecret.Value, microsoftAccountClientSecretSettingName.Value, Optional.ToList(microsoftAccountOAuthScopes), isAuthFromFile.Value, authFilePath.Value, configVersion.Value, kind.Value);
         }
     }
 }

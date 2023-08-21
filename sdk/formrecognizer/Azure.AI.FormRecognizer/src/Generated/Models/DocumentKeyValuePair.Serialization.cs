@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             DocumentKeyValueElement key = default;
-            Core.Optional<DocumentKeyValueElement> value = default;
+            Optional<DocumentKeyValueElement> value = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
             {

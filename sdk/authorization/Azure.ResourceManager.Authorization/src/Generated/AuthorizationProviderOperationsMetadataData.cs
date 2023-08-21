@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Initializes a new instance of AuthorizationProviderOperationsMetadataData. </summary>
         internal AuthorizationProviderOperationsMetadataData()
         {
-            ResourceTypes = new Core.ChangeTrackingList<AuthorizationProviderResourceType>();
-            Operations = new Core.ChangeTrackingList<AuthorizationProviderOperationInfo>();
+            ResourceTypes = new ChangeTrackingList<AuthorizationProviderResourceType>();
+            Operations = new ChangeTrackingList<AuthorizationProviderOperationInfo>();
         }
 
         /// <summary> Initializes a new instance of AuthorizationProviderOperationsMetadataData. </summary>

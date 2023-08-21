@@ -14,19 +14,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    public partial class ScopeMapData : Core.IUtf8JsonSerializable
+    public partial class ScopeMapData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(Actions))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> type0 = default;
-            Core.Optional<DateTimeOffset> creationDate = default;
-            Core.Optional<ContainerRegistryProvisioningState> provisioningState = default;
-            Core.Optional<IList<string>> actions = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<string> type0 = default;
+            Optional<DateTimeOffset> creationDate = default;
+            Optional<ContainerRegistryProvisioningState> provisioningState = default;
+            Optional<IList<string>> actions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     continue;
                 }
             }
-            return new ScopeMapData(id, name, type, systemData.Value, description.Value, type0.Value, Core.Optional.ToNullable(creationDate), Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(actions));
+            return new ScopeMapData(id, name, type, systemData.Value, description.Value, type0.Value, Optional.ToNullable(creationDate), Optional.ToNullable(provisioningState), Optional.ToList(actions));
         }
     }
 }

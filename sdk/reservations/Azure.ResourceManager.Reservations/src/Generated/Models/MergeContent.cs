@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of MergeContent. </summary>
         public MergeContent()
         {
-            Sources = new Core.ChangeTrackingList<string>();
+            Sources = new ChangeTrackingList<string>();
         }
 
         /// <summary> Format of the resource id should be /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>

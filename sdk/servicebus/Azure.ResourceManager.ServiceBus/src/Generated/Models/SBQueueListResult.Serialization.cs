@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ServiceBusQueueData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ServiceBusQueueData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new SBQueueListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new SBQueueListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

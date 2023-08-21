@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of WafMetricsResponse. </summary>
         internal WafMetricsResponse()
         {
-            Series = new Core.ChangeTrackingList<WafMetricsResponseSeriesItem>();
+            Series = new ChangeTrackingList<WafMetricsResponseSeriesItem>();
         }
 
         /// <summary> Initializes a new instance of WafMetricsResponse. </summary>

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<string> vmSize = default;
-            Core.Optional<double> count = default;
+            Optional<string> vmSize = default;
+            Optional<double> count = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSize"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new DedicatedHostAllocatableVm(vmSize.Value, Core.Optional.ToNullable(count));
+            return new DedicatedHostAllocatableVm(vmSize.Value, Optional.ToNullable(count));
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 return null;
             }
             IReadOnlyList<SphereDeploymentData> value = default;
-            Core.Optional<Uri> nextLink = default;
+            Optional<Uri> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))

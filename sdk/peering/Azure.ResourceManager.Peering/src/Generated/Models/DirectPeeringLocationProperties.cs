@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of DirectPeeringLocationProperties. </summary>
         public DirectPeeringLocationProperties()
         {
-            PeeringFacilities = new Core.ChangeTrackingList<DirectPeeringFacility>();
-            BandwidthOffers = new Core.ChangeTrackingList<PeeringBandwidthOffer>();
+            PeeringFacilities = new ChangeTrackingList<DirectPeeringFacility>();
+            BandwidthOffers = new ChangeTrackingList<PeeringBandwidthOffer>();
         }
 
         /// <summary> Initializes a new instance of DirectPeeringLocationProperties. </summary>

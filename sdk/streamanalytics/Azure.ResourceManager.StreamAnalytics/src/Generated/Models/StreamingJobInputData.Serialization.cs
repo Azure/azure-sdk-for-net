@@ -11,17 +11,17 @@ using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    public partial class StreamingJobInputData : Core.IUtf8JsonSerializable
+    public partial class StreamingJobInputData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 return null;
             }
-            Core.Optional<StreamingJobInputProperties> properties = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
+            Optional<StreamingJobInputProperties> properties = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     continue;
                 }
             }
-            return new StreamingJobInputData(id.Value, name.Value, Core.Optional.ToNullable(type), properties.Value);
+            return new StreamingJobInputData(id.Value, name.Value, Optional.ToNullable(type), properties.Value);
         }
     }
 }

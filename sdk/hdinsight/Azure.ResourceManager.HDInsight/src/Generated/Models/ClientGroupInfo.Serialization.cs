@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class ClientGroupInfo : Core.IUtf8JsonSerializable
+    public partial class ClientGroupInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(GroupName))
+            if (Optional.IsDefined(GroupName))
             {
                 writer.WritePropertyName("groupName"u8);
                 writer.WriteStringValue(GroupName);
             }
-            if (Core.Optional.IsDefined(GroupId))
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<string> groupName = default;
-            Core.Optional<string> groupId = default;
+            Optional<string> groupName = default;
+            Optional<string> groupId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupName"u8))

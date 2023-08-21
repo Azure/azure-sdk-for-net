@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class NotificationContent : Core.IUtf8JsonSerializable
+    public partial class NotificationContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("alertType"u8);
             writer.WriteStringValue(AlertType);
-            if (Core.Optional.IsCollectionDefined(EmailReceivers))
+            if (Optional.IsCollectionDefined(EmailReceivers))
             {
                 writer.WritePropertyName("emailReceivers"u8);
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(SmsReceivers))
+            if (Optional.IsCollectionDefined(SmsReceivers))
             {
                 writer.WritePropertyName("smsReceivers"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(WebhookReceivers))
+            if (Optional.IsCollectionDefined(WebhookReceivers))
             {
                 writer.WritePropertyName("webhookReceivers"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ItsmReceivers))
+            if (Optional.IsCollectionDefined(ItsmReceivers))
             {
                 writer.WritePropertyName("itsmReceivers"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(AzureAppPushReceivers))
+            if (Optional.IsCollectionDefined(AzureAppPushReceivers))
             {
                 writer.WritePropertyName("azureAppPushReceivers"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(AutomationRunbookReceivers))
+            if (Optional.IsCollectionDefined(AutomationRunbookReceivers))
             {
                 writer.WritePropertyName("automationRunbookReceivers"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(VoiceReceivers))
+            if (Optional.IsCollectionDefined(VoiceReceivers))
             {
                 writer.WritePropertyName("voiceReceivers"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(LogicAppReceivers))
+            if (Optional.IsCollectionDefined(LogicAppReceivers))
             {
                 writer.WritePropertyName("logicAppReceivers"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(AzureFunctionReceivers))
+            if (Optional.IsCollectionDefined(AzureFunctionReceivers))
             {
                 writer.WritePropertyName("azureFunctionReceivers"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ArmRoleReceivers))
+            if (Optional.IsCollectionDefined(ArmRoleReceivers))
             {
                 writer.WritePropertyName("armRoleReceivers"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(EventHubReceivers))
+            if (Optional.IsCollectionDefined(EventHubReceivers))
             {
                 writer.WritePropertyName("eventHubReceivers"u8);
                 writer.WriteStartArray();

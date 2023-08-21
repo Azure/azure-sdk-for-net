@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<DateTimeOffset?> startTime = default;
-            Core.Optional<DateTimeOffset?> endTime = default;
-            Core.Optional<string> status = default;
-            Core.Optional<ResponseError> error = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<DateTimeOffset?> startTime = default;
+            Optional<DateTimeOffset?> endTime = default;
+            Optional<string> status = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorPrivateLinkScopeOperationStatus(id.Value, name.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), status.Value, error.Value);
+            return new MonitorPrivateLinkScopeOperationStatus(id.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, error.Value);
         }
     }
 }

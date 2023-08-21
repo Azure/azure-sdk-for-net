@@ -15,24 +15,24 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagedNetwork
 {
-    public partial class ManagedNetworkGroupData : Core.IUtf8JsonSerializable
+    public partial class ManagedNetworkGroupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ManagementGroups))
+            if (Optional.IsCollectionDefined(ManagementGroups))
             {
                 writer.WritePropertyName("managementGroups"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Subscriptions))
+            if (Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(VirtualNetworks))
+            if (Optional.IsCollectionDefined(VirtualNetworks))
             {
                 writer.WritePropertyName("virtualNetworks"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Subnets))
+            if (Optional.IsCollectionDefined(Subnets))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -82,18 +82,18 @@ namespace Azure.ResourceManager.ManagedNetwork
             {
                 return null;
             }
-            Core.Optional<ManagedNetworkKind> kind = default;
-            Core.Optional<AzureLocation> location = default;
+            Optional<ManagedNetworkKind> kind = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IList<WritableSubResource>> managementGroups = default;
-            Core.Optional<IList<WritableSubResource>> subscriptions = default;
-            Core.Optional<IList<WritableSubResource>> virtualNetworks = default;
-            Core.Optional<IList<WritableSubResource>> subnets = default;
+            Optional<SystemData> systemData = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<ETag> etag = default;
+            Optional<IList<WritableSubResource>> managementGroups = default;
+            Optional<IList<WritableSubResource>> subscriptions = default;
+            Optional<IList<WritableSubResource>> virtualNetworks = default;
+            Optional<IList<WritableSubResource>> subnets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                     continue;
                 }
             }
-            return new ManagedNetworkGroupData(id, name, type, systemData.Value, Core.Optional.ToNullable(kind), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(etag), Core.Optional.ToList(managementGroups), Core.Optional.ToList(subscriptions), Core.Optional.ToList(virtualNetworks), Core.Optional.ToList(subnets), Core.Optional.ToNullable(location));
+            return new ManagedNetworkGroupData(id, name, type, systemData.Value, Optional.ToNullable(kind), Optional.ToNullable(provisioningState), Optional.ToNullable(etag), Optional.ToList(managementGroups), Optional.ToList(subscriptions), Optional.ToList(virtualNetworks), Optional.ToList(subnets), Optional.ToNullable(location));
         }
     }
 }

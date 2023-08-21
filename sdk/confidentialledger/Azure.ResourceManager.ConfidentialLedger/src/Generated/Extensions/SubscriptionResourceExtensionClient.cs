@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfidentialLedgerLedgerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfidentialLedgerLedgerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfidentialLedgerResource(Client, ConfidentialLedgerData.DeserializeConfidentialLedgerData(e)), ConfidentialLedgerLedgerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfidentialLedgers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfidentialLedgerResource(Client, ConfidentialLedgerData.DeserializeConfidentialLedgerData(e)), ConfidentialLedgerLedgerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfidentialLedgers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfidentialLedgerLedgerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfidentialLedgerLedgerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfidentialLedgerResource(Client, ConfidentialLedgerData.DeserializeConfidentialLedgerData(e)), ConfidentialLedgerLedgerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfidentialLedgers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfidentialLedgerResource(Client, ConfidentialLedgerData.DeserializeConfidentialLedgerData(e)), ConfidentialLedgerLedgerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfidentialLedgers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedCcfManagedCCFRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedCcfManagedCCFRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedCcfResource(Client, ManagedCcfData.DeserializeManagedCcfData(e)), ManagedCcfManagedCCFClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedCcfs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedCcfResource(Client, ManagedCcfData.DeserializeManagedCcfData(e)), ManagedCcfManagedCCFClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedCcfs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedCcfManagedCCFRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedCcfManagedCCFRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedCcfResource(Client, ManagedCcfData.DeserializeManagedCcfData(e)), ManagedCcfManagedCCFClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedCcfs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedCcfResource(Client, ManagedCcfData.DeserializeManagedCcfData(e)), ManagedCcfManagedCCFClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedCcfs", "value", "nextLink", cancellationToken);
         }
     }
 }

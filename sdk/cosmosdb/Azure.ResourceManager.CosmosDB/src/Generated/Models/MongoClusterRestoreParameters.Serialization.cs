@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class MongoClusterRestoreParameters : Core.IUtf8JsonSerializable
+    public partial class MongoClusterRestoreParameters : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PointInTimeUTC))
+            if (Optional.IsDefined(PointInTimeUTC))
             {
                 writer.WritePropertyName("pointInTimeUTC"u8);
                 writer.WriteStringValue(PointInTimeUTC.Value, "O");
             }
-            if (Core.Optional.IsDefined(SourceResourceId))
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> pointInTimeUTC = default;
-            Core.Optional<string> sourceResourceId = default;
+            Optional<DateTimeOffset> pointInTimeUTC = default;
+            Optional<string> sourceResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pointInTimeUTC"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new MongoClusterRestoreParameters(Core.Optional.ToNullable(pointInTimeUTC), sourceResourceId.Value);
+            return new MongoClusterRestoreParameters(Optional.ToNullable(pointInTimeUTC), sourceResourceId.Value);
         }
     }
 }

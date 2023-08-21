@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    internal partial class TableProperties : Core.IUtf8JsonSerializable
+    internal partial class TableProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TableName))
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("TableName"u8);
                 writer.WriteStringValue(TableName);

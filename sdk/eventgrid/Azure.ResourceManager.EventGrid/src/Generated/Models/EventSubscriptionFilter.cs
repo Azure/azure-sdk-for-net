@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of EventSubscriptionFilter. </summary>
         public EventSubscriptionFilter()
         {
-            IncludedEventTypes = new Core.ChangeTrackingList<string>();
-            AdvancedFilters = new Core.ChangeTrackingList<AdvancedFilter>();
+            IncludedEventTypes = new ChangeTrackingList<string>();
+            AdvancedFilters = new ChangeTrackingList<AdvancedFilter>();
         }
 
         /// <summary> Initializes a new instance of EventSubscriptionFilter. </summary>

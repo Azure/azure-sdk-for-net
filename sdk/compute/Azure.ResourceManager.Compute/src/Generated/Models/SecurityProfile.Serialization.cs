@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SecurityProfile : Core.IUtf8JsonSerializable
+    public partial class SecurityProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(UefiSettings))
+            if (Optional.IsDefined(UefiSettings))
             {
                 writer.WritePropertyName("uefiSettings"u8);
                 writer.WriteObjectValue(UefiSettings);
             }
-            if (Core.Optional.IsDefined(EncryptionAtHost))
+            if (Optional.IsDefined(EncryptionAtHost))
             {
                 writer.WritePropertyName("encryptionAtHost"u8);
                 writer.WriteBooleanValue(EncryptionAtHost.Value);
             }
-            if (Core.Optional.IsDefined(SecurityType))
+            if (Optional.IsDefined(SecurityType))
             {
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<UefiSettings> uefiSettings = default;
-            Core.Optional<bool> encryptionAtHost = default;
-            Core.Optional<SecurityType> securityType = default;
+            Optional<UefiSettings> uefiSettings = default;
+            Optional<bool> encryptionAtHost = default;
+            Optional<SecurityType> securityType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uefiSettings"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SecurityProfile(uefiSettings.Value, Core.Optional.ToNullable(encryptionAtHost), Core.Optional.ToNullable(securityType));
+            return new SecurityProfile(uefiSettings.Value, Optional.ToNullable(encryptionAtHost), Optional.ToNullable(securityType));
         }
     }
 }

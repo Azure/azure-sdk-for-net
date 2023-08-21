@@ -12,17 +12,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServices
 {
-    public partial class ManagedServicesRegistrationData : Core.IUtf8JsonSerializable
+    public partial class ManagedServicesRegistrationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Core.Optional.IsDefined(Plan))
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteObjectValue(Plan);
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 return null;
             }
-            Core.Optional<ManagedServicesRegistrationProperties> properties = default;
-            Core.Optional<ManagedServicesPlan> plan = default;
+            Optional<ManagedServicesRegistrationProperties> properties = default;
+            Optional<ManagedServicesPlan> plan = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

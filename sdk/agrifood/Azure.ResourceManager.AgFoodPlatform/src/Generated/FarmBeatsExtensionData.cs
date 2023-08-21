@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <summary> Initializes a new instance of FarmBeatsExtensionData. </summary>
         public FarmBeatsExtensionData()
         {
-            DetailedInformation = new Core.ChangeTrackingList<DetailedInformation>();
+            DetailedInformation = new ChangeTrackingList<DetailedInformation>();
         }
 
         /// <summary> Initializes a new instance of FarmBeatsExtensionData. </summary>

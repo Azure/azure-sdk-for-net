@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> marsAgentVersion = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> marsAgentVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

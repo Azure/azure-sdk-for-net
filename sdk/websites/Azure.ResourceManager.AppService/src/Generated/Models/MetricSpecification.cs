@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of MetricSpecification. </summary>
         internal MetricSpecification()
         {
-            Dimensions = new Core.ChangeTrackingList<MetricDimension>();
-            Availabilities = new Core.ChangeTrackingList<MetricAvailability>();
-            SupportedTimeGrainTypes = new Core.ChangeTrackingList<string>();
-            SupportedAggregationTypes = new Core.ChangeTrackingList<string>();
+            Dimensions = new ChangeTrackingList<MetricDimension>();
+            Availabilities = new ChangeTrackingList<MetricAvailability>();
+            SupportedTimeGrainTypes = new ChangeTrackingList<string>();
+            SupportedAggregationTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MetricSpecification. </summary>

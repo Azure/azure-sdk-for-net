@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of MachineSkuSlot. </summary>
         internal MachineSkuSlot()
         {
-            Disks = new Core.ChangeTrackingList<MachineDisk>();
-            NetworkInterfaces = new Core.ChangeTrackingList<NetworkCloudNetworkInterface>();
+            Disks = new ChangeTrackingList<MachineDisk>();
+            NetworkInterfaces = new ChangeTrackingList<NetworkCloudNetworkInterface>();
         }
 
         /// <summary> Initializes a new instance of MachineSkuSlot. </summary>

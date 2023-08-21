@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class BaselineAdjustedResult : Core.IUtf8JsonSerializable
+    public partial class BaselineAdjustedResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Baseline))
+            if (Optional.IsDefined(Baseline))
             {
                 writer.WritePropertyName("baseline"u8);
                 writer.WriteObjectValue(Baseline);
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(ResultsNotInBaseline))
+            if (Optional.IsCollectionDefined(ResultsNotInBaseline))
             {
                 writer.WritePropertyName("resultsNotInBaseline"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ResultsOnlyInBaseline))
+            if (Optional.IsCollectionDefined(ResultsOnlyInBaseline))
             {
                 writer.WritePropertyName("resultsOnlyInBaseline"u8);
                 writer.WriteStartArray();
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<SqlVulnerabilityAssessmentBaseline> baseline = default;
-            Core.Optional<SqlVulnerabilityAssessmentScanResultRuleStatus> status = default;
-            Core.Optional<IList<IList<string>>> resultsNotInBaseline = default;
-            Core.Optional<IList<IList<string>>> resultsOnlyInBaseline = default;
+            Optional<SqlVulnerabilityAssessmentBaseline> baseline = default;
+            Optional<SqlVulnerabilityAssessmentScanResultRuleStatus> status = default;
+            Optional<IList<IList<string>>> resultsNotInBaseline = default;
+            Optional<IList<IList<string>>> resultsOnlyInBaseline = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseline"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new BaselineAdjustedResult(baseline.Value, Core.Optional.ToNullable(status), Core.Optional.ToList(resultsNotInBaseline), Core.Optional.ToList(resultsOnlyInBaseline));
+            return new BaselineAdjustedResult(baseline.Value, Optional.ToNullable(status), Optional.ToList(resultsNotInBaseline), Optional.ToList(resultsOnlyInBaseline));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of EventHubListResult. </summary>
         internal EventHubListResult()
         {
-            Value = new Core.ChangeTrackingList<EventHubData>();
+            Value = new ChangeTrackingList<EventHubData>();
         }
 
         /// <summary> Initializes a new instance of EventHubListResult. </summary>

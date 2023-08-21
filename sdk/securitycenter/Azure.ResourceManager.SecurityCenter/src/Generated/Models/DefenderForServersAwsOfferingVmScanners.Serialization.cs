@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForServersAwsOfferingVmScanners : Core.IUtf8JsonSerializable
+    public partial class DefenderForServersAwsOfferingVmScanners : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(Configuration))
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<DefenderForServersAwsOfferingVmScannersConfiguration> configuration = default;
+            Optional<bool> enabled = default;
+            Optional<DefenderForServersAwsOfferingVmScannersConfiguration> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DefenderForServersAwsOfferingVmScanners(Core.Optional.ToNullable(enabled), configuration.Value);
+            return new DefenderForServersAwsOfferingVmScanners(Optional.ToNullable(enabled), configuration.Value);
         }
     }
 }

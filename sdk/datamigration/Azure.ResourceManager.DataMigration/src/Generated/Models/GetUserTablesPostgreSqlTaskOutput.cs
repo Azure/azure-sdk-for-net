@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of GetUserTablesPostgreSqlTaskOutput. </summary>
         internal GetUserTablesPostgreSqlTaskOutput()
         {
-            Tables = new Core.ChangeTrackingList<DatabaseTable>();
-            ValidationErrors = new Core.ChangeTrackingList<ReportableException>();
+            Tables = new ChangeTrackingList<DatabaseTable>();
+            ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
         /// <summary> Initializes a new instance of GetUserTablesPostgreSqlTaskOutput. </summary>

@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class AssignmentJobCreatedResource : Core.IUtf8JsonSerializable
+    public partial class AssignmentJobCreatedResource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> properties = default;
+            Optional<IDictionary<string, string>> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     continue;
                 }
             }
-            return new AssignmentJobCreatedResource(id, name, type, systemData.Value, Core.Optional.ToDictionary(properties));
+            return new AssignmentJobCreatedResource(id, name, type, systemData.Value, Optional.ToDictionary(properties));
         }
     }
 }

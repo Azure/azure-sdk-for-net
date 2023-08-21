@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesRegistrationAssignmentProperties : Core.IUtf8JsonSerializable
+    public partial class ManagedServicesRegistrationAssignmentProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("registrationDefinitionId"u8);
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 return null;
             }
             ResourceIdentifier registrationDefinitionId = default;
-            Core.Optional<ManagedServicesProvisioningState> provisioningState = default;
-            Core.Optional<ManagedServicesRegistrationAssignmentRegistrationData> registrationDefinition = default;
+            Optional<ManagedServicesProvisioningState> provisioningState = default;
+            Optional<ManagedServicesRegistrationAssignmentRegistrationData> registrationDefinition = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registrationDefinitionId"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     continue;
                 }
             }
-            return new ManagedServicesRegistrationAssignmentProperties(registrationDefinitionId, Core.Optional.ToNullable(provisioningState), registrationDefinition.Value);
+            return new ManagedServicesRegistrationAssignmentProperties(registrationDefinitionId, Optional.ToNullable(provisioningState), registrationDefinition.Value);
         }
     }
 }

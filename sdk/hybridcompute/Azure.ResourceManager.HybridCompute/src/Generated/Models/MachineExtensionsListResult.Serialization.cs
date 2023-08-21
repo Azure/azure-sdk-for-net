@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<HybridComputeMachineExtensionData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<HybridComputeMachineExtensionData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     continue;
                 }
             }
-            return new MachineExtensionsListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new MachineExtensionsListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

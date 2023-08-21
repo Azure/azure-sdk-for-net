@@ -19,9 +19,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<TimeSpan> maxRunTime = default;
-            Core.Optional<long> maxDocumentExtractionSize = default;
-            Core.Optional<long> maxDocumentContentCharactersToExtract = default;
+            Optional<TimeSpan> maxRunTime = default;
+            Optional<long> maxDocumentExtractionSize = default;
+            Optional<long> maxDocumentContentCharactersToExtract = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxRunTime"u8))
@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerLimits(Core.Optional.ToNullable(maxRunTime), Core.Optional.ToNullable(maxDocumentExtractionSize), Core.Optional.ToNullable(maxDocumentContentCharactersToExtract));
+            return new SearchIndexerLimits(Optional.ToNullable(maxRunTime), Optional.ToNullable(maxDocumentExtractionSize), Optional.ToNullable(maxDocumentContentCharactersToExtract));
         }
     }
 }

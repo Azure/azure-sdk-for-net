@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of WafRankingsResponse. </summary>
         internal WafRankingsResponse()
         {
-            Groups = new Core.ChangeTrackingList<string>();
-            Data = new Core.ChangeTrackingList<WafRankingsResponseDataItem>();
+            Groups = new ChangeTrackingList<string>();
+            Data = new ChangeTrackingList<WafRankingsResponseDataItem>();
         }
 
         /// <summary> Initializes a new instance of WafRankingsResponse. </summary>

@@ -21,23 +21,23 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> requestId = default;
-            Core.Optional<string> resultType = default;
-            Core.Optional<long> total = default;
-            Core.Optional<long> top = default;
-            Core.Optional<string> id = default;
-            Core.Optional<IReadOnlyList<OperationalInsightsSearchCoreSummary>> coreSummaries = default;
-            Core.Optional<string> status = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> lastUpdated = default;
-            Core.Optional<ETag> eTag = default;
-            Core.Optional<IReadOnlyList<SearchSort>> sort = default;
-            Core.Optional<long> requestTime = default;
-            Core.Optional<string> aggregatedValueField = default;
-            Core.Optional<string> aggregatedGroupingFields = default;
-            Core.Optional<long> sum = default;
-            Core.Optional<long> max = default;
-            Core.Optional<SearchMetadataSchema> schema = default;
+            Optional<string> requestId = default;
+            Optional<string> resultType = default;
+            Optional<long> total = default;
+            Optional<long> top = default;
+            Optional<string> id = default;
+            Optional<IReadOnlyList<OperationalInsightsSearchCoreSummary>> coreSummaries = default;
+            Optional<string> status = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> lastUpdated = default;
+            Optional<ETag> eTag = default;
+            Optional<IReadOnlyList<SearchSort>> sort = default;
+            Optional<long> requestTime = default;
+            Optional<string> aggregatedValueField = default;
+            Optional<string> aggregatedGroupingFields = default;
+            Optional<long> sum = default;
+            Optional<long> max = default;
+            Optional<SearchMetadataSchema> schema = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requestId"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new SearchMetadata(requestId.Value, resultType.Value, Core.Optional.ToNullable(total), Core.Optional.ToNullable(top), id.Value, Core.Optional.ToList(coreSummaries), status.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(lastUpdated), Core.Optional.ToNullable(eTag), Core.Optional.ToList(sort), Core.Optional.ToNullable(requestTime), aggregatedValueField.Value, aggregatedGroupingFields.Value, Core.Optional.ToNullable(sum), Core.Optional.ToNullable(max), schema.Value);
+            return new SearchMetadata(requestId.Value, resultType.Value, Optional.ToNullable(total), Optional.ToNullable(top), id.Value, Optional.ToList(coreSummaries), status.Value, Optional.ToNullable(startTime), Optional.ToNullable(lastUpdated), Optional.ToNullable(eTag), Optional.ToList(sort), Optional.ToNullable(requestTime), aggregatedValueField.Value, aggregatedGroupingFields.Value, Optional.ToNullable(sum), Optional.ToNullable(max), schema.Value);
         }
     }
 }

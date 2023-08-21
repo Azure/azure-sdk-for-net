@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class MotionDetectionProcessor : Core.IUtf8JsonSerializable
+    public partial class MotionDetectionProcessor : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sensitivity))
+            if (Optional.IsDefined(Sensitivity))
             {
                 writer.WritePropertyName("sensitivity"u8);
                 writer.WriteStringValue(Sensitivity.Value.ToString());
             }
-            if (Core.Optional.IsDefined(OutputMotionRegion))
+            if (Optional.IsDefined(OutputMotionRegion))
             {
                 writer.WritePropertyName("outputMotionRegion"u8);
                 writer.WriteBooleanValue(OutputMotionRegion.Value);
             }
-            if (Core.Optional.IsDefined(EventAggregationWindow))
+            if (Optional.IsDefined(EventAggregationWindow))
             {
                 writer.WritePropertyName("eventAggregationWindow"u8);
                 writer.WriteStringValue(EventAggregationWindow);
@@ -51,9 +51,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<MotionDetectionSensitivity> sensitivity = default;
-            Core.Optional<bool> outputMotionRegion = default;
-            Core.Optional<string> eventAggregationWindow = default;
+            Optional<MotionDetectionSensitivity> sensitivity = default;
+            Optional<bool> outputMotionRegion = default;
+            Optional<string> eventAggregationWindow = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
@@ -103,7 +103,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new MotionDetectionProcessor(type, name, inputs, Core.Optional.ToNullable(sensitivity), Core.Optional.ToNullable(outputMotionRegion), eventAggregationWindow.Value);
+            return new MotionDetectionProcessor(type, name, inputs, Optional.ToNullable(sensitivity), Optional.ToNullable(outputMotionRegion), eventAggregationWindow.Value);
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.Communication.JobRouter.Models
             {
                 return null;
             }
-            Core.Optional<DistributionPolicy> distributionPolicy = default;
-            Core.Optional<string> etag = default;
+            Optional<DistributionPolicy> distributionPolicy = default;
+            Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("distributionPolicy"u8))

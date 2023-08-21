@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    internal partial class CmkKeyVaultProperties : Core.IUtf8JsonSerializable
+    internal partial class CmkKeyVaultProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeyUri))
+            if (Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUri"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Core.Optional<Uri> keyUri = default;
+            Optional<Uri> keyUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyUri"u8))

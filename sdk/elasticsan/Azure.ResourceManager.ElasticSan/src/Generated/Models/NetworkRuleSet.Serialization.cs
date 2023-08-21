@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    internal partial class NetworkRuleSet : Core.IUtf8JsonSerializable
+    internal partial class NetworkRuleSet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(VirtualNetworkRules))
+            if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Core.Optional<IList<ElasticSanVirtualNetworkRule>> virtualNetworkRules = default;
+            Optional<IList<ElasticSanVirtualNetworkRule>> virtualNetworkRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualNetworkRules"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new NetworkRuleSet(Core.Optional.ToList(virtualNetworkRules));
+            return new NetworkRuleSet(Optional.ToList(virtualNetworkRules));
         }
     }
 }

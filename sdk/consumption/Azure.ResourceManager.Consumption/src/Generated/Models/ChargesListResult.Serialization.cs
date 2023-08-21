@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ConsumptionChargeSummary>> value = default;
+            Optional<IReadOnlyList<ConsumptionChargeSummary>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ChargesListResult(Core.Optional.ToList(value));
+            return new ChargesListResult(Optional.ToList(value));
         }
     }
 }

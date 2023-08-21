@@ -19,17 +19,17 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Core.Optional<string> eventSource = default;
-            Core.Optional<string> recordingId = default;
-            Core.Optional<RecordingState> state = default;
-            Core.Optional<DateTimeOffset> startDateTime = default;
-            Core.Optional<string> version = default;
-            Core.Optional<string> operationContext = default;
-            Core.Optional<ResultInformation> resultInformation = default;
-            Core.Optional<string> callConnectionId = default;
-            Core.Optional<string> serverCallId = default;
-            Core.Optional<string> correlationId = default;
-            Core.Optional<string> publicEventType = default;
+            Optional<string> eventSource = default;
+            Optional<string> recordingId = default;
+            Optional<RecordingState> state = default;
+            Optional<DateTimeOffset> startDateTime = default;
+            Optional<string> version = default;
+            Optional<string> operationContext = default;
+            Optional<ResultInformation> resultInformation = default;
+            Optional<string> callConnectionId = default;
+            Optional<string> serverCallId = default;
+            Optional<string> correlationId = default;
+            Optional<string> publicEventType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventSource"u8))
@@ -100,7 +100,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallRecordingStateChanged(eventSource.Value, recordingId.Value, state, Core.Optional.ToNullable(startDateTime), version.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new CallRecordingStateChanged(eventSource.Value, recordingId.Value, state, Optional.ToNullable(startDateTime), version.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
         }
     }
 }

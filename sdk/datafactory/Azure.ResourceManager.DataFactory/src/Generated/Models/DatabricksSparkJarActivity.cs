@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(mainClassName, nameof(mainClassName));
 
             MainClassName = mainClassName;
-            Parameters = new Core.ChangeTrackingList<BinaryData>();
-            Libraries = new Core.ChangeTrackingList<IDictionary<string, BinaryData>>();
+            Parameters = new ChangeTrackingList<BinaryData>();
+            Libraries = new ChangeTrackingList<IDictionary<string, BinaryData>>();
             ActivityType = "DatabricksSparkJar";
         }
 

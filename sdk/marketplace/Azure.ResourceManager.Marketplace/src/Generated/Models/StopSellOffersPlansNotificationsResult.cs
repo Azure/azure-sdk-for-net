@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of StopSellOffersPlansNotificationsResult. </summary>
         internal StopSellOffersPlansNotificationsResult()
         {
-            Plans = new Core.ChangeTrackingList<PlanNotificationDetails>();
-            SubscriptionsIds = new Core.ChangeTrackingList<string>();
+            Plans = new ChangeTrackingList<PlanNotificationDetails>();
+            SubscriptionsIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StopSellOffersPlansNotificationsResult. </summary>

@@ -13,49 +13,49 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SapCloudForCustomerSink : Core.IUtf8JsonSerializable
+    public partial class SapCloudForCustomerSink : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(WriteBehavior))
+            if (Optional.IsDefined(WriteBehavior))
             {
                 writer.WritePropertyName("writeBehavior"u8);
                 writer.WriteStringValue(WriteBehavior.Value.ToString());
             }
-            if (Core.Optional.IsDefined(HttpRequestTimeout))
+            if (Optional.IsDefined(HttpRequestTimeout))
             {
                 writer.WritePropertyName("httpRequestTimeout"u8);
                 JsonSerializer.Serialize(writer, HttpRequestTimeout);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
-            if (Core.Optional.IsDefined(WriteBatchSize))
+            if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 JsonSerializer.Serialize(writer, WriteBatchSize);
             }
-            if (Core.Optional.IsDefined(WriteBatchTimeout))
+            if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 JsonSerializer.Serialize(writer, WriteBatchTimeout);
             }
-            if (Core.Optional.IsDefined(SinkRetryCount))
+            if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 JsonSerializer.Serialize(writer, SinkRetryCount);
             }
-            if (Core.Optional.IsDefined(SinkRetryWait))
+            if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 JsonSerializer.Serialize(writer, SinkRetryWait);
             }
-            if (Core.Optional.IsDefined(MaxConcurrentConnections))
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Core.Optional.IsDefined(DisableMetricsCollection))
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -78,15 +78,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<SapCloudForCustomerSinkWriteBehavior> writeBehavior = default;
-            Core.Optional<DataFactoryElement<string>> httpRequestTimeout = default;
+            Optional<SapCloudForCustomerSinkWriteBehavior> writeBehavior = default;
+            Optional<DataFactoryElement<string>> httpRequestTimeout = default;
             string type = default;
-            Core.Optional<DataFactoryElement<int>> writeBatchSize = default;
-            Core.Optional<DataFactoryElement<string>> writeBatchTimeout = default;
-            Core.Optional<DataFactoryElement<int>> sinkRetryCount = default;
-            Core.Optional<DataFactoryElement<string>> sinkRetryWait = default;
-            Core.Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Core.Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            Optional<DataFactoryElement<int>> writeBatchSize = default;
+            Optional<DataFactoryElement<string>> writeBatchTimeout = default;
+            Optional<DataFactoryElement<int>> sinkRetryCount = default;
+            Optional<DataFactoryElement<string>> sinkRetryWait = default;
+            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
+            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapCloudForCustomerSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, Core.Optional.ToNullable(writeBehavior), httpRequestTimeout.Value);
+            return new SapCloudForCustomerSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, Optional.ToNullable(writeBehavior), httpRequestTimeout.Value);
         }
     }
 }

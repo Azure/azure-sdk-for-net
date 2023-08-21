@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of SqlDBMigrationStatusDetails. </summary>
         internal SqlDBMigrationStatusDetails()
         {
-            SqlDataCopyErrors = new Core.ChangeTrackingList<string>();
-            ListOfCopyProgressDetails = new Core.ChangeTrackingList<CopyProgressDetails>();
+            SqlDataCopyErrors = new ChangeTrackingList<string>();
+            ListOfCopyProgressDetails = new ChangeTrackingList<CopyProgressDetails>();
         }
 
         /// <summary> Initializes a new instance of SqlDBMigrationStatusDetails. </summary>

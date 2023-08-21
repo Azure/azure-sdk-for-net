@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of LoggerListResult. </summary>
         internal LoggerListResult()
         {
-            Value = new Core.ChangeTrackingList<ApiManagementLoggerData>();
+            Value = new ChangeTrackingList<ApiManagementLoggerData>();
         }
 
         /// <summary> Initializes a new instance of LoggerListResult. </summary>

@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<bool> isApplyingChanges = default;
-            Core.Optional<bool> isPartiallyFailed = default;
-            Core.Optional<object> startTime = default;
-            Core.Optional<object> stopTime = default;
-            Core.Optional<string> status = default;
-            Core.Optional<string> continuousRunId = default;
-            Core.Optional<object> error = default;
-            Core.Optional<LinkConnectionRefreshStatus> refreshStatus = default;
-            Core.Optional<DateTimeOffset> landingZoneCredentialExpireTime = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<bool> isApplyingChanges = default;
+            Optional<bool> isPartiallyFailed = default;
+            Optional<object> startTime = default;
+            Optional<object> stopTime = default;
+            Optional<string> status = default;
+            Optional<string> continuousRunId = default;
+            Optional<object> error = default;
+            Optional<LinkConnectionRefreshStatus> refreshStatus = default;
+            Optional<DateTimeOffset> landingZoneCredentialExpireTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -118,7 +118,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnectionDetailedStatus(id.Value, name.Value, Core.Optional.ToNullable(isApplyingChanges), Core.Optional.ToNullable(isPartiallyFailed), startTime.Value, stopTime.Value, status.Value, continuousRunId.Value, error.Value, refreshStatus.Value, Core.Optional.ToNullable(landingZoneCredentialExpireTime));
+            return new LinkConnectionDetailedStatus(id.Value, name.Value, Optional.ToNullable(isApplyingChanges), Optional.ToNullable(isPartiallyFailed), startTime.Value, stopTime.Value, status.Value, continuousRunId.Value, error.Value, refreshStatus.Value, Optional.ToNullable(landingZoneCredentialExpireTime));
         }
 
         internal partial class LinkConnectionDetailedStatusConverter : JsonConverter<LinkConnectionDetailedStatus>

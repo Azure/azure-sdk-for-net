@@ -14,17 +14,17 @@ using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview
 {
-    public partial class PurviewAccountData : Core.IUtf8JsonSerializable
+    public partial class PurviewAccountData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.Purview
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CloudConnectors))
+            if (Optional.IsDefined(CloudConnectors))
             {
                 writer.WritePropertyName("cloudConnectors"u8);
                 writer.WriteObjectValue(CloudConnectors);
             }
-            if (Core.Optional.IsDefined(ManagedResourceGroupName))
+            if (Optional.IsDefined(ManagedResourceGroupName))
             {
                 writer.WritePropertyName("managedResourceGroupName"u8);
                 writer.WriteStringValue(ManagedResourceGroupName);
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -64,25 +64,25 @@ namespace Azure.ResourceManager.Purview
             {
                 return null;
             }
-            Core.Optional<PurviewAccountSku> sku = default;
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<PurviewAccountSku> sku = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<CloudConnectors> cloudConnectors = default;
-            Core.Optional<DateTimeOffset> createdAt = default;
-            Core.Optional<string> createdBy = default;
-            Core.Optional<string> createdByObjectId = default;
-            Core.Optional<PurviewAccountEndpoint> endpoints = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<string> managedResourceGroupName = default;
-            Core.Optional<PurviewManagedResource> managedResources = default;
-            Core.Optional<IReadOnlyList<PurviewPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Core.Optional<PurviewProvisioningState> provisioningState = default;
-            Core.Optional<PurviewPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<SystemData> systemData = default;
+            Optional<CloudConnectors> cloudConnectors = default;
+            Optional<DateTimeOffset> createdAt = default;
+            Optional<string> createdBy = default;
+            Optional<string> createdByObjectId = default;
+            Optional<PurviewAccountEndpoint> endpoints = default;
+            Optional<string> friendlyName = default;
+            Optional<string> managedResourceGroupName = default;
+            Optional<PurviewManagedResource> managedResources = default;
+            Optional<IReadOnlyList<PurviewPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<PurviewProvisioningState> provisioningState = default;
+            Optional<PurviewPublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Purview
                     continue;
                 }
             }
-            return new PurviewAccountData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, cloudConnectors.Value, Core.Optional.ToNullable(createdAt), createdBy.Value, createdByObjectId.Value, endpoints.Value, friendlyName.Value, managedResourceGroupName.Value, managedResources.Value, Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(publicNetworkAccess), identity);
+            return new PurviewAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, cloudConnectors.Value, Optional.ToNullable(createdAt), createdBy.Value, createdByObjectId.Value, endpoints.Value, friendlyName.Value, managedResourceGroupName.Value, managedResources.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), identity);
         }
     }
 }

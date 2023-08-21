@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
             QuotaId = quotaId;
             Effect = effect;
-            RequiredFeatures = new Core.ChangeTrackingList<string>();
+            RequiredFeatures = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ResourceProviderCapabilities. </summary>

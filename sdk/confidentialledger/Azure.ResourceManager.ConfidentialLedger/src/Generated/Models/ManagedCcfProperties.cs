@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Initializes a new instance of ManagedCcfProperties. </summary>
         public ManagedCcfProperties()
         {
-            MemberIdentityCertificates = new Core.ChangeTrackingList<ConfidentialLedgerMemberIdentityCertificate>();
+            MemberIdentityCertificates = new ChangeTrackingList<ConfidentialLedgerMemberIdentityCertificate>();
         }
 
         /// <summary> Initializes a new instance of ManagedCcfProperties. </summary>

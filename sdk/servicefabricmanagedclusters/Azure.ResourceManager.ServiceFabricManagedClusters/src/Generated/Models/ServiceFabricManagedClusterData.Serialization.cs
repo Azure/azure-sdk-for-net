@@ -16,14 +16,14 @@ using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    public partial class ServiceFabricManagedClusterData : Core.IUtf8JsonSerializable
+    public partial class ServiceFabricManagedClusterData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,32 +38,32 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DnsName))
+            if (Optional.IsDefined(DnsName))
             {
                 writer.WritePropertyName("dnsName"u8);
                 writer.WriteStringValue(DnsName);
             }
-            if (Core.Optional.IsDefined(ClientConnectionPort))
+            if (Optional.IsDefined(ClientConnectionPort))
             {
                 writer.WritePropertyName("clientConnectionPort"u8);
                 writer.WriteNumberValue(ClientConnectionPort.Value);
             }
-            if (Core.Optional.IsDefined(HttpGatewayConnectionPort))
+            if (Optional.IsDefined(HttpGatewayConnectionPort))
             {
                 writer.WritePropertyName("httpGatewayConnectionPort"u8);
                 writer.WriteNumberValue(HttpGatewayConnectionPort.Value);
             }
-            if (Core.Optional.IsDefined(AdminUserName))
+            if (Optional.IsDefined(AdminUserName))
             {
                 writer.WritePropertyName("adminUserName"u8);
                 writer.WriteStringValue(AdminUserName);
             }
-            if (Core.Optional.IsDefined(AdminPassword))
+            if (Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (Core.Optional.IsCollectionDefined(LoadBalancingRules))
+            if (Optional.IsCollectionDefined(LoadBalancingRules))
             {
                 writer.WritePropertyName("loadBalancingRules"u8);
                 writer.WriteStartArray();
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsRdpAccessAllowed))
+            if (Optional.IsDefined(IsRdpAccessAllowed))
             {
                 writer.WritePropertyName("allowRdpAccess"u8);
                 writer.WriteBooleanValue(IsRdpAccessAllowed.Value);
             }
-            if (Core.Optional.IsCollectionDefined(NetworkSecurityRules))
+            if (Optional.IsCollectionDefined(NetworkSecurityRules))
             {
                 writer.WritePropertyName("networkSecurityRules"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Clients))
+            if (Optional.IsCollectionDefined(Clients))
             {
                 writer.WritePropertyName("clients"u8);
                 writer.WriteStartArray();
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(AzureActiveDirectory))
+            if (Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
                 writer.WriteObjectValue(AzureActiveDirectory);
             }
-            if (Core.Optional.IsCollectionDefined(FabricSettings))
+            if (Optional.IsCollectionDefined(FabricSettings))
             {
                 writer.WritePropertyName("fabricSettings"u8);
                 writer.WriteStartArray();
@@ -113,22 +113,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ClusterCodeVersion))
+            if (Optional.IsDefined(ClusterCodeVersion))
             {
                 writer.WritePropertyName("clusterCodeVersion"u8);
                 writer.WriteStringValue(ClusterCodeVersion);
             }
-            if (Core.Optional.IsDefined(ClusterUpgradeMode))
+            if (Optional.IsDefined(ClusterUpgradeMode))
             {
                 writer.WritePropertyName("clusterUpgradeMode"u8);
                 writer.WriteStringValue(ClusterUpgradeMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ClusterUpgradeCadence))
+            if (Optional.IsDefined(ClusterUpgradeCadence))
             {
                 writer.WritePropertyName("clusterUpgradeCadence"u8);
                 writer.WriteStringValue(ClusterUpgradeCadence.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(AddOnFeatures))
+            if (Optional.IsCollectionDefined(AddOnFeatures))
             {
                 writer.WritePropertyName("addonFeatures"u8);
                 writer.WriteStartArray();
@@ -138,32 +138,32 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsAutoOSUpgradeEnabled))
+            if (Optional.IsDefined(IsAutoOSUpgradeEnabled))
             {
                 writer.WritePropertyName("enableAutoOSUpgrade"u8);
                 writer.WriteBooleanValue(IsAutoOSUpgradeEnabled.Value);
             }
-            if (Core.Optional.IsDefined(HasZoneResiliency))
+            if (Optional.IsDefined(HasZoneResiliency))
             {
                 writer.WritePropertyName("zonalResiliency"u8);
                 writer.WriteBooleanValue(HasZoneResiliency.Value);
             }
-            if (Core.Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
+            if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
             {
                 writer.WritePropertyName("applicationTypeVersionsCleanupPolicy"u8);
                 writer.WriteObjectValue(ApplicationTypeVersionsCleanupPolicy);
             }
-            if (Core.Optional.IsDefined(IsIPv6Enabled))
+            if (Optional.IsDefined(IsIPv6Enabled))
             {
                 writer.WritePropertyName("enableIpv6"u8);
                 writer.WriteBooleanValue(IsIPv6Enabled.Value);
             }
-            if (Core.Optional.IsDefined(SubnetId))
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Core.Optional.IsCollectionDefined(IPTags))
+            if (Optional.IsCollectionDefined(IPTags))
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsServicePublicIPEnabled))
+            if (Optional.IsDefined(IsServicePublicIPEnabled))
             {
                 writer.WritePropertyName("enableServicePublicIP"u8);
                 writer.WriteBooleanValue(IsServicePublicIPEnabled.Value);
             }
-            if (Core.Optional.IsCollectionDefined(AuxiliarySubnets))
+            if (Optional.IsCollectionDefined(AuxiliarySubnets))
             {
                 writer.WritePropertyName("auxiliarySubnets"u8);
                 writer.WriteStartArray();
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ServiceEndpoints))
+            if (Optional.IsCollectionDefined(ServiceEndpoints))
             {
                 writer.WritePropertyName("serviceEndpoints"u8);
                 writer.WriteStartArray();
@@ -198,17 +198,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ZonalUpdateMode))
+            if (Optional.IsDefined(ZonalUpdateMode))
             {
                 writer.WritePropertyName("zonalUpdateMode"u8);
                 writer.WriteStringValue(ZonalUpdateMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(UseCustomVnet))
+            if (Optional.IsDefined(UseCustomVnet))
             {
                 writer.WritePropertyName("useCustomVnet"u8);
                 writer.WriteBooleanValue(UseCustomVnet.Value);
             }
-            if (Core.Optional.IsDefined(PublicIPPrefixId))
+            if (Optional.IsDefined(PublicIPPrefixId))
             {
                 writer.WritePropertyName("publicIPPrefixId"u8);
                 writer.WriteStringValue(PublicIPPrefixId);
@@ -224,47 +224,47 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 return null;
             }
             ServiceFabricManagedClustersSku sku = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> dnsName = default;
-            Core.Optional<string> fqdn = default;
-            Core.Optional<IPAddress> ipv4Address = default;
-            Core.Optional<Guid> clusterId = default;
-            Core.Optional<ServiceFabricManagedClusterState> clusterState = default;
-            Core.Optional<IReadOnlyList<BinaryData>> clusterCertificateThumbprints = default;
-            Core.Optional<int> clientConnectionPort = default;
-            Core.Optional<int> httpGatewayConnectionPort = default;
-            Core.Optional<string> adminUserName = default;
-            Core.Optional<string> adminPassword = default;
-            Core.Optional<IList<ManagedClusterLoadBalancingRule>> loadBalancingRules = default;
-            Core.Optional<bool> allowRdpAccess = default;
-            Core.Optional<IList<ServiceFabricManagedNetworkSecurityRule>> networkSecurityRules = default;
-            Core.Optional<IList<ManagedClusterClientCertificate>> clients = default;
-            Core.Optional<ManagedClusterAzureActiveDirectory> azureActiveDirectory = default;
-            Core.Optional<IList<ClusterFabricSettingsSection>> fabricSettings = default;
-            Core.Optional<ServiceFabricManagedResourceProvisioningState> provisioningState = default;
-            Core.Optional<string> clusterCodeVersion = default;
-            Core.Optional<ManagedClusterUpgradeMode> clusterUpgradeMode = default;
-            Core.Optional<ManagedClusterUpgradeCadence> clusterUpgradeCadence = default;
-            Core.Optional<IList<ManagedClusterAddOnFeature>> addonFeatures = default;
-            Core.Optional<bool> enableAutoOSUpgrade = default;
-            Core.Optional<bool> zonalResiliency = default;
-            Core.Optional<ApplicationTypeVersionsCleanupPolicy> applicationTypeVersionsCleanupPolicy = default;
-            Core.Optional<bool> enableIPv6 = default;
-            Core.Optional<string> subnetId = default;
-            Core.Optional<IList<ManagedClusterIPTag>> ipTags = default;
-            Core.Optional<IPAddress> ipv6Address = default;
-            Core.Optional<bool> enableServicePublicIP = default;
-            Core.Optional<IList<ManagedClusterSubnet>> auxiliarySubnets = default;
-            Core.Optional<IList<ManagedClusterServiceEndpoint>> serviceEndpoints = default;
-            Core.Optional<ZonalUpdateMode> zonalUpdateMode = default;
-            Core.Optional<bool> useCustomVnet = default;
-            Core.Optional<ResourceIdentifier> publicIPPrefixId = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> dnsName = default;
+            Optional<string> fqdn = default;
+            Optional<IPAddress> ipv4Address = default;
+            Optional<Guid> clusterId = default;
+            Optional<ServiceFabricManagedClusterState> clusterState = default;
+            Optional<IReadOnlyList<BinaryData>> clusterCertificateThumbprints = default;
+            Optional<int> clientConnectionPort = default;
+            Optional<int> httpGatewayConnectionPort = default;
+            Optional<string> adminUserName = default;
+            Optional<string> adminPassword = default;
+            Optional<IList<ManagedClusterLoadBalancingRule>> loadBalancingRules = default;
+            Optional<bool> allowRdpAccess = default;
+            Optional<IList<ServiceFabricManagedNetworkSecurityRule>> networkSecurityRules = default;
+            Optional<IList<ManagedClusterClientCertificate>> clients = default;
+            Optional<ManagedClusterAzureActiveDirectory> azureActiveDirectory = default;
+            Optional<IList<ClusterFabricSettingsSection>> fabricSettings = default;
+            Optional<ServiceFabricManagedResourceProvisioningState> provisioningState = default;
+            Optional<string> clusterCodeVersion = default;
+            Optional<ManagedClusterUpgradeMode> clusterUpgradeMode = default;
+            Optional<ManagedClusterUpgradeCadence> clusterUpgradeCadence = default;
+            Optional<IList<ManagedClusterAddOnFeature>> addonFeatures = default;
+            Optional<bool> enableAutoOSUpgrade = default;
+            Optional<bool> zonalResiliency = default;
+            Optional<ApplicationTypeVersionsCleanupPolicy> applicationTypeVersionsCleanupPolicy = default;
+            Optional<bool> enableIPv6 = default;
+            Optional<string> subnetId = default;
+            Optional<IList<ManagedClusterIPTag>> ipTags = default;
+            Optional<IPAddress> ipv6Address = default;
+            Optional<bool> enableServicePublicIP = default;
+            Optional<IList<ManagedClusterSubnet>> auxiliarySubnets = default;
+            Optional<IList<ManagedClusterServiceEndpoint>> serviceEndpoints = default;
+            Optional<ZonalUpdateMode> zonalUpdateMode = default;
+            Optional<bool> useCustomVnet = default;
+            Optional<ResourceIdentifier> publicIPPrefixId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     continue;
                 }
             }
-            return new ServiceFabricManagedClusterData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku, dnsName.Value, fqdn.Value, ipv4Address.Value, Core.Optional.ToNullable(clusterId), Core.Optional.ToNullable(clusterState), Core.Optional.ToList(clusterCertificateThumbprints), Core.Optional.ToNullable(clientConnectionPort), Core.Optional.ToNullable(httpGatewayConnectionPort), adminUserName.Value, adminPassword.Value, Core.Optional.ToList(loadBalancingRules), Core.Optional.ToNullable(allowRdpAccess), Core.Optional.ToList(networkSecurityRules), Core.Optional.ToList(clients), azureActiveDirectory.Value, Core.Optional.ToList(fabricSettings), Core.Optional.ToNullable(provisioningState), clusterCodeVersion.Value, Core.Optional.ToNullable(clusterUpgradeMode), Core.Optional.ToNullable(clusterUpgradeCadence), Core.Optional.ToList(addonFeatures), Core.Optional.ToNullable(enableAutoOSUpgrade), Core.Optional.ToNullable(zonalResiliency), applicationTypeVersionsCleanupPolicy.Value, Core.Optional.ToNullable(enableIPv6), subnetId.Value, Core.Optional.ToList(ipTags), ipv6Address.Value, Core.Optional.ToNullable(enableServicePublicIP), Core.Optional.ToList(auxiliarySubnets), Core.Optional.ToList(serviceEndpoints), Core.Optional.ToNullable(zonalUpdateMode), Core.Optional.ToNullable(useCustomVnet), publicIPPrefixId.Value, Core.Optional.ToNullable(etag));
+            return new ServiceFabricManagedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, dnsName.Value, fqdn.Value, ipv4Address.Value, Optional.ToNullable(clusterId), Optional.ToNullable(clusterState), Optional.ToList(clusterCertificateThumbprints), Optional.ToNullable(clientConnectionPort), Optional.ToNullable(httpGatewayConnectionPort), adminUserName.Value, adminPassword.Value, Optional.ToList(loadBalancingRules), Optional.ToNullable(allowRdpAccess), Optional.ToList(networkSecurityRules), Optional.ToList(clients), azureActiveDirectory.Value, Optional.ToList(fabricSettings), Optional.ToNullable(provisioningState), clusterCodeVersion.Value, Optional.ToNullable(clusterUpgradeMode), Optional.ToNullable(clusterUpgradeCadence), Optional.ToList(addonFeatures), Optional.ToNullable(enableAutoOSUpgrade), Optional.ToNullable(zonalResiliency), applicationTypeVersionsCleanupPolicy.Value, Optional.ToNullable(enableIPv6), subnetId.Value, Optional.ToList(ipTags), ipv6Address.Value, Optional.ToNullable(enableServicePublicIP), Optional.ToList(auxiliarySubnets), Optional.ToList(serviceEndpoints), Optional.ToNullable(zonalUpdateMode), Optional.ToNullable(useCustomVnet), publicIPPrefixId.Value, Optional.ToNullable(etag));
         }
     }
 }

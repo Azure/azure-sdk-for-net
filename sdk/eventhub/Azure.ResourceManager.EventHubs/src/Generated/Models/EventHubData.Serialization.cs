@@ -14,29 +14,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubData : Core.IUtf8JsonSerializable
+    public partial class EventHubData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PartitionCount))
+            if (Optional.IsDefined(PartitionCount))
             {
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(CaptureDescription))
+            if (Optional.IsDefined(CaptureDescription))
             {
                 writer.WritePropertyName("captureDescription"u8);
                 writer.WriteObjectValue(CaptureDescription);
             }
-            if (Core.Optional.IsDefined(RetentionDescription))
+            if (Optional.IsDefined(RetentionDescription))
             {
                 writer.WritePropertyName("retentionDescription"u8);
                 writer.WriteObjectValue(RetentionDescription);
@@ -51,18 +51,18 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyList<string>> partitionIds = default;
-            Core.Optional<DateTimeOffset> createdAt = default;
-            Core.Optional<DateTimeOffset> updatedAt = default;
-            Core.Optional<long> partitionCount = default;
-            Core.Optional<EventHubEntityStatus> status = default;
-            Core.Optional<CaptureDescription> captureDescription = default;
-            Core.Optional<RetentionDescription> retentionDescription = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyList<string>> partitionIds = default;
+            Optional<DateTimeOffset> createdAt = default;
+            Optional<DateTimeOffset> updatedAt = default;
+            Optional<long> partitionCount = default;
+            Optional<EventHubEntityStatus> status = default;
+            Optional<CaptureDescription> captureDescription = default;
+            Optional<RetentionDescription> retentionDescription = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubData(id, name, type, systemData.Value, Core.Optional.ToList(partitionIds), Core.Optional.ToNullable(createdAt), Core.Optional.ToNullable(updatedAt), Core.Optional.ToNullable(partitionCount), Core.Optional.ToNullable(status), captureDescription.Value, retentionDescription.Value, Core.Optional.ToNullable(location));
+            return new EventHubData(id, name, type, systemData.Value, Optional.ToList(partitionIds), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(partitionCount), Optional.ToNullable(status), captureDescription.Value, retentionDescription.Value, Optional.ToNullable(location));
         }
     }
 }

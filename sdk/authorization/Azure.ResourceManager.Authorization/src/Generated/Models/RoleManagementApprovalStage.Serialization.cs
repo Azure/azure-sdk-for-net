@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementApprovalStage : Core.IUtf8JsonSerializable
+    public partial class RoleManagementApprovalStage : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ApprovalStageTimeOutInDays))
+            if (Optional.IsDefined(ApprovalStageTimeOutInDays))
             {
                 writer.WritePropertyName("approvalStageTimeOutInDays"u8);
                 writer.WriteNumberValue(ApprovalStageTimeOutInDays.Value);
             }
-            if (Core.Optional.IsDefined(IsApproverJustificationRequired))
+            if (Optional.IsDefined(IsApproverJustificationRequired))
             {
                 writer.WritePropertyName("isApproverJustificationRequired"u8);
                 writer.WriteBooleanValue(IsApproverJustificationRequired.Value);
             }
-            if (Core.Optional.IsDefined(EscalationTimeInMinutes))
+            if (Optional.IsDefined(EscalationTimeInMinutes))
             {
                 writer.WritePropertyName("escalationTimeInMinutes"u8);
                 writer.WriteNumberValue(EscalationTimeInMinutes.Value);
             }
-            if (Core.Optional.IsCollectionDefined(PrimaryApprovers))
+            if (Optional.IsCollectionDefined(PrimaryApprovers))
             {
                 writer.WritePropertyName("primaryApprovers"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsEscalationEnabled))
+            if (Optional.IsDefined(IsEscalationEnabled))
             {
                 writer.WritePropertyName("isEscalationEnabled"u8);
                 writer.WriteBooleanValue(IsEscalationEnabled.Value);
             }
-            if (Core.Optional.IsCollectionDefined(EscalationApprovers))
+            if (Optional.IsCollectionDefined(EscalationApprovers))
             {
                 writer.WritePropertyName("escalationApprovers"u8);
                 writer.WriteStartArray();
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Core.Optional<int> approvalStageTimeOutInDays = default;
-            Core.Optional<bool> isApproverJustificationRequired = default;
-            Core.Optional<int> escalationTimeInMinutes = default;
-            Core.Optional<IList<RoleManagementUserInfo>> primaryApprovers = default;
-            Core.Optional<bool> isEscalationEnabled = default;
-            Core.Optional<IList<RoleManagementUserInfo>> escalationApprovers = default;
+            Optional<int> approvalStageTimeOutInDays = default;
+            Optional<bool> isApproverJustificationRequired = default;
+            Optional<int> escalationTimeInMinutes = default;
+            Optional<IList<RoleManagementUserInfo>> primaryApprovers = default;
+            Optional<bool> isEscalationEnabled = default;
+            Optional<IList<RoleManagementUserInfo>> escalationApprovers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("approvalStageTimeOutInDays"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleManagementApprovalStage(Core.Optional.ToNullable(approvalStageTimeOutInDays), Core.Optional.ToNullable(isApproverJustificationRequired), Core.Optional.ToNullable(escalationTimeInMinutes), Core.Optional.ToList(primaryApprovers), Core.Optional.ToNullable(isEscalationEnabled), Core.Optional.ToList(escalationApprovers));
+            return new RoleManagementApprovalStage(Optional.ToNullable(approvalStageTimeOutInDays), Optional.ToNullable(isApproverJustificationRequired), Optional.ToNullable(escalationTimeInMinutes), Optional.ToList(primaryApprovers), Optional.ToNullable(isEscalationEnabled), Optional.ToList(escalationApprovers));
         }
     }
 }

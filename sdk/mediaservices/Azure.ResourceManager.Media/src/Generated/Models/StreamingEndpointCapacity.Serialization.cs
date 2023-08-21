@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<string> scaleType = default;
-            Core.Optional<int> @default = default;
-            Core.Optional<int> minimum = default;
-            Core.Optional<int> maximum = default;
+            Optional<string> scaleType = default;
+            Optional<int> @default = default;
+            Optional<int> minimum = default;
+            Optional<int> maximum = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scaleType"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new StreamingEndpointCapacity(scaleType.Value, Core.Optional.ToNullable(@default), Core.Optional.ToNullable(minimum), Core.Optional.ToNullable(maximum));
+            return new StreamingEndpointCapacity(scaleType.Value, Optional.ToNullable(@default), Optional.ToNullable(minimum), Optional.ToNullable(maximum));
         }
     }
 }

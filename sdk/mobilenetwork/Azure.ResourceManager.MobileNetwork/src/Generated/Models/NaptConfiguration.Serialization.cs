@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class NaptConfiguration : Core.IUtf8JsonSerializable
+    public partial class NaptConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PortRange))
+            if (Optional.IsDefined(PortRange))
             {
                 writer.WritePropertyName("portRange"u8);
                 writer.WriteObjectValue(PortRange);
             }
-            if (Core.Optional.IsDefined(PortReuseHoldTime))
+            if (Optional.IsDefined(PortReuseHoldTime))
             {
                 writer.WritePropertyName("portReuseHoldTime"u8);
                 writer.WriteObjectValue(PortReuseHoldTime);
             }
-            if (Core.Optional.IsDefined(PinholeLimits))
+            if (Optional.IsDefined(PinholeLimits))
             {
                 writer.WritePropertyName("pinholeLimits"u8);
                 writer.WriteNumberValue(PinholeLimits.Value);
             }
-            if (Core.Optional.IsDefined(PinholeTimeouts))
+            if (Optional.IsDefined(PinholeTimeouts))
             {
                 writer.WritePropertyName("pinholeTimeouts"u8);
                 writer.WriteObjectValue(PinholeTimeouts);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Core.Optional<NaptState> enabled = default;
-            Core.Optional<MobileNetworkPortRange> portRange = default;
-            Core.Optional<MobileNetworkPortReuseHoldTimes> portReuseHoldTime = default;
-            Core.Optional<int> pinholeLimits = default;
-            Core.Optional<PinholeTimeouts> pinholeTimeouts = default;
+            Optional<NaptState> enabled = default;
+            Optional<MobileNetworkPortRange> portRange = default;
+            Optional<MobileNetworkPortReuseHoldTimes> portReuseHoldTime = default;
+            Optional<int> pinholeLimits = default;
+            Optional<PinholeTimeouts> pinholeTimeouts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new NaptConfiguration(Core.Optional.ToNullable(enabled), portRange.Value, portReuseHoldTime.Value, Core.Optional.ToNullable(pinholeLimits), pinholeTimeouts.Value);
+            return new NaptConfiguration(Optional.ToNullable(enabled), portRange.Value, portReuseHoldTime.Value, Optional.ToNullable(pinholeLimits), pinholeTimeouts.Value);
         }
     }
 }

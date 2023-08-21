@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmApplicationUserAssignedIdentity : Core.IUtf8JsonSerializable
+    public partial class ArmApplicationUserAssignedIdentity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<Guid> principalId = default;
-            Core.Optional<Guid> tenantId = default;
+            Optional<Guid> principalId = default;
+            Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmApplicationUserAssignedIdentity(Core.Optional.ToNullable(principalId), Core.Optional.ToNullable(tenantId));
+            return new ArmApplicationUserAssignedIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId));
         }
     }
 }

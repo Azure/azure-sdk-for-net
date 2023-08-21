@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ProviderRegistrationListResult. </summary>
         internal ProviderRegistrationListResult()
         {
-            Value = new Core.ChangeTrackingList<ProviderRegistrationData>();
+            Value = new ChangeTrackingList<ProviderRegistrationData>();
         }
 
         /// <summary> Initializes a new instance of ProviderRegistrationListResult. </summary>

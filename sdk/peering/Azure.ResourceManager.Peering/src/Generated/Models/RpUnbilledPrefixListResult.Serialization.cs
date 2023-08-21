@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<RoutingPreferenceUnbilledPrefix>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<RoutingPreferenceUnbilledPrefix>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new RpUnbilledPrefixListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new RpUnbilledPrefixListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

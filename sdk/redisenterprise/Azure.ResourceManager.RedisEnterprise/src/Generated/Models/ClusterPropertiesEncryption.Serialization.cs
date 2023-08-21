@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    internal partial class ClusterPropertiesEncryption : Core.IUtf8JsonSerializable
+    internal partial class ClusterPropertiesEncryption : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CustomerManagedKeyEncryption))
+            if (Optional.IsDefined(CustomerManagedKeyEncryption))
             {
                 writer.WritePropertyName("customerManagedKeyEncryption"u8);
                 writer.WriteObjectValue(CustomerManagedKeyEncryption);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Core.Optional<RedisEnterpriseCustomerManagedKeyEncryption> customerManagedKeyEncryption = default;
+            Optional<RedisEnterpriseCustomerManagedKeyEncryption> customerManagedKeyEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customerManagedKeyEncryption"u8))

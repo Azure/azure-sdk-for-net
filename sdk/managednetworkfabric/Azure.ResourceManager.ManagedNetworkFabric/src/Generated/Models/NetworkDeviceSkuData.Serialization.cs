@@ -13,21 +13,21 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkDeviceSkuData : Core.IUtf8JsonSerializable
+    public partial class NetworkDeviceSkuData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
-            if (Core.Optional.IsDefined(Manufacturer))
+            if (Optional.IsDefined(Manufacturer))
             {
                 writer.WritePropertyName("manufacturer"u8);
                 writer.WriteStringValue(Manufacturer);
             }
-            if (Core.Optional.IsCollectionDefined(SupportedVersions))
+            if (Optional.IsCollectionDefined(SupportedVersions))
             {
                 writer.WritePropertyName("supportedVersions"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(SupportedRoleTypes))
+            if (Optional.IsCollectionDefined(SupportedRoleTypes))
             {
                 writer.WritePropertyName("supportedRoleTypes"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Interfaces))
+            if (Optional.IsCollectionDefined(Interfaces))
             {
                 writer.WritePropertyName("interfaces"u8);
                 writer.WriteStartArray();
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             string model = default;
-            Core.Optional<string> manufacturer = default;
-            Core.Optional<IList<SupportedVersionProperties>> supportedVersions = default;
-            Core.Optional<IList<NetworkDeviceRoleName>> supportedRoleTypes = default;
-            Core.Optional<IList<NetworkDeviceInterfaceProperties>> interfaces = default;
-            Core.Optional<NetworkFabricProvisioningState> provisioningState = default;
+            Optional<string> manufacturer = default;
+            Optional<IList<SupportedVersionProperties>> supportedVersions = default;
+            Optional<IList<NetworkDeviceRoleName>> supportedRoleTypes = default;
+            Optional<IList<NetworkDeviceInterfaceProperties>> interfaces = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     continue;
                 }
             }
-            return new NetworkDeviceSkuData(id, name, type, systemData.Value, model, manufacturer.Value, Core.Optional.ToList(supportedVersions), Core.Optional.ToList(supportedRoleTypes), Core.Optional.ToList(interfaces), Core.Optional.ToNullable(provisioningState));
+            return new NetworkDeviceSkuData(id, name, type, systemData.Value, model, manufacturer.Value, Optional.ToList(supportedVersions), Optional.ToList(supportedRoleTypes), Optional.ToList(interfaces), Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class ServiceBusSku : Core.IUtf8JsonSerializable
+    public partial class ServiceBusSku : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToSerialString());
-            if (Core.Optional.IsDefined(Tier))
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(Capacity))
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 return null;
             }
             ServiceBusSkuName name = default;
-            Core.Optional<ServiceBusSkuTier> tier = default;
-            Core.Optional<int> capacity = default;
+            Optional<ServiceBusSkuTier> tier = default;
+            Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new ServiceBusSku(name, Core.Optional.ToNullable(tier), Core.Optional.ToNullable(capacity));
+            return new ServiceBusSku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity));
         }
     }
 }

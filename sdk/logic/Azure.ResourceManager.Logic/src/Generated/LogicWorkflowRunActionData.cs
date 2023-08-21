@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic
         /// <summary> Initializes a new instance of LogicWorkflowRunActionData. </summary>
         internal LogicWorkflowRunActionData()
         {
-            RetryHistory = new Core.ChangeTrackingList<LogicWorkRetryHistory>();
+            RetryHistory = new ChangeTrackingList<LogicWorkRetryHistory>();
         }
 
         /// <summary> Initializes a new instance of LogicWorkflowRunActionData. </summary>

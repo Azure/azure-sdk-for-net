@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(accessModeSettings, nameof(accessModeSettings));
 
-            PrivateEndpointConnections = new Core.ChangeTrackingList<MonitorPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<MonitorPrivateEndpointConnectionData>();
             AccessModeSettings = accessModeSettings;
         }
 

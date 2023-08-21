@@ -24,8 +24,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(notebookPath, nameof(notebookPath));
 
             NotebookPath = notebookPath;
-            BaseParameters = new Core.ChangeTrackingDictionary<string, object>();
-            Libraries = new Core.ChangeTrackingList<IDictionary<string, object>>();
+            BaseParameters = new ChangeTrackingDictionary<string, object>();
+            Libraries = new ChangeTrackingList<IDictionary<string, object>>();
             Type = "DatabricksNotebook";
         }
 

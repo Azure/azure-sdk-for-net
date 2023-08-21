@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningModelVersionProperties : Core.IUtf8JsonSerializable
+    public partial class MachineLearningModelVersionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Flavors))
+            if (Optional.IsCollectionDefined(Flavors))
             {
                 if (Flavors != null)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("flavors");
                 }
             }
-            if (Core.Optional.IsDefined(JobName))
+            if (Optional.IsDefined(JobName))
             {
                 if (JobName != null)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobName");
                 }
             }
-            if (Core.Optional.IsDefined(ModelType))
+            if (Optional.IsDefined(ModelType))
             {
                 if (ModelType != null)
                 {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelType");
                 }
             }
-            if (Core.Optional.IsDefined(ModelUri))
+            if (Optional.IsDefined(ModelUri))
             {
                 if (ModelUri != null)
                 {
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelUri");
                 }
             }
-            if (Core.Optional.IsDefined(IsAnonymous))
+            if (Optional.IsDefined(IsAnonymous))
             {
                 writer.WritePropertyName("isAnonymous"u8);
                 writer.WriteBooleanValue(IsAnonymous.Value);
             }
-            if (Core.Optional.IsDefined(IsArchived))
+            if (Optional.IsDefined(IsArchived))
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, MachineLearningFlavorData>> flavors = default;
-            Core.Optional<string> jobName = default;
-            Core.Optional<string> modelType = default;
-            Core.Optional<Uri> modelUri = default;
-            Core.Optional<bool> isAnonymous = default;
-            Core.Optional<bool> isArchived = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IDictionary<string, string>> properties = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, MachineLearningFlavorData>> flavors = default;
+            Optional<string> jobName = default;
+            Optional<string> modelType = default;
+            Optional<Uri> modelUri = default;
+            Optional<bool> isAnonymous = default;
+            Optional<bool> isArchived = default;
+            Optional<string> description = default;
+            Optional<IDictionary<string, string>> properties = default;
+            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("flavors"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningModelVersionProperties(description.Value, Core.Optional.ToDictionary(properties), Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(isAnonymous), Core.Optional.ToNullable(isArchived), Core.Optional.ToDictionary(flavors), jobName.Value, modelType.Value, modelUri.Value);
+            return new MachineLearningModelVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToDictionary(flavors), jobName.Value, modelType.Value, modelUri.Value);
         }
     }
 }

@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Core.Optional<string> commonName = default;
-            Core.Optional<string> organization = default;
-            Core.Optional<string> organizationalUnit = default;
-            Core.Optional<string> state = default;
-            Core.Optional<string> country = default;
+            Optional<string> commonName = default;
+            Optional<string> organization = default;
+            Optional<string> organizationalUnit = default;
+            Optional<string> state = default;
+            Optional<string> country = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commonName"u8))

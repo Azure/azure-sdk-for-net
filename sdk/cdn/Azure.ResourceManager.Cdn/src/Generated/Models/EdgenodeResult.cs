@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of EdgenodeResult. </summary>
         internal EdgenodeResult()
         {
-            Value = new Core.ChangeTrackingList<EdgeNode>();
+            Value = new ChangeTrackingList<EdgeNode>();
         }
 
         /// <summary> Initializes a new instance of EdgenodeResult. </summary>

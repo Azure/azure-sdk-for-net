@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = await _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ArcScVmmArmOperation<ScVmmVirtualMachineTemplateResource>(new ScVmmVirtualMachineTemplateOperationSource(Client), _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ArcScVmmArmOperation<ScVmmVirtualMachineTemplateResource>(new ScVmmVirtualMachineTemplateOperationSource(Client), _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, data, cancellationToken);
-                var operation = new ArcScVmmArmOperation<ScVmmVirtualMachineTemplateResource>(new ScVmmVirtualMachineTemplateOperationSource(Client), _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ArcScVmmArmOperation<ScVmmVirtualMachineTemplateResource>(new ScVmmVirtualMachineTemplateOperationSource(Client), _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineTemplateResource(Client, ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e)), _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "ScVmmVirtualMachineTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineTemplateResource(Client, ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e)), _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "ScVmmVirtualMachineTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineTemplateResource(Client, ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e)), _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "ScVmmVirtualMachineTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineTemplateResource(Client, ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e)), _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "ScVmmVirtualMachineTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

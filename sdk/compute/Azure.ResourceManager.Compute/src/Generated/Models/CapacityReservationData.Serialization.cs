@@ -15,14 +15,14 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class CapacityReservationData : Core.IUtf8JsonSerializable
+    public partial class CapacityReservationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Core.Optional.IsCollectionDefined(Zones))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,20 +58,20 @@ namespace Azure.ResourceManager.Compute
                 return null;
             }
             ComputeSku sku = default;
-            Core.Optional<IList<string>> zones = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<string>> zones = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> reservationId = default;
-            Core.Optional<int> platformFaultDomainCount = default;
-            Core.Optional<IReadOnlyList<SubResource>> virtualMachinesAssociated = default;
-            Core.Optional<DateTimeOffset> provisioningTime = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<CapacityReservationInstanceView> instanceView = default;
-            Core.Optional<DateTimeOffset> timeCreated = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> reservationId = default;
+            Optional<int> platformFaultDomainCount = default;
+            Optional<IReadOnlyList<SubResource>> virtualMachinesAssociated = default;
+            Optional<DateTimeOffset> provisioningTime = default;
+            Optional<string> provisioningState = default;
+            Optional<CapacityReservationInstanceView> instanceView = default;
+            Optional<DateTimeOffset> timeCreated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new CapacityReservationData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku, Core.Optional.ToList(zones), reservationId.Value, Core.Optional.ToNullable(platformFaultDomainCount), Core.Optional.ToList(virtualMachinesAssociated), Core.Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Core.Optional.ToNullable(timeCreated));
+            return new CapacityReservationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(zones), reservationId.Value, Optional.ToNullable(platformFaultDomainCount), Optional.ToList(virtualMachinesAssociated), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated));
         }
     }
 }

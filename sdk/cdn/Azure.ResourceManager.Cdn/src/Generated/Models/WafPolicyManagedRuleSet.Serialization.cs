@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class WafPolicyManagedRuleSet : Core.IUtf8JsonSerializable
+    public partial class WafPolicyManagedRuleSet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ruleSetType"u8);
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (Core.Optional.IsDefined(AnomalyScore))
+            if (Optional.IsDefined(AnomalyScore))
             {
                 writer.WritePropertyName("anomalyScore"u8);
                 writer.WriteNumberValue(AnomalyScore.Value);
             }
-            if (Core.Optional.IsCollectionDefined(RuleGroupOverrides))
+            if (Optional.IsCollectionDefined(RuleGroupOverrides))
             {
                 writer.WritePropertyName("ruleGroupOverrides"u8);
                 writer.WriteStartArray();
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Core.Optional<int> anomalyScore = default;
-            Core.Optional<IList<ManagedRuleGroupOverrideSetting>> ruleGroupOverrides = default;
+            Optional<int> anomalyScore = default;
+            Optional<IList<ManagedRuleGroupOverrideSetting>> ruleGroupOverrides = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleSetType"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new WafPolicyManagedRuleSet(ruleSetType, ruleSetVersion, Core.Optional.ToNullable(anomalyScore), Core.Optional.ToList(ruleGroupOverrides));
+            return new WafPolicyManagedRuleSet(ruleSetType, ruleSetVersion, Optional.ToNullable(anomalyScore), Optional.ToList(ruleGroupOverrides));
         }
     }
 }

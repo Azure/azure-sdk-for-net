@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> amlWorkspaceLocation = default;
-            Core.Optional<string> type = default;
-            Core.Optional<MachineLearningUsageUnit> unit = default;
-            Core.Optional<long> currentValue = default;
-            Core.Optional<long> limit = default;
-            Core.Optional<MachineLearningUsageName> name = default;
+            Optional<string> id = default;
+            Optional<string> amlWorkspaceLocation = default;
+            Optional<string> type = default;
+            Optional<MachineLearningUsageUnit> unit = default;
+            Optional<long> currentValue = default;
+            Optional<long> limit = default;
+            Optional<MachineLearningUsageName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningUsage(id.Value, amlWorkspaceLocation.Value, type.Value, Core.Optional.ToNullable(unit), Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit), name.Value);
+            return new MachineLearningUsage(id.Value, amlWorkspaceLocation.Value, type.Value, Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
         }
     }
 }

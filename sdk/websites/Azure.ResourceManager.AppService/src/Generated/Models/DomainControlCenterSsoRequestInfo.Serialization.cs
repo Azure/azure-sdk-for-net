@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<Uri> url = default;
-            Core.Optional<string> postParameterKey = default;
-            Core.Optional<string> postParameterValue = default;
+            Optional<Uri> url = default;
+            Optional<string> postParameterKey = default;
+            Optional<string> postParameterValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))

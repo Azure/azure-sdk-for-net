@@ -13,12 +13,12 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class ActivityLogAlertData : Core.IUtf8JsonSerializable
+    public partial class ActivityLogAlertData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Scopes))
+            if (Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -43,22 +43,22 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Condition))
+            if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteObjectValue(Condition);
             }
-            if (Core.Optional.IsDefined(Actions))
+            if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteObjectValue(Actions);
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IList<string>> scopes = default;
-            Core.Optional<AlertRuleAllOfCondition> condition = default;
-            Core.Optional<ActionList> actions = default;
-            Core.Optional<bool> enabled = default;
-            Core.Optional<string> description = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<string>> scopes = default;
+            Optional<AlertRuleAllOfCondition> condition = default;
+            Optional<ActionList> actions = default;
+            Optional<bool> enabled = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new ActivityLogAlertData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToList(scopes), condition.Value, actions.Value, Core.Optional.ToNullable(enabled), description.Value);
+            return new ActivityLogAlertData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(scopes), condition.Value, actions.Value, Optional.ToNullable(enabled), description.Value);
         }
     }
 }

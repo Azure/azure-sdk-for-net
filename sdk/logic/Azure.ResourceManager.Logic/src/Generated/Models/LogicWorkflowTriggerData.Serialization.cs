@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<LogicWorkflowTriggerProvisioningState> provisioningState = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<DateTimeOffset> changedTime = default;
-            Core.Optional<LogicWorkflowState> state = default;
-            Core.Optional<LogicWorkflowStatus> status = default;
-            Core.Optional<DateTimeOffset> lastExecutionTime = default;
-            Core.Optional<DateTimeOffset> nextExecutionTime = default;
-            Core.Optional<LogicWorkflowTriggerRecurrence> recurrence = default;
-            Core.Optional<LogicResourceReference> workflow = default;
+            Optional<SystemData> systemData = default;
+            Optional<LogicWorkflowTriggerProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> changedTime = default;
+            Optional<LogicWorkflowState> state = default;
+            Optional<LogicWorkflowStatus> status = default;
+            Optional<DateTimeOffset> lastExecutionTime = default;
+            Optional<DateTimeOffset> nextExecutionTime = default;
+            Optional<LogicWorkflowTriggerRecurrence> recurrence = default;
+            Optional<LogicResourceReference> workflow = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Logic
                     continue;
                 }
             }
-            return new LogicWorkflowTriggerData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(changedTime), Core.Optional.ToNullable(state), Core.Optional.ToNullable(status), Core.Optional.ToNullable(lastExecutionTime), Core.Optional.ToNullable(nextExecutionTime), recurrence.Value, workflow.Value);
+            return new LogicWorkflowTriggerData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), Optional.ToNullable(state), Optional.ToNullable(status), Optional.ToNullable(lastExecutionTime), Optional.ToNullable(nextExecutionTime), recurrence.Value, workflow.Value);
         }
     }
 }

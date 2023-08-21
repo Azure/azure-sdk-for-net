@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TruncationSelectionPolicy : Core.IUtf8JsonSerializable
+    public partial class TruncationSelectionPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TruncationPercentage))
+            if (Optional.IsDefined(TruncationPercentage))
             {
                 writer.WritePropertyName("truncationPercentage"u8);
                 writer.WriteNumberValue(TruncationPercentage.Value);
             }
-            if (Core.Optional.IsDefined(DelayEvaluation))
+            if (Optional.IsDefined(DelayEvaluation))
             {
                 writer.WritePropertyName("delayEvaluation"u8);
                 writer.WriteNumberValue(DelayEvaluation.Value);
             }
-            if (Core.Optional.IsDefined(EvaluationInterval))
+            if (Optional.IsDefined(EvaluationInterval))
             {
                 writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteNumberValue(EvaluationInterval.Value);
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<int> truncationPercentage = default;
-            Core.Optional<int> delayEvaluation = default;
-            Core.Optional<int> evaluationInterval = default;
+            Optional<int> truncationPercentage = default;
+            Optional<int> delayEvaluation = default;
+            Optional<int> evaluationInterval = default;
             EarlyTerminationPolicyType policyType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new TruncationSelectionPolicy(Core.Optional.ToNullable(delayEvaluation), Core.Optional.ToNullable(evaluationInterval), policyType, Core.Optional.ToNullable(truncationPercentage));
+            return new TruncationSelectionPolicy(Optional.ToNullable(delayEvaluation), Optional.ToNullable(evaluationInterval), policyType, Optional.ToNullable(truncationPercentage));
         }
     }
 }

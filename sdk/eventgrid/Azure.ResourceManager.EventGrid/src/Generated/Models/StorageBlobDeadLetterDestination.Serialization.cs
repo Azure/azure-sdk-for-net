@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class StorageBlobDeadLetterDestination : Core.IUtf8JsonSerializable
+    public partial class StorageBlobDeadLetterDestination : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Core.Optional.IsDefined(BlobContainerName))
+            if (Optional.IsDefined(BlobContainerName))
             {
                 writer.WritePropertyName("blobContainerName"u8);
                 writer.WriteStringValue(BlobContainerName);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             DeadLetterEndPointType endpointType = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<string> blobContainerName = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<string> blobContainerName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"u8))

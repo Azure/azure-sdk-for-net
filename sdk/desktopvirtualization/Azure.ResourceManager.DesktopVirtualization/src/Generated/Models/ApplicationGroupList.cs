@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of ApplicationGroupList. </summary>
         internal ApplicationGroupList()
         {
-            Value = new Core.ChangeTrackingList<VirtualApplicationGroupData>();
+            Value = new ChangeTrackingList<VirtualApplicationGroupData>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGroupList. </summary>

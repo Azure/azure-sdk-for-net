@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ManagedServices.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ManagedServicesRegistrationAssignmentData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ManagedServicesRegistrationAssignmentData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     continue;
                 }
             }
-            return new ManagedServicesRegistrationAssignmentListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ManagedServicesRegistrationAssignmentListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

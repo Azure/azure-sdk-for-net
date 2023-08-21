@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class InstantRPAdditionalDetails : Core.IUtf8JsonSerializable
+    public partial class InstantRPAdditionalDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AzureBackupRGNamePrefix))
+            if (Optional.IsDefined(AzureBackupRGNamePrefix))
             {
                 writer.WritePropertyName("azureBackupRGNamePrefix"u8);
                 writer.WriteStringValue(AzureBackupRGNamePrefix);
             }
-            if (Core.Optional.IsDefined(AzureBackupRGNameSuffix))
+            if (Optional.IsDefined(AzureBackupRGNameSuffix))
             {
                 writer.WritePropertyName("azureBackupRGNameSuffix"u8);
                 writer.WriteStringValue(AzureBackupRGNameSuffix);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<string> azureBackupRGNamePrefix = default;
-            Core.Optional<string> azureBackupRGNameSuffix = default;
+            Optional<string> azureBackupRGNamePrefix = default;
+            Optional<string> azureBackupRGNameSuffix = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureBackupRGNamePrefix"u8))

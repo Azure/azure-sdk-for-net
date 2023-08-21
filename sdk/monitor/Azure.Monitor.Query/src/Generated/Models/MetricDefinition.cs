@@ -16,9 +16,9 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of MetricDefinition. </summary>
         internal MetricDefinition()
         {
-            SupportedAggregationTypes = new Core.ChangeTrackingList<MetricAggregationType>();
-            MetricAvailabilities = new Core.ChangeTrackingList<MetricAvailability>();
-            LocalizedDimensions = new Core.ChangeTrackingList<LocalizableString>();
+            SupportedAggregationTypes = new ChangeTrackingList<MetricAggregationType>();
+            MetricAvailabilities = new ChangeTrackingList<MetricAvailability>();
+            LocalizedDimensions = new ChangeTrackingList<LocalizableString>();
         }
 
         /// <summary> Initializes a new instance of MetricDefinition. </summary>

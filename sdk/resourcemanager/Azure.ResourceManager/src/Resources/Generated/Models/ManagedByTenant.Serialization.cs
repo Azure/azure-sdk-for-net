@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<Guid> tenantId = default;
+            Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ManagedByTenant(Core.Optional.ToNullable(tenantId));
+            return new ManagedByTenant(Optional.ToNullable(tenantId));
         }
     }
 }

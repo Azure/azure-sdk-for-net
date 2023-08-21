@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of AvsPrivateCloudClusterPatch. </summary>
         public AvsPrivateCloudClusterPatch()
         {
-            Hosts = new Core.ChangeTrackingList<string>();
+            Hosts = new ChangeTrackingList<string>();
         }
 
         /// <summary> The cluster size. </summary>

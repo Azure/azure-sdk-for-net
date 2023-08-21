@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Storage.Models
         /// <summary> Initializes a new instance of StorageAccountUpdateParameters. </summary>
         public StorageAccountUpdateParameters()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The current active storage account key name. </summary>

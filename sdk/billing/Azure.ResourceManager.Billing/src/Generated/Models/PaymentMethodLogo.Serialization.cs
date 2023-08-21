@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class PaymentMethodLogo : Core.IUtf8JsonSerializable
+    public partial class PaymentMethodLogo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Core.Optional<string> mimeType = default;
-            Core.Optional<Uri> url = default;
+            Optional<string> mimeType = default;
+            Optional<Uri> url = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mimeType"u8))

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> vmwareSiteId = default;
-            Core.Optional<ResourceIdentifier> physicalSiteId = default;
-            Core.Optional<ResourceIdentifier> migrationSolutionId = default;
-            Core.Optional<string> serviceEndpoint = default;
-            Core.Optional<ResourceIdentifier> serviceResourceId = default;
-            Core.Optional<string> serviceContainerId = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryProcessServerDetails>> processServers = default;
+            Optional<ResourceIdentifier> vmwareSiteId = default;
+            Optional<ResourceIdentifier> physicalSiteId = default;
+            Optional<ResourceIdentifier> migrationSolutionId = default;
+            Optional<string> serviceEndpoint = default;
+            Optional<ResourceIdentifier> serviceResourceId = default;
+            Optional<string> serviceContainerId = default;
+            Optional<IReadOnlyList<SiteRecoveryProcessServerDetails>> processServers = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new VMwareV2FabricSpecificDetails(instanceType, vmwareSiteId.Value, physicalSiteId.Value, migrationSolutionId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, Core.Optional.ToList(processServers));
+            return new VMwareV2FabricSpecificDetails(instanceType, vmwareSiteId.Value, physicalSiteId.Value, migrationSolutionId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, Optional.ToList(processServers));
         }
     }
 }

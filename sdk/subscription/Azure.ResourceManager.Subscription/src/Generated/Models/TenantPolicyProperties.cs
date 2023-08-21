@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <summary> Initializes a new instance of TenantPolicyProperties. </summary>
         internal TenantPolicyProperties()
         {
-            ExemptedPrincipals = new Core.ChangeTrackingList<Guid>();
+            ExemptedPrincipals = new ChangeTrackingList<Guid>();
         }
 
         /// <summary> Initializes a new instance of TenantPolicyProperties. </summary>

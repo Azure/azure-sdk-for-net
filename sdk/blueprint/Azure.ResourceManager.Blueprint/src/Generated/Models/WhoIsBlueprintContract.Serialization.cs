@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Core.Optional<string> objectId = default;
+            Optional<string> objectId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("objectId"u8))

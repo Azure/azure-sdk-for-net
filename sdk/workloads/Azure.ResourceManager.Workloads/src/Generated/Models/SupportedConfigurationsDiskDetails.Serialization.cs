@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<SapDiskSku> sku = default;
-            Core.Optional<long> sizeGB = default;
-            Core.Optional<long> minimumSupportedDiskCount = default;
-            Core.Optional<long> maximumSupportedDiskCount = default;
-            Core.Optional<long> iopsReadWrite = default;
-            Core.Optional<long> mbpsReadWrite = default;
-            Core.Optional<string> diskTier = default;
+            Optional<SapDiskSku> sku = default;
+            Optional<long> sizeGB = default;
+            Optional<long> minimumSupportedDiskCount = default;
+            Optional<long> maximumSupportedDiskCount = default;
+            Optional<long> iopsReadWrite = default;
+            Optional<long> mbpsReadWrite = default;
+            Optional<string> diskTier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SupportedConfigurationsDiskDetails(sku.Value, Core.Optional.ToNullable(sizeGB), Core.Optional.ToNullable(minimumSupportedDiskCount), Core.Optional.ToNullable(maximumSupportedDiskCount), Core.Optional.ToNullable(iopsReadWrite), Core.Optional.ToNullable(mbpsReadWrite), diskTier.Value);
+            return new SupportedConfigurationsDiskDetails(sku.Value, Optional.ToNullable(sizeGB), Optional.ToNullable(minimumSupportedDiskCount), Optional.ToNullable(maximumSupportedDiskCount), Optional.ToNullable(iopsReadWrite), Optional.ToNullable(mbpsReadWrite), diskTier.Value);
         }
     }
 }

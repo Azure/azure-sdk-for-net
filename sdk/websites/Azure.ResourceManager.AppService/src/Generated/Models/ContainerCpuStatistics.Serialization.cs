@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ContainerCpuStatistics : Core.IUtf8JsonSerializable
+    public partial class ContainerCpuStatistics : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CpuUsage))
+            if (Optional.IsDefined(CpuUsage))
             {
                 writer.WritePropertyName("cpuUsage"u8);
                 writer.WriteObjectValue(CpuUsage);
             }
-            if (Core.Optional.IsDefined(SystemCpuUsage))
+            if (Optional.IsDefined(SystemCpuUsage))
             {
                 writer.WritePropertyName("systemCpuUsage"u8);
                 writer.WriteNumberValue(SystemCpuUsage.Value);
             }
-            if (Core.Optional.IsDefined(OnlineCpuCount))
+            if (Optional.IsDefined(OnlineCpuCount))
             {
                 writer.WritePropertyName("onlineCpuCount"u8);
                 writer.WriteNumberValue(OnlineCpuCount.Value);
             }
-            if (Core.Optional.IsDefined(ThrottlingData))
+            if (Optional.IsDefined(ThrottlingData))
             {
                 writer.WritePropertyName("throttlingData"u8);
                 writer.WriteObjectValue(ThrottlingData);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<ContainerCpuUsage> cpuUsage = default;
-            Core.Optional<long> systemCpuUsage = default;
-            Core.Optional<int> onlineCpuCount = default;
-            Core.Optional<ContainerThrottlingInfo> throttlingData = default;
+            Optional<ContainerCpuUsage> cpuUsage = default;
+            Optional<long> systemCpuUsage = default;
+            Optional<int> onlineCpuCount = default;
+            Optional<ContainerThrottlingInfo> throttlingData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpuUsage"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ContainerCpuStatistics(cpuUsage.Value, Core.Optional.ToNullable(systemCpuUsage), Core.Optional.ToNullable(onlineCpuCount), throttlingData.Value);
+            return new ContainerCpuStatistics(cpuUsage.Value, Optional.ToNullable(systemCpuUsage), Optional.ToNullable(onlineCpuCount), throttlingData.Value);
         }
     }
 }

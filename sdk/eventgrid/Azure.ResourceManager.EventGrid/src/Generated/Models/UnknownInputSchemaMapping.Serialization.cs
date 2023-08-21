@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    internal partial class UnknownInputSchemaMapping : Core.IUtf8JsonSerializable
+    internal partial class UnknownInputSchemaMapping : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("inputSchemaMappingType"u8);

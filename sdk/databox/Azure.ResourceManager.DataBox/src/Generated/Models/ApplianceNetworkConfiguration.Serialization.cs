@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> macAddress = default;
+            Optional<string> name = default;
+            Optional<string> macAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

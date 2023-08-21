@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AssignmentOperationData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<AssignmentOperationData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     continue;
                 }
             }
-            return new AssignmentOperationList(Core.Optional.ToList(value), nextLink.Value);
+            return new AssignmentOperationList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

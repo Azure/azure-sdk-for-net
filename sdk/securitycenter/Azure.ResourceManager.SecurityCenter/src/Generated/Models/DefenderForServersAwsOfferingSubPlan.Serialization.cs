@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class DefenderForServersAwsOfferingSubPlan : Core.IUtf8JsonSerializable
+    internal partial class DefenderForServersAwsOfferingSubPlan : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AvailableSubPlanType))
+            if (Optional.IsDefined(AvailableSubPlanType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AvailableSubPlanType.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<AvailableSubPlanType> type = default;
+            Optional<AvailableSubPlanType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DefenderForServersAwsOfferingSubPlan(Core.Optional.ToNullable(type));
+            return new DefenderForServersAwsOfferingSubPlan(Optional.ToNullable(type));
         }
     }
 }

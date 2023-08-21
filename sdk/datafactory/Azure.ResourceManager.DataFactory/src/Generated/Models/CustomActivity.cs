@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(command, nameof(command));
 
             Command = command;
-            ExtendedProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            ExtendedProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "Custom";
         }
 

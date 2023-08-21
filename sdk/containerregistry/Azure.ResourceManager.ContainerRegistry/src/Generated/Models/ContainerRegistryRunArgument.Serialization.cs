@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryRunArgument : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryRunArgument : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (Core.Optional.IsDefined(IsSecret))
+            if (Optional.IsDefined(IsSecret))
             {
                 writer.WritePropertyName("isSecret"u8);
                 writer.WriteBooleanValue(IsSecret.Value);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             string name = default;
             string value = default;
-            Core.Optional<bool> isSecret = default;
+            Optional<bool> isSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryRunArgument(name, value, Core.Optional.ToNullable(isSecret));
+            return new ContainerRegistryRunArgument(name, value, Optional.ToNullable(isSecret));
         }
     }
 }

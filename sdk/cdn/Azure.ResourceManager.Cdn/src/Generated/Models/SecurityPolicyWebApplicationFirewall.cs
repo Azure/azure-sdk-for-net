@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewall. </summary>
         public SecurityPolicyWebApplicationFirewall()
         {
-            Associations = new Core.ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>();
+            Associations = new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>();
             PolicyType = SecurityPolicyType.WebApplicationFirewall;
         }
 

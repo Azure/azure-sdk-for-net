@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceStaticWebAppsProvider : Core.IUtf8JsonSerializable
+    public partial class AppServiceStaticWebAppsProvider : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(Registration))
+            if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<AppServiceStaticWebAppsRegistration> registration = default;
+            Optional<bool> enabled = default;
+            Optional<AppServiceStaticWebAppsRegistration> registration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceStaticWebAppsProvider(Core.Optional.ToNullable(enabled), registration.Value);
+            return new AppServiceStaticWebAppsProvider(Optional.ToNullable(enabled), registration.Value);
         }
     }
 }

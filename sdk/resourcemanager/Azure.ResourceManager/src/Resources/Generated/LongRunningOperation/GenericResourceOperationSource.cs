@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class GenericResourceOperationSource : Core.IOperationSource<GenericResource>
+    internal class GenericResourceOperationSource : IOperationSource<GenericResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Resources
             _client = client;
         }
 
-        GenericResource Core.IOperationSource<GenericResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        GenericResource IOperationSource<GenericResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GenericResourceData.DeserializeGenericResourceData(document.RootElement);
             return new GenericResource(_client, data);
         }
 
-        async ValueTask<GenericResource> Core.IOperationSource<GenericResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GenericResource> IOperationSource<GenericResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GenericResourceData.DeserializeGenericResourceData(document.RootElement);

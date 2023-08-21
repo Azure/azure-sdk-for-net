@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<bool> isPrimary = default;
-            Core.Optional<string> subnetName = default;
-            Core.Optional<IPAddress> staticIPAddress = default;
-            Core.Optional<string> ipAddressType = default;
-            Core.Optional<bool> isSeletedForFailover = default;
-            Core.Optional<string> recoverySubnetName = default;
-            Core.Optional<IPAddress> recoveryStaticIPAddress = default;
-            Core.Optional<string> recoveryIPAddressType = default;
-            Core.Optional<ResourceIdentifier> recoveryPublicIPAddressId = default;
-            Core.Optional<IReadOnlyList<string>> recoveryLBBackendAddressPoolIds = default;
-            Core.Optional<string> tfoSubnetName = default;
-            Core.Optional<IPAddress> tfoStaticIPAddress = default;
-            Core.Optional<ResourceIdentifier> tfoPublicIPAddressId = default;
-            Core.Optional<IReadOnlyList<string>> tfoLBBackendAddressPoolIds = default;
+            Optional<string> name = default;
+            Optional<bool> isPrimary = default;
+            Optional<string> subnetName = default;
+            Optional<IPAddress> staticIPAddress = default;
+            Optional<string> ipAddressType = default;
+            Optional<bool> isSeletedForFailover = default;
+            Optional<string> recoverySubnetName = default;
+            Optional<IPAddress> recoveryStaticIPAddress = default;
+            Optional<string> recoveryIPAddressType = default;
+            Optional<ResourceIdentifier> recoveryPublicIPAddressId = default;
+            Optional<IReadOnlyList<string>> recoveryLBBackendAddressPoolIds = default;
+            Optional<string> tfoSubnetName = default;
+            Optional<IPAddress> tfoStaticIPAddress = default;
+            Optional<ResourceIdentifier> tfoPublicIPAddressId = default;
+            Optional<IReadOnlyList<string>> tfoLBBackendAddressPoolIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new HyperVIPConfigDetails(name.Value, Core.Optional.ToNullable(isPrimary), subnetName.Value, staticIPAddress.Value, ipAddressType.Value, Core.Optional.ToNullable(isSeletedForFailover), recoverySubnetName.Value, recoveryStaticIPAddress.Value, recoveryIPAddressType.Value, recoveryPublicIPAddressId.Value, Core.Optional.ToList(recoveryLBBackendAddressPoolIds), tfoSubnetName.Value, tfoStaticIPAddress.Value, tfoPublicIPAddressId.Value, Core.Optional.ToList(tfoLBBackendAddressPoolIds));
+            return new HyperVIPConfigDetails(name.Value, Optional.ToNullable(isPrimary), subnetName.Value, staticIPAddress.Value, ipAddressType.Value, Optional.ToNullable(isSeletedForFailover), recoverySubnetName.Value, recoveryStaticIPAddress.Value, recoveryIPAddressType.Value, recoveryPublicIPAddressId.Value, Optional.ToList(recoveryLBBackendAddressPoolIds), tfoSubnetName.Value, tfoStaticIPAddress.Value, tfoPublicIPAddressId.Value, Optional.ToList(tfoLBBackendAddressPoolIds));
         }
     }
 }

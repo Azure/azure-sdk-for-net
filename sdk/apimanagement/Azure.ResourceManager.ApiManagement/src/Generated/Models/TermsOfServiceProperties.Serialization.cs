@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class TermsOfServiceProperties : Core.IUtf8JsonSerializable
+    public partial class TermsOfServiceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Text))
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (Core.Optional.IsDefined(IsDisplayEnabled))
+            if (Optional.IsDefined(IsDisplayEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsDisplayEnabled.Value);
             }
-            if (Core.Optional.IsDefined(IsConsentRequired))
+            if (Optional.IsDefined(IsConsentRequired))
             {
                 writer.WritePropertyName("consentRequired"u8);
                 writer.WriteBooleanValue(IsConsentRequired.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> text = default;
-            Core.Optional<bool> enabled = default;
-            Core.Optional<bool> consentRequired = default;
+            Optional<string> text = default;
+            Optional<bool> enabled = default;
+            Optional<bool> consentRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new TermsOfServiceProperties(text.Value, Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(consentRequired));
+            return new TermsOfServiceProperties(text.Value, Optional.ToNullable(enabled), Optional.ToNullable(consentRequired));
         }
     }
 }

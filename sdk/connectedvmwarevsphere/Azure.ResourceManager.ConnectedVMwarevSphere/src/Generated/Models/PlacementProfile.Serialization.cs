@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class PlacementProfile : Core.IUtf8JsonSerializable
+    public partial class PlacementProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ResourcePoolId))
+            if (Optional.IsDefined(ResourcePoolId))
             {
                 writer.WritePropertyName("resourcePoolId"u8);
                 writer.WriteStringValue(ResourcePoolId);
             }
-            if (Core.Optional.IsDefined(ClusterId))
+            if (Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (Core.Optional.IsDefined(HostId))
+            if (Optional.IsDefined(HostId))
             {
                 writer.WritePropertyName("hostId"u8);
                 writer.WriteStringValue(HostId);
             }
-            if (Core.Optional.IsDefined(DatastoreId))
+            if (Optional.IsDefined(DatastoreId))
             {
                 writer.WritePropertyName("datastoreId"u8);
                 writer.WriteStringValue(DatastoreId);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Core.Optional<string> resourcePoolId = default;
-            Core.Optional<string> clusterId = default;
-            Core.Optional<string> hostId = default;
-            Core.Optional<string> datastoreId = default;
+            Optional<string> resourcePoolId = default;
+            Optional<string> clusterId = default;
+            Optional<string> hostId = default;
+            Optional<string> datastoreId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourcePoolId"u8))

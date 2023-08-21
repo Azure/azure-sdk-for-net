@@ -14,46 +14,46 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
-    public partial class BillingBenefitsSavingsPlanOrderData : Core.IUtf8JsonSerializable
+    public partial class BillingBenefitsSavingsPlanOrderData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(BillingScopeId))
+            if (Optional.IsDefined(BillingScopeId))
             {
                 writer.WritePropertyName("billingScopeId"u8);
                 writer.WriteStringValue(BillingScopeId);
             }
-            if (Core.Optional.IsDefined(Term))
+            if (Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term.Value.ToString());
             }
-            if (Core.Optional.IsDefined(BillingPlan))
+            if (Optional.IsDefined(BillingPlan))
             {
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
-            if (Core.Optional.IsDefined(BenefitStartOn))
+            if (Optional.IsDefined(BenefitStartOn))
             {
                 writer.WritePropertyName("benefitStartTime"u8);
                 writer.WriteStringValue(BenefitStartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(PlanInformation))
+            if (Optional.IsDefined(PlanInformation))
             {
                 writer.WritePropertyName("planInformation"u8);
                 writer.WriteObjectValue(PlanInformation);
             }
-            if (Core.Optional.IsCollectionDefined(SavingsPlans))
+            if (Optional.IsCollectionDefined(SavingsPlans))
             {
                 writer.WritePropertyName("savingsPlans"u8);
                 writer.WriteStartArray();
@@ -77,20 +77,20 @@ namespace Azure.ResourceManager.BillingBenefits
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<BillingBenefitsProvisioningState> provisioningState = default;
-            Core.Optional<ResourceIdentifier> billingScopeId = default;
-            Core.Optional<ResourceIdentifier> billingProfileId = default;
-            Core.Optional<string> customerId = default;
-            Core.Optional<ResourceIdentifier> billingAccountId = default;
-            Core.Optional<BillingBenefitsTerm> term = default;
-            Core.Optional<BillingBenefitsBillingPlan> billingPlan = default;
-            Core.Optional<DateTimeOffset> expiryDateTime = default;
-            Core.Optional<DateTimeOffset> benefitStartTime = default;
-            Core.Optional<BillingPlanInformation> planInformation = default;
-            Core.Optional<IList<string>> savingsPlans = default;
-            Core.Optional<BillingBenefitsExtendedStatusInfo> extendedStatusInfo = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<BillingBenefitsProvisioningState> provisioningState = default;
+            Optional<ResourceIdentifier> billingScopeId = default;
+            Optional<ResourceIdentifier> billingProfileId = default;
+            Optional<string> customerId = default;
+            Optional<ResourceIdentifier> billingAccountId = default;
+            Optional<BillingBenefitsTerm> term = default;
+            Optional<BillingBenefitsBillingPlan> billingPlan = default;
+            Optional<DateTimeOffset> expiryDateTime = default;
+            Optional<DateTimeOffset> benefitStartTime = default;
+            Optional<BillingPlanInformation> planInformation = default;
+            Optional<IList<string>> savingsPlans = default;
+            Optional<BillingBenefitsExtendedStatusInfo> extendedStatusInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     continue;
                 }
             }
-            return new BillingBenefitsSavingsPlanOrderData(id, name, type, systemData.Value, sku, displayName.Value, Core.Optional.ToNullable(provisioningState), billingScopeId.Value, billingProfileId.Value, customerId.Value, billingAccountId.Value, Core.Optional.ToNullable(term), Core.Optional.ToNullable(billingPlan), Core.Optional.ToNullable(expiryDateTime), Core.Optional.ToNullable(benefitStartTime), planInformation.Value, Core.Optional.ToList(savingsPlans), extendedStatusInfo.Value);
+            return new BillingBenefitsSavingsPlanOrderData(id, name, type, systemData.Value, sku, displayName.Value, Optional.ToNullable(provisioningState), billingScopeId.Value, billingProfileId.Value, customerId.Value, billingAccountId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(expiryDateTime), Optional.ToNullable(benefitStartTime), planInformation.Value, Optional.ToList(savingsPlans), extendedStatusInfo.Value);
         }
     }
 }

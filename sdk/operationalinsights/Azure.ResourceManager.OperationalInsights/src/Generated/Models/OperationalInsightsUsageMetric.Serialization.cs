@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Core.Optional<OperationalInsightsMetricName> name = default;
-            Core.Optional<string> unit = default;
-            Core.Optional<double> currentValue = default;
-            Core.Optional<double> limit = default;
-            Core.Optional<DateTimeOffset> nextResetTime = default;
-            Core.Optional<string> quotaPeriod = default;
+            Optional<OperationalInsightsMetricName> name = default;
+            Optional<string> unit = default;
+            Optional<double> currentValue = default;
+            Optional<double> limit = default;
+            Optional<DateTimeOffset> nextResetTime = default;
+            Optional<string> quotaPeriod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new OperationalInsightsUsageMetric(name.Value, unit.Value, Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit), Core.Optional.ToNullable(nextResetTime), quotaPeriod.Value);
+            return new OperationalInsightsUsageMetric(name.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(nextResetTime), quotaPeriod.Value);
         }
     }
 }

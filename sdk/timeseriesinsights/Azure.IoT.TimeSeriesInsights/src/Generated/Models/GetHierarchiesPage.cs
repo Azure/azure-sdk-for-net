@@ -16,7 +16,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of GetHierarchiesPage. </summary>
         internal GetHierarchiesPage()
         {
-            Hierarchies = new Core.ChangeTrackingList<TimeSeriesHierarchy>();
+            Hierarchies = new ChangeTrackingList<TimeSeriesHierarchy>();
         }
 
         /// <summary> Initializes a new instance of GetHierarchiesPage. </summary>

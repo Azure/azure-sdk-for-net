@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class IntegrationServiceEnvironmentManagedApiData : Core.IUtf8JsonSerializable
+    public partial class IntegrationServiceEnvironmentManagedApiData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Logic
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IntegrationServiceEnvironment))
+            if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
                 writer.WriteObjectValue(IntegrationServiceEnvironment);
             }
-            if (Core.Optional.IsDefined(DeploymentParameters))
+            if (Optional.IsDefined(DeploymentParameters))
             {
                 writer.WritePropertyName("deploymentParameters"u8);
                 writer.WriteObjectValue(DeploymentParameters);
@@ -54,26 +54,26 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> name0 = default;
-            Core.Optional<IReadOnlyDictionary<string, BinaryData>> connectionParameters = default;
-            Core.Optional<LogicApiResourceMetadata> metadata = default;
-            Core.Optional<IReadOnlyList<Uri>> runtimeUrls = default;
-            Core.Optional<LogicApiResourceGeneralInformation> generalInformation = default;
-            Core.Optional<IReadOnlyList<string>> capabilities = default;
-            Core.Optional<LogicApiResourceBackendService> backendService = default;
-            Core.Optional<LogicApiResourcePolicies> policies = default;
-            Core.Optional<Uri> apiDefinitionUrl = default;
-            Core.Optional<LogicApiResourceDefinitions> apiDefinitions = default;
-            Core.Optional<LogicResourceReference> integrationServiceEnvironment = default;
-            Core.Optional<LogicWorkflowProvisioningState> provisioningState = default;
-            Core.Optional<LogicApiTier> category = default;
-            Core.Optional<IntegrationServiceEnvironmentManagedApiDeploymentParameters> deploymentParameters = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> name0 = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> connectionParameters = default;
+            Optional<LogicApiResourceMetadata> metadata = default;
+            Optional<IReadOnlyList<Uri>> runtimeUrls = default;
+            Optional<LogicApiResourceGeneralInformation> generalInformation = default;
+            Optional<IReadOnlyList<string>> capabilities = default;
+            Optional<LogicApiResourceBackendService> backendService = default;
+            Optional<LogicApiResourcePolicies> policies = default;
+            Optional<Uri> apiDefinitionUrl = default;
+            Optional<LogicApiResourceDefinitions> apiDefinitions = default;
+            Optional<LogicResourceReference> integrationServiceEnvironment = default;
+            Optional<LogicWorkflowProvisioningState> provisioningState = default;
+            Optional<LogicApiTier> category = default;
+            Optional<IntegrationServiceEnvironmentManagedApiDeploymentParameters> deploymentParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Logic
                     continue;
                 }
             }
-            return new IntegrationServiceEnvironmentManagedApiData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, name0.Value, Core.Optional.ToDictionary(connectionParameters), metadata.Value, Core.Optional.ToList(runtimeUrls), generalInformation.Value, Core.Optional.ToList(capabilities), backendService.Value, policies.Value, apiDefinitionUrl.Value, apiDefinitions.Value, integrationServiceEnvironment.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(category), deploymentParameters.Value);
+            return new IntegrationServiceEnvironmentManagedApiData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, Optional.ToDictionary(connectionParameters), metadata.Value, Optional.ToList(runtimeUrls), generalInformation.Value, Optional.ToList(capabilities), backendService.Value, policies.Value, apiDefinitionUrl.Value, apiDefinitions.Value, integrationServiceEnvironment.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(category), deploymentParameters.Value);
         }
     }
 }

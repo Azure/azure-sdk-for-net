@@ -14,12 +14,12 @@ using Azure.ResourceManager.ServiceNetworking.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    public partial class TrafficControllerData : Core.IUtf8JsonSerializable
+    public partial class TrafficControllerData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,16 +44,16 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyList<string>> configurationEndpoints = default;
-            Core.Optional<IReadOnlyList<SubResource>> frontends = default;
-            Core.Optional<IReadOnlyList<SubResource>> associations = default;
-            Core.Optional<ProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyList<string>> configurationEndpoints = default;
+            Optional<IReadOnlyList<SubResource>> frontends = default;
+            Optional<IReadOnlyList<SubResource>> associations = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                     continue;
                 }
             }
-            return new TrafficControllerData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToList(configurationEndpoints), Core.Optional.ToList(frontends), Core.Optional.ToList(associations), Core.Optional.ToNullable(provisioningState));
+            return new TrafficControllerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(configurationEndpoints), Optional.ToList(frontends), Optional.ToList(associations), Optional.ToNullable(provisioningState));
         }
     }
 }

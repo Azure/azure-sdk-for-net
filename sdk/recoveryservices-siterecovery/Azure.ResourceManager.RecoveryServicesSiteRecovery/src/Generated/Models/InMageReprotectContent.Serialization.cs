@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageReprotectContent : Core.IUtf8JsonSerializable
+    public partial class InMageReprotectContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("masterTargetId"u8);
@@ -21,24 +21,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(ProcessServerId);
             writer.WritePropertyName("retentionDrive"u8);
             writer.WriteStringValue(RetentionDrive);
-            if (Core.Optional.IsDefined(RunAsAccountId))
+            if (Optional.IsDefined(RunAsAccountId))
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
-            if (Core.Optional.IsDefined(DatastoreName))
+            if (Optional.IsDefined(DatastoreName))
             {
                 writer.WritePropertyName("datastoreName"u8);
                 writer.WriteStringValue(DatastoreName);
             }
-            if (Core.Optional.IsDefined(DiskExclusionContent))
+            if (Optional.IsDefined(DiskExclusionContent))
             {
                 writer.WritePropertyName("diskExclusionInput"u8);
                 writer.WriteObjectValue(DiskExclusionContent);
             }
             writer.WritePropertyName("profileId"u8);
             writer.WriteStringValue(ProfileId);
-            if (Core.Optional.IsCollectionDefined(DisksToInclude))
+            if (Optional.IsCollectionDefined(DisksToInclude))
             {
                 writer.WritePropertyName("disksToInclude"u8);
                 writer.WriteStartArray();

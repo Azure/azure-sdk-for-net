@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            IPConfigurations = new Core.ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>();
+            IPConfigurations = new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceConfiguration. </summary>

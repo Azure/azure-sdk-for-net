@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class TimeSeriesType : Core.IUtf8JsonSerializable
+    public partial class TimeSeriesType : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -45,9 +45,9 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Core.Optional<string> id = default;
+            Optional<string> id = default;
             string name = default;
-            Core.Optional<string> description = default;
+            Optional<string> description = default;
             IDictionary<string, TimeSeriesVariable> variables = default;
             foreach (var property in element.EnumerateObject())
             {

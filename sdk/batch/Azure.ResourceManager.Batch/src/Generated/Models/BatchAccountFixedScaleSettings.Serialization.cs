@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountFixedScaleSettings : Core.IUtf8JsonSerializable
+    public partial class BatchAccountFixedScaleSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ResizeTimeout))
+            if (Optional.IsDefined(ResizeTimeout))
             {
                 writer.WritePropertyName("resizeTimeout"u8);
                 writer.WriteStringValue(ResizeTimeout.Value, "P");
             }
-            if (Core.Optional.IsDefined(TargetDedicatedNodes))
+            if (Optional.IsDefined(TargetDedicatedNodes))
             {
                 writer.WritePropertyName("targetDedicatedNodes"u8);
                 writer.WriteNumberValue(TargetDedicatedNodes.Value);
             }
-            if (Core.Optional.IsDefined(TargetLowPriorityNodes))
+            if (Optional.IsDefined(TargetLowPriorityNodes))
             {
                 writer.WritePropertyName("targetLowPriorityNodes"u8);
                 writer.WriteNumberValue(TargetLowPriorityNodes.Value);
             }
-            if (Core.Optional.IsDefined(NodeDeallocationOption))
+            if (Optional.IsDefined(NodeDeallocationOption))
             {
                 writer.WritePropertyName("nodeDeallocationOption"u8);
                 writer.WriteStringValue(NodeDeallocationOption.Value.ToSerialString());
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Core.Optional<TimeSpan> resizeTimeout = default;
-            Core.Optional<int> targetDedicatedNodes = default;
-            Core.Optional<int> targetLowPriorityNodes = default;
-            Core.Optional<BatchNodeDeallocationOption> nodeDeallocationOption = default;
+            Optional<TimeSpan> resizeTimeout = default;
+            Optional<int> targetDedicatedNodes = default;
+            Optional<int> targetLowPriorityNodes = default;
+            Optional<BatchNodeDeallocationOption> nodeDeallocationOption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resizeTimeout"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchAccountFixedScaleSettings(Core.Optional.ToNullable(resizeTimeout), Core.Optional.ToNullable(targetDedicatedNodes), Core.Optional.ToNullable(targetLowPriorityNodes), Core.Optional.ToNullable(nodeDeallocationOption));
+            return new BatchAccountFixedScaleSettings(Optional.ToNullable(resizeTimeout), Optional.ToNullable(targetDedicatedNodes), Optional.ToNullable(targetLowPriorityNodes), Optional.ToNullable(nodeDeallocationOption));
         }
     }
 }

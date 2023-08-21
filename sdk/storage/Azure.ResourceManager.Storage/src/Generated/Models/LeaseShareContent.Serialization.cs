@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class LeaseShareContent : Core.IUtf8JsonSerializable
+    public partial class LeaseShareContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
-            if (Core.Optional.IsDefined(LeaseId))
+            if (Optional.IsDefined(LeaseId))
             {
                 writer.WritePropertyName("leaseId"u8);
                 writer.WriteStringValue(LeaseId);
             }
-            if (Core.Optional.IsDefined(BreakPeriod))
+            if (Optional.IsDefined(BreakPeriod))
             {
                 writer.WritePropertyName("breakPeriod"u8);
                 writer.WriteNumberValue(BreakPeriod.Value);
             }
-            if (Core.Optional.IsDefined(LeaseDuration))
+            if (Optional.IsDefined(LeaseDuration))
             {
                 writer.WritePropertyName("leaseDuration"u8);
                 writer.WriteNumberValue(LeaseDuration.Value);
             }
-            if (Core.Optional.IsDefined(ProposedLeaseId))
+            if (Optional.IsDefined(ProposedLeaseId))
             {
                 writer.WritePropertyName("proposedLeaseId"u8);
                 writer.WriteStringValue(ProposedLeaseId);

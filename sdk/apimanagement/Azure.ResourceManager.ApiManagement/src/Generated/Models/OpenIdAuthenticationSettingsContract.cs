@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of OpenIdAuthenticationSettingsContract. </summary>
         public OpenIdAuthenticationSettingsContract()
         {
-            BearerTokenSendingMethods = new Core.ChangeTrackingList<BearerTokenSendingMethod>();
+            BearerTokenSendingMethods = new ChangeTrackingList<BearerTokenSendingMethod>();
         }
 
         /// <summary> Initializes a new instance of OpenIdAuthenticationSettingsContract. </summary>

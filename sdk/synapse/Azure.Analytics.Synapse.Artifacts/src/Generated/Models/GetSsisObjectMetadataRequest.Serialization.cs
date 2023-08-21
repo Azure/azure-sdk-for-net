@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(GetSsisObjectMetadataRequestConverter))]
-    public partial class GetSsisObjectMetadataRequest : Core.IUtf8JsonSerializable
+    public partial class GetSsisObjectMetadataRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MetadataPath))
+            if (Optional.IsDefined(MetadataPath))
             {
                 writer.WritePropertyName("metadataPath"u8);
                 writer.WriteStringValue(MetadataPath);
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> metadataPath = default;
+            Optional<string> metadataPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metadataPath"u8))

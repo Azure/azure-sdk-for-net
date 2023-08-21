@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class ProvisionedClustersCommonPropertiesFeatures : Core.IUtf8JsonSerializable
+    internal partial class ProvisionedClustersCommonPropertiesFeatures : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ArcAgentProfile))
+            if (Optional.IsDefined(ArcAgentProfile))
             {
                 writer.WritePropertyName("arcAgentProfile"u8);
                 writer.WriteObjectValue(ArcAgentProfile);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<ArcAgentProfile> arcAgentProfile = default;
+            Optional<ArcAgentProfile> arcAgentProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("arcAgentProfile"u8))

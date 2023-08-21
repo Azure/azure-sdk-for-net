@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<string> nextLink = default;
-            Core.Optional<IReadOnlyList<StorageTargetData>> value = default;
+            Optional<string> nextLink = default;
+            Optional<IReadOnlyList<StorageTargetData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new StorageTargetsResult(nextLink.Value, Core.Optional.ToList(value));
+            return new StorageTargetsResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

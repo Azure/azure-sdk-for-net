@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class IPAccessControl : Core.IUtf8JsonSerializable
+    internal partial class IPAccessControl : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AllowedIPs))
+            if (Optional.IsCollectionDefined(AllowedIPs))
             {
                 writer.WritePropertyName("allow"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<IList<IPRange>> allow = default;
+            Optional<IList<IPRange>> allow = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allow"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new IPAccessControl(Core.Optional.ToList(allow));
+            return new IPAccessControl(Optional.ToList(allow));
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    internal class ConnectorResourceFormatOperationSource : Core.IOperationSource<ConnectorResourceFormatResource>
+    internal class ConnectorResourceFormatOperationSource : IOperationSource<ConnectorResourceFormatResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CustomerInsights
             _client = client;
         }
 
-        ConnectorResourceFormatResource Core.IOperationSource<ConnectorResourceFormatResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ConnectorResourceFormatResource IOperationSource<ConnectorResourceFormatResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ConnectorResourceFormatData.DeserializeConnectorResourceFormatData(document.RootElement);
             return new ConnectorResourceFormatResource(_client, data);
         }
 
-        async ValueTask<ConnectorResourceFormatResource> Core.IOperationSource<ConnectorResourceFormatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ConnectorResourceFormatResource> IOperationSource<ConnectorResourceFormatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ConnectorResourceFormatData.DeserializeConnectorResourceFormatData(document.RootElement);

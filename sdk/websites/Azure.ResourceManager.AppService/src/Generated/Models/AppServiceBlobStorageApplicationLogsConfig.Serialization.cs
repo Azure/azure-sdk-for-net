@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceBlobStorageApplicationLogsConfig : Core.IUtf8JsonSerializable
+    public partial class AppServiceBlobStorageApplicationLogsConfig : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Level))
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(SasUri))
+            if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUrl"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(RetentionInDays))
+            if (Optional.IsDefined(RetentionInDays))
             {
                 writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<WebAppLogLevel> level = default;
-            Core.Optional<Uri> sasUrl = default;
-            Core.Optional<int> retentionInDays = default;
+            Optional<WebAppLogLevel> level = default;
+            Optional<Uri> sasUrl = default;
+            Optional<int> retentionInDays = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("level"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceBlobStorageApplicationLogsConfig(Core.Optional.ToNullable(level), sasUrl.Value, Core.Optional.ToNullable(retentionInDays));
+            return new AppServiceBlobStorageApplicationLogsConfig(Optional.ToNullable(level), sasUrl.Value, Optional.ToNullable(retentionInDays));
         }
     }
 }

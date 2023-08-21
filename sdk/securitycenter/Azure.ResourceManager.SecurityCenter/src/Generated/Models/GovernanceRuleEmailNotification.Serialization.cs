@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GovernanceRuleEmailNotification : Core.IUtf8JsonSerializable
+    public partial class GovernanceRuleEmailNotification : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsManagerEmailNotificationDisabled))
+            if (Optional.IsDefined(IsManagerEmailNotificationDisabled))
             {
                 writer.WritePropertyName("disableManagerEmailNotification"u8);
                 writer.WriteBooleanValue(IsManagerEmailNotificationDisabled.Value);
             }
-            if (Core.Optional.IsDefined(IsOwnerEmailNotificationDisabled))
+            if (Optional.IsDefined(IsOwnerEmailNotificationDisabled))
             {
                 writer.WritePropertyName("disableOwnerEmailNotification"u8);
                 writer.WriteBooleanValue(IsOwnerEmailNotificationDisabled.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<bool> disableManagerEmailNotification = default;
-            Core.Optional<bool> disableOwnerEmailNotification = default;
+            Optional<bool> disableManagerEmailNotification = default;
+            Optional<bool> disableOwnerEmailNotification = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disableManagerEmailNotification"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new GovernanceRuleEmailNotification(Core.Optional.ToNullable(disableManagerEmailNotification), Core.Optional.ToNullable(disableOwnerEmailNotification));
+            return new GovernanceRuleEmailNotification(Optional.ToNullable(disableManagerEmailNotification), Optional.ToNullable(disableOwnerEmailNotification));
         }
     }
 }

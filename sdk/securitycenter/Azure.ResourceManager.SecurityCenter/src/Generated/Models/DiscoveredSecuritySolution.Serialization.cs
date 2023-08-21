@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DiscoveredSecuritySolution : Core.IUtf8JsonSerializable
+    public partial class DiscoveredSecuritySolution : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             SecurityFamily securityFamily = default;
             string offer = default;
             string publisher = default;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DiscoveredSecuritySolution(id, name, type, systemData.Value, securityFamily, offer, publisher, sku, Core.Optional.ToNullable(location));
+            return new DiscoveredSecuritySolution(id, name, type, systemData.Value, securityFamily, offer, publisher, sku, Optional.ToNullable(location));
         }
     }
 }

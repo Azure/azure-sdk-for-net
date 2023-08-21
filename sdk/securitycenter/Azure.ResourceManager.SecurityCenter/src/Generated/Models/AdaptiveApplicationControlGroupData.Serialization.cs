@@ -13,24 +13,24 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class AdaptiveApplicationControlGroupData : Core.IUtf8JsonSerializable
+    public partial class AdaptiveApplicationControlGroupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EnforcementMode))
+            if (Optional.IsDefined(EnforcementMode))
             {
                 writer.WritePropertyName("enforcementMode"u8);
                 writer.WriteStringValue(EnforcementMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ProtectionMode))
+            if (Optional.IsDefined(ProtectionMode))
             {
                 writer.WritePropertyName("protectionMode"u8);
                 writer.WriteObjectValue(ProtectionMode);
             }
-            if (Core.Optional.IsCollectionDefined(VmRecommendations))
+            if (Optional.IsCollectionDefined(VmRecommendations))
             {
                 writer.WritePropertyName("vmRecommendations"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(PathRecommendations))
+            if (Optional.IsCollectionDefined(PathRecommendations))
             {
                 writer.WritePropertyName("pathRecommendations"u8);
                 writer.WriteStartArray();
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<AdaptiveApplicationControlEnforcementMode> enforcementMode = default;
-            Core.Optional<SecurityCenterFileProtectionMode> protectionMode = default;
-            Core.Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
-            Core.Optional<RecommendationStatus> recommendationStatus = default;
-            Core.Optional<IReadOnlyList<AdaptiveApplicationControlIssueSummary>> issues = default;
-            Core.Optional<AdaptiveApplicationControlGroupSourceSystem> sourceSystem = default;
-            Core.Optional<IList<VmRecommendation>> vmRecommendations = default;
-            Core.Optional<IList<PathRecommendation>> pathRecommendations = default;
+            Optional<SystemData> systemData = default;
+            Optional<AdaptiveApplicationControlEnforcementMode> enforcementMode = default;
+            Optional<SecurityCenterFileProtectionMode> protectionMode = default;
+            Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
+            Optional<RecommendationStatus> recommendationStatus = default;
+            Optional<IReadOnlyList<AdaptiveApplicationControlIssueSummary>> issues = default;
+            Optional<AdaptiveApplicationControlGroupSourceSystem> sourceSystem = default;
+            Optional<IList<VmRecommendation>> vmRecommendations = default;
+            Optional<IList<PathRecommendation>> pathRecommendations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new AdaptiveApplicationControlGroupData(id, name, type, systemData.Value, Core.Optional.ToNullable(enforcementMode), protectionMode.Value, Core.Optional.ToNullable(configurationStatus), Core.Optional.ToNullable(recommendationStatus), Core.Optional.ToList(issues), Core.Optional.ToNullable(sourceSystem), Core.Optional.ToList(vmRecommendations), Core.Optional.ToList(pathRecommendations), Core.Optional.ToNullable(location));
+            return new AdaptiveApplicationControlGroupData(id, name, type, systemData.Value, Optional.ToNullable(enforcementMode), protectionMode.Value, Optional.ToNullable(configurationStatus), Optional.ToNullable(recommendationStatus), Optional.ToList(issues), Optional.ToNullable(sourceSystem), Optional.ToList(vmRecommendations), Optional.ToList(pathRecommendations), Optional.ToNullable(location));
         }
     }
 }

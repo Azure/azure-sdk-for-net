@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SharingUpdate : Core.IUtf8JsonSerializable
+    public partial class SharingUpdate : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("operationType"u8);
             writer.WriteStringValue(OperationType.ToString());
-            if (Core.Optional.IsCollectionDefined(Groups))
+            if (Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             SharingUpdateOperationType operationType = default;
-            Core.Optional<IList<SharingProfileGroup>> groups = default;
+            Optional<IList<SharingProfileGroup>> groups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationType"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SharingUpdate(operationType, Core.Optional.ToList(groups));
+            return new SharingUpdate(operationType, Optional.ToList(groups));
         }
     }
 }

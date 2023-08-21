@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    internal partial class WebTestPropertiesConfiguration : Core.IUtf8JsonSerializable
+    internal partial class WebTestPropertiesConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(WebTest))
+            if (Optional.IsDefined(WebTest))
             {
                 writer.WritePropertyName("WebTest"u8);
                 writer.WriteStringValue(WebTest);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> webTest = default;
+            Optional<string> webTest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("WebTest"u8))

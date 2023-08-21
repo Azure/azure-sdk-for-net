@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of HyperVReplicaAzurePolicyContent. </summary>
         public HyperVReplicaAzurePolicyContent()
         {
-            StorageAccounts = new Core.ChangeTrackingList<string>();
+            StorageAccounts = new ChangeTrackingList<string>();
             InstanceType = "HyperVReplicaAzure";
         }
 

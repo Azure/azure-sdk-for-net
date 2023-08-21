@@ -13,22 +13,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class ExternalSecuritySolutionProperties : Core.IUtf8JsonSerializable
+    public partial class ExternalSecuritySolutionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DeviceVendor))
+            if (Optional.IsDefined(DeviceVendor))
             {
                 writer.WritePropertyName("deviceVendor"u8);
                 writer.WriteStringValue(DeviceVendor);
             }
-            if (Core.Optional.IsDefined(DeviceType))
+            if (Optional.IsDefined(DeviceType))
             {
                 writer.WritePropertyName("deviceType"u8);
                 writer.WriteStringValue(DeviceType);
             }
-            if (Core.Optional.IsDefined(Workspace))
+            if (Optional.IsDefined(Workspace))
             {
                 writer.WritePropertyName("workspace"u8);
                 JsonSerializer.Serialize(writer, Workspace);
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<string> deviceVendor = default;
-            Core.Optional<string> deviceType = default;
-            Core.Optional<WritableSubResource> workspace = default;
+            Optional<string> deviceVendor = default;
+            Optional<string> deviceType = default;
+            Optional<WritableSubResource> workspace = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

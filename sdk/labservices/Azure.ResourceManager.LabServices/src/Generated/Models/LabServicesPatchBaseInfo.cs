@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> Initializes a new instance of LabServicesPatchBaseInfo. </summary>
         public LabServicesPatchBaseInfo()
         {
-            Tags = new Core.ChangeTrackingList<string>();
+            Tags = new ChangeTrackingList<string>();
         }
 
         /// <summary> Resource tags. </summary>

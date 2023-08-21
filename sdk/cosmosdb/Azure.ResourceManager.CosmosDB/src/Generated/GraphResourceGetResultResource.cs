@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _graphResourceGetResultGraphResourcesRestClient.DeleteGraphResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_graphResourceGetResultGraphResourcesClientDiagnostics, Pipeline, _graphResourceGetResultGraphResourcesRestClient.CreateDeleteGraphResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_graphResourceGetResultGraphResourcesClientDiagnostics, Pipeline, _graphResourceGetResultGraphResourcesRestClient.CreateDeleteGraphResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _graphResourceGetResultGraphResourcesRestClient.DeleteGraphResource(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_graphResourceGetResultGraphResourcesClientDiagnostics, Pipeline, _graphResourceGetResultGraphResourcesRestClient.CreateDeleteGraphResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_graphResourceGetResultGraphResourcesClientDiagnostics, Pipeline, _graphResourceGetResultGraphResourcesRestClient.CreateDeleteGraphResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _graphResourceGetResultGraphResourcesRestClient.CreateUpdateGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<GraphResourceGetResultResource>(new GraphResourceGetResultOperationSource(Client), _graphResourceGetResultGraphResourcesClientDiagnostics, Pipeline, _graphResourceGetResultGraphResourcesRestClient.CreateCreateUpdateGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<GraphResourceGetResultResource>(new GraphResourceGetResultOperationSource(Client), _graphResourceGetResultGraphResourcesClientDiagnostics, Pipeline, _graphResourceGetResultGraphResourcesRestClient.CreateCreateUpdateGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _graphResourceGetResultGraphResourcesRestClient.CreateUpdateGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<GraphResourceGetResultResource>(new GraphResourceGetResultOperationSource(Client), _graphResourceGetResultGraphResourcesClientDiagnostics, Pipeline, _graphResourceGetResultGraphResourcesRestClient.CreateCreateUpdateGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<GraphResourceGetResultResource>(new GraphResourceGetResultOperationSource(Client), _graphResourceGetResultGraphResourcesClientDiagnostics, Pipeline, _graphResourceGetResultGraphResourcesRestClient.CreateCreateUpdateGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

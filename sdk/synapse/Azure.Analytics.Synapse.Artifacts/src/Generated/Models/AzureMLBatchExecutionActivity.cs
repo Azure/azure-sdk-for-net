@@ -21,9 +21,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            GlobalParameters = new Core.ChangeTrackingDictionary<string, object>();
-            WebServiceOutputs = new Core.ChangeTrackingDictionary<string, AzureMLWebServiceFile>();
-            WebServiceInputs = new Core.ChangeTrackingDictionary<string, AzureMLWebServiceFile>();
+            GlobalParameters = new ChangeTrackingDictionary<string, object>();
+            WebServiceOutputs = new ChangeTrackingDictionary<string, AzureMLWebServiceFile>();
+            WebServiceInputs = new ChangeTrackingDictionary<string, AzureMLWebServiceFile>();
             Type = "AzureMLBatchExecution";
         }
 

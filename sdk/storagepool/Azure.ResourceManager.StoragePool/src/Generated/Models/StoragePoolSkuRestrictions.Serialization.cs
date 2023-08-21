@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Core.Optional<StoragePoolSkuRestrictionsType> type = default;
-            Core.Optional<IReadOnlyList<string>> values = default;
-            Core.Optional<StoragePoolSkuRestrictionInfo> restrictionInfo = default;
-            Core.Optional<StoragePoolSkuRestrictionsReasonCode> reasonCode = default;
+            Optional<StoragePoolSkuRestrictionsType> type = default;
+            Optional<IReadOnlyList<string>> values = default;
+            Optional<StoragePoolSkuRestrictionInfo> restrictionInfo = default;
+            Optional<StoragePoolSkuRestrictionsReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     continue;
                 }
             }
-            return new StoragePoolSkuRestrictions(Core.Optional.ToNullable(type), Core.Optional.ToList(values), restrictionInfo.Value, Core.Optional.ToNullable(reasonCode));
+            return new StoragePoolSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode));
         }
     }
 }

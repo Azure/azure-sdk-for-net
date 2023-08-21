@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of ConnectableResourceInfo. </summary>
         internal ConnectableResourceInfo()
         {
-            InboundConnectedResources = new Core.ChangeTrackingList<ConnectedResourceInfo>();
-            OutboundConnectedResources = new Core.ChangeTrackingList<ConnectedResourceInfo>();
+            InboundConnectedResources = new ChangeTrackingList<ConnectedResourceInfo>();
+            OutboundConnectedResources = new ChangeTrackingList<ConnectedResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of ConnectableResourceInfo. </summary>

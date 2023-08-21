@@ -11,24 +11,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class SessionHostPatch : Core.IUtf8JsonSerializable
+    public partial class SessionHostPatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AllowNewSession))
+            if (Optional.IsDefined(AllowNewSession))
             {
                 writer.WritePropertyName("allowNewSession"u8);
                 writer.WriteBooleanValue(AllowNewSession.Value);
             }
-            if (Core.Optional.IsDefined(AssignedUser))
+            if (Optional.IsDefined(AssignedUser))
             {
                 writer.WritePropertyName("assignedUser"u8);
                 writer.WriteStringValue(AssignedUser);
             }
-            if (Core.Optional.IsDefined(FriendlyName))
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<bool> allowNewSession = default;
-            Core.Optional<string> assignedUser = default;
-            Core.Optional<string> friendlyName = default;
+            Optional<SystemData> systemData = default;
+            Optional<bool> allowNewSession = default;
+            Optional<string> assignedUser = default;
+            Optional<string> friendlyName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new SessionHostPatch(id, name, type, systemData.Value, Core.Optional.ToNullable(allowNewSession), assignedUser.Value, friendlyName.Value);
+            return new SessionHostPatch(id, name, type, systemData.Value, Optional.ToNullable(allowNewSession), assignedUser.Value, friendlyName.Value);
         }
     }
 }

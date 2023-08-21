@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> key = default;
-            Core.Optional<Uri> triggerUrl = default;
+            Optional<string> key = default;
+            Optional<Uri> triggerUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))

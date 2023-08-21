@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<IReadOnlyList<EmergingIssueImpactedRegion>> regions = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<EmergingIssueImpactedRegion>> regions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new EmergingIssueImpact(id.Value, name.Value, Core.Optional.ToList(regions));
+            return new EmergingIssueImpact(id.Value, name.Value, Optional.ToList(regions));
         }
     }
 }

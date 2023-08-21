@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<DiskRestorePointReplicationStatus> replicationStatus = default;
+            Optional<string> id = default;
+            Optional<DiskRestorePointReplicationStatus> replicationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

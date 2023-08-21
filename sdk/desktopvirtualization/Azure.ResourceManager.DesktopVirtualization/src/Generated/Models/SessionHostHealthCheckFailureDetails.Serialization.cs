@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Core.Optional<string> message = default;
-            Core.Optional<int> errorCode = default;
-            Core.Optional<DateTimeOffset> lastHealthCheckDateTime = default;
+            Optional<string> message = default;
+            Optional<int> errorCode = default;
+            Optional<DateTimeOffset> lastHealthCheckDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new SessionHostHealthCheckFailureDetails(message.Value, Core.Optional.ToNullable(errorCode), Core.Optional.ToNullable(lastHealthCheckDateTime));
+            return new SessionHostHealthCheckFailureDetails(message.Value, Optional.ToNullable(errorCode), Optional.ToNullable(lastHealthCheckDateTime));
         }
     }
 }

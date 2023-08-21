@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> migrationId = default;
-            Core.Optional<IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult>> summaryResults = default;
-            Core.Optional<ValidationStatus> status = default;
+            Optional<string> id = default;
+            Optional<string> migrationId = default;
+            Optional<IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult>> summaryResults = default;
+            Optional<ValidationStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrationValidationResult(id.Value, migrationId.Value, Core.Optional.ToDictionary(summaryResults), Core.Optional.ToNullable(status));
+            return new MigrationValidationResult(id.Value, migrationId.Value, Optional.ToDictionary(summaryResults), Optional.ToNullable(status));
         }
     }
 }

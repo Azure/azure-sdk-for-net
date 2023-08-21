@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<IotHubMatchedRoute>> routes = default;
+            Optional<IReadOnlyList<IotHubMatchedRoute>> routes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routes"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubTestAllRoutesResult(Core.Optional.ToList(routes));
+            return new IotHubTestAllRoutesResult(Optional.ToList(routes));
         }
     }
 }

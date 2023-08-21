@@ -14,19 +14,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
-    public partial class LabVirtualMachineImageData : Core.IUtf8JsonSerializable
+    public partial class LabVirtualMachineImageData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EnabledState))
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToSerialString());
             }
-            if (Core.Optional.IsCollectionDefined(AvailableRegions))
+            if (Optional.IsCollectionDefined(AvailableRegions))
             {
                 writer.WritePropertyName("availableRegions"u8);
                 writer.WriteStartArray();
@@ -49,23 +49,23 @@ namespace Azure.ResourceManager.LabServices
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<LabServicesEnableState> enabledState = default;
-            Core.Optional<LabServicesProvisioningState> provisioningState = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<Uri> iconUrl = default;
-            Core.Optional<string> author = default;
-            Core.Optional<LabVirtualMachineImageOSType> osType = default;
-            Core.Optional<string> plan = default;
-            Core.Optional<LabServicesEnableState> termsStatus = default;
-            Core.Optional<string> offer = default;
-            Core.Optional<string> publisher = default;
-            Core.Optional<string> sku = default;
-            Core.Optional<string> version = default;
-            Core.Optional<ResourceIdentifier> sharedGalleryId = default;
-            Core.Optional<IList<AzureLocation>> availableRegions = default;
-            Core.Optional<LabVirtualMachineImageOSState> osState = default;
+            Optional<SystemData> systemData = default;
+            Optional<LabServicesEnableState> enabledState = default;
+            Optional<LabServicesProvisioningState> provisioningState = default;
+            Optional<string> displayName = default;
+            Optional<string> description = default;
+            Optional<Uri> iconUrl = default;
+            Optional<string> author = default;
+            Optional<LabVirtualMachineImageOSType> osType = default;
+            Optional<string> plan = default;
+            Optional<LabServicesEnableState> termsStatus = default;
+            Optional<string> offer = default;
+            Optional<string> publisher = default;
+            Optional<string> sku = default;
+            Optional<string> version = default;
+            Optional<ResourceIdentifier> sharedGalleryId = default;
+            Optional<IList<AzureLocation>> availableRegions = default;
+            Optional<LabVirtualMachineImageOSState> osState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.LabServices
                     continue;
                 }
             }
-            return new LabVirtualMachineImageData(id, name, type, systemData.Value, Core.Optional.ToNullable(enabledState), Core.Optional.ToNullable(provisioningState), displayName.Value, description.Value, iconUrl.Value, author.Value, Core.Optional.ToNullable(osType), plan.Value, Core.Optional.ToNullable(termsStatus), offer.Value, publisher.Value, sku.Value, version.Value, sharedGalleryId.Value, Core.Optional.ToList(availableRegions), Core.Optional.ToNullable(osState));
+            return new LabVirtualMachineImageData(id, name, type, systemData.Value, Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), displayName.Value, description.Value, iconUrl.Value, author.Value, Optional.ToNullable(osType), plan.Value, Optional.ToNullable(termsStatus), offer.Value, publisher.Value, sku.Value, version.Value, sharedGalleryId.Value, Optional.ToList(availableRegions), Optional.ToNullable(osState));
         }
     }
 }

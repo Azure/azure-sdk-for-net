@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class LuceneStandardTokenizer : Core.IUtf8JsonSerializable
+    public partial class LuceneStandardTokenizer : IUtf8JsonSerializable
     {
     }
 }

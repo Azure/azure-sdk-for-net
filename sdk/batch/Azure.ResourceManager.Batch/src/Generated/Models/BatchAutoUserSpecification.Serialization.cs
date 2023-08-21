@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAutoUserSpecification : Core.IUtf8JsonSerializable
+    public partial class BatchAutoUserSpecification : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Scope))
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(ElevationLevel))
+            if (Optional.IsDefined(ElevationLevel))
             {
                 writer.WritePropertyName("elevationLevel"u8);
                 writer.WriteStringValue(ElevationLevel.Value.ToSerialString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Core.Optional<BatchAutoUserScope> scope = default;
-            Core.Optional<BatchUserAccountElevationLevel> elevationLevel = default;
+            Optional<BatchAutoUserScope> scope = default;
+            Optional<BatchUserAccountElevationLevel> elevationLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchAutoUserSpecification(Core.Optional.ToNullable(scope), Core.Optional.ToNullable(elevationLevel));
+            return new BatchAutoUserSpecification(Optional.ToNullable(scope), Optional.ToNullable(elevationLevel));
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<string> persistentVolumeClaim = default;
-            Core.Optional<string> persistentVolume = default;
-            Core.Optional<string> storageClass = default;
+            Optional<string> persistentVolumeClaim = default;
+            Optional<string> persistentVolume = default;
+            Optional<string> storageClass = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("persistentVolumeClaim"u8))

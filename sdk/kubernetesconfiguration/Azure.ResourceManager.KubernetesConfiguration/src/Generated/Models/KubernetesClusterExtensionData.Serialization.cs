@@ -15,39 +15,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    public partial class KubernetesClusterExtensionData : Core.IUtf8JsonSerializable
+    public partial class KubernetesClusterExtensionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsDefined(Plan))
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExtensionType))
+            if (Optional.IsDefined(ExtensionType))
             {
                 writer.WritePropertyName("extensionType"u8);
                 writer.WriteStringValue(ExtensionType);
             }
-            if (Core.Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (Optional.IsDefined(AutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (Core.Optional.IsDefined(ReleaseTrain))
+            if (Optional.IsDefined(ReleaseTrain))
             {
                 writer.WritePropertyName("releaseTrain"u8);
                 writer.WriteStringValue(ReleaseTrain);
             }
-            if (Core.Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 if (Version != null)
                 {
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("version");
                 }
             }
-            if (Core.Optional.IsDefined(Scope))
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteObjectValue(Scope);
             }
-            if (Core.Optional.IsCollectionDefined(ConfigurationSettings))
+            if (Optional.IsCollectionDefined(ConfigurationSettings))
             {
                 if (ConfigurationSettings != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("configurationSettings");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(ConfigurationProtectedSettings))
+            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
                 if (ConfigurationProtectedSettings != null)
                 {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("configurationProtectedSettings");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Statuses))
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 if (Statuses != null)
                 {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("statuses");
                 }
             }
-            if (Core.Optional.IsDefined(AksAssignedIdentity))
+            if (Optional.IsDefined(AksAssignedIdentity))
             {
                 writer.WritePropertyName("aksAssignedIdentity"u8);
                 JsonSerializer.Serialize(writer, AksAssignedIdentity);
@@ -132,27 +132,27 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<ArmPlan> plan = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<ArmPlan> plan = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> extensionType = default;
-            Core.Optional<bool> autoUpgradeMinorVersion = default;
-            Core.Optional<string> releaseTrain = default;
-            Core.Optional<string> version = default;
-            Core.Optional<KubernetesClusterExtensionScope> scope = default;
-            Core.Optional<IDictionary<string, string>> configurationSettings = default;
-            Core.Optional<IDictionary<string, string>> configurationProtectedSettings = default;
-            Core.Optional<string> currentVersion = default;
-            Core.Optional<KubernetesConfigurationProvisioningState> provisioningState = default;
-            Core.Optional<IList<KubernetesClusterExtensionStatus>> statuses = default;
-            Core.Optional<ResponseError> errorInfo = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> customLocationSettings = default;
-            Core.Optional<Uri> packageUri = default;
-            Core.Optional<ManagedServiceIdentity> aksAssignedIdentity = default;
-            Core.Optional<bool> isSystemExtension = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> extensionType = default;
+            Optional<bool> autoUpgradeMinorVersion = default;
+            Optional<string> releaseTrain = default;
+            Optional<string> version = default;
+            Optional<KubernetesClusterExtensionScope> scope = default;
+            Optional<IDictionary<string, string>> configurationSettings = default;
+            Optional<IDictionary<string, string>> configurationProtectedSettings = default;
+            Optional<string> currentVersion = default;
+            Optional<KubernetesConfigurationProvisioningState> provisioningState = default;
+            Optional<IList<KubernetesClusterExtensionStatus>> statuses = default;
+            Optional<ResponseError> errorInfo = default;
+            Optional<IReadOnlyDictionary<string, string>> customLocationSettings = default;
+            Optional<Uri> packageUri = default;
+            Optional<ManagedServiceIdentity> aksAssignedIdentity = default;
+            Optional<bool> isSystemExtension = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     continue;
                 }
             }
-            return new KubernetesClusterExtensionData(id, name, type, systemData.Value, identity, plan, extensionType.Value, Core.Optional.ToNullable(autoUpgradeMinorVersion), releaseTrain.Value, version.Value, scope.Value, Core.Optional.ToDictionary(configurationSettings), Core.Optional.ToDictionary(configurationProtectedSettings), currentVersion.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(statuses), errorInfo.Value, Core.Optional.ToDictionary(customLocationSettings), packageUri.Value, aksAssignedIdentity, Core.Optional.ToNullable(isSystemExtension));
+            return new KubernetesClusterExtensionData(id, name, type, systemData.Value, identity, plan, extensionType.Value, Optional.ToNullable(autoUpgradeMinorVersion), releaseTrain.Value, version.Value, scope.Value, Optional.ToDictionary(configurationSettings), Optional.ToDictionary(configurationProtectedSettings), currentVersion.Value, Optional.ToNullable(provisioningState), Optional.ToList(statuses), errorInfo.Value, Optional.ToDictionary(customLocationSettings), packageUri.Value, aksAssignedIdentity, Optional.ToNullable(isSystemExtension));
         }
     }
 }

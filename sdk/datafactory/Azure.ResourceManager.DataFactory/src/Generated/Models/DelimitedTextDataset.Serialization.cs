@@ -13,30 +13,30 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DelimitedTextDataset : Core.IUtf8JsonSerializable
+    public partial class DelimitedTextDataset : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(Structure))
+            if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
                 JsonSerializer.Serialize(writer, Structure);
             }
-            if (Core.Optional.IsDefined(Schema))
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName); if (Core.Optional.IsCollectionDefined(Parameters))
+            JsonSerializer.Serialize(writer, LinkedServiceName); if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Annotations))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -66,39 +66,39 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Folder))
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DataLocation))
+            if (Optional.IsDefined(DataLocation))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteObjectValue(DataLocation);
             }
-            if (Core.Optional.IsDefined(ColumnDelimiter))
+            if (Optional.IsDefined(ColumnDelimiter))
             {
                 writer.WritePropertyName("columnDelimiter"u8);
                 JsonSerializer.Serialize(writer, ColumnDelimiter);
             }
-            if (Core.Optional.IsDefined(RowDelimiter))
+            if (Optional.IsDefined(RowDelimiter))
             {
                 writer.WritePropertyName("rowDelimiter"u8);
                 JsonSerializer.Serialize(writer, RowDelimiter);
             }
-            if (Core.Optional.IsDefined(EncodingName))
+            if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
                 JsonSerializer.Serialize(writer, EncodingName);
             }
-            if (Core.Optional.IsDefined(CompressionCodec))
+            if (Optional.IsDefined(CompressionCodec))
             {
                 writer.WritePropertyName("compressionCodec"u8);
                 JsonSerializer.Serialize(writer, CompressionCodec);
             }
-            if (Core.Optional.IsDefined(CompressionLevel))
+            if (Optional.IsDefined(CompressionLevel))
             {
                 writer.WritePropertyName("compressionLevel"u8);
 #if NET6_0_OR_GREATER
@@ -107,22 +107,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(CompressionLevel.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(QuoteChar))
+            if (Optional.IsDefined(QuoteChar))
             {
                 writer.WritePropertyName("quoteChar"u8);
                 JsonSerializer.Serialize(writer, QuoteChar);
             }
-            if (Core.Optional.IsDefined(EscapeChar))
+            if (Optional.IsDefined(EscapeChar))
             {
                 writer.WritePropertyName("escapeChar"u8);
                 JsonSerializer.Serialize(writer, EscapeChar);
             }
-            if (Core.Optional.IsDefined(FirstRowAsHeader))
+            if (Optional.IsDefined(FirstRowAsHeader))
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
                 JsonSerializer.Serialize(writer, FirstRowAsHeader);
             }
-            if (Core.Optional.IsDefined(NullValue))
+            if (Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue"u8);
                 JsonSerializer.Serialize(writer, NullValue);
@@ -147,23 +147,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Core.Optional<string> description = default;
-            Core.Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
-            Core.Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
+            Optional<string> description = default;
+            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
+            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
-            Core.Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Core.Optional<IList<BinaryData>> annotations = default;
-            Core.Optional<DatasetFolder> folder = default;
-            Core.Optional<DatasetLocation> location = default;
-            Core.Optional<DataFactoryElement<string>> columnDelimiter = default;
-            Core.Optional<DataFactoryElement<string>> rowDelimiter = default;
-            Core.Optional<DataFactoryElement<string>> encodingName = default;
-            Core.Optional<DataFactoryElement<string>> compressionCodec = default;
-            Core.Optional<BinaryData> compressionLevel = default;
-            Core.Optional<DataFactoryElement<string>> quoteChar = default;
-            Core.Optional<DataFactoryElement<string>> escapeChar = default;
-            Core.Optional<DataFactoryElement<bool>> firstRowAsHeader = default;
-            Core.Optional<DataFactoryElement<string>> nullValue = default;
+            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            Optional<IList<BinaryData>> annotations = default;
+            Optional<DatasetFolder> folder = default;
+            Optional<DatasetLocation> location = default;
+            Optional<DataFactoryElement<string>> columnDelimiter = default;
+            Optional<DataFactoryElement<string>> rowDelimiter = default;
+            Optional<DataFactoryElement<string>> encodingName = default;
+            Optional<DataFactoryElement<string>> compressionCodec = default;
+            Optional<BinaryData> compressionLevel = default;
+            Optional<DataFactoryElement<string>> quoteChar = default;
+            Optional<DataFactoryElement<string>> escapeChar = default;
+            Optional<DataFactoryElement<bool>> firstRowAsHeader = default;
+            Optional<DataFactoryElement<string>> nullValue = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, columnDelimiter.Value, rowDelimiter.Value, encodingName.Value, compressionCodec.Value, compressionLevel.Value, quoteChar.Value, escapeChar.Value, firstRowAsHeader.Value, nullValue.Value);
+            return new DelimitedTextDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, columnDelimiter.Value, rowDelimiter.Value, encodingName.Value, compressionCodec.Value, compressionLevel.Value, quoteChar.Value, escapeChar.Value, firstRowAsHeader.Value, nullValue.Value);
         }
     }
 }

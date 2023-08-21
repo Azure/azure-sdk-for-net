@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DiskPurchasePlan : Core.IUtf8JsonSerializable
+    public partial class DiskPurchasePlan : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Publisher);
             writer.WritePropertyName("product"u8);
             writer.WriteStringValue(Product);
-            if (Core.Optional.IsDefined(PromotionCode))
+            if (Optional.IsDefined(PromotionCode))
             {
                 writer.WritePropertyName("promotionCode"u8);
                 writer.WriteStringValue(PromotionCode);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
             string name = default;
             string publisher = default;
             string product = default;
-            Core.Optional<string> promotionCode = default;
+            Optional<string> promotionCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

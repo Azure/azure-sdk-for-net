@@ -17,7 +17,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of ReverseSearchAddressItem. </summary>
         internal ReverseSearchAddressItem()
         {
-            RoadUse = new Core.ChangeTrackingList<RoadKind>();
+            RoadUse = new ChangeTrackingList<RoadKind>();
         }
 
         /// <summary> Initializes a new instance of ReverseSearchAddressItem. </summary>

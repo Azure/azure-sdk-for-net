@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchTaskContainerSettings : Core.IUtf8JsonSerializable
+    public partial class BatchTaskContainerSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ContainerRunOptions))
+            if (Optional.IsDefined(ContainerRunOptions))
             {
                 writer.WritePropertyName("containerRunOptions"u8);
                 writer.WriteStringValue(ContainerRunOptions);
             }
             writer.WritePropertyName("imageName"u8);
             writer.WriteStringValue(ImageName);
-            if (Core.Optional.IsDefined(Registry))
+            if (Optional.IsDefined(Registry))
             {
                 writer.WritePropertyName("registry"u8);
                 writer.WriteObjectValue(Registry);
             }
-            if (Core.Optional.IsDefined(WorkingDirectory))
+            if (Optional.IsDefined(WorkingDirectory))
             {
                 writer.WritePropertyName("workingDirectory"u8);
                 writer.WriteStringValue(WorkingDirectory.Value.ToSerialString());
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Core.Optional<string> containerRunOptions = default;
+            Optional<string> containerRunOptions = default;
             string imageName = default;
-            Core.Optional<BatchVmContainerRegistry> registry = default;
-            Core.Optional<BatchContainerWorkingDirectory> workingDirectory = default;
+            Optional<BatchVmContainerRegistry> registry = default;
+            Optional<BatchContainerWorkingDirectory> workingDirectory = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerRunOptions"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchTaskContainerSettings(containerRunOptions.Value, imageName, registry.Value, Core.Optional.ToNullable(workingDirectory));
+            return new BatchTaskContainerSettings(containerRunOptions.Value, imageName, registry.Value, Optional.ToNullable(workingDirectory));
         }
     }
 }

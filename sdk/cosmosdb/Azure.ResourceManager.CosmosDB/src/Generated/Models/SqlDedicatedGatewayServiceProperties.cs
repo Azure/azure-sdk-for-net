@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of SqlDedicatedGatewayServiceProperties. </summary>
         public SqlDedicatedGatewayServiceProperties()
         {
-            Locations = new Core.ChangeTrackingList<SqlDedicatedGatewayRegionalService>();
+            Locations = new ChangeTrackingList<SqlDedicatedGatewayRegionalService>();
             ServiceType = CosmosDBServiceType.SqlDedicatedGateway;
         }
 

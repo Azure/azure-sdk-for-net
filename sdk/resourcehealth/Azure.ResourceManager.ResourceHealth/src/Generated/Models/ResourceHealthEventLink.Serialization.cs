@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Core.Optional<ResourceHealthEventLinkTypeValue> type = default;
-            Core.Optional<ResourceHealthEventLinkDisplayText> displayText = default;
-            Core.Optional<string> extensionName = default;
-            Core.Optional<string> bladeName = default;
-            Core.Optional<BinaryData> parameters = default;
+            Optional<ResourceHealthEventLinkTypeValue> type = default;
+            Optional<ResourceHealthEventLinkDisplayText> displayText = default;
+            Optional<string> extensionName = default;
+            Optional<string> bladeName = default;
+            Optional<BinaryData> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new ResourceHealthEventLink(Core.Optional.ToNullable(type), displayText.Value, extensionName.Value, bladeName.Value, parameters.Value);
+            return new ResourceHealthEventLink(Optional.ToNullable(type), displayText.Value, extensionName.Value, bladeName.Value, parameters.Value);
         }
     }
 }

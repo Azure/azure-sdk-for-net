@@ -11,24 +11,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class ResourceHealthMetadataData : Core.IUtf8JsonSerializable
+    public partial class ResourceHealthMetadataData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Category))
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Core.Optional.IsDefined(IsSignalAvailable))
+            if (Optional.IsDefined(IsSignalAvailable))
             {
                 writer.WritePropertyName("signalAvailability"u8);
                 writer.WriteBooleanValue(IsSignalAvailable.Value);
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> category = default;
-            Core.Optional<bool> signalAvailability = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> category = default;
+            Optional<bool> signalAvailability = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new ResourceHealthMetadataData(id, name, type, systemData.Value, category.Value, Core.Optional.ToNullable(signalAvailability), kind.Value);
+            return new ResourceHealthMetadataData(id, name, type, systemData.Value, category.Value, Optional.ToNullable(signalAvailability), kind.Value);
         }
     }
 }

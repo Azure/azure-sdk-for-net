@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
-    public partial class PrivateDnsPtrRecordInfo : Core.IUtf8JsonSerializable
+    public partial class PrivateDnsPtrRecordInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PtrDomainName))
+            if (Optional.IsDefined(PtrDomainName))
             {
                 writer.WritePropertyName("ptrdname"u8);
                 writer.WriteStringValue(PtrDomainName);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 return null;
             }
-            Core.Optional<string> ptrdname = default;
+            Optional<string> ptrdname = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ptrdname"u8))

@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsMailboxEntity : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsMailboxEntity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<string> mailboxPrimaryAddress = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> upn = default;
-            Core.Optional<Guid> externalDirectoryObjectId = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            Optional<string> friendlyName = default;
+            Optional<string> mailboxPrimaryAddress = default;
+            Optional<string> displayName = default;
+            Optional<string> upn = default;
+            Optional<Guid> externalDirectoryObjectId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsMailboxEntity(id, name, type, systemData.Value, kind, Core.Optional.ToDictionary(additionalData), friendlyName.Value, mailboxPrimaryAddress.Value, displayName.Value, upn.Value, Core.Optional.ToNullable(externalDirectoryObjectId));
+            return new SecurityInsightsMailboxEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, mailboxPrimaryAddress.Value, displayName.Value, upn.Value, Optional.ToNullable(externalDirectoryObjectId));
         }
     }
 }

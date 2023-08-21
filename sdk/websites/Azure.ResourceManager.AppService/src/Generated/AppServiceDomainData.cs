@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The location. </param>
         public AppServiceDomainData(AzureLocation location) : base(location)
         {
-            NameServers = new Core.ChangeTrackingList<string>();
-            ManagedHostNames = new Core.ChangeTrackingList<AppServiceHostName>();
-            DomainNotRenewableReasons = new Core.ChangeTrackingList<DomainNotRenewableReason>();
+            NameServers = new ChangeTrackingList<string>();
+            ManagedHostNames = new ChangeTrackingList<AppServiceHostName>();
+            DomainNotRenewableReasons = new ChangeTrackingList<DomainNotRenewableReason>();
         }
 
         /// <summary> Initializes a new instance of AppServiceDomainData. </summary>

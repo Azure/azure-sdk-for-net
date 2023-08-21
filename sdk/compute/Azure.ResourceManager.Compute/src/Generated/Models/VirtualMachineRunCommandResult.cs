@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineRunCommandResult. </summary>
         internal VirtualMachineRunCommandResult()
         {
-            Value = new Core.ChangeTrackingList<InstanceViewStatus>();
+            Value = new ChangeTrackingList<InstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineRunCommandResult. </summary>

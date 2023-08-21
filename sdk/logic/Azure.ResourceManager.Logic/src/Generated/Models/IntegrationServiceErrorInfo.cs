@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Logic.Models
 
             Code = code;
             Message = message;
-            Details = new Core.ChangeTrackingList<IntegrationServiceErrorInfo>();
+            Details = new ChangeTrackingList<IntegrationServiceErrorInfo>();
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceErrorInfo. </summary>

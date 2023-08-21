@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VmImagesInEdgeZoneListResult. </summary>
         internal VmImagesInEdgeZoneListResult()
         {
-            Value = new Core.ChangeTrackingList<VirtualMachineImageBase>();
+            Value = new ChangeTrackingList<VirtualMachineImageBase>();
         }
 
         /// <summary> Initializes a new instance of VmImagesInEdgeZoneListResult. </summary>

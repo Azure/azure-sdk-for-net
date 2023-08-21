@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> azureResourceId = default;
+            Optional<ResourceIdentifier> azureResourceId = default;
             ResourceIdentifierType type = default;
             foreach (var property in element.EnumerateObject())
             {

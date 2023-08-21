@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmDeploymentScriptManagedIdentity. </summary>
         public ArmDeploymentScriptManagedIdentity()
         {
-            UserAssignedIdentities = new Core.ChangeTrackingDictionary<string, UserAssignedIdentity>();
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of ArmDeploymentScriptManagedIdentity. </summary>

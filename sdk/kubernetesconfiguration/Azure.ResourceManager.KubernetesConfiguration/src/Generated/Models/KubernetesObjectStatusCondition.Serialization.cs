@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> lastTransitionTime = default;
-            Core.Optional<string> message = default;
-            Core.Optional<string> reason = default;
-            Core.Optional<string> status = default;
-            Core.Optional<string> type = default;
+            Optional<DateTimeOffset> lastTransitionTime = default;
+            Optional<string> message = default;
+            Optional<string> reason = default;
+            Optional<string> status = default;
+            Optional<string> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastTransitionTime"u8))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     continue;
                 }
             }
-            return new KubernetesObjectStatusCondition(Core.Optional.ToNullable(lastTransitionTime), message.Value, reason.Value, status.Value, type.Value);
+            return new KubernetesObjectStatusCondition(Optional.ToNullable(lastTransitionTime), message.Value, reason.Value, status.Value, type.Value);
         }
     }
 }

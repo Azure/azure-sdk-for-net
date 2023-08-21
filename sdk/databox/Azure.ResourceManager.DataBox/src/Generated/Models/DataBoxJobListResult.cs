@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxJobListResult. </summary>
         internal DataBoxJobListResult()
         {
-            Value = new Core.ChangeTrackingList<DataBoxJobData>();
+            Value = new ChangeTrackingList<DataBoxJobData>();
         }
 
         /// <summary> Initializes a new instance of DataBoxJobListResult. </summary>

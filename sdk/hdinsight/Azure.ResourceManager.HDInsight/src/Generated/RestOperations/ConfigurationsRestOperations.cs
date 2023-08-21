@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HDInsight
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartObject();
             foreach (var item in clusterConfiguration)
             {

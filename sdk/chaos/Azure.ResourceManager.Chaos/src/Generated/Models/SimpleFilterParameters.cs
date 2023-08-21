@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of SimpleFilterParameters. </summary>
         public SimpleFilterParameters()
         {
-            Zones = new Core.ChangeTrackingList<string>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SimpleFilterParameters. </summary>

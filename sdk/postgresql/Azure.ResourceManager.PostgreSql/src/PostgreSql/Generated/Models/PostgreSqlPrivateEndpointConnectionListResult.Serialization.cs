@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<PostgreSqlPrivateEndpointConnectionData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<PostgreSqlPrivateEndpointConnectionData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     continue;
                 }
             }
-            return new PostgreSqlPrivateEndpointConnectionListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new PostgreSqlPrivateEndpointConnectionListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

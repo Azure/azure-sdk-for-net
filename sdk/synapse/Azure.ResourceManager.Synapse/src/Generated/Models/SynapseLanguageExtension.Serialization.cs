@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseLanguageExtension : Core.IUtf8JsonSerializable
+    public partial class SynapseLanguageExtension : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LanguageExtensionName))
+            if (Optional.IsDefined(LanguageExtensionName))
             {
                 writer.WritePropertyName("languageExtensionName"u8);
                 writer.WriteStringValue(LanguageExtensionName.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<SynapseLanguageExtensionName> languageExtensionName = default;
+            Optional<SynapseLanguageExtensionName> languageExtensionName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("languageExtensionName"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseLanguageExtension(Core.Optional.ToNullable(languageExtensionName));
+            return new SynapseLanguageExtension(Optional.ToNullable(languageExtensionName));
         }
     }
 }

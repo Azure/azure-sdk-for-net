@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    internal class PacketCoreDataPlaneOperationSource : Core.IOperationSource<PacketCoreDataPlaneResource>
+    internal class PacketCoreDataPlaneOperationSource : IOperationSource<PacketCoreDataPlaneResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.MobileNetwork
             _client = client;
         }
 
-        PacketCoreDataPlaneResource Core.IOperationSource<PacketCoreDataPlaneResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PacketCoreDataPlaneResource IOperationSource<PacketCoreDataPlaneResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(document.RootElement);
             return new PacketCoreDataPlaneResource(_client, data);
         }
 
-        async ValueTask<PacketCoreDataPlaneResource> Core.IOperationSource<PacketCoreDataPlaneResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PacketCoreDataPlaneResource> IOperationSource<PacketCoreDataPlaneResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(document.RootElement);

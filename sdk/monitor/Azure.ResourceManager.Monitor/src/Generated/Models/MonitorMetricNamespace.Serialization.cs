@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<MonitorNamespaceClassification> classification = default;
-            Core.Optional<MetricNamespaceName> properties = default;
+            Optional<MonitorNamespaceClassification> classification = default;
+            Optional<MetricNamespaceName> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("classification"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorMetricNamespace(id, name, type, systemData.Value, Core.Optional.ToNullable(classification), properties.Value);
+            return new MonitorMetricNamespace(id, name, type, systemData.Value, Optional.ToNullable(classification), properties.Value);
         }
     }
 }

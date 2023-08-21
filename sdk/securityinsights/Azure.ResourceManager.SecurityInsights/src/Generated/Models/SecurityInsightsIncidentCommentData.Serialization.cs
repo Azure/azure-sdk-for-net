@@ -14,19 +14,19 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsIncidentCommentData : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsIncidentCommentData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Message))
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -41,15 +41,15 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> createdTimeUtc = default;
-            Core.Optional<DateTimeOffset> lastModifiedTimeUtc = default;
-            Core.Optional<string> message = default;
-            Core.Optional<SecurityInsightsClientInfo> author = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> createdTimeUtc = default;
+            Optional<DateTimeOffset> lastModifiedTimeUtc = default;
+            Optional<string> message = default;
+            Optional<SecurityInsightsClientInfo> author = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new SecurityInsightsIncidentCommentData(id, name, type, systemData.Value, Core.Optional.ToNullable(createdTimeUtc), Core.Optional.ToNullable(lastModifiedTimeUtc), message.Value, author.Value, Core.Optional.ToNullable(etag));
+            return new SecurityInsightsIncidentCommentData(id, name, type, systemData.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastModifiedTimeUtc), message.Value, author.Value, Optional.ToNullable(etag));
         }
     }
 }

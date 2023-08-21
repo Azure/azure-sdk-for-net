@@ -16,7 +16,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of HierarchiesBatchRequest. </summary>
         public HierarchiesBatchRequest()
         {
-            Put = new Core.ChangeTrackingList<TimeSeriesHierarchy>();
+            Put = new ChangeTrackingList<TimeSeriesHierarchy>();
         }
 
         /// <summary> "get" should be set while fetching specific hierarchies either by IDs or names. </summary>

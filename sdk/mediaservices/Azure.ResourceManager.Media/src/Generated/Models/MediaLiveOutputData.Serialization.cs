@@ -13,29 +13,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class MediaLiveOutputData : Core.IUtf8JsonSerializable
+    public partial class MediaLiveOutputData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(AssetName))
+            if (Optional.IsDefined(AssetName))
             {
                 writer.WritePropertyName("assetName"u8);
                 writer.WriteStringValue(AssetName);
             }
-            if (Core.Optional.IsDefined(ArchiveWindowLength))
+            if (Optional.IsDefined(ArchiveWindowLength))
             {
                 writer.WritePropertyName("archiveWindowLength"u8);
                 writer.WriteStringValue(ArchiveWindowLength.Value, "P");
             }
-            if (Core.Optional.IsDefined(RewindWindowLength))
+            if (Optional.IsDefined(RewindWindowLength))
             {
                 if (RewindWindowLength != null)
                 {
@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("rewindWindowLength");
                 }
             }
-            if (Core.Optional.IsDefined(ManifestName))
+            if (Optional.IsDefined(ManifestName))
             {
                 writer.WritePropertyName("manifestName"u8);
                 writer.WriteStringValue(ManifestName);
             }
-            if (Core.Optional.IsDefined(Hls))
+            if (Optional.IsDefined(Hls))
             {
                 writer.WritePropertyName("hls"u8);
                 writer.WriteObjectValue(Hls);
             }
-            if (Core.Optional.IsDefined(OutputSnapTime))
+            if (Optional.IsDefined(OutputSnapTime))
             {
                 writer.WritePropertyName("outputSnapTime"u8);
                 writer.WriteNumberValue(OutputSnapTime.Value);
@@ -75,18 +75,18 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> assetName = default;
-            Core.Optional<TimeSpan> archiveWindowLength = default;
-            Core.Optional<TimeSpan?> rewindWindowLength = default;
-            Core.Optional<string> manifestName = default;
-            Core.Optional<Hls> hls = default;
-            Core.Optional<long> outputSnapTime = default;
-            Core.Optional<DateTimeOffset> created = default;
-            Core.Optional<DateTimeOffset> lastModified = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<LiveOutputResourceState> resourceState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<string> assetName = default;
+            Optional<TimeSpan> archiveWindowLength = default;
+            Optional<TimeSpan?> rewindWindowLength = default;
+            Optional<string> manifestName = default;
+            Optional<Hls> hls = default;
+            Optional<long> outputSnapTime = default;
+            Optional<DateTimeOffset> created = default;
+            Optional<DateTimeOffset> lastModified = default;
+            Optional<string> provisioningState = default;
+            Optional<LiveOutputResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Media
                     continue;
                 }
             }
-            return new MediaLiveOutputData(id, name, type, systemData.Value, description.Value, assetName.Value, Core.Optional.ToNullable(archiveWindowLength), Core.Optional.ToNullable(rewindWindowLength), manifestName.Value, hls.Value, Core.Optional.ToNullable(outputSnapTime), Core.Optional.ToNullable(created), Core.Optional.ToNullable(lastModified), provisioningState.Value, Core.Optional.ToNullable(resourceState));
+            return new MediaLiveOutputData(id, name, type, systemData.Value, description.Value, assetName.Value, Optional.ToNullable(archiveWindowLength), Optional.ToNullable(rewindWindowLength), manifestName.Value, hls.Value, Optional.ToNullable(outputSnapTime), Optional.ToNullable(created), Optional.ToNullable(lastModified), provisioningState.Value, Optional.ToNullable(resourceState));
         }
     }
 }

@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<long> minimum = default;
-            Core.Optional<long> maximum = default;
-            Core.Optional<long> defaultCapacity = default;
-            Core.Optional<VirtualMachineScaleSetSkuScaleType> scaleType = default;
+            Optional<long> minimum = default;
+            Optional<long> maximum = default;
+            Optional<long> defaultCapacity = default;
+            Optional<VirtualMachineScaleSetSkuScaleType> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetSkuCapacity(Core.Optional.ToNullable(minimum), Core.Optional.ToNullable(maximum), Core.Optional.ToNullable(defaultCapacity), Core.Optional.ToNullable(scaleType));
+            return new VirtualMachineScaleSetSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(defaultCapacity), Optional.ToNullable(scaleType));
         }
     }
 }

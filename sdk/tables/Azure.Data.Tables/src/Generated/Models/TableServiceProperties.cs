@@ -16,7 +16,7 @@ namespace Azure.Data.Tables.Models
         /// <summary> Initializes a new instance of TableServiceProperties. </summary>
         public TableServiceProperties()
         {
-            Cors = new Core.ChangeTrackingList<TableCorsRule>();
+            Cors = new ChangeTrackingList<TableCorsRule>();
         }
 
         /// <summary> Initializes a new instance of TableServiceProperties. </summary>

@@ -14,12 +14,12 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppBackupPolicyData : Core.IUtf8JsonSerializable
+    public partial class NetAppBackupPolicyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.NetApp
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DailyBackupsToKeep))
+            if (Optional.IsDefined(DailyBackupsToKeep))
             {
                 writer.WritePropertyName("dailyBackupsToKeep"u8);
                 writer.WriteNumberValue(DailyBackupsToKeep.Value);
             }
-            if (Core.Optional.IsDefined(WeeklyBackupsToKeep))
+            if (Optional.IsDefined(WeeklyBackupsToKeep))
             {
                 writer.WritePropertyName("weeklyBackupsToKeep"u8);
                 writer.WriteNumberValue(WeeklyBackupsToKeep.Value);
             }
-            if (Core.Optional.IsDefined(MonthlyBackupsToKeep))
+            if (Optional.IsDefined(MonthlyBackupsToKeep))
             {
                 writer.WritePropertyName("monthlyBackupsToKeep"u8);
                 writer.WriteNumberValue(MonthlyBackupsToKeep.Value);
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -64,21 +64,21 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> backupPolicyId = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<int> dailyBackupsToKeep = default;
-            Core.Optional<int> weeklyBackupsToKeep = default;
-            Core.Optional<int> monthlyBackupsToKeep = default;
-            Core.Optional<int> volumesAssigned = default;
-            Core.Optional<bool> enabled = default;
-            Core.Optional<IReadOnlyList<NetAppVolumeBackupDetail>> volumeBackups = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> backupPolicyId = default;
+            Optional<string> provisioningState = default;
+            Optional<int> dailyBackupsToKeep = default;
+            Optional<int> weeklyBackupsToKeep = default;
+            Optional<int> monthlyBackupsToKeep = default;
+            Optional<int> volumesAssigned = default;
+            Optional<bool> enabled = default;
+            Optional<IReadOnlyList<NetAppVolumeBackupDetail>> volumeBackups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.NetApp
                     continue;
                 }
             }
-            return new NetAppBackupPolicyData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), backupPolicyId.Value, provisioningState.Value, Core.Optional.ToNullable(dailyBackupsToKeep), Core.Optional.ToNullable(weeklyBackupsToKeep), Core.Optional.ToNullable(monthlyBackupsToKeep), Core.Optional.ToNullable(volumesAssigned), Core.Optional.ToNullable(enabled), Core.Optional.ToList(volumeBackups));
+            return new NetAppBackupPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), backupPolicyId.Value, provisioningState.Value, Optional.ToNullable(dailyBackupsToKeep), Optional.ToNullable(weeklyBackupsToKeep), Optional.ToNullable(monthlyBackupsToKeep), Optional.ToNullable(volumesAssigned), Optional.ToNullable(enabled), Optional.ToList(volumeBackups));
         }
     }
 }

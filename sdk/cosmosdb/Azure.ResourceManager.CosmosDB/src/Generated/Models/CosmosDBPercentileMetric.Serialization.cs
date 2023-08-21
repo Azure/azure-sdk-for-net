@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<string> timeGrain = default;
-            Core.Optional<CosmosDBMetricUnitType> unit = default;
-            Core.Optional<CosmosDBMetricName> name = default;
-            Core.Optional<IReadOnlyList<PercentileMetricValue>> metricValues = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<string> timeGrain = default;
+            Optional<CosmosDBMetricUnitType> unit = default;
+            Optional<CosmosDBMetricName> name = default;
+            Optional<IReadOnlyList<PercentileMetricValue>> metricValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBPercentileMetric(Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), timeGrain.Value, Core.Optional.ToNullable(unit), name.Value, Core.Optional.ToList(metricValues));
+            return new CosmosDBPercentileMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, Optional.ToList(metricValues));
         }
     }
 }

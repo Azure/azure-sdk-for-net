@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 return null;
             }
             StorageInsightState state = default;
-            Core.Optional<string> description = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))

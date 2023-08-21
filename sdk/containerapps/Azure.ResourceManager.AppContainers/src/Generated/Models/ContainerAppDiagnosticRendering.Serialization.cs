@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppDiagnosticRendering : Core.IUtf8JsonSerializable
+    public partial class ContainerAppDiagnosticRendering : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DiagnosticRenderingType))
+            if (Optional.IsDefined(DiagnosticRenderingType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteNumberValue(DiagnosticRenderingType.Value);
             }
-            if (Core.Optional.IsDefined(Title))
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(IsVisible))
+            if (Optional.IsDefined(IsVisible))
             {
                 writer.WritePropertyName("isVisible"u8);
                 writer.WriteBooleanValue(IsVisible.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<int> type = default;
-            Core.Optional<string> title = default;
-            Core.Optional<string> description = default;
-            Core.Optional<bool> isVisible = default;
+            Optional<int> type = default;
+            Optional<string> title = default;
+            Optional<string> description = default;
+            Optional<bool> isVisible = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppDiagnosticRendering(Core.Optional.ToNullable(type), title.Value, description.Value, Core.Optional.ToNullable(isVisible));
+            return new ContainerAppDiagnosticRendering(Optional.ToNullable(type), title.Value, description.Value, Optional.ToNullable(isVisible));
         }
     }
 }

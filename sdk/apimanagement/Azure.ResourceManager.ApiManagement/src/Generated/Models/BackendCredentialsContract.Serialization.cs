@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class BackendCredentialsContract : Core.IUtf8JsonSerializable
+    public partial class BackendCredentialsContract : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(CertificateIds))
+            if (Optional.IsCollectionDefined(CertificateIds))
             {
                 writer.WritePropertyName("certificateIds"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Certificate))
+            if (Optional.IsCollectionDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Query))
+            if (Optional.IsCollectionDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Header))
+            if (Optional.IsCollectionDefined(Header))
             {
                 writer.WritePropertyName("header"u8);
                 writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(Authorization))
+            if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
                 writer.WriteObjectValue(Authorization);
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> certificateIds = default;
-            Core.Optional<IList<string>> certificate = default;
-            Core.Optional<IDictionary<string, IList<string>>> query = default;
-            Core.Optional<IDictionary<string, IList<string>>> header = default;
-            Core.Optional<BackendAuthorizationHeaderCredentials> authorization = default;
+            Optional<IList<string>> certificateIds = default;
+            Optional<IList<string>> certificate = default;
+            Optional<IDictionary<string, IList<string>>> query = default;
+            Optional<IDictionary<string, IList<string>>> header = default;
+            Optional<BackendAuthorizationHeaderCredentials> authorization = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateIds"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new BackendCredentialsContract(Core.Optional.ToList(certificateIds), Core.Optional.ToList(certificate), Core.Optional.ToDictionary(query), Core.Optional.ToDictionary(header), authorization.Value);
+            return new BackendCredentialsContract(Optional.ToList(certificateIds), Optional.ToList(certificate), Optional.ToDictionary(query), Optional.ToDictionary(header), authorization.Value);
         }
     }
 }

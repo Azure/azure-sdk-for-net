@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsKeyVaultProperties : Core.IUtf8JsonSerializable
+    public partial class OperationalInsightsKeyVaultProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeyVaultUri))
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(KeyName))
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (Core.Optional.IsDefined(KeyVersion))
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (Core.Optional.IsDefined(KeyRsaSize))
+            if (Optional.IsDefined(KeyRsaSize))
             {
                 writer.WritePropertyName("keyRsaSize"u8);
                 writer.WriteNumberValue(KeyRsaSize.Value);
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Core.Optional<Uri> keyVaultUri = default;
-            Core.Optional<string> keyName = default;
-            Core.Optional<string> keyVersion = default;
-            Core.Optional<int> keyRsaSize = default;
+            Optional<Uri> keyVaultUri = default;
+            Optional<string> keyName = default;
+            Optional<string> keyVersion = default;
+            Optional<int> keyRsaSize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultUri"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new OperationalInsightsKeyVaultProperties(keyVaultUri.Value, keyName.Value, keyVersion.Value, Core.Optional.ToNullable(keyRsaSize));
+            return new OperationalInsightsKeyVaultProperties(keyVaultUri.Value, keyName.Value, keyVersion.Value, Optional.ToNullable(keyRsaSize));
         }
     }
 }

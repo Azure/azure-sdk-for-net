@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Billing
             try
             {
                 var response = await _billingPaymentMethodLinkPaymentMethodsRestClient.DeleteAtBillingProfileAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation(_billingPaymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, _billingPaymentMethodLinkPaymentMethodsRestClient.CreateDeleteAtBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new BillingArmOperation(_billingPaymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, _billingPaymentMethodLinkPaymentMethodsRestClient.CreateDeleteAtBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Billing
             try
             {
                 var response = _billingPaymentMethodLinkPaymentMethodsRestClient.DeleteAtBillingProfile(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BillingArmOperation(_billingPaymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, _billingPaymentMethodLinkPaymentMethodsRestClient.CreateDeleteAtBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new BillingArmOperation(_billingPaymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, _billingPaymentMethodLinkPaymentMethodsRestClient.CreateDeleteAtBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

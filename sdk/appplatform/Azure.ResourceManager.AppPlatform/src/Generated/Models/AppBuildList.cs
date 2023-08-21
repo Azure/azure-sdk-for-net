@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppBuildList. </summary>
         internal AppBuildList()
         {
-            Value = new Core.ChangeTrackingList<AppPlatformBuildData>();
+            Value = new ChangeTrackingList<AppPlatformBuildData>();
         }
 
         /// <summary> Initializes a new instance of AppBuildList. </summary>

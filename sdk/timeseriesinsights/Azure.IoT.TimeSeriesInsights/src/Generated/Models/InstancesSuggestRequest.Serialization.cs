@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class InstancesSuggestRequest : Core.IUtf8JsonSerializable
+    internal partial class InstancesSuggestRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("searchString"u8);
             writer.WriteStringValue(SearchString);
-            if (Core.Optional.IsDefined(Take))
+            if (Optional.IsDefined(Take))
             {
                 writer.WritePropertyName("take"u8);
                 writer.WriteNumberValue(Take.Value);

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<Uri> consoleScreenshotBlobUri = default;
-            Core.Optional<Uri> serialConsoleLogBlobUri = default;
+            Optional<Uri> consoleScreenshotBlobUri = default;
+            Optional<Uri> serialConsoleLogBlobUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("consoleScreenshotBlobUri"u8))

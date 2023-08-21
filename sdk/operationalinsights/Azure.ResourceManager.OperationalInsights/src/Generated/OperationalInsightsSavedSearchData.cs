@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.OperationalInsights
             Category = category;
             DisplayName = displayName;
             Query = query;
-            Tags = new Core.ChangeTrackingList<OperationalInsightsTag>();
+            Tags = new ChangeTrackingList<OperationalInsightsTag>();
         }
 
         /// <summary> Initializes a new instance of OperationalInsightsSavedSearchData. </summary>

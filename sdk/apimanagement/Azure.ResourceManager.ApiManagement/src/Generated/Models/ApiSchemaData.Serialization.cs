@@ -12,26 +12,26 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiSchemaData : Core.IUtf8JsonSerializable
+    public partial class ApiSchemaData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ContentType))
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
             writer.WritePropertyName("document"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Core.Optional.IsDefined(Definitions))
+            if (Optional.IsDefined(Definitions))
             {
                 writer.WritePropertyName("definitions"u8);
 #if NET6_0_OR_GREATER
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Definitions.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(Components))
+            if (Optional.IsDefined(Components))
             {
                 writer.WritePropertyName("components"u8);
 #if NET6_0_OR_GREATER
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> contentType = default;
-            Core.Optional<string> value = default;
-            Core.Optional<BinaryData> definitions = default;
-            Core.Optional<BinaryData> components = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> contentType = default;
+            Optional<string> value = default;
+            Optional<BinaryData> definitions = default;
+            Optional<BinaryData> components = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

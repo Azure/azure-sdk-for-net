@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         /// <summary> Initializes a new instance of FederatedIdentityCredentialsListResult. </summary>
         internal FederatedIdentityCredentialsListResult()
         {
-            Value = new Core.ChangeTrackingList<FederatedIdentityCredentialData>();
+            Value = new ChangeTrackingList<FederatedIdentityCredentialData>();
         }
 
         /// <summary> Initializes a new instance of FederatedIdentityCredentialsListResult. </summary>

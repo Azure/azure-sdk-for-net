@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation(_networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics, Pipeline, _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation(_networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics, Pipeline, _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkCloudArmOperation(_networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics, Pipeline, _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation(_networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics, Pipeline, _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudCloudServicesNetworkResource>(new NetworkCloudCloudServicesNetworkOperationSource(Client), _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics, Pipeline, _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudCloudServicesNetworkResource>(new NetworkCloudCloudServicesNetworkOperationSource(Client), _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics, Pipeline, _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudCloudServicesNetworkResource>(new NetworkCloudCloudServicesNetworkOperationSource(Client), _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics, Pipeline, _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudCloudServicesNetworkResource>(new NetworkCloudCloudServicesNetworkOperationSource(Client), _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics, Pipeline, _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

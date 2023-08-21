@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SynonymTokenFilter : Core.IUtf8JsonSerializable
+    public partial class SynonymTokenFilter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("synonyms"u8);
@@ -23,12 +23,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(IgnoreCase))
+            if (Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("ignoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (Core.Optional.IsDefined(Expand))
+            if (Optional.IsDefined(Expand))
             {
                 writer.WritePropertyName("expand"u8);
                 writer.WriteBooleanValue(Expand.Value);
@@ -47,8 +47,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<string> synonyms = default;
-            Core.Optional<bool> ignoreCase = default;
-            Core.Optional<bool> expand = default;
+            Optional<bool> ignoreCase = default;
+            Optional<bool> expand = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SynonymTokenFilter(odataType, name, synonyms, Core.Optional.ToNullable(ignoreCase), Core.Optional.ToNullable(expand));
+            return new SynonymTokenFilter(odataType, name, synonyms, Optional.ToNullable(ignoreCase), Optional.ToNullable(expand));
         }
     }
 }

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ReplicationProtectedItemProperties. </summary>
         internal ReplicationProtectedItemProperties()
         {
-            AllowedOperations = new Core.ChangeTrackingList<string>();
-            HealthErrors = new Core.ChangeTrackingList<SiteRecoveryHealthError>();
+            AllowedOperations = new ChangeTrackingList<string>();
+            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of ReplicationProtectedItemProperties. </summary>

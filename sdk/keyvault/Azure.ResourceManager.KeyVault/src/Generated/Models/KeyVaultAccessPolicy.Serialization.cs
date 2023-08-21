@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class KeyVaultAccessPolicy : Core.IUtf8JsonSerializable
+    public partial class KeyVaultAccessPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
             writer.WritePropertyName("objectId"u8);
             writer.WriteStringValue(ObjectId);
-            if (Core.Optional.IsDefined(ApplicationId))
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId.Value);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             Guid tenantId = default;
             string objectId = default;
-            Core.Optional<Guid> applicationId = default;
+            Optional<Guid> applicationId = default;
             IdentityAccessPermissions permissions = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new KeyVaultAccessPolicy(tenantId, objectId, Core.Optional.ToNullable(applicationId), permissions);
+            return new KeyVaultAccessPolicy(tenantId, objectId, Optional.ToNullable(applicationId), permissions);
         }
     }
 }

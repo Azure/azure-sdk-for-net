@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="location"> The location. </param>
         public DscConfigurationData(AzureLocation location) : base(location)
         {
-            Parameters = new Core.ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>();
+            Parameters = new ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>();
         }
 
         /// <summary> Initializes a new instance of DscConfigurationData. </summary>

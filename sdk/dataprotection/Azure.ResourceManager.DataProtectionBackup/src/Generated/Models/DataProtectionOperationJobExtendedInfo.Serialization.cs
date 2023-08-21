@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> jobId = default;
+            Optional<ResourceIdentifier> jobId = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -13,34 +13,34 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseAttachedDatabaseConfigurationData : Core.IUtf8JsonSerializable
+    public partial class SynapseAttachedDatabaseConfigurationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DatabaseName))
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Core.Optional.IsDefined(KustoPoolResourceId))
+            if (Optional.IsDefined(KustoPoolResourceId))
             {
                 writer.WritePropertyName("clusterResourceId"u8);
                 writer.WriteStringValue(KustoPoolResourceId);
             }
-            if (Core.Optional.IsDefined(DefaultPrincipalsModificationKind))
+            if (Optional.IsDefined(DefaultPrincipalsModificationKind))
             {
                 writer.WritePropertyName("defaultPrincipalsModificationKind"u8);
                 writer.WriteStringValue(DefaultPrincipalsModificationKind.Value.ToString());
             }
-            if (Core.Optional.IsDefined(TableLevelSharingProperties))
+            if (Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
                 writer.WriteObjectValue(TableLevelSharingProperties);
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceProvisioningState> provisioningState = default;
-            Core.Optional<string> databaseName = default;
-            Core.Optional<ResourceIdentifier> clusterResourceId = default;
-            Core.Optional<IReadOnlyList<string>> attachedDatabaseNames = default;
-            Core.Optional<SynapseDefaultPrincipalsModificationKind> defaultPrincipalsModificationKind = default;
-            Core.Optional<SynapseTableLevelSharingProperties> tableLevelSharingProperties = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceProvisioningState> provisioningState = default;
+            Optional<string> databaseName = default;
+            Optional<ResourceIdentifier> clusterResourceId = default;
+            Optional<IReadOnlyList<string>> attachedDatabaseNames = default;
+            Optional<SynapseDefaultPrincipalsModificationKind> defaultPrincipalsModificationKind = default;
+            Optional<SynapseTableLevelSharingProperties> tableLevelSharingProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseAttachedDatabaseConfigurationData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(provisioningState), databaseName.Value, clusterResourceId.Value, Core.Optional.ToList(attachedDatabaseNames), Core.Optional.ToNullable(defaultPrincipalsModificationKind), tableLevelSharingProperties.Value);
+            return new SynapseAttachedDatabaseConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), databaseName.Value, clusterResourceId.Value, Optional.ToList(attachedDatabaseNames), Optional.ToNullable(defaultPrincipalsModificationKind), tableLevelSharingProperties.Value);
         }
     }
 }

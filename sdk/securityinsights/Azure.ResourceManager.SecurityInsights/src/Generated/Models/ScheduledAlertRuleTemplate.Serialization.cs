@@ -13,31 +13,31 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ScheduledAlertRuleTemplate : Core.IUtf8JsonSerializable
+    public partial class ScheduledAlertRuleTemplate : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AlertRulesCreatedByTemplateCount))
+            if (Optional.IsDefined(AlertRulesCreatedByTemplateCount))
             {
                 writer.WritePropertyName("alertRulesCreatedByTemplateCount"u8);
                 writer.WriteNumberValue(AlertRulesCreatedByTemplateCount.Value);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsCollectionDefined(RequiredDataConnectors))
+            if (Optional.IsCollectionDefined(RequiredDataConnectors))
             {
                 writer.WritePropertyName("requiredDataConnectors"u8);
                 writer.WriteStartArray();
@@ -47,42 +47,42 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Query))
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (Core.Optional.IsDefined(QueryFrequency))
+            if (Optional.IsDefined(QueryFrequency))
             {
                 writer.WritePropertyName("queryFrequency"u8);
                 writer.WriteStringValue(QueryFrequency.Value, "P");
             }
-            if (Core.Optional.IsDefined(QueryPeriod))
+            if (Optional.IsDefined(QueryPeriod))
             {
                 writer.WritePropertyName("queryPeriod"u8);
                 writer.WriteStringValue(QueryPeriod.Value, "P");
             }
-            if (Core.Optional.IsDefined(Severity))
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Core.Optional.IsDefined(TriggerOperator))
+            if (Optional.IsDefined(TriggerOperator))
             {
                 writer.WritePropertyName("triggerOperator"u8);
                 writer.WriteStringValue(TriggerOperator.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(TriggerThreshold))
+            if (Optional.IsDefined(TriggerThreshold))
             {
                 writer.WritePropertyName("triggerThreshold"u8);
                 writer.WriteNumberValue(TriggerThreshold.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Tactics))
+            if (Optional.IsCollectionDefined(Tactics))
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Techniques))
+            if (Optional.IsCollectionDefined(Techniques))
             {
                 writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();
@@ -102,17 +102,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Core.Optional.IsDefined(EventGroupingSettings))
+            if (Optional.IsDefined(EventGroupingSettings))
             {
                 writer.WritePropertyName("eventGroupingSettings"u8);
                 writer.WriteObjectValue(EventGroupingSettings);
             }
-            if (Core.Optional.IsCollectionDefined(CustomDetails))
+            if (Optional.IsCollectionDefined(CustomDetails))
             {
                 writer.WritePropertyName("customDetails"u8);
                 writer.WriteStartObject();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(EntityMappings))
+            if (Optional.IsCollectionDefined(EntityMappings))
             {
                 writer.WritePropertyName("entityMappings"u8);
                 writer.WriteStartArray();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(AlertDetailsOverride))
+            if (Optional.IsDefined(AlertDetailsOverride))
             {
                 writer.WritePropertyName("alertDetailsOverride"u8);
                 writer.WriteObjectValue(AlertDetailsOverride);
@@ -152,27 +152,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<int> alertRulesCreatedByTemplateCount = default;
-            Core.Optional<DateTimeOffset> createdDateUTC = default;
-            Core.Optional<DateTimeOffset> lastUpdatedDateUTC = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<IList<AlertRuleTemplateDataSource>> requiredDataConnectors = default;
-            Core.Optional<SecurityInsightsAlertRuleTemplateStatus> status = default;
-            Core.Optional<string> query = default;
-            Core.Optional<TimeSpan> queryFrequency = default;
-            Core.Optional<TimeSpan> queryPeriod = default;
-            Core.Optional<SecurityInsightsAlertSeverity> severity = default;
-            Core.Optional<SecurityInsightsAlertRuleTriggerOperator> triggerOperator = default;
-            Core.Optional<int> triggerThreshold = default;
-            Core.Optional<IList<SecurityInsightsAttackTactic>> tactics = default;
-            Core.Optional<IList<string>> techniques = default;
-            Core.Optional<string> version = default;
-            Core.Optional<EventGroupingSettings> eventGroupingSettings = default;
-            Core.Optional<IDictionary<string, string>> customDetails = default;
-            Core.Optional<IList<SecurityInsightsAlertRuleEntityMapping>> entityMappings = default;
-            Core.Optional<SecurityInsightsAlertDetailsOverride> alertDetailsOverride = default;
+            Optional<SystemData> systemData = default;
+            Optional<int> alertRulesCreatedByTemplateCount = default;
+            Optional<DateTimeOffset> createdDateUTC = default;
+            Optional<DateTimeOffset> lastUpdatedDateUTC = default;
+            Optional<string> description = default;
+            Optional<string> displayName = default;
+            Optional<IList<AlertRuleTemplateDataSource>> requiredDataConnectors = default;
+            Optional<SecurityInsightsAlertRuleTemplateStatus> status = default;
+            Optional<string> query = default;
+            Optional<TimeSpan> queryFrequency = default;
+            Optional<TimeSpan> queryPeriod = default;
+            Optional<SecurityInsightsAlertSeverity> severity = default;
+            Optional<SecurityInsightsAlertRuleTriggerOperator> triggerOperator = default;
+            Optional<int> triggerThreshold = default;
+            Optional<IList<SecurityInsightsAttackTactic>> tactics = default;
+            Optional<IList<string>> techniques = default;
+            Optional<string> version = default;
+            Optional<EventGroupingSettings> eventGroupingSettings = default;
+            Optional<IDictionary<string, string>> customDetails = default;
+            Optional<IList<SecurityInsightsAlertRuleEntityMapping>> entityMappings = default;
+            Optional<SecurityInsightsAlertDetailsOverride> alertDetailsOverride = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new ScheduledAlertRuleTemplate(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(alertRulesCreatedByTemplateCount), Core.Optional.ToNullable(createdDateUTC), Core.Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Core.Optional.ToList(requiredDataConnectors), Core.Optional.ToNullable(status), query.Value, Core.Optional.ToNullable(queryFrequency), Core.Optional.ToNullable(queryPeriod), Core.Optional.ToNullable(severity), Core.Optional.ToNullable(triggerOperator), Core.Optional.ToNullable(triggerThreshold), Core.Optional.ToList(tactics), Core.Optional.ToList(techniques), version.Value, eventGroupingSettings.Value, Core.Optional.ToDictionary(customDetails), Core.Optional.ToList(entityMappings), alertDetailsOverride.Value);
+            return new ScheduledAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), query.Value, Optional.ToNullable(queryFrequency), Optional.ToNullable(queryPeriod), Optional.ToNullable(severity), Optional.ToNullable(triggerOperator), Optional.ToNullable(triggerThreshold), Optional.ToList(tactics), Optional.ToList(techniques), version.Value, eventGroupingSettings.Value, Optional.ToDictionary(customDetails), Optional.ToList(entityMappings), alertDetailsOverride.Value);
         }
     }
 }

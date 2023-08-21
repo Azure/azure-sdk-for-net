@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    internal partial class SubnetSharedPublicIPAddressConfiguration : Core.IUtf8JsonSerializable
+    internal partial class SubnetSharedPublicIPAddressConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AllowedPorts))
+            if (Optional.IsCollectionDefined(AllowedPorts))
             {
                 writer.WritePropertyName("allowedPorts"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<IList<DevTestLabPort>> allowedPorts = default;
+            Optional<IList<DevTestLabPort>> allowedPorts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedPorts"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new SubnetSharedPublicIPAddressConfiguration(Core.Optional.ToList(allowedPorts));
+            return new SubnetSharedPublicIPAddressConfiguration(Optional.ToList(allowedPorts));
         }
     }
 }

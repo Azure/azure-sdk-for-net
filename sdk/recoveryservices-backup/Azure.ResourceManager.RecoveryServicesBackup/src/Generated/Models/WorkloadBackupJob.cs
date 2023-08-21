@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of WorkloadBackupJob. </summary>
         public WorkloadBackupJob()
         {
-            ActionsInfo = new Core.ChangeTrackingList<JobSupportedAction>();
-            ErrorDetails = new Core.ChangeTrackingList<WorkloadErrorInfo>();
+            ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
+            ErrorDetails = new ChangeTrackingList<WorkloadErrorInfo>();
             JobType = "AzureWorkloadJob";
         }
 

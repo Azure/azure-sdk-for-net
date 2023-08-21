@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<OperationalInsightsManagementGroup>> value = default;
+            Optional<IReadOnlyList<OperationalInsightsManagementGroup>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new WorkspaceListManagementGroupsResult(Core.Optional.ToList(value));
+            return new WorkspaceListManagementGroupsResult(Optional.ToList(value));
         }
     }
 }

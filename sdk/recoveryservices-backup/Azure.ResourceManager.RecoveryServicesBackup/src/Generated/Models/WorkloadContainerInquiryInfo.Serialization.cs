@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadContainerInquiryInfo : Core.IUtf8JsonSerializable
+    public partial class WorkloadContainerInquiryInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Core.Optional.IsDefined(ErrorDetail))
+            if (Optional.IsDefined(ErrorDetail))
             {
                 writer.WritePropertyName("errorDetail"u8);
                 writer.WriteObjectValue(ErrorDetail);
             }
-            if (Core.Optional.IsCollectionDefined(InquiryDetails))
+            if (Optional.IsCollectionDefined(InquiryDetails))
             {
                 writer.WritePropertyName("inquiryDetails"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<string> status = default;
-            Core.Optional<BackupErrorDetail> errorDetail = default;
-            Core.Optional<IList<WorkloadInquiryDetails>> inquiryDetails = default;
+            Optional<string> status = default;
+            Optional<BackupErrorDetail> errorDetail = default;
+            Optional<IList<WorkloadInquiryDetails>> inquiryDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new WorkloadContainerInquiryInfo(status.Value, errorDetail.Value, Core.Optional.ToList(inquiryDetails));
+            return new WorkloadContainerInquiryInfo(status.Value, errorDetail.Value, Optional.ToList(inquiryDetails));
         }
     }
 }

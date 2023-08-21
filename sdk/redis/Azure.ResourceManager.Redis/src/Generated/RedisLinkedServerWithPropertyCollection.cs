@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Redis
             try
             {
                 var response = await _redisLinkedServerWithPropertyLinkedServerRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisArmOperation<RedisLinkedServerWithPropertyResource>(new RedisLinkedServerWithPropertyOperationSource(Client), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, _redisLinkedServerWithPropertyLinkedServerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new RedisArmOperation<RedisLinkedServerWithPropertyResource>(new RedisLinkedServerWithPropertyOperationSource(Client), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, _redisLinkedServerWithPropertyLinkedServerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Redis
             try
             {
                 var response = _redisLinkedServerWithPropertyLinkedServerRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, content, cancellationToken);
-                var operation = new RedisArmOperation<RedisLinkedServerWithPropertyResource>(new RedisLinkedServerWithPropertyOperationSource(Client), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, _redisLinkedServerWithPropertyLinkedServerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new RedisArmOperation<RedisLinkedServerWithPropertyResource>(new RedisLinkedServerWithPropertyOperationSource(Client), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, _redisLinkedServerWithPropertyLinkedServerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Redis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisLinkedServerWithPropertyLinkedServerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisLinkedServerWithPropertyLinkedServerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisLinkedServerWithPropertyResource(Client, RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(e)), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, "RedisLinkedServerWithPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisLinkedServerWithPropertyResource(Client, RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(e)), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, "RedisLinkedServerWithPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Redis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisLinkedServerWithPropertyLinkedServerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisLinkedServerWithPropertyLinkedServerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisLinkedServerWithPropertyResource(Client, RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(e)), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, "RedisLinkedServerWithPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisLinkedServerWithPropertyResource(Client, RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(e)), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, "RedisLinkedServerWithPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

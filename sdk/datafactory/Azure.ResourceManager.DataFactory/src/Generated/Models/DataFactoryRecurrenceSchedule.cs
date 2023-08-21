@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DataFactoryRecurrenceSchedule. </summary>
         public DataFactoryRecurrenceSchedule()
         {
-            Minutes = new Core.ChangeTrackingList<int>();
-            Hours = new Core.ChangeTrackingList<int>();
-            WeekDays = new Core.ChangeTrackingList<DataFactoryDayOfWeek>();
-            MonthDays = new Core.ChangeTrackingList<int>();
-            MonthlyOccurrences = new Core.ChangeTrackingList<DataFactoryRecurrenceScheduleOccurrence>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Minutes = new ChangeTrackingList<int>();
+            Hours = new ChangeTrackingList<int>();
+            WeekDays = new ChangeTrackingList<DataFactoryDayOfWeek>();
+            MonthDays = new ChangeTrackingList<int>();
+            MonthlyOccurrences = new ChangeTrackingList<DataFactoryRecurrenceScheduleOccurrence>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DataFactoryRecurrenceSchedule. </summary>

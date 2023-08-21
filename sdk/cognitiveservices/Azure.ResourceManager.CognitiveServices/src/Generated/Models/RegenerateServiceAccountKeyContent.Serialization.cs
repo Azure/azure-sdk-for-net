@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class RegenerateServiceAccountKeyContent : Core.IUtf8JsonSerializable
+    public partial class RegenerateServiceAccountKeyContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyName"u8);

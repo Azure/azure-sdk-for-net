@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ExpressionEvaluationDetails>> evaluatedExpressions = default;
-            Core.Optional<IfNotExistsEvaluationDetails> ifNotExistsDetails = default;
+            Optional<IReadOnlyList<ExpressionEvaluationDetails>> evaluatedExpressions = default;
+            Optional<IfNotExistsEvaluationDetails> ifNotExistsDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("evaluatedExpressions"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new PolicyEvaluationDetails(Core.Optional.ToList(evaluatedExpressions), ifNotExistsDetails.Value);
+            return new PolicyEvaluationDetails(Optional.ToList(evaluatedExpressions), ifNotExistsDetails.Value);
         }
     }
 }

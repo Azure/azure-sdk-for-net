@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> email = default;
-            Core.Optional<string> nameFirst = default;
-            Core.Optional<string> nameLast = default;
-            Core.Optional<string> phone = default;
+            Optional<string> email = default;
+            Optional<string> nameFirst = default;
+            Optional<string> nameLast = default;
+            Optional<string> phone = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("email"u8))

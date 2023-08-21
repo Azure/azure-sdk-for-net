@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class InfluxDBDataFeedPatch : Core.IUtf8JsonSerializable
+    internal partial class InfluxDBDataFeedPatch : IUtf8JsonSerializable
     {
     }
 }

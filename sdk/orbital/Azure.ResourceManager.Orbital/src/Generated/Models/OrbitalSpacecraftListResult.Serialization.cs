@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Orbital.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<OrbitalSpacecraftData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<OrbitalSpacecraftData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     continue;
                 }
             }
-            return new OrbitalSpacecraftListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new OrbitalSpacecraftListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

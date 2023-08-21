@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteLimits : Core.IUtf8JsonSerializable
+    public partial class SiteLimits : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MaxPercentageCpu))
+            if (Optional.IsDefined(MaxPercentageCpu))
             {
                 writer.WritePropertyName("maxPercentageCpu"u8);
                 writer.WriteNumberValue(MaxPercentageCpu.Value);
             }
-            if (Core.Optional.IsDefined(MaxMemoryInMb))
+            if (Optional.IsDefined(MaxMemoryInMb))
             {
                 writer.WritePropertyName("maxMemoryInMb"u8);
                 writer.WriteNumberValue(MaxMemoryInMb.Value);
             }
-            if (Core.Optional.IsDefined(MaxDiskSizeInMb))
+            if (Optional.IsDefined(MaxDiskSizeInMb))
             {
                 writer.WritePropertyName("maxDiskSizeInMb"u8);
                 writer.WriteNumberValue(MaxDiskSizeInMb.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<double> maxPercentageCpu = default;
-            Core.Optional<long> maxMemoryInMb = default;
-            Core.Optional<long> maxDiskSizeInMb = default;
+            Optional<double> maxPercentageCpu = default;
+            Optional<long> maxMemoryInMb = default;
+            Optional<long> maxDiskSizeInMb = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxPercentageCpu"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new SiteLimits(Core.Optional.ToNullable(maxPercentageCpu), Core.Optional.ToNullable(maxMemoryInMb), Core.Optional.ToNullable(maxDiskSizeInMb));
+            return new SiteLimits(Optional.ToNullable(maxPercentageCpu), Optional.ToNullable(maxMemoryInMb), Optional.ToNullable(maxDiskSizeInMb));
         }
     }
 }

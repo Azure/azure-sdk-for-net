@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of CustomEntityStoreAssignmentsListResult. </summary>
         internal CustomEntityStoreAssignmentsListResult()
         {
-            Value = new Core.ChangeTrackingList<CustomEntityStoreAssignmentData>();
+            Value = new ChangeTrackingList<CustomEntityStoreAssignmentData>();
         }
 
         /// <summary> Initializes a new instance of CustomEntityStoreAssignmentsListResult. </summary>

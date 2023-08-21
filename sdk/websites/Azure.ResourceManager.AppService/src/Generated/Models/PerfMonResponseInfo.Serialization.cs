@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> code = default;
-            Core.Optional<string> message = default;
-            Core.Optional<PerfMonSet> data = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<PerfMonSet> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))

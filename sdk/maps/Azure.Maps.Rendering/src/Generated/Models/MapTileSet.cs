@@ -16,11 +16,11 @@ namespace Azure.Maps.Rendering
         /// <summary> Initializes a new instance of MapTileSet. </summary>
         internal MapTileSet()
         {
-            TileEndpoints = new Core.ChangeTrackingList<string>();
-            Grids = new Core.ChangeTrackingList<string>();
-            GeoJsonDataFiles = new Core.ChangeTrackingList<string>();
-            BoundsInternal = new Core.ChangeTrackingList<float>();
-            CenterInternal = new Core.ChangeTrackingList<float>();
+            TileEndpoints = new ChangeTrackingList<string>();
+            Grids = new ChangeTrackingList<string>();
+            GeoJsonDataFiles = new ChangeTrackingList<string>();
+            BoundsInternal = new ChangeTrackingList<float>();
+            CenterInternal = new ChangeTrackingList<float>();
         }
     }
 }

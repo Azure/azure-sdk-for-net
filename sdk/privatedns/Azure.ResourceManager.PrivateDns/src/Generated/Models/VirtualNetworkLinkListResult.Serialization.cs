@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<VirtualNetworkLinkData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<VirtualNetworkLinkData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     continue;
                 }
             }
-            return new VirtualNetworkLinkListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new VirtualNetworkLinkListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

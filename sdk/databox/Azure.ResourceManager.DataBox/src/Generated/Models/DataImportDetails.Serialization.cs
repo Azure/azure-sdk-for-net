@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataImportDetails : Core.IUtf8JsonSerializable
+    public partial class DataImportDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("accountDetails"u8);
             writer.WriteObjectValue(AccountDetails);
-            if (Core.Optional.IsDefined(LogCollectionLevel))
+            if (Optional.IsDefined(LogCollectionLevel))
             {
                 writer.WritePropertyName("logCollectionLevel"u8);
                 writer.WriteStringValue(LogCollectionLevel.Value.ToSerialString());
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataAccountDetails accountDetails = default;
-            Core.Optional<LogCollectionLevel> logCollectionLevel = default;
+            Optional<LogCollectionLevel> logCollectionLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountDetails"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataImportDetails(accountDetails, Core.Optional.ToNullable(logCollectionLevel));
+            return new DataImportDetails(accountDetails, Optional.ToNullable(logCollectionLevel));
         }
     }
 }

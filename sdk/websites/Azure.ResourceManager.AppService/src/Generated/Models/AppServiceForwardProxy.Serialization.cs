@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceForwardProxy : Core.IUtf8JsonSerializable
+    public partial class AppServiceForwardProxy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Convention))
+            if (Optional.IsDefined(Convention))
             {
                 writer.WritePropertyName("convention"u8);
                 writer.WriteStringValue(Convention.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(CustomHostHeaderName))
+            if (Optional.IsDefined(CustomHostHeaderName))
             {
                 writer.WritePropertyName("customHostHeaderName"u8);
                 writer.WriteStringValue(CustomHostHeaderName);
             }
-            if (Core.Optional.IsDefined(CustomProtoHeaderName))
+            if (Optional.IsDefined(CustomProtoHeaderName))
             {
                 writer.WritePropertyName("customProtoHeaderName"u8);
                 writer.WriteStringValue(CustomProtoHeaderName);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<ForwardProxyConvention> convention = default;
-            Core.Optional<string> customHostHeaderName = default;
-            Core.Optional<string> customProtoHeaderName = default;
+            Optional<ForwardProxyConvention> convention = default;
+            Optional<string> customHostHeaderName = default;
+            Optional<string> customProtoHeaderName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("convention"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceForwardProxy(Core.Optional.ToNullable(convention), customHostHeaderName.Value, customProtoHeaderName.Value);
+            return new AppServiceForwardProxy(Optional.ToNullable(convention), customHostHeaderName.Value, customProtoHeaderName.Value);
         }
     }
 }

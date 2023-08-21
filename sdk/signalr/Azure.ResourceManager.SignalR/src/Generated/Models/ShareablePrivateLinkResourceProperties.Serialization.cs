@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    public partial class ShareablePrivateLinkResourceProperties : Core.IUtf8JsonSerializable
+    public partial class ShareablePrivateLinkResourceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(GroupId))
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Core.Optional.IsDefined(ShareablePrivateLinkResourcePropertiesType))
+            if (Optional.IsDefined(ShareablePrivateLinkResourcePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ShareablePrivateLinkResourcePropertiesType);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Core.Optional<string> description = default;
-            Core.Optional<string> groupId = default;
-            Core.Optional<string> type = default;
+            Optional<string> description = default;
+            Optional<string> groupId = default;
+            Optional<string> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))

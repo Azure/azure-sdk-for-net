@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class BotChannelSettings : Core.IUtf8JsonSerializable
+    public partial class BotChannelSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExtensionKey1))
+            if (Optional.IsDefined(ExtensionKey1))
             {
                 writer.WritePropertyName("extensionKey1"u8);
                 writer.WriteStringValue(ExtensionKey1);
             }
-            if (Core.Optional.IsDefined(ExtensionKey2))
+            if (Optional.IsDefined(ExtensionKey2))
             {
                 writer.WritePropertyName("extensionKey2"u8);
                 writer.WriteStringValue(ExtensionKey2);
             }
-            if (Core.Optional.IsCollectionDefined(Sites))
+            if (Optional.IsCollectionDefined(Sites))
             {
                 writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();
@@ -37,37 +37,37 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ChannelId))
+            if (Optional.IsDefined(ChannelId))
             {
                 writer.WritePropertyName("channelId"u8);
                 writer.WriteStringValue(ChannelId);
             }
-            if (Core.Optional.IsDefined(ChannelDisplayName))
+            if (Optional.IsDefined(ChannelDisplayName))
             {
                 writer.WritePropertyName("channelDisplayName"u8);
                 writer.WriteStringValue(ChannelDisplayName);
             }
-            if (Core.Optional.IsDefined(BotId))
+            if (Optional.IsDefined(BotId))
             {
                 writer.WritePropertyName("botId"u8);
                 writer.WriteStringValue(BotId);
             }
-            if (Core.Optional.IsDefined(BotIconUri))
+            if (Optional.IsDefined(BotIconUri))
             {
                 writer.WritePropertyName("botIconUrl"u8);
                 writer.WriteStringValue(BotIconUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (Core.Optional.IsDefined(RequireTermsAgreement))
+            if (Optional.IsDefined(RequireTermsAgreement))
             {
                 writer.WritePropertyName("requireTermsAgreement"u8);
                 writer.WriteBooleanValue(RequireTermsAgreement.Value);
@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<string> extensionKey1 = default;
-            Core.Optional<string> extensionKey2 = default;
-            Core.Optional<IList<BotChannelSite>> sites = default;
-            Core.Optional<string> channelId = default;
-            Core.Optional<string> channelDisplayName = default;
-            Core.Optional<string> botId = default;
-            Core.Optional<Uri> botIconUrl = default;
-            Core.Optional<bool> isEnabled = default;
-            Core.Optional<bool> disableLocalAuth = default;
-            Core.Optional<bool> requireTermsAgreement = default;
+            Optional<string> extensionKey1 = default;
+            Optional<string> extensionKey2 = default;
+            Optional<IList<BotChannelSite>> sites = default;
+            Optional<string> channelId = default;
+            Optional<string> channelDisplayName = default;
+            Optional<string> botId = default;
+            Optional<Uri> botIconUrl = default;
+            Optional<bool> isEnabled = default;
+            Optional<bool> disableLocalAuth = default;
+            Optional<bool> requireTermsAgreement = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extensionKey1"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new BotChannelSettings(extensionKey1.Value, extensionKey2.Value, Core.Optional.ToList(sites), channelId.Value, channelDisplayName.Value, botId.Value, botIconUrl.Value, Core.Optional.ToNullable(isEnabled), Core.Optional.ToNullable(disableLocalAuth), Core.Optional.ToNullable(requireTermsAgreement));
+            return new BotChannelSettings(extensionKey1.Value, extensionKey2.Value, Optional.ToList(sites), channelId.Value, channelDisplayName.Value, botId.Value, botIconUrl.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(requireTermsAgreement));
         }
     }
 }

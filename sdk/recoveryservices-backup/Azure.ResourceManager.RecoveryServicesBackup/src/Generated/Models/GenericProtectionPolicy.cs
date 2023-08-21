@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of GenericProtectionPolicy. </summary>
         public GenericProtectionPolicy()
         {
-            SubProtectionPolicy = new Core.ChangeTrackingList<SubProtectionPolicy>();
+            SubProtectionPolicy = new ChangeTrackingList<SubProtectionPolicy>();
             BackupManagementType = "GenericProtectionPolicy";
         }
 

@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    public partial class ResourceQueryRequestOptions : Core.IUtf8JsonSerializable
+    public partial class ResourceQueryRequestOptions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SkipToken))
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("$skipToken"u8);
                 writer.WriteStringValue(SkipToken);
             }
-            if (Core.Optional.IsDefined(Top))
+            if (Optional.IsDefined(Top))
             {
                 writer.WritePropertyName("$top"u8);
                 writer.WriteNumberValue(Top.Value);
             }
-            if (Core.Optional.IsDefined(Skip))
+            if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("$skip"u8);
                 writer.WriteNumberValue(Skip.Value);
             }
-            if (Core.Optional.IsDefined(ResultFormat))
+            if (Optional.IsDefined(ResultFormat))
             {
                 writer.WritePropertyName("resultFormat"u8);
                 writer.WriteStringValue(ResultFormat.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(AllowPartialScopes))
+            if (Optional.IsDefined(AllowPartialScopes))
             {
                 writer.WritePropertyName("allowPartialScopes"u8);
                 writer.WriteBooleanValue(AllowPartialScopes.Value);
             }
-            if (Core.Optional.IsDefined(AuthorizationScopeFilter))
+            if (Optional.IsDefined(AuthorizationScopeFilter))
             {
                 writer.WritePropertyName("authorizationScopeFilter"u8);
                 writer.WriteStringValue(AuthorizationScopeFilter.Value.ToSerialString());

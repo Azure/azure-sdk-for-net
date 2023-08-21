@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationListResult. </summary>
         internal SoftwareUpdateConfigurationListResult()
         {
-            Value = new Core.ChangeTrackingList<SoftwareUpdateConfigurationCollectionItem>();
+            Value = new ChangeTrackingList<SoftwareUpdateConfigurationCollectionItem>();
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationListResult. </summary>

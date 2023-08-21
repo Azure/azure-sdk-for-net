@@ -13,16 +13,16 @@ using Azure.ResourceManager.PowerBIDedicated.Models;
 
 namespace Azure.ResourceManager.PowerBIDedicated
 {
-    public partial class DedicatedCapacityData : Core.IUtf8JsonSerializable
+    public partial class DedicatedCapacityData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,19 +33,19 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(SystemData))
+            if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 writer.WriteObjectValue(SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Administration))
+            if (Optional.IsDefined(Administration))
             {
                 writer.WritePropertyName("administration"u8);
                 writer.WriteObjectValue(Administration);
             }
-            if (Core.Optional.IsDefined(Mode))
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
@@ -61,18 +61,18 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 return null;
             }
             CapacitySku sku = default;
-            Core.Optional<string> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> type = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             AzureLocation location = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DedicatedCapacityAdministrators> administration = default;
-            Core.Optional<Mode> mode = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<State> state = default;
-            Core.Optional<CapacityProvisioningState> provisioningState = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<SystemData> systemData = default;
+            Optional<DedicatedCapacityAdministrators> administration = default;
+            Optional<Mode> mode = default;
+            Optional<Guid> tenantId = default;
+            Optional<string> friendlyName = default;
+            Optional<State> state = default;
+            Optional<CapacityProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                     continue;
                 }
             }
-            return new DedicatedCapacityData(id.Value, name.Value, type.Value, location, Core.Optional.ToDictionary(tags), systemData.Value, sku, administration.Value, Core.Optional.ToNullable(mode), Core.Optional.ToNullable(tenantId), friendlyName.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(provisioningState));
+            return new DedicatedCapacityData(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), systemData.Value, sku, administration.Value, Optional.ToNullable(mode), Optional.ToNullable(tenantId), friendlyName.Value, Optional.ToNullable(state), Optional.ToNullable(provisioningState));
         }
     }
 }

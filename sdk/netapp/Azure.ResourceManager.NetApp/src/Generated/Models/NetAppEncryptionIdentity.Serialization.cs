@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppEncryptionIdentity : Core.IUtf8JsonSerializable
+    public partial class NetAppEncryptionIdentity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(UserAssignedIdentity))
+            if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<string> principalId = default;
-            Core.Optional<string> userAssignedIdentity = default;
+            Optional<string> principalId = default;
+            Optional<string> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))

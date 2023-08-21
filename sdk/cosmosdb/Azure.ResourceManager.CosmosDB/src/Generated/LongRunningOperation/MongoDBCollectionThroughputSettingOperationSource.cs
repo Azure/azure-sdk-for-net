@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class MongoDBCollectionThroughputSettingOperationSource : Core.IOperationSource<MongoDBCollectionThroughputSettingResource>
+    internal class MongoDBCollectionThroughputSettingOperationSource : IOperationSource<MongoDBCollectionThroughputSettingResource>
     {
         private readonly ArmClient _client;
         private readonly Dictionary<string, string> _idMappings = new Dictionary<string, string>()
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        MongoDBCollectionThroughputSettingResource Core.IOperationSource<MongoDBCollectionThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MongoDBCollectionThroughputSettingResource IOperationSource<MongoDBCollectionThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScrubId(ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement));
             return new MongoDBCollectionThroughputSettingResource(_client, data);
         }
 
-        async ValueTask<MongoDBCollectionThroughputSettingResource> Core.IOperationSource<MongoDBCollectionThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MongoDBCollectionThroughputSettingResource> IOperationSource<MongoDBCollectionThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScrubId(ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement));

@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
-    public partial class DeviceProvisioningServiceData : Core.IUtf8JsonSerializable
+    public partial class DeviceProvisioningServiceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             writer.WriteObjectValue(Properties);
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,15 +50,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             DeviceProvisioningServiceProperties properties = default;
             DeviceProvisioningServicesSkuInfo sku = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     continue;
                 }
             }
-            return new DeviceProvisioningServiceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), properties, sku);
+            return new DeviceProvisioningServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), properties, sku);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of ManagedHsmRegionsListResult. </summary>
         internal ManagedHsmRegionsListResult()
         {
-            Value = new Core.ChangeTrackingList<ManagedHsmGeoReplicatedRegion>();
+            Value = new ChangeTrackingList<ManagedHsmGeoReplicatedRegion>();
         }
 
         /// <summary> Initializes a new instance of ManagedHsmRegionsListResult. </summary>

@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsGroupingConfiguration : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsGroupingConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStringValue(LookbackDuration, "P");
             writer.WritePropertyName("matchingMethod"u8);
             writer.WriteStringValue(MatchingMethod.ToString());
-            if (Core.Optional.IsCollectionDefined(GroupByEntities))
+            if (Optional.IsCollectionDefined(GroupByEntities))
             {
                 writer.WritePropertyName("groupByEntities"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(GroupByAlertDetails))
+            if (Optional.IsCollectionDefined(GroupByAlertDetails))
             {
                 writer.WritePropertyName("groupByAlertDetails"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(GroupByCustomDetails))
+            if (Optional.IsCollectionDefined(GroupByCustomDetails))
             {
                 writer.WritePropertyName("groupByCustomDetails"u8);
                 writer.WriteStartArray();
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             bool reopenClosedIncident = default;
             TimeSpan lookbackDuration = default;
             SecurityInsightsGroupingMatchingMethod matchingMethod = default;
-            Core.Optional<IList<SecurityInsightsAlertRuleEntityMappingType>> groupByEntities = default;
-            Core.Optional<IList<SecurityInsightsAlertDetail>> groupByAlertDetails = default;
-            Core.Optional<IList<string>> groupByCustomDetails = default;
+            Optional<IList<SecurityInsightsAlertRuleEntityMappingType>> groupByEntities = default;
+            Optional<IList<SecurityInsightsAlertDetail>> groupByAlertDetails = default;
+            Optional<IList<string>> groupByCustomDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsGroupingConfiguration(enabled, reopenClosedIncident, lookbackDuration, matchingMethod, Core.Optional.ToList(groupByEntities), Core.Optional.ToList(groupByAlertDetails), Core.Optional.ToList(groupByCustomDetails));
+            return new SecurityInsightsGroupingConfiguration(enabled, reopenClosedIncident, lookbackDuration, matchingMethod, Optional.ToList(groupByEntities), Optional.ToList(groupByAlertDetails), Optional.ToList(groupByCustomDetails));
         }
     }
 }

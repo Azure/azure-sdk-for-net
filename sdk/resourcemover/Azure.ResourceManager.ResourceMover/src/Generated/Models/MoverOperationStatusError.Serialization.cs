@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Core.Optional<string> code = default;
-            Core.Optional<string> message = default;
-            Core.Optional<IReadOnlyList<MoverOperationStatusError>> details = default;
-            Core.Optional<IReadOnlyList<MoverOperationErrorAdditionalInfo>> additionalInfo = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<IReadOnlyList<MoverOperationStatusError>> details = default;
+            Optional<IReadOnlyList<MoverOperationErrorAdditionalInfo>> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverOperationStatusError(code.Value, message.Value, Core.Optional.ToList(details), Core.Optional.ToList(additionalInfo));
+            return new MoverOperationStatusError(code.Value, message.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
         }
     }
 }

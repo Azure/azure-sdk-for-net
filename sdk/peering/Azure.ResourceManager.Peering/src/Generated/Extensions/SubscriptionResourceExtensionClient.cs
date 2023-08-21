@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CdnPeeringPrefixesRestClient.CreateListRequest(Id.SubscriptionId, peeringLocation);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CdnPeeringPrefixesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, peeringLocation);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CdnPeeringPrefix.DeserializeCdnPeeringPrefix, CdnPeeringPrefixesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCdnPeeringPrefixes", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CdnPeeringPrefix.DeserializeCdnPeeringPrefix, CdnPeeringPrefixesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCdnPeeringPrefixes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CdnPeeringPrefixesRestClient.CreateListRequest(Id.SubscriptionId, peeringLocation);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CdnPeeringPrefixesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, peeringLocation);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CdnPeeringPrefix.DeserializeCdnPeeringPrefix, CdnPeeringPrefixesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCdnPeeringPrefixes", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CdnPeeringPrefix.DeserializeCdnPeeringPrefix, CdnPeeringPrefixesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCdnPeeringPrefixes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LegacyPeeringsRestClient.CreateListRequest(Id.SubscriptionId, peeringLocation, kind, asn, directPeeringType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LegacyPeeringsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, peeringLocation, kind, asn, directPeeringType);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeeringResource(Client, PeeringData.DeserializePeeringData(e)), LegacyPeeringsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringsByLegacyPeering", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeeringResource(Client, PeeringData.DeserializePeeringData(e)), LegacyPeeringsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringsByLegacyPeering", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LegacyPeeringsRestClient.CreateListRequest(Id.SubscriptionId, peeringLocation, kind, asn, directPeeringType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LegacyPeeringsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, peeringLocation, kind, asn, directPeeringType);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeeringResource(Client, PeeringData.DeserializePeeringData(e)), LegacyPeeringsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringsByLegacyPeering", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeeringResource(Client, PeeringData.DeserializePeeringData(e)), LegacyPeeringsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringsByLegacyPeering", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringLocationsRestClient.CreateListRequest(Id.SubscriptionId, kind, directPeeringType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringLocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, kind, directPeeringType);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PeeringLocation.DeserializePeeringLocation, PeeringLocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringLocations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PeeringLocation.DeserializePeeringLocation, PeeringLocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringLocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringLocationsRestClient.CreateListRequest(Id.SubscriptionId, kind, directPeeringType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringLocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, kind, directPeeringType);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PeeringLocation.DeserializePeeringLocation, PeeringLocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringLocations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PeeringLocation.DeserializePeeringLocation, PeeringLocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringLocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeeringResource(Client, PeeringData.DeserializePeeringData(e)), PeeringClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeerings", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeeringResource(Client, PeeringData.DeserializePeeringData(e)), PeeringClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeerings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeeringResource(Client, PeeringData.DeserializePeeringData(e)), PeeringClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeerings", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeeringResource(Client, PeeringData.DeserializePeeringData(e)), PeeringClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeerings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringServiceCountriesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringServiceCountriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PeeringServiceCountry.DeserializePeeringServiceCountry, PeeringServiceCountriesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServiceCountries", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PeeringServiceCountry.DeserializePeeringServiceCountry, PeeringServiceCountriesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServiceCountries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringServiceCountriesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringServiceCountriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PeeringServiceCountry.DeserializePeeringServiceCountry, PeeringServiceCountriesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServiceCountries", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PeeringServiceCountry.DeserializePeeringServiceCountry, PeeringServiceCountriesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServiceCountries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringServiceLocationsRestClient.CreateListRequest(Id.SubscriptionId, country);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringServiceLocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, country);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PeeringServiceLocation.DeserializePeeringServiceLocation, PeeringServiceLocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServiceLocations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PeeringServiceLocation.DeserializePeeringServiceLocation, PeeringServiceLocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServiceLocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringServiceLocationsRestClient.CreateListRequest(Id.SubscriptionId, country);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringServiceLocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, country);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PeeringServiceLocation.DeserializePeeringServiceLocation, PeeringServiceLocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServiceLocations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PeeringServiceLocation.DeserializePeeringServiceLocation, PeeringServiceLocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServiceLocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringServiceProvidersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringServiceProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PeeringServiceProvider.DeserializePeeringServiceProvider, PeeringServiceProvidersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServiceProviders", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PeeringServiceProvider.DeserializePeeringServiceProvider, PeeringServiceProvidersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServiceProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringServiceProvidersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringServiceProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PeeringServiceProvider.DeserializePeeringServiceProvider, PeeringServiceProvidersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServiceProviders", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PeeringServiceProvider.DeserializePeeringServiceProvider, PeeringServiceProvidersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServiceProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeeringServiceResource(Client, PeeringServiceData.DeserializePeeringServiceData(e)), PeeringServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServices", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeeringServiceResource(Client, PeeringServiceData.DeserializePeeringServiceData(e)), PeeringServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeeringServiceResource(Client, PeeringServiceData.DeserializePeeringServiceData(e)), PeeringServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServices", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeeringServiceResource(Client, PeeringServiceData.DeserializePeeringServiceData(e)), PeeringServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPeeringServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

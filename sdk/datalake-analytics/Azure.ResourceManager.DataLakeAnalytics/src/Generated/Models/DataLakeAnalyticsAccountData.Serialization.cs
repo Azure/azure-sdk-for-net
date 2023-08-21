@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<AzureLocation> location = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> accountId = default;
-            Core.Optional<DataLakeAnalyticsAccountStatus> provisioningState = default;
-            Core.Optional<DataLakeAnalyticsAccountState> state = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<string> endpoint = default;
-            Core.Optional<string> defaultDataLakeStoreAccount = default;
-            Core.Optional<IReadOnlyList<DataLakeStoreAccountInformationData>> dataLakeStoreAccounts = default;
-            Core.Optional<IReadOnlyList<DataLakeStoreAccountInformationData>> publicDataLakeStoreAccounts = default;
-            Core.Optional<IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData>> storageAccounts = default;
-            Core.Optional<IReadOnlyList<DataLakeAnalyticsComputePolicyData>> computePolicies = default;
-            Core.Optional<IReadOnlyList<DataLakeAnalyticsHiveMetastore>> hiveMetastores = default;
-            Core.Optional<IReadOnlyList<DataLakeAnalyticsVirtualNetworkRule>> virtualNetworkRules = default;
-            Core.Optional<IReadOnlyList<DataLakeAnalyticsFirewallRuleData>> firewallRules = default;
-            Core.Optional<DataLakeAnalyticsFirewallState> firewallState = default;
-            Core.Optional<DataLakeAnalyticsFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
-            Core.Optional<DataLakeAnalyticsCommitmentTierType> newTier = default;
-            Core.Optional<DataLakeAnalyticsCommitmentTierType> currentTier = default;
-            Core.Optional<int> maxJobCount = default;
-            Core.Optional<int> maxActiveJobCountPerUser = default;
-            Core.Optional<int> maxQueuedJobCountPerUser = default;
-            Core.Optional<int> maxJobRunningTimeInMin = default;
-            Core.Optional<int> systemMaxJobCount = default;
-            Core.Optional<int> maxDegreeOfParallelism = default;
-            Core.Optional<int> systemMaxDegreeOfParallelism = default;
-            Core.Optional<int> maxDegreeOfParallelismPerJob = default;
-            Core.Optional<int> minPriorityPerJob = default;
-            Core.Optional<int> queryStoreRetention = default;
-            Core.Optional<DebugDataAccessLevel> debugDataAccessLevel = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> accountId = default;
+            Optional<DataLakeAnalyticsAccountStatus> provisioningState = default;
+            Optional<DataLakeAnalyticsAccountState> state = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<string> endpoint = default;
+            Optional<string> defaultDataLakeStoreAccount = default;
+            Optional<IReadOnlyList<DataLakeStoreAccountInformationData>> dataLakeStoreAccounts = default;
+            Optional<IReadOnlyList<DataLakeStoreAccountInformationData>> publicDataLakeStoreAccounts = default;
+            Optional<IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData>> storageAccounts = default;
+            Optional<IReadOnlyList<DataLakeAnalyticsComputePolicyData>> computePolicies = default;
+            Optional<IReadOnlyList<DataLakeAnalyticsHiveMetastore>> hiveMetastores = default;
+            Optional<IReadOnlyList<DataLakeAnalyticsVirtualNetworkRule>> virtualNetworkRules = default;
+            Optional<IReadOnlyList<DataLakeAnalyticsFirewallRuleData>> firewallRules = default;
+            Optional<DataLakeAnalyticsFirewallState> firewallState = default;
+            Optional<DataLakeAnalyticsFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
+            Optional<DataLakeAnalyticsCommitmentTierType> newTier = default;
+            Optional<DataLakeAnalyticsCommitmentTierType> currentTier = default;
+            Optional<int> maxJobCount = default;
+            Optional<int> maxActiveJobCountPerUser = default;
+            Optional<int> maxQueuedJobCountPerUser = default;
+            Optional<int> maxJobRunningTimeInMin = default;
+            Optional<int> systemMaxJobCount = default;
+            Optional<int> maxDegreeOfParallelism = default;
+            Optional<int> systemMaxDegreeOfParallelism = default;
+            Optional<int> maxDegreeOfParallelismPerJob = default;
+            Optional<int> minPriorityPerJob = default;
+            Optional<int> queryStoreRetention = default;
+            Optional<DebugDataAccessLevel> debugDataAccessLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                     continue;
                 }
             }
-            return new DataLakeAnalyticsAccountData(id, name, type, systemData.Value, Core.Optional.ToNullable(accountId), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(state), Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime), endpoint.Value, defaultDataLakeStoreAccount.Value, Core.Optional.ToList(dataLakeStoreAccounts), Core.Optional.ToList(publicDataLakeStoreAccounts), Core.Optional.ToList(storageAccounts), Core.Optional.ToList(computePolicies), Core.Optional.ToList(hiveMetastores), Core.Optional.ToList(virtualNetworkRules), Core.Optional.ToList(firewallRules), Core.Optional.ToNullable(firewallState), Core.Optional.ToNullable(firewallAllowAzureIPs), Core.Optional.ToNullable(newTier), Core.Optional.ToNullable(currentTier), Core.Optional.ToNullable(maxJobCount), Core.Optional.ToNullable(maxActiveJobCountPerUser), Core.Optional.ToNullable(maxQueuedJobCountPerUser), Core.Optional.ToNullable(maxJobRunningTimeInMin), Core.Optional.ToNullable(systemMaxJobCount), Core.Optional.ToNullable(maxDegreeOfParallelism), Core.Optional.ToNullable(systemMaxDegreeOfParallelism), Core.Optional.ToNullable(maxDegreeOfParallelismPerJob), Core.Optional.ToNullable(minPriorityPerJob), Core.Optional.ToNullable(queryStoreRetention), Core.Optional.ToNullable(debugDataAccessLevel), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags));
+            return new DataLakeAnalyticsAccountData(id, name, type, systemData.Value, Optional.ToNullable(accountId), Optional.ToNullable(provisioningState), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), endpoint.Value, defaultDataLakeStoreAccount.Value, Optional.ToList(dataLakeStoreAccounts), Optional.ToList(publicDataLakeStoreAccounts), Optional.ToList(storageAccounts), Optional.ToList(computePolicies), Optional.ToList(hiveMetastores), Optional.ToList(virtualNetworkRules), Optional.ToList(firewallRules), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), Optional.ToNullable(newTier), Optional.ToNullable(currentTier), Optional.ToNullable(maxJobCount), Optional.ToNullable(maxActiveJobCountPerUser), Optional.ToNullable(maxQueuedJobCountPerUser), Optional.ToNullable(maxJobRunningTimeInMin), Optional.ToNullable(systemMaxJobCount), Optional.ToNullable(maxDegreeOfParallelism), Optional.ToNullable(systemMaxDegreeOfParallelism), Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob), Optional.ToNullable(queryStoreRetention), Optional.ToNullable(debugDataAccessLevel), Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }

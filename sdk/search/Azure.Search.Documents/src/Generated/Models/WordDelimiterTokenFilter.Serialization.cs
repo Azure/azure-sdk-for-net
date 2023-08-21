@@ -11,57 +11,57 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class WordDelimiterTokenFilter : Core.IUtf8JsonSerializable
+    public partial class WordDelimiterTokenFilter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(GenerateWordParts))
+            if (Optional.IsDefined(GenerateWordParts))
             {
                 writer.WritePropertyName("generateWordParts"u8);
                 writer.WriteBooleanValue(GenerateWordParts.Value);
             }
-            if (Core.Optional.IsDefined(GenerateNumberParts))
+            if (Optional.IsDefined(GenerateNumberParts))
             {
                 writer.WritePropertyName("generateNumberParts"u8);
                 writer.WriteBooleanValue(GenerateNumberParts.Value);
             }
-            if (Core.Optional.IsDefined(CatenateWords))
+            if (Optional.IsDefined(CatenateWords))
             {
                 writer.WritePropertyName("catenateWords"u8);
                 writer.WriteBooleanValue(CatenateWords.Value);
             }
-            if (Core.Optional.IsDefined(CatenateNumbers))
+            if (Optional.IsDefined(CatenateNumbers))
             {
                 writer.WritePropertyName("catenateNumbers"u8);
                 writer.WriteBooleanValue(CatenateNumbers.Value);
             }
-            if (Core.Optional.IsDefined(CatenateAll))
+            if (Optional.IsDefined(CatenateAll))
             {
                 writer.WritePropertyName("catenateAll"u8);
                 writer.WriteBooleanValue(CatenateAll.Value);
             }
-            if (Core.Optional.IsDefined(SplitOnCaseChange))
+            if (Optional.IsDefined(SplitOnCaseChange))
             {
                 writer.WritePropertyName("splitOnCaseChange"u8);
                 writer.WriteBooleanValue(SplitOnCaseChange.Value);
             }
-            if (Core.Optional.IsDefined(PreserveOriginal))
+            if (Optional.IsDefined(PreserveOriginal))
             {
                 writer.WritePropertyName("preserveOriginal"u8);
                 writer.WriteBooleanValue(PreserveOriginal.Value);
             }
-            if (Core.Optional.IsDefined(SplitOnNumerics))
+            if (Optional.IsDefined(SplitOnNumerics))
             {
                 writer.WritePropertyName("splitOnNumerics"u8);
                 writer.WriteBooleanValue(SplitOnNumerics.Value);
             }
-            if (Core.Optional.IsDefined(StemEnglishPossessive))
+            if (Optional.IsDefined(StemEnglishPossessive))
             {
                 writer.WritePropertyName("stemEnglishPossessive"u8);
                 writer.WriteBooleanValue(StemEnglishPossessive.Value);
             }
-            if (Core.Optional.IsCollectionDefined(ProtectedWords))
+            if (Optional.IsCollectionDefined(ProtectedWords))
             {
                 writer.WritePropertyName("protectedWords"u8);
                 writer.WriteStartArray();
@@ -84,16 +84,16 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<bool> generateWordParts = default;
-            Core.Optional<bool> generateNumberParts = default;
-            Core.Optional<bool> catenateWords = default;
-            Core.Optional<bool> catenateNumbers = default;
-            Core.Optional<bool> catenateAll = default;
-            Core.Optional<bool> splitOnCaseChange = default;
-            Core.Optional<bool> preserveOriginal = default;
-            Core.Optional<bool> splitOnNumerics = default;
-            Core.Optional<bool> stemEnglishPossessive = default;
-            Core.Optional<IList<string>> protectedWords = default;
+            Optional<bool> generateWordParts = default;
+            Optional<bool> generateNumberParts = default;
+            Optional<bool> catenateWords = default;
+            Optional<bool> catenateNumbers = default;
+            Optional<bool> catenateAll = default;
+            Optional<bool> splitOnCaseChange = default;
+            Optional<bool> preserveOriginal = default;
+            Optional<bool> splitOnNumerics = default;
+            Optional<bool> stemEnglishPossessive = default;
+            Optional<IList<string>> protectedWords = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new WordDelimiterTokenFilter(odataType, name, Core.Optional.ToNullable(generateWordParts), Core.Optional.ToNullable(generateNumberParts), Core.Optional.ToNullable(catenateWords), Core.Optional.ToNullable(catenateNumbers), Core.Optional.ToNullable(catenateAll), Core.Optional.ToNullable(splitOnCaseChange), Core.Optional.ToNullable(preserveOriginal), Core.Optional.ToNullable(splitOnNumerics), Core.Optional.ToNullable(stemEnglishPossessive), Core.Optional.ToList(protectedWords));
+            return new WordDelimiterTokenFilter(odataType, name, Optional.ToNullable(generateWordParts), Optional.ToNullable(generateNumberParts), Optional.ToNullable(catenateWords), Optional.ToNullable(catenateNumbers), Optional.ToNullable(catenateAll), Optional.ToNullable(splitOnCaseChange), Optional.ToNullable(preserveOriginal), Optional.ToNullable(splitOnNumerics), Optional.ToNullable(stemEnglishPossessive), Optional.ToList(protectedWords));
         }
     }
 }

@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> type = default;
-            Core.Optional<long> limit = default;
-            Core.Optional<MachineLearningQuotaUnit> unit = default;
-            Core.Optional<MachineLearningWorkspaceQuotaStatus> status = default;
+            Optional<string> id = default;
+            Optional<string> type = default;
+            Optional<long> limit = default;
+            Optional<MachineLearningQuotaUnit> unit = default;
+            Optional<MachineLearningWorkspaceQuotaStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningWorkspaceQuotaUpdate(id.Value, type.Value, Core.Optional.ToNullable(limit), Core.Optional.ToNullable(unit), Core.Optional.ToNullable(status));
+            return new MachineLearningWorkspaceQuotaUpdate(id.Value, type.Value, Optional.ToNullable(limit), Optional.ToNullable(unit), Optional.ToNullable(status));
         }
     }
 }

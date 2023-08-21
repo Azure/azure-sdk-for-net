@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class InputFieldMappingEntry : Core.IUtf8JsonSerializable
+    public partial class InputFieldMappingEntry : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Source))
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Core.Optional.IsDefined(SourceContext))
+            if (Optional.IsDefined(SourceContext))
             {
                 writer.WritePropertyName("sourceContext"u8);
                 writer.WriteStringValue(SourceContext);
             }
-            if (Core.Optional.IsCollectionDefined(Inputs))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -48,9 +48,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Core.Optional<string> source = default;
-            Core.Optional<string> sourceContext = default;
-            Core.Optional<IList<InputFieldMappingEntry>> inputs = default;
+            Optional<string> source = default;
+            Optional<string> sourceContext = default;
+            Optional<IList<InputFieldMappingEntry>> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -83,7 +83,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new InputFieldMappingEntry(name, source.Value, sourceContext.Value, Core.Optional.ToList(inputs));
+            return new InputFieldMappingEntry(name, source.Value, sourceContext.Value, Optional.ToList(inputs));
         }
     }
 }

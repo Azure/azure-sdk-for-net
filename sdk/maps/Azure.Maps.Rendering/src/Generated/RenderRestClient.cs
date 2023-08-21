@@ -107,7 +107,7 @@ namespace Azure.Maps.Rendering
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<Stream, RenderGetMapTileHeaders>> GetMapTileAsync(MapTileSetId tilesetId, MapTileIndex tileIndex, DateTimeOffset? timeStamp = null, MapTileSize? tileSize = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, RenderGetMapTileHeaders>> GetMapTileAsync(MapTileSetId tilesetId, MapTileIndex tileIndex, DateTimeOffset? timeStamp = null, MapTileSize? tileSize = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (tileIndex == null)
             {
@@ -122,7 +122,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -155,7 +155,7 @@ namespace Azure.Maps.Rendering
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
-        public Core.ResponseWithHeaders<Stream, RenderGetMapTileHeaders> GetMapTile(MapTileSetId tilesetId, MapTileIndex tileIndex, DateTimeOffset? timeStamp = null, MapTileSize? tileSize = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, RenderGetMapTileHeaders> GetMapTile(MapTileSetId tilesetId, MapTileIndex tileIndex, DateTimeOffset? timeStamp = null, MapTileSize? tileSize = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (tileIndex == null)
             {
@@ -170,7 +170,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -257,7 +257,7 @@ namespace Azure.Maps.Rendering
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("tilesetId", tilesetId.ToString(), true);
             uri.AppendQuery("zoom", zoom, true);
-            if (bounds != null && Core.Optional.IsCollectionDefined(bounds))
+            if (bounds != null && Optional.IsCollectionDefined(bounds))
             {
                 uri.AppendQueryDelimited("bounds", bounds, ",", true);
             }
@@ -367,7 +367,7 @@ namespace Azure.Maps.Rendering
         /// <param name="tileIndex"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="statesetId"/> or <paramref name="tileIndex"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<Stream, RenderGetMapStateTileHeaders>> GetMapStateTileAsync(string statesetId, MapTileIndex tileIndex, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, RenderGetMapStateTileHeaders>> GetMapStateTileAsync(string statesetId, MapTileIndex tileIndex, CancellationToken cancellationToken = default)
         {
             if (statesetId == null)
             {
@@ -386,7 +386,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -402,7 +402,7 @@ namespace Azure.Maps.Rendering
         /// <param name="tileIndex"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="statesetId"/> or <paramref name="tileIndex"/> is null. </exception>
-        public Core.ResponseWithHeaders<Stream, RenderGetMapStateTileHeaders> GetMapStateTile(string statesetId, MapTileIndex tileIndex, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, RenderGetMapStateTileHeaders> GetMapStateTile(string statesetId, MapTileIndex tileIndex, CancellationToken cancellationToken = default)
         {
             if (statesetId == null)
             {
@@ -421,7 +421,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -529,11 +529,11 @@ namespace Azure.Maps.Rendering
             {
                 uri.AppendQuery("zoom", zoom.Value, true);
             }
-            if (center != null && Core.Optional.IsCollectionDefined(center))
+            if (center != null && Optional.IsCollectionDefined(center))
             {
                 uri.AppendQueryDelimited("center", center, ",", true);
             }
-            if (boundingBoxPrivate != null && Core.Optional.IsCollectionDefined(boundingBoxPrivate))
+            if (boundingBoxPrivate != null && Optional.IsCollectionDefined(boundingBoxPrivate))
             {
                 uri.AppendQueryDelimited("bbox", boundingBoxPrivate, ",", true);
             }
@@ -553,14 +553,14 @@ namespace Azure.Maps.Rendering
             {
                 uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
             }
-            if (pins != null && Core.Optional.IsCollectionDefined(pins))
+            if (pins != null && Optional.IsCollectionDefined(pins))
             {
                 foreach (var param in pins)
                 {
                     uri.AppendQuery("pins", param, true);
                 }
             }
-            if (path != null && Core.Optional.IsCollectionDefined(path))
+            if (path != null && Optional.IsCollectionDefined(path))
             {
                 foreach (var param in path)
                 {
@@ -846,7 +846,7 @@ namespace Azure.Maps.Rendering
         /// ra        | Circle radius (meters) | Greater than 0
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<Stream, RenderGetMapStaticImageHeaders>> GetMapStaticImageAsync(RasterTileFormat format, MapImageLayer? layer = null, MapImageStyle? style = null, int? zoom = null, IEnumerable<double> center = null, IEnumerable<double> boundingBoxPrivate = null, int? height = null, int? width = null, string language = null, LocalizedMapView? localizedMapView = null, IEnumerable<string> pins = null, IEnumerable<string> path = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, RenderGetMapStaticImageHeaders>> GetMapStaticImageAsync(RasterTileFormat format, MapImageLayer? layer = null, MapImageStyle? style = null, int? zoom = null, IEnumerable<double> center = null, IEnumerable<double> boundingBoxPrivate = null, int? height = null, int? width = null, string language = null, LocalizedMapView? localizedMapView = null, IEnumerable<string> pins = null, IEnumerable<string> path = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetMapStaticImageRequest(format, layer, style, zoom, center, boundingBoxPrivate, height, width, language, localizedMapView, pins, path);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -856,7 +856,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1133,7 +1133,7 @@ namespace Azure.Maps.Rendering
         /// ra        | Circle radius (meters) | Greater than 0
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<Stream, RenderGetMapStaticImageHeaders> GetMapStaticImage(RasterTileFormat format, MapImageLayer? layer = null, MapImageStyle? style = null, int? zoom = null, IEnumerable<double> center = null, IEnumerable<double> boundingBoxPrivate = null, int? height = null, int? width = null, string language = null, LocalizedMapView? localizedMapView = null, IEnumerable<string> pins = null, IEnumerable<string> path = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, RenderGetMapStaticImageHeaders> GetMapStaticImage(RasterTileFormat format, MapImageLayer? layer = null, MapImageStyle? style = null, int? zoom = null, IEnumerable<double> center = null, IEnumerable<double> boundingBoxPrivate = null, int? height = null, int? width = null, string language = null, LocalizedMapView? localizedMapView = null, IEnumerable<string> pins = null, IEnumerable<string> path = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetMapStaticImageRequest(format, layer, style, zoom, center, boundingBoxPrivate, height, width, language, localizedMapView, pins, path);
             _pipeline.Send(message, cancellationToken);
@@ -1143,7 +1143,7 @@ namespace Azure.Maps.Rendering
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1160,11 +1160,11 @@ namespace Azure.Maps.Rendering
             uri.AppendPath("/map/copyright/bounding/", false);
             uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (boundingBox?.SouthWest != null && Core.Optional.IsCollectionDefined(boundingBox?.SouthWest))
+            if (boundingBox?.SouthWest != null && Optional.IsCollectionDefined(boundingBox?.SouthWest))
             {
                 uri.AppendQueryDelimited("mincoordinates", boundingBox.SouthWest, ",", true);
             }
-            if (boundingBox?.NorthEast != null && Core.Optional.IsCollectionDefined(boundingBox?.NorthEast))
+            if (boundingBox?.NorthEast != null && Optional.IsCollectionDefined(boundingBox?.NorthEast))
             {
                 uri.AppendQueryDelimited("maxcoordinates", boundingBox.NorthEast, ",", true);
             }

@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CassandraClusterProperties. </summary>
         public CassandraClusterProperties()
         {
-            ClientCertificates = new Core.ChangeTrackingList<CassandraCertificate>();
-            ExternalGossipCertificates = new Core.ChangeTrackingList<CassandraCertificate>();
-            GossipCertificates = new Core.ChangeTrackingList<CassandraCertificate>();
-            ExternalSeedNodes = new Core.ChangeTrackingList<CassandraDataCenterSeedNode>();
-            SeedNodes = new Core.ChangeTrackingList<CassandraDataCenterSeedNode>();
+            ClientCertificates = new ChangeTrackingList<CassandraCertificate>();
+            ExternalGossipCertificates = new ChangeTrackingList<CassandraCertificate>();
+            GossipCertificates = new ChangeTrackingList<CassandraCertificate>();
+            ExternalSeedNodes = new ChangeTrackingList<CassandraDataCenterSeedNode>();
+            SeedNodes = new ChangeTrackingList<CassandraDataCenterSeedNode>();
         }
 
         /// <summary> Initializes a new instance of CassandraClusterProperties. </summary>

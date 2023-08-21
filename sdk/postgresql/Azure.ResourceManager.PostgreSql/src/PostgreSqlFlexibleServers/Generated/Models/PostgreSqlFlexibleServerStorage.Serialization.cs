@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerStorage : Core.IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerStorage : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StorageSizeInGB))
+            if (Optional.IsDefined(StorageSizeInGB))
             {
                 writer.WritePropertyName("storageSizeGB"u8);
                 writer.WriteNumberValue(StorageSizeInGB.Value);
             }
-            if (Core.Optional.IsDefined(AutoGrow))
+            if (Optional.IsDefined(AutoGrow))
             {
                 writer.WritePropertyName("autoGrow"u8);
                 writer.WriteStringValue(AutoGrow.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Tier))
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<int> storageSizeGB = default;
-            Core.Optional<StorageAutoGrow> autoGrow = default;
-            Core.Optional<PostgreSqlManagedDiskPerformanceTier> tier = default;
-            Core.Optional<int> iops = default;
+            Optional<int> storageSizeGB = default;
+            Optional<StorageAutoGrow> autoGrow = default;
+            Optional<PostgreSqlManagedDiskPerformanceTier> tier = default;
+            Optional<int> iops = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageSizeGB"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerStorage(Core.Optional.ToNullable(storageSizeGB), Core.Optional.ToNullable(autoGrow), Core.Optional.ToNullable(tier), Core.Optional.ToNullable(iops));
+            return new PostgreSqlFlexibleServerStorage(Optional.ToNullable(storageSizeGB), Optional.ToNullable(autoGrow), Optional.ToNullable(tier), Optional.ToNullable(iops));
         }
     }
 }

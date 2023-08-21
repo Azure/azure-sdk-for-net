@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<RecoveryPointSyncType> recoveryPointSyncType = default;
-            Core.Optional<IReadOnlyList<string>> disks = default;
+            Optional<RecoveryPointSyncType> recoveryPointSyncType = default;
+            Optional<IReadOnlyList<string>> disks = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new A2ARecoveryPointDetails(instanceType, Core.Optional.ToNullable(recoveryPointSyncType), Core.Optional.ToList(disks));
+            return new A2ARecoveryPointDetails(instanceType, Optional.ToNullable(recoveryPointSyncType), Optional.ToList(disks));
         }
     }
 }

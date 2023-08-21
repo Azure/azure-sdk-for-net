@@ -11,34 +11,34 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    internal partial class UnknownPartnerDestinationInfo : Core.IUtf8JsonSerializable
+    internal partial class UnknownPartnerDestinationInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AzureSubscriptionId))
+            if (Optional.IsDefined(AzureSubscriptionId))
             {
                 writer.WritePropertyName("azureSubscriptionId"u8);
                 writer.WriteStringValue(AzureSubscriptionId);
             }
-            if (Core.Optional.IsDefined(ResourceGroupName))
+            if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Core.Optional.IsDefined(EndpointServiceContext))
+            if (Optional.IsDefined(EndpointServiceContext))
             {
                 writer.WritePropertyName("endpointServiceContext"u8);
                 writer.WriteStringValue(EndpointServiceContext);
             }
-            if (Core.Optional.IsCollectionDefined(ResourceMoveChangeHistory))
+            if (Optional.IsCollectionDefined(ResourceMoveChangeHistory))
             {
                 writer.WritePropertyName("resourceMoveChangeHistory"u8);
                 writer.WriteStartArray();
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Core.Optional<string> azureSubscriptionId = default;
-            Core.Optional<string> resourceGroupName = default;
-            Core.Optional<string> name = default;
+            Optional<string> azureSubscriptionId = default;
+            Optional<string> resourceGroupName = default;
+            Optional<string> name = default;
             PartnerEndpointType endpointType = "Unknown";
-            Core.Optional<string> endpointServiceContext = default;
-            Core.Optional<IList<ResourceMoveChangeHistory>> resourceMoveChangeHistory = default;
+            Optional<string> endpointServiceContext = default;
+            Optional<IList<ResourceMoveChangeHistory>> resourceMoveChangeHistory = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureSubscriptionId"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new UnknownPartnerDestinationInfo(azureSubscriptionId.Value, resourceGroupName.Value, name.Value, endpointType, endpointServiceContext.Value, Core.Optional.ToList(resourceMoveChangeHistory));
+            return new UnknownPartnerDestinationInfo(azureSubscriptionId.Value, resourceGroupName.Value, name.Value, endpointType, endpointServiceContext.Value, Optional.ToList(resourceMoveChangeHistory));
         }
     }
 }

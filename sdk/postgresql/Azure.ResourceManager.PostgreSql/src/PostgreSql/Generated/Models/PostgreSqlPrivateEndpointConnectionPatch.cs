@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <summary> Initializes a new instance of PostgreSqlPrivateEndpointConnectionPatch. </summary>
         public PostgreSqlPrivateEndpointConnectionPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Resource tags. </summary>

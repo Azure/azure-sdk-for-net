@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class ControlPlaneNodeConfiguration : Core.IUtf8JsonSerializable
+    public partial class ControlPlaneNodeConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AdministratorConfiguration))
+            if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
                 writer.WriteObjectValue(AdministratorConfiguration);
             }
-            if (Core.Optional.IsCollectionDefined(AvailabilityZones))
+            if (Optional.IsCollectionDefined(AvailabilityZones))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Core.Optional<AdministratorConfiguration> administratorConfiguration = default;
-            Core.Optional<IList<string>> availabilityZones = default;
+            Optional<AdministratorConfiguration> administratorConfiguration = default;
+            Optional<IList<string>> availabilityZones = default;
             long count = default;
             string vmSkuName = default;
             foreach (var property in element.EnumerateObject())
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new ControlPlaneNodeConfiguration(administratorConfiguration.Value, Core.Optional.ToList(availabilityZones), count, vmSkuName);
+            return new ControlPlaneNodeConfiguration(administratorConfiguration.Value, Optional.ToList(availabilityZones), count, vmSkuName);
         }
     }
 }

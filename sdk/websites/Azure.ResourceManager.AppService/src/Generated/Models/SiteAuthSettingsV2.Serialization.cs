@@ -11,39 +11,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteAuthSettingsV2 : Core.IUtf8JsonSerializable
+    public partial class SiteAuthSettingsV2 : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Platform))
+            if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
                 writer.WriteObjectValue(Platform);
             }
-            if (Core.Optional.IsDefined(GlobalValidation))
+            if (Optional.IsDefined(GlobalValidation))
             {
                 writer.WritePropertyName("globalValidation"u8);
                 writer.WriteObjectValue(GlobalValidation);
             }
-            if (Core.Optional.IsDefined(IdentityProviders))
+            if (Optional.IsDefined(IdentityProviders))
             {
                 writer.WritePropertyName("identityProviders"u8);
                 writer.WriteObjectValue(IdentityProviders);
             }
-            if (Core.Optional.IsDefined(Login))
+            if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
             }
-            if (Core.Optional.IsDefined(HttpSettings))
+            if (Optional.IsDefined(HttpSettings))
             {
                 writer.WritePropertyName("httpSettings"u8);
                 writer.WriteObjectValue(HttpSettings);
@@ -58,16 +58,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<AuthPlatform> platform = default;
-            Core.Optional<GlobalValidation> globalValidation = default;
-            Core.Optional<AppServiceIdentityProviders> identityProviders = default;
-            Core.Optional<WebAppLoginInfo> login = default;
-            Core.Optional<AppServiceHttpSettings> httpSettings = default;
+            Optional<SystemData> systemData = default;
+            Optional<AuthPlatform> platform = default;
+            Optional<GlobalValidation> globalValidation = default;
+            Optional<AppServiceIdentityProviders> identityProviders = default;
+            Optional<WebAppLoginInfo> login = default;
+            Optional<AppServiceHttpSettings> httpSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))

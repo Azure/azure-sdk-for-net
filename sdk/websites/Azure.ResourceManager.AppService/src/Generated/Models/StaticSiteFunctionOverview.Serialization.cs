@@ -11,12 +11,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StaticSiteFunctionOverview : Core.IUtf8JsonSerializable
+    public partial class StaticSiteFunctionOverview : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> functionName = default;
-            Core.Optional<FunctionTriggerType> triggerType = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> functionName = default;
+            Optional<FunctionTriggerType> triggerType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSiteFunctionOverview(id, name, type, systemData.Value, functionName.Value, Core.Optional.ToNullable(triggerType), kind.Value);
+            return new StaticSiteFunctionOverview(id, name, type, systemData.Value, functionName.Value, Optional.ToNullable(triggerType), kind.Value);
         }
     }
 }

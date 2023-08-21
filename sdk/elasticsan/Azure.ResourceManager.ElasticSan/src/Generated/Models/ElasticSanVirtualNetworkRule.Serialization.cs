@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class ElasticSanVirtualNetworkRule : Core.IUtf8JsonSerializable
+    public partial class ElasticSanVirtualNetworkRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(VirtualNetworkResourceId);
-            if (Core.Optional.IsDefined(Action))
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Core.Optional<ElasticSanVirtualNetworkRuleAction> action = default;
-            Core.Optional<ElasticSanVirtualNetworkRuleState> state = default;
+            Optional<ElasticSanVirtualNetworkRuleAction> action = default;
+            Optional<ElasticSanVirtualNetworkRuleState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new ElasticSanVirtualNetworkRule(id, Core.Optional.ToNullable(action), Core.Optional.ToNullable(state));
+            return new ElasticSanVirtualNetworkRule(id, Optional.ToNullable(action), Optional.ToNullable(state));
         }
     }
 }

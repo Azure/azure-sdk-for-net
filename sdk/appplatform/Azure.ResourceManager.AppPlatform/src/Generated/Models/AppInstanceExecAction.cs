@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppInstanceExecAction. </summary>
         public AppInstanceExecAction()
         {
-            Command = new Core.ChangeTrackingList<string>();
+            Command = new ChangeTrackingList<string>();
             ProbeActionType = ProbeActionType.ExecAction;
         }
 

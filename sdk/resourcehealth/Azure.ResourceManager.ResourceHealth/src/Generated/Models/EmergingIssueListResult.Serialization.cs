@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ServiceEmergingIssueData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ServiceEmergingIssueData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new EmergingIssueListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new EmergingIssueListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

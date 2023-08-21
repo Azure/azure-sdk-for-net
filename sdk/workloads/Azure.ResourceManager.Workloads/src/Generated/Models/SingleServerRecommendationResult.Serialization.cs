@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<string> vmSku = default;
+            Optional<string> vmSku = default;
             SapDeploymentType deploymentType = default;
             foreach (var property in element.EnumerateObject())
             {

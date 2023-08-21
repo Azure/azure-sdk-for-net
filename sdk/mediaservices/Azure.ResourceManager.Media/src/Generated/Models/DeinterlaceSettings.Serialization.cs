@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class DeinterlaceSettings : Core.IUtf8JsonSerializable
+    public partial class DeinterlaceSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Parity))
+            if (Optional.IsDefined(Parity))
             {
                 writer.WritePropertyName("parity"u8);
                 writer.WriteStringValue(Parity.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Mode))
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<DeinterlaceParity> parity = default;
-            Core.Optional<DeinterlaceMode> mode = default;
+            Optional<DeinterlaceParity> parity = default;
+            Optional<DeinterlaceMode> mode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parity"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new DeinterlaceSettings(Core.Optional.ToNullable(parity), Core.Optional.ToNullable(mode));
+            return new DeinterlaceSettings(Optional.ToNullable(parity), Optional.ToNullable(mode));
         }
     }
 }

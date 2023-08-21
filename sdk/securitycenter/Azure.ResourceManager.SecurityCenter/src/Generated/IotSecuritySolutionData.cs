@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="location"> The location. </param>
         public IotSecuritySolutionData(AzureLocation location) : base(location)
         {
-            Export = new Core.ChangeTrackingList<IotSecuritySolutionExportOption>();
-            DisabledDataSources = new Core.ChangeTrackingList<IotSecuritySolutionDataSource>();
-            IotHubs = new Core.ChangeTrackingList<string>();
-            AutoDiscoveredResources = new Core.ChangeTrackingList<string>();
-            RecommendationsConfiguration = new Core.ChangeTrackingList<RecommendationConfigurationProperties>();
-            AdditionalWorkspaces = new Core.ChangeTrackingList<AdditionalWorkspacesProperties>();
+            Export = new ChangeTrackingList<IotSecuritySolutionExportOption>();
+            DisabledDataSources = new ChangeTrackingList<IotSecuritySolutionDataSource>();
+            IotHubs = new ChangeTrackingList<string>();
+            AutoDiscoveredResources = new ChangeTrackingList<string>();
+            RecommendationsConfiguration = new ChangeTrackingList<RecommendationConfigurationProperties>();
+            AdditionalWorkspaces = new ChangeTrackingList<AdditionalWorkspacesProperties>();
         }
 
         /// <summary> Initializes a new instance of IotSecuritySolutionData. </summary>

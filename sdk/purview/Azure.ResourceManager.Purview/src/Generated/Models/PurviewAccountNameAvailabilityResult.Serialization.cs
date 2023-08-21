@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Core.Optional<string> message = default;
-            Core.Optional<bool> nameAvailable = default;
-            Core.Optional<PurviewAccountNameUnavailableReason> reason = default;
+            Optional<string> message = default;
+            Optional<bool> nameAvailable = default;
+            Optional<PurviewAccountNameUnavailableReason> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Purview.Models
                     continue;
                 }
             }
-            return new PurviewAccountNameAvailabilityResult(message.Value, Core.Optional.ToNullable(nameAvailable), Core.Optional.ToNullable(reason));
+            return new PurviewAccountNameAvailabilityResult(message.Value, Optional.ToNullable(nameAvailable), Optional.ToNullable(reason));
         }
     }
 }

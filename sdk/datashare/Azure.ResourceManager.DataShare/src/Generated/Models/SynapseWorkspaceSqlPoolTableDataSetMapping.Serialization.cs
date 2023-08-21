@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class SynapseWorkspaceSqlPoolTableDataSetMapping : Core.IUtf8JsonSerializable
+    public partial class SynapseWorkspaceSqlPoolTableDataSetMapping : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             Guid dataSetId = default;
-            Core.Optional<DataSetMappingStatus> dataSetMappingStatus = default;
-            Core.Optional<DataShareProvisioningState> provisioningState = default;
+            Optional<DataSetMappingStatus> dataSetMappingStatus = default;
+            Optional<DataShareProvisioningState> provisioningState = default;
             ResourceIdentifier synapseWorkspaceSqlPoolTableResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new SynapseWorkspaceSqlPoolTableDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Core.Optional.ToNullable(dataSetMappingStatus), Core.Optional.ToNullable(provisioningState), synapseWorkspaceSqlPoolTableResourceId);
+            return new SynapseWorkspaceSqlPoolTableDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Optional.ToNullable(dataSetMappingStatus), Optional.ToNullable(provisioningState), synapseWorkspaceSqlPoolTableResourceId);
         }
     }
 }

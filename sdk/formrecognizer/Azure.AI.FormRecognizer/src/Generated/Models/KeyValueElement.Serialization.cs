@@ -19,10 +19,10 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 return null;
             }
-            Core.Optional<KeyValueType> type = default;
+            Optional<KeyValueType> type = default;
             string text = default;
-            Core.Optional<IReadOnlyList<float>> boundingBox = default;
-            Core.Optional<IReadOnlyList<string>> elements = default;
+            Optional<IReadOnlyList<float>> boundingBox = default;
+            Optional<IReadOnlyList<string>> elements = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -70,7 +70,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new KeyValueElement(Core.Optional.ToNullable(type), text, Core.Optional.ToList(boundingBox), Core.Optional.ToList(elements));
+            return new KeyValueElement(Optional.ToNullable(type), text, Optional.ToList(boundingBox), Optional.ToList(elements));
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ComputeResourceSkuRestrictionInfo. </summary>
         internal ComputeResourceSkuRestrictionInfo()
         {
-            Locations = new Core.ChangeTrackingList<AzureLocation>();
-            Zones = new Core.ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ComputeResourceSkuRestrictionInfo. </summary>

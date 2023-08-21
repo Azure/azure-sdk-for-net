@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class RolloutStatusBase : Core.IUtf8JsonSerializable
+    public partial class RolloutStatusBase : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(CompletedRegions))
+            if (Optional.IsCollectionDefined(CompletedRegions))
             {
                 writer.WritePropertyName("completedRegions"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(FailedOrSkippedRegions))
+            if (Optional.IsCollectionDefined(FailedOrSkippedRegions))
             {
                 writer.WritePropertyName("failedOrSkippedRegions"u8);
                 writer.WriteStartObject();
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<IList<AzureLocation>> completedRegions = default;
-            Core.Optional<IDictionary<string, ExtendedErrorInfo>> failedOrSkippedRegions = default;
+            Optional<IList<AzureLocation>> completedRegions = default;
+            Optional<IDictionary<string, ExtendedErrorInfo>> failedOrSkippedRegions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("completedRegions"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new RolloutStatusBase(Core.Optional.ToList(completedRegions), Core.Optional.ToDictionary(failedOrSkippedRegions));
+            return new RolloutStatusBase(Optional.ToList(completedRegions), Optional.ToDictionary(failedOrSkippedRegions));
         }
     }
 }

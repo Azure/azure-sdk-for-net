@@ -12,19 +12,19 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseDataMaskingPolicyData : Core.IUtf8JsonSerializable
+    public partial class SynapseDataMaskingPolicyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DataMaskingState))
+            if (Optional.IsDefined(DataMaskingState))
             {
                 writer.WritePropertyName("dataMaskingState"u8);
                 writer.WriteStringValue(DataMaskingState.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(ExemptPrincipals))
+            if (Optional.IsDefined(ExemptPrincipals))
             {
                 writer.WritePropertyName("exemptPrincipals"u8);
                 writer.WriteStringValue(ExemptPrincipals);
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<string> kind = default;
-            Core.Optional<string> managedBy = default;
+            Optional<AzureLocation> location = default;
+            Optional<string> kind = default;
+            Optional<string> managedBy = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SynapseDataMaskingState> dataMaskingState = default;
-            Core.Optional<string> exemptPrincipals = default;
-            Core.Optional<string> applicationPrincipals = default;
-            Core.Optional<string> maskingLevel = default;
+            Optional<SystemData> systemData = default;
+            Optional<SynapseDataMaskingState> dataMaskingState = default;
+            Optional<string> exemptPrincipals = default;
+            Optional<string> applicationPrincipals = default;
+            Optional<string> maskingLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseDataMaskingPolicyData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), kind.Value, managedBy.Value, Core.Optional.ToNullable(dataMaskingState), exemptPrincipals.Value, applicationPrincipals.Value, maskingLevel.Value);
+            return new SynapseDataMaskingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, managedBy.Value, Optional.ToNullable(dataMaskingState), exemptPrincipals.Value, applicationPrincipals.Value, maskingLevel.Value);
         }
     }
 }

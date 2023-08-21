@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ContainerServiceManagedClusterData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ContainerServiceManagedClusterData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ManagedClusterListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

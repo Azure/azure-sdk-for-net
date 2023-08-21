@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class SqlDataDirectory : Core.IUtf8JsonSerializable
+    public partial class SqlDataDirectory : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DirectoryType))
+            if (Optional.IsDefined(DirectoryType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DirectoryType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Core.Optional.IsDefined(LogicalName))
+            if (Optional.IsDefined(LogicalName))
             {
                 writer.WritePropertyName("logicalName"u8);
                 writer.WriteStringValue(LogicalName);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<SqlDataDirectoryType> type = default;
-            Core.Optional<string> path = default;
-            Core.Optional<string> logicalName = default;
+            Optional<SqlDataDirectoryType> type = default;
+            Optional<string> path = default;
+            Optional<string> logicalName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new SqlDataDirectory(Core.Optional.ToNullable(type), path.Value, logicalName.Value);
+            return new SqlDataDirectory(Optional.ToNullable(type), path.Value, logicalName.Value);
         }
     }
 }

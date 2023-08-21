@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Core.Optional<IPAddress> privateIPAddress = default;
-            Core.Optional<string> sshAuthority = default;
-            Core.Optional<Uri> sshInBrowserUrl = default;
-            Core.Optional<string> rdpAuthority = default;
-            Core.Optional<Uri> rdpInBrowserUrl = default;
-            Core.Optional<string> adminUsername = default;
-            Core.Optional<string> nonAdminUsername = default;
+            Optional<IPAddress> privateIPAddress = default;
+            Optional<string> sshAuthority = default;
+            Optional<Uri> sshInBrowserUrl = default;
+            Optional<string> rdpAuthority = default;
+            Optional<Uri> rdpInBrowserUrl = default;
+            Optional<string> adminUsername = default;
+            Optional<string> nonAdminUsername = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateIpAddress"u8))

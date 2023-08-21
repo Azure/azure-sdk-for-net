@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class AvsPrivateCloudClusterVirtualMachineRestrictMovement : Core.IUtf8JsonSerializable
+    public partial class AvsPrivateCloudClusterVirtualMachineRestrictMovement : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RestrictMovement))
+            if (Optional.IsDefined(RestrictMovement))
             {
                 writer.WritePropertyName("restrictMovement"u8);
                 writer.WriteStringValue(RestrictMovement.Value.ToString());

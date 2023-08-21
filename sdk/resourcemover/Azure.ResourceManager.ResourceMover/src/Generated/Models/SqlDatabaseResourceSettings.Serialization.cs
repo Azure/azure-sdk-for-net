@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class SqlDatabaseResourceSettings : Core.IUtf8JsonSerializable
+    public partial class SqlDatabaseResourceSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(ZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteStringValue(ZoneRedundant.Value.ToString());
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<ResourceZoneRedundantSetting> zoneRedundant = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<ResourceZoneRedundantSetting> zoneRedundant = default;
             string resourceType = default;
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new SqlDatabaseResourceSettings(resourceType, targetResourceName, Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(zoneRedundant));
+            return new SqlDatabaseResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), Optional.ToNullable(zoneRedundant));
         }
     }
 }

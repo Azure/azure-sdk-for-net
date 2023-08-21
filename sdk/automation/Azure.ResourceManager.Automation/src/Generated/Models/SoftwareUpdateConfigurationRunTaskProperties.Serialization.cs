@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<string> status = default;
-            Core.Optional<string> source = default;
-            Core.Optional<Guid> jobId = default;
+            Optional<string> status = default;
+            Optional<string> source = default;
+            Optional<Guid> jobId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new SoftwareUpdateConfigurationRunTaskProperties(status.Value, source.Value, Core.Optional.ToNullable(jobId));
+            return new SoftwareUpdateConfigurationRunTaskProperties(status.Value, source.Value, Optional.ToNullable(jobId));
         }
     }
 }

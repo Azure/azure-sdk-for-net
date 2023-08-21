@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class TelemetryExceptionData : Core.IUtf8JsonSerializable
+    internal partial class TelemetryExceptionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("exceptions"u8);
@@ -22,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(SeverityLevel))
+            if (Optional.IsDefined(SeverityLevel))
             {
                 if (SeverityLevel != null)
                 {
@@ -34,12 +34,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     writer.WriteNull("severityLevel");
                 }
             }
-            if (Core.Optional.IsDefined(ProblemId))
+            if (Optional.IsDefined(ProblemId))
             {
                 writer.WritePropertyName("problemId"u8);
                 writer.WriteStringValue(ProblemId);
             }
-            if (Core.Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Measurements))
+            if (Optional.IsCollectionDefined(Measurements))
             {
                 writer.WritePropertyName("measurements"u8);
                 writer.WriteStartObject();

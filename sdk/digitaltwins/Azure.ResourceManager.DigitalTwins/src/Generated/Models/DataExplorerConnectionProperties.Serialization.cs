@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DataExplorerConnectionProperties : Core.IUtf8JsonSerializable
+    public partial class DataExplorerConnectionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("adxResourceId"u8);
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteStringValue(AdxEndpointUri.AbsoluteUri);
             writer.WritePropertyName("adxDatabaseName"u8);
             writer.WriteStringValue(AdxDatabaseName);
-            if (Core.Optional.IsDefined(AdxTableName))
+            if (Optional.IsDefined(AdxTableName))
             {
                 if (AdxTableName != null)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("adxTableName");
                 }
             }
-            if (Core.Optional.IsDefined(AdxTwinLifecycleEventsTableName))
+            if (Optional.IsDefined(AdxTwinLifecycleEventsTableName))
             {
                 if (AdxTwinLifecycleEventsTableName != null)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("adxTwinLifecycleEventsTableName");
                 }
             }
-            if (Core.Optional.IsDefined(AdxRelationshipLifecycleEventsTableName))
+            if (Optional.IsDefined(AdxRelationshipLifecycleEventsTableName))
             {
                 if (AdxRelationshipLifecycleEventsTableName != null)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteStringValue(EventHubEntityPath);
             writer.WritePropertyName("eventHubNamespaceResourceId"u8);
             writer.WriteStringValue(EventHubNamespaceResourceId);
-            if (Core.Optional.IsDefined(EventHubConsumerGroup))
+            if (Optional.IsDefined(EventHubConsumerGroup))
             {
                 if (EventHubConsumerGroup != null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("eventHubConsumerGroup");
                 }
             }
-            if (Core.Optional.IsDefined(RecordPropertyAndItemRemovals))
+            if (Optional.IsDefined(RecordPropertyAndItemRemovals))
             {
                 if (RecordPropertyAndItemRemovals != null)
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
             writer.WritePropertyName("connectionType"u8);
             writer.WriteStringValue(ConnectionType.ToString());
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
@@ -114,17 +114,17 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             ResourceIdentifier adxResourceId = default;
             Uri adxEndpointUri = default;
             string adxDatabaseName = default;
-            Core.Optional<string> adxTableName = default;
-            Core.Optional<string> adxTwinLifecycleEventsTableName = default;
-            Core.Optional<string> adxRelationshipLifecycleEventsTableName = default;
+            Optional<string> adxTableName = default;
+            Optional<string> adxTwinLifecycleEventsTableName = default;
+            Optional<string> adxRelationshipLifecycleEventsTableName = default;
             Uri eventHubEndpointUri = default;
             string eventHubEntityPath = default;
             ResourceIdentifier eventHubNamespaceResourceId = default;
-            Core.Optional<string> eventHubConsumerGroup = default;
-            Core.Optional<RecordPropertyAndItemRemoval?> recordPropertyAndItemRemovals = default;
+            Optional<string> eventHubConsumerGroup = default;
+            Optional<RecordPropertyAndItemRemoval?> recordPropertyAndItemRemovals = default;
             ConnectionType connectionType = default;
-            Core.Optional<TimeSeriesDatabaseConnectionState> provisioningState = default;
-            Core.Optional<DigitalTwinsManagedIdentityReference> identity = default;
+            Optional<TimeSeriesDatabaseConnectionState> provisioningState = default;
+            Optional<DigitalTwinsManagedIdentityReference> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adxResourceId"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new DataExplorerConnectionProperties(connectionType, Core.Optional.ToNullable(provisioningState), identity.Value, adxResourceId, adxEndpointUri, adxDatabaseName, adxTableName.Value, adxTwinLifecycleEventsTableName.Value, adxRelationshipLifecycleEventsTableName.Value, eventHubEndpointUri, eventHubEntityPath, eventHubNamespaceResourceId, eventHubConsumerGroup.Value, Core.Optional.ToNullable(recordPropertyAndItemRemovals));
+            return new DataExplorerConnectionProperties(connectionType, Optional.ToNullable(provisioningState), identity.Value, adxResourceId, adxEndpointUri, adxDatabaseName, adxTableName.Value, adxTwinLifecycleEventsTableName.Value, adxRelationshipLifecycleEventsTableName.Value, eventHubEndpointUri, eventHubEntityPath, eventHubNamespaceResourceId, eventHubConsumerGroup.Value, Optional.ToNullable(recordPropertyAndItemRemovals));
         }
     }
 }

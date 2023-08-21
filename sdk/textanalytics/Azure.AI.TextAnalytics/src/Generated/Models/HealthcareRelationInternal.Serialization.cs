@@ -12,14 +12,14 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class HealthcareRelationInternal : Core.IUtf8JsonSerializable
+    internal partial class HealthcareRelationInternal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("relationType"u8);
             writer.WriteStringValue(RelationType.ToString());
-            if (Core.Optional.IsDefined(ConfidenceScore))
+            if (Optional.IsDefined(ConfidenceScore))
             {
                 writer.WritePropertyName("confidenceScore"u8);
                 writer.WriteNumberValue(ConfidenceScore.Value);
@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             HealthcareEntityRelationType relationType = default;
-            Core.Optional<double> confidenceScore = default;
+            Optional<double> confidenceScore = default;
             IList<HealthcareRelationEntity> entities = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -70,7 +70,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareRelationInternal(relationType, Core.Optional.ToNullable(confidenceScore), entities);
+            return new HealthcareRelationInternal(relationType, Optional.ToNullable(confidenceScore), entities);
         }
     }
 }

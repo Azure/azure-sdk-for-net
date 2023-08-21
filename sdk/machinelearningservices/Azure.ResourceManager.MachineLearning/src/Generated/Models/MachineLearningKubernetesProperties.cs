@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningKubernetesProperties. </summary>
         public MachineLearningKubernetesProperties()
         {
-            InstanceTypes = new Core.ChangeTrackingDictionary<string, MachineLearningInstanceTypeSchema>();
+            InstanceTypes = new ChangeTrackingDictionary<string, MachineLearningInstanceTypeSchema>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningKubernetesProperties. </summary>

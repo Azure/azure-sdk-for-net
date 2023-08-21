@@ -13,32 +13,32 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(RunNotebookRequestConverter))]
-    public partial class RunNotebookRequest : Core.IUtf8JsonSerializable
+    public partial class RunNotebookRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Notebook))
+            if (Optional.IsDefined(Notebook))
             {
                 writer.WritePropertyName("notebook"u8);
                 writer.WriteStringValue(Notebook);
             }
-            if (Core.Optional.IsDefined(SparkPool))
+            if (Optional.IsDefined(SparkPool))
             {
                 writer.WritePropertyName("sparkPool"u8);
                 writer.WriteStringValue(SparkPool);
             }
-            if (Core.Optional.IsDefined(SessionOptions))
+            if (Optional.IsDefined(SessionOptions))
             {
                 writer.WritePropertyName("sessionOptions"u8);
                 writer.WriteObjectValue(SessionOptions);
             }
-            if (Core.Optional.IsDefined(HonorSessionTimeToLive))
+            if (Optional.IsDefined(HonorSessionTimeToLive))
             {
                 writer.WritePropertyName("honorSessionTimeToLive"u8);
                 writer.WriteBooleanValue(HonorSessionTimeToLive.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupTieringPolicy : Core.IUtf8JsonSerializable
+    public partial class BackupTieringPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TieringMode))
+            if (Optional.IsDefined(TieringMode))
             {
                 writer.WritePropertyName("tieringMode"u8);
                 writer.WriteStringValue(TieringMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DurationValue))
+            if (Optional.IsDefined(DurationValue))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteNumberValue(DurationValue.Value);
             }
-            if (Core.Optional.IsDefined(DurationType))
+            if (Optional.IsDefined(DurationType))
             {
                 writer.WritePropertyName("durationType"u8);
                 writer.WriteStringValue(DurationType.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<TieringMode> tieringMode = default;
-            Core.Optional<int> duration = default;
-            Core.Optional<RetentionDurationType> durationType = default;
+            Optional<TieringMode> tieringMode = default;
+            Optional<int> duration = default;
+            Optional<RetentionDurationType> durationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tieringMode"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new BackupTieringPolicy(Core.Optional.ToNullable(tieringMode), Core.Optional.ToNullable(duration), Core.Optional.ToNullable(durationType));
+            return new BackupTieringPolicy(Optional.ToNullable(tieringMode), Optional.ToNullable(duration), Optional.ToNullable(durationType));
         }
     }
 }

@@ -14,21 +14,21 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    public partial class DeviceUpdatePrivateEndpointConnectionData : Core.IUtf8JsonSerializable
+    public partial class DeviceUpdatePrivateEndpointConnectionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
             writer.WriteObjectValue(ConnectionState);
-            if (Core.Optional.IsCollectionDefined(GroupIds))
+            if (Optional.IsCollectionDefined(GroupIds))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SubResource> privateEndpoint = default;
+            Optional<SystemData> systemData = default;
+            Optional<SubResource> privateEndpoint = default;
             DeviceUpdatePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
-            Core.Optional<IList<string>> groupIds = default;
-            Core.Optional<DeviceUpdatePrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<IList<string>> groupIds = default;
+            Optional<DeviceUpdatePrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     continue;
                 }
             }
-            return new DeviceUpdatePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState, Core.Optional.ToList(groupIds), Core.Optional.ToNullable(provisioningState));
+            return new DeviceUpdatePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState, Optional.ToList(groupIds), Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNull(model, nameof(model));
 
             Model = model;
-            SupportedVersions = new Core.ChangeTrackingList<SupportedVersionProperties>();
-            SupportedRoleTypes = new Core.ChangeTrackingList<NetworkDeviceRoleName>();
-            Interfaces = new Core.ChangeTrackingList<NetworkDeviceInterfaceProperties>();
+            SupportedVersions = new ChangeTrackingList<SupportedVersionProperties>();
+            SupportedRoleTypes = new ChangeTrackingList<NetworkDeviceRoleName>();
+            Interfaces = new ChangeTrackingList<NetworkDeviceInterfaceProperties>();
         }
 
         /// <summary> Initializes a new instance of NetworkDeviceSkuData. </summary>

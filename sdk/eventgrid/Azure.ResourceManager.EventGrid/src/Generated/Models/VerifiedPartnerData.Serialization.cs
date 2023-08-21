@@ -13,39 +13,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class VerifiedPartnerData : Core.IUtf8JsonSerializable
+    public partial class VerifiedPartnerData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PartnerRegistrationImmutableId))
+            if (Optional.IsDefined(PartnerRegistrationImmutableId))
             {
                 writer.WritePropertyName("partnerRegistrationImmutableId"u8);
                 writer.WriteStringValue(PartnerRegistrationImmutableId.Value);
             }
-            if (Core.Optional.IsDefined(OrganizationName))
+            if (Optional.IsDefined(OrganizationName))
             {
                 writer.WritePropertyName("organizationName"u8);
                 writer.WriteStringValue(OrganizationName);
             }
-            if (Core.Optional.IsDefined(PartnerDisplayName))
+            if (Optional.IsDefined(PartnerDisplayName))
             {
                 writer.WritePropertyName("partnerDisplayName"u8);
                 writer.WriteStringValue(PartnerDisplayName);
             }
-            if (Core.Optional.IsDefined(PartnerTopicDetails))
+            if (Optional.IsDefined(PartnerTopicDetails))
             {
                 writer.WritePropertyName("partnerTopicDetails"u8);
                 writer.WriteObjectValue(PartnerTopicDetails);
             }
-            if (Core.Optional.IsDefined(PartnerDestinationDetails))
+            if (Optional.IsDefined(PartnerDestinationDetails))
             {
                 writer.WritePropertyName("partnerDestinationDetails"u8);
                 writer.WriteObjectValue(PartnerDestinationDetails);
             }
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> partnerRegistrationImmutableId = default;
-            Core.Optional<string> organizationName = default;
-            Core.Optional<string> partnerDisplayName = default;
-            Core.Optional<PartnerDetails> partnerTopicDetails = default;
-            Core.Optional<PartnerDetails> partnerDestinationDetails = default;
-            Core.Optional<VerifiedPartnerProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> partnerRegistrationImmutableId = default;
+            Optional<string> organizationName = default;
+            Optional<string> partnerDisplayName = default;
+            Optional<PartnerDetails> partnerTopicDetails = default;
+            Optional<PartnerDetails> partnerDestinationDetails = default;
+            Optional<VerifiedPartnerProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new VerifiedPartnerData(id, name, type, systemData.Value, Core.Optional.ToNullable(partnerRegistrationImmutableId), organizationName.Value, partnerDisplayName.Value, partnerTopicDetails.Value, partnerDestinationDetails.Value, Core.Optional.ToNullable(provisioningState));
+            return new VerifiedPartnerData(id, name, type, systemData.Value, Optional.ToNullable(partnerRegistrationImmutableId), organizationName.Value, partnerDisplayName.Value, partnerTopicDetails.Value, partnerDestinationDetails.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

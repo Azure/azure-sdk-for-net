@@ -19,7 +19,7 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<PointOfInterestCategory>> poiCategories = default;
+            Optional<IReadOnlyList<PointOfInterestCategory>> poiCategories = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("poiCategories"u8))
@@ -37,7 +37,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new PointOfInterestCategoryTreeResult(Core.Optional.ToList(poiCategories));
+            return new PointOfInterestCategoryTreeResult(Optional.ToList(poiCategories));
         }
     }
 }

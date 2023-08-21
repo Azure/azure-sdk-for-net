@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="location"> The location. </param>
         public FhirServiceData(AzureLocation location) : base(location)
         {
-            AccessPolicies = new Core.ChangeTrackingList<FhirServiceAccessPolicyEntry>();
-            PrivateEndpointConnections = new Core.ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
+            AccessPolicies = new ChangeTrackingList<FhirServiceAccessPolicyEntry>();
+            PrivateEndpointConnections = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of FhirServiceData. </summary>

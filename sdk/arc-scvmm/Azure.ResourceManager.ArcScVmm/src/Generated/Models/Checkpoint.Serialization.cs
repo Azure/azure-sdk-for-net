@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class Checkpoint : Core.IUtf8JsonSerializable
+    public partial class Checkpoint : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ParentCheckpointId))
+            if (Optional.IsDefined(ParentCheckpointId))
             {
                 writer.WritePropertyName("parentCheckpointID"u8);
                 writer.WriteStringValue(ParentCheckpointId);
             }
-            if (Core.Optional.IsDefined(CheckpointId))
+            if (Optional.IsDefined(CheckpointId))
             {
                 writer.WritePropertyName("checkpointID"u8);
                 writer.WriteStringValue(CheckpointId);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Core.Optional<string> parentCheckpointId = default;
-            Core.Optional<string> checkpointId = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
+            Optional<string> parentCheckpointId = default;
+            Optional<string> checkpointId = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parentCheckpointID"u8))

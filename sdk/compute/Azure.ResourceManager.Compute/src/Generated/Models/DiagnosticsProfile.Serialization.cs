@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class DiagnosticsProfile : Core.IUtf8JsonSerializable
+    internal partial class DiagnosticsProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BootDiagnostics))
+            if (Optional.IsDefined(BootDiagnostics))
             {
                 writer.WritePropertyName("bootDiagnostics"u8);
                 writer.WriteObjectValue(BootDiagnostics);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<BootDiagnostics> bootDiagnostics = default;
+            Optional<BootDiagnostics> bootDiagnostics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bootDiagnostics"u8))

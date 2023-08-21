@@ -13,14 +13,14 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class DeviceSecurityGroupData : Core.IUtf8JsonSerializable
+    public partial class DeviceSecurityGroupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ThresholdRules))
+            if (Optional.IsCollectionDefined(ThresholdRules))
             {
                 writer.WritePropertyName("thresholdRules"u8);
                 writer.WriteStartArray();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(TimeWindowRules))
+            if (Optional.IsCollectionDefined(TimeWindowRules))
             {
                 writer.WritePropertyName("timeWindowRules"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(AllowlistRules))
+            if (Optional.IsCollectionDefined(AllowlistRules))
             {
                 writer.WritePropertyName("allowlistRules"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DenylistRules))
+            if (Optional.IsCollectionDefined(DenylistRules))
             {
                 writer.WritePropertyName("denylistRules"u8);
                 writer.WriteStartArray();
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IList<ThresholdCustomAlertRule>> thresholdRules = default;
-            Core.Optional<IList<TimeWindowCustomAlertRule>> timeWindowRules = default;
-            Core.Optional<IList<AllowlistCustomAlertRule>> allowlistRules = default;
-            Core.Optional<IList<DenylistCustomAlertRule>> denylistRules = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<ThresholdCustomAlertRule>> thresholdRules = default;
+            Optional<IList<TimeWindowCustomAlertRule>> timeWindowRules = default;
+            Optional<IList<AllowlistCustomAlertRule>> allowlistRules = default;
+            Optional<IList<DenylistCustomAlertRule>> denylistRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new DeviceSecurityGroupData(id, name, type, systemData.Value, Core.Optional.ToList(thresholdRules), Core.Optional.ToList(timeWindowRules), Core.Optional.ToList(allowlistRules), Core.Optional.ToList(denylistRules));
+            return new DeviceSecurityGroupData(id, name, type, systemData.Value, Optional.ToList(thresholdRules), Optional.ToList(timeWindowRules), Optional.ToList(allowlistRules), Optional.ToList(denylistRules));
         }
     }
 }

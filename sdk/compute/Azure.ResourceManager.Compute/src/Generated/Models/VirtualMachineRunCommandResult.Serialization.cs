@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<InstanceViewStatus>> value = default;
+            Optional<IReadOnlyList<InstanceViewStatus>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineRunCommandResult(Core.Optional.ToList(value));
+            return new VirtualMachineRunCommandResult(Optional.ToList(value));
         }
     }
 }

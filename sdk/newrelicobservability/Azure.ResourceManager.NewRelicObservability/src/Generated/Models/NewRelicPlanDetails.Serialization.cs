@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicPlanDetails : Core.IUtf8JsonSerializable
+    public partial class NewRelicPlanDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(UsageType))
+            if (Optional.IsDefined(UsageType))
             {
                 writer.WritePropertyName("usageType"u8);
                 writer.WriteStringValue(UsageType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(BillingCycle))
+            if (Optional.IsDefined(BillingCycle))
             {
                 writer.WritePropertyName("billingCycle"u8);
                 writer.WriteStringValue(BillingCycle.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PlanDetails))
+            if (Optional.IsDefined(PlanDetails))
             {
                 writer.WritePropertyName("planDetails"u8);
                 writer.WriteStringValue(PlanDetails);
             }
-            if (Core.Optional.IsDefined(EffectiveOn))
+            if (Optional.IsDefined(EffectiveOn))
             {
                 writer.WritePropertyName("effectiveDate"u8);
                 writer.WriteStringValue(EffectiveOn.Value, "O");
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Core.Optional<NewRelicObservabilityUsageType> usageType = default;
-            Core.Optional<NewRelicObservabilityBillingCycle> billingCycle = default;
-            Core.Optional<string> planDetails = default;
-            Core.Optional<DateTimeOffset> effectiveDate = default;
+            Optional<NewRelicObservabilityUsageType> usageType = default;
+            Optional<NewRelicObservabilityBillingCycle> billingCycle = default;
+            Optional<string> planDetails = default;
+            Optional<DateTimeOffset> effectiveDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usageType"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new NewRelicPlanDetails(Core.Optional.ToNullable(usageType), Core.Optional.ToNullable(billingCycle), planDetails.Value, Core.Optional.ToNullable(effectiveDate));
+            return new NewRelicPlanDetails(Optional.ToNullable(usageType), Optional.ToNullable(billingCycle), planDetails.Value, Optional.ToNullable(effectiveDate));
         }
     }
 }

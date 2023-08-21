@@ -12,29 +12,29 @@ using Azure.ResourceManager.ServiceLinker.Models;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    public partial class LinkerResourceData : Core.IUtf8JsonSerializable
+    public partial class LinkerResourceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TargetService))
+            if (Optional.IsDefined(TargetService))
             {
                 writer.WritePropertyName("targetService"u8);
                 writer.WriteObjectValue(TargetService);
             }
-            if (Core.Optional.IsDefined(AuthInfo))
+            if (Optional.IsDefined(AuthInfo))
             {
                 writer.WritePropertyName("authInfo"u8);
                 writer.WriteObjectValue(AuthInfo);
             }
-            if (Core.Optional.IsDefined(ClientType))
+            if (Optional.IsDefined(ClientType))
             {
                 writer.WritePropertyName("clientType"u8);
                 writer.WriteStringValue(ClientType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(VnetSolution))
+            if (Optional.IsDefined(VnetSolution))
             {
                 if (VnetSolution != null)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceLinker
                     writer.WriteNull("vNetSolution");
                 }
             }
-            if (Core.Optional.IsDefined(SecretStore))
+            if (Optional.IsDefined(SecretStore))
             {
                 if (SecretStore != null)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceLinker
                     writer.WriteNull("secretStore");
                 }
             }
-            if (Core.Optional.IsDefined(Scope))
+            if (Optional.IsDefined(Scope))
             {
                 if (Scope != null)
                 {
@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.ServiceLinker
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<TargetServiceBaseInfo> targetService = default;
-            Core.Optional<AuthBaseInfo> authInfo = default;
-            Core.Optional<LinkerClientType> clientType = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<VnetSolution> vnetSolution = default;
-            Core.Optional<LinkerSecretStore> secretStore = default;
-            Core.Optional<string> scope = default;
+            Optional<SystemData> systemData = default;
+            Optional<TargetServiceBaseInfo> targetService = default;
+            Optional<AuthBaseInfo> authInfo = default;
+            Optional<LinkerClientType> clientType = default;
+            Optional<string> provisioningState = default;
+            Optional<VnetSolution> vnetSolution = default;
+            Optional<LinkerSecretStore> secretStore = default;
+            Optional<string> scope = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ServiceLinker
                     continue;
                 }
             }
-            return new LinkerResourceData(id, name, type, systemData.Value, targetService.Value, authInfo.Value, Core.Optional.ToNullable(clientType), provisioningState.Value, vnetSolution.Value, secretStore.Value, scope.Value);
+            return new LinkerResourceData(id, name, type, systemData.Value, targetService.Value, authInfo.Value, Optional.ToNullable(clientType), provisioningState.Value, vnetSolution.Value, secretStore.Value, scope.Value);
         }
     }
 }

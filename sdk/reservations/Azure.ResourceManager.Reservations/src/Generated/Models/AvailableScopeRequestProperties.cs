@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of AvailableScopeRequestProperties. </summary>
         public AvailableScopeRequestProperties()
         {
-            Scopes = new Core.ChangeTrackingList<string>();
+            Scopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Gets the scopes. </summary>

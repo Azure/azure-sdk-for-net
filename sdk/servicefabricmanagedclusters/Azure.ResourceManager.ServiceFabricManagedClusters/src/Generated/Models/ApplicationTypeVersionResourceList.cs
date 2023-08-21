@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of ApplicationTypeVersionResourceList. </summary>
         internal ApplicationTypeVersionResourceList()
         {
-            Value = new Core.ChangeTrackingList<ServiceFabricManagedApplicationTypeVersionData>();
+            Value = new ChangeTrackingList<ServiceFabricManagedApplicationTypeVersionData>();
         }
 
         /// <summary> Initializes a new instance of ApplicationTypeVersionResourceList. </summary>

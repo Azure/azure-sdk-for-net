@@ -14,14 +14,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseSparkConfigurationData : Core.IUtf8JsonSerializable
+    public partial class SynapseSparkConfigurationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStringValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Core.Optional.IsCollectionDefined(Annotations))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.Synapse
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Notes))
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Core.Optional.IsDefined(CreatedBy))
+            if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Core.Optional.IsCollectionDefined(ConfigMergeRule))
+            if (Optional.IsCollectionDefined(ConfigMergeRule))
             {
                 writer.WritePropertyName("configMergeRule"u8);
                 writer.WriteStartObject();
@@ -80,18 +80,18 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
             IDictionary<string, string> configs = default;
-            Core.Optional<IList<string>> annotations = default;
-            Core.Optional<string> notes = default;
-            Core.Optional<string> createdBy = default;
-            Core.Optional<DateTimeOffset> created = default;
-            Core.Optional<IDictionary<string, string>> configMergeRule = default;
+            Optional<IList<string>> annotations = default;
+            Optional<string> notes = default;
+            Optional<string> createdBy = default;
+            Optional<DateTimeOffset> created = default;
+            Optional<IDictionary<string, string>> configMergeRule = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseSparkConfigurationData(id, name, type, systemData.Value, description.Value, configs, Core.Optional.ToList(annotations), notes.Value, createdBy.Value, Core.Optional.ToNullable(created), Core.Optional.ToDictionary(configMergeRule), Core.Optional.ToNullable(etag));
+            return new SynapseSparkConfigurationData(id, name, type, systemData.Value, description.Value, configs, Optional.ToList(annotations), notes.Value, createdBy.Value, Optional.ToNullable(created), Optional.ToDictionary(configMergeRule), Optional.ToNullable(etag));
         }
     }
 }

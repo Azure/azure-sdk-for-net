@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of NetworkSecurityPerimeterConfigurationList. </summary>
         internal NetworkSecurityPerimeterConfigurationList()
         {
-            Value = new Core.ChangeTrackingList<EventHubsNetworkSecurityPerimeterConfiguration>();
+            Value = new ChangeTrackingList<EventHubsNetworkSecurityPerimeterConfiguration>();
         }
 
         /// <summary> Initializes a new instance of NetworkSecurityPerimeterConfigurationList. </summary>

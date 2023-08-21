@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightAutoScaleTimeAndCapacity : Core.IUtf8JsonSerializable
+    public partial class HDInsightAutoScaleTimeAndCapacity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Time))
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);
             }
-            if (Core.Optional.IsDefined(MinInstanceCount))
+            if (Optional.IsDefined(MinInstanceCount))
             {
                 writer.WritePropertyName("minInstanceCount"u8);
                 writer.WriteNumberValue(MinInstanceCount.Value);
             }
-            if (Core.Optional.IsDefined(MaxInstanceCount))
+            if (Optional.IsDefined(MaxInstanceCount))
             {
                 writer.WritePropertyName("maxInstanceCount"u8);
                 writer.WriteNumberValue(MaxInstanceCount.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<string> time = default;
-            Core.Optional<int> minInstanceCount = default;
-            Core.Optional<int> maxInstanceCount = default;
+            Optional<string> time = default;
+            Optional<int> minInstanceCount = default;
+            Optional<int> maxInstanceCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightAutoScaleTimeAndCapacity(time.Value, Core.Optional.ToNullable(minInstanceCount), Core.Optional.ToNullable(maxInstanceCount));
+            return new HDInsightAutoScaleTimeAndCapacity(time.Value, Optional.ToNullable(minInstanceCount), Optional.ToNullable(maxInstanceCount));
         }
     }
 }

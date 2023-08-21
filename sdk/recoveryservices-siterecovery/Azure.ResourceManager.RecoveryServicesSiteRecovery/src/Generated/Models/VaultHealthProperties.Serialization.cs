@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SiteRecoveryHealthError>> vaultErrors = default;
-            Core.Optional<ResourceHealthSummary> protectedItemsHealth = default;
-            Core.Optional<ResourceHealthSummary> fabricsHealth = default;
-            Core.Optional<ResourceHealthSummary> containersHealth = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> vaultErrors = default;
+            Optional<ResourceHealthSummary> protectedItemsHealth = default;
+            Optional<ResourceHealthSummary> fabricsHealth = default;
+            Optional<ResourceHealthSummary> containersHealth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vaultErrors"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new VaultHealthProperties(Core.Optional.ToList(vaultErrors), protectedItemsHealth.Value, fabricsHealth.Value, containersHealth.Value);
+            return new VaultHealthProperties(Optional.ToList(vaultErrors), protectedItemsHealth.Value, fabricsHealth.Value, containersHealth.Value);
         }
     }
 }

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SharingProfileGroup : Core.IUtf8JsonSerializable
+    public partial class SharingProfileGroup : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(GroupType))
+            if (Optional.IsDefined(GroupType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(GroupType.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Ids))
+            if (Optional.IsCollectionDefined(Ids))
             {
                 writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<SharingProfileGroupType> type = default;
-            Core.Optional<IList<string>> ids = default;
+            Optional<SharingProfileGroupType> type = default;
+            Optional<IList<string>> ids = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SharingProfileGroup(Core.Optional.ToNullable(type), Core.Optional.ToList(ids));
+            return new SharingProfileGroup(Optional.ToNullable(type), Optional.ToList(ids));
         }
     }
 }

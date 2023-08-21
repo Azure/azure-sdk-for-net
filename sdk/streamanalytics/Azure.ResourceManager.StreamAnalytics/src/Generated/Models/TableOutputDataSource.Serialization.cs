@@ -11,41 +11,41 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class TableOutputDataSource : Core.IUtf8JsonSerializable
+    public partial class TableOutputDataSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AccountName))
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Core.Optional.IsDefined(AccountKey))
+            if (Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
-            if (Core.Optional.IsDefined(Table))
+            if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(Table);
             }
-            if (Core.Optional.IsDefined(PartitionKey))
+            if (Optional.IsDefined(PartitionKey))
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteStringValue(PartitionKey);
             }
-            if (Core.Optional.IsDefined(RowKey))
+            if (Optional.IsDefined(RowKey))
             {
                 writer.WritePropertyName("rowKey"u8);
                 writer.WriteStringValue(RowKey);
             }
-            if (Core.Optional.IsCollectionDefined(ColumnsToRemove))
+            if (Optional.IsCollectionDefined(ColumnsToRemove))
             {
                 writer.WritePropertyName("columnsToRemove"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(BatchSize))
+            if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Core.Optional<string> accountName = default;
-            Core.Optional<string> accountKey = default;
-            Core.Optional<string> table = default;
-            Core.Optional<string> partitionKey = default;
-            Core.Optional<string> rowKey = default;
-            Core.Optional<IList<string>> columnsToRemove = default;
-            Core.Optional<int> batchSize = default;
+            Optional<string> accountName = default;
+            Optional<string> accountKey = default;
+            Optional<string> table = default;
+            Optional<string> partitionKey = default;
+            Optional<string> rowKey = default;
+            Optional<IList<string>> columnsToRemove = default;
+            Optional<int> batchSize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new TableOutputDataSource(type, accountName.Value, accountKey.Value, table.Value, partitionKey.Value, rowKey.Value, Core.Optional.ToList(columnsToRemove), Core.Optional.ToNullable(batchSize));
+            return new TableOutputDataSource(type, accountName.Value, accountKey.Value, table.Value, partitionKey.Value, rowKey.Value, Optional.ToList(columnsToRemove), Optional.ToNullable(batchSize));
         }
     }
 }

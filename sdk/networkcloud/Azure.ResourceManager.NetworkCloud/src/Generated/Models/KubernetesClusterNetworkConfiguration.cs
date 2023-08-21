@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
             CloudServicesNetworkId = cloudServicesNetworkId;
             CniNetworkId = cniNetworkId;
-            PodCidrs = new Core.ChangeTrackingList<string>();
-            ServiceCidrs = new Core.ChangeTrackingList<string>();
+            PodCidrs = new ChangeTrackingList<string>();
+            ServiceCidrs = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of KubernetesClusterNetworkConfiguration. </summary>

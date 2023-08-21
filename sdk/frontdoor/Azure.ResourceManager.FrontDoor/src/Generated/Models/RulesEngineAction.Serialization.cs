@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class RulesEngineAction : Core.IUtf8JsonSerializable
+    public partial class RulesEngineAction : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(RequestHeaderActions))
+            if (Optional.IsCollectionDefined(RequestHeaderActions))
             {
                 writer.WritePropertyName("requestHeaderActions"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ResponseHeaderActions))
+            if (Optional.IsCollectionDefined(ResponseHeaderActions))
             {
                 writer.WritePropertyName("responseHeaderActions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(RouteConfigurationOverride))
+            if (Optional.IsDefined(RouteConfigurationOverride))
             {
                 if (RouteConfigurationOverride != null)
                 {
@@ -57,9 +57,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Core.Optional<IList<RulesEngineHeaderAction>> requestHeaderActions = default;
-            Core.Optional<IList<RulesEngineHeaderAction>> responseHeaderActions = default;
-            Core.Optional<RouteConfiguration> routeConfigurationOverride = default;
+            Optional<IList<RulesEngineHeaderAction>> requestHeaderActions = default;
+            Optional<IList<RulesEngineHeaderAction>> responseHeaderActions = default;
+            Optional<RouteConfiguration> routeConfigurationOverride = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requestHeaderActions"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new RulesEngineAction(Core.Optional.ToList(requestHeaderActions), Core.Optional.ToList(responseHeaderActions), routeConfigurationOverride.Value);
+            return new RulesEngineAction(Optional.ToList(requestHeaderActions), Optional.ToList(responseHeaderActions), routeConfigurationOverride.Value);
         }
     }
 }

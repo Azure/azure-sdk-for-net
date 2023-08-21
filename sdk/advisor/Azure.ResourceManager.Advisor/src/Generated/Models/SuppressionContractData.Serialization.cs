@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Advisor
 {
-    public partial class SuppressionContractData : Core.IUtf8JsonSerializable
+    public partial class SuppressionContractData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SuppressionId))
+            if (Optional.IsDefined(SuppressionId))
             {
                 writer.WritePropertyName("suppressionId"u8);
                 writer.WriteStringValue(SuppressionId);
             }
-            if (Core.Optional.IsDefined(Ttl))
+            if (Optional.IsDefined(Ttl))
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteStringValue(Ttl);
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Advisor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> suppressionId = default;
-            Core.Optional<string> ttl = default;
-            Core.Optional<DateTimeOffset> expirationTimeStamp = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> suppressionId = default;
+            Optional<string> ttl = default;
+            Optional<DateTimeOffset> expirationTimeStamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Advisor
                     continue;
                 }
             }
-            return new SuppressionContractData(id, name, type, systemData.Value, suppressionId.Value, ttl.Value, Core.Optional.ToNullable(expirationTimeStamp));
+            return new SuppressionContractData(id, name, type, systemData.Value, suppressionId.Value, ttl.Value, Optional.ToNullable(expirationTimeStamp));
         }
     }
 }

@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             try
             {
                 var response = await _farmBeatFarmBeatsModelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new AgFoodPlatformArmOperation<FarmBeatResource>(new FarmBeatOperationSource(Client), _farmBeatFarmBeatsModelsClientDiagnostics, Pipeline, _farmBeatFarmBeatsModelsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AgFoodPlatformArmOperation<FarmBeatResource>(new FarmBeatOperationSource(Client), _farmBeatFarmBeatsModelsClientDiagnostics, Pipeline, _farmBeatFarmBeatsModelsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             try
             {
                 var response = _farmBeatFarmBeatsModelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new AgFoodPlatformArmOperation<FarmBeatResource>(new FarmBeatOperationSource(Client), _farmBeatFarmBeatsModelsClientDiagnostics, Pipeline, _farmBeatFarmBeatsModelsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AgFoodPlatformArmOperation<FarmBeatResource>(new FarmBeatOperationSource(Client), _farmBeatFarmBeatsModelsClientDiagnostics, Pipeline, _farmBeatFarmBeatsModelsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of DiskConfiguration. </summary>
         public DiskConfiguration()
         {
-            DiskVolumeConfigurations = new Core.ChangeTrackingDictionary<string, DiskVolumeConfiguration>();
+            DiskVolumeConfigurations = new ChangeTrackingDictionary<string, DiskVolumeConfiguration>();
         }
 
         /// <summary> Initializes a new instance of DiskConfiguration. </summary>

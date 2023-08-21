@@ -21,16 +21,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<string> api = default;
-            Core.Optional<string> clientRequestId = default;
-            Core.Optional<string> requestId = default;
-            Core.Optional<string> contentType = default;
-            Core.Optional<long> contentLength = default;
-            Core.Optional<string> blobType = default;
-            Core.Optional<string> url = default;
-            Core.Optional<string> sequencer = default;
-            Core.Optional<string> identity = default;
-            Core.Optional<object> storageDiagnostics = default;
+            Optional<string> api = default;
+            Optional<string> clientRequestId = default;
+            Optional<string> requestId = default;
+            Optional<string> contentType = default;
+            Optional<long> contentLength = default;
+            Optional<string> blobType = default;
+            Optional<string> url = default;
+            Optional<string> sequencer = default;
+            Optional<string> identity = default;
+            Optional<object> storageDiagnostics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("api"u8))
@@ -92,7 +92,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new StorageAsyncOperationInitiatedEventData(api.Value, clientRequestId.Value, requestId.Value, contentType.Value, Core.Optional.ToNullable(contentLength), blobType.Value, url.Value, sequencer.Value, identity.Value, storageDiagnostics.Value);
+            return new StorageAsyncOperationInitiatedEventData(api.Value, clientRequestId.Value, requestId.Value, contentType.Value, Optional.ToNullable(contentLength), blobType.Value, url.Value, sequencer.Value, identity.Value, storageDiagnostics.Value);
         }
 
         internal partial class StorageAsyncOperationInitiatedEventDataConverter : JsonConverter<StorageAsyncOperationInitiatedEventData>

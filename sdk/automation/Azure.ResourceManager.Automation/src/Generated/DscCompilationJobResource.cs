@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _dscCompilationJobRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<DscCompilationJobResource>(new DscCompilationJobOperationSource(Client), _dscCompilationJobClientDiagnostics, Pipeline, _dscCompilationJobRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AutomationArmOperation<DscCompilationJobResource>(new DscCompilationJobOperationSource(Client), _dscCompilationJobClientDiagnostics, Pipeline, _dscCompilationJobRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _dscCompilationJobRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new AutomationArmOperation<DscCompilationJobResource>(new DscCompilationJobOperationSource(Client), _dscCompilationJobClientDiagnostics, Pipeline, _dscCompilationJobRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AutomationArmOperation<DscCompilationJobResource>(new DscCompilationJobOperationSource(Client), _dscCompilationJobClientDiagnostics, Pipeline, _dscCompilationJobRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

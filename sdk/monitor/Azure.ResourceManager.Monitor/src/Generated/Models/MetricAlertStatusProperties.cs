@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MetricAlertStatusProperties. </summary>
         internal MetricAlertStatusProperties()
         {
-            Dimensions = new Core.ChangeTrackingDictionary<string, string>();
+            Dimensions = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of MetricAlertStatusProperties. </summary>

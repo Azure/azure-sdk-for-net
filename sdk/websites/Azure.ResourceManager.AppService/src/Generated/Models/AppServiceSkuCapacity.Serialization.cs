@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceSkuCapacity : Core.IUtf8JsonSerializable
+    public partial class AppServiceSkuCapacity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Minimum))
+            if (Optional.IsDefined(Minimum))
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (Core.Optional.IsDefined(Maximum))
+            if (Optional.IsDefined(Maximum))
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (Core.Optional.IsDefined(ElasticMaximum))
+            if (Optional.IsDefined(ElasticMaximum))
             {
                 writer.WritePropertyName("elasticMaximum"u8);
                 writer.WriteNumberValue(ElasticMaximum.Value);
             }
-            if (Core.Optional.IsDefined(Default))
+            if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
-            if (Core.Optional.IsDefined(ScaleType))
+            if (Optional.IsDefined(ScaleType))
             {
                 writer.WritePropertyName("scaleType"u8);
                 writer.WriteStringValue(ScaleType);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<int> minimum = default;
-            Core.Optional<int> maximum = default;
-            Core.Optional<int> elasticMaximum = default;
-            Core.Optional<int> @default = default;
-            Core.Optional<string> scaleType = default;
+            Optional<int> minimum = default;
+            Optional<int> maximum = default;
+            Optional<int> elasticMaximum = default;
+            Optional<int> @default = default;
+            Optional<string> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceSkuCapacity(Core.Optional.ToNullable(minimum), Core.Optional.ToNullable(maximum), Core.Optional.ToNullable(elasticMaximum), Core.Optional.ToNullable(@default), scaleType.Value);
+            return new AppServiceSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(elasticMaximum), Optional.ToNullable(@default), scaleType.Value);
         }
     }
 }

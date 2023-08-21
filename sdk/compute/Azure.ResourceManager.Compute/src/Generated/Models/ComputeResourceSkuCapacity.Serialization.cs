@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<long> minimum = default;
-            Core.Optional<long> maximum = default;
-            Core.Optional<long> @default = default;
-            Core.Optional<ComputeResourceSkuCapacityScaleType> scaleType = default;
+            Optional<long> minimum = default;
+            Optional<long> maximum = default;
+            Optional<long> @default = default;
+            Optional<ComputeResourceSkuCapacityScaleType> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ComputeResourceSkuCapacity(Core.Optional.ToNullable(minimum), Core.Optional.ToNullable(maximum), Core.Optional.ToNullable(@default), Core.Optional.ToNullable(scaleType));
+            return new ComputeResourceSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType));
         }
     }
 }

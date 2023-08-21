@@ -13,29 +13,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    public partial class KustoDatabasePrincipalAssignmentData : Core.IUtf8JsonSerializable
+    public partial class KustoDatabasePrincipalAssignmentData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DatabasePrincipalId))
+            if (Optional.IsDefined(DatabasePrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(DatabasePrincipalId);
             }
-            if (Core.Optional.IsDefined(Role))
+            if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
-            if (Core.Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Core.Optional.IsDefined(PrincipalType))
+            if (Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.Kusto
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> principalId = default;
-            Core.Optional<KustoDatabasePrincipalRole> role = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<KustoPrincipalAssignmentType> principalType = default;
-            Core.Optional<string> tenantName = default;
-            Core.Optional<string> principalName = default;
-            Core.Optional<KustoProvisioningState> provisioningState = default;
-            Core.Optional<Guid> aadObjectId = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> principalId = default;
+            Optional<KustoDatabasePrincipalRole> role = default;
+            Optional<Guid> tenantId = default;
+            Optional<KustoPrincipalAssignmentType> principalType = default;
+            Optional<string> tenantName = default;
+            Optional<string> principalName = default;
+            Optional<KustoProvisioningState> provisioningState = default;
+            Optional<Guid> aadObjectId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Kusto
                     continue;
                 }
             }
-            return new KustoDatabasePrincipalAssignmentData(id, name, type, systemData.Value, principalId.Value, Core.Optional.ToNullable(role), Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(principalType), tenantName.Value, principalName.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(aadObjectId));
+            return new KustoDatabasePrincipalAssignmentData(id, name, type, systemData.Value, principalId.Value, Optional.ToNullable(role), Optional.ToNullable(tenantId), Optional.ToNullable(principalType), tenantName.Value, principalName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aadObjectId));
         }
     }
 }

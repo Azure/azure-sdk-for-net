@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerSkuCapability. </summary>
         internal PostgreSqlFlexibleServerSkuCapability()
         {
-            SupportedZones = new Core.ChangeTrackingList<string>();
-            SupportedHaMode = new Core.ChangeTrackingList<PostgreSqlFlexibleServerHAMode>();
+            SupportedZones = new ChangeTrackingList<string>();
+            SupportedHaMode = new ChangeTrackingList<PostgreSqlFlexibleServerHAMode>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerSkuCapability. </summary>

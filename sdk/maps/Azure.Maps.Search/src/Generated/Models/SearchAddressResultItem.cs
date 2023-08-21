@@ -17,7 +17,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of SearchAddressResultItem. </summary>
         internal SearchAddressResultItem()
         {
-            EntryPoints = new Core.ChangeTrackingList<FacilityEntryPoint>();
+            EntryPoints = new ChangeTrackingList<FacilityEntryPoint>();
         }
 
         /// <summary> Initializes a new instance of SearchAddressResultItem. </summary>

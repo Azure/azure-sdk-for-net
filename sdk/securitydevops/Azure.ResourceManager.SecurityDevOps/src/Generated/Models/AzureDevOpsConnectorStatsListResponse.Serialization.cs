@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AzureDevOpsConnectorStats>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<AzureDevOpsConnectorStats>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     continue;
                 }
             }
-            return new AzureDevOpsConnectorStatsListResponse(Core.Optional.ToList(value), nextLink.Value);
+            return new AzureDevOpsConnectorStatsListResponse(Optional.ToList(value), nextLink.Value);
         }
     }
 }

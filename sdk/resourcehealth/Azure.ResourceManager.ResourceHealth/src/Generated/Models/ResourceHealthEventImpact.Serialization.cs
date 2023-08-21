@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Core.Optional<string> impactedService = default;
-            Core.Optional<IReadOnlyList<ResourceHealthEventImpactedServiceRegion>> impactedRegions = default;
+            Optional<string> impactedService = default;
+            Optional<IReadOnlyList<ResourceHealthEventImpactedServiceRegion>> impactedRegions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("impactedService"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new ResourceHealthEventImpact(impactedService.Value, Core.Optional.ToList(impactedRegions));
+            return new ResourceHealthEventImpact(impactedService.Value, Optional.ToList(impactedRegions));
         }
     }
 }

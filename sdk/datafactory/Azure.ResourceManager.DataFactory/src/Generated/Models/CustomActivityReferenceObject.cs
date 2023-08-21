@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of CustomActivityReferenceObject. </summary>
         public CustomActivityReferenceObject()
         {
-            LinkedServices = new Core.ChangeTrackingList<DataFactoryLinkedServiceReference>();
-            Datasets = new Core.ChangeTrackingList<DatasetReference>();
+            LinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
+            Datasets = new ChangeTrackingList<DatasetReference>();
         }
 
         /// <summary> Initializes a new instance of CustomActivityReferenceObject. </summary>

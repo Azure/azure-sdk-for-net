@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of ServiceAlertModificationProperties. </summary>
         public ServiceAlertModificationProperties()
         {
-            Modifications = new Core.ChangeTrackingList<ServiceAlertModificationItemInfo>();
+            Modifications = new ChangeTrackingList<ServiceAlertModificationItemInfo>();
         }
 
         /// <summary> Initializes a new instance of ServiceAlertModificationProperties. </summary>

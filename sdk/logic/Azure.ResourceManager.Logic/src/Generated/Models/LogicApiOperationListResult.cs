@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of LogicApiOperationListResult. </summary>
         internal LogicApiOperationListResult()
         {
-            Value = new Core.ChangeTrackingList<LogicApiOperationInfo>();
+            Value = new ChangeTrackingList<LogicApiOperationInfo>();
         }
 
         /// <summary> Initializes a new instance of LogicApiOperationListResult. </summary>

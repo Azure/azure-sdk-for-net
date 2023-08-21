@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesNetworkRuleSet : Core.IUtf8JsonSerializable
+    public partial class CognitiveServicesNetworkRuleSet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DefaultAction))
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(IPRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(VirtualNetworkRules))
+            if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Core.Optional<CognitiveServicesNetworkRuleAction> defaultAction = default;
-            Core.Optional<IList<CognitiveServicesIPRule>> ipRules = default;
-            Core.Optional<IList<CognitiveServicesVirtualNetworkRule>> virtualNetworkRules = default;
+            Optional<CognitiveServicesNetworkRuleAction> defaultAction = default;
+            Optional<IList<CognitiveServicesIPRule>> ipRules = default;
+            Optional<IList<CognitiveServicesVirtualNetworkRule>> virtualNetworkRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultAction"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesNetworkRuleSet(Core.Optional.ToNullable(defaultAction), Core.Optional.ToList(ipRules), Core.Optional.ToList(virtualNetworkRules));
+            return new CognitiveServicesNetworkRuleSet(Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules));
         }
     }
 }

@@ -13,16 +13,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsProcessEntity : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsProcessEntity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ElevationToken))
+            if (Optional.IsDefined(ElevationToken))
             {
                 writer.WritePropertyName("elevationToken"u8);
                 writer.WriteStringValue(ElevationToken.Value.ToSerialString());
@@ -41,18 +41,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<string> accountEntityId = default;
-            Core.Optional<string> commandLine = default;
-            Core.Optional<DateTimeOffset> creationTimeUtc = default;
-            Core.Optional<SecurityInsightsProcessElevationToken> elevationToken = default;
-            Core.Optional<string> hostEntityId = default;
-            Core.Optional<string> hostLogonSessionEntityId = default;
-            Core.Optional<string> imageFileEntityId = default;
-            Core.Optional<string> parentProcessEntityId = default;
-            Core.Optional<string> processId = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            Optional<string> friendlyName = default;
+            Optional<string> accountEntityId = default;
+            Optional<string> commandLine = default;
+            Optional<DateTimeOffset> creationTimeUtc = default;
+            Optional<SecurityInsightsProcessElevationToken> elevationToken = default;
+            Optional<string> hostEntityId = default;
+            Optional<string> hostLogonSessionEntityId = default;
+            Optional<string> imageFileEntityId = default;
+            Optional<string> parentProcessEntityId = default;
+            Optional<string> processId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsProcessEntity(id, name, type, systemData.Value, kind, Core.Optional.ToDictionary(additionalData), friendlyName.Value, accountEntityId.Value, commandLine.Value, Core.Optional.ToNullable(creationTimeUtc), Core.Optional.ToNullable(elevationToken), hostEntityId.Value, hostLogonSessionEntityId.Value, imageFileEntityId.Value, parentProcessEntityId.Value, processId.Value);
+            return new SecurityInsightsProcessEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, accountEntityId.Value, commandLine.Value, Optional.ToNullable(creationTimeUtc), Optional.ToNullable(elevationToken), hostEntityId.Value, hostLogonSessionEntityId.Value, imageFileEntityId.Value, parentProcessEntityId.Value, processId.Value);
         }
     }
 }

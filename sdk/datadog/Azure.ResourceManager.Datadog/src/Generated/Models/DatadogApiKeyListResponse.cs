@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> Initializes a new instance of DatadogApiKeyListResponse. </summary>
         internal DatadogApiKeyListResponse()
         {
-            Value = new Core.ChangeTrackingList<DatadogApiKey>();
+            Value = new ChangeTrackingList<DatadogApiKey>();
         }
 
         /// <summary> Initializes a new instance of DatadogApiKeyListResponse. </summary>

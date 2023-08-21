@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<LabPlanData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<LabPlanData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     continue;
                 }
             }
-            return new PagedLabPlans(Core.Optional.ToList(value), nextLink.Value);
+            return new PagedLabPlans(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class CodecCopyAudio : Core.IUtf8JsonSerializable
+    public partial class CodecCopyAudio : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Core.Optional.IsDefined(Label))
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             string odataType = default;
-            Core.Optional<string> label = default;
+            Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"u8))

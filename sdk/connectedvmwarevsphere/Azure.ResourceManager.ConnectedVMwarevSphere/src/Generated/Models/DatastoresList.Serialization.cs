@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Core.Optional<string> nextLink = default;
+            Optional<string> nextLink = default;
             IReadOnlyList<VMwareDatastoreData> value = default;
             foreach (var property in element.EnumerateObject())
             {

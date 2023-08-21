@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<IReadOnlyList<ResourceType>> resourceTypes = default;
+            Optional<string> id = default;
+            Optional<string> displayName = default;
+            Optional<IReadOnlyList<ResourceType>> resourceTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new MetadataSupportedValueDetail(id.Value, displayName.Value, Core.Optional.ToList(resourceTypes));
+            return new MetadataSupportedValueDetail(id.Value, displayName.Value, Optional.ToList(resourceTypes));
         }
     }
 }

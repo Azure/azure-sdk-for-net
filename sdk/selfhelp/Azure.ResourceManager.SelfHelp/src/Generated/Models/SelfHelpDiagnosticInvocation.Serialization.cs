@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SelfHelpDiagnosticInvocation : Core.IUtf8JsonSerializable
+    public partial class SelfHelpDiagnosticInvocation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SolutionId))
+            if (Optional.IsDefined(SolutionId))
             {
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (Core.Optional.IsCollectionDefined(AdditionalParameters))
+            if (Optional.IsCollectionDefined(AdditionalParameters))
             {
                 writer.WritePropertyName("additionalParameters"u8);
                 writer.WriteStartObject();
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Core.Optional<string> solutionId = default;
-            Core.Optional<IDictionary<string, string>> additionalParameters = default;
+            Optional<string> solutionId = default;
+            Optional<IDictionary<string, string>> additionalParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("solutionId"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new SelfHelpDiagnosticInvocation(solutionId.Value, Core.Optional.ToDictionary(additionalParameters));
+            return new SelfHelpDiagnosticInvocation(solutionId.Value, Optional.ToDictionary(additionalParameters));
         }
     }
 }

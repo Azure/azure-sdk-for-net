@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class PartnerTopicData : Core.IUtf8JsonSerializable
+    public partial class PartnerTopicData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,37 +39,37 @@ namespace Azure.ResourceManager.EventGrid
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PartnerRegistrationImmutableId))
+            if (Optional.IsDefined(PartnerRegistrationImmutableId))
             {
                 writer.WritePropertyName("partnerRegistrationImmutableId"u8);
                 writer.WriteStringValue(PartnerRegistrationImmutableId.Value);
             }
-            if (Core.Optional.IsDefined(Source))
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Core.Optional.IsDefined(EventTypeInfo))
+            if (Optional.IsDefined(EventTypeInfo))
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
                 writer.WriteObjectValue(EventTypeInfo);
             }
-            if (Core.Optional.IsDefined(ExpireOnIfNotActivated))
+            if (Optional.IsDefined(ExpireOnIfNotActivated))
             {
                 writer.WritePropertyName("expirationTimeIfNotActivatedUtc"u8);
                 writer.WriteStringValue(ExpireOnIfNotActivated.Value, "O");
             }
-            if (Core.Optional.IsDefined(ActivationState))
+            if (Optional.IsDefined(ActivationState))
             {
                 writer.WritePropertyName("activationState"u8);
                 writer.WriteStringValue(ActivationState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PartnerTopicFriendlyDescription))
+            if (Optional.IsDefined(PartnerTopicFriendlyDescription))
             {
                 writer.WritePropertyName("partnerTopicFriendlyDescription"u8);
                 writer.WriteStringValue(PartnerTopicFriendlyDescription);
             }
-            if (Core.Optional.IsDefined(MessageForActivation))
+            if (Optional.IsDefined(MessageForActivation))
             {
                 writer.WritePropertyName("messageForActivation"u8);
                 writer.WriteStringValue(MessageForActivation);
@@ -84,21 +84,21 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> partnerRegistrationImmutableId = default;
-            Core.Optional<string> source = default;
-            Core.Optional<PartnerTopicEventTypeInfo> eventTypeInfo = default;
-            Core.Optional<DateTimeOffset> expirationTimeIfNotActivatedUtc = default;
-            Core.Optional<PartnerTopicProvisioningState> provisioningState = default;
-            Core.Optional<PartnerTopicActivationState> activationState = default;
-            Core.Optional<string> partnerTopicFriendlyDescription = default;
-            Core.Optional<string> messageForActivation = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> partnerRegistrationImmutableId = default;
+            Optional<string> source = default;
+            Optional<PartnerTopicEventTypeInfo> eventTypeInfo = default;
+            Optional<DateTimeOffset> expirationTimeIfNotActivatedUtc = default;
+            Optional<PartnerTopicProvisioningState> provisioningState = default;
+            Optional<PartnerTopicActivationState> activationState = default;
+            Optional<string> partnerTopicFriendlyDescription = default;
+            Optional<string> messageForActivation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new PartnerTopicData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, Core.Optional.ToNullable(partnerRegistrationImmutableId), source.Value, eventTypeInfo.Value, Core.Optional.ToNullable(expirationTimeIfNotActivatedUtc), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(activationState), partnerTopicFriendlyDescription.Value, messageForActivation.Value);
+            return new PartnerTopicData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(partnerRegistrationImmutableId), source.Value, eventTypeInfo.Value, Optional.ToNullable(expirationTimeIfNotActivatedUtc), Optional.ToNullable(provisioningState), Optional.ToNullable(activationState), partnerTopicFriendlyDescription.Value, messageForActivation.Value);
         }
     }
 }

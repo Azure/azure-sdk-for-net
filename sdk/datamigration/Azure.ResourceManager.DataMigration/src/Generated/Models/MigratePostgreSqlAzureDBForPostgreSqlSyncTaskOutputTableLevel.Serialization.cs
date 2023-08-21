@@ -19,20 +19,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> tableName = default;
-            Core.Optional<string> databaseName = default;
-            Core.Optional<long> cdcInsertCounter = default;
-            Core.Optional<long> cdcUpdateCounter = default;
-            Core.Optional<long> cdcDeleteCounter = default;
-            Core.Optional<DateTimeOffset> fullLoadEstFinishTime = default;
-            Core.Optional<DateTimeOffset> fullLoadStartedOn = default;
-            Core.Optional<DateTimeOffset> fullLoadEndedOn = default;
-            Core.Optional<long> fullLoadTotalRows = default;
-            Core.Optional<SyncTableMigrationState> state = default;
-            Core.Optional<long> totalChangesApplied = default;
-            Core.Optional<long> dataErrorsCounter = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<string> id = default;
+            Optional<string> tableName = default;
+            Optional<string> databaseName = default;
+            Optional<long> cdcInsertCounter = default;
+            Optional<long> cdcUpdateCounter = default;
+            Optional<long> cdcDeleteCounter = default;
+            Optional<DateTimeOffset> fullLoadEstFinishTime = default;
+            Optional<DateTimeOffset> fullLoadStartedOn = default;
+            Optional<DateTimeOffset> fullLoadEndedOn = default;
+            Optional<long> fullLoadTotalRows = default;
+            Optional<SyncTableMigrationState> state = default;
+            Optional<long> totalChangesApplied = default;
+            Optional<long> dataErrorsCounter = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel(id.Value, resultType, tableName.Value, databaseName.Value, Core.Optional.ToNullable(cdcInsertCounter), Core.Optional.ToNullable(cdcUpdateCounter), Core.Optional.ToNullable(cdcDeleteCounter), Core.Optional.ToNullable(fullLoadEstFinishTime), Core.Optional.ToNullable(fullLoadStartedOn), Core.Optional.ToNullable(fullLoadEndedOn), Core.Optional.ToNullable(fullLoadTotalRows), Core.Optional.ToNullable(state), Core.Optional.ToNullable(totalChangesApplied), Core.Optional.ToNullable(dataErrorsCounter), Core.Optional.ToNullable(lastModifiedTime));
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel(id.Value, resultType, tableName.Value, databaseName.Value, Optional.ToNullable(cdcInsertCounter), Optional.ToNullable(cdcUpdateCounter), Optional.ToNullable(cdcDeleteCounter), Optional.ToNullable(fullLoadEstFinishTime), Optional.ToNullable(fullLoadStartedOn), Optional.ToNullable(fullLoadEndedOn), Optional.ToNullable(fullLoadTotalRows), Optional.ToNullable(state), Optional.ToNullable(totalChangesApplied), Optional.ToNullable(dataErrorsCounter), Optional.ToNullable(lastModifiedTime));
         }
     }
 }

@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AutomationRulePropertyValuesCondition : Core.IUtf8JsonSerializable
+    public partial class AutomationRulePropertyValuesCondition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PropertyName))
+            if (Optional.IsDefined(PropertyName))
             {
                 writer.WritePropertyName("propertyName"u8);
                 writer.WriteStringValue(PropertyName.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Operator))
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(PropertyValues))
+            if (Optional.IsCollectionDefined(PropertyValues))
             {
                 writer.WritePropertyName("propertyValues"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Core.Optional<AutomationRulePropertyConditionSupportedProperty> propertyName = default;
-            Core.Optional<AutomationRulePropertyConditionSupportedOperator> @operator = default;
-            Core.Optional<IList<string>> propertyValues = default;
+            Optional<AutomationRulePropertyConditionSupportedProperty> propertyName = default;
+            Optional<AutomationRulePropertyConditionSupportedOperator> @operator = default;
+            Optional<IList<string>> propertyValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("propertyName"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new AutomationRulePropertyValuesCondition(Core.Optional.ToNullable(propertyName), Core.Optional.ToNullable(@operator), Core.Optional.ToList(propertyValues));
+            return new AutomationRulePropertyValuesCondition(Optional.ToNullable(propertyName), Optional.ToNullable(@operator), Optional.ToList(propertyValues));
         }
     }
 }

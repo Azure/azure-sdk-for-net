@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationAccountListKeyVaultKeyContent : Core.IUtf8JsonSerializable
+    public partial class IntegrationAccountListKeyVaultKeyContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyVault"u8);
             writer.WriteObjectValue(KeyVault);
-            if (Core.Optional.IsDefined(SkipToken))
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);

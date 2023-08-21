@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of PlanRequesterDetails. </summary>
         internal PlanRequesterDetails()
         {
-            Requesters = new Core.ChangeTrackingList<PlanRequesterInfo>();
+            Requesters = new ChangeTrackingList<PlanRequesterInfo>();
         }
 
         /// <summary> Initializes a new instance of PlanRequesterDetails. </summary>

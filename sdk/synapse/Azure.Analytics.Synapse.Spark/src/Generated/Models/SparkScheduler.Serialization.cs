@@ -19,11 +19,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset?> submittedAt = default;
-            Core.Optional<DateTimeOffset?> scheduledAt = default;
-            Core.Optional<DateTimeOffset?> endedAt = default;
-            Core.Optional<DateTimeOffset?> cancellationRequestedAt = default;
-            Core.Optional<SchedulerCurrentState> currentState = default;
+            Optional<DateTimeOffset?> submittedAt = default;
+            Optional<DateTimeOffset?> scheduledAt = default;
+            Optional<DateTimeOffset?> endedAt = default;
+            Optional<DateTimeOffset?> cancellationRequestedAt = default;
+            Optional<SchedulerCurrentState> currentState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("submittedAt"u8))
@@ -76,7 +76,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkScheduler(Core.Optional.ToNullable(submittedAt), Core.Optional.ToNullable(scheduledAt), Core.Optional.ToNullable(endedAt), Core.Optional.ToNullable(cancellationRequestedAt), Core.Optional.ToNullable(currentState));
+            return new SparkScheduler(Optional.ToNullable(submittedAt), Optional.ToNullable(scheduledAt), Optional.ToNullable(endedAt), Optional.ToNullable(cancellationRequestedAt), Optional.ToNullable(currentState));
         }
     }
 }

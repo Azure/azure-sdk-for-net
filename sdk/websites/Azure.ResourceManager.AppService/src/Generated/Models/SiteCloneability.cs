@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of SiteCloneability. </summary>
         internal SiteCloneability()
         {
-            BlockingFeatures = new Core.ChangeTrackingList<SiteCloneabilityCriterion>();
-            UnsupportedFeatures = new Core.ChangeTrackingList<SiteCloneabilityCriterion>();
-            BlockingCharacteristics = new Core.ChangeTrackingList<SiteCloneabilityCriterion>();
+            BlockingFeatures = new ChangeTrackingList<SiteCloneabilityCriterion>();
+            UnsupportedFeatures = new ChangeTrackingList<SiteCloneabilityCriterion>();
+            BlockingCharacteristics = new ChangeTrackingList<SiteCloneabilityCriterion>();
         }
 
         /// <summary> Initializes a new instance of SiteCloneability. </summary>

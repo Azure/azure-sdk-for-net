@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppKeyVaultProperties : Core.IUtf8JsonSerializable
+    public partial class NetAppKeyVaultProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyVaultUri"u8);
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<string> keyVaultId = default;
+            Optional<string> keyVaultId = default;
             Uri keyVaultUri = default;
             string keyName = default;
             string keyVaultResourceId = default;
-            Core.Optional<NetAppKeyVaultStatus> status = default;
+            Optional<NetAppKeyVaultStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultId"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppKeyVaultProperties(keyVaultId.Value, keyVaultUri, keyName, keyVaultResourceId, Core.Optional.ToNullable(status));
+            return new NetAppKeyVaultProperties(keyVaultId.Value, keyVaultUri, keyName, keyVaultResourceId, Optional.ToNullable(status));
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="location"> The location. </param>
         public HciClusterData(AzureLocation location) : base(location)
         {
-            UserAssignedIdentities = new Core.ChangeTrackingDictionary<string, UserAssignedIdentity>();
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of HciClusterData. </summary>

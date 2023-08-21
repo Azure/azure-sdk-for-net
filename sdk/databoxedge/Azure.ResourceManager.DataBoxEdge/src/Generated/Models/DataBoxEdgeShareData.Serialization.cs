@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeShareData : Core.IUtf8JsonSerializable
+    public partial class DataBoxEdgeShareData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             writer.WriteStringValue(ShareStatus.ToString());
             writer.WritePropertyName("monitoringStatus"u8);
             writer.WriteStringValue(MonitoringStatus.ToString());
-            if (Core.Optional.IsDefined(AzureContainerInfo))
+            if (Optional.IsDefined(AzureContainerInfo))
             {
                 writer.WritePropertyName("azureContainerInfo"u8);
                 writer.WriteObjectValue(AzureContainerInfo);
             }
             writer.WritePropertyName("accessProtocol"u8);
             writer.WriteStringValue(AccessProtocol.ToString());
-            if (Core.Optional.IsCollectionDefined(UserAccessRights))
+            if (Optional.IsCollectionDefined(UserAccessRights))
             {
                 writer.WritePropertyName("userAccessRights"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ClientAccessRights))
+            if (Optional.IsCollectionDefined(ClientAccessRights))
             {
                 writer.WritePropertyName("clientAccessRights"u8);
                 writer.WriteStartArray();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(RefreshDetails))
+            if (Optional.IsDefined(RefreshDetails))
             {
                 writer.WritePropertyName("refreshDetails"u8);
                 writer.WriteObjectValue(RefreshDetails);
             }
-            if (Core.Optional.IsDefined(DataPolicy))
+            if (Optional.IsDefined(DataPolicy))
             {
                 writer.WritePropertyName("dataPolicy"u8);
                 writer.WriteStringValue(DataPolicy.Value.ToString());
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
             ShareStatus shareStatus = default;
             DataBoxEdgeShareMonitoringStatus monitoringStatus = default;
-            Core.Optional<DataBoxEdgeStorageContainerInfo> azureContainerInfo = default;
+            Optional<DataBoxEdgeStorageContainerInfo> azureContainerInfo = default;
             ShareAccessProtocol accessProtocol = default;
-            Core.Optional<IList<UserAccessRight>> userAccessRights = default;
-            Core.Optional<IList<ClientAccessRight>> clientAccessRights = default;
-            Core.Optional<DataBoxEdgeRefreshDetails> refreshDetails = default;
-            Core.Optional<IReadOnlyList<DataBoxEdgeMountPointMap>> shareMappings = default;
-            Core.Optional<DataBoxEdgeDataPolicy> dataPolicy = default;
+            Optional<IList<UserAccessRight>> userAccessRights = default;
+            Optional<IList<ClientAccessRight>> clientAccessRights = default;
+            Optional<DataBoxEdgeRefreshDetails> refreshDetails = default;
+            Optional<IReadOnlyList<DataBoxEdgeMountPointMap>> shareMappings = default;
+            Optional<DataBoxEdgeDataPolicy> dataPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     continue;
                 }
             }
-            return new DataBoxEdgeShareData(id, name, type, systemData.Value, description.Value, shareStatus, monitoringStatus, azureContainerInfo.Value, accessProtocol, Core.Optional.ToList(userAccessRights), Core.Optional.ToList(clientAccessRights), refreshDetails.Value, Core.Optional.ToList(shareMappings), Core.Optional.ToNullable(dataPolicy));
+            return new DataBoxEdgeShareData(id, name, type, systemData.Value, description.Value, shareStatus, monitoringStatus, azureContainerInfo.Value, accessProtocol, Optional.ToList(userAccessRights), Optional.ToList(clientAccessRights), refreshDetails.Value, Optional.ToList(shareMappings), Optional.ToNullable(dataPolicy));
         }
     }
 }

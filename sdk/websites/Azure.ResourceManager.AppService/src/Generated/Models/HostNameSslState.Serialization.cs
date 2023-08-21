@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class HostNameSslState : Core.IUtf8JsonSerializable
+    public partial class HostNameSslState : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(SslState))
+            if (Optional.IsDefined(SslState))
             {
                 writer.WritePropertyName("sslState"u8);
                 writer.WriteStringValue(SslState.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(VirtualIP))
+            if (Optional.IsDefined(VirtualIP))
             {
                 writer.WritePropertyName("virtualIP"u8);
                 writer.WriteStringValue(VirtualIP);
             }
-            if (Core.Optional.IsDefined(ThumbprintString))
+            if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (Core.Optional.IsDefined(ToUpdate))
+            if (Optional.IsDefined(ToUpdate))
             {
                 if (ToUpdate != null)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("toUpdate");
                 }
             }
-            if (Core.Optional.IsDefined(HostType))
+            if (Optional.IsDefined(HostType))
             {
                 writer.WritePropertyName("hostType"u8);
                 writer.WriteStringValue(HostType.Value.ToSerialString());
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<HostNameBindingSslState> sslState = default;
-            Core.Optional<string> virtualIP = default;
-            Core.Optional<string> thumbprint = default;
-            Core.Optional<bool?> toUpdate = default;
-            Core.Optional<AppServiceHostType> hostType = default;
+            Optional<string> name = default;
+            Optional<HostNameBindingSslState> sslState = default;
+            Optional<string> virtualIP = default;
+            Optional<string> thumbprint = default;
+            Optional<bool?> toUpdate = default;
+            Optional<AppServiceHostType> hostType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new HostNameSslState(name.Value, Core.Optional.ToNullable(sslState), virtualIP.Value, thumbprint.Value, Core.Optional.ToNullable(toUpdate), Core.Optional.ToNullable(hostType));
+            return new HostNameSslState(name.Value, Optional.ToNullable(sslState), virtualIP.Value, thumbprint.Value, Optional.ToNullable(toUpdate), Optional.ToNullable(hostType));
         }
     }
 }

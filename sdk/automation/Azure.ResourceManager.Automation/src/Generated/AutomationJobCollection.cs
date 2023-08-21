@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationJobJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationJobJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutomationJobCollectionItemData.DeserializeAutomationJobCollectionItemData, _automationJobJobClientDiagnostics, Pipeline, "AutomationJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutomationJobCollectionItemData.DeserializeAutomationJobCollectionItemData, _automationJobJobClientDiagnostics, Pipeline, "AutomationJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationJobJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationJobJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutomationJobCollectionItemData.DeserializeAutomationJobCollectionItemData, _automationJobJobClientDiagnostics, Pipeline, "AutomationJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutomationJobCollectionItemData.DeserializeAutomationJobCollectionItemData, _automationJobJobClientDiagnostics, Pipeline, "AutomationJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

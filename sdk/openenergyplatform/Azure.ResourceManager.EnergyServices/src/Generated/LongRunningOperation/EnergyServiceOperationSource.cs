@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EnergyServices
 {
-    internal class EnergyServiceOperationSource : Core.IOperationSource<EnergyServiceResource>
+    internal class EnergyServiceOperationSource : IOperationSource<EnergyServiceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.EnergyServices
             _client = client;
         }
 
-        EnergyServiceResource Core.IOperationSource<EnergyServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        EnergyServiceResource IOperationSource<EnergyServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = EnergyServiceData.DeserializeEnergyServiceData(document.RootElement);
             return new EnergyServiceResource(_client, data);
         }
 
-        async ValueTask<EnergyServiceResource> Core.IOperationSource<EnergyServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EnergyServiceResource> IOperationSource<EnergyServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = EnergyServiceData.DeserializeEnergyServiceData(document.RootElement);

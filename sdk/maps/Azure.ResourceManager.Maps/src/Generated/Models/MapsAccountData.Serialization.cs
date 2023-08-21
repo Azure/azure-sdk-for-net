@@ -13,29 +13,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maps
 {
-    public partial class MapsAccountData : Core.IUtf8JsonSerializable
+    public partial class MapsAccountData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,15 +58,15 @@ namespace Azure.ResourceManager.Maps
                 return null;
             }
             MapsSku sku = default;
-            Core.Optional<MapsAccountKind> kind = default;
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<MapsAccountProperties> properties = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<MapsAccountKind> kind = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<MapsAccountProperties> properties = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Maps
                     continue;
                 }
             }
-            return new MapsAccountData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku, Core.Optional.ToNullable(kind), identity, properties.Value);
+            return new MapsAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(kind), identity, properties.Value);
         }
     }
 }

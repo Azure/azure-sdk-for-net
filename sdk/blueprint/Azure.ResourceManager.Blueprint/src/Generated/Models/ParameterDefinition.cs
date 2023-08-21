@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         public ParameterDefinition(TemplateParameterType templateParameterType)
         {
             TemplateParameterType = templateParameterType;
-            AllowedValues = new Core.ChangeTrackingList<BinaryData>();
+            AllowedValues = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ParameterDefinition. </summary>

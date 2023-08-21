@@ -11,52 +11,52 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class DB2ProviderInstanceProperties : Core.IUtf8JsonSerializable
+    public partial class DB2ProviderInstanceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Hostname))
+            if (Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Core.Optional.IsDefined(DBName))
+            if (Optional.IsDefined(DBName))
             {
                 writer.WritePropertyName("dbName"u8);
                 writer.WriteStringValue(DBName);
             }
-            if (Core.Optional.IsDefined(DBPort))
+            if (Optional.IsDefined(DBPort))
             {
                 writer.WritePropertyName("dbPort"u8);
                 writer.WriteStringValue(DBPort);
             }
-            if (Core.Optional.IsDefined(DBUsername))
+            if (Optional.IsDefined(DBUsername))
             {
                 writer.WritePropertyName("dbUsername"u8);
                 writer.WriteStringValue(DBUsername);
             }
-            if (Core.Optional.IsDefined(DBPassword))
+            if (Optional.IsDefined(DBPassword))
             {
                 writer.WritePropertyName("dbPassword"u8);
                 writer.WriteStringValue(DBPassword);
             }
-            if (Core.Optional.IsDefined(DBPasswordUri))
+            if (Optional.IsDefined(DBPasswordUri))
             {
                 writer.WritePropertyName("dbPasswordUri"u8);
                 writer.WriteStringValue(DBPasswordUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(SapSid))
+            if (Optional.IsDefined(SapSid))
             {
                 writer.WritePropertyName("sapSid"u8);
                 writer.WriteStringValue(SapSid);
             }
-            if (Core.Optional.IsDefined(SslPreference))
+            if (Optional.IsDefined(SslPreference))
             {
                 writer.WritePropertyName("sslPreference"u8);
                 writer.WriteStringValue(SslPreference.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SslCertificateUri))
+            if (Optional.IsDefined(SslCertificateUri))
             {
                 writer.WritePropertyName("sslCertificateUri"u8);
                 writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
@@ -72,15 +72,15 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<string> hostname = default;
-            Core.Optional<string> dbName = default;
-            Core.Optional<string> dbPort = default;
-            Core.Optional<string> dbUsername = default;
-            Core.Optional<string> dbPassword = default;
-            Core.Optional<Uri> dbPasswordUri = default;
-            Core.Optional<string> sapSid = default;
-            Core.Optional<SapSslPreference> sslPreference = default;
-            Core.Optional<Uri> sslCertificateUri = default;
+            Optional<string> hostname = default;
+            Optional<string> dbName = default;
+            Optional<string> dbPort = default;
+            Optional<string> dbUsername = default;
+            Optional<string> dbPassword = default;
+            Optional<Uri> dbPasswordUri = default;
+            Optional<string> sapSid = default;
+            Optional<SapSslPreference> sslPreference = default;
+            Optional<Uri> sslCertificateUri = default;
             string providerType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new DB2ProviderInstanceProperties(providerType, hostname.Value, dbName.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value, Core.Optional.ToNullable(sslPreference), sslCertificateUri.Value);
+            return new DB2ProviderInstanceProperties(providerType, hostname.Value, dbName.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value);
         }
     }
 }

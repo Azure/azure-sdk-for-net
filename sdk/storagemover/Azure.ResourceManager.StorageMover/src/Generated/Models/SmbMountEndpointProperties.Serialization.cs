@@ -10,23 +10,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class SmbMountEndpointProperties : Core.IUtf8JsonSerializable
+    public partial class SmbMountEndpointProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
             writer.WriteStringValue(Host);
             writer.WritePropertyName("shareName"u8);
             writer.WriteStringValue(ShareName);
-            if (Core.Optional.IsDefined(Credentials))
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
             string host = default;
             string shareName = default;
-            Core.Optional<AzureKeyVaultSmbCredentials> credentials = default;
+            Optional<AzureKeyVaultSmbCredentials> credentials = default;
             EndpointType endpointType = default;
-            Core.Optional<string> description = default;
-            Core.Optional<StorageMoverProvisioningState> provisioningState = default;
+            Optional<string> description = default;
+            Optional<StorageMoverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("host"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     continue;
                 }
             }
-            return new SmbMountEndpointProperties(endpointType, description.Value, Core.Optional.ToNullable(provisioningState), host, shareName, credentials.Value);
+            return new SmbMountEndpointProperties(endpointType, description.Value, Optional.ToNullable(provisioningState), host, shareName, credentials.Value);
         }
     }
 }

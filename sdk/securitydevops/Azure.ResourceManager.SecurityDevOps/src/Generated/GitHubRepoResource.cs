@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             try
             {
                 var response = await _gitHubRepoRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityDevOpsArmOperation<GitHubRepoResource>(new GitHubRepoOperationSource(Client), _gitHubRepoClientDiagnostics, Pipeline, _gitHubRepoRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new SecurityDevOpsArmOperation<GitHubRepoResource>(new GitHubRepoOperationSource(Client), _gitHubRepoClientDiagnostics, Pipeline, _gitHubRepoRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             try
             {
                 var response = _gitHubRepoRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SecurityDevOpsArmOperation<GitHubRepoResource>(new GitHubRepoOperationSource(Client), _gitHubRepoClientDiagnostics, Pipeline, _gitHubRepoRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new SecurityDevOpsArmOperation<GitHubRepoResource>(new GitHubRepoOperationSource(Client), _gitHubRepoClientDiagnostics, Pipeline, _gitHubRepoRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

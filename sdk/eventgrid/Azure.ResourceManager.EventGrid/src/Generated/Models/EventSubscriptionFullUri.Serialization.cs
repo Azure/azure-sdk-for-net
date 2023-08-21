@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Core.Optional<Uri> endpointUri = default;
+            Optional<Uri> endpointUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointUrl"u8))

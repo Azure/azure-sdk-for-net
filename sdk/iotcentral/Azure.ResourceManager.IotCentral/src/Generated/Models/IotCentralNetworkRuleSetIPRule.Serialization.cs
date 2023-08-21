@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
-    public partial class IotCentralNetworkRuleSetIPRule : Core.IUtf8JsonSerializable
+    public partial class IotCentralNetworkRuleSetIPRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FilterName))
+            if (Optional.IsDefined(FilterName))
             {
                 writer.WritePropertyName("filterName"u8);
                 writer.WriteStringValue(FilterName);
             }
-            if (Core.Optional.IsDefined(IPMask))
+            if (Optional.IsDefined(IPMask))
             {
                 writer.WritePropertyName("ipMask"u8);
                 writer.WriteStringValue(IPMask);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.IotCentral.Models
             {
                 return null;
             }
-            Core.Optional<string> filterName = default;
-            Core.Optional<string> ipMask = default;
+            Optional<string> filterName = default;
+            Optional<string> ipMask = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filterName"u8))

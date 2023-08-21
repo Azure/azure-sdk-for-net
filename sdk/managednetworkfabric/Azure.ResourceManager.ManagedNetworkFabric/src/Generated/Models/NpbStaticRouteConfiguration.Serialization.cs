@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NpbStaticRouteConfiguration : Core.IUtf8JsonSerializable
+    public partial class NpbStaticRouteConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BfdConfiguration))
+            if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
                 writer.WriteObjectValue(BfdConfiguration);
             }
-            if (Core.Optional.IsCollectionDefined(IPv4Routes))
+            if (Optional.IsCollectionDefined(IPv4Routes))
             {
                 writer.WritePropertyName("ipv4Routes"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(IPv6Routes))
+            if (Optional.IsCollectionDefined(IPv6Routes))
             {
                 writer.WritePropertyName("ipv6Routes"u8);
                 writer.WriteStartArray();
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<BfdConfiguration> bfdConfiguration = default;
-            Core.Optional<IList<StaticRouteProperties>> ipv4Routes = default;
-            Core.Optional<IList<StaticRouteProperties>> ipv6Routes = default;
+            Optional<BfdConfiguration> bfdConfiguration = default;
+            Optional<IList<StaticRouteProperties>> ipv4Routes = default;
+            Optional<IList<StaticRouteProperties>> ipv6Routes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bfdConfiguration"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new NpbStaticRouteConfiguration(bfdConfiguration.Value, Core.Optional.ToList(ipv4Routes), Core.Optional.ToList(ipv6Routes));
+            return new NpbStaticRouteConfiguration(bfdConfiguration.Value, Optional.ToList(ipv4Routes), Optional.ToList(ipv6Routes));
         }
     }
 }

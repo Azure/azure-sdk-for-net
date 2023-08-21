@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightCapabilitiesResult. </summary>
         internal HDInsightCapabilitiesResult()
         {
-            Versions = new Core.ChangeTrackingDictionary<string, HDInsightVersionsCapability>();
-            Regions = new Core.ChangeTrackingDictionary<string, RegionsCapability>();
-            Features = new Core.ChangeTrackingList<string>();
+            Versions = new ChangeTrackingDictionary<string, HDInsightVersionsCapability>();
+            Regions = new ChangeTrackingDictionary<string, RegionsCapability>();
+            Features = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HDInsightCapabilitiesResult. </summary>

@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.DataLakeStore
             try
             {
                 var response = await _dataLakeStoreAccountAccountsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataLakeStoreArmOperation(_dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, _dataLakeStoreAccountAccountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DataLakeStoreArmOperation(_dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, _dataLakeStoreAccountAccountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.DataLakeStore
             try
             {
                 var response = _dataLakeStoreAccountAccountsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DataLakeStoreArmOperation(_dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, _dataLakeStoreAccountAccountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DataLakeStoreArmOperation(_dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, _dataLakeStoreAccountAccountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.DataLakeStore
             try
             {
                 var response = await _dataLakeStoreAccountAccountsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataLakeStoreArmOperation<DataLakeStoreAccountResource>(new DataLakeStoreAccountOperationSource(Client), _dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, _dataLakeStoreAccountAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DataLakeStoreArmOperation<DataLakeStoreAccountResource>(new DataLakeStoreAccountOperationSource(Client), _dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, _dataLakeStoreAccountAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.DataLakeStore
             try
             {
                 var response = _dataLakeStoreAccountAccountsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new DataLakeStoreArmOperation<DataLakeStoreAccountResource>(new DataLakeStoreAccountOperationSource(Client), _dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, _dataLakeStoreAccountAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DataLakeStoreArmOperation<DataLakeStoreAccountResource>(new DataLakeStoreAccountOperationSource(Client), _dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, _dataLakeStoreAccountAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

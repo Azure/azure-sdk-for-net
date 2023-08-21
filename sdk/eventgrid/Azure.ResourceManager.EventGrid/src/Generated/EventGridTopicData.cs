@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="location"> The location. </param>
         public EventGridTopicData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<EventGridPrivateEndpointConnectionData>();
-            InboundIPRules = new Core.ChangeTrackingList<EventGridInboundIPRule>();
+            PrivateEndpointConnections = new ChangeTrackingList<EventGridPrivateEndpointConnectionData>();
+            InboundIPRules = new ChangeTrackingList<EventGridInboundIPRule>();
         }
 
         /// <summary> Initializes a new instance of EventGridTopicData. </summary>

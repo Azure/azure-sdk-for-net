@@ -18,9 +18,9 @@ namespace Azure.Communication.PhoneNumbers
             {
                 return null;
             }
-            Core.Optional<PhoneNumberType> phoneNumberType = default;
-            Core.Optional<PhoneNumberAssignmentType> assignmentType = default;
-            Core.Optional<PhoneNumberCapabilities> availableCapabilities = default;
+            Optional<PhoneNumberType> phoneNumberType = default;
+            Optional<PhoneNumberAssignmentType> assignmentType = default;
+            Optional<PhoneNumberCapabilities> availableCapabilities = default;
             PhoneNumberCost cost = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -57,7 +57,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new PhoneNumberOffering(Core.Optional.ToNullable(phoneNumberType), Core.Optional.ToNullable(assignmentType), availableCapabilities.Value, cost);
+            return new PhoneNumberOffering(Optional.ToNullable(phoneNumberType), Optional.ToNullable(assignmentType), availableCapabilities.Value, cost);
         }
     }
 }

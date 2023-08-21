@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class L2NetworkAttachmentConfiguration : Core.IUtf8JsonSerializable
+    public partial class L2NetworkAttachmentConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("networkId"u8);
             writer.WriteStringValue(NetworkId);
-            if (Core.Optional.IsDefined(PluginType))
+            if (Optional.IsDefined(PluginType))
             {
                 writer.WritePropertyName("pluginType"u8);
                 writer.WriteStringValue(PluginType.Value.ToString());
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             ResourceIdentifier networkId = default;
-            Core.Optional<KubernetesPluginType> pluginType = default;
+            Optional<KubernetesPluginType> pluginType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkId"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new L2NetworkAttachmentConfiguration(networkId, Core.Optional.ToNullable(pluginType));
+            return new L2NetworkAttachmentConfiguration(networkId, Optional.ToNullable(pluginType));
         }
     }
 }

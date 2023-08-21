@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of ManagedVmSizesResult. </summary>
         internal ManagedVmSizesResult()
         {
-            Value = new Core.ChangeTrackingList<ServiceFabricManagedUnsupportedVmSize>();
+            Value = new ChangeTrackingList<ServiceFabricManagedUnsupportedVmSize>();
         }
 
         /// <summary> Initializes a new instance of ManagedVmSizesResult. </summary>

@@ -20,30 +20,30 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<SenderAuthorization> authorization = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> claims = default;
-            Core.Optional<string> caller = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> id = default;
-            Core.Optional<string> eventDataId = default;
-            Core.Optional<string> correlationId = default;
-            Core.Optional<MonitorLocalizableString> eventName = default;
-            Core.Optional<MonitorLocalizableString> category = default;
-            Core.Optional<EventDataHttpRequestInfo> httpRequest = default;
-            Core.Optional<MonitorEventLevel> level = default;
-            Core.Optional<string> resourceGroupName = default;
-            Core.Optional<MonitorLocalizableString> resourceProviderName = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<MonitorLocalizableString> resourceType = default;
-            Core.Optional<string> operationId = default;
-            Core.Optional<MonitorLocalizableString> operationName = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> properties = default;
-            Core.Optional<MonitorLocalizableString> status = default;
-            Core.Optional<MonitorLocalizableString> subStatus = default;
-            Core.Optional<DateTimeOffset> eventTimestamp = default;
-            Core.Optional<DateTimeOffset> submissionTimestamp = default;
-            Core.Optional<string> subscriptionId = default;
-            Core.Optional<Guid> tenantId = default;
+            Optional<SenderAuthorization> authorization = default;
+            Optional<IReadOnlyDictionary<string, string>> claims = default;
+            Optional<string> caller = default;
+            Optional<string> description = default;
+            Optional<string> id = default;
+            Optional<string> eventDataId = default;
+            Optional<string> correlationId = default;
+            Optional<MonitorLocalizableString> eventName = default;
+            Optional<MonitorLocalizableString> category = default;
+            Optional<EventDataHttpRequestInfo> httpRequest = default;
+            Optional<MonitorEventLevel> level = default;
+            Optional<string> resourceGroupName = default;
+            Optional<MonitorLocalizableString> resourceProviderName = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<MonitorLocalizableString> resourceType = default;
+            Optional<string> operationId = default;
+            Optional<MonitorLocalizableString> operationName = default;
+            Optional<IReadOnlyDictionary<string, string>> properties = default;
+            Optional<MonitorLocalizableString> status = default;
+            Optional<MonitorLocalizableString> subStatus = default;
+            Optional<DateTimeOffset> eventTimestamp = default;
+            Optional<DateTimeOffset> submissionTimestamp = default;
+            Optional<string> subscriptionId = default;
+            Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorization"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new EventDataInfo(authorization.Value, Core.Optional.ToDictionary(claims), caller.Value, description.Value, id.Value, eventDataId.Value, correlationId.Value, eventName.Value, category.Value, httpRequest.Value, Core.Optional.ToNullable(level), resourceGroupName.Value, resourceProviderName.Value, resourceId.Value, resourceType.Value, operationId.Value, operationName.Value, Core.Optional.ToDictionary(properties), status.Value, subStatus.Value, Core.Optional.ToNullable(eventTimestamp), Core.Optional.ToNullable(submissionTimestamp), subscriptionId.Value, Core.Optional.ToNullable(tenantId));
+            return new EventDataInfo(authorization.Value, Optional.ToDictionary(claims), caller.Value, description.Value, id.Value, eventDataId.Value, correlationId.Value, eventName.Value, category.Value, httpRequest.Value, Optional.ToNullable(level), resourceGroupName.Value, resourceProviderName.Value, resourceId.Value, resourceType.Value, operationId.Value, operationName.Value, Optional.ToDictionary(properties), status.Value, subStatus.Value, Optional.ToNullable(eventTimestamp), Optional.ToNullable(submissionTimestamp), subscriptionId.Value, Optional.ToNullable(tenantId));
         }
     }
 }

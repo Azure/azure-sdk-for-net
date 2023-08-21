@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DevTestLabServiceFabricData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DevTestLabServiceFabricData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new ServiceFabricList(Core.Optional.ToList(value), nextLink.Value);
+            return new ServiceFabricList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

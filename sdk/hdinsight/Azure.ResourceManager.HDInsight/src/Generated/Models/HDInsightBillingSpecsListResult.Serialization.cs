@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> vmSizes = default;
-            Core.Optional<IReadOnlyList<string>> vmSizesWithEncryptionAtHost = default;
-            Core.Optional<IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2>> vmSizeFilters = default;
-            Core.Optional<IReadOnlyList<HDInsightVmSizeProperty>> vmSizeProperties = default;
-            Core.Optional<IReadOnlyList<HDInsightBillingResources>> billingResources = default;
+            Optional<IReadOnlyList<string>> vmSizes = default;
+            Optional<IReadOnlyList<string>> vmSizesWithEncryptionAtHost = default;
+            Optional<IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2>> vmSizeFilters = default;
+            Optional<IReadOnlyList<HDInsightVmSizeProperty>> vmSizeProperties = default;
+            Optional<IReadOnlyList<HDInsightBillingResources>> billingResources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSizes"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightBillingSpecsListResult(Core.Optional.ToList(vmSizes), Core.Optional.ToList(vmSizesWithEncryptionAtHost), Core.Optional.ToList(vmSizeFilters), Core.Optional.ToList(vmSizeProperties), Core.Optional.ToList(billingResources));
+            return new HDInsightBillingSpecsListResult(Optional.ToList(vmSizes), Optional.ToList(vmSizesWithEncryptionAtHost), Optional.ToList(vmSizeFilters), Optional.ToList(vmSizeProperties), Optional.ToList(billingResources));
         }
     }
 }

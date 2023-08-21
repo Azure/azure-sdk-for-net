@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabFormulaData : Core.IUtf8JsonSerializable
+    public partial class DevTestLabFormulaData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.DevTestLabs
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(OSType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Core.Optional.IsDefined(FormulaContent))
+            if (Optional.IsDefined(FormulaContent))
             {
                 writer.WritePropertyName("formulaContent"u8);
                 writer.WriteObjectValue(FormulaContent);
             }
-            if (Core.Optional.IsDefined(Vm))
+            if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
                 writer.WriteObjectValue(Vm);
@@ -64,20 +64,20 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> author = default;
-            Core.Optional<string> osType = default;
-            Core.Optional<DateTimeOffset> creationDate = default;
-            Core.Optional<DevTestLabVmCreationContent> formulaContent = default;
-            Core.Optional<FormulaPropertiesFromVm> vm = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<Guid> uniqueIdentifier = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<string> author = default;
+            Optional<string> osType = default;
+            Optional<DateTimeOffset> creationDate = default;
+            Optional<DevTestLabVmCreationContent> formulaContent = default;
+            Optional<FormulaPropertiesFromVm> vm = default;
+            Optional<string> provisioningState = default;
+            Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     continue;
                 }
             }
-            return new DevTestLabFormulaData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, description.Value, author.Value, osType.Value, Core.Optional.ToNullable(creationDate), formulaContent.Value, vm.Value, provisioningState.Value, Core.Optional.ToNullable(uniqueIdentifier));
+            return new DevTestLabFormulaData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, author.Value, osType.Value, Optional.ToNullable(creationDate), formulaContent.Value, vm.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    internal partial class NginxLogging : Core.IUtf8JsonSerializable
+    internal partial class NginxLogging : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StorageAccount))
+            if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteObjectValue(StorageAccount);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Core.Optional<NginxStorageAccount> storageAccount = default;
+            Optional<NginxStorageAccount> storageAccount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccount"u8))

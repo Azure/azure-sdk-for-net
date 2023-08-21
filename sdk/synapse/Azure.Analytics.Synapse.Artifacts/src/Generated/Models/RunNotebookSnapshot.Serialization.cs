@@ -22,15 +22,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> exitValue = default;
+            Optional<string> exitValue = default;
             string id = default;
             string notebook = default;
-            Core.Optional<RunNotebookSparkSessionOptions> sessionOptions = default;
-            Core.Optional<bool> honorSessionTimeToLive = default;
-            Core.Optional<long> sessionId = default;
-            Core.Optional<string> sparkPool = default;
-            Core.Optional<IReadOnlyDictionary<string, RunNotebookParameter>> parameters = default;
-            Core.Optional<NotebookResource> notebookContent = default;
+            Optional<RunNotebookSparkSessionOptions> sessionOptions = default;
+            Optional<bool> honorSessionTimeToLive = default;
+            Optional<long> sessionId = default;
+            Optional<string> sparkPool = default;
+            Optional<IReadOnlyDictionary<string, RunNotebookParameter>> parameters = default;
+            Optional<NotebookResource> notebookContent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exitValue"u8))
@@ -104,7 +104,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new RunNotebookSnapshot(exitValue.Value, id, notebook, sessionOptions.Value, Core.Optional.ToNullable(honorSessionTimeToLive), Core.Optional.ToNullable(sessionId), sparkPool.Value, Core.Optional.ToDictionary(parameters), notebookContent.Value);
+            return new RunNotebookSnapshot(exitValue.Value, id, notebook, sessionOptions.Value, Optional.ToNullable(honorSessionTimeToLive), Optional.ToNullable(sessionId), sparkPool.Value, Optional.ToDictionary(parameters), notebookContent.Value);
         }
 
         internal partial class RunNotebookSnapshotConverter : JsonConverter<RunNotebookSnapshot>

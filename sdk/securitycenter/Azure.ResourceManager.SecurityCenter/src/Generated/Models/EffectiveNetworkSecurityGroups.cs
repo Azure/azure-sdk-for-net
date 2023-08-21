@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroups. </summary>
         public EffectiveNetworkSecurityGroups()
         {
-            NetworkSecurityGroups = new Core.ChangeTrackingList<string>();
+            NetworkSecurityGroups = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroups. </summary>

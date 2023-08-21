@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<FailoverReplicationProtectedItemDetails>> protectedItemDetails = default;
+            Optional<IReadOnlyList<FailoverReplicationProtectedItemDetails>> protectedItemDetails = default;
             string instanceType = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
+            Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectedItemDetails"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new FailoverJobDetails(instanceType, Core.Optional.ToDictionary(affectedObjectDetails), Core.Optional.ToList(protectedItemDetails));
+            return new FailoverJobDetails(instanceType, Optional.ToDictionary(affectedObjectDetails), Optional.ToList(protectedItemDetails));
         }
     }
 }

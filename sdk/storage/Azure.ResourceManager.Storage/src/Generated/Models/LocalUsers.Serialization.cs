@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<StorageAccountLocalUserData>> value = default;
+            Optional<IReadOnlyList<StorageAccountLocalUserData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new LocalUsers(Core.Optional.ToList(value));
+            return new LocalUsers(Optional.ToList(value));
         }
     }
 }

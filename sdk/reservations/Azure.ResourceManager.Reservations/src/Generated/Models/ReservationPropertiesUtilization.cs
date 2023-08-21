@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of ReservationPropertiesUtilization. </summary>
         internal ReservationPropertiesUtilization()
         {
-            Aggregates = new Core.ChangeTrackingList<ReservationUtilizationAggregates>();
+            Aggregates = new ChangeTrackingList<ReservationUtilizationAggregates>();
         }
 
         /// <summary> Initializes a new instance of ReservationPropertiesUtilization. </summary>

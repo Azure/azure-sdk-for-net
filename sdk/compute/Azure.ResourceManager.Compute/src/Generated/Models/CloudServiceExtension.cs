@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CloudServiceExtension. </summary>
         public CloudServiceExtension()
         {
-            RolesAppliedTo = new Core.ChangeTrackingList<string>();
+            RolesAppliedTo = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CloudServiceExtension. </summary>

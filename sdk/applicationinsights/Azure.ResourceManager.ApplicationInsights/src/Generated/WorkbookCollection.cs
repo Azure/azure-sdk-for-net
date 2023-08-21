@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workbookRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, category, tags, sourceId, canFetchContent);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workbookRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, category, tags, sourceId, canFetchContent);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkbookResource(Client, WorkbookData.DeserializeWorkbookData(e)), _workbookClientDiagnostics, Pipeline, "WorkbookCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkbookResource(Client, WorkbookData.DeserializeWorkbookData(e)), _workbookClientDiagnostics, Pipeline, "WorkbookCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workbookRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, category, tags, sourceId, canFetchContent);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workbookRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, category, tags, sourceId, canFetchContent);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkbookResource(Client, WorkbookData.DeserializeWorkbookData(e)), _workbookClientDiagnostics, Pipeline, "WorkbookCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkbookResource(Client, WorkbookData.DeserializeWorkbookData(e)), _workbookClientDiagnostics, Pipeline, "WorkbookCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

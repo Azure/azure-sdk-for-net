@@ -11,47 +11,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmBackupJobTaskDetails : Core.IUtf8JsonSerializable
+    public partial class IaasVmBackupJobTaskDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TaskId))
+            if (Optional.IsDefined(TaskId))
             {
                 writer.WritePropertyName("taskId"u8);
                 writer.WriteStringValue(TaskId);
             }
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(InstanceId))
+            if (Optional.IsDefined(InstanceId))
             {
                 writer.WritePropertyName("instanceId"u8);
                 writer.WriteStringValue(InstanceId);
             }
-            if (Core.Optional.IsDefined(Duration))
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Core.Optional.IsDefined(ProgressPercentage))
+            if (Optional.IsDefined(ProgressPercentage))
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
-            if (Core.Optional.IsDefined(TaskExecutionDetails))
+            if (Optional.IsDefined(TaskExecutionDetails))
             {
                 writer.WritePropertyName("taskExecutionDetails"u8);
                 writer.WriteStringValue(TaskExecutionDetails);
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<string> taskId = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<string> instanceId = default;
-            Core.Optional<TimeSpan> duration = default;
-            Core.Optional<string> status = default;
-            Core.Optional<double> progressPercentage = default;
-            Core.Optional<string> taskExecutionDetails = default;
+            Optional<string> taskId = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<string> instanceId = default;
+            Optional<TimeSpan> duration = default;
+            Optional<string> status = default;
+            Optional<double> progressPercentage = default;
+            Optional<string> taskExecutionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("taskId"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new IaasVmBackupJobTaskDetails(taskId.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), instanceId.Value, Core.Optional.ToNullable(duration), status.Value, Core.Optional.ToNullable(progressPercentage), taskExecutionDetails.Value);
+            return new IaasVmBackupJobTaskDetails(taskId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), instanceId.Value, Optional.ToNullable(duration), status.Value, Optional.ToNullable(progressPercentage), taskExecutionDetails.Value);
         }
     }
 }

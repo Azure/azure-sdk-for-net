@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal class SiteRecoveryVCenterOperationSource : Core.IOperationSource<SiteRecoveryVCenterResource>
+    internal class SiteRecoveryVCenterOperationSource : IOperationSource<SiteRecoveryVCenterResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _client = client;
         }
 
-        SiteRecoveryVCenterResource Core.IOperationSource<SiteRecoveryVCenterResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SiteRecoveryVCenterResource IOperationSource<SiteRecoveryVCenterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SiteRecoveryVCenterData.DeserializeSiteRecoveryVCenterData(document.RootElement);
             return new SiteRecoveryVCenterResource(_client, data);
         }
 
-        async ValueTask<SiteRecoveryVCenterResource> Core.IOperationSource<SiteRecoveryVCenterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SiteRecoveryVCenterResource> IOperationSource<SiteRecoveryVCenterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SiteRecoveryVCenterData.DeserializeSiteRecoveryVCenterData(document.RootElement);

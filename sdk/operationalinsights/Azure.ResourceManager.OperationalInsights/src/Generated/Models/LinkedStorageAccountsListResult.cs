@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of LinkedStorageAccountsListResult. </summary>
         internal LinkedStorageAccountsListResult()
         {
-            Value = new Core.ChangeTrackingList<OperationalInsightsLinkedStorageAccountsData>();
+            Value = new ChangeTrackingList<OperationalInsightsLinkedStorageAccountsData>();
         }
 
         /// <summary> Initializes a new instance of LinkedStorageAccountsListResult. </summary>

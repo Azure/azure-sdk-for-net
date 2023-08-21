@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of AppConfigurationStoreApiKeyListResult. </summary>
         internal AppConfigurationStoreApiKeyListResult()
         {
-            Value = new Core.ChangeTrackingList<AppConfigurationStoreApiKey>();
+            Value = new ChangeTrackingList<AppConfigurationStoreApiKey>();
         }
 
         /// <summary> Initializes a new instance of AppConfigurationStoreApiKeyListResult. </summary>

@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(QueryTableStatusRequestConverter))]
-    public partial class QueryTableStatusRequest : Core.IUtf8JsonSerializable
+    public partial class QueryTableStatusRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MaxSegmentCount))
+            if (Optional.IsDefined(MaxSegmentCount))
             {
                 writer.WritePropertyName("maxSegmentCount"u8);
                 writer.WriteNumberValue(MaxSegmentCount.Value);
             }
-            if (Core.Optional.IsDefined(ContinuationToken))
+            if (Optional.IsDefined(ContinuationToken))
             {
                 writer.WritePropertyName("continuationToken"u8);
                 writer.WriteObjectValue(ContinuationToken);

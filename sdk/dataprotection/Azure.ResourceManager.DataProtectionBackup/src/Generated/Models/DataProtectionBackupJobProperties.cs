@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             DataSourceLocation = dataSourceLocation;
             DataSourceName = dataSourceName;
             DataSourceType = dataSourceType;
-            ErrorDetails = new Core.ChangeTrackingList<ResponseError>();
+            ErrorDetails = new ChangeTrackingList<ResponseError>();
             IsUserTriggered = isUserTriggered;
             Operation = operation;
             OperationCategory = operationCategory;

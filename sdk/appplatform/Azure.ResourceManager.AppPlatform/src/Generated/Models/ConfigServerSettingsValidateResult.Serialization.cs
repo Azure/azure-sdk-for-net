@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<bool> isValid = default;
-            Core.Optional<IReadOnlyList<ConfigServerSettingsErrorRecord>> details = default;
+            Optional<bool> isValid = default;
+            Optional<IReadOnlyList<ConfigServerSettingsErrorRecord>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isValid"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new ConfigServerSettingsValidateResult(Core.Optional.ToNullable(isValid), Core.Optional.ToList(details));
+            return new ConfigServerSettingsValidateResult(Optional.ToNullable(isValid), Optional.ToList(details));
         }
     }
 }

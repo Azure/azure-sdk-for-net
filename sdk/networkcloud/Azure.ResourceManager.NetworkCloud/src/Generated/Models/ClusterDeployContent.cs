@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of ClusterDeployContent. </summary>
         public ClusterDeployContent()
         {
-            SkipValidationsForMachines = new Core.ChangeTrackingList<string>();
+            SkipValidationsForMachines = new ChangeTrackingList<string>();
         }
 
         /// <summary> The names of bare metal machines in the cluster that should be skipped during environment validation. </summary>

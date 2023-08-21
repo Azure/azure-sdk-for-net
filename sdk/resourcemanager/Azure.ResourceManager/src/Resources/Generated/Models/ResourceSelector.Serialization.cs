@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ResourceSelector : Core.IUtf8JsonSerializable
+    public partial class ResourceSelector : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsCollectionDefined(Selectors))
+            if (Optional.IsCollectionDefined(Selectors))
             {
                 writer.WritePropertyName("selectors"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IList<ResourceSelectorExpression>> selectors = default;
+            Optional<string> name = default;
+            Optional<IList<ResourceSelectorExpression>> selectors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ResourceSelector(name.Value, Core.Optional.ToList(selectors));
+            return new ResourceSelector(name.Value, Optional.ToList(selectors));
         }
     }
 }

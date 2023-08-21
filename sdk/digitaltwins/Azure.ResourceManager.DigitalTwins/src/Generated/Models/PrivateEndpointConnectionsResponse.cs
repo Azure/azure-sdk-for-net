@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Initializes a new instance of PrivateEndpointConnectionsResponse. </summary>
         internal PrivateEndpointConnectionsResponse()
         {
-            Value = new Core.ChangeTrackingList<DigitalTwinsPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<DigitalTwinsPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionsResponse. </summary>

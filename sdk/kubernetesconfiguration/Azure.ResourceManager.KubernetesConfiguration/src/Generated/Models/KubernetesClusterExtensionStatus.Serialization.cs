@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesClusterExtensionStatus : Core.IUtf8JsonSerializable
+    public partial class KubernetesClusterExtensionStatus : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Code))
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Core.Optional.IsDefined(DisplayStatus))
+            if (Optional.IsDefined(DisplayStatus))
             {
                 writer.WritePropertyName("displayStatus"u8);
                 writer.WriteStringValue(DisplayStatus);
             }
-            if (Core.Optional.IsDefined(Level))
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Message))
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Core.Optional.IsDefined(Time))
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<string> code = default;
-            Core.Optional<string> displayStatus = default;
-            Core.Optional<KubernetesClusterExtensionStatusLevel> level = default;
-            Core.Optional<string> message = default;
-            Core.Optional<string> time = default;
+            Optional<string> code = default;
+            Optional<string> displayStatus = default;
+            Optional<KubernetesClusterExtensionStatusLevel> level = default;
+            Optional<string> message = default;
+            Optional<string> time = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     continue;
                 }
             }
-            return new KubernetesClusterExtensionStatus(code.Value, displayStatus.Value, Core.Optional.ToNullable(level), message.Value, time.Value);
+            return new KubernetesClusterExtensionStatus(code.Value, displayStatus.Value, Optional.ToNullable(level), message.Value, time.Value);
         }
     }
 }

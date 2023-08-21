@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<IReadOnlyList<string>> values = default;
-            Core.Optional<string> reasonCode = default;
+            Optional<string> type = default;
+            Optional<IReadOnlyList<string>> values = default;
+            Optional<string> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new SkuRestriction(type.Value, Core.Optional.ToList(values), reasonCode.Value);
+            return new SkuRestriction(type.Value, Optional.ToList(values), reasonCode.Value);
         }
     }
 }

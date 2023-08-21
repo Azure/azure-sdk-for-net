@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    internal partial class UnknownRoleManagementPolicyRule : Core.IUtf8JsonSerializable
+    internal partial class UnknownRoleManagementPolicyRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Core.Optional.IsDefined(Target))
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
+            Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = "Unknown";
-            Core.Optional<RoleManagementPolicyRuleTarget> target = default;
+            Optional<RoleManagementPolicyRuleTarget> target = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

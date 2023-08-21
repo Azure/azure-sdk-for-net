@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of JobBaseResourceArmPaginatedResult. </summary>
         internal JobBaseResourceArmPaginatedResult()
         {
-            Value = new Core.ChangeTrackingList<MachineLearningJobData>();
+            Value = new ChangeTrackingList<MachineLearningJobData>();
         }
 
         /// <summary> Initializes a new instance of JobBaseResourceArmPaginatedResult. </summary>

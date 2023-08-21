@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class IntegrationAccountAgreementData : Core.IUtf8JsonSerializable
+    public partial class IntegrationAccountAgreementData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Logic
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Metadata))
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -65,15 +65,15 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<DateTimeOffset> changedTime = default;
-            Core.Optional<BinaryData> metadata = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> changedTime = default;
+            Optional<BinaryData> metadata = default;
             IntegrationAccountAgreementType agreementType = default;
             string hostPartner = default;
             string guestPartner = default;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Logic
                     continue;
                 }
             }
-            return new IntegrationAccountAgreementData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(changedTime), metadata.Value, agreementType, hostPartner, guestPartner, hostIdentity, guestIdentity, content);
+            return new IntegrationAccountAgreementData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, agreementType, hostPartner, guestPartner, hostIdentity, guestIdentity, content);
         }
     }
 }

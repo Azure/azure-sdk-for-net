@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class TransferFilterDetails : Core.IUtf8JsonSerializable
+    public partial class TransferFilterDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (Core.Optional.IsDefined(BlobFilterDetails))
+            if (Optional.IsDefined(BlobFilterDetails))
             {
                 writer.WritePropertyName("blobFilterDetails"u8);
                 writer.WriteObjectValue(BlobFilterDetails);
             }
-            if (Core.Optional.IsDefined(AzureFileFilterDetails))
+            if (Optional.IsDefined(AzureFileFilterDetails))
             {
                 writer.WritePropertyName("azureFileFilterDetails"u8);
                 writer.WriteObjectValue(AzureFileFilterDetails);
             }
-            if (Core.Optional.IsCollectionDefined(FilterFileDetails))
+            if (Optional.IsCollectionDefined(FilterFileDetails))
             {
                 writer.WritePropertyName("filterFileDetails"u8);
                 writer.WriteStartArray();
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataAccountType dataAccountType = default;
-            Core.Optional<BlobFilterDetails> blobFilterDetails = default;
-            Core.Optional<AzureFileFilterDetails> azureFileFilterDetails = default;
-            Core.Optional<IList<FilterFileDetails>> filterFileDetails = default;
+            Optional<BlobFilterDetails> blobFilterDetails = default;
+            Optional<AzureFileFilterDetails> azureFileFilterDetails = default;
+            Optional<IList<FilterFileDetails>> filterFileDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataAccountType"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new TransferFilterDetails(dataAccountType, blobFilterDetails.Value, azureFileFilterDetails.Value, Core.Optional.ToList(filterFileDetails));
+            return new TransferFilterDetails(dataAccountType, blobFilterDetails.Value, azureFileFilterDetails.Value, Optional.ToList(filterFileDetails));
         }
     }
 }

@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Core.Optional<string> title = default;
-            Core.Optional<string> message = default;
-            Core.Optional<string> cloud = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<string> title = default;
+            Optional<string> message = default;
+            Optional<string> cloud = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new EmergingIssueBannerType(title.Value, message.Value, cloud.Value, Core.Optional.ToNullable(lastModifiedTime));
+            return new EmergingIssueBannerType(title.Value, message.Value, cloud.Value, Optional.ToNullable(lastModifiedTime));
         }
     }
 }

@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class CustomAnalyzer : Core.IUtf8JsonSerializable
+    public partial class CustomAnalyzer : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tokenizer"u8);
             writer.WriteStringValue(TokenizerName.ToString());
-            if (Core.Optional.IsCollectionDefined(TokenFilters))
+            if (Optional.IsCollectionDefined(TokenFilters))
             {
                 writer.WritePropertyName("tokenFilters"u8);
                 writer.WriteStartArray();
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(CharFilters))
+            if (Optional.IsCollectionDefined(CharFilters))
             {
                 writer.WritePropertyName("charFilters"u8);
                 writer.WriteStartArray();
@@ -52,8 +52,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             LexicalTokenizerName tokenizer = default;
-            Core.Optional<IList<TokenFilterName>> tokenFilters = default;
-            Core.Optional<IList<string>> charFilters = default;
+            Optional<IList<TokenFilterName>> tokenFilters = default;
+            Optional<IList<string>> charFilters = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomAnalyzer(odataType, name, tokenizer, Core.Optional.ToList(tokenFilters), Core.Optional.ToList(charFilters));
+            return new CustomAnalyzer(odataType, name, tokenizer, Optional.ToList(tokenFilters), Optional.ToList(charFilters));
         }
     }
 }

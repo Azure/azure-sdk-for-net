@@ -18,7 +18,7 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Core.Optional<int> id = default;
+            Optional<int> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -31,7 +31,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new PointOfInterestCategorySet(Core.Optional.ToNullable(id));
+            return new PointOfInterestCategorySet(Optional.ToNullable(id));
         }
     }
 }

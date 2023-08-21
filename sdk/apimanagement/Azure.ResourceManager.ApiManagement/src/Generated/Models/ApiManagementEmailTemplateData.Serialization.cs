@@ -13,34 +13,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementEmailTemplateData : Core.IUtf8JsonSerializable
+    public partial class ApiManagementEmailTemplateData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Subject))
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (Core.Optional.IsDefined(Body))
+            if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
-            if (Core.Optional.IsDefined(Title))
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> subject = default;
-            Core.Optional<string> body = default;
-            Core.Optional<string> title = default;
-            Core.Optional<string> description = default;
-            Core.Optional<bool> isDefault = default;
-            Core.Optional<IList<EmailTemplateParametersContractProperties>> parameters = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> subject = default;
+            Optional<string> body = default;
+            Optional<string> title = default;
+            Optional<string> description = default;
+            Optional<bool> isDefault = default;
+            Optional<IList<EmailTemplateParametersContractProperties>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementEmailTemplateData(id, name, type, systemData.Value, subject.Value, body.Value, title.Value, description.Value, Core.Optional.ToNullable(isDefault), Core.Optional.ToList(parameters));
+            return new ApiManagementEmailTemplateData(id, name, type, systemData.Value, subject.Value, body.Value, title.Value, description.Value, Optional.ToNullable(isDefault), Optional.ToList(parameters));
         }
     }
 }

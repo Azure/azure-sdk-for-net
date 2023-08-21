@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Argument.AssertNotNull(content, nameof(content));
 
             Content = content;
-            Polygon = new Core.ChangeTrackingList<float>();
+            Polygon = new ChangeTrackingList<float>();
             Span = span;
             Confidence = confidence;
         }

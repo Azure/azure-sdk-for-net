@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class FrontDoorRouteCacheConfiguration : Core.IUtf8JsonSerializable
+    public partial class FrontDoorRouteCacheConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(QueryStringCachingBehavior))
+            if (Optional.IsDefined(QueryStringCachingBehavior))
             {
                 writer.WritePropertyName("queryStringCachingBehavior"u8);
                 writer.WriteStringValue(QueryStringCachingBehavior.Value.ToString());
             }
-            if (Core.Optional.IsDefined(QueryParameters))
+            if (Optional.IsDefined(QueryParameters))
             {
                 writer.WritePropertyName("queryParameters"u8);
                 writer.WriteStringValue(QueryParameters);
             }
-            if (Core.Optional.IsDefined(CompressionSettings))
+            if (Optional.IsDefined(CompressionSettings))
             {
                 writer.WritePropertyName("compressionSettings"u8);
                 writer.WriteObjectValue(CompressionSettings);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Core.Optional<FrontDoorQueryStringCachingBehavior> queryStringCachingBehavior = default;
-            Core.Optional<string> queryParameters = default;
-            Core.Optional<RouteCacheCompressionSettings> compressionSettings = default;
+            Optional<FrontDoorQueryStringCachingBehavior> queryStringCachingBehavior = default;
+            Optional<string> queryParameters = default;
+            Optional<RouteCacheCompressionSettings> compressionSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryStringCachingBehavior"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new FrontDoorRouteCacheConfiguration(Core.Optional.ToNullable(queryStringCachingBehavior), queryParameters.Value, compressionSettings.Value);
+            return new FrontDoorRouteCacheConfiguration(Optional.ToNullable(queryStringCachingBehavior), queryParameters.Value, compressionSettings.Value);
         }
     }
 }

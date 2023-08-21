@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageCapability. </summary>
         internal PostgreSqlFlexibleServerStorageCapability()
         {
-            SupportedIopsTiers = new Core.ChangeTrackingList<PostgreSqlFlexibleServerStorageTierCapability>();
+            SupportedIopsTiers = new ChangeTrackingList<PostgreSqlFlexibleServerStorageTierCapability>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageCapability. </summary>

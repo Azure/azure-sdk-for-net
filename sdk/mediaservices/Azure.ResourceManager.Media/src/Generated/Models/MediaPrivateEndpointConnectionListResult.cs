@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of MediaPrivateEndpointConnectionListResult. </summary>
         internal MediaPrivateEndpointConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of MediaPrivateEndpointConnectionListResult. </summary>

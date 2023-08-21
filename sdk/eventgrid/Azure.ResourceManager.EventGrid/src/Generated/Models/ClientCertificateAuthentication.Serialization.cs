@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class ClientCertificateAuthentication : Core.IUtf8JsonSerializable
+    public partial class ClientCertificateAuthentication : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ValidationScheme))
+            if (Optional.IsDefined(ValidationScheme))
             {
                 writer.WritePropertyName("validationScheme"u8);
                 writer.WriteStringValue(ValidationScheme.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(AllowedThumbprints))
+            if (Optional.IsCollectionDefined(AllowedThumbprints))
             {
                 writer.WritePropertyName("allowedThumbprints"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Core.Optional<ClientCertificateValidationScheme> validationScheme = default;
-            Core.Optional<IList<string>> allowedThumbprints = default;
+            Optional<ClientCertificateValidationScheme> validationScheme = default;
+            Optional<IList<string>> allowedThumbprints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationScheme"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new ClientCertificateAuthentication(Core.Optional.ToNullable(validationScheme), Core.Optional.ToList(allowedThumbprints));
+            return new ClientCertificateAuthentication(Optional.ToNullable(validationScheme), Optional.ToList(allowedThumbprints));
         }
     }
 }

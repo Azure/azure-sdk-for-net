@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class AadBasedSecurityPrincipal : Core.IUtf8JsonSerializable
+    public partial class AadBasedSecurityPrincipal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrincipalId))
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (Core.Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Core.Optional.IsDefined(LedgerRoleName))
+            if (Optional.IsDefined(LedgerRoleName))
             {
                 writer.WritePropertyName("ledgerRoleName"u8);
                 writer.WriteStringValue(LedgerRoleName.Value.ToString());
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Core.Optional<Guid> principalId = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<ConfidentialLedgerRoleName> ledgerRoleName = default;
+            Optional<Guid> principalId = default;
+            Optional<Guid> tenantId = default;
+            Optional<ConfidentialLedgerRoleName> ledgerRoleName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     continue;
                 }
             }
-            return new AadBasedSecurityPrincipal(Core.Optional.ToNullable(principalId), Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(ledgerRoleName));
+            return new AadBasedSecurityPrincipal(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(ledgerRoleName));
         }
     }
 }

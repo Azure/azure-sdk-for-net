@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<KustoScriptData>> value = default;
+            Optional<IReadOnlyList<KustoScriptData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new ScriptListResult(Core.Optional.ToList(value));
+            return new ScriptListResult(Optional.ToList(value));
         }
     }
 }

@@ -15,9 +15,9 @@ using Azure.Core;
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(OperationStatusResultConverter))]
-    public partial class OperationStatusResult : Core.IUtf8JsonSerializable
+    public partial class OperationStatusResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
             string status = default;
-            Core.Optional<float> percentComplete = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<IReadOnlyList<OperationStatusResult>> operations = default;
-            Core.Optional<ResponseError> error = default;
+            Optional<float> percentComplete = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<IReadOnlyList<OperationStatusResult>> operations = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new OperationStatusResult(id, name.Value, status, Core.Optional.ToNullable(percentComplete), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToList(operations), error.Value);
+            return new OperationStatusResult(id, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value);
         }
 
         internal partial class OperationStatusResultConverter : JsonConverter<OperationStatusResult>

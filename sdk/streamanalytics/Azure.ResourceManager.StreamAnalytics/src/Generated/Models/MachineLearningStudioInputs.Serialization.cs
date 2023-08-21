@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class MachineLearningStudioInputs : Core.IUtf8JsonSerializable
+    public partial class MachineLearningStudioInputs : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsCollectionDefined(ColumnNames))
+            if (Optional.IsCollectionDefined(ColumnNames))
             {
                 writer.WritePropertyName("columnNames"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IList<MachineLearningStudioInputColumn>> columnNames = default;
+            Optional<string> name = default;
+            Optional<IList<MachineLearningStudioInputColumn>> columnNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new MachineLearningStudioInputs(name.Value, Core.Optional.ToList(columnNames));
+            return new MachineLearningStudioInputs(name.Value, Optional.ToList(columnNames));
         }
     }
 }

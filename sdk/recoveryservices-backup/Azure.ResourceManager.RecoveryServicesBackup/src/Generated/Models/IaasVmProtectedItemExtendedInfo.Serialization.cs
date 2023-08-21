@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmProtectedItemExtendedInfo : Core.IUtf8JsonSerializable
+    public partial class IaasVmProtectedItemExtendedInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(OldestRecoverOn))
+            if (Optional.IsDefined(OldestRecoverOn))
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
                 writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(OldestRecoveryPointInVault))
+            if (Optional.IsDefined(OldestRecoveryPointInVault))
             {
                 writer.WritePropertyName("oldestRecoveryPointInVault"u8);
                 writer.WriteStringValue(OldestRecoveryPointInVault.Value, "O");
             }
-            if (Core.Optional.IsDefined(OldestRecoveryPointInArchive))
+            if (Optional.IsDefined(OldestRecoveryPointInArchive))
             {
                 writer.WritePropertyName("oldestRecoveryPointInArchive"u8);
                 writer.WriteStringValue(OldestRecoveryPointInArchive.Value, "O");
             }
-            if (Core.Optional.IsDefined(NewestRecoveryPointInArchive))
+            if (Optional.IsDefined(NewestRecoveryPointInArchive))
             {
                 writer.WritePropertyName("newestRecoveryPointInArchive"u8);
                 writer.WriteStringValue(NewestRecoveryPointInArchive.Value, "O");
             }
-            if (Core.Optional.IsDefined(RecoveryPointCount))
+            if (Optional.IsDefined(RecoveryPointCount))
             {
                 writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
-            if (Core.Optional.IsDefined(IsPolicyInconsistent))
+            if (Optional.IsDefined(IsPolicyInconsistent))
             {
                 writer.WritePropertyName("policyInconsistent"u8);
                 writer.WriteBooleanValue(IsPolicyInconsistent.Value);
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> oldestRecoveryPoint = default;
-            Core.Optional<DateTimeOffset> oldestRecoveryPointInVault = default;
-            Core.Optional<DateTimeOffset> oldestRecoveryPointInArchive = default;
-            Core.Optional<DateTimeOffset> newestRecoveryPointInArchive = default;
-            Core.Optional<int> recoveryPointCount = default;
-            Core.Optional<bool> policyInconsistent = default;
+            Optional<DateTimeOffset> oldestRecoveryPoint = default;
+            Optional<DateTimeOffset> oldestRecoveryPointInVault = default;
+            Optional<DateTimeOffset> oldestRecoveryPointInArchive = default;
+            Optional<DateTimeOffset> newestRecoveryPointInArchive = default;
+            Optional<int> recoveryPointCount = default;
+            Optional<bool> policyInconsistent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("oldestRecoveryPoint"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new IaasVmProtectedItemExtendedInfo(Core.Optional.ToNullable(oldestRecoveryPoint), Core.Optional.ToNullable(oldestRecoveryPointInVault), Core.Optional.ToNullable(oldestRecoveryPointInArchive), Core.Optional.ToNullable(newestRecoveryPointInArchive), Core.Optional.ToNullable(recoveryPointCount), Core.Optional.ToNullable(policyInconsistent));
+            return new IaasVmProtectedItemExtendedInfo(Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(oldestRecoveryPointInVault), Optional.ToNullable(oldestRecoveryPointInArchive), Optional.ToNullable(newestRecoveryPointInArchive), Optional.ToNullable(recoveryPointCount), Optional.ToNullable(policyInconsistent));
         }
     }
 }

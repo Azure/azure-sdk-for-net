@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBUniqueKeyPolicy. </summary>
         public CosmosDBUniqueKeyPolicy()
         {
-            UniqueKeys = new Core.ChangeTrackingList<CosmosDBUniqueKey>();
+            UniqueKeys = new ChangeTrackingList<CosmosDBUniqueKey>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBUniqueKeyPolicy. </summary>

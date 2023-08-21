@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ReportResourceData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ReportResourceData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     continue;
                 }
             }
-            return new ReportResourceList(Core.Optional.ToList(value), nextLink.Value);
+            return new ReportResourceList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

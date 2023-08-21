@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Core.Optional<string> href = default;
-            Core.Optional<string> label = default;
+            Optional<string> href = default;
+            Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("href"u8))

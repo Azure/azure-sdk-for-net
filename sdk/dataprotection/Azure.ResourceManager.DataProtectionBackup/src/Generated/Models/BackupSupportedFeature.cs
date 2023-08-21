@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of BackupSupportedFeature. </summary>
         internal BackupSupportedFeature()
         {
-            ExposureControlledFeatures = new Core.ChangeTrackingList<string>();
+            ExposureControlledFeatures = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BackupSupportedFeature. </summary>

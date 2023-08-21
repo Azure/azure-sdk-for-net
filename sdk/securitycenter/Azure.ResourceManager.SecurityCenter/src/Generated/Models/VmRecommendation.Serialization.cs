@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class VmRecommendation : Core.IUtf8JsonSerializable
+    public partial class VmRecommendation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ConfigurationStatus))
+            if (Optional.IsDefined(ConfigurationStatus))
             {
                 writer.WritePropertyName("configurationStatus"u8);
                 writer.WriteStringValue(ConfigurationStatus.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RecommendationAction))
+            if (Optional.IsDefined(RecommendationAction))
             {
                 writer.WritePropertyName("recommendationAction"u8);
                 writer.WriteStringValue(RecommendationAction.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Core.Optional.IsDefined(EnforcementSupport))
+            if (Optional.IsDefined(EnforcementSupport))
             {
                 writer.WritePropertyName("enforcementSupport"u8);
                 writer.WriteStringValue(EnforcementSupport.Value.ToString());
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
-            Core.Optional<RecommendationAction> recommendationAction = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<SecurityCenterVmEnforcementSupportState> enforcementSupport = default;
+            Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
+            Optional<RecommendationAction> recommendationAction = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<SecurityCenterVmEnforcementSupportState> enforcementSupport = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurationStatus"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new VmRecommendation(Core.Optional.ToNullable(configurationStatus), Core.Optional.ToNullable(recommendationAction), resourceId.Value, Core.Optional.ToNullable(enforcementSupport));
+            return new VmRecommendation(Optional.ToNullable(configurationStatus), Optional.ToNullable(recommendationAction), resourceId.Value, Optional.ToNullable(enforcementSupport));
         }
     }
 }

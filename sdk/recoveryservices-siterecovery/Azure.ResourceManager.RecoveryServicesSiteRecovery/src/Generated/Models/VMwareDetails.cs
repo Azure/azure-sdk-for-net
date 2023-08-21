@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of VMwareDetails. </summary>
         internal VMwareDetails()
         {
-            ProcessServers = new Core.ChangeTrackingList<SiteRecoveryProcessServer>();
-            MasterTargetServers = new Core.ChangeTrackingList<MasterTargetServer>();
-            RunAsAccounts = new Core.ChangeTrackingList<SiteRecoveryRunAsAccount>();
-            SwitchProviderBlockingErrorDetails = new Core.ChangeTrackingList<InMageFabricSwitchProviderBlockingErrorDetails>();
+            ProcessServers = new ChangeTrackingList<SiteRecoveryProcessServer>();
+            MasterTargetServers = new ChangeTrackingList<MasterTargetServer>();
+            RunAsAccounts = new ChangeTrackingList<SiteRecoveryRunAsAccount>();
+            SwitchProviderBlockingErrorDetails = new ChangeTrackingList<InMageFabricSwitchProviderBlockingErrorDetails>();
             InstanceType = "VMware";
         }
 

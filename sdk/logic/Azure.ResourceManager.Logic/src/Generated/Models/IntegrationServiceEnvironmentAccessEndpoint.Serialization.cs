@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    internal partial class IntegrationServiceEnvironmentAccessEndpoint : Core.IUtf8JsonSerializable
+    internal partial class IntegrationServiceEnvironmentAccessEndpoint : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EndpointType))
+            if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EndpointType.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<IntegrationServiceEnvironmentAccessEndpointType> type = default;
+            Optional<IntegrationServiceEnvironmentAccessEndpointType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new IntegrationServiceEnvironmentAccessEndpoint(Core.Optional.ToNullable(type));
+            return new IntegrationServiceEnvironmentAccessEndpoint(Optional.ToNullable(type));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of SessionHostAgentUpdatePatchProperties. </summary>
         public SessionHostAgentUpdatePatchProperties()
         {
-            MaintenanceWindows = new Core.ChangeTrackingList<MaintenanceWindowPatchProperties>();
+            MaintenanceWindows = new ChangeTrackingList<MaintenanceWindowPatchProperties>();
         }
 
         /// <summary> Initializes a new instance of SessionHostAgentUpdatePatchProperties. </summary>

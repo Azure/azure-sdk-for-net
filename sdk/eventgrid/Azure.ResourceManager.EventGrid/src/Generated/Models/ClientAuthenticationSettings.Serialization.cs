@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    internal partial class ClientAuthenticationSettings : Core.IUtf8JsonSerializable
+    internal partial class ClientAuthenticationSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AlternativeAuthenticationNameSources))
+            if (Optional.IsCollectionDefined(AlternativeAuthenticationNameSources))
             {
                 writer.WritePropertyName("alternativeAuthenticationNameSources"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Core.Optional<IList<AlternativeAuthenticationNameSource>> alternativeAuthenticationNameSources = default;
+            Optional<IList<AlternativeAuthenticationNameSource>> alternativeAuthenticationNameSources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alternativeAuthenticationNameSources"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new ClientAuthenticationSettings(Core.Optional.ToList(alternativeAuthenticationNameSources));
+            return new ClientAuthenticationSettings(Optional.ToList(alternativeAuthenticationNameSources));
         }
     }
 }

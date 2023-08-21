@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SynapseRestorePointData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<SynapseRestorePointData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseRestorePointListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new SynapseRestorePointListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

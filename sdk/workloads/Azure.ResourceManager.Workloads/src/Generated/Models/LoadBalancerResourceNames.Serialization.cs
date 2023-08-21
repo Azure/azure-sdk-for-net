@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class LoadBalancerResourceNames : Core.IUtf8JsonSerializable
+    public partial class LoadBalancerResourceNames : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LoadBalancerName))
+            if (Optional.IsDefined(LoadBalancerName))
             {
                 writer.WritePropertyName("loadBalancerName"u8);
                 writer.WriteStringValue(LoadBalancerName);
             }
-            if (Core.Optional.IsCollectionDefined(FrontendIPConfigurationNames))
+            if (Optional.IsCollectionDefined(FrontendIPConfigurationNames))
             {
                 writer.WritePropertyName("frontendIpConfigurationNames"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(BackendPoolNames))
+            if (Optional.IsCollectionDefined(BackendPoolNames))
             {
                 writer.WritePropertyName("backendPoolNames"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(HealthProbeNames))
+            if (Optional.IsCollectionDefined(HealthProbeNames))
             {
                 writer.WritePropertyName("healthProbeNames"u8);
                 writer.WriteStartArray();
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<string> loadBalancerName = default;
-            Core.Optional<IList<string>> frontendIPConfigurationNames = default;
-            Core.Optional<IList<string>> backendPoolNames = default;
-            Core.Optional<IList<string>> healthProbeNames = default;
+            Optional<string> loadBalancerName = default;
+            Optional<IList<string>> frontendIPConfigurationNames = default;
+            Optional<IList<string>> backendPoolNames = default;
+            Optional<IList<string>> healthProbeNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loadBalancerName"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new LoadBalancerResourceNames(loadBalancerName.Value, Core.Optional.ToList(frontendIPConfigurationNames), Core.Optional.ToList(backendPoolNames), Core.Optional.ToList(healthProbeNames));
+            return new LoadBalancerResourceNames(loadBalancerName.Value, Optional.ToList(frontendIPConfigurationNames), Optional.ToList(backendPoolNames), Optional.ToList(healthProbeNames));
         }
     }
 }

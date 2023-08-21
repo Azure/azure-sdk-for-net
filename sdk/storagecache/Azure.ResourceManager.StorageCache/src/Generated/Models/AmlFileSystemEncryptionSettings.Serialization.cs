@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    internal partial class AmlFileSystemEncryptionSettings : Core.IUtf8JsonSerializable
+    internal partial class AmlFileSystemEncryptionSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeyEncryptionKey))
+            if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<StorageCacheEncryptionKeyVaultKeyReference> keyEncryptionKey = default;
+            Optional<StorageCacheEncryptionKeyVaultKeyReference> keyEncryptionKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyEncryptionKey"u8))

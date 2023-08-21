@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningQuotaProperties : Core.IUtf8JsonSerializable
+    public partial class MachineLearningQuotaProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(QuotaBasePropertiesType))
+            if (Optional.IsDefined(QuotaBasePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(QuotaBasePropertiesType);
             }
-            if (Core.Optional.IsDefined(Limit))
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Core.Optional.IsDefined(Unit))
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());

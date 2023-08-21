@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SnapshotRunAsAccountId = snapshotRunAsAccountId;
             TargetResourceGroupId = targetResourceGroupId;
             TargetNetworkId = targetNetworkId;
-            TargetVmTags = new Core.ChangeTrackingDictionary<string, string>();
-            SeedDiskTags = new Core.ChangeTrackingDictionary<string, string>();
-            TargetDiskTags = new Core.ChangeTrackingDictionary<string, string>();
-            TargetNicTags = new Core.ChangeTrackingDictionary<string, string>();
+            TargetVmTags = new ChangeTrackingDictionary<string, string>();
+            SeedDiskTags = new ChangeTrackingDictionary<string, string>();
+            TargetDiskTags = new ChangeTrackingDictionary<string, string>();
+            TargetNicTags = new ChangeTrackingDictionary<string, string>();
             InstanceType = "VMwareCbt";
         }
 

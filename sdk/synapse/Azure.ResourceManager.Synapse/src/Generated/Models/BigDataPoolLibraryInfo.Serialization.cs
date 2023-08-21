@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class BigDataPoolLibraryInfo : Core.IUtf8JsonSerializable
+    public partial class BigDataPoolLibraryInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Core.Optional.IsDefined(ContainerName))
+            if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (Core.Optional.IsDefined(UploadedOn))
+            if (Optional.IsDefined(UploadedOn))
             {
                 writer.WritePropertyName("uploadedTimestamp"u8);
                 writer.WriteStringValue(UploadedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(LibraryInfoType))
+            if (Optional.IsDefined(LibraryInfoType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LibraryInfoType);
@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> path = default;
-            Core.Optional<string> containerName = default;
-            Core.Optional<DateTimeOffset> uploadedTimestamp = default;
-            Core.Optional<string> type = default;
-            Core.Optional<string> provisioningStatus = default;
-            Core.Optional<string> creatorId = default;
+            Optional<string> name = default;
+            Optional<string> path = default;
+            Optional<string> containerName = default;
+            Optional<DateTimeOffset> uploadedTimestamp = default;
+            Optional<string> type = default;
+            Optional<string> provisioningStatus = default;
+            Optional<string> creatorId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new BigDataPoolLibraryInfo(name.Value, path.Value, containerName.Value, Core.Optional.ToNullable(uploadedTimestamp), type.Value, provisioningStatus.Value, creatorId.Value);
+            return new BigDataPoolLibraryInfo(name.Value, path.Value, containerName.Value, Optional.ToNullable(uploadedTimestamp), type.Value, provisioningStatus.Value, creatorId.Value);
         }
     }
 }

@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IReadOnlyList<PostgreSqlFlexibleServerEditionCapability>> supportedServerEditions = default;
-            Core.Optional<IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability>> supportedServerVersions = default;
-            Core.Optional<PostgreSqlFlexibleServerFastProvisioningSupported> fastProvisioningSupported = default;
-            Core.Optional<IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>> supportedFastProvisioningEditions = default;
-            Core.Optional<PostgreSqlFlexibleServerGeoBackupSupported> geoBackupSupported = default;
-            Core.Optional<PostgreSqlFlexibleServerZoneRedundantHaSupported> zoneRedundantHaSupported = default;
-            Core.Optional<PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported> zoneRedundantHaAndGeoBackupSupported = default;
-            Core.Optional<PostgreSqlFlexibleServerStorageAutoGrowthSupported> storageAutoGrowthSupported = default;
-            Core.Optional<PostgreSqlFlexibleServerOnlineResizeSupported> onlineResizeSupported = default;
-            Core.Optional<PostgreSqlFlexibleServerZoneRedundantRestricted> restricted = default;
-            Core.Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Core.Optional<string> reason = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<PostgreSqlFlexibleServerEditionCapability>> supportedServerEditions = default;
+            Optional<IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability>> supportedServerVersions = default;
+            Optional<PostgreSqlFlexibleServerFastProvisioningSupported> fastProvisioningSupported = default;
+            Optional<IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>> supportedFastProvisioningEditions = default;
+            Optional<PostgreSqlFlexibleServerGeoBackupSupported> geoBackupSupported = default;
+            Optional<PostgreSqlFlexibleServerZoneRedundantHaSupported> zoneRedundantHaSupported = default;
+            Optional<PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported> zoneRedundantHaAndGeoBackupSupported = default;
+            Optional<PostgreSqlFlexibleServerStorageAutoGrowthSupported> storageAutoGrowthSupported = default;
+            Optional<PostgreSqlFlexibleServerOnlineResizeSupported> onlineResizeSupported = default;
+            Optional<PostgreSqlFlexibleServerZoneRedundantRestricted> restricted = default;
+            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerCapabilityProperties(Core.Optional.ToNullable(status), reason.Value, name.Value, Core.Optional.ToList(supportedServerEditions), Core.Optional.ToList(supportedServerVersions), Core.Optional.ToNullable(fastProvisioningSupported), Core.Optional.ToList(supportedFastProvisioningEditions), Core.Optional.ToNullable(geoBackupSupported), Core.Optional.ToNullable(zoneRedundantHaSupported), Core.Optional.ToNullable(zoneRedundantHaAndGeoBackupSupported), Core.Optional.ToNullable(storageAutoGrowthSupported), Core.Optional.ToNullable(onlineResizeSupported), Core.Optional.ToNullable(restricted));
+            return new PostgreSqlFlexibleServerCapabilityProperties(Optional.ToNullable(status), reason.Value, name.Value, Optional.ToList(supportedServerEditions), Optional.ToList(supportedServerVersions), Optional.ToNullable(fastProvisioningSupported), Optional.ToList(supportedFastProvisioningEditions), Optional.ToNullable(geoBackupSupported), Optional.ToNullable(zoneRedundantHaSupported), Optional.ToNullable(zoneRedundantHaAndGeoBackupSupported), Optional.ToNullable(storageAutoGrowthSupported), Optional.ToNullable(onlineResizeSupported), Optional.ToNullable(restricted));
         }
     }
 }

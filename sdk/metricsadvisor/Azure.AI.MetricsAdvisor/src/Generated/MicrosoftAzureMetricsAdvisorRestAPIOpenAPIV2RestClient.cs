@@ -161,7 +161,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -282,7 +282,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -292,7 +292,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> anomaly alerting configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders>> CreateAnomalyAlertingConfigurationAsync(AnomalyAlertConfiguration body, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders>> CreateAnomalyAlertingConfigurationAsync(AnomalyAlertConfiguration body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -305,7 +305,7 @@ namespace Azure.AI.MetricsAdvisor
             switch (message.Response.Status)
             {
                 case 201:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -315,7 +315,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> anomaly alerting configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Core.ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> CreateAnomalyAlertingConfiguration(AnomalyAlertConfiguration body, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> CreateAnomalyAlertingConfiguration(AnomalyAlertConfiguration body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -328,7 +328,7 @@ namespace Azure.AI.MetricsAdvisor
             switch (message.Response.Status)
             {
                 case 201:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -356,7 +356,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -664,7 +664,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -785,7 +785,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -795,7 +795,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> anomaly detection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders>> CreateAnomalyDetectionConfigurationAsync(AnomalyDetectionConfiguration body, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders>> CreateAnomalyDetectionConfigurationAsync(AnomalyDetectionConfiguration body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -808,7 +808,7 @@ namespace Azure.AI.MetricsAdvisor
             switch (message.Response.Status)
             {
                 case 201:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -818,7 +818,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> anomaly detection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Core.ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> CreateAnomalyDetectionConfiguration(AnomalyDetectionConfiguration body, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> CreateAnomalyDetectionConfiguration(AnomalyDetectionConfiguration body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -831,7 +831,7 @@ namespace Azure.AI.MetricsAdvisor
             switch (message.Response.Status)
             {
                 case 201:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -921,7 +921,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -1005,7 +1005,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -1093,7 +1093,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -1177,7 +1177,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -1397,7 +1397,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -1407,7 +1407,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Create data source credential request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders>> CreateCredentialAsync(DataSourceCredentialEntity body, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders>> CreateCredentialAsync(DataSourceCredentialEntity body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -1420,7 +1420,7 @@ namespace Azure.AI.MetricsAdvisor
             switch (message.Response.Status)
             {
                 case 201:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1430,7 +1430,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Create data source credential request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Core.ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders> CreateCredential(DataSourceCredentialEntity body, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders> CreateCredential(DataSourceCredentialEntity body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -1443,7 +1443,7 @@ namespace Azure.AI.MetricsAdvisor
             switch (message.Response.Status)
             {
                 case 201:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1528,7 +1528,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -1802,7 +1802,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -1812,7 +1812,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> parameters to create a data feed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders>> CreateDataFeedAsync(DataFeedDetail body, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders>> CreateDataFeedAsync(DataFeedDetail body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -1825,7 +1825,7 @@ namespace Azure.AI.MetricsAdvisor
             switch (message.Response.Status)
             {
                 case 201:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1835,7 +1835,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> parameters to create a data feed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Core.ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> CreateDataFeed(DataFeedDetail body, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> CreateDataFeed(DataFeedDetail body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -1848,7 +1848,7 @@ namespace Azure.AI.MetricsAdvisor
             switch (message.Response.Status)
             {
                 case 201:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1924,7 +1924,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -2110,7 +2110,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -2186,7 +2186,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -2196,7 +2196,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> metric feedback. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders>> CreateMetricFeedbackAsync(MetricFeedback body, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders>> CreateMetricFeedbackAsync(MetricFeedback body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -2209,7 +2209,7 @@ namespace Azure.AI.MetricsAdvisor
             switch (message.Response.Status)
             {
                 case 201:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -2219,7 +2219,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> metric feedback. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Core.ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> CreateMetricFeedback(MetricFeedback body, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> CreateMetricFeedback(MetricFeedback body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -2232,7 +2232,7 @@ namespace Azure.AI.MetricsAdvisor
             switch (message.Response.Status)
             {
                 case 201:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -2322,7 +2322,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -2332,7 +2332,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Create hook request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders>> CreateHookAsync(NotificationHook body, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders>> CreateHookAsync(NotificationHook body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -2345,7 +2345,7 @@ namespace Azure.AI.MetricsAdvisor
             switch (message.Response.Status)
             {
                 case 201:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -2355,7 +2355,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Create hook request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Core.ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> CreateHook(NotificationHook body, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> CreateHook(NotificationHook body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -2368,7 +2368,7 @@ namespace Azure.AI.MetricsAdvisor
             switch (message.Response.Status)
             {
                 case 201:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -2444,7 +2444,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -2575,7 +2575,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -2655,7 +2655,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -2779,7 +2779,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -2863,7 +2863,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -2951,7 +2951,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -3109,7 +3109,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -3188,7 +3188,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -3271,7 +3271,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -3354,7 +3354,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -3437,7 +3437,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -3520,7 +3520,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -3603,7 +3603,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -3686,7 +3686,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -3769,7 +3769,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;

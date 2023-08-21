@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmWorkloadSqlInstanceWorkloadItem : Core.IUtf8JsonSerializable
+    public partial class VmWorkloadSqlInstanceWorkloadItem : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(DataDirectoryPaths))
+            if (Optional.IsCollectionDefined(DataDirectoryPaths))
             {
                 writer.WritePropertyName("dataDirectoryPaths"u8);
                 writer.WriteStartArray();
@@ -26,49 +26,49 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ParentName))
+            if (Optional.IsDefined(ParentName))
             {
                 writer.WritePropertyName("parentName"u8);
                 writer.WriteStringValue(ParentName);
             }
-            if (Core.Optional.IsDefined(ServerName))
+            if (Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (Core.Optional.IsDefined(IsAutoProtectable))
+            if (Optional.IsDefined(IsAutoProtectable))
             {
                 writer.WritePropertyName("isAutoProtectable"u8);
                 writer.WriteBooleanValue(IsAutoProtectable.Value);
             }
-            if (Core.Optional.IsDefined(SubInquiredItemCount))
+            if (Optional.IsDefined(SubInquiredItemCount))
             {
                 writer.WritePropertyName("subinquireditemcount"u8);
                 writer.WriteNumberValue(SubInquiredItemCount.Value);
             }
-            if (Core.Optional.IsDefined(SubWorkloadItemCount))
+            if (Optional.IsDefined(SubWorkloadItemCount))
             {
                 writer.WritePropertyName("subWorkloadItemCount"u8);
                 writer.WriteNumberValue(SubWorkloadItemCount.Value);
             }
-            if (Core.Optional.IsDefined(BackupManagementType))
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
-            if (Core.Optional.IsDefined(WorkloadType))
+            if (Optional.IsDefined(WorkloadType))
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
             writer.WritePropertyName("workloadItemType"u8);
             writer.WriteStringValue(WorkloadItemType);
-            if (Core.Optional.IsDefined(FriendlyName))
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Core.Optional.IsDefined(ProtectionState))
+            if (Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<IList<SqlDataDirectory>> dataDirectoryPaths = default;
-            Core.Optional<string> parentName = default;
-            Core.Optional<string> serverName = default;
-            Core.Optional<bool> isAutoProtectable = default;
-            Core.Optional<int> subinquireditemcount = default;
-            Core.Optional<int> subWorkloadItemCount = default;
-            Core.Optional<string> backupManagementType = default;
-            Core.Optional<string> workloadType = default;
+            Optional<IList<SqlDataDirectory>> dataDirectoryPaths = default;
+            Optional<string> parentName = default;
+            Optional<string> serverName = default;
+            Optional<bool> isAutoProtectable = default;
+            Optional<int> subinquireditemcount = default;
+            Optional<int> subWorkloadItemCount = default;
+            Optional<string> backupManagementType = default;
+            Optional<string> workloadType = default;
             string workloadItemType = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<BackupProtectionStatus> protectionState = default;
+            Optional<string> friendlyName = default;
+            Optional<BackupProtectionStatus> protectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataDirectoryPaths"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new VmWorkloadSqlInstanceWorkloadItem(backupManagementType.Value, workloadType.Value, workloadItemType, friendlyName.Value, Core.Optional.ToNullable(protectionState), parentName.Value, serverName.Value, Core.Optional.ToNullable(isAutoProtectable), Core.Optional.ToNullable(subinquireditemcount), Core.Optional.ToNullable(subWorkloadItemCount), Core.Optional.ToList(dataDirectoryPaths));
+            return new VmWorkloadSqlInstanceWorkloadItem(backupManagementType.Value, workloadType.Value, workloadItemType, friendlyName.Value, Optional.ToNullable(protectionState), parentName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subWorkloadItemCount), Optional.ToList(dataDirectoryPaths));
         }
     }
 }

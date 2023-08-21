@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _staticSiteRestClient.DeleteStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_staticSiteClientDiagnostics, Pipeline, _staticSiteRestClient.CreateDeleteStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_staticSiteClientDiagnostics, Pipeline, _staticSiteRestClient.CreateDeleteStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSiteRestClient.DeleteStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AppServiceArmOperation(_staticSiteClientDiagnostics, Pipeline, _staticSiteRestClient.CreateDeleteStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_staticSiteClientDiagnostics, Pipeline, _staticSiteRestClient.CreateDeleteStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.AppService
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteUsersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateListStaticSiteUsersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StaticSiteUser.DeserializeStaticSiteUser, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetUsers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StaticSiteUser.DeserializeStaticSiteUser, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetUsers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.AppService
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteUsersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateListStaticSiteUsersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StaticSiteUser.DeserializeStaticSiteUser, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetUsers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StaticSiteUser.DeserializeStaticSiteUser, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetUsers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -932,7 +932,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _staticSiteRestClient.DetachStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_staticSiteClientDiagnostics, Pipeline, _staticSiteRestClient.CreateDetachStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_staticSiteClientDiagnostics, Pipeline, _staticSiteRestClient.CreateDetachStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -966,7 +966,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSiteRestClient.DetachStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AppServiceArmOperation(_staticSiteClientDiagnostics, Pipeline, _staticSiteRestClient.CreateDetachStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_staticSiteClientDiagnostics, Pipeline, _staticSiteRestClient.CreateDetachStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateListStaticSiteFunctionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetStaticSiteFunctions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetStaticSiteFunctions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateListStaticSiteFunctionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetStaticSiteFunctions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetStaticSiteFunctions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1280,7 +1280,7 @@ namespace Azure.ResourceManager.AppService
         public virtual AsyncPageable<AppServicePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1301,7 +1301,7 @@ namespace Azure.ResourceManager.AppService
         public virtual Pageable<AppServicePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1398,7 +1398,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _staticSiteRestClient.CreateZipDeploymentForStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_staticSiteClientDiagnostics, Pipeline, _staticSiteRestClient.CreateCreateZipDeploymentForStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_staticSiteClientDiagnostics, Pipeline, _staticSiteRestClient.CreateCreateZipDeploymentForStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1436,7 +1436,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSiteRestClient.CreateZipDeploymentForStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope, cancellationToken);
-                var operation = new AppServiceArmOperation(_staticSiteClientDiagnostics, Pipeline, _staticSiteRestClient.CreateCreateZipDeploymentForStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation(_staticSiteClientDiagnostics, Pipeline, _staticSiteRestClient.CreateCreateZipDeploymentForStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

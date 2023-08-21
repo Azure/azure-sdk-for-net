@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class CheckNameAvailabilitySpecifications : Core.IUtf8JsonSerializable
+    public partial class CheckNameAvailabilitySpecifications : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsDefaultValidationEnabled))
+            if (Optional.IsDefined(IsDefaultValidationEnabled))
             {
                 writer.WritePropertyName("enableDefaultValidation"u8);
                 writer.WriteBooleanValue(IsDefaultValidationEnabled.Value);
             }
-            if (Core.Optional.IsCollectionDefined(ResourceTypesWithCustomValidation))
+            if (Optional.IsCollectionDefined(ResourceTypesWithCustomValidation))
             {
                 writer.WritePropertyName("resourceTypesWithCustomValidation"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<bool> enableDefaultValidation = default;
-            Core.Optional<IList<string>> resourceTypesWithCustomValidation = default;
+            Optional<bool> enableDefaultValidation = default;
+            Optional<IList<string>> resourceTypesWithCustomValidation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableDefaultValidation"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new CheckNameAvailabilitySpecifications(Core.Optional.ToNullable(enableDefaultValidation), Core.Optional.ToList(resourceTypesWithCustomValidation));
+            return new CheckNameAvailabilitySpecifications(Optional.ToNullable(enableDefaultValidation), Optional.ToList(resourceTypesWithCustomValidation));
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
-    internal class NewRelicMonitorResourceOperationSource : Core.IOperationSource<NewRelicMonitorResource>
+    internal class NewRelicMonitorResourceOperationSource : IOperationSource<NewRelicMonitorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.NewRelicObservability
             _client = client;
         }
 
-        NewRelicMonitorResource Core.IOperationSource<NewRelicMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NewRelicMonitorResource IOperationSource<NewRelicMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(document.RootElement);
             return new NewRelicMonitorResource(_client, data);
         }
 
-        async ValueTask<NewRelicMonitorResource> Core.IOperationSource<NewRelicMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NewRelicMonitorResource> IOperationSource<NewRelicMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(document.RootElement);

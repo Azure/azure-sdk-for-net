@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceEnvironmentPatch. </summary>
         public AppServiceEnvironmentPatch()
         {
-            ClusterSettings = new Core.ChangeTrackingList<AppServiceNameValuePair>();
-            UserWhitelistedIPRanges = new Core.ChangeTrackingList<string>();
+            ClusterSettings = new ChangeTrackingList<AppServiceNameValuePair>();
+            UserWhitelistedIPRanges = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppServiceEnvironmentPatch. </summary>

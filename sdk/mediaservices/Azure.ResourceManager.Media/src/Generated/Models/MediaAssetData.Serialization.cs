@@ -13,34 +13,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class MediaAssetData : Core.IUtf8JsonSerializable
+    public partial class MediaAssetData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AlternateId))
+            if (Optional.IsDefined(AlternateId))
             {
                 writer.WritePropertyName("alternateId"u8);
                 writer.WriteStringValue(AlternateId);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(Container))
+            if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
-            if (Core.Optional.IsDefined(StorageAccountName))
+            if (Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
-            if (Core.Optional.IsDefined(EncryptionScope))
+            if (Optional.IsDefined(EncryptionScope))
             {
                 writer.WritePropertyName("encryptionScope"u8);
                 writer.WriteStringValue(EncryptionScope);
@@ -58,16 +58,16 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> assetId = default;
-            Core.Optional<DateTimeOffset> created = default;
-            Core.Optional<DateTimeOffset> lastModified = default;
-            Core.Optional<string> alternateId = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> container = default;
-            Core.Optional<string> storageAccountName = default;
-            Core.Optional<MediaAssetStorageEncryptionFormat> storageEncryptionFormat = default;
-            Core.Optional<string> encryptionScope = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> assetId = default;
+            Optional<DateTimeOffset> created = default;
+            Optional<DateTimeOffset> lastModified = default;
+            Optional<string> alternateId = default;
+            Optional<string> description = default;
+            Optional<string> container = default;
+            Optional<string> storageAccountName = default;
+            Optional<MediaAssetStorageEncryptionFormat> storageEncryptionFormat = default;
+            Optional<string> encryptionScope = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Media
                     continue;
                 }
             }
-            return new MediaAssetData(id, name, type, systemData.Value, Core.Optional.ToNullable(assetId), Core.Optional.ToNullable(created), Core.Optional.ToNullable(lastModified), alternateId.Value, description.Value, container.Value, storageAccountName.Value, Core.Optional.ToNullable(storageEncryptionFormat), encryptionScope.Value);
+            return new MediaAssetData(id, name, type, systemData.Value, Optional.ToNullable(assetId), Optional.ToNullable(created), Optional.ToNullable(lastModified), alternateId.Value, description.Value, container.Value, storageAccountName.Value, Optional.ToNullable(storageEncryptionFormat), encryptionScope.Value);
         }
     }
 }

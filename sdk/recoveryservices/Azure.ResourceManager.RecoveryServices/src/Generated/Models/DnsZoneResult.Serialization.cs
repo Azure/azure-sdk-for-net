@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class DnsZoneResult : Core.IUtf8JsonSerializable
+    public partial class DnsZoneResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(RequiredZoneNames))
+            if (Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SubResource))
+            if (Optional.IsDefined(SubResource))
             {
                 writer.WritePropertyName("subResource"u8);
                 writer.WriteStringValue(SubResource.Value.ToString());
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> requiredZoneNames = default;
-            Core.Optional<VaultSubResourceType> subResource = default;
+            Optional<IList<string>> requiredZoneNames = default;
+            Optional<VaultSubResourceType> subResource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requiredZoneNames"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new DnsZoneResult(Core.Optional.ToNullable(subResource), Core.Optional.ToList(requiredZoneNames));
+            return new DnsZoneResult(Optional.ToNullable(subResource), Optional.ToList(requiredZoneNames));
         }
     }
 }

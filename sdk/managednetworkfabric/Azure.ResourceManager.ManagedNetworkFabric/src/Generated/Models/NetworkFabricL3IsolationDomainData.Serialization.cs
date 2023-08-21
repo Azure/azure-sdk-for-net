@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkFabricL3IsolationDomainData : Core.IUtf8JsonSerializable
+    public partial class NetworkFabricL3IsolationDomainData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,27 +33,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Annotation))
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Core.Optional.IsDefined(RedistributeConnectedSubnets))
+            if (Optional.IsDefined(RedistributeConnectedSubnets))
             {
                 writer.WritePropertyName("redistributeConnectedSubnets"u8);
                 writer.WriteStringValue(RedistributeConnectedSubnets.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RedistributeStaticRoutes))
+            if (Optional.IsDefined(RedistributeStaticRoutes))
             {
                 writer.WritePropertyName("redistributeStaticRoutes"u8);
                 writer.WriteStringValue(RedistributeStaticRoutes.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AggregateRouteConfiguration))
+            if (Optional.IsDefined(AggregateRouteConfiguration))
             {
                 writer.WritePropertyName("aggregateRouteConfiguration"u8);
                 writer.WriteObjectValue(AggregateRouteConfiguration);
             }
-            if (Core.Optional.IsDefined(ConnectedSubnetRoutePolicy))
+            if (Optional.IsDefined(ConnectedSubnetRoutePolicy))
             {
                 writer.WritePropertyName("connectedSubnetRoutePolicy"u8);
                 writer.WriteObjectValue(ConnectedSubnetRoutePolicy);
@@ -70,21 +70,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> annotation = default;
-            Core.Optional<RedistributeConnectedSubnet> redistributeConnectedSubnets = default;
-            Core.Optional<RedistributeStaticRoute> redistributeStaticRoutes = default;
-            Core.Optional<AggregateRouteConfiguration> aggregateRouteConfiguration = default;
-            Core.Optional<ConnectedSubnetRoutePolicy> connectedSubnetRoutePolicy = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> annotation = default;
+            Optional<RedistributeConnectedSubnet> redistributeConnectedSubnets = default;
+            Optional<RedistributeStaticRoute> redistributeStaticRoutes = default;
+            Optional<AggregateRouteConfiguration> aggregateRouteConfiguration = default;
+            Optional<ConnectedSubnetRoutePolicy> connectedSubnetRoutePolicy = default;
             ResourceIdentifier networkFabricId = default;
-            Core.Optional<NetworkFabricConfigurationState> configurationState = default;
-            Core.Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Core.Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            Optional<NetworkFabricConfigurationState> configurationState = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            Optional<NetworkFabricAdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     continue;
                 }
             }
-            return new NetworkFabricL3IsolationDomainData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, annotation.Value, Core.Optional.ToNullable(redistributeConnectedSubnets), Core.Optional.ToNullable(redistributeStaticRoutes), aggregateRouteConfiguration.Value, connectedSubnetRoutePolicy.Value, networkFabricId, Core.Optional.ToNullable(configurationState), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(administrativeState));
+            return new NetworkFabricL3IsolationDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(redistributeConnectedSubnets), Optional.ToNullable(redistributeStaticRoutes), aggregateRouteConfiguration.Value, connectedSubnetRoutePolicy.Value, networkFabricId, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
         }
     }
 }

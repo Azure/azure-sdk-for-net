@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabNetworkProfile : Core.IUtf8JsonSerializable
+    public partial class LabNetworkProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SubnetId))
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Core.Optional.IsDefined(LoadBalancerId))
+            if (Optional.IsDefined(LoadBalancerId))
             {
                 writer.WritePropertyName("loadBalancerId"u8);
                 writer.WriteStringValue(LoadBalancerId);
             }
-            if (Core.Optional.IsDefined(PublicIPId))
+            if (Optional.IsDefined(PublicIPId))
             {
                 writer.WritePropertyName("publicIpId"u8);
                 writer.WriteStringValue(PublicIPId);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> subnetId = default;
-            Core.Optional<ResourceIdentifier> loadBalancerId = default;
-            Core.Optional<ResourceIdentifier> publicIPId = default;
+            Optional<ResourceIdentifier> subnetId = default;
+            Optional<ResourceIdentifier> loadBalancerId = default;
+            Optional<ResourceIdentifier> publicIPId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))

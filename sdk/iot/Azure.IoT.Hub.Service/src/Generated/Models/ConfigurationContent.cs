@@ -16,9 +16,9 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of ConfigurationContent. </summary>
         public ConfigurationContent()
         {
-            DeviceContent = new Core.ChangeTrackingDictionary<string, object>();
-            ModulesContent = new Core.ChangeTrackingDictionary<string, IDictionary<string, object>>();
-            ModuleContent = new Core.ChangeTrackingDictionary<string, object>();
+            DeviceContent = new ChangeTrackingDictionary<string, object>();
+            ModulesContent = new ChangeTrackingDictionary<string, IDictionary<string, object>>();
+            ModuleContent = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationContent. </summary>

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<AzureLocation> location = default;
+            Optional<string> name = default;
+            Optional<AzureLocation> location = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new HostingEnvironmentDeploymentInfo(name.Value, Core.Optional.ToNullable(location));
+            return new HostingEnvironmentDeploymentInfo(name.Value, Optional.ToNullable(location));
         }
     }
 }

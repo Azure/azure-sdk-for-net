@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class ScalingHostPoolReference : Core.IUtf8JsonSerializable
+    public partial class ScalingHostPoolReference : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HostPoolId))
+            if (Optional.IsDefined(HostPoolId))
             {
                 writer.WritePropertyName("hostPoolArmPath"u8);
                 writer.WriteStringValue(HostPoolId);
             }
-            if (Core.Optional.IsDefined(IsScalingPlanEnabled))
+            if (Optional.IsDefined(IsScalingPlanEnabled))
             {
                 writer.WritePropertyName("scalingPlanEnabled"u8);
                 writer.WriteBooleanValue(IsScalingPlanEnabled.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> hostPoolArmPath = default;
-            Core.Optional<bool> scalingPlanEnabled = default;
+            Optional<ResourceIdentifier> hostPoolArmPath = default;
+            Optional<bool> scalingPlanEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostPoolArmPath"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new ScalingHostPoolReference(hostPoolArmPath.Value, Core.Optional.ToNullable(scalingPlanEnabled));
+            return new ScalingHostPoolReference(hostPoolArmPath.Value, Optional.ToNullable(scalingPlanEnabled));
         }
     }
 }

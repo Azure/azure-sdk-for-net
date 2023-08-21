@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of StorageCacheHealth. </summary>
         internal StorageCacheHealth()
         {
-            Conditions = new Core.ChangeTrackingList<OutstandingCondition>();
+            Conditions = new ChangeTrackingList<OutstandingCondition>();
         }
 
         /// <summary> Initializes a new instance of StorageCacheHealth. </summary>

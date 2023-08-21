@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceConfigurationDictionary. </summary>
         public AppServiceConfigurationDictionary()
         {
-            Properties = new Core.ChangeTrackingDictionary<string, string>();
+            Properties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of AppServiceConfigurationDictionary. </summary>

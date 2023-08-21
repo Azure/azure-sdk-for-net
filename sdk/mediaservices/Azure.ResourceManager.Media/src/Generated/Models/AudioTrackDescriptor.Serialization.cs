@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AudioTrackDescriptor : Core.IUtf8JsonSerializable
+    public partial class AudioTrackDescriptor : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ChannelMapping))
+            if (Optional.IsDefined(ChannelMapping))
             {
                 writer.WritePropertyName("channelMapping"u8);
                 writer.WriteStringValue(ChannelMapping.Value.ToString());
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.SelectAudioTrackById": return SelectAudioTrackById.DeserializeSelectAudioTrackById(element);
                 }
             }
-            Core.Optional<ChannelMapping> channelMapping = default;
+            Optional<ChannelMapping> channelMapping = default;
             string odataType = "#Microsoft.Media.AudioTrackDescriptor";
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new AudioTrackDescriptor(odataType, Core.Optional.ToNullable(channelMapping));
+            return new AudioTrackDescriptor(odataType, Optional.ToNullable(channelMapping));
         }
     }
 }

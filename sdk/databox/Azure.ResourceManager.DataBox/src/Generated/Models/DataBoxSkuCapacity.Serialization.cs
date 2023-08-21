@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<string> usable = default;
-            Core.Optional<string> maximum = default;
+            Optional<string> usable = default;
+            Optional<string> maximum = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usable"u8))

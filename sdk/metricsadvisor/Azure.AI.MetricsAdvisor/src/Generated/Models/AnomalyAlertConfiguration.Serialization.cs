@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class AnomalyAlertConfiguration : Core.IUtf8JsonSerializable
+    public partial class AnomalyAlertConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(CrossMetricsOperator))
+            if (Optional.IsDefined(CrossMetricsOperator))
             {
                 writer.WritePropertyName("crossMetricsOperator"u8);
                 writer.WriteStringValue(CrossMetricsOperator.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(DimensionsToSplitAlert))
+            if (Optional.IsCollectionDefined(DimensionsToSplitAlert))
             {
                 writer.WritePropertyName("splitAlertByDimensions"u8);
                 writer.WriteStartArray();
@@ -61,11 +61,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Core.Optional<string> anomalyAlertingConfigurationId = default;
+            Optional<string> anomalyAlertingConfigurationId = default;
             string name = default;
-            Core.Optional<string> description = default;
-            Core.Optional<MetricAlertConfigurationsOperator> crossMetricsOperator = default;
-            Core.Optional<IList<string>> splitAlertByDimensions = default;
+            Optional<string> description = default;
+            Optional<MetricAlertConfigurationsOperator> crossMetricsOperator = default;
+            Optional<IList<string>> splitAlertByDimensions = default;
             IList<string> hookIds = default;
             IList<MetricAlertConfiguration> metricAlertingConfigurations = default;
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyAlertConfiguration(anomalyAlertingConfigurationId.Value, name, description.Value, Core.Optional.ToNullable(crossMetricsOperator), Core.Optional.ToList(splitAlertByDimensions), hookIds, metricAlertingConfigurations);
+            return new AnomalyAlertConfiguration(anomalyAlertingConfigurationId.Value, name, description.Value, Optional.ToNullable(crossMetricsOperator), Optional.ToList(splitAlertByDimensions), hookIds, metricAlertingConfigurations);
         }
     }
 }

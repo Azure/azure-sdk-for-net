@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<CassandraConnectionState> connectionState = default;
-            Core.Optional<string> ipFrom = default;
-            Core.Optional<string> ipTo = default;
-            Core.Optional<int> port = default;
-            Core.Optional<string> exception = default;
+            Optional<CassandraConnectionState> connectionState = default;
+            Optional<string> ipFrom = default;
+            Optional<string> ipTo = default;
+            Optional<int> port = default;
+            Optional<string> exception = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionState"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CassandraConnectionError(Core.Optional.ToNullable(connectionState), ipFrom.Value, ipTo.Value, Core.Optional.ToNullable(port), exception.Value);
+            return new CassandraConnectionError(Optional.ToNullable(connectionState), ipFrom.Value, ipTo.Value, Optional.ToNullable(port), exception.Value);
         }
     }
 }

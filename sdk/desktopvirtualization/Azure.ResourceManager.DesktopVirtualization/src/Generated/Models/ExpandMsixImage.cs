@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of ExpandMsixImage. </summary>
         public ExpandMsixImage()
         {
-            PackageDependencies = new Core.ChangeTrackingList<MsixPackageDependencies>();
-            PackageApplications = new Core.ChangeTrackingList<MsixPackageApplications>();
+            PackageDependencies = new ChangeTrackingList<MsixPackageDependencies>();
+            PackageApplications = new ChangeTrackingList<MsixPackageApplications>();
         }
 
         /// <summary> Initializes a new instance of ExpandMsixImage. </summary>

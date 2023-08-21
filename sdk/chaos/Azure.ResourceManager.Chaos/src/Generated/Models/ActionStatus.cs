@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of ActionStatus. </summary>
         internal ActionStatus()
         {
-            Targets = new Core.ChangeTrackingList<ExperimentExecutionActionTargetDetailsProperties>();
+            Targets = new ChangeTrackingList<ExperimentExecutionActionTargetDetailsProperties>();
         }
 
         /// <summary> Initializes a new instance of ActionStatus. </summary>

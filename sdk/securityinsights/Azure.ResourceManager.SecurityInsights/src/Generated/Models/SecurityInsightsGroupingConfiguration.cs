@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IsClosedIncidentReopened = isClosedIncidentReopened;
             LookbackDuration = lookbackDuration;
             MatchingMethod = matchingMethod;
-            GroupByEntities = new Core.ChangeTrackingList<SecurityInsightsAlertRuleEntityMappingType>();
-            GroupByAlertDetails = new Core.ChangeTrackingList<SecurityInsightsAlertDetail>();
-            GroupByCustomDetails = new Core.ChangeTrackingList<string>();
+            GroupByEntities = new ChangeTrackingList<SecurityInsightsAlertRuleEntityMappingType>();
+            GroupByAlertDetails = new ChangeTrackingList<SecurityInsightsAlertDetail>();
+            GroupByCustomDetails = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SecurityInsightsGroupingConfiguration. </summary>

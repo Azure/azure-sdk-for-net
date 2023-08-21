@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationAccountKeyVaultKeyReference : Core.IUtf8JsonSerializable
+    public partial class IntegrationAccountKeyVaultKeyReference : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
-            if (Core.Optional.IsDefined(KeyVersion))
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
             writer.WritePropertyName("keyVault"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(ResourceId);
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             string keyName = default;
-            Core.Optional<string> keyVersion = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
+            Optional<string> keyVersion = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyName"u8))
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new IntegrationAccountKeyVaultKeyReference(keyName, keyVersion.Value, id.Value, name.Value, Core.Optional.ToNullable(type));
+            return new IntegrationAccountKeyVaultKeyReference(keyName, keyVersion.Value, id.Value, name.Value, Optional.ToNullable(type));
         }
     }
 }

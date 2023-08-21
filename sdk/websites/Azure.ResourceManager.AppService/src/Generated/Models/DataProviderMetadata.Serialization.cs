@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DataProviderMetadata : Core.IUtf8JsonSerializable
+    public partial class DataProviderMetadata : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProviderName))
+            if (Optional.IsDefined(ProviderName))
             {
                 writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> providerName = default;
-            Core.Optional<IReadOnlyList<DataProviderKeyValuePair>> propertyBag = default;
+            Optional<string> providerName = default;
+            Optional<IReadOnlyList<DataProviderKeyValuePair>> propertyBag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerName"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DataProviderMetadata(providerName.Value, Core.Optional.ToList(propertyBag));
+            return new DataProviderMetadata(providerName.Value, Optional.ToList(propertyBag));
         }
     }
 }

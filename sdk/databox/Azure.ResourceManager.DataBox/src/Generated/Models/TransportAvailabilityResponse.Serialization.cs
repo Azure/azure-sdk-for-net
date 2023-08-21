@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<TransportAvailabilityDetails>> transportAvailabilityDetails = default;
+            Optional<IReadOnlyList<TransportAvailabilityDetails>> transportAvailabilityDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transportAvailabilityDetails"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new TransportAvailabilityResponse(Core.Optional.ToList(transportAvailabilityDetails));
+            return new TransportAvailabilityResponse(Optional.ToList(transportAvailabilityDetails));
         }
     }
 }

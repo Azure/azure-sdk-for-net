@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of IotHubPrivateEndpointGroupInformationProperties. </summary>
         internal IotHubPrivateEndpointGroupInformationProperties()
         {
-            RequiredMembers = new Core.ChangeTrackingList<string>();
-            RequiredDnsZoneNames = new Core.ChangeTrackingList<string>();
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredDnsZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of IotHubPrivateEndpointGroupInformationProperties. </summary>

@@ -12,14 +12,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedMongoDBCollectionResourceInfo : Core.IUtf8JsonSerializable
+    public partial class ExtendedMongoDBCollectionResourceInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(CollectionName);
-            if (Core.Optional.IsCollectionDefined(ShardKey))
+            if (Optional.IsCollectionDefined(ShardKey))
             {
                 writer.WritePropertyName("shardKey"u8);
                 writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Indexes))
+            if (Optional.IsCollectionDefined(Indexes))
             {
                 writer.WritePropertyName("indexes"u8);
                 writer.WriteStartArray();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(AnalyticalStorageTtl))
+            if (Optional.IsDefined(AnalyticalStorageTtl))
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
             }
-            if (Core.Optional.IsDefined(RestoreParameters))
+            if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
-            if (Core.Optional.IsDefined(CreateMode))
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<string> rid = default;
-            Core.Optional<float> ts = default;
-            Core.Optional<ETag> etag = default;
+            Optional<string> rid = default;
+            Optional<float> ts = default;
+            Optional<ETag> etag = default;
             string id = default;
-            Core.Optional<IDictionary<string, string>> shardKey = default;
-            Core.Optional<IList<MongoDBIndex>> indexes = default;
-            Core.Optional<int> analyticalStorageTtl = default;
-            Core.Optional<ResourceRestoreParameters> restoreParameters = default;
-            Core.Optional<CosmosDBAccountCreateMode> createMode = default;
+            Optional<IDictionary<string, string>> shardKey = default;
+            Optional<IList<MongoDBIndex>> indexes = default;
+            Optional<int> analyticalStorageTtl = default;
+            Optional<ResourceRestoreParameters> restoreParameters = default;
+            Optional<CosmosDBAccountCreateMode> createMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ExtendedMongoDBCollectionResourceInfo(id, Core.Optional.ToDictionary(shardKey), Core.Optional.ToList(indexes), Core.Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Core.Optional.ToNullable(createMode), rid.Value, Core.Optional.ToNullable(ts), Core.Optional.ToNullable(etag));
+            return new ExtendedMongoDBCollectionResourceInfo(id, Optional.ToDictionary(shardKey), Optional.ToList(indexes), Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Optional.ToNullable(createMode), rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
     }
 }

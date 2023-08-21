@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Initializes a new instance of WebPubSubPrivateEndpointConnectionData. </summary>
         public WebPubSubPrivateEndpointConnectionData()
         {
-            GroupIds = new Core.ChangeTrackingList<string>();
+            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of WebPubSubPrivateEndpointConnectionData. </summary>

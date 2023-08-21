@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Dynatrace
 {
-    internal class DynatraceTagRuleOperationSource : Core.IOperationSource<DynatraceTagRuleResource>
+    internal class DynatraceTagRuleOperationSource : IOperationSource<DynatraceTagRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Dynatrace
             _client = client;
         }
 
-        DynatraceTagRuleResource Core.IOperationSource<DynatraceTagRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DynatraceTagRuleResource IOperationSource<DynatraceTagRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DynatraceTagRuleData.DeserializeDynatraceTagRuleData(document.RootElement);
             return new DynatraceTagRuleResource(_client, data);
         }
 
-        async ValueTask<DynatraceTagRuleResource> Core.IOperationSource<DynatraceTagRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DynatraceTagRuleResource> IOperationSource<DynatraceTagRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DynatraceTagRuleData.DeserializeDynatraceTagRuleData(document.RootElement);

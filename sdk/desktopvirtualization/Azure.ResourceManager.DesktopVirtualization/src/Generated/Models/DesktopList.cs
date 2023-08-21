@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of DesktopList. </summary>
         internal DesktopList()
         {
-            Value = new Core.ChangeTrackingList<VirtualDesktopData>();
+            Value = new ChangeTrackingList<VirtualDesktopData>();
         }
 
         /// <summary> Initializes a new instance of DesktopList. </summary>

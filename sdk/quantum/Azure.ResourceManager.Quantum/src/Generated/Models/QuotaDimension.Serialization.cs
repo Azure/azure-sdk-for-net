@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> scope = default;
-            Core.Optional<string> period = default;
-            Core.Optional<float> quota = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> unit = default;
-            Core.Optional<string> unitPlural = default;
+            Optional<string> id = default;
+            Optional<string> scope = default;
+            Optional<string> period = default;
+            Optional<float> quota = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<string> unit = default;
+            Optional<string> unitPlural = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     continue;
                 }
             }
-            return new QuotaDimension(id.Value, scope.Value, period.Value, Core.Optional.ToNullable(quota), name.Value, description.Value, unit.Value, unitPlural.Value);
+            return new QuotaDimension(id.Value, scope.Value, period.Value, Optional.ToNullable(quota), name.Value, description.Value, unit.Value, unitPlural.Value);
         }
     }
 }

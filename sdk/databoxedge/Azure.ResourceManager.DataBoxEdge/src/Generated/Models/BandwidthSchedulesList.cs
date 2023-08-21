@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of BandwidthSchedulesList. </summary>
         internal BandwidthSchedulesList()
         {
-            Value = new Core.ChangeTrackingList<BandwidthScheduleData>();
+            Value = new ChangeTrackingList<BandwidthScheduleData>();
         }
 
         /// <summary> Initializes a new instance of BandwidthSchedulesList. </summary>

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryVmEndpoint>> contentEndpoints = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<IReadOnlyList<SiteRecoveryVmEndpoint>> contentEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new A2AVmSyncedConfigDetails(Core.Optional.ToDictionary(tags), Core.Optional.ToList(contentEndpoints));
+            return new A2AVmSyncedConfigDetails(Optional.ToDictionary(tags), Optional.ToList(contentEndpoints));
         }
     }
 }

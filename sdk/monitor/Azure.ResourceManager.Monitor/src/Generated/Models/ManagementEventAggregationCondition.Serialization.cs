@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ManagementEventAggregationCondition : Core.IUtf8JsonSerializable
+    public partial class ManagementEventAggregationCondition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Operator))
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(Threshold))
+            if (Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
             }
-            if (Core.Optional.IsDefined(WindowSize))
+            if (Optional.IsDefined(WindowSize))
             {
                 writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<MonitorConditionOperator> @operator = default;
-            Core.Optional<double> threshold = default;
-            Core.Optional<TimeSpan> windowSize = default;
+            Optional<MonitorConditionOperator> @operator = default;
+            Optional<double> threshold = default;
+            Optional<TimeSpan> windowSize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operator"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new ManagementEventAggregationCondition(Core.Optional.ToNullable(@operator), Core.Optional.ToNullable(threshold), Core.Optional.ToNullable(windowSize));
+            return new ManagementEventAggregationCondition(Optional.ToNullable(@operator), Optional.ToNullable(threshold), Optional.ToNullable(windowSize));
         }
     }
 }

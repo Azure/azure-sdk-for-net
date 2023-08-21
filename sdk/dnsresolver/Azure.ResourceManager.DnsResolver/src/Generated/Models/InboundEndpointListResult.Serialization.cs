@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DnsResolverInboundEndpointData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DnsResolverInboundEndpointData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     continue;
                 }
             }
-            return new InboundEndpointListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new InboundEndpointListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

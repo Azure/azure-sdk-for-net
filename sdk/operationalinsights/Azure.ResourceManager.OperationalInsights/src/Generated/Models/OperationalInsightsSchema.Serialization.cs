@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsSchema : Core.IUtf8JsonSerializable
+    public partial class OperationalInsightsSchema : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(Columns))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -50,17 +50,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IList<OperationalInsightsColumn>> columns = default;
-            Core.Optional<IReadOnlyList<OperationalInsightsColumn>> standardColumns = default;
-            Core.Optional<IReadOnlyList<string>> categories = default;
-            Core.Optional<IReadOnlyList<string>> labels = default;
-            Core.Optional<OperationalInsightsTableCreator> source = default;
-            Core.Optional<OperationalInsightsTableType> tableType = default;
-            Core.Optional<OperationalInsightsTableSubType> tableSubType = default;
-            Core.Optional<IReadOnlyList<string>> solutions = default;
+            Optional<string> name = default;
+            Optional<string> displayName = default;
+            Optional<string> description = default;
+            Optional<IList<OperationalInsightsColumn>> columns = default;
+            Optional<IReadOnlyList<OperationalInsightsColumn>> standardColumns = default;
+            Optional<IReadOnlyList<string>> categories = default;
+            Optional<IReadOnlyList<string>> labels = default;
+            Optional<OperationalInsightsTableCreator> source = default;
+            Optional<OperationalInsightsTableType> tableType = default;
+            Optional<OperationalInsightsTableSubType> tableSubType = default;
+            Optional<IReadOnlyList<string>> solutions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new OperationalInsightsSchema(name.Value, displayName.Value, description.Value, Core.Optional.ToList(columns), Core.Optional.ToList(standardColumns), Core.Optional.ToList(categories), Core.Optional.ToList(labels), Core.Optional.ToNullable(source), Core.Optional.ToNullable(tableType), Core.Optional.ToNullable(tableSubType), Core.Optional.ToList(solutions));
+            return new OperationalInsightsSchema(name.Value, displayName.Value, description.Value, Optional.ToList(columns), Optional.ToList(standardColumns), Optional.ToList(categories), Optional.ToList(labels), Optional.ToNullable(source), Optional.ToNullable(tableType), Optional.ToNullable(tableSubType), Optional.ToList(solutions));
         }
     }
 }

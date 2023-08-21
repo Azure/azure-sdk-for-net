@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.PolicyInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> metadataId = default;
-            Core.Optional<string> category = default;
-            Core.Optional<string> title = default;
-            Core.Optional<string> owner = default;
-            Core.Optional<Uri> additionalContentUrl = default;
-            Core.Optional<BinaryData> metadata = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> requirements = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> metadataId = default;
+            Optional<string> category = default;
+            Optional<string> title = default;
+            Optional<string> owner = default;
+            Optional<Uri> additionalContentUrl = default;
+            Optional<BinaryData> metadata = default;
+            Optional<string> description = default;
+            Optional<string> requirements = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

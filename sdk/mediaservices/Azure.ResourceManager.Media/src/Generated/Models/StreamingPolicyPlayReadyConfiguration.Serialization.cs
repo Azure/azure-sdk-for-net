@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class StreamingPolicyPlayReadyConfiguration : Core.IUtf8JsonSerializable
+    public partial class StreamingPolicyPlayReadyConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
+            if (Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customLicenseAcquisitionUrlTemplate"u8);
                 writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate);
             }
-            if (Core.Optional.IsDefined(PlayReadyCustomAttributes))
+            if (Optional.IsDefined(PlayReadyCustomAttributes))
             {
                 writer.WritePropertyName("playReadyCustomAttributes"u8);
                 writer.WriteStringValue(PlayReadyCustomAttributes);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<string> customLicenseAcquisitionUriTemplate = default;
-            Core.Optional<string> playReadyCustomAttributes = default;
+            Optional<string> customLicenseAcquisitionUriTemplate = default;
+            Optional<string> playReadyCustomAttributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customLicenseAcquisitionUrlTemplate"u8))

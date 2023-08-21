@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformGatewayProperties. </summary>
         public AppPlatformGatewayProperties()
         {
-            Instances = new Core.ChangeTrackingList<AppPlatformGatewayInstance>();
+            Instances = new ChangeTrackingList<AppPlatformGatewayInstance>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformGatewayProperties. </summary>

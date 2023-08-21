@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<string> assetId = default;
-            Core.Optional<DedicatedHostAvailableCapacity> availableCapacity = default;
-            Core.Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            Optional<string> assetId = default;
+            Optional<DedicatedHostAvailableCapacity> availableCapacity = default;
+            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assetId"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new DedicatedHostInstanceView(assetId.Value, availableCapacity.Value, Core.Optional.ToList(statuses));
+            return new DedicatedHostInstanceView(assetId.Value, availableCapacity.Value, Optional.ToList(statuses));
         }
     }
 }

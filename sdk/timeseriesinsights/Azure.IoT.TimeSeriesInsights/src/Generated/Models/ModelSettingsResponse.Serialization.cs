@@ -18,7 +18,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Core.Optional<TimeSeriesModelSettings> modelSettings = default;
+            Optional<TimeSeriesModelSettings> modelSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelSettings"u8))

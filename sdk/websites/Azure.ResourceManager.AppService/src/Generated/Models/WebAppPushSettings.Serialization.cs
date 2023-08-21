@@ -11,34 +11,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WebAppPushSettings : Core.IUtf8JsonSerializable
+    public partial class WebAppPushSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsPushEnabled))
+            if (Optional.IsDefined(IsPushEnabled))
             {
                 writer.WritePropertyName("isPushEnabled"u8);
                 writer.WriteBooleanValue(IsPushEnabled.Value);
             }
-            if (Core.Optional.IsDefined(TagWhitelistJson))
+            if (Optional.IsDefined(TagWhitelistJson))
             {
                 writer.WritePropertyName("tagWhitelistJson"u8);
                 writer.WriteStringValue(TagWhitelistJson);
             }
-            if (Core.Optional.IsDefined(TagsRequiringAuth))
+            if (Optional.IsDefined(TagsRequiringAuth))
             {
                 writer.WritePropertyName("tagsRequiringAuth"u8);
                 writer.WriteStringValue(TagsRequiringAuth);
             }
-            if (Core.Optional.IsDefined(DynamicTagsJson))
+            if (Optional.IsDefined(DynamicTagsJson))
             {
                 writer.WritePropertyName("dynamicTagsJson"u8);
                 writer.WriteStringValue(DynamicTagsJson);
@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<bool> isPushEnabled = default;
-            Core.Optional<string> tagWhitelistJson = default;
-            Core.Optional<string> tagsRequiringAuth = default;
-            Core.Optional<string> dynamicTagsJson = default;
+            Optional<SystemData> systemData = default;
+            Optional<bool> isPushEnabled = default;
+            Optional<string> tagWhitelistJson = default;
+            Optional<string> tagsRequiringAuth = default;
+            Optional<string> dynamicTagsJson = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new WebAppPushSettings(id, name, type, systemData.Value, Core.Optional.ToNullable(isPushEnabled), tagWhitelistJson.Value, tagsRequiringAuth.Value, dynamicTagsJson.Value, kind.Value);
+            return new WebAppPushSettings(id, name, type, systemData.Value, Optional.ToNullable(isPushEnabled), tagWhitelistJson.Value, tagsRequiringAuth.Value, dynamicTagsJson.Value, kind.Value);
         }
     }
 }

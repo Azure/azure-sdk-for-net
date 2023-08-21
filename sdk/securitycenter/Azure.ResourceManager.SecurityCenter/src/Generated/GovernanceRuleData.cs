@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of GovernanceRuleData. </summary>
         public GovernanceRuleData()
         {
-            ExcludedScopes = new Core.ChangeTrackingList<string>();
-            ConditionSets = new Core.ChangeTrackingList<BinaryData>();
+            ExcludedScopes = new ChangeTrackingList<string>();
+            ConditionSets = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of GovernanceRuleData. </summary>

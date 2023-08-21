@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Core.Optional<string> domainName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IReadOnlyList<DevCenterEndpointDetail>> endpointDetails = default;
+            Optional<string> domainName = default;
+            Optional<string> description = default;
+            Optional<IReadOnlyList<DevCenterEndpointDetail>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     continue;
                 }
             }
-            return new EndpointDependency(domainName.Value, description.Value, Core.Optional.ToList(endpointDetails));
+            return new EndpointDependency(domainName.Value, description.Value, Optional.ToList(endpointDetails));
         }
     }
 }

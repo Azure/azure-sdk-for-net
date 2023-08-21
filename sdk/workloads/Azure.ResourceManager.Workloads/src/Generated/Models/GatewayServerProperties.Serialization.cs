@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class GatewayServerProperties : Core.IUtf8JsonSerializable
+    public partial class GatewayServerProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<long?> port = default;
-            Core.Optional<SapHealthState> health = default;
+            Optional<long?> port = default;
+            Optional<SapHealthState> health = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new GatewayServerProperties(Core.Optional.ToNullable(port), Core.Optional.ToNullable(health));
+            return new GatewayServerProperties(Optional.ToNullable(port), Optional.ToNullable(health));
         }
     }
 }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<CapabilityTypeData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<CapabilityTypeData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     continue;
                 }
             }
-            return new CapabilityTypeListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new CapabilityTypeListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

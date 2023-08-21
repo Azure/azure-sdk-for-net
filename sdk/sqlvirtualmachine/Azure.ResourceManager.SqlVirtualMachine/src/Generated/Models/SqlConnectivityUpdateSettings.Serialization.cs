@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlConnectivityUpdateSettings : Core.IUtf8JsonSerializable
+    public partial class SqlConnectivityUpdateSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ConnectivityType))
+            if (Optional.IsDefined(ConnectivityType))
             {
                 writer.WritePropertyName("connectivityType"u8);
                 writer.WriteStringValue(ConnectivityType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Port))
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Core.Optional.IsDefined(SqlAuthUpdateUserName))
+            if (Optional.IsDefined(SqlAuthUpdateUserName))
             {
                 writer.WritePropertyName("sqlAuthUpdateUserName"u8);
                 writer.WriteStringValue(SqlAuthUpdateUserName);
             }
-            if (Core.Optional.IsDefined(SqlAuthUpdatePassword))
+            if (Optional.IsDefined(SqlAuthUpdatePassword))
             {
                 writer.WritePropertyName("sqlAuthUpdatePassword"u8);
                 writer.WriteStringValue(SqlAuthUpdatePassword);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Core.Optional<SqlServerConnectivityType> connectivityType = default;
-            Core.Optional<int> port = default;
-            Core.Optional<string> sqlAuthUpdateUserName = default;
-            Core.Optional<string> sqlAuthUpdatePassword = default;
+            Optional<SqlServerConnectivityType> connectivityType = default;
+            Optional<int> port = default;
+            Optional<string> sqlAuthUpdateUserName = default;
+            Optional<string> sqlAuthUpdatePassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectivityType"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new SqlConnectivityUpdateSettings(Core.Optional.ToNullable(connectivityType), Core.Optional.ToNullable(port), sqlAuthUpdateUserName.Value, sqlAuthUpdatePassword.Value);
+            return new SqlConnectivityUpdateSettings(Optional.ToNullable(connectivityType), Optional.ToNullable(port), sqlAuthUpdateUserName.Value, sqlAuthUpdatePassword.Value);
         }
     }
 }

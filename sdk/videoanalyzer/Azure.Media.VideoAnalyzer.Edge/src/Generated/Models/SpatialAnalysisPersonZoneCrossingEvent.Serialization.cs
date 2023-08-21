@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SpatialAnalysisPersonZoneCrossingEvent : Core.IUtf8JsonSerializable
+    public partial class SpatialAnalysisPersonZoneCrossingEvent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EventType))
+            if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Threshold))
+            if (Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteStringValue(Threshold);
             }
-            if (Core.Optional.IsDefined(Focus))
+            if (Optional.IsDefined(Focus))
             {
                 writer.WritePropertyName("focus"u8);
                 writer.WriteStringValue(Focus.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<SpatialAnalysisPersonZoneCrossingEventType> eventType = default;
-            Core.Optional<string> threshold = default;
-            Core.Optional<SpatialAnalysisOperationFocus> focus = default;
+            Optional<SpatialAnalysisPersonZoneCrossingEventType> eventType = default;
+            Optional<string> threshold = default;
+            Optional<SpatialAnalysisOperationFocus> focus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventType"u8))
@@ -68,7 +68,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonZoneCrossingEvent(threshold.Value, Core.Optional.ToNullable(focus), Core.Optional.ToNullable(eventType));
+            return new SpatialAnalysisPersonZoneCrossingEvent(threshold.Value, Optional.ToNullable(focus), Optional.ToNullable(eventType));
         }
     }
 }

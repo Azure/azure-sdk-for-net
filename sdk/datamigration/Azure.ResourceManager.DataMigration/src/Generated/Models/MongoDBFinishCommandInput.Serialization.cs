@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBFinishCommandInput : Core.IUtf8JsonSerializable
+    public partial class MongoDBFinishCommandInput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("immediate"u8);
             writer.WriteBooleanValue(Immediate);
-            if (Core.Optional.IsDefined(ObjectName))
+            if (Optional.IsDefined(ObjectName))
             {
                 writer.WritePropertyName("objectName"u8);
                 writer.WriteStringValue(ObjectName);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             bool immediate = default;
-            Core.Optional<string> objectName = default;
+            Optional<string> objectName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("immediate"u8))

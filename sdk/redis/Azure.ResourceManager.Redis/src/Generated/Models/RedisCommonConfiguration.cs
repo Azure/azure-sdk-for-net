@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Initializes a new instance of RedisCommonConfiguration. </summary>
         public RedisCommonConfiguration()
         {
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of RedisCommonConfiguration. </summary>

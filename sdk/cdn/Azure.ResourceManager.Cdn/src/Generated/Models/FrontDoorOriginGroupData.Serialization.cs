@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class FrontDoorOriginGroupData : Core.IUtf8JsonSerializable
+    public partial class FrontDoorOriginGroupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LoadBalancingSettings))
+            if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
                 writer.WriteObjectValue(LoadBalancingSettings);
             }
-            if (Core.Optional.IsDefined(HealthProbeSettings))
+            if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
                 writer.WriteObjectValue(HealthProbeSettings);
             }
-            if (Core.Optional.IsDefined(TrafficRestorationTimeInMinutes))
+            if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
             {
                 if (TrafficRestorationTimeInMinutes != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
                 }
             }
-            if (Core.Optional.IsDefined(SessionAffinityState))
+            if (Optional.IsDefined(SessionAffinityState))
             {
                 writer.WritePropertyName("sessionAffinityState"u8);
                 writer.WriteStringValue(SessionAffinityState.Value.ToString());
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> profileName = default;
-            Core.Optional<LoadBalancingSettings> loadBalancingSettings = default;
-            Core.Optional<HealthProbeSettings> healthProbeSettings = default;
-            Core.Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
-            Core.Optional<EnabledState> sessionAffinityState = default;
-            Core.Optional<FrontDoorProvisioningState> provisioningState = default;
-            Core.Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> profileName = default;
+            Optional<LoadBalancingSettings> loadBalancingSettings = default;
+            Optional<HealthProbeSettings> healthProbeSettings = default;
+            Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
+            Optional<EnabledState> sessionAffinityState = default;
+            Optional<FrontDoorProvisioningState> provisioningState = default;
+            Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new FrontDoorOriginGroupData(id, name, type, systemData.Value, profileName.Value, loadBalancingSettings.Value, healthProbeSettings.Value, Core.Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), Core.Optional.ToNullable(sessionAffinityState), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(deploymentStatus));
+            return new FrontDoorOriginGroupData(id, name, type, systemData.Value, profileName.Value, loadBalancingSettings.Value, healthProbeSettings.Value, Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), Optional.ToNullable(sessionAffinityState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
         }
     }
 }

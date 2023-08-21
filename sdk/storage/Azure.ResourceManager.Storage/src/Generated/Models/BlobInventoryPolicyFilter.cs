@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of BlobInventoryPolicyFilter. </summary>
         public BlobInventoryPolicyFilter()
         {
-            IncludePrefix = new Core.ChangeTrackingList<string>();
-            ExcludePrefix = new Core.ChangeTrackingList<string>();
-            BlobTypes = new Core.ChangeTrackingList<string>();
+            IncludePrefix = new ChangeTrackingList<string>();
+            ExcludePrefix = new ChangeTrackingList<string>();
+            BlobTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BlobInventoryPolicyFilter. </summary>

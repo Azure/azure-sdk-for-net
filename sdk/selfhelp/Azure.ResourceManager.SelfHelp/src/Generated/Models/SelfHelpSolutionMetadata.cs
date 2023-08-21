@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
         public SelfHelpSolutionMetadata()
         {
-            RequiredParameterSets = new Core.ChangeTrackingList<IList<string>>();
+            RequiredParameterSets = new ChangeTrackingList<IList<string>>();
         }
 
         /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeKubernetesClusterInfo : Core.IUtf8JsonSerializable
+    public partial class EdgeKubernetesClusterInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("version"u8);
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<DataBoxEdgeEtcdInfo> etcdInfo = default;
-            Core.Optional<IReadOnlyList<EdgeKubernetesNodeInfo>> nodes = default;
+            Optional<DataBoxEdgeEtcdInfo> etcdInfo = default;
+            Optional<IReadOnlyList<EdgeKubernetesNodeInfo>> nodes = default;
             string version = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new EdgeKubernetesClusterInfo(etcdInfo.Value, Core.Optional.ToList(nodes), version);
+            return new EdgeKubernetesClusterInfo(etcdInfo.Value, Optional.ToList(nodes), version);
         }
     }
 }

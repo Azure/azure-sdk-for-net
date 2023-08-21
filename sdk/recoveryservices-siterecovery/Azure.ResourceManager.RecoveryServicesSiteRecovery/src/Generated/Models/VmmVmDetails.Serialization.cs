@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> sourceItemId = default;
-            Core.Optional<string> generation = default;
-            Core.Optional<SiteRecoveryOSDetails> osDetails = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryDiskDetails>> diskDetails = default;
-            Core.Optional<HyperVVmDiskPresenceStatus> hasPhysicalDisk = default;
-            Core.Optional<HyperVVmDiskPresenceStatus> hasFibreChannelAdapter = default;
-            Core.Optional<HyperVVmDiskPresenceStatus> hasSharedVhd = default;
-            Core.Optional<string> hyperVHostId = default;
+            Optional<string> sourceItemId = default;
+            Optional<string> generation = default;
+            Optional<SiteRecoveryOSDetails> osDetails = default;
+            Optional<IReadOnlyList<SiteRecoveryDiskDetails>> diskDetails = default;
+            Optional<HyperVVmDiskPresenceStatus> hasPhysicalDisk = default;
+            Optional<HyperVVmDiskPresenceStatus> hasFibreChannelAdapter = default;
+            Optional<HyperVVmDiskPresenceStatus> hasSharedVhd = default;
+            Optional<string> hyperVHostId = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new VmmVmDetails(instanceType, sourceItemId.Value, generation.Value, osDetails.Value, Core.Optional.ToList(diskDetails), Core.Optional.ToNullable(hasPhysicalDisk), Core.Optional.ToNullable(hasFibreChannelAdapter), Core.Optional.ToNullable(hasSharedVhd), hyperVHostId.Value);
+            return new VmmVmDetails(instanceType, sourceItemId.Value, generation.Value, osDetails.Value, Optional.ToList(diskDetails), Optional.ToNullable(hasPhysicalDisk), Optional.ToNullable(hasFibreChannelAdapter), Optional.ToNullable(hasSharedVhd), hyperVHostId.Value);
         }
     }
 }

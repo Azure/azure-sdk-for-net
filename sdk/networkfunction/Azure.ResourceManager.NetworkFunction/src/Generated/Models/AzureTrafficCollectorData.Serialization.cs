@@ -15,12 +15,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
-    public partial class AzureTrafficCollectorData : Core.IUtf8JsonSerializable
+    public partial class AzureTrafficCollectorData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkFunction
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VirtualHub))
+            if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
                 JsonSerializer.Serialize(writer, VirtualHub);
@@ -50,16 +50,16 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyList<SubResource>> collectorPolicies = default;
-            Core.Optional<SubResource> virtualHub = default;
-            Core.Optional<CollectorProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyList<SubResource>> collectorPolicies = default;
+            Optional<SubResource> virtualHub = default;
+            Optional<CollectorProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.NetworkFunction
                     continue;
                 }
             }
-            return new AzureTrafficCollectorData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), Core.Optional.ToList(collectorPolicies), virtualHub, Core.Optional.ToNullable(provisioningState));
+            return new AzureTrafficCollectorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToList(collectorPolicies), virtualHub, Optional.ToNullable(provisioningState));
         }
     }
 }

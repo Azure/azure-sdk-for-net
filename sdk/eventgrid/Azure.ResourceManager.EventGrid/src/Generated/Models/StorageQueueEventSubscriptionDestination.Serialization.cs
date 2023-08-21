@@ -10,26 +10,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class StorageQueueEventSubscriptionDestination : Core.IUtf8JsonSerializable
+    public partial class StorageQueueEventSubscriptionDestination : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Core.Optional.IsDefined(QueueName))
+            if (Optional.IsDefined(QueueName))
             {
                 writer.WritePropertyName("queueName"u8);
                 writer.WriteStringValue(QueueName);
             }
-            if (Core.Optional.IsDefined(QueueMessageTimeToLiveInSeconds))
+            if (Optional.IsDefined(QueueMessageTimeToLiveInSeconds))
             {
                 writer.WritePropertyName("queueMessageTimeToLiveInSeconds"u8);
                 writer.WriteNumberValue(QueueMessageTimeToLiveInSeconds.Value);
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<string> queueName = default;
-            Core.Optional<long> queueMessageTimeToLiveInSeconds = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<string> queueName = default;
+            Optional<long> queueMessageTimeToLiveInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new StorageQueueEventSubscriptionDestination(endpointType, resourceId.Value, queueName.Value, Core.Optional.ToNullable(queueMessageTimeToLiveInSeconds));
+            return new StorageQueueEventSubscriptionDestination(endpointType, resourceId.Value, queueName.Value, Optional.ToNullable(queueMessageTimeToLiveInSeconds));
         }
     }
 }

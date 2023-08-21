@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> symbolicName = default;
-            Core.Optional<Guid> uuid = default;
-            Core.Optional<string> capacity = default;
-            Core.Optional<string> freeSpace = default;
-            Core.Optional<string> type = default;
+            Optional<string> symbolicName = default;
+            Optional<Guid> uuid = default;
+            Optional<string> capacity = default;
+            Optional<string> freeSpace = default;
+            Optional<string> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("symbolicName"u8))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryDataStore(symbolicName.Value, Core.Optional.ToNullable(uuid), capacity.Value, freeSpace.Value, type.Value);
+            return new SiteRecoveryDataStore(symbolicName.Value, Optional.ToNullable(uuid), capacity.Value, freeSpace.Value, type.Value);
         }
     }
 }

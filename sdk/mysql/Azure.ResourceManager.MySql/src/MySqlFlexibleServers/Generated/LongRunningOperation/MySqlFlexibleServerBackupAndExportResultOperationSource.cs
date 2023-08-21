@@ -14,15 +14,15 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    internal class MySqlFlexibleServerBackupAndExportResultOperationSource : Core.IOperationSource<MySqlFlexibleServerBackupAndExportResult>
+    internal class MySqlFlexibleServerBackupAndExportResultOperationSource : IOperationSource<MySqlFlexibleServerBackupAndExportResult>
     {
-        MySqlFlexibleServerBackupAndExportResult Core.IOperationSource<MySqlFlexibleServerBackupAndExportResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        MySqlFlexibleServerBackupAndExportResult IOperationSource<MySqlFlexibleServerBackupAndExportResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return MySqlFlexibleServerBackupAndExportResult.DeserializeMySqlFlexibleServerBackupAndExportResult(document.RootElement);
         }
 
-        async ValueTask<MySqlFlexibleServerBackupAndExportResult> Core.IOperationSource<MySqlFlexibleServerBackupAndExportResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MySqlFlexibleServerBackupAndExportResult> IOperationSource<MySqlFlexibleServerBackupAndExportResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return MySqlFlexibleServerBackupAndExportResult.DeserializeMySqlFlexibleServerBackupAndExportResult(document.RootElement);

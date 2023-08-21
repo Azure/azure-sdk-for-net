@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<CloneAbilityResult> result = default;
-            Core.Optional<IReadOnlyList<SiteCloneabilityCriterion>> blockingFeatures = default;
-            Core.Optional<IReadOnlyList<SiteCloneabilityCriterion>> unsupportedFeatures = default;
-            Core.Optional<IReadOnlyList<SiteCloneabilityCriterion>> blockingCharacteristics = default;
+            Optional<CloneAbilityResult> result = default;
+            Optional<IReadOnlyList<SiteCloneabilityCriterion>> blockingFeatures = default;
+            Optional<IReadOnlyList<SiteCloneabilityCriterion>> unsupportedFeatures = default;
+            Optional<IReadOnlyList<SiteCloneabilityCriterion>> blockingCharacteristics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("result"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new SiteCloneability(Core.Optional.ToNullable(result), Core.Optional.ToList(blockingFeatures), Core.Optional.ToList(unsupportedFeatures), Core.Optional.ToList(blockingCharacteristics));
+            return new SiteCloneability(Optional.ToNullable(result), Optional.ToList(blockingFeatures), Optional.ToList(unsupportedFeatures), Optional.ToList(blockingCharacteristics));
         }
     }
 }

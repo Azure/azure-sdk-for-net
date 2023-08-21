@@ -19,10 +19,10 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> resourceId = default;
-            Core.Optional<StorageAccountAttributes> attributes = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<string> id = default;
+            Optional<string> resourceId = default;
+            Optional<StorageAccountAttributes> attributes = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new StorageAccountItem(id.Value, resourceId.Value, attributes.Value, Core.Optional.ToDictionary(tags));
+            return new StorageAccountItem(id.Value, resourceId.Value, attributes.Value, Optional.ToDictionary(tags));
         }
     }
 }

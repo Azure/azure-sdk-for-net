@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Core.Optional<int> count = default;
-            Core.Optional<DateTimeOffset> firstTimestamp = default;
-            Core.Optional<DateTimeOffset> lastTimestamp = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> message = default;
-            Core.Optional<string> type = default;
+            Optional<int> count = default;
+            Optional<DateTimeOffset> firstTimestamp = default;
+            Optional<DateTimeOffset> lastTimestamp = default;
+            Optional<string> name = default;
+            Optional<string> message = default;
+            Optional<string> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerEvent(Core.Optional.ToNullable(count), Core.Optional.ToNullable(firstTimestamp), Core.Optional.ToNullable(lastTimestamp), name.Value, message.Value, type.Value);
+            return new ContainerEvent(Optional.ToNullable(count), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp), name.Value, message.Value, type.Value);
         }
     }
 }

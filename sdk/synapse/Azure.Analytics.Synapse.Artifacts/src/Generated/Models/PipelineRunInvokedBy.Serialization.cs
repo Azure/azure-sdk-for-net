@@ -21,9 +21,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> id = default;
-            Core.Optional<string> invokedByType = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<string> invokedByType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class PiiTaskParameters : Core.IUtf8JsonSerializable
+    internal partial class PiiTaskParameters : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Domain))
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ModelVersion))
+            if (Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("model-version"u8);
                 writer.WriteStringValue(ModelVersion);
             }
-            if (Core.Optional.IsDefined(LoggingOptOut))
+            if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
-            if (Core.Optional.IsCollectionDefined(PiiCategories))
+            if (Optional.IsCollectionDefined(PiiCategories))
             {
                 writer.WritePropertyName("piiCategories"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(StringIndexType))
+            if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());

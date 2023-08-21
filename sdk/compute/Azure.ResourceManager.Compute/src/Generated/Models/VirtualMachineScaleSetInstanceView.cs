@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetInstanceView. </summary>
         internal VirtualMachineScaleSetInstanceView()
         {
-            Extensions = new Core.ChangeTrackingList<VirtualMachineScaleSetVmExtensionsSummary>();
-            Statuses = new Core.ChangeTrackingList<InstanceViewStatus>();
-            OrchestrationServices = new Core.ChangeTrackingList<OrchestrationServiceSummary>();
+            Extensions = new ChangeTrackingList<VirtualMachineScaleSetVmExtensionsSummary>();
+            Statuses = new ChangeTrackingList<InstanceViewStatus>();
+            OrchestrationServices = new ChangeTrackingList<OrchestrationServiceSummary>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetInstanceView. </summary>

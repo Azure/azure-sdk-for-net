@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Initializes a new instance of PrivateStoreOfferData. </summary>
         public PrivateStoreOfferData()
         {
-            SpecificPlanIdsLimitation = new Core.ChangeTrackingList<string>();
-            IconFileUris = new Core.ChangeTrackingDictionary<string, Uri>();
-            Plans = new Core.ChangeTrackingList<PrivateStorePlan>();
+            SpecificPlanIdsLimitation = new ChangeTrackingList<string>();
+            IconFileUris = new ChangeTrackingDictionary<string, Uri>();
+            Plans = new ChangeTrackingList<PrivateStorePlan>();
         }
 
         /// <summary> Initializes a new instance of PrivateStoreOfferData. </summary>

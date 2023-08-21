@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    internal partial class StorageMappingProperties : Core.IUtf8JsonSerializable
+    internal partial class StorageMappingProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TargetStorageClassificationId))
+            if (Optional.IsDefined(TargetStorageClassificationId))
             {
                 writer.WritePropertyName("targetStorageClassificationId"u8);
                 writer.WriteStringValue(TargetStorageClassificationId);

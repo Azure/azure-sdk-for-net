@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class ManagedDiskDetails : Core.IUtf8JsonSerializable
+    public partial class ManagedDiskDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceGroupId"u8);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(StagingStorageAccountId);
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (Core.Optional.IsDefined(SharePassword))
+            if (Optional.IsDefined(SharePassword))
             {
                 writer.WritePropertyName("sharePassword"u8);
                 writer.WriteStringValue(SharePassword);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBox.Models
             ResourceIdentifier resourceGroupId = default;
             ResourceIdentifier stagingStorageAccountId = default;
             DataAccountType dataAccountType = default;
-            Core.Optional<string> sharePassword = default;
+            Optional<string> sharePassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceGroupId"u8))

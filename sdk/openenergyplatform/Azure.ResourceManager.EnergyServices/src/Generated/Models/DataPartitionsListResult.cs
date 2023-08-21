@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
         /// <summary> Initializes a new instance of DataPartitionsListResult. </summary>
         internal DataPartitionsListResult()
         {
-            DataPartitionInfo = new Core.ChangeTrackingList<DataPartition>();
+            DataPartitionInfo = new ChangeTrackingList<DataPartition>();
         }
 
         /// <summary> Initializes a new instance of DataPartitionsListResult. </summary>

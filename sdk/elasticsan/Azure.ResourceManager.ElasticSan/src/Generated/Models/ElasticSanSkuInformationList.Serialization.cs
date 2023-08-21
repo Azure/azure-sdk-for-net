@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ElasticSanSkuInformation>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ElasticSanSkuInformation>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new ElasticSanSkuInformationList(Core.Optional.ToList(value), nextLink.Value);
+            return new ElasticSanSkuInformationList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

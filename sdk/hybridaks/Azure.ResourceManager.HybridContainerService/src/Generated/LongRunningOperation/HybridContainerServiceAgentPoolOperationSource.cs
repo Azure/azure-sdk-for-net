@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    internal class HybridContainerServiceAgentPoolOperationSource : Core.IOperationSource<HybridContainerServiceAgentPoolResource>
+    internal class HybridContainerServiceAgentPoolOperationSource : IOperationSource<HybridContainerServiceAgentPoolResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HybridContainerService
             _client = client;
         }
 
-        HybridContainerServiceAgentPoolResource Core.IOperationSource<HybridContainerServiceAgentPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HybridContainerServiceAgentPoolResource IOperationSource<HybridContainerServiceAgentPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(document.RootElement);
             return new HybridContainerServiceAgentPoolResource(_client, data);
         }
 
-        async ValueTask<HybridContainerServiceAgentPoolResource> Core.IOperationSource<HybridContainerServiceAgentPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HybridContainerServiceAgentPoolResource> IOperationSource<HybridContainerServiceAgentPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(document.RootElement);

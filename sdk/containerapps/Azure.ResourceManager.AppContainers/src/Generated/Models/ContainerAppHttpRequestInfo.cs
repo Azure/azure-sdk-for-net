@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="port"> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
         public ContainerAppHttpRequestInfo(int port)
         {
-            HttpHeaders = new Core.ChangeTrackingList<ContainerAppHttpHeaderInfo>();
+            HttpHeaders = new ChangeTrackingList<ContainerAppHttpHeaderInfo>();
             Port = port;
         }
 

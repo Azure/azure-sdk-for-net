@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of ReservationRefundPolicyResultProperty. </summary>
         internal ReservationRefundPolicyResultProperty()
         {
-            PolicyErrors = new Core.ChangeTrackingList<ReservationRefundPolicyError>();
+            PolicyErrors = new ChangeTrackingList<ReservationRefundPolicyError>();
         }
 
         /// <summary> Initializes a new instance of ReservationRefundPolicyResultProperty. </summary>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Initializes a new instance of ServiceBusAuthorizationRuleData. </summary>
         public ServiceBusAuthorizationRuleData()
         {
-            Rights = new Core.ChangeTrackingList<ServiceBusAccessRight>();
+            Rights = new ChangeTrackingList<ServiceBusAccessRight>();
         }
 
         /// <summary> Initializes a new instance of ServiceBusAuthorizationRuleData. </summary>

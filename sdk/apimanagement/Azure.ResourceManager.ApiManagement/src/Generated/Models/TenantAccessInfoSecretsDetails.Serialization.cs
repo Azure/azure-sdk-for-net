@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> principalId = default;
-            Core.Optional<string> primaryKey = default;
-            Core.Optional<string> secondaryKey = default;
-            Core.Optional<bool> enabled = default;
+            Optional<string> id = default;
+            Optional<string> principalId = default;
+            Optional<string> primaryKey = default;
+            Optional<string> secondaryKey = default;
+            Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new TenantAccessInfoSecretsDetails(id.Value, principalId.Value, primaryKey.Value, secondaryKey.Value, Core.Optional.ToNullable(enabled));
+            return new TenantAccessInfoSecretsDetails(id.Value, principalId.Value, primaryKey.Value, secondaryKey.Value, Optional.ToNullable(enabled));
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.DigitalTwins.Core
             {
                 return null;
             }
-            Azure.Core.Optional<string> code = default;
-            Azure.Core.Optional<InnerError> innererror = default;
+            Optional<string> code = default;
+            Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))

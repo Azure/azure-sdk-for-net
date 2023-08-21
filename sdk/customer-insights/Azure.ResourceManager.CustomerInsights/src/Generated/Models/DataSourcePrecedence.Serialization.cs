@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Core.Optional<int> precedence = default;
-            Core.Optional<string> name = default;
-            Core.Optional<DataSourceType> dataSourceType = default;
-            Core.Optional<Status> status = default;
-            Core.Optional<int> id = default;
-            Core.Optional<string> dataSourceReferenceId = default;
+            Optional<int> precedence = default;
+            Optional<string> name = default;
+            Optional<DataSourceType> dataSourceType = default;
+            Optional<Status> status = default;
+            Optional<int> id = default;
+            Optional<string> dataSourceReferenceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("precedence"u8))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new DataSourcePrecedence(Core.Optional.ToNullable(precedence), name.Value, Core.Optional.ToNullable(dataSourceType), Core.Optional.ToNullable(status), Core.Optional.ToNullable(id), dataSourceReferenceId.Value);
+            return new DataSourcePrecedence(Optional.ToNullable(precedence), name.Value, Optional.ToNullable(dataSourceType), Optional.ToNullable(status), Optional.ToNullable(id), dataSourceReferenceId.Value);
         }
     }
 }

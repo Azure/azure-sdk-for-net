@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class GuestConfigurationVmInfo : Core.IUtf8JsonSerializable
+    public partial class GuestConfigurationVmInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<Guid> uuid = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<Guid> uuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     continue;
                 }
             }
-            return new GuestConfigurationVmInfo(id.Value, Core.Optional.ToNullable(uuid));
+            return new GuestConfigurationVmInfo(id.Value, Optional.ToNullable(uuid));
         }
     }
 }

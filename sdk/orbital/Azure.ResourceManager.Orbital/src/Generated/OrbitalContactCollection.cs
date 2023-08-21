@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Orbital
             try
             {
                 var response = await _orbitalContactContactsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contactName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OrbitalArmOperation<OrbitalContactResource>(new OrbitalContactOperationSource(Client), _orbitalContactContactsClientDiagnostics, Pipeline, _orbitalContactContactsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contactName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new OrbitalArmOperation<OrbitalContactResource>(new OrbitalContactOperationSource(Client), _orbitalContactContactsClientDiagnostics, Pipeline, _orbitalContactContactsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contactName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Orbital
             try
             {
                 var response = _orbitalContactContactsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contactName, data, cancellationToken);
-                var operation = new OrbitalArmOperation<OrbitalContactResource>(new OrbitalContactOperationSource(Client), _orbitalContactContactsClientDiagnostics, Pipeline, _orbitalContactContactsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contactName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new OrbitalArmOperation<OrbitalContactResource>(new OrbitalContactOperationSource(Client), _orbitalContactContactsClientDiagnostics, Pipeline, _orbitalContactContactsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contactName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Orbital
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _orbitalContactContactsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _orbitalContactContactsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skiptoken);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OrbitalContactResource(Client, OrbitalContactData.DeserializeOrbitalContactData(e)), _orbitalContactContactsClientDiagnostics, Pipeline, "OrbitalContactCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OrbitalContactResource(Client, OrbitalContactData.DeserializeOrbitalContactData(e)), _orbitalContactContactsClientDiagnostics, Pipeline, "OrbitalContactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Orbital
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _orbitalContactContactsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _orbitalContactContactsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skiptoken);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OrbitalContactResource(Client, OrbitalContactData.DeserializeOrbitalContactData(e)), _orbitalContactContactsClientDiagnostics, Pipeline, "OrbitalContactCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OrbitalContactResource(Client, OrbitalContactData.DeserializeOrbitalContactData(e)), _orbitalContactContactsClientDiagnostics, Pipeline, "OrbitalContactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

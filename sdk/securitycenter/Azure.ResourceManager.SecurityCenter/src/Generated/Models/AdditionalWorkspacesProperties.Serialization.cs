@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AdditionalWorkspacesProperties : Core.IUtf8JsonSerializable
+    public partial class AdditionalWorkspacesProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Workspace))
+            if (Optional.IsDefined(Workspace))
             {
                 writer.WritePropertyName("workspace"u8);
                 writer.WriteStringValue(Workspace);
             }
-            if (Core.Optional.IsDefined(WorkspaceType))
+            if (Optional.IsDefined(WorkspaceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WorkspaceType.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(DataTypes))
+            if (Optional.IsCollectionDefined(DataTypes))
             {
                 writer.WritePropertyName("dataTypes"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<string> workspace = default;
-            Core.Optional<AdditionalWorkspaceType> type = default;
-            Core.Optional<IList<AdditionalWorkspaceDataType>> dataTypes = default;
+            Optional<string> workspace = default;
+            Optional<AdditionalWorkspaceType> type = default;
+            Optional<IList<AdditionalWorkspaceDataType>> dataTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspace"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new AdditionalWorkspacesProperties(workspace.Value, Core.Optional.ToNullable(type), Core.Optional.ToList(dataTypes));
+            return new AdditionalWorkspacesProperties(workspace.Value, Optional.ToNullable(type), Optional.ToList(dataTypes));
         }
     }
 }

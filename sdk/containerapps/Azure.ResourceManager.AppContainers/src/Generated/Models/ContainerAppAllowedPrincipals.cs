@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppAllowedPrincipals. </summary>
         public ContainerAppAllowedPrincipals()
         {
-            Groups = new Core.ChangeTrackingList<string>();
-            Identities = new Core.ChangeTrackingList<string>();
+            Groups = new ChangeTrackingList<string>();
+            Identities = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppAllowedPrincipals. </summary>

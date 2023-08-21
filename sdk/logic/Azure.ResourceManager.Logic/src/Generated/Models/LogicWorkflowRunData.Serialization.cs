@@ -25,19 +25,19 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> waitEndTime = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<LogicWorkflowStatus> status = default;
-            Core.Optional<string> code = default;
-            Core.Optional<BinaryData> error = default;
-            Core.Optional<string> correlationId = default;
-            Core.Optional<Correlation> correlation = default;
-            Core.Optional<LogicResourceReference> workflow = default;
-            Core.Optional<LogicWorkflowRunTrigger> trigger = default;
-            Core.Optional<IReadOnlyDictionary<string, LogicWorkflowOutputParameterInfo>> outputs = default;
-            Core.Optional<LogicWorkflowRunTrigger> response = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> waitEndTime = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<LogicWorkflowStatus> status = default;
+            Optional<string> code = default;
+            Optional<BinaryData> error = default;
+            Optional<string> correlationId = default;
+            Optional<Correlation> correlation = default;
+            Optional<LogicResourceReference> workflow = default;
+            Optional<LogicWorkflowRunTrigger> trigger = default;
+            Optional<IReadOnlyDictionary<string, LogicWorkflowOutputParameterInfo>> outputs = default;
+            Optional<LogicWorkflowRunTrigger> response = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Logic
                     continue;
                 }
             }
-            return new LogicWorkflowRunData(id, name, type, systemData.Value, Core.Optional.ToNullable(waitEndTime), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(status), code.Value, error.Value, correlationId.Value, correlation.Value, workflow.Value, trigger.Value, Core.Optional.ToDictionary(outputs), response.Value);
+            return new LogicWorkflowRunData(id, name, type, systemData.Value, Optional.ToNullable(waitEndTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(status), code.Value, error.Value, correlationId.Value, correlation.Value, workflow.Value, trigger.Value, Optional.ToDictionary(outputs), response.Value);
         }
     }
 }

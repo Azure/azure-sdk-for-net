@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class NumaNodeInfo : Core.IUtf8JsonSerializable
+    public partial class NumaNodeInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NumaNodeIndex))
+            if (Optional.IsDefined(NumaNodeIndex))
             {
                 writer.WritePropertyName("numaNodeIndex"u8);
                 writer.WriteNumberValue(NumaNodeIndex.Value);
             }
-            if (Core.Optional.IsDefined(TotalMemoryInMB))
+            if (Optional.IsDefined(TotalMemoryInMB))
             {
                 writer.WritePropertyName("totalMemoryInMb"u8);
                 writer.WriteNumberValue(TotalMemoryInMB.Value);
             }
-            if (Core.Optional.IsDefined(LogicalCoreCountPerCore))
+            if (Optional.IsDefined(LogicalCoreCountPerCore))
             {
                 writer.WritePropertyName("logicalCoreCountPerCore"u8);
                 writer.WriteNumberValue(LogicalCoreCountPerCore.Value);
             }
-            if (Core.Optional.IsDefined(EffectiveAvailableMemoryInMB))
+            if (Optional.IsDefined(EffectiveAvailableMemoryInMB))
             {
                 writer.WritePropertyName("effectiveAvailableMemoryInMb"u8);
                 writer.WriteNumberValue(EffectiveAvailableMemoryInMB.Value);
             }
-            if (Core.Optional.IsCollectionDefined(FreeVCpuIndexesForHpn))
+            if (Optional.IsCollectionDefined(FreeVCpuIndexesForHpn))
             {
                 writer.WritePropertyName("freeVCpuIndexesForHpn"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(VCpuIndexesForHpn))
+            if (Optional.IsCollectionDefined(VCpuIndexesForHpn))
             {
                 writer.WritePropertyName("vCpuIndexesForHpn"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(VCpuIndexesForRoot))
+            if (Optional.IsCollectionDefined(VCpuIndexesForRoot))
             {
                 writer.WritePropertyName("vCpuIndexesForRoot"u8);
                 writer.WriteStartArray();
@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<int> numaNodeIndex = default;
-            Core.Optional<long> totalMemoryInMb = default;
-            Core.Optional<int> logicalCoreCountPerCore = default;
-            Core.Optional<long> effectiveAvailableMemoryInMb = default;
-            Core.Optional<IList<int>> freeVCpuIndexesForHpn = default;
-            Core.Optional<IList<int>> vCpuIndexesForHpn = default;
-            Core.Optional<IList<int>> vCpuIndexesForRoot = default;
+            Optional<int> numaNodeIndex = default;
+            Optional<long> totalMemoryInMb = default;
+            Optional<int> logicalCoreCountPerCore = default;
+            Optional<long> effectiveAvailableMemoryInMb = default;
+            Optional<IList<int>> freeVCpuIndexesForHpn = default;
+            Optional<IList<int>> vCpuIndexesForHpn = default;
+            Optional<IList<int>> vCpuIndexesForRoot = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("numaNodeIndex"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new NumaNodeInfo(Core.Optional.ToNullable(numaNodeIndex), Core.Optional.ToNullable(totalMemoryInMb), Core.Optional.ToNullable(logicalCoreCountPerCore), Core.Optional.ToNullable(effectiveAvailableMemoryInMb), Core.Optional.ToList(freeVCpuIndexesForHpn), Core.Optional.ToList(vCpuIndexesForHpn), Core.Optional.ToList(vCpuIndexesForRoot));
+            return new NumaNodeInfo(Optional.ToNullable(numaNodeIndex), Optional.ToNullable(totalMemoryInMb), Optional.ToNullable(logicalCoreCountPerCore), Optional.ToNullable(effectiveAvailableMemoryInMb), Optional.ToList(freeVCpuIndexesForHpn), Optional.ToList(vCpuIndexesForHpn), Optional.ToList(vCpuIndexesForRoot));
         }
     }
 }

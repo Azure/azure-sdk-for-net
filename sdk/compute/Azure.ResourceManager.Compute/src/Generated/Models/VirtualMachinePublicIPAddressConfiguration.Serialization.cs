@@ -12,36 +12,36 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachinePublicIPAddressConfiguration : Core.IUtf8JsonSerializable
+    public partial class VirtualMachinePublicIPAddressConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IdleTimeoutInMinutes))
+            if (Optional.IsDefined(IdleTimeoutInMinutes))
             {
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
-            if (Core.Optional.IsDefined(DeleteOption))
+            if (Optional.IsDefined(DeleteOption))
             {
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DnsSettings))
+            if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings);
             }
-            if (Core.Optional.IsCollectionDefined(IPTags))
+            if (Optional.IsCollectionDefined(IPTags))
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(PublicIPPrefix))
+            if (Optional.IsDefined(PublicIPPrefix))
             {
                 writer.WritePropertyName("publicIPPrefix"u8);
                 JsonSerializer.Serialize(writer, PublicIPPrefix);
             }
-            if (Core.Optional.IsDefined(PublicIPAddressVersion))
+            if (Optional.IsDefined(PublicIPAddressVersion))
             {
                 writer.WritePropertyName("publicIPAddressVersion"u8);
                 writer.WriteStringValue(PublicIPAddressVersion.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PublicIPAllocationMethod))
+            if (Optional.IsDefined(PublicIPAllocationMethod))
             {
                 writer.WritePropertyName("publicIPAllocationMethod"u8);
                 writer.WriteStringValue(PublicIPAllocationMethod.Value.ToString());
@@ -77,14 +77,14 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            Core.Optional<ComputePublicIPAddressSku> sku = default;
-            Core.Optional<int> idleTimeoutInMinutes = default;
-            Core.Optional<ComputeDeleteOption> deleteOption = default;
-            Core.Optional<VirtualMachinePublicIPAddressDnsSettingsConfiguration> dnsSettings = default;
-            Core.Optional<IList<VirtualMachineIPTag>> ipTags = default;
-            Core.Optional<WritableSubResource> publicIPPrefix = default;
-            Core.Optional<IPVersion> publicIPAddressVersion = default;
-            Core.Optional<PublicIPAllocationMethod> publicIPAllocationMethod = default;
+            Optional<ComputePublicIPAddressSku> sku = default;
+            Optional<int> idleTimeoutInMinutes = default;
+            Optional<ComputeDeleteOption> deleteOption = default;
+            Optional<VirtualMachinePublicIPAddressDnsSettingsConfiguration> dnsSettings = default;
+            Optional<IList<VirtualMachineIPTag>> ipTags = default;
+            Optional<WritableSubResource> publicIPPrefix = default;
+            Optional<IPVersion> publicIPAddressVersion = default;
+            Optional<PublicIPAllocationMethod> publicIPAllocationMethod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachinePublicIPAddressConfiguration(name, sku.Value, Core.Optional.ToNullable(idleTimeoutInMinutes), Core.Optional.ToNullable(deleteOption), dnsSettings.Value, Core.Optional.ToList(ipTags), publicIPPrefix, Core.Optional.ToNullable(publicIPAddressVersion), Core.Optional.ToNullable(publicIPAllocationMethod));
+            return new VirtualMachinePublicIPAddressConfiguration(name, sku.Value, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(deleteOption), dnsSettings.Value, Optional.ToList(ipTags), publicIPPrefix, Optional.ToNullable(publicIPAddressVersion), Optional.ToNullable(publicIPAllocationMethod));
         }
     }
 }

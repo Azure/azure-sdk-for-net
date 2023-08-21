@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Core.Optional<string> generatedInvitation = default;
+            Optional<string> generatedInvitation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("generatedInvitation"u8))

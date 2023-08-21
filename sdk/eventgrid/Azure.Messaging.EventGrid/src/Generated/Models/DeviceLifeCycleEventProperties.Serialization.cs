@@ -18,9 +18,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<string> deviceId = default;
-            Core.Optional<string> hubName = default;
-            Core.Optional<DeviceTwinInfo> twin = default;
+            Optional<string> deviceId = default;
+            Optional<string> hubName = default;
+            Optional<DeviceTwinInfo> twin = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))

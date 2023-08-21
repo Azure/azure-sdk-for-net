@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> enableAgentAutoUpgrade = default;
+            Optional<string> enableAgentAutoUpgrade = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {

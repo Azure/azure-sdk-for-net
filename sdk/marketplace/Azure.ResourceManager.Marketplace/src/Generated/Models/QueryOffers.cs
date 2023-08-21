@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of QueryOffers. </summary>
         internal QueryOffers()
         {
-            Value = new Core.ChangeTrackingList<PrivateStoreOfferResult>();
+            Value = new ChangeTrackingList<PrivateStoreOfferResult>();
         }
 
         /// <summary> Initializes a new instance of QueryOffers. </summary>

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class DataMasking : Core.IUtf8JsonSerializable
+    public partial class DataMasking : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(QueryParams))
+            if (Optional.IsCollectionDefined(QueryParams))
             {
                 writer.WritePropertyName("queryParams"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Headers))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<IList<DataMaskingEntity>> queryParams = default;
-            Core.Optional<IList<DataMaskingEntity>> headers = default;
+            Optional<IList<DataMaskingEntity>> queryParams = default;
+            Optional<IList<DataMaskingEntity>> headers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryParams"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new DataMasking(Core.Optional.ToList(queryParams), Core.Optional.ToList(headers));
+            return new DataMasking(Optional.ToList(queryParams), Optional.ToList(headers));
         }
     }
 }

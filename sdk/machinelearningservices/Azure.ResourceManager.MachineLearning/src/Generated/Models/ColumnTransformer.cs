@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ColumnTransformer. </summary>
         public ColumnTransformer()
         {
-            Fields = new Core.ChangeTrackingList<string>();
+            Fields = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ColumnTransformer. </summary>

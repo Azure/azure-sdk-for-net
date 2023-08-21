@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of ServicesDescriptionListResult. </summary>
         internal ServicesDescriptionListResult()
         {
-            Value = new Core.ChangeTrackingList<HealthcareApisServiceData>();
+            Value = new ChangeTrackingList<HealthcareApisServiceData>();
         }
 
         /// <summary> Initializes a new instance of ServicesDescriptionListResult. </summary>

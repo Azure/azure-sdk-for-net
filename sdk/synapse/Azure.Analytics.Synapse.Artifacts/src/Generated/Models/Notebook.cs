@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             NotebookFormat = notebookFormat;
             NotebookFormatMinor = notebookFormatMinor;
             Cells = cells.ToList();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of Notebook. </summary>

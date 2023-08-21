@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of FrontDoorNetworkExperimentProfilePatch. </summary>
         public FrontDoorNetworkExperimentProfilePatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Resource tags. </summary>

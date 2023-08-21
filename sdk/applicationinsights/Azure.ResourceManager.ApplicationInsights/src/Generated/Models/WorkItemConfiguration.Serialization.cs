@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> connectorId = default;
-            Core.Optional<string> configDisplayName = default;
-            Core.Optional<bool> isDefault = default;
-            Core.Optional<string> id = default;
-            Core.Optional<string> configProperties = default;
+            Optional<string> connectorId = default;
+            Optional<string> configDisplayName = default;
+            Optional<bool> isDefault = default;
+            Optional<string> id = default;
+            Optional<string> configProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ConnectorId"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new WorkItemConfiguration(connectorId.Value, configDisplayName.Value, Core.Optional.ToNullable(isDefault), id.Value, configProperties.Value);
+            return new WorkItemConfiguration(connectorId.Value, configDisplayName.Value, Optional.ToNullable(isDefault), id.Value, configProperties.Value);
         }
     }
 }

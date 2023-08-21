@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of NetworkCloudClusterMetricsConfigurationPatch. </summary>
         public NetworkCloudClusterMetricsConfigurationPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            EnabledMetrics = new Core.ChangeTrackingList<string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            EnabledMetrics = new ChangeTrackingList<string>();
         }
 
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>

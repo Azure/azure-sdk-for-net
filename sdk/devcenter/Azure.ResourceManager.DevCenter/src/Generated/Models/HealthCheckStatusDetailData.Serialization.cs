@@ -14,9 +14,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class HealthCheckStatusDetailData : Core.IUtf8JsonSerializable
+    public partial class HealthCheckStatusDetailData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> startDateTime = default;
-            Core.Optional<DateTimeOffset> endDateTime = default;
-            Core.Optional<IReadOnlyList<DevCenterHealthCheck>> healthChecks = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> startDateTime = default;
+            Optional<DateTimeOffset> endDateTime = default;
+            Optional<IReadOnlyList<DevCenterHealthCheck>> healthChecks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new HealthCheckStatusDetailData(id, name, type, systemData.Value, Core.Optional.ToNullable(startDateTime), Core.Optional.ToNullable(endDateTime), Core.Optional.ToList(healthChecks));
+            return new HealthCheckStatusDetailData(id, name, type, systemData.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToList(healthChecks));
         }
     }
 }

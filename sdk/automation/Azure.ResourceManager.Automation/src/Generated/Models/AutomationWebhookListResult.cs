@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationWebhookListResult. </summary>
         internal AutomationWebhookListResult()
         {
-            Value = new Core.ChangeTrackingList<AutomationWebhookData>();
+            Value = new ChangeTrackingList<AutomationWebhookData>();
         }
 
         /// <summary> Initializes a new instance of AutomationWebhookListResult. </summary>

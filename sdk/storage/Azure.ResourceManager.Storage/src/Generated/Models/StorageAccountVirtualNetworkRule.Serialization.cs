@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountVirtualNetworkRule : Core.IUtf8JsonSerializable
+    public partial class StorageAccountVirtualNetworkRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(VirtualNetworkResourceId);
-            if (Core.Optional.IsDefined(Action))
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Core.Optional<StorageAccountNetworkRuleAction> action = default;
-            Core.Optional<StorageAccountNetworkRuleState> state = default;
+            Optional<StorageAccountNetworkRuleAction> action = default;
+            Optional<StorageAccountNetworkRuleState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StorageAccountVirtualNetworkRule(id, Core.Optional.ToNullable(action), Core.Optional.ToNullable(state));
+            return new StorageAccountVirtualNetworkRule(id, Optional.ToNullable(action), Optional.ToNullable(state));
         }
     }
 }

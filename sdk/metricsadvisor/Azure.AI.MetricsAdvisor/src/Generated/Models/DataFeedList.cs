@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of DataFeedList. </summary>
         internal DataFeedList()
         {
-            Value = new Core.ChangeTrackingList<DataFeedDetail>();
+            Value = new ChangeTrackingList<DataFeedDetail>();
         }
 
         /// <summary> Initializes a new instance of DataFeedList. </summary>

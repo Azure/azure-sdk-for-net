@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class ExternalSecuritySolution : Core.IUtf8JsonSerializable
+    public partial class ExternalSecuritySolution : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Kind != null)
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             ExternalSecuritySolutionKind? kind = default;
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new ExternalSecuritySolution(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(location));
+            return new ExternalSecuritySolution(id, name, type, systemData.Value, kind, Optional.ToNullable(location));
         }
     }
 }

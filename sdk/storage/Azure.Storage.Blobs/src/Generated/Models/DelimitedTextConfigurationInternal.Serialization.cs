@@ -10,36 +10,36 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class DelimitedTextConfigurationInternal : Core.IXmlSerializable
+    internal partial class DelimitedTextConfigurationInternal : IXmlSerializable
     {
-        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "DelimitedTextConfiguration");
-            if (Core.Optional.IsDefined(ColumnSeparator))
+            if (Optional.IsDefined(ColumnSeparator))
             {
                 writer.WriteStartElement("ColumnSeparator");
                 writer.WriteValue(ColumnSeparator);
                 writer.WriteEndElement();
             }
-            if (Core.Optional.IsDefined(FieldQuote))
+            if (Optional.IsDefined(FieldQuote))
             {
                 writer.WriteStartElement("FieldQuote");
                 writer.WriteValue(FieldQuote);
                 writer.WriteEndElement();
             }
-            if (Core.Optional.IsDefined(RecordSeparator))
+            if (Optional.IsDefined(RecordSeparator))
             {
                 writer.WriteStartElement("RecordSeparator");
                 writer.WriteValue(RecordSeparator);
                 writer.WriteEndElement();
             }
-            if (Core.Optional.IsDefined(EscapeChar))
+            if (Optional.IsDefined(EscapeChar))
             {
                 writer.WriteStartElement("EscapeChar");
                 writer.WriteValue(EscapeChar);
                 writer.WriteEndElement();
             }
-            if (Core.Optional.IsDefined(HeadersPresent))
+            if (Optional.IsDefined(HeadersPresent))
             {
                 writer.WriteStartElement("HasHeaders");
                 writer.WriteValue(HeadersPresent.Value);

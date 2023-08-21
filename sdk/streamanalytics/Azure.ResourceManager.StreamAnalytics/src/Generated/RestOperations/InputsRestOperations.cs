@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
             _userAgent.Apply(message);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
             _userAgent.Apply(message);
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (input != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Core.Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(input);
                 request.Content = content;
             }

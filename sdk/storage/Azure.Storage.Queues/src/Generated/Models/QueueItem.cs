@@ -22,7 +22,7 @@ namespace Azure.Storage.Queues.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Metadata = new Core.ChangeTrackingDictionary<string, string>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of QueueItem. </summary>

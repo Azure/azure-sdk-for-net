@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> Initializes a new instance of StoragePoolSkuRestrictions. </summary>
         internal StoragePoolSkuRestrictions()
         {
-            Values = new Core.ChangeTrackingList<string>();
+            Values = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StoragePoolSkuRestrictions. </summary>

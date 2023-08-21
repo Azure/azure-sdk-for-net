@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    internal class VirtualNetworkOperationSource : Core.IOperationSource<VirtualNetworkResource>
+    internal class VirtualNetworkOperationSource : IOperationSource<VirtualNetworkResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             _client = client;
         }
 
-        VirtualNetworkResource Core.IOperationSource<VirtualNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualNetworkResource IOperationSource<VirtualNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualNetworkData.DeserializeVirtualNetworkData(document.RootElement);
             return new VirtualNetworkResource(_client, data);
         }
 
-        async ValueTask<VirtualNetworkResource> Core.IOperationSource<VirtualNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualNetworkResource> IOperationSource<VirtualNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualNetworkData.DeserializeVirtualNetworkData(document.RootElement);

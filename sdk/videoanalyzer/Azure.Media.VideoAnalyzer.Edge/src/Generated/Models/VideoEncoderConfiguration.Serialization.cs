@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class VideoEncoderConfiguration : Core.IUtf8JsonSerializable
+    public partial class VideoEncoderConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Encoding))
+            if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Quality))
+            if (Optional.IsDefined(Quality))
             {
                 writer.WritePropertyName("quality"u8);
                 writer.WriteNumberValue(Quality.Value);
             }
-            if (Core.Optional.IsDefined(Resolution))
+            if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
-            if (Core.Optional.IsDefined(RateControl))
+            if (Optional.IsDefined(RateControl))
             {
                 writer.WritePropertyName("rateControl"u8);
                 writer.WriteObjectValue(RateControl);
             }
-            if (Core.Optional.IsDefined(H264))
+            if (Optional.IsDefined(H264))
             {
                 writer.WritePropertyName("h264"u8);
                 writer.WriteObjectValue(H264);
             }
-            if (Core.Optional.IsDefined(Mpeg4))
+            if (Optional.IsDefined(Mpeg4))
             {
                 writer.WritePropertyName("mpeg4"u8);
                 writer.WriteObjectValue(Mpeg4);
@@ -54,12 +54,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<VideoEncoding> encoding = default;
-            Core.Optional<float> quality = default;
-            Core.Optional<VideoResolution> resolution = default;
-            Core.Optional<RateControl> rateControl = default;
-            Core.Optional<H264Configuration> h264 = default;
-            Core.Optional<Mpeg4Configuration> mpeg4 = default;
+            Optional<VideoEncoding> encoding = default;
+            Optional<float> quality = default;
+            Optional<VideoResolution> resolution = default;
+            Optional<RateControl> rateControl = default;
+            Optional<H264Configuration> h264 = default;
+            Optional<Mpeg4Configuration> mpeg4 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encoding"u8))
@@ -117,7 +117,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new VideoEncoderConfiguration(Core.Optional.ToNullable(encoding), Core.Optional.ToNullable(quality), resolution.Value, rateControl.Value, h264.Value, mpeg4.Value);
+            return new VideoEncoderConfiguration(Optional.ToNullable(encoding), Optional.ToNullable(quality), resolution.Value, rateControl.Value, h264.Value, mpeg4.Value);
         }
     }
 }

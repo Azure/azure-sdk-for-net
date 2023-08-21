@@ -11,84 +11,84 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
-    internal partial class JsonWebKey : Core.IUtf8JsonSerializable
+    internal partial class JsonWebKey : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Alg))
+            if (Optional.IsDefined(Alg))
             {
                 writer.WritePropertyName("alg"u8);
                 writer.WriteStringValue(Alg);
             }
-            if (Core.Optional.IsDefined(Crv))
+            if (Optional.IsDefined(Crv))
             {
                 writer.WritePropertyName("crv"u8);
                 writer.WriteStringValue(Crv);
             }
-            if (Core.Optional.IsDefined(D))
+            if (Optional.IsDefined(D))
             {
                 writer.WritePropertyName("d"u8);
                 writer.WriteStringValue(D);
             }
-            if (Core.Optional.IsDefined(Dp))
+            if (Optional.IsDefined(Dp))
             {
                 writer.WritePropertyName("dp"u8);
                 writer.WriteStringValue(Dp);
             }
-            if (Core.Optional.IsDefined(Dq))
+            if (Optional.IsDefined(Dq))
             {
                 writer.WritePropertyName("dq"u8);
                 writer.WriteStringValue(Dq);
             }
-            if (Core.Optional.IsDefined(E))
+            if (Optional.IsDefined(E))
             {
                 writer.WritePropertyName("e"u8);
                 writer.WriteStringValue(E);
             }
-            if (Core.Optional.IsDefined(K))
+            if (Optional.IsDefined(K))
             {
                 writer.WritePropertyName("k"u8);
                 writer.WriteStringValue(K);
             }
-            if (Core.Optional.IsDefined(Kid))
+            if (Optional.IsDefined(Kid))
             {
                 writer.WritePropertyName("kid"u8);
                 writer.WriteStringValue(Kid);
             }
             writer.WritePropertyName("kty"u8);
             writer.WriteStringValue(Kty);
-            if (Core.Optional.IsDefined(N))
+            if (Optional.IsDefined(N))
             {
                 writer.WritePropertyName("n"u8);
                 writer.WriteStringValue(N);
             }
-            if (Core.Optional.IsDefined(P))
+            if (Optional.IsDefined(P))
             {
                 writer.WritePropertyName("p"u8);
                 writer.WriteStringValue(P);
             }
-            if (Core.Optional.IsDefined(Q))
+            if (Optional.IsDefined(Q))
             {
                 writer.WritePropertyName("q"u8);
                 writer.WriteStringValue(Q);
             }
-            if (Core.Optional.IsDefined(Qi))
+            if (Optional.IsDefined(Qi))
             {
                 writer.WritePropertyName("qi"u8);
                 writer.WriteStringValue(Qi);
             }
-            if (Core.Optional.IsDefined(Use))
+            if (Optional.IsDefined(Use))
             {
                 writer.WritePropertyName("use"u8);
                 writer.WriteStringValue(Use);
             }
-            if (Core.Optional.IsDefined(X))
+            if (Optional.IsDefined(X))
             {
                 writer.WritePropertyName("x"u8);
                 writer.WriteStringValue(X);
             }
-            if (Core.Optional.IsCollectionDefined(X5C))
+            if (Optional.IsCollectionDefined(X5C))
             {
                 writer.WritePropertyName("x5c"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.Security.Attestation
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Y))
+            if (Optional.IsDefined(Y))
             {
                 writer.WritePropertyName("y"u8);
                 writer.WriteStringValue(Y);
@@ -112,23 +112,23 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            Core.Optional<string> alg = default;
-            Core.Optional<string> crv = default;
-            Core.Optional<string> d = default;
-            Core.Optional<string> dp = default;
-            Core.Optional<string> dq = default;
-            Core.Optional<string> e = default;
-            Core.Optional<string> k = default;
-            Core.Optional<string> kid = default;
+            Optional<string> alg = default;
+            Optional<string> crv = default;
+            Optional<string> d = default;
+            Optional<string> dp = default;
+            Optional<string> dq = default;
+            Optional<string> e = default;
+            Optional<string> k = default;
+            Optional<string> kid = default;
             string kty = default;
-            Core.Optional<string> n = default;
-            Core.Optional<string> p = default;
-            Core.Optional<string> q = default;
-            Core.Optional<string> qi = default;
-            Core.Optional<string> use = default;
-            Core.Optional<string> x = default;
-            Core.Optional<IList<string>> x5c = default;
-            Core.Optional<string> y = default;
+            Optional<string> n = default;
+            Optional<string> p = default;
+            Optional<string> q = default;
+            Optional<string> qi = default;
+            Optional<string> use = default;
+            Optional<string> x = default;
+            Optional<IList<string>> x5c = default;
+            Optional<string> y = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alg"u8))
@@ -226,7 +226,7 @@ namespace Azure.Security.Attestation
                     continue;
                 }
             }
-            return new JsonWebKey(alg.Value, crv.Value, d.Value, dp.Value, dq.Value, e.Value, k.Value, kid.Value, kty, n.Value, p.Value, q.Value, qi.Value, use.Value, x.Value, Core.Optional.ToList(x5c), y.Value);
+            return new JsonWebKey(alg.Value, crv.Value, d.Value, dp.Value, dq.Value, e.Value, k.Value, kid.Value, kty, n.Value, p.Value, q.Value, qi.Value, use.Value, x.Value, Optional.ToList(x5c), y.Value);
         }
     }
 }

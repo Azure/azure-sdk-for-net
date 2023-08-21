@@ -15,12 +15,12 @@ using Azure.ResourceManager.Orbital.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
-    public partial class OrbitalContactProfileData : Core.IUtf8JsonSerializable
+    public partial class OrbitalContactProfileData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -35,37 +35,37 @@ namespace Azure.ResourceManager.Orbital
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(MinimumViableContactDuration))
+            if (Optional.IsDefined(MinimumViableContactDuration))
             {
                 writer.WritePropertyName("minimumViableContactDuration"u8);
                 writer.WriteStringValue(MinimumViableContactDuration.Value, "P");
             }
-            if (Core.Optional.IsDefined(MinimumElevationDegrees))
+            if (Optional.IsDefined(MinimumElevationDegrees))
             {
                 writer.WritePropertyName("minimumElevationDegrees"u8);
                 writer.WriteNumberValue(MinimumElevationDegrees.Value);
             }
-            if (Core.Optional.IsDefined(AutoTrackingConfiguration))
+            if (Optional.IsDefined(AutoTrackingConfiguration))
             {
                 writer.WritePropertyName("autoTrackingConfiguration"u8);
                 writer.WriteStringValue(AutoTrackingConfiguration.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(EventHubUri))
+            if (Optional.IsDefined(EventHubUri))
             {
                 writer.WritePropertyName("eventHubUri"u8);
                 writer.WriteStringValue(EventHubUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(NetworkConfiguration))
+            if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
             }
-            if (Core.Optional.IsCollectionDefined(Links))
+            if (Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -85,20 +85,20 @@ namespace Azure.ResourceManager.Orbital
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<OrbitalProvisioningState> provisioningState = default;
-            Core.Optional<TimeSpan> minimumViableContactDuration = default;
-            Core.Optional<float> minimumElevationDegrees = default;
-            Core.Optional<AutoTrackingConfiguration> autoTrackingConfiguration = default;
-            Core.Optional<Uri> eventHubUri = default;
-            Core.Optional<ContactProfilesPropertiesNetworkConfiguration> networkConfiguration = default;
-            Core.Optional<IList<OrbitalContactProfileLink>> links = default;
+            Optional<SystemData> systemData = default;
+            Optional<OrbitalProvisioningState> provisioningState = default;
+            Optional<TimeSpan> minimumViableContactDuration = default;
+            Optional<float> minimumElevationDegrees = default;
+            Optional<AutoTrackingConfiguration> autoTrackingConfiguration = default;
+            Optional<Uri> eventHubUri = default;
+            Optional<ContactProfilesPropertiesNetworkConfiguration> networkConfiguration = default;
+            Optional<IList<OrbitalContactProfileLink>> links = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Orbital
                     continue;
                 }
             }
-            return new OrbitalContactProfileData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(minimumViableContactDuration), Core.Optional.ToNullable(minimumElevationDegrees), Core.Optional.ToNullable(autoTrackingConfiguration), eventHubUri.Value, networkConfiguration.Value, Core.Optional.ToList(links));
+            return new OrbitalContactProfileData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(minimumViableContactDuration), Optional.ToNullable(minimumElevationDegrees), Optional.ToNullable(autoTrackingConfiguration), eventHubUri.Value, networkConfiguration.Value, Optional.ToList(links));
         }
     }
 }

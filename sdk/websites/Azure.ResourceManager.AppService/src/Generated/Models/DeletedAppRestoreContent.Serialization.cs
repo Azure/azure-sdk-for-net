@@ -11,34 +11,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DeletedAppRestoreContent : Core.IUtf8JsonSerializable
+    public partial class DeletedAppRestoreContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DeletedSiteId))
+            if (Optional.IsDefined(DeletedSiteId))
             {
                 writer.WritePropertyName("deletedSiteId"u8);
                 writer.WriteStringValue(DeletedSiteId);
             }
-            if (Core.Optional.IsDefined(RecoverConfiguration))
+            if (Optional.IsDefined(RecoverConfiguration))
             {
                 writer.WritePropertyName("recoverConfiguration"u8);
                 writer.WriteBooleanValue(RecoverConfiguration.Value);
             }
-            if (Core.Optional.IsDefined(SnapshotTime))
+            if (Optional.IsDefined(SnapshotTime))
             {
                 writer.WritePropertyName("snapshotTime"u8);
                 writer.WriteStringValue(SnapshotTime);
             }
-            if (Core.Optional.IsDefined(UseDRSecondary))
+            if (Optional.IsDefined(UseDRSecondary))
             {
                 writer.WritePropertyName("useDRSecondary"u8);
                 writer.WriteBooleanValue(UseDRSecondary.Value);
@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> deletedSiteId = default;
-            Core.Optional<bool> recoverConfiguration = default;
-            Core.Optional<string> snapshotTime = default;
-            Core.Optional<bool> useDRSecondary = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> deletedSiteId = default;
+            Optional<bool> recoverConfiguration = default;
+            Optional<string> snapshotTime = default;
+            Optional<bool> useDRSecondary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DeletedAppRestoreContent(id, name, type, systemData.Value, deletedSiteId.Value, Core.Optional.ToNullable(recoverConfiguration), snapshotTime.Value, Core.Optional.ToNullable(useDRSecondary), kind.Value);
+            return new DeletedAppRestoreContent(id, name, type, systemData.Value, deletedSiteId.Value, Optional.ToNullable(recoverConfiguration), snapshotTime.Value, Optional.ToNullable(useDRSecondary), kind.Value);
         }
     }
 }

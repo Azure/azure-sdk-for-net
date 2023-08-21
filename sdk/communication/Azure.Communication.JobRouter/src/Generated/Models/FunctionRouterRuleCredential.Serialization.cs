@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class FunctionRouterRuleCredential : Core.IUtf8JsonSerializable
+    public partial class FunctionRouterRuleCredential : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FunctionKey))
+            if (Optional.IsDefined(FunctionKey))
             {
                 writer.WritePropertyName("functionKey"u8);
                 writer.WriteStringValue(FunctionKey);
             }
-            if (Core.Optional.IsDefined(AppKey))
+            if (Optional.IsDefined(AppKey))
             {
                 writer.WritePropertyName("appKey"u8);
                 writer.WriteStringValue(AppKey);
             }
-            if (Core.Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
@@ -39,9 +39,9 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Core.Optional<string> functionKey = default;
-            Core.Optional<string> appKey = default;
-            Core.Optional<string> clientId = default;
+            Optional<string> functionKey = default;
+            Optional<string> appKey = default;
+            Optional<string> clientId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("functionKey"u8))

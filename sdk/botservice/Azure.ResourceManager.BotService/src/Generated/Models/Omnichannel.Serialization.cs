@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class Omnichannel : Core.IUtf8JsonSerializable
+    public partial class Omnichannel : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("channelName"u8);
             writer.WriteStringValue(ChannelName);
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 if (ETag != null)
                 {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("etag");
                 }
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             string channelName = default;
-            Core.Optional<ETag?> etag = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<AzureLocation> location = default;
+            Optional<ETag?> etag = default;
+            Optional<string> provisioningState = default;
+            Optional<AzureLocation> location = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("channelName"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new Omnichannel(channelName, Core.Optional.ToNullable(etag), provisioningState.Value, Core.Optional.ToNullable(location));
+            return new Omnichannel(channelName, Optional.ToNullable(etag), provisioningState.Value, Optional.ToNullable(location));
         }
     }
 }

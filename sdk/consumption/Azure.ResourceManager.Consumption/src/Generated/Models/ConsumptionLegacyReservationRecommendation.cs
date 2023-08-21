@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Argument.AssertNotNull(scope, nameof(scope));
 
             Scope = scope;
-            SkuProperties = new Core.ChangeTrackingList<ConsumptionSkuProperty>();
+            SkuProperties = new ChangeTrackingList<ConsumptionSkuProperty>();
             Kind = ReservationRecommendationKind.Legacy;
         }
 

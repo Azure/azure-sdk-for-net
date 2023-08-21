@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabSupport : Core.IUtf8JsonSerializable
+    public partial class DevTestLabSupport : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Markdown))
+            if (Optional.IsDefined(Markdown))
             {
                 writer.WritePropertyName("markdown"u8);
                 writer.WriteStringValue(Markdown);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<DevTestLabEnableStatus> enabled = default;
-            Core.Optional<string> markdown = default;
+            Optional<DevTestLabEnableStatus> enabled = default;
+            Optional<string> markdown = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabSupport(Core.Optional.ToNullable(enabled), markdown.Value);
+            return new DevTestLabSupport(Optional.ToNullable(enabled), markdown.Value);
         }
     }
 }

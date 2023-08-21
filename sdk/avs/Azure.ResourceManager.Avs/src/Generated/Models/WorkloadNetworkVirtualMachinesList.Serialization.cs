@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<WorkloadNetworkVirtualMachineData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<WorkloadNetworkVirtualMachineData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new WorkloadNetworkVirtualMachinesList(Core.Optional.ToList(value), nextLink.Value);
+            return new WorkloadNetworkVirtualMachinesList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

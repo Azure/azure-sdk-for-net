@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         {
             Argument.AssertNotNull(query, nameof(query));
 
-            Subscriptions = new Core.ChangeTrackingList<string>();
-            ManagementGroups = new Core.ChangeTrackingList<string>();
+            Subscriptions = new ChangeTrackingList<string>();
+            ManagementGroups = new ChangeTrackingList<string>();
             Query = query;
-            Facets = new Core.ChangeTrackingList<FacetRequest>();
+            Facets = new ChangeTrackingList<FacetRequest>();
         }
 
         /// <summary> Azure subscriptions against which to execute the query. </summary>

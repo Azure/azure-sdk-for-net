@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Orbital.Models
             {
                 return null;
             }
-            Core.Optional<string> groundStation = default;
-            Core.Optional<DateTimeOffset> expirationDate = default;
+            Optional<string> groundStation = default;
+            Optional<DateTimeOffset> expirationDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groundStation"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     continue;
                 }
             }
-            return new AuthorizedGroundStation(groundStation.Value, Core.Optional.ToNullable(expirationDate));
+            return new AuthorizedGroundStation(groundStation.Value, Optional.ToNullable(expirationDate));
         }
     }
 }

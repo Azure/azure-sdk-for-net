@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Argument.AssertNotNull(backupBlobShare, nameof(backupBlobShare));
 
             SelectedDatabases = selectedDatabases.ToList();
-            SelectedLogins = new Core.ChangeTrackingList<string>();
-            SelectedAgentJobs = new Core.ChangeTrackingList<string>();
+            SelectedLogins = new ChangeTrackingList<string>();
+            SelectedAgentJobs = new ChangeTrackingList<string>();
             BackupBlobShare = backupBlobShare;
         }
 

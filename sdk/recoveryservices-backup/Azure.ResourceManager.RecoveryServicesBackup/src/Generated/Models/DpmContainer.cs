@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of DpmContainer. </summary>
         public DpmContainer()
         {
-            DpmServers = new Core.ChangeTrackingList<string>();
+            DpmServers = new ChangeTrackingList<string>();
             ContainerType = ProtectableContainerType.DpmContainer;
         }
 

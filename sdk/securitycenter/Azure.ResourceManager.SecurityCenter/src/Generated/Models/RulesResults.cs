@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of RulesResults. </summary>
         internal RulesResults()
         {
-            Value = new Core.ChangeTrackingList<SqlVulnerabilityAssessmentBaselineRuleData>();
+            Value = new ChangeTrackingList<SqlVulnerabilityAssessmentBaselineRuleData>();
         }
 
         /// <summary> Initializes a new instance of RulesResults. </summary>

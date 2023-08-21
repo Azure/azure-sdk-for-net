@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Automation.Models
         {
             Argument.AssertNotNull(source, nameof(source));
 
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
             Source = source;
-            Parameters = new Core.ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>();
+            Parameters = new ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>();
         }
 
         /// <summary> Gets or sets name of the resource. </summary>

@@ -13,14 +13,14 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudKubernetesClusterData : Core.IUtf8JsonSerializable
+    public partial class NetworkCloudKubernetesClusterData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AadConfiguration))
+            if (Optional.IsDefined(AadConfiguration))
             {
                 writer.WritePropertyName("aadConfiguration"u8);
                 writer.WriteObjectValue(AadConfiguration);
             }
-            if (Core.Optional.IsDefined(AdministratorConfiguration))
+            if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
                 writer.WriteObjectValue(AdministratorConfiguration);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteEndArray();
             writer.WritePropertyName("kubernetesVersion"u8);
             writer.WriteStringValue(KubernetesVersion);
-            if (Core.Optional.IsDefined(ManagedResourceGroupConfiguration))
+            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
@@ -74,29 +74,29 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<NetworkCloudAadConfiguration> aadConfiguration = default;
-            Core.Optional<AdministratorConfiguration> administratorConfiguration = default;
-            Core.Optional<IReadOnlyList<ResourceIdentifier>> attachedNetworkIds = default;
-            Core.Optional<IReadOnlyList<AvailableUpgrade>> availableUpgrades = default;
-            Core.Optional<ResourceIdentifier> clusterId = default;
-            Core.Optional<ResourceIdentifier> connectedClusterId = default;
-            Core.Optional<string> controlPlaneKubernetesVersion = default;
+            Optional<SystemData> systemData = default;
+            Optional<NetworkCloudAadConfiguration> aadConfiguration = default;
+            Optional<AdministratorConfiguration> administratorConfiguration = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> attachedNetworkIds = default;
+            Optional<IReadOnlyList<AvailableUpgrade>> availableUpgrades = default;
+            Optional<ResourceIdentifier> clusterId = default;
+            Optional<ResourceIdentifier> connectedClusterId = default;
+            Optional<string> controlPlaneKubernetesVersion = default;
             ControlPlaneNodeConfiguration controlPlaneNodeConfiguration = default;
-            Core.Optional<KubernetesClusterDetailedStatus> detailedStatus = default;
-            Core.Optional<string> detailedStatusMessage = default;
-            Core.Optional<IReadOnlyList<FeatureStatus>> featureStatuses = default;
+            Optional<KubernetesClusterDetailedStatus> detailedStatus = default;
+            Optional<string> detailedStatusMessage = default;
+            Optional<IReadOnlyList<FeatureStatus>> featureStatuses = default;
             IList<InitialAgentPoolConfiguration> initialAgentPoolConfigurations = default;
             string kubernetesVersion = default;
-            Core.Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
+            Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
             KubernetesClusterNetworkConfiguration networkConfiguration = default;
-            Core.Optional<IReadOnlyList<KubernetesClusterNode>> nodes = default;
-            Core.Optional<KubernetesClusterProvisioningState> provisioningState = default;
+            Optional<IReadOnlyList<KubernetesClusterNode>> nodes = default;
+            Optional<KubernetesClusterProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new NetworkCloudKubernetesClusterData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, aadConfiguration.Value, administratorConfiguration.Value, Core.Optional.ToList(attachedNetworkIds), Core.Optional.ToList(availableUpgrades), clusterId.Value, connectedClusterId.Value, controlPlaneKubernetesVersion.Value, controlPlaneNodeConfiguration, Core.Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Core.Optional.ToList(featureStatuses), initialAgentPoolConfigurations, kubernetesVersion, managedResourceGroupConfiguration.Value, networkConfiguration, Core.Optional.ToList(nodes), Core.Optional.ToNullable(provisioningState));
+            return new NetworkCloudKubernetesClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, aadConfiguration.Value, administratorConfiguration.Value, Optional.ToList(attachedNetworkIds), Optional.ToList(availableUpgrades), clusterId.Value, connectedClusterId.Value, controlPlaneKubernetesVersion.Value, controlPlaneNodeConfiguration, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToList(featureStatuses), initialAgentPoolConfigurations, kubernetesVersion, managedResourceGroupConfiguration.Value, networkConfiguration, Optional.ToList(nodes), Optional.ToNullable(provisioningState));
         }
     }
 }

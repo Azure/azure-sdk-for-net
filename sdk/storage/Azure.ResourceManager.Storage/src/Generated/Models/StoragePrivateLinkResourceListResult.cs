@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of StoragePrivateLinkResourceListResult. </summary>
         internal StoragePrivateLinkResourceListResult()
         {
-            Value = new Core.ChangeTrackingList<StoragePrivateLinkResourceData>();
+            Value = new ChangeTrackingList<StoragePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of StoragePrivateLinkResourceListResult. </summary>

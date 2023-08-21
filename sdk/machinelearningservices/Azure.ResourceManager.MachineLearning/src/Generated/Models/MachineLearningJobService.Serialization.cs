@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningJobService : Core.IUtf8JsonSerializable
+    public partial class MachineLearningJobService : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Endpoint))
+            if (Optional.IsDefined(Endpoint))
             {
                 if (Endpoint != null)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endpoint");
                 }
             }
-            if (Core.Optional.IsDefined(JobServiceType))
+            if (Optional.IsDefined(JobServiceType))
             {
                 if (JobServiceType != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobServiceType");
                 }
             }
-            if (Core.Optional.IsDefined(Port))
+            if (Optional.IsDefined(Port))
             {
                 if (Port != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("port");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> endpoint = default;
-            Core.Optional<string> errorMessage = default;
-            Core.Optional<string> jobServiceType = default;
-            Core.Optional<int?> port = default;
-            Core.Optional<IDictionary<string, string>> properties = default;
-            Core.Optional<string> status = default;
+            Optional<string> endpoint = default;
+            Optional<string> errorMessage = default;
+            Optional<string> jobServiceType = default;
+            Optional<int?> port = default;
+            Optional<IDictionary<string, string>> properties = default;
+            Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpoint"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningJobService(endpoint.Value, errorMessage.Value, jobServiceType.Value, Core.Optional.ToNullable(port), Core.Optional.ToDictionary(properties), status.Value);
+            return new MachineLearningJobService(endpoint.Value, errorMessage.Value, jobServiceType.Value, Optional.ToNullable(port), Optional.ToDictionary(properties), status.Value);
         }
     }
 }

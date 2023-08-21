@@ -13,29 +13,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class VirtualApplicationData : Core.IUtf8JsonSerializable
+    public partial class VirtualApplicationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(FriendlyName))
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Core.Optional.IsDefined(FilePath))
+            if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (Core.Optional.IsDefined(MsixPackageFamilyName))
+            if (Optional.IsDefined(MsixPackageFamilyName))
             {
                 if (MsixPackageFamilyName != null)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     writer.WriteNull("msixPackageFamilyName");
                 }
             }
-            if (Core.Optional.IsDefined(MsixPackageApplicationId))
+            if (Optional.IsDefined(MsixPackageApplicationId))
             {
                 if (MsixPackageApplicationId != null)
                 {
@@ -59,29 +59,29 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     writer.WriteNull("msixPackageApplicationId");
                 }
             }
-            if (Core.Optional.IsDefined(ApplicationType))
+            if (Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
             writer.WritePropertyName("commandLineSetting"u8);
             writer.WriteStringValue(CommandLineSetting.ToString());
-            if (Core.Optional.IsDefined(CommandLineArguments))
+            if (Optional.IsDefined(CommandLineArguments))
             {
                 writer.WritePropertyName("commandLineArguments"u8);
                 writer.WriteStringValue(CommandLineArguments);
             }
-            if (Core.Optional.IsDefined(ShowInPortal))
+            if (Optional.IsDefined(ShowInPortal))
             {
                 writer.WritePropertyName("showInPortal"u8);
                 writer.WriteBooleanValue(ShowInPortal.Value);
             }
-            if (Core.Optional.IsDefined(IconPath))
+            if (Optional.IsDefined(IconPath))
             {
                 writer.WritePropertyName("iconPath"u8);
                 writer.WriteStringValue(IconPath);
             }
-            if (Core.Optional.IsDefined(IconIndex))
+            if (Optional.IsDefined(IconIndex))
             {
                 writer.WritePropertyName("iconIndex"u8);
                 writer.WriteNumberValue(IconIndex.Value);
@@ -99,21 +99,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> objectId = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<string> filePath = default;
-            Core.Optional<string> msixPackageFamilyName = default;
-            Core.Optional<string> msixPackageApplicationId = default;
-            Core.Optional<RemoteApplicationType> applicationType = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> objectId = default;
+            Optional<string> description = default;
+            Optional<string> friendlyName = default;
+            Optional<string> filePath = default;
+            Optional<string> msixPackageFamilyName = default;
+            Optional<string> msixPackageApplicationId = default;
+            Optional<RemoteApplicationType> applicationType = default;
             VirtualApplicationCommandLineSetting commandLineSetting = default;
-            Core.Optional<string> commandLineArguments = default;
-            Core.Optional<bool> showInPortal = default;
-            Core.Optional<string> iconPath = default;
-            Core.Optional<int> iconIndex = default;
-            Core.Optional<string> iconHash = default;
-            Core.Optional<BinaryData> iconContent = default;
+            Optional<string> commandLineArguments = default;
+            Optional<bool> showInPortal = default;
+            Optional<string> iconPath = default;
+            Optional<int> iconIndex = default;
+            Optional<string> iconHash = default;
+            Optional<BinaryData> iconContent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new VirtualApplicationData(id, name, type, systemData.Value, objectId.Value, description.Value, friendlyName.Value, filePath.Value, msixPackageFamilyName.Value, msixPackageApplicationId.Value, Core.Optional.ToNullable(applicationType), commandLineSetting, commandLineArguments.Value, Core.Optional.ToNullable(showInPortal), iconPath.Value, Core.Optional.ToNullable(iconIndex), iconHash.Value, iconContent.Value);
+            return new VirtualApplicationData(id, name, type, systemData.Value, objectId.Value, description.Value, friendlyName.Value, filePath.Value, msixPackageFamilyName.Value, msixPackageApplicationId.Value, Optional.ToNullable(applicationType), commandLineSetting, commandLineArguments.Value, Optional.ToNullable(showInPortal), iconPath.Value, Optional.ToNullable(iconIndex), iconHash.Value, iconContent.Value);
         }
     }
 }

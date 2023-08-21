@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of ReservationMergeProperties. </summary>
         internal ReservationMergeProperties()
         {
-            MergeSources = new Core.ChangeTrackingList<string>();
+            MergeSources = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ReservationMergeProperties. </summary>

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DetectedChangeData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DetectedChangeData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     continue;
                 }
             }
-            return new ChangeList(Core.Optional.ToList(value), nextLink.Value);
+            return new ChangeList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

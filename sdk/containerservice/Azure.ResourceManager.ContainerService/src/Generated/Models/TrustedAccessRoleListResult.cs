@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of TrustedAccessRoleListResult. </summary>
         internal TrustedAccessRoleListResult()
         {
-            Value = new Core.ChangeTrackingList<ContainerServiceTrustedAccessRole>();
+            Value = new ChangeTrackingList<ContainerServiceTrustedAccessRole>();
         }
 
         /// <summary> Initializes a new instance of TrustedAccessRoleListResult. </summary>

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of AvailableCognitiveServicesSku. </summary>
         internal AvailableCognitiveServicesSku()
         {
-            Locations = new Core.ChangeTrackingList<AzureLocation>();
-            Restrictions = new Core.ChangeTrackingList<CognitiveServicesSkuRestrictions>();
+            Locations = new ChangeTrackingList<AzureLocation>();
+            Restrictions = new ChangeTrackingList<CognitiveServicesSkuRestrictions>();
         }
 
         /// <summary> Initializes a new instance of AvailableCognitiveServicesSku. </summary>

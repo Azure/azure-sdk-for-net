@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class ReplaceAllIPFirewallRulesContent : Core.IUtf8JsonSerializable
+    public partial class ReplaceAllIPFirewallRulesContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(IPFirewallRules))
+            if (Optional.IsCollectionDefined(IPFirewallRules))
             {
                 writer.WritePropertyName("ipFirewallRules"u8);
                 writer.WriteStartObject();

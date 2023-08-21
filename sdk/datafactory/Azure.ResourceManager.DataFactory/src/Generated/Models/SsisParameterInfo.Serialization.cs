@@ -18,18 +18,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<long> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> dataType = default;
-            Core.Optional<bool> required = default;
-            Core.Optional<bool> sensitive = default;
-            Core.Optional<string> designDefaultValue = default;
-            Core.Optional<string> defaultValue = default;
-            Core.Optional<string> sensitiveDefaultValue = default;
-            Core.Optional<string> valueType = default;
-            Core.Optional<bool> valueSet = default;
-            Core.Optional<string> variable = default;
+            Optional<long> id = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<string> dataType = default;
+            Optional<bool> required = default;
+            Optional<bool> sensitive = default;
+            Optional<string> designDefaultValue = default;
+            Optional<string> defaultValue = default;
+            Optional<string> sensitiveDefaultValue = default;
+            Optional<string> valueType = default;
+            Optional<bool> valueSet = default;
+            Optional<string> variable = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new SsisParameterInfo(Core.Optional.ToNullable(id), name.Value, description.Value, dataType.Value, Core.Optional.ToNullable(required), Core.Optional.ToNullable(sensitive), designDefaultValue.Value, defaultValue.Value, sensitiveDefaultValue.Value, valueType.Value, Core.Optional.ToNullable(valueSet), variable.Value);
+            return new SsisParameterInfo(Optional.ToNullable(id), name.Value, description.Value, dataType.Value, Optional.ToNullable(required), Optional.ToNullable(sensitive), designDefaultValue.Value, defaultValue.Value, sensitiveDefaultValue.Value, valueType.Value, Optional.ToNullable(valueSet), variable.Value);
         }
     }
 }

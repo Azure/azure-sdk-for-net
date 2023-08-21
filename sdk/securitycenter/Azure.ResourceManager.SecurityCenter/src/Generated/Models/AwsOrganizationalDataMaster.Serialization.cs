@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AwsOrganizationalDataMaster : Core.IUtf8JsonSerializable
+    public partial class AwsOrganizationalDataMaster : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StacksetName))
+            if (Optional.IsDefined(StacksetName))
             {
                 writer.WritePropertyName("stacksetName"u8);
                 writer.WriteStringValue(StacksetName);
             }
-            if (Core.Optional.IsCollectionDefined(ExcludedAccountIds))
+            if (Optional.IsCollectionDefined(ExcludedAccountIds))
             {
                 writer.WritePropertyName("excludedAccountIds"u8);
                 writer.WriteStartArray();
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<string> stacksetName = default;
-            Core.Optional<IList<string>> excludedAccountIds = default;
+            Optional<string> stacksetName = default;
+            Optional<IList<string>> excludedAccountIds = default;
             OrganizationMembershipType organizationMembershipType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new AwsOrganizationalDataMaster(organizationMembershipType, stacksetName.Value, Core.Optional.ToList(excludedAccountIds));
+            return new AwsOrganizationalDataMaster(organizationMembershipType, stacksetName.Value, Optional.ToList(excludedAccountIds));
         }
     }
 }

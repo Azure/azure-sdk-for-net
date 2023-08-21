@@ -13,9 +13,9 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(RerunTriggerResourceConverter))]
-    public partial class RerunTriggerResource : Core.IUtf8JsonSerializable
+    public partial class RerunTriggerResource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -30,10 +30,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             RerunTumblingWindowTrigger properties = default;
-            Core.Optional<string> etag = default;
-            Core.Optional<string> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> type = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

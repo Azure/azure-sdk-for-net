@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    public partial class SignalRResourceLogCategory : Core.IUtf8JsonSerializable
+    public partial class SignalRResourceLogCategory : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> enabled = default;
+            Optional<string> name = default;
+            Optional<string> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

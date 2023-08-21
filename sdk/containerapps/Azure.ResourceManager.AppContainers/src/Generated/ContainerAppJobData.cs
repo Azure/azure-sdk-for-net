@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="location"> The location. </param>
         public ContainerAppJobData(AzureLocation location) : base(location)
         {
-            OutboundIPAddresses = new Core.ChangeTrackingList<string>();
+            OutboundIPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppJobData. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of AlertRuleTemplateDataSource. </summary>
         public AlertRuleTemplateDataSource()
         {
-            DataTypes = new Core.ChangeTrackingList<string>();
+            DataTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AlertRuleTemplateDataSource. </summary>

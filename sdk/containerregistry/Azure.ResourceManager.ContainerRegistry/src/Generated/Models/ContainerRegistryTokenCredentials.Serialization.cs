@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryTokenCredentials : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryTokenCredentials : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Certificates))
+            if (Optional.IsCollectionDefined(Certificates))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Passwords))
+            if (Optional.IsCollectionDefined(Passwords))
             {
                 writer.WritePropertyName("passwords"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<IList<ContainerRegistryTokenCertificate>> certificates = default;
-            Core.Optional<IList<ContainerRegistryTokenPassword>> passwords = default;
+            Optional<IList<ContainerRegistryTokenCertificate>> certificates = default;
+            Optional<IList<ContainerRegistryTokenPassword>> passwords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificates"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryTokenCredentials(Core.Optional.ToList(certificates), Core.Optional.ToList(passwords));
+            return new ContainerRegistryTokenCredentials(Optional.ToList(certificates), Optional.ToList(passwords));
         }
     }
 }

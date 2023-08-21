@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<MachineLearningFqdnEndpointsProperties> properties = default;
+            Optional<MachineLearningFqdnEndpointsProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

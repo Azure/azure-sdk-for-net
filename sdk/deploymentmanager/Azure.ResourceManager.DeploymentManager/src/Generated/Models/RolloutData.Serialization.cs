@@ -13,17 +13,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeploymentManager
 {
-    public partial class RolloutData : Core.IUtf8JsonSerializable
+    public partial class RolloutData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.DeploymentManager
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BuildVersion))
+            if (Optional.IsDefined(BuildVersion))
             {
                 writer.WritePropertyName("buildVersion"u8);
                 writer.WriteStringValue(BuildVersion);
             }
-            if (Core.Optional.IsDefined(ArtifactSourceId))
+            if (Optional.IsDefined(ArtifactSourceId))
             {
                 writer.WritePropertyName("artifactSourceId"u8);
                 writer.WriteStringValue(ArtifactSourceId);
             }
-            if (Core.Optional.IsDefined(TargetServiceTopologyId))
+            if (Optional.IsDefined(TargetServiceTopologyId))
             {
                 writer.WritePropertyName("targetServiceTopologyId"u8);
                 writer.WriteStringValue(TargetServiceTopologyId);
             }
-            if (Core.Optional.IsCollectionDefined(StepGroups))
+            if (Optional.IsCollectionDefined(StepGroups))
             {
                 writer.WritePropertyName("stepGroups"u8);
                 writer.WriteStartArray();
@@ -73,21 +73,21 @@ namespace Azure.ResourceManager.DeploymentManager
             {
                 return null;
             }
-            Core.Optional<Identity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<Identity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> buildVersion = default;
-            Core.Optional<string> artifactSourceId = default;
-            Core.Optional<string> targetServiceTopologyId = default;
-            Core.Optional<IList<StepGroup>> stepGroups = default;
-            Core.Optional<string> status = default;
-            Core.Optional<int> totalRetryAttempts = default;
-            Core.Optional<RolloutOperationInfo> operationInfo = default;
-            Core.Optional<IReadOnlyList<Service>> services = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> buildVersion = default;
+            Optional<string> artifactSourceId = default;
+            Optional<string> targetServiceTopologyId = default;
+            Optional<IList<StepGroup>> stepGroups = default;
+            Optional<string> status = default;
+            Optional<int> totalRetryAttempts = default;
+            Optional<RolloutOperationInfo> operationInfo = default;
+            Optional<IReadOnlyList<Service>> services = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DeploymentManager
                     continue;
                 }
             }
-            return new RolloutData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity.Value, buildVersion.Value, artifactSourceId.Value, targetServiceTopologyId.Value, Core.Optional.ToList(stepGroups), status.Value, Core.Optional.ToNullable(totalRetryAttempts), operationInfo.Value, Core.Optional.ToList(services));
+            return new RolloutData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, buildVersion.Value, artifactSourceId.Value, targetServiceTopologyId.Value, Optional.ToList(stepGroups), status.Value, Optional.ToNullable(totalRetryAttempts), operationInfo.Value, Optional.ToList(services));
         }
     }
 }

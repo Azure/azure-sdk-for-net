@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppReplicaContainer : Core.IUtf8JsonSerializable
+    public partial class ContainerAppReplicaContainer : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(ContainerId))
+            if (Optional.IsDefined(ContainerId))
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
-            if (Core.Optional.IsDefined(IsReady))
+            if (Optional.IsDefined(IsReady))
             {
                 writer.WritePropertyName("ready"u8);
                 writer.WriteBooleanValue(IsReady.Value);
             }
-            if (Core.Optional.IsDefined(IsStarted))
+            if (Optional.IsDefined(IsStarted))
             {
                 writer.WritePropertyName("started"u8);
                 writer.WriteBooleanValue(IsStarted.Value);
             }
-            if (Core.Optional.IsDefined(RestartCount))
+            if (Optional.IsDefined(RestartCount))
             {
                 writer.WritePropertyName("restartCount"u8);
                 writer.WriteNumberValue(RestartCount.Value);
@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> containerId = default;
-            Core.Optional<bool> ready = default;
-            Core.Optional<bool> started = default;
-            Core.Optional<int> restartCount = default;
-            Core.Optional<ContainerAppContainerRunningState> runningState = default;
-            Core.Optional<string> runningStateDetails = default;
-            Core.Optional<string> logStreamEndpoint = default;
-            Core.Optional<string> execEndpoint = default;
+            Optional<string> name = default;
+            Optional<string> containerId = default;
+            Optional<bool> ready = default;
+            Optional<bool> started = default;
+            Optional<int> restartCount = default;
+            Optional<ContainerAppContainerRunningState> runningState = default;
+            Optional<string> runningStateDetails = default;
+            Optional<string> logStreamEndpoint = default;
+            Optional<string> execEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppReplicaContainer(name.Value, containerId.Value, Core.Optional.ToNullable(ready), Core.Optional.ToNullable(started), Core.Optional.ToNullable(restartCount), Core.Optional.ToNullable(runningState), runningStateDetails.Value, logStreamEndpoint.Value, execEndpoint.Value);
+            return new ContainerAppReplicaContainer(name.Value, containerId.Value, Optional.ToNullable(ready), Optional.ToNullable(started), Optional.ToNullable(restartCount), Optional.ToNullable(runningState), runningStateDetails.Value, logStreamEndpoint.Value, execEndpoint.Value);
         }
     }
 }

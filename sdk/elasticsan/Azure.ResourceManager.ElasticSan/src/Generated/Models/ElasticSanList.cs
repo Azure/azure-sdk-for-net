@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Initializes a new instance of ElasticSanList. </summary>
         internal ElasticSanList()
         {
-            Value = new Core.ChangeTrackingList<ElasticSanData>();
+            Value = new ChangeTrackingList<ElasticSanData>();
         }
 
         /// <summary> Initializes a new instance of ElasticSanList. </summary>

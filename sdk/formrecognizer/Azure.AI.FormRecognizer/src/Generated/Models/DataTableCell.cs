@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Models
             Text = text;
             BoundingBox = boundingBox.ToList();
             Confidence = confidence;
-            Elements = new Core.ChangeTrackingList<string>();
+            Elements = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DataTableCell. </summary>

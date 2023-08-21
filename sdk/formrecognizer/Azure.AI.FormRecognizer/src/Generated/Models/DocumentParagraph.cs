@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Argument.AssertNotNull(spans, nameof(spans));
 
             Content = content;
-            BoundingRegions = new Core.ChangeTrackingList<BoundingRegion>();
+            BoundingRegions = new ChangeTrackingList<BoundingRegion>();
             Spans = spans.ToList();
         }
 

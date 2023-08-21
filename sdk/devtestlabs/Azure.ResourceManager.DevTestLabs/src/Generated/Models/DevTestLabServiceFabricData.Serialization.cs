@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabServiceFabricData : Core.IUtf8JsonSerializable
+    public partial class DevTestLabServiceFabricData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DevTestLabs
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExternalServiceFabricId))
+            if (Optional.IsDefined(ExternalServiceFabricId))
             {
                 writer.WritePropertyName("externalServiceFabricId"u8);
                 writer.WriteStringValue(ExternalServiceFabricId);
             }
-            if (Core.Optional.IsDefined(EnvironmentId))
+            if (Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> externalServiceFabricId = default;
-            Core.Optional<string> environmentId = default;
-            Core.Optional<DevTestLabApplicableSchedule> applicableSchedule = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<Guid> uniqueIdentifier = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> externalServiceFabricId = default;
+            Optional<string> environmentId = default;
+            Optional<DevTestLabApplicableSchedule> applicableSchedule = default;
+            Optional<string> provisioningState = default;
+            Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     continue;
                 }
             }
-            return new DevTestLabServiceFabricData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, externalServiceFabricId.Value, environmentId.Value, applicableSchedule.Value, provisioningState.Value, Core.Optional.ToNullable(uniqueIdentifier));
+            return new DevTestLabServiceFabricData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, externalServiceFabricId.Value, environmentId.Value, applicableSchedule.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseFollowerDatabaseListResult. </summary>
         internal SynapseFollowerDatabaseListResult()
         {
-            Value = new Core.ChangeTrackingList<SynapseFollowerDatabaseDefinition>();
+            Value = new ChangeTrackingList<SynapseFollowerDatabaseDefinition>();
         }
 
         /// <summary> Initializes a new instance of SynapseFollowerDatabaseListResult. </summary>

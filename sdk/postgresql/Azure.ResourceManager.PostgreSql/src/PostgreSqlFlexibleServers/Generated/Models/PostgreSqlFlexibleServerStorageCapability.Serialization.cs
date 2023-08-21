@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<long> supportedIops = default;
-            Core.Optional<long> storageSizeMb = default;
-            Core.Optional<string> defaultIopsTier = default;
-            Core.Optional<IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability>> supportedIopsTiers = default;
-            Core.Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Core.Optional<string> reason = default;
+            Optional<long> supportedIops = default;
+            Optional<long> storageSizeMb = default;
+            Optional<string> defaultIopsTier = default;
+            Optional<IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability>> supportedIopsTiers = default;
+            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedIops"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerStorageCapability(Core.Optional.ToNullable(status), reason.Value, Core.Optional.ToNullable(supportedIops), Core.Optional.ToNullable(storageSizeMb), defaultIopsTier.Value, Core.Optional.ToList(supportedIopsTiers));
+            return new PostgreSqlFlexibleServerStorageCapability(Optional.ToNullable(status), reason.Value, Optional.ToNullable(supportedIops), Optional.ToNullable(storageSizeMb), defaultIopsTier.Value, Optional.ToList(supportedIopsTiers));
         }
     }
 }

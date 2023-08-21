@@ -14,23 +14,23 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    public partial class HealthcareApisIotConnectorData : Core.IUtf8JsonSerializable
+    public partial class HealthcareApisIotConnectorData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.HealthcareApis
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IngestionEndpointConfiguration))
+            if (Optional.IsDefined(IngestionEndpointConfiguration))
             {
                 writer.WritePropertyName("ingestionEndpointConfiguration"u8);
                 writer.WriteObjectValue(IngestionEndpointConfiguration);
             }
-            if (Core.Optional.IsDefined(DeviceMapping))
+            if (Optional.IsDefined(DeviceMapping))
             {
                 writer.WritePropertyName("deviceMapping"u8);
                 writer.WriteObjectValue(DeviceMapping);
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<HealthcareApisProvisioningState> provisioningState = default;
-            Core.Optional<HealthcareApisIotConnectorEventHubIngestionConfiguration> ingestionEndpointConfiguration = default;
-            Core.Optional<HealthcareApisIotMappingProperties> deviceMapping = default;
+            Optional<SystemData> systemData = default;
+            Optional<HealthcareApisProvisioningState> provisioningState = default;
+            Optional<HealthcareApisIotConnectorEventHubIngestionConfiguration> ingestionEndpointConfiguration = default;
+            Optional<HealthcareApisIotMappingProperties> deviceMapping = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     continue;
                 }
             }
-            return new HealthcareApisIotConnectorData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(provisioningState), ingestionEndpointConfiguration.Value, deviceMapping.Value, identity, Core.Optional.ToNullable(etag));
+            return new HealthcareApisIotConnectorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), ingestionEndpointConfiguration.Value, deviceMapping.Value, identity, Optional.ToNullable(etag));
         }
     }
 }

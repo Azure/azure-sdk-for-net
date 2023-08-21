@@ -13,24 +13,24 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class QuickBooksLinkedService : Core.IUtf8JsonSerializable
+    public partial class QuickBooksLinkedService : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (Core.Optional.IsDefined(ConnectVia))
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Annotations))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ConnectionProperties))
+            if (Optional.IsDefined(ConnectionProperties))
             {
                 writer.WritePropertyName("connectionProperties"u8);
 #if NET6_0_OR_GREATER
@@ -71,42 +71,42 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(ConnectionProperties.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(Endpoint))
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 JsonSerializer.Serialize(writer, Endpoint);
             }
-            if (Core.Optional.IsDefined(CompanyId))
+            if (Optional.IsDefined(CompanyId))
             {
                 writer.WritePropertyName("companyId"u8);
                 JsonSerializer.Serialize(writer, CompanyId);
             }
-            if (Core.Optional.IsDefined(ConsumerKey))
+            if (Optional.IsDefined(ConsumerKey))
             {
                 writer.WritePropertyName("consumerKey"u8);
                 JsonSerializer.Serialize(writer, ConsumerKey);
             }
-            if (Core.Optional.IsDefined(ConsumerSecret))
+            if (Optional.IsDefined(ConsumerSecret))
             {
                 writer.WritePropertyName("consumerSecret"u8);
                 JsonSerializer.Serialize(writer, ConsumerSecret);
             }
-            if (Core.Optional.IsDefined(AccessToken))
+            if (Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
                 JsonSerializer.Serialize(writer, AccessToken);
             }
-            if (Core.Optional.IsDefined(AccessTokenSecret))
+            if (Optional.IsDefined(AccessTokenSecret))
             {
                 writer.WritePropertyName("accessTokenSecret"u8);
                 JsonSerializer.Serialize(writer, AccessTokenSecret);
             }
-            if (Core.Optional.IsDefined(UseEncryptedEndpoints))
+            if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
                 JsonSerializer.Serialize(writer, UseEncryptedEndpoints);
             }
-            if (Core.Optional.IsDefined(EncryptedCredential))
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -131,19 +131,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Core.Optional<IntegrationRuntimeReference> connectVia = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Core.Optional<IList<BinaryData>> annotations = default;
-            Core.Optional<BinaryData> connectionProperties = default;
-            Core.Optional<DataFactoryElement<string>> endpoint = default;
-            Core.Optional<DataFactoryElement<string>> companyId = default;
-            Core.Optional<DataFactoryElement<string>> consumerKey = default;
-            Core.Optional<DataFactorySecretBaseDefinition> consumerSecret = default;
-            Core.Optional<DataFactorySecretBaseDefinition> accessToken = default;
-            Core.Optional<DataFactorySecretBaseDefinition> accessTokenSecret = default;
-            Core.Optional<DataFactoryElement<bool>> useEncryptedEndpoints = default;
-            Core.Optional<string> encryptedCredential = default;
+            Optional<IntegrationRuntimeReference> connectVia = default;
+            Optional<string> description = default;
+            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            Optional<IList<BinaryData>> annotations = default;
+            Optional<BinaryData> connectionProperties = default;
+            Optional<DataFactoryElement<string>> endpoint = default;
+            Optional<DataFactoryElement<string>> companyId = default;
+            Optional<DataFactoryElement<string>> consumerKey = default;
+            Optional<DataFactorySecretBaseDefinition> consumerSecret = default;
+            Optional<DataFactorySecretBaseDefinition> accessToken = default;
+            Optional<DataFactorySecretBaseDefinition> accessTokenSecret = default;
+            Optional<DataFactoryElement<bool>> useEncryptedEndpoints = default;
+            Optional<string> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new QuickBooksLinkedService(type, connectVia.Value, description.Value, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(annotations), additionalProperties, connectionProperties.Value, endpoint.Value, companyId.Value, consumerKey.Value, consumerSecret, accessToken, accessTokenSecret, useEncryptedEndpoints.Value, encryptedCredential.Value);
+            return new QuickBooksLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionProperties.Value, endpoint.Value, companyId.Value, consumerKey.Value, consumerSecret, accessToken, accessTokenSecret, useEncryptedEndpoints.Value, encryptedCredential.Value);
         }
     }
 }

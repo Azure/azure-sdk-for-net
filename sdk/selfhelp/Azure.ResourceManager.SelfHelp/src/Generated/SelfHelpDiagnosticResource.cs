@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SelfHelp
             try
             {
                 var response = await _selfHelpDiagnosticDiagnosticsRestClient.CreateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticOperationSource(Client), _selfHelpDiagnosticDiagnosticsClientDiagnostics, Pipeline, _selfHelpDiagnosticDiagnosticsRestClient.CreateCreateRequest(Id.Parent, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticOperationSource(Client), _selfHelpDiagnosticDiagnosticsClientDiagnostics, Pipeline, _selfHelpDiagnosticDiagnosticsRestClient.CreateCreateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SelfHelp
             try
             {
                 var response = _selfHelpDiagnosticDiagnosticsRestClient.Create(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticOperationSource(Client), _selfHelpDiagnosticDiagnosticsClientDiagnostics, Pipeline, _selfHelpDiagnosticDiagnosticsRestClient.CreateCreateRequest(Id.Parent, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticOperationSource(Client), _selfHelpDiagnosticDiagnosticsClientDiagnostics, Pipeline, _selfHelpDiagnosticDiagnosticsRestClient.CreateCreateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

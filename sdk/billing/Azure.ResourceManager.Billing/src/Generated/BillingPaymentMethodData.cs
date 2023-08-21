@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Initializes a new instance of BillingPaymentMethodData. </summary>
         public BillingPaymentMethodData()
         {
-            Logos = new Core.ChangeTrackingList<PaymentMethodLogo>();
+            Logos = new ChangeTrackingList<PaymentMethodLogo>();
         }
 
         /// <summary> Initializes a new instance of BillingPaymentMethodData. </summary>

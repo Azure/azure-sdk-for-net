@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class WindowsUpdateConfigurationProperties : Core.IUtf8JsonSerializable
+    public partial class WindowsUpdateConfigurationProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IncludedUpdateClassifications))
+            if (Optional.IsDefined(IncludedUpdateClassifications))
             {
                 writer.WritePropertyName("includedUpdateClassifications"u8);
                 writer.WriteStringValue(IncludedUpdateClassifications.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(ExcludedKBNumbers))
+            if (Optional.IsCollectionDefined(ExcludedKBNumbers))
             {
                 writer.WritePropertyName("excludedKbNumbers"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(IncludedKBNumbers))
+            if (Optional.IsCollectionDefined(IncludedKBNumbers))
             {
                 writer.WritePropertyName("includedKbNumbers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(RebootSetting))
+            if (Optional.IsDefined(RebootSetting))
             {
                 writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting);
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<WindowsUpdateClassification> includedUpdateClassifications = default;
-            Core.Optional<IList<string>> excludedKbNumbers = default;
-            Core.Optional<IList<string>> includedKbNumbers = default;
-            Core.Optional<string> rebootSetting = default;
+            Optional<WindowsUpdateClassification> includedUpdateClassifications = default;
+            Optional<IList<string>> excludedKbNumbers = default;
+            Optional<IList<string>> includedKbNumbers = default;
+            Optional<string> rebootSetting = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("includedUpdateClassifications"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new WindowsUpdateConfigurationProperties(Core.Optional.ToNullable(includedUpdateClassifications), Core.Optional.ToList(excludedKbNumbers), Core.Optional.ToList(includedKbNumbers), rebootSetting.Value);
+            return new WindowsUpdateConfigurationProperties(Optional.ToNullable(includedUpdateClassifications), Optional.ToList(excludedKbNumbers), Optional.ToList(includedKbNumbers), rebootSetting.Value);
         }
     }
 }

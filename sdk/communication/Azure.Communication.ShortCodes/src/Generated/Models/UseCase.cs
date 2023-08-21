@@ -16,7 +16,7 @@ namespace Azure.Communication.ShortCodes.Models
         /// <summary> Initializes a new instance of UseCase. </summary>
         public UseCase()
         {
-            Examples = new Core.ChangeTrackingList<MessageExampleSequence>();
+            Examples = new ChangeTrackingList<MessageExampleSequence>();
         }
 
         /// <summary> Initializes a new instance of UseCase. </summary>

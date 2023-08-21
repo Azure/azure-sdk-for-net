@@ -13,19 +13,19 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseIPFirewallRuleInfoData : Core.IUtf8JsonSerializable
+    public partial class SynapseIPFirewallRuleInfoData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EndIPAddress))
+            if (Optional.IsDefined(EndIPAddress))
             {
                 writer.WritePropertyName("endIpAddress"u8);
                 writer.WriteStringValue(EndIPAddress.ToString());
             }
-            if (Core.Optional.IsDefined(StartIPAddress))
+            if (Optional.IsDefined(StartIPAddress))
             {
                 writer.WritePropertyName("startIpAddress"u8);
                 writer.WriteStringValue(StartIPAddress.ToString());
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IPAddress> endIPAddress = default;
-            Core.Optional<SynapseProvisioningState> provisioningState = default;
-            Core.Optional<IPAddress> startIPAddress = default;
+            Optional<SystemData> systemData = default;
+            Optional<IPAddress> endIPAddress = default;
+            Optional<SynapseProvisioningState> provisioningState = default;
+            Optional<IPAddress> startIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseIPFirewallRuleInfoData(id, name, type, systemData.Value, endIPAddress.Value, Core.Optional.ToNullable(provisioningState), startIPAddress.Value);
+            return new SynapseIPFirewallRuleInfoData(id, name, type, systemData.Value, endIPAddress.Value, Optional.ToNullable(provisioningState), startIPAddress.Value);
         }
     }
 }

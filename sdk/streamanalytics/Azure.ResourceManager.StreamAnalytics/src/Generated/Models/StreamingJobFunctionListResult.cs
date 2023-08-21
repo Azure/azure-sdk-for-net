@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of StreamingJobFunctionListResult. </summary>
         internal StreamingJobFunctionListResult()
         {
-            Value = new Core.ChangeTrackingList<StreamingJobFunctionData>();
+            Value = new ChangeTrackingList<StreamingJobFunctionData>();
         }
 
         /// <summary> Initializes a new instance of StreamingJobFunctionListResult. </summary>

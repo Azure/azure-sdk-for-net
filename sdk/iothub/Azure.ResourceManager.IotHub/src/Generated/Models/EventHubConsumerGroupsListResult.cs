@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of EventHubConsumerGroupsListResult. </summary>
         internal EventHubConsumerGroupsListResult()
         {
-            Value = new Core.ChangeTrackingList<EventHubConsumerGroupInfoData>();
+            Value = new ChangeTrackingList<EventHubConsumerGroupInfoData>();
         }
 
         /// <summary> Initializes a new instance of EventHubConsumerGroupsListResult. </summary>

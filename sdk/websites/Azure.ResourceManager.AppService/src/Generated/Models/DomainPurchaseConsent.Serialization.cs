@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DomainPurchaseConsent : Core.IUtf8JsonSerializable
+    public partial class DomainPurchaseConsent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AgreementKeys))
+            if (Optional.IsCollectionDefined(AgreementKeys))
             {
                 writer.WritePropertyName("agreementKeys"u8);
                 writer.WriteStartArray();
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(AgreedBy))
+            if (Optional.IsDefined(AgreedBy))
             {
                 writer.WritePropertyName("agreedBy"u8);
                 writer.WriteStringValue(AgreedBy);
             }
-            if (Core.Optional.IsDefined(AgreedOn))
+            if (Optional.IsDefined(AgreedOn))
             {
                 writer.WritePropertyName("agreedAt"u8);
                 writer.WriteStringValue(AgreedOn.Value, "O");
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> agreementKeys = default;
-            Core.Optional<string> agreedBy = default;
-            Core.Optional<DateTimeOffset> agreedAt = default;
+            Optional<IList<string>> agreementKeys = default;
+            Optional<string> agreedBy = default;
+            Optional<DateTimeOffset> agreedAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("agreementKeys"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DomainPurchaseConsent(Core.Optional.ToList(agreementKeys), agreedBy.Value, Core.Optional.ToNullable(agreedAt));
+            return new DomainPurchaseConsent(Optional.ToList(agreementKeys), agreedBy.Value, Optional.ToNullable(agreedAt));
         }
     }
 }

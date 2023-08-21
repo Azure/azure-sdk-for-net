@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppDefaultAuthorizationPolicy. </summary>
         public ContainerAppDefaultAuthorizationPolicy()
         {
-            AllowedApplications = new Core.ChangeTrackingList<string>();
+            AllowedApplications = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppDefaultAuthorizationPolicy. </summary>

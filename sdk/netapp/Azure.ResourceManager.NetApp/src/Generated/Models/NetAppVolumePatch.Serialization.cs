@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumePatch : Core.IUtf8JsonSerializable
+    public partial class NetAppVolumePatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -30,47 +30,47 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServiceLevel))
+            if (Optional.IsDefined(ServiceLevel))
             {
                 writer.WritePropertyName("serviceLevel"u8);
                 writer.WriteStringValue(ServiceLevel.Value.ToString());
             }
-            if (Core.Optional.IsDefined(UsageThreshold))
+            if (Optional.IsDefined(UsageThreshold))
             {
                 writer.WritePropertyName("usageThreshold"u8);
                 writer.WriteNumberValue(UsageThreshold.Value);
             }
-            if (Core.Optional.IsDefined(ExportPolicy))
+            if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
                 writer.WriteObjectValue(ExportPolicy);
             }
-            if (Core.Optional.IsDefined(ThroughputMibps))
+            if (Optional.IsDefined(ThroughputMibps))
             {
                 writer.WritePropertyName("throughputMibps"u8);
                 writer.WriteNumberValue(ThroughputMibps.Value);
             }
-            if (Core.Optional.IsDefined(DataProtection))
+            if (Optional.IsDefined(DataProtection))
             {
                 writer.WritePropertyName("dataProtection"u8);
                 writer.WriteObjectValue(DataProtection);
             }
-            if (Core.Optional.IsDefined(IsDefaultQuotaEnabled))
+            if (Optional.IsDefined(IsDefaultQuotaEnabled))
             {
                 writer.WritePropertyName("isDefaultQuotaEnabled"u8);
                 writer.WriteBooleanValue(IsDefaultQuotaEnabled.Value);
             }
-            if (Core.Optional.IsDefined(DefaultUserQuotaInKiBs))
+            if (Optional.IsDefined(DefaultUserQuotaInKiBs))
             {
                 writer.WritePropertyName("defaultUserQuotaInKiBs"u8);
                 writer.WriteNumberValue(DefaultUserQuotaInKiBs.Value);
             }
-            if (Core.Optional.IsDefined(DefaultGroupQuotaInKiBs))
+            if (Optional.IsDefined(DefaultGroupQuotaInKiBs))
             {
                 writer.WritePropertyName("defaultGroupQuotaInKiBs"u8);
                 writer.WriteNumberValue(DefaultGroupQuotaInKiBs.Value);
             }
-            if (Core.Optional.IsDefined(UnixPermissions))
+            if (Optional.IsDefined(UnixPermissions))
             {
                 if (UnixPermissions != null)
                 {
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("unixPermissions");
                 }
             }
-            if (Core.Optional.IsDefined(IsCoolAccessEnabled))
+            if (Optional.IsDefined(IsCoolAccessEnabled))
             {
                 writer.WritePropertyName("coolAccess"u8);
                 writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
-            if (Core.Optional.IsDefined(CoolnessPeriod))
+            if (Optional.IsDefined(CoolnessPeriod))
             {
                 writer.WritePropertyName("coolnessPeriod"u8);
                 writer.WriteNumberValue(CoolnessPeriod.Value);
             }
-            if (Core.Optional.IsDefined(IsSnapshotDirectoryVisible))
+            if (Optional.IsDefined(IsSnapshotDirectoryVisible))
             {
                 writer.WritePropertyName("snapshotDirectoryVisible"u8);
                 writer.WriteBooleanValue(IsSnapshotDirectoryVisible.Value);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    internal class MobileNetworkServiceOperationSource : Core.IOperationSource<MobileNetworkServiceResource>
+    internal class MobileNetworkServiceOperationSource : IOperationSource<MobileNetworkServiceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.MobileNetwork
             _client = client;
         }
 
-        MobileNetworkServiceResource Core.IOperationSource<MobileNetworkServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MobileNetworkServiceResource IOperationSource<MobileNetworkServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MobileNetworkServiceData.DeserializeMobileNetworkServiceData(document.RootElement);
             return new MobileNetworkServiceResource(_client, data);
         }
 
-        async ValueTask<MobileNetworkServiceResource> Core.IOperationSource<MobileNetworkServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MobileNetworkServiceResource> IOperationSource<MobileNetworkServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MobileNetworkServiceData.DeserializeMobileNetworkServiceData(document.RootElement);

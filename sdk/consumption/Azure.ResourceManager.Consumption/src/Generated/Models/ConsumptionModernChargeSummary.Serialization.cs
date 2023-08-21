@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionModernChargeSummary : Core.IUtf8JsonSerializable
+    public partial class ConsumptionModernChargeSummary : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             ChargeSummaryKind kind = default;
-            Core.Optional<ETag> eTag = default;
+            Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> billingPeriodId = default;
-            Core.Optional<string> usageStart = default;
-            Core.Optional<string> usageEnd = default;
-            Core.Optional<ConsumptionAmount> azureCharges = default;
-            Core.Optional<ConsumptionAmount> chargesBilledSeparately = default;
-            Core.Optional<ConsumptionAmount> marketplaceCharges = default;
-            Core.Optional<string> billingAccountId = default;
-            Core.Optional<string> billingProfileId = default;
-            Core.Optional<string> invoiceSectionId = default;
-            Core.Optional<string> customerId = default;
-            Core.Optional<bool> isInvoiced = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> billingPeriodId = default;
+            Optional<string> usageStart = default;
+            Optional<string> usageEnd = default;
+            Optional<ConsumptionAmount> azureCharges = default;
+            Optional<ConsumptionAmount> chargesBilledSeparately = default;
+            Optional<ConsumptionAmount> marketplaceCharges = default;
+            Optional<string> billingAccountId = default;
+            Optional<string> billingProfileId = default;
+            Optional<string> invoiceSectionId = default;
+            Optional<string> customerId = default;
+            Optional<bool> isInvoiced = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionModernChargeSummary(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(eTag), billingPeriodId.Value, usageStart.Value, usageEnd.Value, azureCharges.Value, chargesBilledSeparately.Value, marketplaceCharges.Value, billingAccountId.Value, billingProfileId.Value, invoiceSectionId.Value, customerId.Value, Core.Optional.ToNullable(isInvoiced));
+            return new ConsumptionModernChargeSummary(id, name, type, systemData.Value, kind, Optional.ToNullable(eTag), billingPeriodId.Value, usageStart.Value, usageEnd.Value, azureCharges.Value, chargesBilledSeparately.Value, marketplaceCharges.Value, billingAccountId.Value, billingProfileId.Value, invoiceSectionId.Value, customerId.Value, Optional.ToNullable(isInvoiced));
         }
     }
 }

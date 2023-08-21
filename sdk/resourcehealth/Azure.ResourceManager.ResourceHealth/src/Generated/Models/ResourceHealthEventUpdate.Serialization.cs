@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Core.Optional<string> summary = default;
-            Core.Optional<DateTimeOffset> updateDateTime = default;
+            Optional<string> summary = default;
+            Optional<DateTimeOffset> updateDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new ResourceHealthEventUpdate(summary.Value, Core.Optional.ToNullable(updateDateTime));
+            return new ResourceHealthEventUpdate(summary.Value, Optional.ToNullable(updateDateTime));
         }
     }
 }

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class AS2MdnSettings : Core.IUtf8JsonSerializable
+    public partial class AS2MdnSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("needMDN"u8);
@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(SignMdn);
             writer.WritePropertyName("sendMDNAsynchronously"u8);
             writer.WriteBooleanValue(SendMdnAsynchronously);
-            if (Core.Optional.IsDefined(ReceiptDeliveryUri))
+            if (Optional.IsDefined(ReceiptDeliveryUri))
             {
                 writer.WritePropertyName("receiptDeliveryUrl"u8);
                 writer.WriteStringValue(ReceiptDeliveryUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(DispositionNotificationTo))
+            if (Optional.IsDefined(DispositionNotificationTo))
             {
                 writer.WritePropertyName("dispositionNotificationTo"u8);
                 writer.WriteStringValue(DispositionNotificationTo);
             }
             writer.WritePropertyName("signOutboundMDNIfOptional"u8);
             writer.WriteBooleanValue(SignOutboundMdnIfOptional);
-            if (Core.Optional.IsDefined(MdnText))
+            if (Optional.IsDefined(MdnText))
             {
                 writer.WritePropertyName("mdnText"u8);
                 writer.WriteStringValue(MdnText);
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Logic.Models
             bool needMdn = default;
             bool signMdn = default;
             bool sendMdnAsynchronously = default;
-            Core.Optional<Uri> receiptDeliveryUrl = default;
-            Core.Optional<string> dispositionNotificationTo = default;
+            Optional<Uri> receiptDeliveryUrl = default;
+            Optional<string> dispositionNotificationTo = default;
             bool signOutboundMdnIfOptional = default;
-            Core.Optional<string> mdnText = default;
+            Optional<string> mdnText = default;
             bool sendInboundMdnToMessageBox = default;
             AS2HashingAlgorithm micHashingAlgorithm = default;
             foreach (var property in element.EnumerateObject())

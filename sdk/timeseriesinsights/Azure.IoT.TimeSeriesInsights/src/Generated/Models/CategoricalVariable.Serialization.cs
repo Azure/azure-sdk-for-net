@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class CategoricalVariable : Core.IUtf8JsonSerializable
+    public partial class CategoricalVariable : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteObjectValue(Value);
-            if (Core.Optional.IsDefined(Interpolation))
+            if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
                 writer.WriteObjectValue(Interpolation);
             }
-            if (Core.Optional.IsCollectionDefined(Categories))
+            if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteObjectValue(DefaultCategory);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Core.Optional.IsDefined(Filter))
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -52,11 +52,11 @@ namespace Azure.IoT.TimeSeriesInsights
                 return null;
             }
             TimeSeriesExpression value = default;
-            Core.Optional<TimeSeriesInterpolation> interpolation = default;
-            Core.Optional<IList<TimeSeriesAggregateCategory>> categories = default;
+            Optional<TimeSeriesInterpolation> interpolation = default;
+            Optional<IList<TimeSeriesAggregateCategory>> categories = default;
             TimeSeriesDefaultCategory defaultCategory = default;
             string kind = default;
-            Core.Optional<TimeSeriesExpression> filter = default;
+            Optional<TimeSeriesExpression> filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -107,7 +107,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new CategoricalVariable(kind, filter.Value, value, interpolation.Value, Core.Optional.ToList(categories), defaultCategory);
+            return new CategoricalVariable(kind, filter.Value, value, interpolation.Value, Optional.ToList(categories), defaultCategory);
         }
     }
 }

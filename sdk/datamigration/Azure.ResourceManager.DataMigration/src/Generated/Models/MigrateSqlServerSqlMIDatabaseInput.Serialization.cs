@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlMIDatabaseInput : Core.IUtf8JsonSerializable
+    public partial class MigrateSqlServerSqlMIDatabaseInput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("restoreDatabaseName"u8);
             writer.WriteStringValue(RestoreDatabaseName);
-            if (Core.Optional.IsDefined(BackupFileShare))
+            if (Optional.IsDefined(BackupFileShare))
             {
                 writer.WritePropertyName("backupFileShare"u8);
                 writer.WriteObjectValue(BackupFileShare);
             }
-            if (Core.Optional.IsCollectionDefined(BackupFilePaths))
+            if (Optional.IsCollectionDefined(BackupFilePaths))
             {
                 writer.WritePropertyName("backupFilePaths"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             string name = default;
             string restoreDatabaseName = default;
-            Core.Optional<FileShare> backupFileShare = default;
-            Core.Optional<IList<string>> backupFilePaths = default;
-            Core.Optional<string> id = default;
+            Optional<FileShare> backupFileShare = default;
+            Optional<IList<string>> backupFilePaths = default;
+            Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSqlServerSqlMIDatabaseInput(name, restoreDatabaseName, backupFileShare.Value, Core.Optional.ToList(backupFilePaths), id.Value);
+            return new MigrateSqlServerSqlMIDatabaseInput(name, restoreDatabaseName, backupFileShare.Value, Optional.ToList(backupFilePaths), id.Value);
         }
     }
 }

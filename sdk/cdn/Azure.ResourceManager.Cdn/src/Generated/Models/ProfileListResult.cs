@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of ProfileListResult. </summary>
         internal ProfileListResult()
         {
-            Value = new Core.ChangeTrackingList<ProfileData>();
+            Value = new ChangeTrackingList<ProfileData>();
         }
 
         /// <summary> Initializes a new instance of ProfileListResult. </summary>

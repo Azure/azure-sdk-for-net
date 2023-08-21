@@ -10,44 +10,44 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmProtectableItem : Core.IUtf8JsonSerializable
+    public partial class IaasVmProtectableItem : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VirtualMachineId))
+            if (Optional.IsDefined(VirtualMachineId))
             {
                 writer.WritePropertyName("virtualMachineId"u8);
                 writer.WriteStringValue(VirtualMachineId);
             }
-            if (Core.Optional.IsDefined(VirtualMachineVersion))
+            if (Optional.IsDefined(VirtualMachineVersion))
             {
                 writer.WritePropertyName("virtualMachineVersion"u8);
                 writer.WriteStringValue(VirtualMachineVersion);
             }
-            if (Core.Optional.IsDefined(ResourceGroup))
+            if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (Core.Optional.IsDefined(BackupManagementType))
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
-            if (Core.Optional.IsDefined(WorkloadType))
+            if (Optional.IsDefined(WorkloadType))
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
             writer.WritePropertyName("protectableItemType"u8);
             writer.WriteStringValue(ProtectableItemType);
-            if (Core.Optional.IsDefined(FriendlyName))
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Core.Optional.IsDefined(ProtectionState))
+            if (Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
@@ -69,14 +69,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "Microsoft.Compute/virtualMachines": return IaasComputeVmProtectableItem.DeserializeIaasComputeVmProtectableItem(element);
                 }
             }
-            Core.Optional<ResourceIdentifier> virtualMachineId = default;
-            Core.Optional<string> virtualMachineVersion = default;
-            Core.Optional<string> resourceGroup = default;
-            Core.Optional<string> backupManagementType = default;
-            Core.Optional<string> workloadType = default;
+            Optional<ResourceIdentifier> virtualMachineId = default;
+            Optional<string> virtualMachineVersion = default;
+            Optional<string> resourceGroup = default;
+            Optional<string> backupManagementType = default;
+            Optional<string> workloadType = default;
             string protectableItemType = "IaaSVMProtectableItem";
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<BackupProtectionStatus> protectionState = default;
+            Optional<string> friendlyName = default;
+            Optional<BackupProtectionStatus> protectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachineId"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new IaasVmProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Core.Optional.ToNullable(protectionState), virtualMachineId.Value, virtualMachineVersion.Value, resourceGroup.Value);
+            return new IaasVmProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState), virtualMachineId.Value, virtualMachineVersion.Value, resourceGroup.Value);
         }
     }
 }

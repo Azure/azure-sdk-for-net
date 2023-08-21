@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class KustoTableDataSet : Core.IUtf8JsonSerializable
+    public partial class KustoTableDataSet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> dataSetId = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> dataSetId = default;
             ResourceIdentifier kustoDatabaseResourceId = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<DataShareProvisioningState> provisioningState = default;
+            Optional<AzureLocation> location = default;
+            Optional<DataShareProvisioningState> provisioningState = default;
             TableLevelSharingProperties tableLevelSharingProperties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new KustoTableDataSet(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(dataSetId), kustoDatabaseResourceId, Core.Optional.ToNullable(location), Core.Optional.ToNullable(provisioningState), tableLevelSharingProperties);
+            return new KustoTableDataSet(id, name, type, systemData.Value, kind, Optional.ToNullable(dataSetId), kustoDatabaseResourceId, Optional.ToNullable(location), Optional.ToNullable(provisioningState), tableLevelSharingProperties);
         }
     }
 }

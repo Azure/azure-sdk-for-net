@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
-    public partial class TrainingFileFilter : Core.IUtf8JsonSerializable
+    public partial class TrainingFileFilter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Prefix))
+            if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (Core.Optional.IsDefined(IncludeSubfolders))
+            if (Optional.IsDefined(IncludeSubfolders))
             {
                 writer.WritePropertyName("includeSubFolders"u8);
                 writer.WriteBooleanValue(IncludeSubfolders);

@@ -12,34 +12,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerLogFile : Core.IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerLogFile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(LastModifiedOn))
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(SizeInKb))
+            if (Optional.IsDefined(SizeInKb))
             {
                 writer.WritePropertyName("sizeInKb"u8);
                 writer.WriteNumberValue(SizeInKb.Value);
             }
-            if (Core.Optional.IsDefined(TypePropertiesType))
+            if (Optional.IsDefined(TypePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypePropertiesType);
             }
-            if (Core.Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<long> sizeInKb = default;
-            Core.Optional<string> type0 = default;
-            Core.Optional<Uri> url = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<long> sizeInKb = default;
+            Optional<string> type0 = default;
+            Optional<Uri> url = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerLogFile(id, name, type, systemData.Value, Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(lastModifiedTime), Core.Optional.ToNullable(sizeInKb), type0.Value, url.Value);
+            return new PostgreSqlFlexibleServerLogFile(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(sizeInKb), type0.Value, url.Value);
         }
     }
 }

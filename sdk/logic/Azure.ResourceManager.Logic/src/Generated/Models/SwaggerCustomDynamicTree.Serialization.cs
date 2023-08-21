@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SwaggerCustomDynamicTree : Core.IUtf8JsonSerializable
+    public partial class SwaggerCustomDynamicTree : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Settings))
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (Core.Optional.IsDefined(Open))
+            if (Optional.IsDefined(Open))
             {
                 writer.WritePropertyName("open"u8);
                 writer.WriteObjectValue(Open);
             }
-            if (Core.Optional.IsDefined(Browse))
+            if (Optional.IsDefined(Browse))
             {
                 writer.WritePropertyName("browse"u8);
                 writer.WriteObjectValue(Browse);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<SwaggerCustomDynamicTreeSettings> settings = default;
-            Core.Optional<SwaggerCustomDynamicTreeCommand> open = default;
-            Core.Optional<SwaggerCustomDynamicTreeCommand> browse = default;
+            Optional<SwaggerCustomDynamicTreeSettings> settings = default;
+            Optional<SwaggerCustomDynamicTreeCommand> open = default;
+            Optional<SwaggerCustomDynamicTreeCommand> browse = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("settings"u8))

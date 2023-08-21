@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<ResponseError> errorDetails = default;
-            Core.Optional<BackupInstanceProtectionStatus> status = default;
+            Optional<ResponseError> errorDetails = default;
+            Optional<BackupInstanceProtectionStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorDetails"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new BackupInstanceProtectionStatusDetails(errorDetails.Value, Core.Optional.ToNullable(status));
+            return new BackupInstanceProtectionStatusDetails(errorDetails.Value, Optional.ToNullable(status));
         }
     }
 }

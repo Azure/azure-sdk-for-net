@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class LogicWorkflowRunActionRepetitionDefinitionData : Core.IUtf8JsonSerializable
+    public partial class LogicWorkflowRunActionRepetitionDefinitionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,32 +34,32 @@ namespace Azure.ResourceManager.Logic
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Correlation))
+            if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
                 writer.WriteObjectValue(Correlation);
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Code))
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Core.Optional.IsDefined(Error))
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
 #if NET6_0_OR_GREATER
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Error.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsCollectionDefined(RetryHistory))
+            if (Optional.IsCollectionDefined(RetryHistory))
             {
                 writer.WritePropertyName("retryHistory"u8);
                 writer.WriteStartArray();
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.Logic
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IterationCount))
+            if (Optional.IsDefined(IterationCount))
             {
                 writer.WritePropertyName("iterationCount"u8);
                 writer.WriteNumberValue(IterationCount.Value);
             }
-            if (Core.Optional.IsCollectionDefined(RepetitionIndexes))
+            if (Optional.IsCollectionDefined(RepetitionIndexes))
             {
                 writer.WritePropertyName("repetitionIndexes"u8);
                 writer.WriteStartArray();
@@ -103,27 +103,27 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<LogicWorkflowRunActionCorrelation> correlation = default;
-            Core.Optional<LogicWorkflowStatus> status = default;
-            Core.Optional<string> code = default;
-            Core.Optional<BinaryData> error = default;
-            Core.Optional<Guid> trackingId = default;
-            Core.Optional<BinaryData> inputs = default;
-            Core.Optional<LogicContentLink> inputsLink = default;
-            Core.Optional<BinaryData> outputs = default;
-            Core.Optional<LogicContentLink> outputsLink = default;
-            Core.Optional<BinaryData> trackedProperties = default;
-            Core.Optional<IList<LogicWorkRetryHistory>> retryHistory = default;
-            Core.Optional<int> iterationCount = default;
-            Core.Optional<IList<LogicWorkflowRepetitionIndex>> repetitionIndexes = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<LogicWorkflowRunActionCorrelation> correlation = default;
+            Optional<LogicWorkflowStatus> status = default;
+            Optional<string> code = default;
+            Optional<BinaryData> error = default;
+            Optional<Guid> trackingId = default;
+            Optional<BinaryData> inputs = default;
+            Optional<LogicContentLink> inputsLink = default;
+            Optional<BinaryData> outputs = default;
+            Optional<LogicContentLink> outputsLink = default;
+            Optional<BinaryData> trackedProperties = default;
+            Optional<IList<LogicWorkRetryHistory>> retryHistory = default;
+            Optional<int> iterationCount = default;
+            Optional<IList<LogicWorkflowRepetitionIndex>> repetitionIndexes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Logic
                     continue;
                 }
             }
-            return new LogicWorkflowRunActionRepetitionDefinitionData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), correlation.Value, Core.Optional.ToNullable(status), code.Value, error.Value, Core.Optional.ToNullable(trackingId), inputs.Value, inputsLink.Value, outputs.Value, outputsLink.Value, trackedProperties.Value, Core.Optional.ToList(retryHistory), Core.Optional.ToNullable(iterationCount), Core.Optional.ToList(repetitionIndexes));
+            return new LogicWorkflowRunActionRepetitionDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(startTime), Optional.ToNullable(endTime), correlation.Value, Optional.ToNullable(status), code.Value, error.Value, Optional.ToNullable(trackingId), inputs.Value, inputsLink.Value, outputs.Value, outputsLink.Value, trackedProperties.Value, Optional.ToList(retryHistory), Optional.ToNullable(iterationCount), Optional.ToList(repetitionIndexes));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <summary> Initializes a new instance of FederatedIdentityCredentialData. </summary>
         public FederatedIdentityCredentialData()
         {
-            Audiences = new Core.ChangeTrackingList<string>();
+            Audiences = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of FederatedIdentityCredentialData. </summary>

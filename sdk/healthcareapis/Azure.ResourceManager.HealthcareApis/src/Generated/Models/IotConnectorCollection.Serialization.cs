@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Core.Optional<string> nextLink = default;
-            Core.Optional<IReadOnlyList<HealthcareApisIotConnectorData>> value = default;
+            Optional<string> nextLink = default;
+            Optional<IReadOnlyList<HealthcareApisIotConnectorData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new IotConnectorCollection(nextLink.Value, Core.Optional.ToList(value));
+            return new IotConnectorCollection(nextLink.Value, Optional.ToList(value));
         }
     }
 }

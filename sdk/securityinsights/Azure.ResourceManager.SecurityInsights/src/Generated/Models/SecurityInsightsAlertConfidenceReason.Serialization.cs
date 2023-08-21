@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> reason = default;
-            Core.Optional<string> reasonType = default;
+            Optional<string> reason = default;
+            Optional<string> reasonType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reason"u8))

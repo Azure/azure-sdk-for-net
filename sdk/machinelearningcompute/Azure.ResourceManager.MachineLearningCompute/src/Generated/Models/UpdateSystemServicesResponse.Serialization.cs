@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Core.Optional<OperationStatus> updateStatus = default;
-            Core.Optional<DateTimeOffset> updateStartedOn = default;
-            Core.Optional<DateTimeOffset> updateCompletedOn = default;
+            Optional<OperationStatus> updateStatus = default;
+            Optional<DateTimeOffset> updateStartedOn = default;
+            Optional<DateTimeOffset> updateCompletedOn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("updateStatus"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     continue;
                 }
             }
-            return new UpdateSystemServicesResponse(Core.Optional.ToNullable(updateStatus), Core.Optional.ToNullable(updateStartedOn), Core.Optional.ToNullable(updateCompletedOn));
+            return new UpdateSystemServicesResponse(Optional.ToNullable(updateStatus), Optional.ToNullable(updateStartedOn), Optional.ToNullable(updateCompletedOn));
         }
     }
 }

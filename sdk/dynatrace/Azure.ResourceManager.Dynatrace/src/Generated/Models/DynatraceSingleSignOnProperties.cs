@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Initializes a new instance of DynatraceSingleSignOnProperties. </summary>
         public DynatraceSingleSignOnProperties()
         {
-            AadDomains = new Core.ChangeTrackingList<string>();
+            AadDomains = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DynatraceSingleSignOnProperties. </summary>

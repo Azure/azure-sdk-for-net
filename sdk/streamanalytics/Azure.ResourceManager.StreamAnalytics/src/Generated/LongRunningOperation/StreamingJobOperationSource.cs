@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    internal class StreamingJobOperationSource : Core.IOperationSource<StreamingJobResource>
+    internal class StreamingJobOperationSource : IOperationSource<StreamingJobResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.StreamAnalytics
             _client = client;
         }
 
-        StreamingJobResource Core.IOperationSource<StreamingJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        StreamingJobResource IOperationSource<StreamingJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StreamingJobData.DeserializeStreamingJobData(document.RootElement);
             return new StreamingJobResource(_client, data);
         }
 
-        async ValueTask<StreamingJobResource> Core.IOperationSource<StreamingJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StreamingJobResource> IOperationSource<StreamingJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StreamingJobData.DeserializeStreamingJobData(document.RootElement);

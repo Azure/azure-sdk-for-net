@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of TenantResourceProviderListResult. </summary>
         internal TenantResourceProviderListResult()
         {
-            Value = new Core.ChangeTrackingList<TenantResourceProvider>();
+            Value = new ChangeTrackingList<TenantResourceProvider>();
         }
 
         /// <summary> Initializes a new instance of TenantResourceProviderListResult. </summary>

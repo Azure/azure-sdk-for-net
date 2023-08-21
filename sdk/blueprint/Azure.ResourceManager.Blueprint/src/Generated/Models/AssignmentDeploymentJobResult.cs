@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <summary> Initializes a new instance of AssignmentDeploymentJobResult. </summary>
         public AssignmentDeploymentJobResult()
         {
-            Resources = new Core.ChangeTrackingList<AssignmentJobCreatedResource>();
+            Resources = new ChangeTrackingList<AssignmentJobCreatedResource>();
         }
 
         /// <summary> Initializes a new instance of AssignmentDeploymentJobResult. </summary>

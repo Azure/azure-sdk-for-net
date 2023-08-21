@@ -150,7 +150,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetPipelinesByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetPipelinesByWorkspaceNextPageRequest(nextLink);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists pipelines. </summary>
@@ -159,7 +159,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetPipelinesByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetPipelinesByWorkspaceNextPageRequest(nextLink);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a pipeline. </summary>

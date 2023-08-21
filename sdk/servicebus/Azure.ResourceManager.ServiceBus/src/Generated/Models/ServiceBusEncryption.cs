@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of ServiceBusEncryption. </summary>
         public ServiceBusEncryption()
         {
-            KeyVaultProperties = new Core.ChangeTrackingList<ServiceBusKeyVaultProperties>();
+            KeyVaultProperties = new ChangeTrackingList<ServiceBusKeyVaultProperties>();
         }
 
         /// <summary> Initializes a new instance of ServiceBusEncryption. </summary>

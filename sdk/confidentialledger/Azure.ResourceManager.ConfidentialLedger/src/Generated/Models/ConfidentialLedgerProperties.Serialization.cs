@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class ConfidentialLedgerProperties : Core.IUtf8JsonSerializable
+    public partial class ConfidentialLedgerProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RunningState))
+            if (Optional.IsDefined(RunningState))
             {
                 writer.WritePropertyName("runningState"u8);
                 writer.WriteStringValue(RunningState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(LedgerType))
+            if (Optional.IsDefined(LedgerType))
             {
                 writer.WritePropertyName("ledgerType"u8);
                 writer.WriteStringValue(LedgerType.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(AadBasedSecurityPrincipals))
+            if (Optional.IsCollectionDefined(AadBasedSecurityPrincipals))
             {
                 writer.WritePropertyName("aadBasedSecurityPrincipals"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(CertBasedSecurityPrincipals))
+            if (Optional.IsCollectionDefined(CertBasedSecurityPrincipals))
             {
                 writer.WritePropertyName("certBasedSecurityPrincipals"u8);
                 writer.WriteStartArray();
@@ -56,15 +56,15 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Core.Optional<string> ledgerName = default;
-            Core.Optional<Uri> ledgerUri = default;
-            Core.Optional<Uri> identityServiceUri = default;
-            Core.Optional<string> ledgerInternalNamespace = default;
-            Core.Optional<ConfidentialLedgerRunningState> runningState = default;
-            Core.Optional<ConfidentialLedgerType> ledgerType = default;
-            Core.Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
-            Core.Optional<IList<AadBasedSecurityPrincipal>> aadBasedSecurityPrincipals = default;
-            Core.Optional<IList<CertBasedSecurityPrincipal>> certBasedSecurityPrincipals = default;
+            Optional<string> ledgerName = default;
+            Optional<Uri> ledgerUri = default;
+            Optional<Uri> identityServiceUri = default;
+            Optional<string> ledgerInternalNamespace = default;
+            Optional<ConfidentialLedgerRunningState> runningState = default;
+            Optional<ConfidentialLedgerType> ledgerType = default;
+            Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
+            Optional<IList<AadBasedSecurityPrincipal>> aadBasedSecurityPrincipals = default;
+            Optional<IList<CertBasedSecurityPrincipal>> certBasedSecurityPrincipals = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ledgerName"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     continue;
                 }
             }
-            return new ConfidentialLedgerProperties(ledgerName.Value, ledgerUri.Value, identityServiceUri.Value, ledgerInternalNamespace.Value, Core.Optional.ToNullable(runningState), Core.Optional.ToNullable(ledgerType), Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(aadBasedSecurityPrincipals), Core.Optional.ToList(certBasedSecurityPrincipals));
+            return new ConfidentialLedgerProperties(ledgerName.Value, ledgerUri.Value, identityServiceUri.Value, ledgerInternalNamespace.Value, Optional.ToNullable(runningState), Optional.ToNullable(ledgerType), Optional.ToNullable(provisioningState), Optional.ToList(aadBasedSecurityPrincipals), Optional.ToList(certBasedSecurityPrincipals));
         }
     }
 }

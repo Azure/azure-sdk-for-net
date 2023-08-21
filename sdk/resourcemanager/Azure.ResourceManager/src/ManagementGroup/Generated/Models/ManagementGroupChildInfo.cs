@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// <summary> Initializes a new instance of ManagementGroupChildInfo. </summary>
         internal ManagementGroupChildInfo()
         {
-            Children = new Core.ChangeTrackingList<ManagementGroupChildInfo>();
+            Children = new ChangeTrackingList<ManagementGroupChildInfo>();
         }
 
         /// <summary> Initializes a new instance of ManagementGroupChildInfo. </summary>

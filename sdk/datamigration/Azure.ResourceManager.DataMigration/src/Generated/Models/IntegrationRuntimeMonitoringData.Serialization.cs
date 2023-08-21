@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IReadOnlyList<NodeMonitoringData>> nodes = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<NodeMonitoringData>> nodes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new IntegrationRuntimeMonitoringData(name.Value, Core.Optional.ToList(nodes));
+            return new IntegrationRuntimeMonitoringData(name.Value, Optional.ToList(nodes));
         }
     }
 }

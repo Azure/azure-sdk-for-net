@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<MachineLearningVmSize>> value = default;
+            Optional<IReadOnlyList<MachineLearningVmSize>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new VirtualMachineSizeListResult(Core.Optional.ToList(value));
+            return new VirtualMachineSizeListResult(Optional.ToList(value));
         }
     }
 }

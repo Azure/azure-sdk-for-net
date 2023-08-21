@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<IReadOnlyList<string>> values = default;
-            Core.Optional<StorageRestrictionReasonCode> reasonCode = default;
+            Optional<string> type = default;
+            Optional<IReadOnlyList<string>> values = default;
+            Optional<StorageRestrictionReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StorageSkuRestriction(type.Value, Core.Optional.ToList(values), Core.Optional.ToNullable(reasonCode));
+            return new StorageSkuRestriction(type.Value, Optional.ToList(values), Optional.ToNullable(reasonCode));
         }
     }
 }

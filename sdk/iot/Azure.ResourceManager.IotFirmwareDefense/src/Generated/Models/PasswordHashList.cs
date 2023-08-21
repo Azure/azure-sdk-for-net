@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of PasswordHashList. </summary>
         internal PasswordHashList()
         {
-            Value = new Core.ChangeTrackingList<PasswordHash>();
+            Value = new ChangeTrackingList<PasswordHash>();
         }
 
         /// <summary> Initializes a new instance of PasswordHashList. </summary>

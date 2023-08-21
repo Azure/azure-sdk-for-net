@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class IPAddressGroup : Core.IUtf8JsonSerializable
+    public partial class IPAddressGroup : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DeliveryRegion))
+            if (Optional.IsDefined(DeliveryRegion))
             {
                 writer.WritePropertyName("deliveryRegion"u8);
                 writer.WriteStringValue(DeliveryRegion);
             }
-            if (Core.Optional.IsCollectionDefined(IPv4Addresses))
+            if (Optional.IsCollectionDefined(IPv4Addresses))
             {
                 writer.WritePropertyName("ipv4Addresses"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(IPv6Addresses))
+            if (Optional.IsCollectionDefined(IPv6Addresses))
             {
                 writer.WritePropertyName("ipv6Addresses"u8);
                 writer.WriteStartArray();
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Core.Optional<string> deliveryRegion = default;
-            Core.Optional<IList<CidrIPAddress>> ipv4Addresses = default;
-            Core.Optional<IList<CidrIPAddress>> ipv6Addresses = default;
+            Optional<string> deliveryRegion = default;
+            Optional<IList<CidrIPAddress>> ipv4Addresses = default;
+            Optional<IList<CidrIPAddress>> ipv6Addresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deliveryRegion"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new IPAddressGroup(deliveryRegion.Value, Core.Optional.ToList(ipv4Addresses), Core.Optional.ToList(ipv6Addresses));
+            return new IPAddressGroup(deliveryRegion.Value, Optional.ToList(ipv4Addresses), Optional.ToList(ipv6Addresses));
         }
     }
 }

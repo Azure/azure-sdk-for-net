@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ProvisionedClustersPropertiesWithSecrets : Core.IUtf8JsonSerializable
+    public partial class ProvisionedClustersPropertiesWithSecrets : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AadProfile))
+            if (Optional.IsDefined(AadProfile))
             {
                 writer.WritePropertyName("aadProfile"u8);
                 writer.WriteObjectValue(AadProfile);
             }
-            if (Core.Optional.IsDefined(WindowsProfile))
+            if (Optional.IsDefined(WindowsProfile))
             {
                 writer.WritePropertyName("windowsProfile"u8);
                 writer.WriteObjectValue(WindowsProfile);
             }
-            if (Core.Optional.IsDefined(HttpProxyConfig))
+            if (Optional.IsDefined(HttpProxyConfig))
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
                 writer.WriteObjectValue(HttpProxyConfig);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<AADProfile> aadProfile = default;
-            Core.Optional<WindowsProfile> windowsProfile = default;
-            Core.Optional<HttpProxyConfig> httpProxyConfig = default;
+            Optional<AADProfile> aadProfile = default;
+            Optional<WindowsProfile> windowsProfile = default;
+            Optional<HttpProxyConfig> httpProxyConfig = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aadProfile"u8))

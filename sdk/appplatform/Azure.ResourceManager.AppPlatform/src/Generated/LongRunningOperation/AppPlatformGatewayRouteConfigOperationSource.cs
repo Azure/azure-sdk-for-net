@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    internal class AppPlatformGatewayRouteConfigOperationSource : Core.IOperationSource<AppPlatformGatewayRouteConfigResource>
+    internal class AppPlatformGatewayRouteConfigOperationSource : IOperationSource<AppPlatformGatewayRouteConfigResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppPlatform
             _client = client;
         }
 
-        AppPlatformGatewayRouteConfigResource Core.IOperationSource<AppPlatformGatewayRouteConfigResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AppPlatformGatewayRouteConfigResource IOperationSource<AppPlatformGatewayRouteConfigResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AppPlatformGatewayRouteConfigData.DeserializeAppPlatformGatewayRouteConfigData(document.RootElement);
             return new AppPlatformGatewayRouteConfigResource(_client, data);
         }
 
-        async ValueTask<AppPlatformGatewayRouteConfigResource> Core.IOperationSource<AppPlatformGatewayRouteConfigResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AppPlatformGatewayRouteConfigResource> IOperationSource<AppPlatformGatewayRouteConfigResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AppPlatformGatewayRouteConfigData.DeserializeAppPlatformGatewayRouteConfigData(document.RootElement);

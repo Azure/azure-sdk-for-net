@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<CosmosDBServiceData>> value = default;
+            Optional<IReadOnlyList<CosmosDBServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBServiceListResult(Core.Optional.ToList(value));
+            return new CosmosDBServiceListResult(Optional.ToList(value));
         }
     }
 }

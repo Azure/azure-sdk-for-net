@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> Initializes a new instance of MetadataEntityListResult. </summary>
         internal MetadataEntityListResult()
         {
-            Value = new Core.ChangeTrackingList<MetadataEntityData>();
+            Value = new ChangeTrackingList<MetadataEntityData>();
         }
 
         /// <summary> Initializes a new instance of MetadataEntityListResult. </summary>

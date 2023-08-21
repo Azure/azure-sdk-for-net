@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterAutoUpgradeProfile : Core.IUtf8JsonSerializable
+    public partial class ManagedClusterAutoUpgradeProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(UpgradeChannel))
+            if (Optional.IsDefined(UpgradeChannel))
             {
                 writer.WritePropertyName("upgradeChannel"u8);
                 writer.WriteStringValue(UpgradeChannel.Value.ToString());
             }
-            if (Core.Optional.IsDefined(NodeOSUpgradeChannel))
+            if (Optional.IsDefined(NodeOSUpgradeChannel))
             {
                 writer.WritePropertyName("nodeOSUpgradeChannel"u8);
                 writer.WriteStringValue(NodeOSUpgradeChannel.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<UpgradeChannel> upgradeChannel = default;
-            Core.Optional<ManagedClusterNodeOSUpgradeChannel> nodeOSUpgradeChannel = default;
+            Optional<UpgradeChannel> upgradeChannel = default;
+            Optional<ManagedClusterNodeOSUpgradeChannel> nodeOSUpgradeChannel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("upgradeChannel"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterAutoUpgradeProfile(Core.Optional.ToNullable(upgradeChannel), Core.Optional.ToNullable(nodeOSUpgradeChannel));
+            return new ManagedClusterAutoUpgradeProfile(Optional.ToNullable(upgradeChannel), Optional.ToNullable(nodeOSUpgradeChannel));
         }
     }
 }

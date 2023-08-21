@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaLiveEventLiveEventsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaLiveEventLiveEventsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaLiveEventLiveEventsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaLiveEventResource>(new MediaLiveEventOperationSource(Client), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation<MediaLiveEventResource>(new MediaLiveEventOperationSource(Client), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaLiveEventLiveEventsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MediaArmOperation<MediaLiveEventResource>(new MediaLiveEventOperationSource(Client), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation<MediaLiveEventResource>(new MediaLiveEventOperationSource(Client), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaLiveEventLiveEventsRestClient.AllocateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateAllocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateAllocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaLiveEventLiveEventsRestClient.Allocate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateAllocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateAllocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaLiveEventLiveEventsRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaLiveEventLiveEventsRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaLiveEventLiveEventsRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaLiveEventLiveEventsRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaLiveEventLiveEventsRestClient.ResetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateResetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateResetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaLiveEventLiveEventsRestClient.Reset(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateResetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation(_mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateResetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

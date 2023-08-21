@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class MaintenanceConfigurationAssignmentFilter : Core.IUtf8JsonSerializable
+    public partial class MaintenanceConfigurationAssignmentFilter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ResourceTypes))
+            if (Optional.IsCollectionDefined(ResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ResourceGroups))
+            if (Optional.IsCollectionDefined(ResourceGroups))
             {
                 writer.WritePropertyName("resourceGroups"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(OSTypes))
+            if (Optional.IsCollectionDefined(OSTypes))
             {
                 writer.WritePropertyName("osTypes"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Locations))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TagSettings))
+            if (Optional.IsDefined(TagSettings))
             {
                 writer.WritePropertyName("tagSettings"u8);
                 writer.WriteObjectValue(TagSettings);
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Core.Optional<IList<ResourceType>> resourceTypes = default;
-            Core.Optional<IList<string>> resourceGroups = default;
-            Core.Optional<IList<string>> osTypes = default;
-            Core.Optional<IList<AzureLocation>> locations = default;
-            Core.Optional<VmTagSettings> tagSettings = default;
+            Optional<IList<ResourceType>> resourceTypes = default;
+            Optional<IList<string>> resourceGroups = default;
+            Optional<IList<string>> osTypes = default;
+            Optional<IList<AzureLocation>> locations = default;
+            Optional<VmTagSettings> tagSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceTypes"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     continue;
                 }
             }
-            return new MaintenanceConfigurationAssignmentFilter(Core.Optional.ToList(resourceTypes), Core.Optional.ToList(resourceGroups), Core.Optional.ToList(osTypes), Core.Optional.ToList(locations), tagSettings.Value);
+            return new MaintenanceConfigurationAssignmentFilter(Optional.ToList(resourceTypes), Optional.ToList(resourceGroups), Optional.ToList(osTypes), Optional.ToList(locations), tagSettings.Value);
         }
     }
 }

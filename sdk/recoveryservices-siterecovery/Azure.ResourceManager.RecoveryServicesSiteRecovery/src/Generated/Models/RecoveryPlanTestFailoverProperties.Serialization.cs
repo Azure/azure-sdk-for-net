@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanTestFailoverProperties : Core.IUtf8JsonSerializable
+    public partial class RecoveryPlanTestFailoverProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("failoverDirection"u8);
             writer.WriteStringValue(FailoverDirection.ToString());
             writer.WritePropertyName("networkType"u8);
             writer.WriteStringValue(NetworkType);
-            if (Core.Optional.IsDefined(NetworkId))
+            if (Optional.IsDefined(NetworkId))
             {
                 writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
-            if (Core.Optional.IsCollectionDefined(ProviderSpecificDetails))
+            if (Optional.IsCollectionDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteStartArray();

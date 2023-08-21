@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> status = default;
-            Core.Optional<ValidateResponseError> error = default;
+            Optional<string> status = default;
+            Optional<ValidateResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))

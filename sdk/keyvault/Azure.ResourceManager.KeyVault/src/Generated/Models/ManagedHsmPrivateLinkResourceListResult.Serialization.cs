@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ManagedHsmPrivateLinkResourceData>> value = default;
+            Optional<IReadOnlyList<ManagedHsmPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new ManagedHsmPrivateLinkResourceListResult(Core.Optional.ToList(value));
+            return new ManagedHsmPrivateLinkResourceListResult(Optional.ToList(value));
         }
     }
 }

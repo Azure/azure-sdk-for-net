@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<GrafanaPrivateEndpointConnectionData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<GrafanaPrivateEndpointConnectionData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     continue;
                 }
             }
-            return new GrafanaPrivateEndpointConnectionListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new GrafanaPrivateEndpointConnectionListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<string> cpu = default;
-            Core.Optional<string> memory = default;
-            Core.Optional<int> instanceCount = default;
+            Optional<string> cpu = default;
+            Optional<string> memory = default;
+            Optional<int> instanceCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpu"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformConfigurationServiceRequirements(cpu.Value, memory.Value, Core.Optional.ToNullable(instanceCount));
+            return new AppPlatformConfigurationServiceRequirements(cpu.Value, memory.Value, Optional.ToNullable(instanceCount));
         }
     }
 }

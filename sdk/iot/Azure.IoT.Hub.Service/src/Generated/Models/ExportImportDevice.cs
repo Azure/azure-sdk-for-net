@@ -16,7 +16,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of ExportImportDevice. </summary>
         public ExportImportDevice()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, object>();
+            Tags = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> The unique identifier of the device. </summary>

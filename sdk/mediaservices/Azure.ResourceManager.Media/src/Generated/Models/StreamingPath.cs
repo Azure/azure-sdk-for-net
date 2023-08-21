@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media.Models
         {
             StreamingProtocol = streamingProtocol;
             EncryptionScheme = encryptionScheme;
-            Paths = new Core.ChangeTrackingList<string>();
+            Paths = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StreamingPath. </summary>

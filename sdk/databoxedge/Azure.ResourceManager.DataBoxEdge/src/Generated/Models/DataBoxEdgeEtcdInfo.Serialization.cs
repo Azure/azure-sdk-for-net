@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<string> version = default;
+            Optional<string> type = default;
+            Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

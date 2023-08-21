@@ -390,7 +390,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSeasonalFieldsByPartyIdRequest(partyId, farmIds, fieldIds, seasonIds, cropProductIds, cropIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSeasonalFieldsByPartyIdNextPageRequest(nextLink, partyId, farmIds, fieldIds, seasonIds, cropProductIds, cropIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SeasonalFields.GetSeasonalFieldsByPartyId", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SeasonalFields.GetSeasonalFieldsByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -437,7 +437,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSeasonalFieldsByPartyIdRequest(partyId, farmIds, fieldIds, seasonIds, cropProductIds, cropIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSeasonalFieldsByPartyIdNextPageRequest(nextLink, partyId, farmIds, fieldIds, seasonIds, cropProductIds, cropIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SeasonalFields.GetSeasonalFieldsByPartyId", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SeasonalFields.GetSeasonalFieldsByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -479,7 +479,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSeasonalFieldsRequest(farmIds, fieldIds, seasonIds, cropProductIds, cropIds, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSeasonalFieldsNextPageRequest(nextLink, farmIds, fieldIds, seasonIds, cropProductIds, cropIds, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SeasonalFields.GetSeasonalFields", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SeasonalFields.GetSeasonalFields", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -521,7 +521,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSeasonalFieldsRequest(farmIds, fieldIds, seasonIds, cropProductIds, cropIds, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSeasonalFieldsNextPageRequest(nextLink, farmIds, fieldIds, seasonIds, cropProductIds, cropIds, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SeasonalFields.GetSeasonalFields", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SeasonalFields.GetSeasonalFields", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -555,7 +555,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, seasonalFieldId, context);
-                return await Core.ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "SeasonalFields.CreateCascadeDeleteJob", Core.OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "SeasonalFields.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -595,7 +595,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, seasonalFieldId, context);
-                return Core.ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "SeasonalFields.CreateCascadeDeleteJob", Core.OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "SeasonalFields.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -614,63 +614,63 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/parties/", false);
             uri.AppendPath(partyId, true);
             uri.AppendPath("/seasonal-fields", false);
-            if (farmIds != null && Core.Optional.IsCollectionDefined(farmIds))
+            if (farmIds != null && Optional.IsCollectionDefined(farmIds))
             {
                 foreach (var param in farmIds)
                 {
                     uri.AppendQuery("farmIds", param, true);
                 }
             }
-            if (fieldIds != null && Core.Optional.IsCollectionDefined(fieldIds))
+            if (fieldIds != null && Optional.IsCollectionDefined(fieldIds))
             {
                 foreach (var param in fieldIds)
                 {
                     uri.AppendQuery("fieldIds", param, true);
                 }
             }
-            if (seasonIds != null && Core.Optional.IsCollectionDefined(seasonIds))
+            if (seasonIds != null && Optional.IsCollectionDefined(seasonIds))
             {
                 foreach (var param in seasonIds)
                 {
                     uri.AppendQuery("seasonIds", param, true);
                 }
             }
-            if (cropProductIds != null && Core.Optional.IsCollectionDefined(cropProductIds))
+            if (cropProductIds != null && Optional.IsCollectionDefined(cropProductIds))
             {
                 foreach (var param in cropProductIds)
                 {
                     uri.AppendQuery("cropProductIds", param, true);
                 }
             }
-            if (cropIds != null && Core.Optional.IsCollectionDefined(cropIds))
+            if (cropIds != null && Optional.IsCollectionDefined(cropIds))
             {
                 foreach (var param in cropIds)
                 {
                     uri.AppendQuery("cropIds", param, true);
                 }
             }
-            if (ids != null && Core.Optional.IsCollectionDefined(ids))
+            if (ids != null && Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Core.Optional.IsCollectionDefined(names))
+            if (names != null && Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Core.Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Core.Optional.IsCollectionDefined(statuses))
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {
@@ -768,63 +768,63 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/seasonal-fields", false);
-            if (farmIds != null && Core.Optional.IsCollectionDefined(farmIds))
+            if (farmIds != null && Optional.IsCollectionDefined(farmIds))
             {
                 foreach (var param in farmIds)
                 {
                     uri.AppendQuery("farmIds", param, true);
                 }
             }
-            if (fieldIds != null && Core.Optional.IsCollectionDefined(fieldIds))
+            if (fieldIds != null && Optional.IsCollectionDefined(fieldIds))
             {
                 foreach (var param in fieldIds)
                 {
                     uri.AppendQuery("fieldIds", param, true);
                 }
             }
-            if (seasonIds != null && Core.Optional.IsCollectionDefined(seasonIds))
+            if (seasonIds != null && Optional.IsCollectionDefined(seasonIds))
             {
                 foreach (var param in seasonIds)
                 {
                     uri.AppendQuery("seasonIds", param, true);
                 }
             }
-            if (cropProductIds != null && Core.Optional.IsCollectionDefined(cropProductIds))
+            if (cropProductIds != null && Optional.IsCollectionDefined(cropProductIds))
             {
                 foreach (var param in cropProductIds)
                 {
                     uri.AppendQuery("cropProductIds", param, true);
                 }
             }
-            if (cropIds != null && Core.Optional.IsCollectionDefined(cropIds))
+            if (cropIds != null && Optional.IsCollectionDefined(cropIds))
             {
                 foreach (var param in cropIds)
                 {
                     uri.AppendQuery("cropIds", param, true);
                 }
             }
-            if (seasonalFieldIds != null && Core.Optional.IsCollectionDefined(seasonalFieldIds))
+            if (seasonalFieldIds != null && Optional.IsCollectionDefined(seasonalFieldIds))
             {
                 foreach (var param in seasonalFieldIds)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Core.Optional.IsCollectionDefined(names))
+            if (names != null && Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Core.Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Core.Optional.IsCollectionDefined(statuses))
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {

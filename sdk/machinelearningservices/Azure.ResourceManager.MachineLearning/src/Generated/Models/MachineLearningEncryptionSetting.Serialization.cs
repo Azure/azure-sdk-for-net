@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningEncryptionSetting : Core.IUtf8JsonSerializable
+    public partial class MachineLearningEncryptionSetting : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningEncryptionStatus status = default;
-            Core.Optional<MachineLearningCmkIdentity> identity = default;
+            Optional<MachineLearningCmkIdentity> identity = default;
             MachineLearningEncryptionKeyVaultProperties keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {

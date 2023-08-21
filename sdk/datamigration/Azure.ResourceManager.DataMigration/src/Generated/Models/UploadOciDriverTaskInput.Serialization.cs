@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UploadOciDriverTaskInput : Core.IUtf8JsonSerializable
+    internal partial class UploadOciDriverTaskInput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DriverShare))
+            if (Optional.IsDefined(DriverShare))
             {
                 writer.WritePropertyName("driverShare"u8);
                 writer.WriteObjectValue(DriverShare);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<FileShare> driverShare = default;
+            Optional<FileShare> driverShare = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("driverShare"u8))

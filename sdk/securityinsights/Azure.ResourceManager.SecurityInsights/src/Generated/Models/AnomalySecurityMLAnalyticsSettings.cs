@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of AnomalySecurityMLAnalyticsSettings. </summary>
         public AnomalySecurityMLAnalyticsSettings()
         {
-            RequiredDataConnectors = new Core.ChangeTrackingList<SecurityMLAnalyticsSettingsDataSource>();
-            Tactics = new Core.ChangeTrackingList<SecurityInsightsAttackTactic>();
-            Techniques = new Core.ChangeTrackingList<string>();
+            RequiredDataConnectors = new ChangeTrackingList<SecurityMLAnalyticsSettingsDataSource>();
+            Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
+            Techniques = new ChangeTrackingList<string>();
             Kind = SecurityMLAnalyticsSettingsKind.Anomaly;
         }
 

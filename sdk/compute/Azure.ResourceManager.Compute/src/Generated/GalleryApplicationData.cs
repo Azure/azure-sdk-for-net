@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public GalleryApplicationData(AzureLocation location) : base(location)
         {
-            CustomActions = new Core.ChangeTrackingList<GalleryApplicationCustomAction>();
+            CustomActions = new ChangeTrackingList<GalleryApplicationCustomAction>();
         }
 
         /// <summary> Initializes a new instance of GalleryApplicationData. </summary>

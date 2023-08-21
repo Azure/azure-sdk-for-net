@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of RelationshipLinkListResult. </summary>
         internal RelationshipLinkListResult()
         {
-            Value = new Core.ChangeTrackingList<RelationshipLinkResourceFormatData>();
+            Value = new ChangeTrackingList<RelationshipLinkResourceFormatData>();
         }
 
         /// <summary> Initializes a new instance of RelationshipLinkListResult. </summary>

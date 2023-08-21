@@ -11,12 +11,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubPrivateEndpointConnectionProperties : Core.IUtf8JsonSerializable
+    public partial class IotHubPrivateEndpointConnectionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Core.Optional<SubResource> privateEndpoint = default;
+            Optional<SubResource> privateEndpoint = default;
             IotHubPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {

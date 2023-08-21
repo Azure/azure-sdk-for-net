@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of OutboundEndpointListResult. </summary>
         internal OutboundEndpointListResult()
         {
-            Value = new Core.ChangeTrackingList<DnsResolverOutboundEndpointData>();
+            Value = new ChangeTrackingList<DnsResolverOutboundEndpointData>();
         }
 
         /// <summary> Initializes a new instance of OutboundEndpointListResult. </summary>

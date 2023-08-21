@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
-    public partial class AzureDevOpsConnectorStatsProperties : Core.IUtf8JsonSerializable
+    public partial class AzureDevOpsConnectorStatsProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(OrgsCount))
+            if (Optional.IsDefined(OrgsCount))
             {
                 writer.WritePropertyName("orgsCount"u8);
                 writer.WriteNumberValue(OrgsCount.Value);
             }
-            if (Core.Optional.IsDefined(ProjectsCount))
+            if (Optional.IsDefined(ProjectsCount))
             {
                 writer.WritePropertyName("projectsCount"u8);
                 writer.WriteNumberValue(ProjectsCount.Value);
             }
-            if (Core.Optional.IsDefined(ReposCount))
+            if (Optional.IsDefined(ReposCount))
             {
                 writer.WritePropertyName("reposCount"u8);
                 writer.WriteNumberValue(ReposCount.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<long> orgsCount = default;
-            Core.Optional<long> projectsCount = default;
-            Core.Optional<long> reposCount = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<long> orgsCount = default;
+            Optional<long> projectsCount = default;
+            Optional<long> reposCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     continue;
                 }
             }
-            return new AzureDevOpsConnectorStatsProperties(Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(orgsCount), Core.Optional.ToNullable(projectsCount), Core.Optional.ToNullable(reposCount));
+            return new AzureDevOpsConnectorStatsProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(orgsCount), Optional.ToNullable(projectsCount), Optional.ToNullable(reposCount));
         }
     }
 }

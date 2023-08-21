@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <summary> Initializes a new instance of PostgreSqlLogFileListResult. </summary>
         internal PostgreSqlLogFileListResult()
         {
-            Value = new Core.ChangeTrackingList<PostgreSqlLogFile>();
+            Value = new ChangeTrackingList<PostgreSqlLogFile>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlLogFileListResult. </summary>

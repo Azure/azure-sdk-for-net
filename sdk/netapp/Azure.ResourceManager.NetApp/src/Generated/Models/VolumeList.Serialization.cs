@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<NetAppVolumeData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<NetAppVolumeData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new VolumeList(Core.Optional.ToList(value), nextLink.Value);
+            return new VolumeList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

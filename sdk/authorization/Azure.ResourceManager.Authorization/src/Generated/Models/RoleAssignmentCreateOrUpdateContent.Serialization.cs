@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleAssignmentCreateOrUpdateContent : Core.IUtf8JsonSerializable
+    public partial class RoleAssignmentCreateOrUpdateContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -21,27 +21,27 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteStringValue(RoleDefinitionId);
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
-            if (Core.Optional.IsDefined(PrincipalType))
+            if (Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(Condition))
+            if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition);
             }
-            if (Core.Optional.IsDefined(ConditionVersion))
+            if (Optional.IsDefined(ConditionVersion))
             {
                 writer.WritePropertyName("conditionVersion"u8);
                 writer.WriteStringValue(ConditionVersion);
             }
-            if (Core.Optional.IsDefined(DelegatedManagedIdentityResourceId))
+            if (Optional.IsDefined(DelegatedManagedIdentityResourceId))
             {
                 if (DelegatedManagedIdentityResourceId != null)
                 {

@@ -12,37 +12,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SwaggerXml : Core.IUtf8JsonSerializable
+    public partial class SwaggerXml : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Namespace))
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Core.Optional.IsDefined(Prefix))
+            if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (Core.Optional.IsDefined(IsAttribute))
+            if (Optional.IsDefined(IsAttribute))
             {
                 writer.WritePropertyName("attribute"u8);
                 writer.WriteBooleanValue(IsAttribute.Value);
             }
-            if (Core.Optional.IsDefined(IsWrapped))
+            if (Optional.IsDefined(IsWrapped))
             {
                 writer.WritePropertyName("wrapped"u8);
                 writer.WriteBooleanValue(IsWrapped.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Extensions))
+            if (Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartObject();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> @namespace = default;
-            Core.Optional<string> prefix = default;
-            Core.Optional<bool> attribute = default;
-            Core.Optional<bool> wrapped = default;
-            Core.Optional<IDictionary<string, BinaryData>> extensions = default;
+            Optional<string> name = default;
+            Optional<string> @namespace = default;
+            Optional<string> prefix = default;
+            Optional<bool> attribute = default;
+            Optional<bool> wrapped = default;
+            Optional<IDictionary<string, BinaryData>> extensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new SwaggerXml(name.Value, @namespace.Value, prefix.Value, Core.Optional.ToNullable(attribute), Core.Optional.ToNullable(wrapped), Core.Optional.ToDictionary(extensions));
+            return new SwaggerXml(name.Value, @namespace.Value, prefix.Value, Optional.ToNullable(attribute), Optional.ToNullable(wrapped), Optional.ToDictionary(extensions));
         }
     }
 }

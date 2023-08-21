@@ -10,34 +10,34 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningManagedIdentityAuthTypeWorkspaceConnection : Core.IUtf8JsonSerializable
+    public partial class MachineLearningManagedIdentityAuthTypeWorkspaceConnection : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Credentials))
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
-            if (Core.Optional.IsDefined(Category))
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Target))
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Core.Optional.IsDefined(ValueFormat))
+            if (Optional.IsDefined(ValueFormat))
             {
                 writer.WritePropertyName("valueFormat"u8);
                 writer.WriteStringValue(ValueFormat.Value.ToString());
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<MachineLearningWorkspaceConnectionManagedIdentity> credentials = default;
+            Optional<MachineLearningWorkspaceConnectionManagedIdentity> credentials = default;
             MachineLearningConnectionAuthType authType = default;
-            Core.Optional<MachineLearningConnectionCategory> category = default;
-            Core.Optional<string> target = default;
-            Core.Optional<string> value = default;
-            Core.Optional<MachineLearningValueFormat> valueFormat = default;
+            Optional<MachineLearningConnectionCategory> category = default;
+            Optional<string> target = default;
+            Optional<string> value = default;
+            Optional<MachineLearningValueFormat> valueFormat = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("credentials"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningManagedIdentityAuthTypeWorkspaceConnection(authType, Core.Optional.ToNullable(category), target.Value, value.Value, Core.Optional.ToNullable(valueFormat), credentials.Value);
+            return new MachineLearningManagedIdentityAuthTypeWorkspaceConnection(authType, Optional.ToNullable(category), target.Value, value.Value, Optional.ToNullable(valueFormat), credentials.Value);
         }
     }
 }

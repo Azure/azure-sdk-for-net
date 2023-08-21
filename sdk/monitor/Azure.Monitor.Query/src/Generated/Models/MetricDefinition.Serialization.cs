@@ -19,19 +19,19 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Core.Optional<bool> isDimensionRequired = default;
-            Core.Optional<string> resourceId = default;
-            Core.Optional<string> @namespace = default;
-            Core.Optional<LocalizableString> name = default;
-            Core.Optional<string> displayDescription = default;
-            Core.Optional<string> category = default;
-            Core.Optional<MetricClass> metricClass = default;
-            Core.Optional<MetricUnit> unit = default;
-            Core.Optional<MetricAggregationType> primaryAggregationType = default;
-            Core.Optional<IReadOnlyList<MetricAggregationType>> supportedAggregationTypes = default;
-            Core.Optional<IReadOnlyList<MetricAvailability>> metricAvailabilities = default;
-            Core.Optional<string> id = default;
-            Core.Optional<IReadOnlyList<LocalizableString>> dimensions = default;
+            Optional<bool> isDimensionRequired = default;
+            Optional<string> resourceId = default;
+            Optional<string> @namespace = default;
+            Optional<LocalizableString> name = default;
+            Optional<string> displayDescription = default;
+            Optional<string> category = default;
+            Optional<MetricClass> metricClass = default;
+            Optional<MetricUnit> unit = default;
+            Optional<MetricAggregationType> primaryAggregationType = default;
+            Optional<IReadOnlyList<MetricAggregationType>> supportedAggregationTypes = default;
+            Optional<IReadOnlyList<MetricAvailability>> metricAvailabilities = default;
+            Optional<string> id = default;
+            Optional<IReadOnlyList<LocalizableString>> dimensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isDimensionRequired"u8))
@@ -147,7 +147,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricDefinition(Core.Optional.ToNullable(isDimensionRequired), resourceId.Value, @namespace.Value, name.Value, displayDescription.Value, category.Value, Core.Optional.ToNullable(metricClass), Core.Optional.ToNullable(unit), Core.Optional.ToNullable(primaryAggregationType), Core.Optional.ToList(supportedAggregationTypes), Core.Optional.ToList(metricAvailabilities), id.Value, Core.Optional.ToList(dimensions));
+            return new MetricDefinition(Optional.ToNullable(isDimensionRequired), resourceId.Value, @namespace.Value, name.Value, displayDescription.Value, category.Value, Optional.ToNullable(metricClass), Optional.ToNullable(unit), Optional.ToNullable(primaryAggregationType), Optional.ToList(supportedAggregationTypes), Optional.ToList(metricAvailabilities), id.Value, Optional.ToList(dimensions));
         }
     }
 }

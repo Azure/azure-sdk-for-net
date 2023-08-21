@@ -13,17 +13,17 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataLakeAnalyticsUsqlActivity : Core.IUtf8JsonSerializable
+    public partial class DataLakeAnalyticsUsqlActivity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LinkedServiceName))
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Core.Optional.IsDefined(Policy))
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsDefined(OnInactiveMarkAs))
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(DependsOn))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(UserProperties))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("scriptPath"u8);
             JsonSerializer.Serialize(writer, ScriptPath);
             writer.WritePropertyName("scriptLinkedService"u8);
-            JsonSerializer.Serialize(writer, ScriptLinkedService); if (Core.Optional.IsDefined(DegreeOfParallelism))
+            JsonSerializer.Serialize(writer, ScriptLinkedService); if (Optional.IsDefined(DegreeOfParallelism))
             {
                 writer.WritePropertyName("degreeOfParallelism"u8);
                 JsonSerializer.Serialize(writer, DegreeOfParallelism);
             }
-            if (Core.Optional.IsDefined(Priority))
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 JsonSerializer.Serialize(writer, Priority);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(RuntimeVersion))
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 JsonSerializer.Serialize(writer, RuntimeVersion);
             }
-            if (Core.Optional.IsDefined(CompilationMode))
+            if (Optional.IsDefined(CompilationMode))
             {
                 writer.WritePropertyName("compilationMode"u8);
                 JsonSerializer.Serialize(writer, CompilationMode);
@@ -131,22 +131,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Core.Optional<PipelineActivityPolicy> policy = default;
+            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
+            Optional<PipelineActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            Core.Optional<string> description = default;
-            Core.Optional<PipelineActivityState> state = default;
-            Core.Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Core.Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Core.Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            Optional<string> description = default;
+            Optional<PipelineActivityState> state = default;
+            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Optional<IList<PipelineActivityDependency>> dependsOn = default;
+            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
             DataFactoryElement<string> scriptPath = default;
             DataFactoryLinkedServiceReference scriptLinkedService = default;
-            Core.Optional<DataFactoryElement<int>> degreeOfParallelism = default;
-            Core.Optional<DataFactoryElement<int>> priority = default;
-            Core.Optional<IDictionary<string, BinaryData>> parameters = default;
-            Core.Optional<DataFactoryElement<string>> runtimeVersion = default;
-            Core.Optional<DataFactoryElement<string>> compilationMode = default;
+            Optional<DataFactoryElement<int>> degreeOfParallelism = default;
+            Optional<DataFactoryElement<int>> priority = default;
+            Optional<IDictionary<string, BinaryData>> parameters = default;
+            Optional<DataFactoryElement<string>> runtimeVersion = default;
+            Optional<DataFactoryElement<string>> compilationMode = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsUsqlActivity(name, type, description.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(onInactiveMarkAs), Core.Optional.ToList(dependsOn), Core.Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, scriptPath, scriptLinkedService, degreeOfParallelism.Value, priority.Value, Core.Optional.ToDictionary(parameters), runtimeVersion.Value, compilationMode.Value);
+            return new DataLakeAnalyticsUsqlActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, scriptPath, scriptLinkedService, degreeOfParallelism.Value, priority.Value, Optional.ToDictionary(parameters), runtimeVersion.Value, compilationMode.Value);
         }
     }
 }

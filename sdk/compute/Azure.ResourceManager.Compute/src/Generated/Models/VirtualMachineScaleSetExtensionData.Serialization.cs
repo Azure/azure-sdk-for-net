@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class VirtualMachineScaleSetExtensionData : Core.IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetExtensionData : IUtf8JsonSerializable
     {
         internal static VirtualMachineScaleSetExtensionData DeserializeVirtualMachineScaleSetExtensionData(JsonElement element)
         {
@@ -25,19 +25,19 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> forceUpdateTag = default;
-            Core.Optional<string> publisher = default;
-            Core.Optional<string> type0 = default;
-            Core.Optional<string> typeHandlerVersion = default;
-            Core.Optional<bool> autoUpgradeMinorVersion = default;
-            Core.Optional<bool> enableAutomaticUpgrade = default;
-            Core.Optional<BinaryData> settings = default;
-            Core.Optional<BinaryData> protectedSettings = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<IList<string>> provisionAfterExtensions = default;
-            Core.Optional<bool> suppressFailures = default;
-            Core.Optional<KeyVaultSecretReference> protectedSettingsFromKeyVault = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> forceUpdateTag = default;
+            Optional<string> publisher = default;
+            Optional<string> type0 = default;
+            Optional<string> typeHandlerVersion = default;
+            Optional<bool> autoUpgradeMinorVersion = default;
+            Optional<bool> enableAutomaticUpgrade = default;
+            Optional<BinaryData> settings = default;
+            Optional<BinaryData> protectedSettings = default;
+            Optional<string> provisioningState = default;
+            Optional<IList<string>> provisionAfterExtensions = default;
+            Optional<bool> suppressFailures = default;
+            Optional<KeyVaultSecretReference> protectedSettingsFromKeyVault = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetExtensionData(id, name, type, systemData.Value, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Core.Optional.ToNullable(autoUpgradeMinorVersion), Core.Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, Core.Optional.ToList(provisionAfterExtensions), Core.Optional.ToNullable(suppressFailures), protectedSettingsFromKeyVault.Value);
+            return new VirtualMachineScaleSetExtensionData(id, name, type, systemData.Value, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, Optional.ToList(provisionAfterExtensions), Optional.ToNullable(suppressFailures), protectedSettingsFromKeyVault.Value);
         }
     }
 }

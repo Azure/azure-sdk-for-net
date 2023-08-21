@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of DpmBackupJobExtendedInfo. </summary>
         public DpmBackupJobExtendedInfo()
         {
-            TasksList = new Core.ChangeTrackingList<DpmBackupJobTaskDetails>();
-            PropertyBag = new Core.ChangeTrackingDictionary<string, string>();
+            TasksList = new ChangeTrackingList<DpmBackupJobTaskDetails>();
+            PropertyBag = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DpmBackupJobExtendedInfo. </summary>

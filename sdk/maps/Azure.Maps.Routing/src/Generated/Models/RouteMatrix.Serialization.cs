@@ -18,8 +18,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Core.Optional<int> statusCode = default;
-            Core.Optional<RouteMatrixResultResponse> response = default;
+            Optional<int> statusCode = default;
+            Optional<RouteMatrixResultResponse> response = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCode"u8))
@@ -41,7 +41,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteMatrix(Core.Optional.ToNullable(statusCode), response.Value);
+            return new RouteMatrix(Optional.ToNullable(statusCode), response.Value);
         }
     }
 }

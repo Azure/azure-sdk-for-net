@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class AdministratorConfiguration : Core.IUtf8JsonSerializable
+    public partial class AdministratorConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AdminUsername))
+            if (Optional.IsDefined(AdminUsername))
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (Core.Optional.IsCollectionDefined(SshPublicKeys))
+            if (Optional.IsCollectionDefined(SshPublicKeys))
             {
                 writer.WritePropertyName("sshPublicKeys"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Core.Optional<string> adminUsername = default;
-            Core.Optional<IList<NetworkCloudSshPublicKey>> sshPublicKeys = default;
+            Optional<string> adminUsername = default;
+            Optional<IList<NetworkCloudSshPublicKey>> sshPublicKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminUsername"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new AdministratorConfiguration(adminUsername.Value, Core.Optional.ToList(sshPublicKeys));
+            return new AdministratorConfiguration(adminUsername.Value, Optional.ToList(sshPublicKeys));
         }
     }
 }

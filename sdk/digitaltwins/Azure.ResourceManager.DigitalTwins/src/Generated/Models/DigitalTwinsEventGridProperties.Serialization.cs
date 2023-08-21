@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DigitalTwinsEventGridProperties : Core.IUtf8JsonSerializable
+    public partial class DigitalTwinsEventGridProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("TopicEndpoint"u8);
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 writer.WriteNull("accessKey1");
             }
-            if (Core.Optional.IsDefined(AccessKey2))
+            if (Optional.IsDefined(AccessKey2))
             {
                 if (AccessKey2 != null)
                 {
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Core.Optional.IsDefined(AuthenticationType))
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DeadLetterSecret))
+            if (Optional.IsDefined(DeadLetterSecret))
             {
                 if (DeadLetterSecret != null)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("deadLetterSecret");
                 }
             }
-            if (Core.Optional.IsDefined(DeadLetterUri))
+            if (Optional.IsDefined(DeadLetterUri))
             {
                 if (DeadLetterUri != null)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("deadLetterUri");
                 }
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
@@ -93,14 +93,14 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
             string topicEndpoint = default;
             string accessKey1 = default;
-            Core.Optional<string> accessKey2 = default;
+            Optional<string> accessKey2 = default;
             EndpointType endpointType = default;
-            Core.Optional<DigitalTwinsEndpointProvisioningState?> provisioningState = default;
-            Core.Optional<DateTimeOffset?> createdTime = default;
-            Core.Optional<DigitalTwinsAuthenticationType> authenticationType = default;
-            Core.Optional<string> deadLetterSecret = default;
-            Core.Optional<Uri> deadLetterUri = default;
-            Core.Optional<DigitalTwinsManagedIdentityReference> identity = default;
+            Optional<DigitalTwinsEndpointProvisioningState?> provisioningState = default;
+            Optional<DateTimeOffset?> createdTime = default;
+            Optional<DigitalTwinsAuthenticationType> authenticationType = default;
+            Optional<string> deadLetterSecret = default;
+            Optional<Uri> deadLetterUri = default;
+            Optional<DigitalTwinsManagedIdentityReference> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("TopicEndpoint"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new DigitalTwinsEventGridProperties(endpointType, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value, topicEndpoint, accessKey1, accessKey2.Value);
+            return new DigitalTwinsEventGridProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value, topicEndpoint, accessKey1, accessKey2.Value);
         }
     }
 }

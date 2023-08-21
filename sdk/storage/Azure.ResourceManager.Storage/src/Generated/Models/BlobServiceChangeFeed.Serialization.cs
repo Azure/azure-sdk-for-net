@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class BlobServiceChangeFeed : Core.IUtf8JsonSerializable
+    public partial class BlobServiceChangeFeed : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(RetentionInDays))
+            if (Optional.IsDefined(RetentionInDays))
             {
                 writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<int> retentionInDays = default;
+            Optional<bool> enabled = default;
+            Optional<int> retentionInDays = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new BlobServiceChangeFeed(Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(retentionInDays));
+            return new BlobServiceChangeFeed(Optional.ToNullable(enabled), Optional.ToNullable(retentionInDays));
         }
     }
 }

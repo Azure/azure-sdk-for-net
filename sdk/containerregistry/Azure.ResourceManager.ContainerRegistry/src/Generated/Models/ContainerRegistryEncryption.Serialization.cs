@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryEncryption : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryEncryption : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(KeyVaultProperties))
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<ContainerRegistryEncryptionStatus> status = default;
-            Core.Optional<ContainerRegistryKeyVaultProperties> keyVaultProperties = default;
+            Optional<ContainerRegistryEncryptionStatus> status = default;
+            Optional<ContainerRegistryKeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryEncryption(Core.Optional.ToNullable(status), keyVaultProperties.Value);
+            return new ContainerRegistryEncryption(Optional.ToNullable(status), keyVaultProperties.Value);
         }
     }
 }

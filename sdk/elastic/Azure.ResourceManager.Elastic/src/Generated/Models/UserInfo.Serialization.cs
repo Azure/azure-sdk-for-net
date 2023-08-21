@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class UserInfo : Core.IUtf8JsonSerializable
+    public partial class UserInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FirstName))
+            if (Optional.IsDefined(FirstName))
             {
                 writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
-            if (Core.Optional.IsDefined(LastName))
+            if (Optional.IsDefined(LastName))
             {
                 writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
-            if (Core.Optional.IsDefined(CompanyName))
+            if (Optional.IsDefined(CompanyName))
             {
                 writer.WritePropertyName("companyName"u8);
                 writer.WriteStringValue(CompanyName);
             }
-            if (Core.Optional.IsDefined(EmailAddress))
+            if (Optional.IsDefined(EmailAddress))
             {
                 writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
-            if (Core.Optional.IsDefined(CompanyInfo))
+            if (Optional.IsDefined(CompanyInfo))
             {
                 writer.WritePropertyName("companyInfo"u8);
                 writer.WriteObjectValue(CompanyInfo);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Core.Optional<string> firstName = default;
-            Core.Optional<string> lastName = default;
-            Core.Optional<string> companyName = default;
-            Core.Optional<string> emailAddress = default;
-            Core.Optional<CompanyInfo> companyInfo = default;
+            Optional<string> firstName = default;
+            Optional<string> lastName = default;
+            Optional<string> companyName = default;
+            Optional<string> emailAddress = default;
+            Optional<CompanyInfo> companyInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstName"u8))

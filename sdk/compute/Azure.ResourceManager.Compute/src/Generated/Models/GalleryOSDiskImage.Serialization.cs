@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryOSDiskImage : Core.IUtf8JsonSerializable
+    public partial class GalleryOSDiskImage : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HostCaching))
+            if (Optional.IsDefined(HostCaching))
             {
                 writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(GallerySource))
+            if (Optional.IsDefined(GallerySource))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(GallerySource);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<int> sizeInGB = default;
-            Core.Optional<HostCaching> hostCaching = default;
-            Core.Optional<GalleryDiskImageSource> source = default;
+            Optional<int> sizeInGB = default;
+            Optional<HostCaching> hostCaching = default;
+            Optional<GalleryDiskImageSource> source = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sizeInGB"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new GalleryOSDiskImage(Core.Optional.ToNullable(sizeInGB), Core.Optional.ToNullable(hostCaching), source.Value);
+            return new GalleryOSDiskImage(Optional.ToNullable(sizeInGB), Optional.ToNullable(hostCaching), source.Value);
         }
     }
 }

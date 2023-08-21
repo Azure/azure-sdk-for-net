@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> primaryAccessKey = default;
-            Core.Optional<string> secondaryAccessKey = default;
+            Optional<string> primaryAccessKey = default;
+            Optional<string> secondaryAccessKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryAccessKey"u8))

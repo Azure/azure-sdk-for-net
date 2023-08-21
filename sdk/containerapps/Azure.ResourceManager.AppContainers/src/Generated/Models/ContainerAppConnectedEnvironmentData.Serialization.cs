@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class ContainerAppConnectedEnvironmentData : Core.IUtf8JsonSerializable
+    public partial class ContainerAppConnectedEnvironmentData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExtendedLocation))
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.AppContainers
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StaticIP))
+            if (Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIp"u8);
                 writer.WriteStringValue(StaticIP.ToString());
             }
-            if (Core.Optional.IsDefined(DaprAIConnectionString))
+            if (Optional.IsDefined(DaprAIConnectionString))
             {
                 writer.WritePropertyName("daprAIConnectionString"u8);
                 writer.WriteStringValue(DaprAIConnectionString);
             }
-            if (Core.Optional.IsDefined(CustomDomainConfiguration))
+            if (Optional.IsDefined(CustomDomainConfiguration))
             {
                 writer.WritePropertyName("customDomainConfiguration"u8);
                 writer.WriteObjectValue(CustomDomainConfiguration);
@@ -64,19 +64,19 @@ namespace Azure.ResourceManager.AppContainers
             {
                 return null;
             }
-            Core.Optional<ContainerAppExtendedLocation> extendedLocation = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ContainerAppExtendedLocation> extendedLocation = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ContainerAppConnectedEnvironmentProvisioningState> provisioningState = default;
-            Core.Optional<string> deploymentErrors = default;
-            Core.Optional<string> defaultDomain = default;
-            Core.Optional<IPAddress> staticIP = default;
-            Core.Optional<string> daprAIConnectionString = default;
-            Core.Optional<ContainerAppCustomDomainConfiguration> customDomainConfiguration = default;
+            Optional<SystemData> systemData = default;
+            Optional<ContainerAppConnectedEnvironmentProvisioningState> provisioningState = default;
+            Optional<string> deploymentErrors = default;
+            Optional<string> defaultDomain = default;
+            Optional<IPAddress> staticIP = default;
+            Optional<string> daprAIConnectionString = default;
+            Optional<ContainerAppCustomDomainConfiguration> customDomainConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppContainers
                     continue;
                 }
             }
-            return new ContainerAppConnectedEnvironmentData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation.Value, Core.Optional.ToNullable(provisioningState), deploymentErrors.Value, defaultDomain.Value, staticIP.Value, daprAIConnectionString.Value, customDomainConfiguration.Value);
+            return new ContainerAppConnectedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, defaultDomain.Value, staticIP.Value, daprAIConnectionString.Value, customDomainConfiguration.Value);
         }
     }
 }

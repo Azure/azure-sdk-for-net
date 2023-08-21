@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class AutoscaleSettingsResourceInfo : Core.IUtf8JsonSerializable
+    public partial class AutoscaleSettingsResourceInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("maxThroughput"u8);
             writer.WriteNumberValue(MaxThroughput);
-            if (Core.Optional.IsDefined(AutoUpgradePolicy))
+            if (Optional.IsDefined(AutoUpgradePolicy))
             {
                 writer.WritePropertyName("autoUpgradePolicy"u8);
                 writer.WriteObjectValue(AutoUpgradePolicy);
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             int maxThroughput = default;
-            Core.Optional<AutoUpgradePolicyResourceInfo> autoUpgradePolicy = default;
-            Core.Optional<int> targetMaxThroughput = default;
+            Optional<AutoUpgradePolicyResourceInfo> autoUpgradePolicy = default;
+            Optional<int> targetMaxThroughput = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxThroughput"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new AutoscaleSettingsResourceInfo(maxThroughput, autoUpgradePolicy.Value, Core.Optional.ToNullable(targetMaxThroughput));
+            return new AutoscaleSettingsResourceInfo(maxThroughput, autoUpgradePolicy.Value, Optional.ToNullable(targetMaxThroughput));
         }
     }
 }

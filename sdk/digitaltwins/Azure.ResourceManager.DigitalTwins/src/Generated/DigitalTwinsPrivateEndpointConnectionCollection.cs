@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DigitalTwins
             try
             {
                 var response = await _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DigitalTwinsArmOperation<DigitalTwinsPrivateEndpointConnectionResource>(new DigitalTwinsPrivateEndpointConnectionOperationSource(Client), _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DigitalTwinsArmOperation<DigitalTwinsPrivateEndpointConnectionResource>(new DigitalTwinsPrivateEndpointConnectionOperationSource(Client), _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DigitalTwins
             try
             {
                 var response = _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new DigitalTwinsArmOperation<DigitalTwinsPrivateEndpointConnectionResource>(new DigitalTwinsPrivateEndpointConnectionOperationSource(Client), _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DigitalTwinsArmOperation<DigitalTwinsPrivateEndpointConnectionResource>(new DigitalTwinsPrivateEndpointConnectionOperationSource(Client), _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DigitalTwins
         public virtual AsyncPageable<DigitalTwinsPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DigitalTwinsPrivateEndpointConnectionResource(Client, DigitalTwinsPrivateEndpointConnectionData.DeserializeDigitalTwinsPrivateEndpointConnectionData(e)), _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "DigitalTwinsPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DigitalTwinsPrivateEndpointConnectionResource(Client, DigitalTwinsPrivateEndpointConnectionData.DeserializeDigitalTwinsPrivateEndpointConnectionData(e)), _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "DigitalTwinsPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DigitalTwins
         public virtual Pageable<DigitalTwinsPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DigitalTwinsPrivateEndpointConnectionResource(Client, DigitalTwinsPrivateEndpointConnectionData.DeserializeDigitalTwinsPrivateEndpointConnectionData(e)), _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "DigitalTwinsPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DigitalTwinsPrivateEndpointConnectionResource(Client, DigitalTwinsPrivateEndpointConnectionData.DeserializeDigitalTwinsPrivateEndpointConnectionData(e)), _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "DigitalTwinsPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class Snssai : Core.IUtf8JsonSerializable
+    public partial class Snssai : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sst"u8);
             writer.WriteNumberValue(Sst);
-            if (Core.Optional.IsDefined(Sd))
+            if (Optional.IsDefined(Sd))
             {
                 writer.WritePropertyName("sd"u8);
                 writer.WriteStringValue(Sd);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             int sst = default;
-            Core.Optional<string> sd = default;
+            Optional<string> sd = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sst"u8))

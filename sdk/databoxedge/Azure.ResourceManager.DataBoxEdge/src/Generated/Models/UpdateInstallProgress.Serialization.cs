@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<int> percentComplete = default;
-            Core.Optional<int> numberOfUpdatesToInstall = default;
-            Core.Optional<int> numberOfUpdatesInstalled = default;
+            Optional<int> percentComplete = default;
+            Optional<int> numberOfUpdatesToInstall = default;
+            Optional<int> numberOfUpdatesInstalled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("percentComplete"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new UpdateInstallProgress(Core.Optional.ToNullable(percentComplete), Core.Optional.ToNullable(numberOfUpdatesToInstall), Core.Optional.ToNullable(numberOfUpdatesInstalled));
+            return new UpdateInstallProgress(Optional.ToNullable(percentComplete), Optional.ToNullable(numberOfUpdatesToInstall), Optional.ToNullable(numberOfUpdatesInstalled));
         }
     }
 }

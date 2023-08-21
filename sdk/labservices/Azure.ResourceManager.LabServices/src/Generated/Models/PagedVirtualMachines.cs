@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> Initializes a new instance of PagedVirtualMachines. </summary>
         internal PagedVirtualMachines()
         {
-            Value = new Core.ChangeTrackingList<LabVirtualMachineData>();
+            Value = new ChangeTrackingList<LabVirtualMachineData>();
         }
 
         /// <summary> Initializes a new instance of PagedVirtualMachines. </summary>

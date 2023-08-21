@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownJobDetails : Core.IUtf8JsonSerializable
+    internal partial class UnknownJobDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("contactDetails"u8);
             writer.WriteObjectValue(ContactDetails);
-            if (Core.Optional.IsDefined(ShippingAddress))
+            if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
-            if (Core.Optional.IsCollectionDefined(DataImportDetails))
+            if (Optional.IsCollectionDefined(DataImportDetails))
             {
                 writer.WritePropertyName("dataImportDetails"u8);
                 writer.WriteStartArray();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DataExportDetails))
+            if (Optional.IsCollectionDefined(DataExportDetails))
             {
                 writer.WritePropertyName("dataExportDetails"u8);
                 writer.WriteStartArray();
@@ -45,22 +45,22 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("jobDetailsType"u8);
             writer.WriteStringValue(JobDetailsType.ToSerialString());
-            if (Core.Optional.IsDefined(Preferences))
+            if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
             }
-            if (Core.Optional.IsDefined(ReverseShippingDetails))
+            if (Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
                 writer.WriteObjectValue(ReverseShippingDetails);
             }
-            if (Core.Optional.IsDefined(KeyEncryptionKey))
+            if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
-            if (Core.Optional.IsDefined(ExpectedDataSizeInTerabytes))
+            if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
             {
                 writer.WritePropertyName("expectedDataSizeInTeraBytes"u8);
                 writer.WriteNumberValue(ExpectedDataSizeInTerabytes.Value);
@@ -74,26 +74,26 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DataBoxJobStage>> jobStages = default;
+            Optional<IReadOnlyList<DataBoxJobStage>> jobStages = default;
             DataBoxContactDetails contactDetails = default;
-            Core.Optional<DataBoxShippingAddress> shippingAddress = default;
-            Core.Optional<PackageShippingDetails> deliveryPackage = default;
-            Core.Optional<PackageShippingDetails> returnPackage = default;
-            Core.Optional<IList<DataImportDetails>> dataImportDetails = default;
-            Core.Optional<IList<DataExportDetails>> dataExportDetails = default;
+            Optional<DataBoxShippingAddress> shippingAddress = default;
+            Optional<PackageShippingDetails> deliveryPackage = default;
+            Optional<PackageShippingDetails> returnPackage = default;
+            Optional<IList<DataImportDetails>> dataImportDetails = default;
+            Optional<IList<DataExportDetails>> dataExportDetails = default;
             DataBoxOrderType jobDetailsType = default;
-            Core.Optional<DataBoxOrderPreferences> preferences = default;
-            Core.Optional<ReverseShippingDetails> reverseShippingDetails = default;
-            Core.Optional<IReadOnlyList<CopyLogDetails>> copyLogDetails = default;
-            Core.Optional<string> reverseShipmentLabelSasKey = default;
-            Core.Optional<string> chainOfCustodySasKey = default;
-            Core.Optional<DeviceErasureDetails> deviceErasureDetails = default;
-            Core.Optional<DataBoxKeyEncryptionKey> keyEncryptionKey = default;
-            Core.Optional<int> expectedDataSizeInTerabytes = default;
-            Core.Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
-            Core.Optional<LastMitigationActionOnJob> lastMitigationActionOnJob = default;
-            Core.Optional<DataCenterAddressResult> dataCenterAddress = default;
-            Core.Optional<DataCenterCode> dataCenterCode = default;
+            Optional<DataBoxOrderPreferences> preferences = default;
+            Optional<ReverseShippingDetails> reverseShippingDetails = default;
+            Optional<IReadOnlyList<CopyLogDetails>> copyLogDetails = default;
+            Optional<string> reverseShipmentLabelSasKey = default;
+            Optional<string> chainOfCustodySasKey = default;
+            Optional<DeviceErasureDetails> deviceErasureDetails = default;
+            Optional<DataBoxKeyEncryptionKey> keyEncryptionKey = default;
+            Optional<int> expectedDataSizeInTerabytes = default;
+            Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
+            Optional<LastMitigationActionOnJob> lastMitigationActionOnJob = default;
+            Optional<DataCenterAddressResult> dataCenterAddress = default;
+            Optional<DataCenterCode> dataCenterCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobStages"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new UnknownJobDetails(Core.Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Core.Optional.ToList(dataImportDetails), Core.Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, reverseShippingDetails.Value, Core.Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Core.Optional.ToNullable(expectedDataSizeInTerabytes), Core.Optional.ToList(actions), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Core.Optional.ToNullable(dataCenterCode));
+            return new UnknownJobDetails(Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Optional.ToList(dataImportDetails), Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, reverseShippingDetails.Value, Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), Optional.ToList(actions), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode));
         }
     }
 }

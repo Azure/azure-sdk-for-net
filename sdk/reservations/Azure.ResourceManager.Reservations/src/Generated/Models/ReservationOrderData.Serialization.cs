@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.Reservations
             {
                 return null;
             }
-            Core.Optional<int> etag = default;
+            Optional<int> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<DateTimeOffset> requestDateTime = default;
-            Core.Optional<DateTimeOffset> createdDateTime = default;
-            Core.Optional<DateTimeOffset> expiryDate = default;
-            Core.Optional<DateTimeOffset> expiryDateTime = default;
-            Core.Optional<DateTimeOffset> benefitStartTime = default;
-            Core.Optional<int> originalQuantity = default;
-            Core.Optional<ReservationTerm> term = default;
-            Core.Optional<ReservationProvisioningState> provisioningState = default;
-            Core.Optional<ReservationBillingPlan> billingPlan = default;
-            Core.Optional<ReservationOrderBillingPlanInformation> planInformation = default;
-            Core.Optional<IReadOnlyList<ReservationDetailData>> reservations = default;
-            Core.Optional<DateTimeOffset> reviewDateTime = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<DateTimeOffset> requestDateTime = default;
+            Optional<DateTimeOffset> createdDateTime = default;
+            Optional<DateTimeOffset> expiryDate = default;
+            Optional<DateTimeOffset> expiryDateTime = default;
+            Optional<DateTimeOffset> benefitStartTime = default;
+            Optional<int> originalQuantity = default;
+            Optional<ReservationTerm> term = default;
+            Optional<ReservationProvisioningState> provisioningState = default;
+            Optional<ReservationBillingPlan> billingPlan = default;
+            Optional<ReservationOrderBillingPlanInformation> planInformation = default;
+            Optional<IReadOnlyList<ReservationDetailData>> reservations = default;
+            Optional<DateTimeOffset> reviewDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Reservations
                     continue;
                 }
             }
-            return new ReservationOrderData(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), displayName.Value, Core.Optional.ToNullable(requestDateTime), Core.Optional.ToNullable(createdDateTime), Core.Optional.ToNullable(expiryDate), Core.Optional.ToNullable(expiryDateTime), Core.Optional.ToNullable(benefitStartTime), Core.Optional.ToNullable(originalQuantity), Core.Optional.ToNullable(term), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(billingPlan), planInformation.Value, Core.Optional.ToList(reservations), Core.Optional.ToNullable(reviewDateTime));
+            return new ReservationOrderData(id, name, type, systemData.Value, Optional.ToNullable(etag), displayName.Value, Optional.ToNullable(requestDateTime), Optional.ToNullable(createdDateTime), Optional.ToNullable(expiryDate), Optional.ToNullable(expiryDateTime), Optional.ToNullable(benefitStartTime), Optional.ToNullable(originalQuantity), Optional.ToNullable(term), Optional.ToNullable(provisioningState), Optional.ToNullable(billingPlan), planInformation.Value, Optional.ToList(reservations), Optional.ToNullable(reviewDateTime));
         }
     }
 }

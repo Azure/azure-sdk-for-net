@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> targetServerVersion = default;
-            Core.Optional<IReadOnlyList<string>> databases = default;
-            Core.Optional<string> targetServerBrandVersion = default;
-            Core.Optional<IReadOnlyList<ReportableException>> validationErrors = default;
-            Core.Optional<IReadOnlyList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem>> databaseSchemaMap = default;
+            Optional<string> targetServerVersion = default;
+            Optional<IReadOnlyList<string>> databases = default;
+            Optional<string> targetServerBrandVersion = default;
+            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Optional<IReadOnlyList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem>> databaseSchemaMap = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetServerVersion"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput(targetServerVersion.Value, Core.Optional.ToList(databases), targetServerBrandVersion.Value, Core.Optional.ToList(validationErrors), Core.Optional.ToList(databaseSchemaMap));
+            return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput(targetServerVersion.Value, Optional.ToList(databases), targetServerBrandVersion.Value, Optional.ToList(validationErrors), Optional.ToList(databaseSchemaMap));
         }
     }
 }

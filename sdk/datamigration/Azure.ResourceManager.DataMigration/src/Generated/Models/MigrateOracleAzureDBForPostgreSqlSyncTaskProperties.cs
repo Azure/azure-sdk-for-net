@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrateOracleAzureDBForPostgreSqlSyncTaskProperties. </summary>
         public MigrateOracleAzureDBForPostgreSqlSyncTaskProperties()
         {
-            Output = new Core.ChangeTrackingList<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>();
+            Output = new ChangeTrackingList<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>();
             TaskType = TaskType.MigrateOracleAzureDBForPostgreSqlSync;
         }
 

@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<StreamAnalyticsQueryCompilationError>> errors = default;
-            Core.Optional<IReadOnlyList<string>> warnings = default;
-            Core.Optional<IReadOnlyList<string>> inputs = default;
-            Core.Optional<IReadOnlyList<string>> outputs = default;
-            Core.Optional<IReadOnlyList<string>> functions = default;
+            Optional<IReadOnlyList<StreamAnalyticsQueryCompilationError>> errors = default;
+            Optional<IReadOnlyList<string>> warnings = default;
+            Optional<IReadOnlyList<string>> inputs = default;
+            Optional<IReadOnlyList<string>> outputs = default;
+            Optional<IReadOnlyList<string>> functions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errors"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamAnalyticsQueryCompilationResult(Core.Optional.ToList(errors), Core.Optional.ToList(warnings), Core.Optional.ToList(inputs), Core.Optional.ToList(outputs), Core.Optional.ToList(functions));
+            return new StreamAnalyticsQueryCompilationResult(Optional.ToList(errors), Optional.ToList(warnings), Optional.ToList(inputs), Optional.ToList(outputs), Optional.ToList(functions));
         }
     }
 }

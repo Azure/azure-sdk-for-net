@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of ScalingPlanPooledScheduleList. </summary>
         internal ScalingPlanPooledScheduleList()
         {
-            Value = new Core.ChangeTrackingList<ScalingPlanPooledScheduleData>();
+            Value = new ChangeTrackingList<ScalingPlanPooledScheduleData>();
         }
 
         /// <summary> Initializes a new instance of ScalingPlanPooledScheduleList. </summary>

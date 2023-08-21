@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Media
 {
-    internal class MediaAssetTrackOperationSource : Core.IOperationSource<MediaAssetTrackResource>
+    internal class MediaAssetTrackOperationSource : IOperationSource<MediaAssetTrackResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Media
             _client = client;
         }
 
-        MediaAssetTrackResource Core.IOperationSource<MediaAssetTrackResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MediaAssetTrackResource IOperationSource<MediaAssetTrackResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MediaAssetTrackData.DeserializeMediaAssetTrackData(document.RootElement);
             return new MediaAssetTrackResource(_client, data);
         }
 
-        async ValueTask<MediaAssetTrackResource> Core.IOperationSource<MediaAssetTrackResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MediaAssetTrackResource> IOperationSource<MediaAssetTrackResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MediaAssetTrackData.DeserializeMediaAssetTrackData(document.RootElement);

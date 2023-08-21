@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningJobResourceConfiguration : Core.IUtf8JsonSerializable
+    public partial class MachineLearningJobResourceConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DockerArgs))
+            if (Optional.IsDefined(DockerArgs))
             {
                 if (DockerArgs != null)
                 {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dockerArgs");
                 }
             }
-            if (Core.Optional.IsDefined(ShmSize))
+            if (Optional.IsDefined(ShmSize))
             {
                 writer.WritePropertyName("shmSize"u8);
                 writer.WriteStringValue(ShmSize);
             }
-            if (Core.Optional.IsDefined(InstanceCount))
+            if (Optional.IsDefined(InstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
-            if (Core.Optional.IsDefined(InstanceType))
+            if (Optional.IsDefined(InstanceType))
             {
                 if (InstanceType != null)
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("instanceType");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> dockerArgs = default;
-            Core.Optional<string> shmSize = default;
-            Core.Optional<int> instanceCount = default;
-            Core.Optional<string> instanceType = default;
-            Core.Optional<IDictionary<string, BinaryData>> properties = default;
+            Optional<string> dockerArgs = default;
+            Optional<string> shmSize = default;
+            Optional<int> instanceCount = default;
+            Optional<string> instanceType = default;
+            Optional<IDictionary<string, BinaryData>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dockerArgs"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningJobResourceConfiguration(Core.Optional.ToNullable(instanceCount), instanceType.Value, Core.Optional.ToDictionary(properties), dockerArgs.Value, shmSize.Value);
+            return new MachineLearningJobResourceConfiguration(Optional.ToNullable(instanceCount), instanceType.Value, Optional.ToDictionary(properties), dockerArgs.Value, shmSize.Value);
         }
     }
 }

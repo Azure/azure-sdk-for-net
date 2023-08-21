@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ImageModelDistributionSettingsObjectDetection : Core.IUtf8JsonSerializable
+    public partial class ImageModelDistributionSettingsObjectDetection : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BoxDetectionsPerImage))
+            if (Optional.IsDefined(BoxDetectionsPerImage))
             {
                 if (BoxDetectionsPerImage != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("boxDetectionsPerImage");
                 }
             }
-            if (Core.Optional.IsDefined(BoxScoreThreshold))
+            if (Optional.IsDefined(BoxScoreThreshold))
             {
                 if (BoxScoreThreshold != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("boxScoreThreshold");
                 }
             }
-            if (Core.Optional.IsDefined(ImageSize))
+            if (Optional.IsDefined(ImageSize))
             {
                 if (ImageSize != null)
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("imageSize");
                 }
             }
-            if (Core.Optional.IsDefined(MaxSize))
+            if (Optional.IsDefined(MaxSize))
             {
                 if (MaxSize != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxSize");
                 }
             }
-            if (Core.Optional.IsDefined(MinSize))
+            if (Optional.IsDefined(MinSize))
             {
                 if (MinSize != null)
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("minSize");
                 }
             }
-            if (Core.Optional.IsDefined(ModelSize))
+            if (Optional.IsDefined(ModelSize))
             {
                 if (ModelSize != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelSize");
                 }
             }
-            if (Core.Optional.IsDefined(MultiScale))
+            if (Optional.IsDefined(MultiScale))
             {
                 if (MultiScale != null)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("multiScale");
                 }
             }
-            if (Core.Optional.IsDefined(NmsIouThreshold))
+            if (Optional.IsDefined(NmsIouThreshold))
             {
                 if (NmsIouThreshold != null)
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nmsIouThreshold");
                 }
             }
-            if (Core.Optional.IsDefined(TileGridSize))
+            if (Optional.IsDefined(TileGridSize))
             {
                 if (TileGridSize != null)
                 {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tileGridSize");
                 }
             }
-            if (Core.Optional.IsDefined(TileOverlapRatio))
+            if (Optional.IsDefined(TileOverlapRatio))
             {
                 if (TileOverlapRatio != null)
                 {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tileOverlapRatio");
                 }
             }
-            if (Core.Optional.IsDefined(TilePredictionsNmsThreshold))
+            if (Optional.IsDefined(TilePredictionsNmsThreshold))
             {
                 if (TilePredictionsNmsThreshold != null)
                 {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tilePredictionsNmsThreshold");
                 }
             }
-            if (Core.Optional.IsDefined(ValidationIouThreshold))
+            if (Optional.IsDefined(ValidationIouThreshold))
             {
                 if (ValidationIouThreshold != null)
                 {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationIouThreshold");
                 }
             }
-            if (Core.Optional.IsDefined(ValidationMetricType))
+            if (Optional.IsDefined(ValidationMetricType))
             {
                 if (ValidationMetricType != null)
                 {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationMetricType");
                 }
             }
-            if (Core.Optional.IsDefined(AmsGradient))
+            if (Optional.IsDefined(AmsGradient))
             {
                 if (AmsGradient != null)
                 {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("amsGradient");
                 }
             }
-            if (Core.Optional.IsDefined(Augmentations))
+            if (Optional.IsDefined(Augmentations))
             {
                 if (Augmentations != null)
                 {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("augmentations");
                 }
             }
-            if (Core.Optional.IsDefined(Beta1))
+            if (Optional.IsDefined(Beta1))
             {
                 if (Beta1 != null)
                 {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("beta1");
                 }
             }
-            if (Core.Optional.IsDefined(Beta2))
+            if (Optional.IsDefined(Beta2))
             {
                 if (Beta2 != null)
                 {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("beta2");
                 }
             }
-            if (Core.Optional.IsDefined(Distributed))
+            if (Optional.IsDefined(Distributed))
             {
                 if (Distributed != null)
                 {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("distributed");
                 }
             }
-            if (Core.Optional.IsDefined(EarlyStopping))
+            if (Optional.IsDefined(EarlyStopping))
             {
                 if (EarlyStopping != null)
                 {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("earlyStopping");
                 }
             }
-            if (Core.Optional.IsDefined(EarlyStoppingDelay))
+            if (Optional.IsDefined(EarlyStoppingDelay))
             {
                 if (EarlyStoppingDelay != null)
                 {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("earlyStoppingDelay");
                 }
             }
-            if (Core.Optional.IsDefined(EarlyStoppingPatience))
+            if (Optional.IsDefined(EarlyStoppingPatience))
             {
                 if (EarlyStoppingPatience != null)
                 {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("earlyStoppingPatience");
                 }
             }
-            if (Core.Optional.IsDefined(EnableOnnxNormalization))
+            if (Optional.IsDefined(EnableOnnxNormalization))
             {
                 if (EnableOnnxNormalization != null)
                 {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("enableOnnxNormalization");
                 }
             }
-            if (Core.Optional.IsDefined(EvaluationFrequency))
+            if (Optional.IsDefined(EvaluationFrequency))
             {
                 if (EvaluationFrequency != null)
                 {
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("evaluationFrequency");
                 }
             }
-            if (Core.Optional.IsDefined(GradientAccumulationStep))
+            if (Optional.IsDefined(GradientAccumulationStep))
             {
                 if (GradientAccumulationStep != null)
                 {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("gradientAccumulationStep");
                 }
             }
-            if (Core.Optional.IsDefined(LayersToFreeze))
+            if (Optional.IsDefined(LayersToFreeze))
             {
                 if (LayersToFreeze != null)
                 {
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("layersToFreeze");
                 }
             }
-            if (Core.Optional.IsDefined(LearningRate))
+            if (Optional.IsDefined(LearningRate))
             {
                 if (LearningRate != null)
                 {
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("learningRate");
                 }
             }
-            if (Core.Optional.IsDefined(LearningRateScheduler))
+            if (Optional.IsDefined(LearningRateScheduler))
             {
                 if (LearningRateScheduler != null)
                 {
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("learningRateScheduler");
                 }
             }
-            if (Core.Optional.IsDefined(ModelName))
+            if (Optional.IsDefined(ModelName))
             {
                 if (ModelName != null)
                 {
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelName");
                 }
             }
-            if (Core.Optional.IsDefined(Momentum))
+            if (Optional.IsDefined(Momentum))
             {
                 if (Momentum != null)
                 {
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("momentum");
                 }
             }
-            if (Core.Optional.IsDefined(Nesterov))
+            if (Optional.IsDefined(Nesterov))
             {
                 if (Nesterov != null)
                 {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nesterov");
                 }
             }
-            if (Core.Optional.IsDefined(NumberOfEpochs))
+            if (Optional.IsDefined(NumberOfEpochs))
             {
                 if (NumberOfEpochs != null)
                 {
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("numberOfEpochs");
                 }
             }
-            if (Core.Optional.IsDefined(NumberOfWorkers))
+            if (Optional.IsDefined(NumberOfWorkers))
             {
                 if (NumberOfWorkers != null)
                 {
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("numberOfWorkers");
                 }
             }
-            if (Core.Optional.IsDefined(Optimizer))
+            if (Optional.IsDefined(Optimizer))
             {
                 if (Optimizer != null)
                 {
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("optimizer");
                 }
             }
-            if (Core.Optional.IsDefined(RandomSeed))
+            if (Optional.IsDefined(RandomSeed))
             {
                 if (RandomSeed != null)
                 {
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("randomSeed");
                 }
             }
-            if (Core.Optional.IsDefined(StepLRGamma))
+            if (Optional.IsDefined(StepLRGamma))
             {
                 if (StepLRGamma != null)
                 {
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stepLRGamma");
                 }
             }
-            if (Core.Optional.IsDefined(StepLRStepSize))
+            if (Optional.IsDefined(StepLRStepSize))
             {
                 if (StepLRStepSize != null)
                 {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stepLRStepSize");
                 }
             }
-            if (Core.Optional.IsDefined(TrainingBatchSize))
+            if (Optional.IsDefined(TrainingBatchSize))
             {
                 if (TrainingBatchSize != null)
                 {
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("trainingBatchSize");
                 }
             }
-            if (Core.Optional.IsDefined(ValidationBatchSize))
+            if (Optional.IsDefined(ValidationBatchSize))
             {
                 if (ValidationBatchSize != null)
                 {
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationBatchSize");
                 }
             }
-            if (Core.Optional.IsDefined(WarmupCosineLRCycles))
+            if (Optional.IsDefined(WarmupCosineLRCycles))
             {
                 if (WarmupCosineLRCycles != null)
                 {
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("warmupCosineLRCycles");
                 }
             }
-            if (Core.Optional.IsDefined(WarmupCosineLRWarmupEpochs))
+            if (Optional.IsDefined(WarmupCosineLRWarmupEpochs))
             {
                 if (WarmupCosineLRWarmupEpochs != null)
                 {
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("warmupCosineLRWarmupEpochs");
                 }
             }
-            if (Core.Optional.IsDefined(WeightDecay))
+            if (Optional.IsDefined(WeightDecay))
             {
                 if (WeightDecay != null)
                 {
@@ -516,47 +516,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> boxDetectionsPerImage = default;
-            Core.Optional<string> boxScoreThreshold = default;
-            Core.Optional<string> imageSize = default;
-            Core.Optional<string> maxSize = default;
-            Core.Optional<string> minSize = default;
-            Core.Optional<string> modelSize = default;
-            Core.Optional<string> multiScale = default;
-            Core.Optional<string> nmsIouThreshold = default;
-            Core.Optional<string> tileGridSize = default;
-            Core.Optional<string> tileOverlapRatio = default;
-            Core.Optional<string> tilePredictionsNmsThreshold = default;
-            Core.Optional<string> validationIouThreshold = default;
-            Core.Optional<string> validationMetricType = default;
-            Core.Optional<string> amsGradient = default;
-            Core.Optional<string> augmentations = default;
-            Core.Optional<string> beta1 = default;
-            Core.Optional<string> beta2 = default;
-            Core.Optional<string> distributed = default;
-            Core.Optional<string> earlyStopping = default;
-            Core.Optional<string> earlyStoppingDelay = default;
-            Core.Optional<string> earlyStoppingPatience = default;
-            Core.Optional<string> enableOnnxNormalization = default;
-            Core.Optional<string> evaluationFrequency = default;
-            Core.Optional<string> gradientAccumulationStep = default;
-            Core.Optional<string> layersToFreeze = default;
-            Core.Optional<string> learningRate = default;
-            Core.Optional<string> learningRateScheduler = default;
-            Core.Optional<string> modelName = default;
-            Core.Optional<string> momentum = default;
-            Core.Optional<string> nesterov = default;
-            Core.Optional<string> numberOfEpochs = default;
-            Core.Optional<string> numberOfWorkers = default;
-            Core.Optional<string> optimizer = default;
-            Core.Optional<string> randomSeed = default;
-            Core.Optional<string> stepLRGamma = default;
-            Core.Optional<string> stepLRStepSize = default;
-            Core.Optional<string> trainingBatchSize = default;
-            Core.Optional<string> validationBatchSize = default;
-            Core.Optional<string> warmupCosineLRCycles = default;
-            Core.Optional<string> warmupCosineLRWarmupEpochs = default;
-            Core.Optional<string> weightDecay = default;
+            Optional<string> boxDetectionsPerImage = default;
+            Optional<string> boxScoreThreshold = default;
+            Optional<string> imageSize = default;
+            Optional<string> maxSize = default;
+            Optional<string> minSize = default;
+            Optional<string> modelSize = default;
+            Optional<string> multiScale = default;
+            Optional<string> nmsIouThreshold = default;
+            Optional<string> tileGridSize = default;
+            Optional<string> tileOverlapRatio = default;
+            Optional<string> tilePredictionsNmsThreshold = default;
+            Optional<string> validationIouThreshold = default;
+            Optional<string> validationMetricType = default;
+            Optional<string> amsGradient = default;
+            Optional<string> augmentations = default;
+            Optional<string> beta1 = default;
+            Optional<string> beta2 = default;
+            Optional<string> distributed = default;
+            Optional<string> earlyStopping = default;
+            Optional<string> earlyStoppingDelay = default;
+            Optional<string> earlyStoppingPatience = default;
+            Optional<string> enableOnnxNormalization = default;
+            Optional<string> evaluationFrequency = default;
+            Optional<string> gradientAccumulationStep = default;
+            Optional<string> layersToFreeze = default;
+            Optional<string> learningRate = default;
+            Optional<string> learningRateScheduler = default;
+            Optional<string> modelName = default;
+            Optional<string> momentum = default;
+            Optional<string> nesterov = default;
+            Optional<string> numberOfEpochs = default;
+            Optional<string> numberOfWorkers = default;
+            Optional<string> optimizer = default;
+            Optional<string> randomSeed = default;
+            Optional<string> stepLRGamma = default;
+            Optional<string> stepLRStepSize = default;
+            Optional<string> trainingBatchSize = default;
+            Optional<string> validationBatchSize = default;
+            Optional<string> warmupCosineLRCycles = default;
+            Optional<string> warmupCosineLRWarmupEpochs = default;
+            Optional<string> weightDecay = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("boxDetectionsPerImage"u8))

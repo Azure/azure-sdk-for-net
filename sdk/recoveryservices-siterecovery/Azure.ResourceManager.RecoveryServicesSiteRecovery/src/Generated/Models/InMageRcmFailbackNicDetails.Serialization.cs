@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> macAddress = default;
-            Core.Optional<string> networkName = default;
-            Core.Optional<string> adapterType = default;
-            Core.Optional<IPAddress> sourceIPAddress = default;
+            Optional<string> macAddress = default;
+            Optional<string> networkName = default;
+            Optional<string> adapterType = default;
+            Optional<IPAddress> sourceIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("macAddress"u8))

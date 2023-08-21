@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    public partial class AnalysisIPv4FirewallSettings : Core.IUtf8JsonSerializable
+    public partial class AnalysisIPv4FirewallSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(FirewallRules))
+            if (Optional.IsCollectionDefined(FirewallRules))
             {
                 writer.WritePropertyName("firewallRules"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsPowerBIServiceEnabled))
+            if (Optional.IsDefined(IsPowerBIServiceEnabled))
             {
                 writer.WritePropertyName("enablePowerBIService"u8);
                 writer.WriteBooleanValue(IsPowerBIServiceEnabled.Value);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 return null;
             }
-            Core.Optional<IList<AnalysisIPv4FirewallRule>> firewallRules = default;
-            Core.Optional<bool> enablePowerBIService = default;
+            Optional<IList<AnalysisIPv4FirewallRule>> firewallRules = default;
+            Optional<bool> enablePowerBIService = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firewallRules"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     continue;
                 }
             }
-            return new AnalysisIPv4FirewallSettings(Core.Optional.ToList(firewallRules), Core.Optional.ToNullable(enablePowerBIService));
+            return new AnalysisIPv4FirewallSettings(Optional.ToList(firewallRules), Optional.ToNullable(enablePowerBIService));
         }
     }
 }

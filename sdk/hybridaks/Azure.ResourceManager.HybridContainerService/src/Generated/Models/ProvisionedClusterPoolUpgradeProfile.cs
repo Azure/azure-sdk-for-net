@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of ProvisionedClusterPoolUpgradeProfile. </summary>
         public ProvisionedClusterPoolUpgradeProfile()
         {
-            Upgrades = new Core.ChangeTrackingList<ProvisionedClusterPoolUpgradeProfileProperties>();
+            Upgrades = new ChangeTrackingList<ProvisionedClusterPoolUpgradeProfileProperties>();
         }
 
         /// <summary> Initializes a new instance of ProvisionedClusterPoolUpgradeProfile. </summary>

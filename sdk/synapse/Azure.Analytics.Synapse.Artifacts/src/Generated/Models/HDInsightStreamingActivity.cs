@@ -32,15 +32,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(output, nameof(output));
             Argument.AssertNotNull(filePaths, nameof(filePaths));
 
-            StorageLinkedServices = new Core.ChangeTrackingList<LinkedServiceReference>();
-            Arguments = new Core.ChangeTrackingList<object>();
+            StorageLinkedServices = new ChangeTrackingList<LinkedServiceReference>();
+            Arguments = new ChangeTrackingList<object>();
             Mapper = mapper;
             Reducer = reducer;
             Input = input;
             Output = output;
             FilePaths = filePaths.ToList();
-            CommandEnvironment = new Core.ChangeTrackingList<object>();
-            Defines = new Core.ChangeTrackingDictionary<string, object>();
+            CommandEnvironment = new ChangeTrackingList<object>();
+            Defines = new ChangeTrackingDictionary<string, object>();
             Type = "HDInsightStreaming";
         }
 

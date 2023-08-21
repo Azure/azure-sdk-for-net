@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<DescendantParentGroupInfo> parent = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<DescendantParentGroupInfo> parent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

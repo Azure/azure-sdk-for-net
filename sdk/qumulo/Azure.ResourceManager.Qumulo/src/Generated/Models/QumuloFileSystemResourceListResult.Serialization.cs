@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 return null;
             }
             IReadOnlyList<QumuloFileSystemResourceData> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Core.Optional<string> accountId = default;
-            Core.Optional<string> apiKey = default;
-            Core.Optional<string> regionId = default;
+            Optional<string> accountId = default;
+            Optional<string> apiKey = default;
+            Optional<string> regionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountId"u8))

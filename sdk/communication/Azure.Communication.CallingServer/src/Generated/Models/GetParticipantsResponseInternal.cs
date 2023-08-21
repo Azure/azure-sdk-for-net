@@ -16,7 +16,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
         internal GetParticipantsResponseInternal()
         {
-            Values = new Core.ChangeTrackingList<AcsCallParticipantInternal>();
+            Values = new ChangeTrackingList<AcsCallParticipantInternal>();
         }
 
         /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>

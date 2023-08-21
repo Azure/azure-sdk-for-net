@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Initializes a new instance of NicIPSettings. </summary>
         public NicIPSettings()
         {
-            DnsServers = new Core.ChangeTrackingList<string>();
-            Gateway = new Core.ChangeTrackingList<string>();
-            IPAddressInfo = new Core.ChangeTrackingList<NicIPAddressSettings>();
+            DnsServers = new ChangeTrackingList<string>();
+            Gateway = new ChangeTrackingList<string>();
+            IPAddressInfo = new ChangeTrackingList<NicIPAddressSettings>();
         }
 
         /// <summary> Initializes a new instance of NicIPSettings. </summary>

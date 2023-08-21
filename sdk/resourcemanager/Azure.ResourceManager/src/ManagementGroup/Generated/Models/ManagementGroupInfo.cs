@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// <summary> Initializes a new instance of ManagementGroupInfo. </summary>
         internal ManagementGroupInfo()
         {
-            Path = new Core.ChangeTrackingList<ManagementGroupPathElement>();
-            ManagementGroupAncestors = new Core.ChangeTrackingList<string>();
-            ManagementGroupAncestorChain = new Core.ChangeTrackingList<ManagementGroupPathElement>();
+            Path = new ChangeTrackingList<ManagementGroupPathElement>();
+            ManagementGroupAncestors = new ChangeTrackingList<string>();
+            ManagementGroupAncestorChain = new ChangeTrackingList<ManagementGroupPathElement>();
         }
 
         /// <summary> Initializes a new instance of ManagementGroupInfo. </summary>

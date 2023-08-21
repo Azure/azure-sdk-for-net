@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.GraphServices.Models
             {
                 return null;
             }
-            Core.Optional<Uri> nextLink = default;
-            Core.Optional<IReadOnlyList<GraphServicesAccountResourceData>> value = default;
+            Optional<Uri> nextLink = default;
+            Optional<IReadOnlyList<GraphServicesAccountResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                     continue;
                 }
             }
-            return new GraphServicesAccountResourceList(nextLink.Value, Core.Optional.ToList(value));
+            return new GraphServicesAccountResourceList(nextLink.Value, Optional.ToList(value));
         }
     }
 }

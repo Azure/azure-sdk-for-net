@@ -380,7 +380,7 @@ namespace Azure.Analytics.Purview.Sharing
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllSentSharesRequest(referenceName, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllSentSharesNextPageRequest(nextLink, referenceName, filter, orderby, context);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShares", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShares", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -407,7 +407,7 @@ namespace Azure.Analytics.Purview.Sharing
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllSentSharesRequest(referenceName, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllSentSharesNextPageRequest(nextLink, referenceName, filter, orderby, context);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShares", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShares", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -435,7 +435,7 @@ namespace Azure.Analytics.Purview.Sharing
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllSentShareInvitationsRequest(sentShareId, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllSentShareInvitationsNextPageRequest(nextLink, sentShareId, filter, orderby, context);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShareInvitations", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShareInvitations", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -463,7 +463,7 @@ namespace Azure.Analytics.Purview.Sharing
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllSentShareInvitationsRequest(sentShareId, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllSentShareInvitationsNextPageRequest(nextLink, sentShareId, filter, orderby, context);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShareInvitations", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShareInvitations", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -495,7 +495,7 @@ namespace Azure.Analytics.Purview.Sharing
             try
             {
                 using HttpMessage message = CreateCreateOrReplaceSentShareRequest(sentShareId, content, context);
-                return await Core.ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "SentSharesClient.CreateOrReplaceSentShare", Core.OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "SentSharesClient.CreateOrReplaceSentShare", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -533,7 +533,7 @@ namespace Azure.Analytics.Purview.Sharing
             try
             {
                 using HttpMessage message = CreateCreateOrReplaceSentShareRequest(sentShareId, content, context);
-                return Core.ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "SentSharesClient.CreateOrReplaceSentShare", Core.OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "SentSharesClient.CreateOrReplaceSentShare", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -569,7 +569,7 @@ namespace Azure.Analytics.Purview.Sharing
             try
             {
                 using HttpMessage message = CreateDeleteSentShareRequest(sentShareId, context);
-                return await Core.ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteSentShare", Core.OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteSentShare", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -605,7 +605,7 @@ namespace Azure.Analytics.Purview.Sharing
             try
             {
                 using HttpMessage message = CreateDeleteSentShareRequest(sentShareId, context);
-                return Core.ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteSentShare", Core.OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteSentShare", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -643,7 +643,7 @@ namespace Azure.Analytics.Purview.Sharing
             try
             {
                 using HttpMessage message = CreateDeleteSentShareInvitationRequest(sentShareId, sentShareInvitationId, context);
-                return await Core.ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteSentShareInvitation", Core.OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteSentShareInvitation", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -681,7 +681,7 @@ namespace Azure.Analytics.Purview.Sharing
             try
             {
                 using HttpMessage message = CreateDeleteSentShareInvitationRequest(sentShareId, sentShareInvitationId, context);
-                return Core.ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteSentShareInvitation", Core.OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteSentShareInvitation", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {

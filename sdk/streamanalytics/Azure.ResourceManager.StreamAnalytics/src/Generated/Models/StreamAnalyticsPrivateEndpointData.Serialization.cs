@@ -13,12 +13,12 @@ using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    public partial class StreamAnalyticsPrivateEndpointData : Core.IUtf8JsonSerializable
+    public partial class StreamAnalyticsPrivateEndpointData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 return null;
             }
-            Core.Optional<StreamAnalyticsPrivateEndpointProperties> properties = default;
-            Core.Optional<ETag?> etag = default;
+            Optional<StreamAnalyticsPrivateEndpointProperties> properties = default;
+            Optional<ETag?> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     continue;
                 }
             }
-            return new StreamAnalyticsPrivateEndpointData(id, name, type, systemData.Value, properties.Value, Core.Optional.ToNullable(etag));
+            return new StreamAnalyticsPrivateEndpointData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag));
         }
     }
 }

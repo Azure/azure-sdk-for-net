@@ -12,21 +12,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesAuthorization : Core.IUtf8JsonSerializable
+    public partial class ManagedServicesAuthorization : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
-            if (Core.Optional.IsDefined(PrincipalIdDisplayName))
+            if (Optional.IsDefined(PrincipalIdDisplayName))
             {
                 writer.WritePropertyName("principalIdDisplayName"u8);
                 writer.WriteStringValue(PrincipalIdDisplayName);
             }
             writer.WritePropertyName("roleDefinitionId"u8);
             writer.WriteStringValue(RoleDefinitionId);
-            if (Core.Optional.IsCollectionDefined(DelegatedRoleDefinitionIds))
+            if (Optional.IsCollectionDefined(DelegatedRoleDefinitionIds))
             {
                 writer.WritePropertyName("delegatedRoleDefinitionIds"u8);
                 writer.WriteStartArray();
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 return null;
             }
             Guid principalId = default;
-            Core.Optional<string> principalIdDisplayName = default;
+            Optional<string> principalIdDisplayName = default;
             string roleDefinitionId = default;
-            Core.Optional<IList<Guid>> delegatedRoleDefinitionIds = default;
+            Optional<IList<Guid>> delegatedRoleDefinitionIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     continue;
                 }
             }
-            return new ManagedServicesAuthorization(principalId, principalIdDisplayName.Value, roleDefinitionId, Core.Optional.ToList(delegatedRoleDefinitionIds));
+            return new ManagedServicesAuthorization(principalId, principalIdDisplayName.Value, roleDefinitionId, Optional.ToList(delegatedRoleDefinitionIds));
         }
     }
 }

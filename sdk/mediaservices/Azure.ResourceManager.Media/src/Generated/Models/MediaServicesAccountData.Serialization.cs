@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class MediaServicesAccountData : Core.IUtf8JsonSerializable
+    public partial class MediaServicesAccountData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(StorageAccounts))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(StorageAuthentication))
+            if (Optional.IsDefined(StorageAuthentication))
             {
                 if (StorageAuthentication != null)
                 {
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("storageAuthentication");
                 }
             }
-            if (Core.Optional.IsDefined(Encryption))
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Core.Optional.IsDefined(KeyDelivery))
+            if (Optional.IsDefined(KeyDelivery))
             {
                 writer.WritePropertyName("keyDelivery"u8);
                 writer.WriteObjectValue(KeyDelivery);
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 if (PublicNetworkAccess != null)
                 {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("publicNetworkAccess");
                 }
             }
-            if (Core.Optional.IsDefined(MinimumTlsVersion))
+            if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
@@ -98,22 +98,22 @@ namespace Azure.ResourceManager.Media
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> mediaServiceId = default;
-            Core.Optional<IList<MediaServicesStorageAccount>> storageAccounts = default;
-            Core.Optional<MediaStorageAuthentication?> storageAuthentication = default;
-            Core.Optional<AccountEncryption> encryption = default;
-            Core.Optional<MediaKeyDelivery> keyDelivery = default;
-            Core.Optional<MediaServicesPublicNetworkAccess?> publicNetworkAccess = default;
-            Core.Optional<MediaServicesProvisioningState> provisioningState = default;
-            Core.Optional<IReadOnlyList<MediaServicesPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Core.Optional<MediaServicesMinimumTlsVersion> minimumTlsVersion = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> mediaServiceId = default;
+            Optional<IList<MediaServicesStorageAccount>> storageAccounts = default;
+            Optional<MediaStorageAuthentication?> storageAuthentication = default;
+            Optional<AccountEncryption> encryption = default;
+            Optional<MediaKeyDelivery> keyDelivery = default;
+            Optional<MediaServicesPublicNetworkAccess?> publicNetworkAccess = default;
+            Optional<MediaServicesProvisioningState> provisioningState = default;
+            Optional<IReadOnlyList<MediaServicesPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<MediaServicesMinimumTlsVersion> minimumTlsVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Media
                     continue;
                 }
             }
-            return new MediaServicesAccountData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, Core.Optional.ToNullable(mediaServiceId), Core.Optional.ToList(storageAccounts), Core.Optional.ToNullable(storageAuthentication), encryption.Value, keyDelivery.Value, Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(minimumTlsVersion));
+            return new MediaServicesAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(mediaServiceId), Optional.ToList(storageAccounts), Optional.ToNullable(storageAuthentication), encryption.Value, keyDelivery.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), Optional.ToNullable(minimumTlsVersion));
         }
     }
 }

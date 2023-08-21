@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class PacketCoreDataPlaneData : Core.IUtf8JsonSerializable
+    public partial class PacketCoreDataPlaneData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
             MobileNetworkInterfaceProperties userPlaneAccessInterface = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     continue;
                 }
             }
-            return new PacketCoreDataPlaneData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(provisioningState), userPlaneAccessInterface);
+            return new PacketCoreDataPlaneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), userPlaneAccessInterface);
         }
     }
 }

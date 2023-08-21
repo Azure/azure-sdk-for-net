@@ -20,14 +20,14 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Core.Optional<string> callConnectionId = default;
-            Core.Optional<string> serverCallId = default;
-            Core.Optional<CallSourceInternal> source = default;
-            Core.Optional<IReadOnlyList<CommunicationIdentifierModel>> targets = default;
-            Core.Optional<CallConnectionState> callConnectionState = default;
-            Core.Optional<string> subject = default;
-            Core.Optional<string> callbackUri = default;
-            Core.Optional<string> mediaSubscriptionId = default;
+            Optional<string> callConnectionId = default;
+            Optional<string> serverCallId = default;
+            Optional<CallSourceInternal> source = default;
+            Optional<IReadOnlyList<CommunicationIdentifierModel>> targets = default;
+            Optional<CallConnectionState> callConnectionState = default;
+            Optional<string> subject = default;
+            Optional<string> callbackUri = default;
+            Optional<string> mediaSubscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -88,7 +88,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, source.Value, Core.Optional.ToList(targets), Core.Optional.ToNullable(callConnectionState), subject.Value, callbackUri.Value, mediaSubscriptionId.Value);
+            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, source.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), subject.Value, callbackUri.Value, mediaSubscriptionId.Value);
         }
     }
 }

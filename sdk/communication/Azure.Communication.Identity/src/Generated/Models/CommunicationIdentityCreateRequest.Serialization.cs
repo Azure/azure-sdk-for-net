@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
 {
-    internal partial class CommunicationIdentityCreateRequest : Core.IUtf8JsonSerializable
+    internal partial class CommunicationIdentityCreateRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(CreateTokenWithScopes))
+            if (Optional.IsCollectionDefined(CreateTokenWithScopes))
             {
                 writer.WritePropertyName("createTokenWithScopes"u8);
                 writer.WriteStartArray();
@@ -25,7 +25,7 @@ namespace Azure.Communication.Identity.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ExpiresInMinutes))
+            if (Optional.IsDefined(ExpiresInMinutes))
             {
                 writer.WritePropertyName("expiresInMinutes"u8);
                 writer.WriteNumberValue(ExpiresInMinutes.Value);

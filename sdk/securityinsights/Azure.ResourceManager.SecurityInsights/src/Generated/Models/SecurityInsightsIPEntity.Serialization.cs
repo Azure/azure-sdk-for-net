@@ -14,9 +14,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsIPEntity : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsIPEntity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<IPAddress> address = default;
-            Core.Optional<SecurityInsightsIPEntityGeoLocation> location = default;
-            Core.Optional<IReadOnlyList<SecurityInsightsThreatIntelligence>> threatIntelligence = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            Optional<string> friendlyName = default;
+            Optional<IPAddress> address = default;
+            Optional<SecurityInsightsIPEntityGeoLocation> location = default;
+            Optional<IReadOnlyList<SecurityInsightsThreatIntelligence>> threatIntelligence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsIPEntity(id, name, type, systemData.Value, kind, Core.Optional.ToDictionary(additionalData), friendlyName.Value, address.Value, location.Value, Core.Optional.ToList(threatIntelligence));
+            return new SecurityInsightsIPEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, address.Value, location.Value, Optional.ToList(threatIntelligence));
         }
     }
 }

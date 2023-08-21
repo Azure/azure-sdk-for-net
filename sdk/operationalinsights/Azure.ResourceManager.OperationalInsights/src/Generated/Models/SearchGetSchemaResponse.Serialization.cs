@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Core.Optional<SearchMetadata> metadata = default;
-            Core.Optional<IReadOnlyList<OperationalInsightsSearchSchemaValue>> value = default;
+            Optional<SearchMetadata> metadata = default;
+            Optional<IReadOnlyList<OperationalInsightsSearchSchemaValue>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metadata"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new SearchGetSchemaResponse(metadata.Value, Core.Optional.ToList(value));
+            return new SearchGetSchemaResponse(metadata.Value, Optional.ToList(value));
         }
     }
 }

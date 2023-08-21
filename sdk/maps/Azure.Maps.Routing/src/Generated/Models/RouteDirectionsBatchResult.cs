@@ -16,7 +16,7 @@ namespace Azure.Maps.Routing.Models
         /// <summary> Initializes a new instance of RouteDirectionsBatchResult. </summary>
         internal RouteDirectionsBatchResult()
         {
-            BatchItems = new Core.ChangeTrackingList<RouteDirectionsBatchItem>();
+            BatchItems = new ChangeTrackingList<RouteDirectionsBatchItem>();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError. </summary>
         internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError()
         {
-            Events = new Core.ChangeTrackingList<SyncMigrationDatabaseErrorEvent>();
+            Events = new ChangeTrackingList<SyncMigrationDatabaseErrorEvent>();
             ResultType = "ErrorOutput";
         }
 

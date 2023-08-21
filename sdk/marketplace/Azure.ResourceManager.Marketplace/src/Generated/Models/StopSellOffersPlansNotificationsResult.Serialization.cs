@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Core.Optional<string> offerId = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<bool> isEntire = default;
-            Core.Optional<long> messageCode = default;
-            Core.Optional<Uri> icon = default;
-            Core.Optional<IReadOnlyList<PlanNotificationDetails>> plans = default;
-            Core.Optional<bool> publicContext = default;
-            Core.Optional<IReadOnlyList<string>> subscriptionsIds = default;
+            Optional<string> offerId = default;
+            Optional<string> displayName = default;
+            Optional<bool> isEntire = default;
+            Optional<long> messageCode = default;
+            Optional<Uri> icon = default;
+            Optional<IReadOnlyList<PlanNotificationDetails>> plans = default;
+            Optional<bool> publicContext = default;
+            Optional<IReadOnlyList<string>> subscriptionsIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offerId"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new StopSellOffersPlansNotificationsResult(offerId.Value, displayName.Value, Core.Optional.ToNullable(isEntire), Core.Optional.ToNullable(messageCode), icon.Value, Core.Optional.ToList(plans), Core.Optional.ToNullable(publicContext), Core.Optional.ToList(subscriptionsIds));
+            return new StopSellOffersPlansNotificationsResult(offerId.Value, displayName.Value, Optional.ToNullable(isEntire), Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans), Optional.ToNullable(publicContext), Optional.ToList(subscriptionsIds));
         }
     }
 }

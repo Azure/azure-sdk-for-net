@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Initializes a new instance of GuestAgentProfile. </summary>
         public GuestAgentProfile()
         {
-            ErrorDetails = new Core.ChangeTrackingList<ResponseError>();
+            ErrorDetails = new ChangeTrackingList<ResponseError>();
         }
 
         /// <summary> Initializes a new instance of GuestAgentProfile. </summary>

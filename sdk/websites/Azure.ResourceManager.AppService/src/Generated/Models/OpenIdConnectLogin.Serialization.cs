@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class OpenIdConnectLogin : Core.IUtf8JsonSerializable
+    public partial class OpenIdConnectLogin : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NameClaimType))
+            if (Optional.IsDefined(NameClaimType))
             {
                 writer.WritePropertyName("nameClaimType"u8);
                 writer.WriteStringValue(NameClaimType);
             }
-            if (Core.Optional.IsCollectionDefined(Scopes))
+            if (Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> nameClaimType = default;
-            Core.Optional<IList<string>> scopes = default;
+            Optional<string> nameClaimType = default;
+            Optional<IList<string>> scopes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameClaimType"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new OpenIdConnectLogin(nameClaimType.Value, Core.Optional.ToList(scopes));
+            return new OpenIdConnectLogin(nameClaimType.Value, Optional.ToList(scopes));
         }
     }
 }

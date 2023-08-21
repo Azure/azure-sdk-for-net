@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> loginName = default;
-            Core.Optional<MigrationState> state = default;
-            Core.Optional<LoginMigrationStage> stage = default;
-            Core.Optional<DateTimeOffset> startedOn = default;
-            Core.Optional<DateTimeOffset> endedOn = default;
-            Core.Optional<string> message = default;
-            Core.Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Core.Optional<string> id = default;
+            Optional<string> loginName = default;
+            Optional<MigrationState> state = default;
+            Optional<LoginMigrationStage> stage = default;
+            Optional<DateTimeOffset> startedOn = default;
+            Optional<DateTimeOffset> endedOn = default;
+            Optional<string> message = default;
+            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
+            Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSqlServerSqlMITaskOutputLoginLevel(id.Value, resultType, loginName.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(stage), Core.Optional.ToNullable(startedOn), Core.Optional.ToNullable(endedOn), message.Value, Core.Optional.ToList(exceptionsAndWarnings));
+            return new MigrateSqlServerSqlMITaskOutputLoginLevel(id.Value, resultType, loginName.Value, Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), message.Value, Optional.ToList(exceptionsAndWarnings));
         }
     }
 }

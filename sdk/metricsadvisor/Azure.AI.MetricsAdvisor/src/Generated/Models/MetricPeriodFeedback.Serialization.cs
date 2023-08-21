@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {
-    public partial class MetricPeriodFeedback : Core.IUtf8JsonSerializable
+    public partial class MetricPeriodFeedback : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
@@ -36,9 +36,9 @@ namespace Azure.AI.MetricsAdvisor
             }
             PeriodFeedbackValue value = default;
             MetricFeedbackKind feedbackType = default;
-            Core.Optional<string> feedbackId = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<string> userPrincipal = default;
+            Optional<string> feedbackId = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<string> userPrincipal = default;
             string metricId = default;
             FeedbackFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
@@ -83,7 +83,7 @@ namespace Azure.AI.MetricsAdvisor
                     continue;
                 }
             }
-            return new MetricPeriodFeedback(feedbackType, feedbackId.Value, Core.Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, value);
+            return new MetricPeriodFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, value);
         }
     }
 }

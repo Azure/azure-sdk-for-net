@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class MySqlDataFeedPatch : Core.IUtf8JsonSerializable
+    internal partial class MySqlDataFeedPatch : IUtf8JsonSerializable
     {
     }
 }

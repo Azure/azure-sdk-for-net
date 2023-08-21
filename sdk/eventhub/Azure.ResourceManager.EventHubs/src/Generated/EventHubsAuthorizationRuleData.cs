@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Initializes a new instance of EventHubsAuthorizationRuleData. </summary>
         public EventHubsAuthorizationRuleData()
         {
-            Rights = new Core.ChangeTrackingList<EventHubsAccessRight>();
+            Rights = new ChangeTrackingList<EventHubsAccessRight>();
         }
 
         /// <summary> Initializes a new instance of EventHubsAuthorizationRuleData. </summary>

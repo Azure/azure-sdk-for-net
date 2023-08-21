@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public LabServicesRecurrencePattern(LabServicesRecurrenceFrequency frequency, DateTimeOffset expireOn)
         {
             Frequency = frequency;
-            WeekDays = new Core.ChangeTrackingList<LabServicesDayOfWeek>();
+            WeekDays = new ChangeTrackingList<LabServicesDayOfWeek>();
             ExpireOn = expireOn;
         }
 

@@ -16,10 +16,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DataFlowDebugPackage. </summary>
         public DataFlowDebugPackage()
         {
-            DataFlows = new Core.ChangeTrackingList<DataFlowDebugResource>();
-            Datasets = new Core.ChangeTrackingList<DatasetDebugResource>();
-            LinkedServices = new Core.ChangeTrackingList<LinkedServiceDebugResource>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
+            DataFlows = new ChangeTrackingList<DataFlowDebugResource>();
+            Datasets = new ChangeTrackingList<DatasetDebugResource>();
+            LinkedServices = new ChangeTrackingList<LinkedServiceDebugResource>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of DataFlowDebugPackage. </summary>

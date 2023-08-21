@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DataBoxDiskSecret>> diskSecrets = default;
-            Core.Optional<string> carrierAccountNumber = default;
+            Optional<IReadOnlyList<DataBoxDiskSecret>> diskSecrets = default;
+            Optional<string> carrierAccountNumber = default;
             DataBoxOrderType jobSecretsType = default;
-            Core.Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
-            Core.Optional<ResponseError> error = default;
+            Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskSecrets"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new CustomerDiskJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, Core.Optional.ToList(diskSecrets), carrierAccountNumber.Value);
+            return new CustomerDiskJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, Optional.ToList(diskSecrets), carrierAccountNumber.Value);
         }
     }
 }

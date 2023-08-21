@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class CommonMatchConditions : Core.IUtf8JsonSerializable
+    public partial class CommonMatchConditions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ProtocolTypes))
+            if (Optional.IsCollectionDefined(ProtocolTypes))
             {
                 writer.WritePropertyName("protocolTypes"u8);
                 writer.WriteStartArray();
@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(VlanMatchCondition))
+            if (Optional.IsDefined(VlanMatchCondition))
             {
                 writer.WritePropertyName("vlanMatchCondition"u8);
                 writer.WriteObjectValue(VlanMatchCondition);
             }
-            if (Core.Optional.IsDefined(IPCondition))
+            if (Optional.IsDefined(IPCondition))
             {
                 writer.WritePropertyName("ipCondition"u8);
                 writer.WriteObjectValue(IPCondition);
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> protocolTypes = default;
-            Core.Optional<VlanMatchCondition> vlanMatchCondition = default;
-            Core.Optional<IPMatchCondition> ipCondition = default;
+            Optional<IList<string>> protocolTypes = default;
+            Optional<VlanMatchCondition> vlanMatchCondition = default;
+            Optional<IPMatchCondition> ipCondition = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocolTypes"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new CommonMatchConditions(Core.Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value);
+            return new CommonMatchConditions(Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value);
         }
     }
 }

@@ -13,29 +13,29 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    public partial class ConnectionMonitorTestData : Core.IUtf8JsonSerializable
+    public partial class ConnectionMonitorTestData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SourceAgent))
+            if (Optional.IsDefined(SourceAgent))
             {
                 writer.WritePropertyName("sourceAgent"u8);
                 writer.WriteStringValue(SourceAgent);
             }
-            if (Core.Optional.IsDefined(Destination))
+            if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteStringValue(Destination);
             }
-            if (Core.Optional.IsDefined(DestinationPort))
+            if (Optional.IsDefined(DestinationPort))
             {
                 writer.WritePropertyName("destinationPort"u8);
                 writer.WriteNumberValue(DestinationPort.Value);
             }
-            if (Core.Optional.IsDefined(TestFrequencyInSec))
+            if (Optional.IsDefined(TestFrequencyInSec))
             {
                 writer.WritePropertyName("testFrequencyInSec"u8);
                 writer.WriteNumberValue(TestFrequencyInSec.Value);
@@ -53,14 +53,14 @@ namespace Azure.ResourceManager.Peering
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> sourceAgent = default;
-            Core.Optional<string> destination = default;
-            Core.Optional<int> destinationPort = default;
-            Core.Optional<int> testFrequencyInSec = default;
-            Core.Optional<bool> isTestSuccessful = default;
-            Core.Optional<IReadOnlyList<string>> path = default;
-            Core.Optional<PeeringProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> sourceAgent = default;
+            Optional<string> destination = default;
+            Optional<int> destinationPort = default;
+            Optional<int> testFrequencyInSec = default;
+            Optional<bool> isTestSuccessful = default;
+            Optional<IReadOnlyList<string>> path = default;
+            Optional<PeeringProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Peering
                     continue;
                 }
             }
-            return new ConnectionMonitorTestData(id, name, type, systemData.Value, sourceAgent.Value, destination.Value, Core.Optional.ToNullable(destinationPort), Core.Optional.ToNullable(testFrequencyInSec), Core.Optional.ToNullable(isTestSuccessful), Core.Optional.ToList(path), Core.Optional.ToNullable(provisioningState));
+            return new ConnectionMonitorTestData(id, name, type, systemData.Value, sourceAgent.Value, destination.Value, Optional.ToNullable(destinationPort), Optional.ToNullable(testFrequencyInSec), Optional.ToNullable(isTestSuccessful), Optional.ToList(path), Optional.ToNullable(provisioningState));
         }
     }
 }

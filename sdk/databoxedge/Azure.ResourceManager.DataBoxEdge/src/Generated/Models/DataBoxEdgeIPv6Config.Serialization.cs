@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<string> ipAddress = default;
-            Core.Optional<int> prefixLength = default;
-            Core.Optional<string> gateway = default;
+            Optional<string> ipAddress = default;
+            Optional<int> prefixLength = default;
+            Optional<string> gateway = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeIPv6Config(ipAddress.Value, Core.Optional.ToNullable(prefixLength), gateway.Value);
+            return new DataBoxEdgeIPv6Config(ipAddress.Value, Optional.ToNullable(prefixLength), gateway.Value);
         }
     }
 }

@@ -21,19 +21,19 @@ namespace Azure.ResourceManager.ManagementPartner
             {
                 return null;
             }
-            Core.Optional<int> etag = default;
+            Optional<int> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> partnerId = default;
-            Core.Optional<string> partnerName = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<string> objectId = default;
-            Core.Optional<int> version = default;
-            Core.Optional<DateTimeOffset> updatedTime = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<ManagementPartnerState> state = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> partnerId = default;
+            Optional<string> partnerName = default;
+            Optional<Guid> tenantId = default;
+            Optional<string> objectId = default;
+            Optional<int> version = default;
+            Optional<DateTimeOffset> updatedTime = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<ManagementPartnerState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ManagementPartner
                     continue;
                 }
             }
-            return new PartnerResponseData(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), partnerId.Value, partnerName.Value, Core.Optional.ToNullable(tenantId), objectId.Value, Core.Optional.ToNullable(version), Core.Optional.ToNullable(updatedTime), Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(state));
+            return new PartnerResponseData(id, name, type, systemData.Value, Optional.ToNullable(etag), partnerId.Value, partnerName.Value, Optional.ToNullable(tenantId), objectId.Value, Optional.ToNullable(version), Optional.ToNullable(updatedTime), Optional.ToNullable(createdTime), Optional.ToNullable(state));
         }
     }
 }

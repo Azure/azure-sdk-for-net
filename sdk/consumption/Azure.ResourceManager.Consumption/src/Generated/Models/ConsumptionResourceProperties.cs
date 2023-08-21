@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of ConsumptionResourceProperties. </summary>
         internal ConsumptionResourceProperties()
         {
-            AppliedScopes = new Core.ChangeTrackingList<string>();
+            AppliedScopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ConsumptionResourceProperties. </summary>

@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ArtifactRenameRequestConverter))]
-    public partial class ArtifactRenameRequest : Core.IUtf8JsonSerializable
+    public partial class ArtifactRenameRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NewName))
+            if (Optional.IsDefined(NewName))
             {
                 writer.WritePropertyName("newName"u8);
                 writer.WriteStringValue(NewName);

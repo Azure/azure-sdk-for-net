@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<MySqlQueryTextData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<MySqlQueryTextData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlQueryTextListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new MySqlQueryTextListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

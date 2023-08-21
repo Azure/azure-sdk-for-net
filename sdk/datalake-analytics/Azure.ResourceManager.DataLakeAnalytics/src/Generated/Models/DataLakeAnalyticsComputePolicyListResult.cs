@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <summary> Initializes a new instance of DataLakeAnalyticsComputePolicyListResult. </summary>
         internal DataLakeAnalyticsComputePolicyListResult()
         {
-            Value = new Core.ChangeTrackingList<DataLakeAnalyticsComputePolicyData>();
+            Value = new ChangeTrackingList<DataLakeAnalyticsComputePolicyData>();
         }
 
         /// <summary> Initializes a new instance of DataLakeAnalyticsComputePolicyListResult. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformBuildProperties. </summary>
         public AppPlatformBuildProperties()
         {
-            Env = new Core.ChangeTrackingDictionary<string, string>();
+            Env = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformBuildProperties. </summary>

@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of TableVerticalFeaturizationSettings. </summary>
         public TableVerticalFeaturizationSettings()
         {
-            BlockedTransformers = new Core.ChangeTrackingList<BlockedTransformer>();
-            ColumnNameAndTypes = new Core.ChangeTrackingDictionary<string, string>();
-            TransformerParams = new Core.ChangeTrackingDictionary<string, IList<ColumnTransformer>>();
+            BlockedTransformers = new ChangeTrackingList<BlockedTransformer>();
+            ColumnNameAndTypes = new ChangeTrackingDictionary<string, string>();
+            TransformerParams = new ChangeTrackingDictionary<string, IList<ColumnTransformer>>();
         }
 
         /// <summary> Initializes a new instance of TableVerticalFeaturizationSettings. </summary>

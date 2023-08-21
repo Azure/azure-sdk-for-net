@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<bool> isAvailable = default;
-            Core.Optional<NetAppNameUnavailableReason> reason = default;
-            Core.Optional<string> message = default;
+            Optional<bool> isAvailable = default;
+            Optional<NetAppNameUnavailableReason> reason = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isAvailable"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppCheckAvailabilityResult(Core.Optional.ToNullable(isAvailable), Core.Optional.ToNullable(reason), message.Value);
+            return new NetAppCheckAvailabilityResult(Optional.ToNullable(isAvailable), Optional.ToNullable(reason), message.Value);
         }
     }
 }

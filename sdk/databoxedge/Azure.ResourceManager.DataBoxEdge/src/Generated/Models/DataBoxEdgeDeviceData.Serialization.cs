@@ -14,27 +14,27 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeDeviceData : Core.IUtf8JsonSerializable
+    public partial class DataBoxEdgeDeviceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DataResidency))
+            if (Optional.IsDefined(DataResidency))
             {
                 writer.WritePropertyName("dataResidency"u8);
                 writer.WriteObjectValue(DataResidency);
@@ -64,33 +64,33 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 return null;
             }
-            Core.Optional<DataBoxEdgeSku> sku = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<DataBoxEdgeDeviceKind> kind = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<DataBoxEdgeSku> sku = default;
+            Optional<ETag> etag = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<DataBoxEdgeDeviceKind> kind = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DataBoxEdgeDeviceStatus> dataBoxEdgeDeviceStatus = default;
-            Core.Optional<string> serialNumber = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> modelDescription = default;
-            Core.Optional<DataBoxEdgeDeviceType> deviceType = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<string> culture = default;
-            Core.Optional<string> deviceModel = default;
-            Core.Optional<string> deviceSoftwareVersion = default;
-            Core.Optional<long> deviceLocalCapacity = default;
-            Core.Optional<string> timeZone = default;
-            Core.Optional<string> deviceHcsVersion = default;
-            Core.Optional<IReadOnlyList<DataBoxEdgeRoleType>> configuredRoleTypes = default;
-            Core.Optional<int> nodeCount = default;
-            Core.Optional<DataBoxEdgeResourceMoveDetails> resourceMoveDetails = default;
-            Core.Optional<EdgeProfile> edgeProfile = default;
-            Core.Optional<DataResidency> dataResidency = default;
+            Optional<SystemData> systemData = default;
+            Optional<DataBoxEdgeDeviceStatus> dataBoxEdgeDeviceStatus = default;
+            Optional<string> serialNumber = default;
+            Optional<string> description = default;
+            Optional<string> modelDescription = default;
+            Optional<DataBoxEdgeDeviceType> deviceType = default;
+            Optional<string> friendlyName = default;
+            Optional<string> culture = default;
+            Optional<string> deviceModel = default;
+            Optional<string> deviceSoftwareVersion = default;
+            Optional<long> deviceLocalCapacity = default;
+            Optional<string> timeZone = default;
+            Optional<string> deviceHcsVersion = default;
+            Optional<IReadOnlyList<DataBoxEdgeRoleType>> configuredRoleTypes = default;
+            Optional<int> nodeCount = default;
+            Optional<DataBoxEdgeResourceMoveDetails> resourceMoveDetails = default;
+            Optional<EdgeProfile> edgeProfile = default;
+            Optional<DataResidency> dataResidency = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     continue;
                 }
             }
-            return new DataBoxEdgeDeviceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, Core.Optional.ToNullable(etag), identity, Core.Optional.ToNullable(kind), Core.Optional.ToNullable(dataBoxEdgeDeviceStatus), serialNumber.Value, description.Value, modelDescription.Value, Core.Optional.ToNullable(deviceType), friendlyName.Value, culture.Value, deviceModel.Value, deviceSoftwareVersion.Value, Core.Optional.ToNullable(deviceLocalCapacity), timeZone.Value, deviceHcsVersion.Value, Core.Optional.ToList(configuredRoleTypes), Core.Optional.ToNullable(nodeCount), resourceMoveDetails.Value, edgeProfile.Value, dataResidency.Value);
+            return new DataBoxEdgeDeviceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(etag), identity, Optional.ToNullable(kind), Optional.ToNullable(dataBoxEdgeDeviceStatus), serialNumber.Value, description.Value, modelDescription.Value, Optional.ToNullable(deviceType), friendlyName.Value, culture.Value, deviceModel.Value, deviceSoftwareVersion.Value, Optional.ToNullable(deviceLocalCapacity), timeZone.Value, deviceHcsVersion.Value, Optional.ToList(configuredRoleTypes), Optional.ToNullable(nodeCount), resourceMoveDetails.Value, edgeProfile.Value, dataResidency.Value);
         }
     }
 }

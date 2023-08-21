@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> apiKey = default;
-            Core.Optional<string> createdDate = default;
-            Core.Optional<string> name = default;
-            Core.Optional<IReadOnlyList<string>> linkedReadProperties = default;
-            Core.Optional<IReadOnlyList<string>> linkedWriteProperties = default;
+            Optional<string> id = default;
+            Optional<string> apiKey = default;
+            Optional<string> createdDate = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<string>> linkedReadProperties = default;
+            Optional<IReadOnlyList<string>> linkedWriteProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new ApplicationInsightsComponentAPIKey(id.Value, apiKey.Value, createdDate.Value, name.Value, Core.Optional.ToList(linkedReadProperties), Core.Optional.ToList(linkedWriteProperties));
+            return new ApplicationInsightsComponentAPIKey(id.Value, apiKey.Value, createdDate.Value, name.Value, Optional.ToList(linkedReadProperties), Optional.ToList(linkedWriteProperties));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <summary> Initializes a new instance of DataLakeStoreUsageListResult. </summary>
         internal DataLakeStoreUsageListResult()
         {
-            Value = new Core.ChangeTrackingList<DataLakeStoreUsage>();
+            Value = new ChangeTrackingList<DataLakeStoreUsage>();
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreUsageListResult. </summary>

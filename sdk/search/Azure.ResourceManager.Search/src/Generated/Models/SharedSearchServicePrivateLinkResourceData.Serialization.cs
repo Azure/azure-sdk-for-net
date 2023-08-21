@@ -12,12 +12,12 @@ using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search
 {
-    public partial class SharedSearchServicePrivateLinkResourceData : Core.IUtf8JsonSerializable
+    public partial class SharedSearchServicePrivateLinkResourceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Search
             {
                 return null;
             }
-            Core.Optional<SharedSearchServicePrivateLinkResourceProperties> properties = default;
+            Optional<SharedSearchServicePrivateLinkResourceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

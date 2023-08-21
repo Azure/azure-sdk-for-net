@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> Initializes a new instance of DatadogAgreementResourceListResponse. </summary>
         internal DatadogAgreementResourceListResponse()
         {
-            Value = new Core.ChangeTrackingList<DatadogAgreementResource>();
+            Value = new ChangeTrackingList<DatadogAgreementResource>();
         }
 
         /// <summary> Initializes a new instance of DatadogAgreementResourceListResponse. </summary>

@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of BatchRequestInternal. </summary>
         public BatchRequestInternal()
         {
-            BatchItems = new Core.ChangeTrackingList<BatchRequestItemInternal>();
+            BatchItems = new ChangeTrackingList<BatchRequestItemInternal>();
         }
 
         /// <summary> The list of queries to process. </summary>

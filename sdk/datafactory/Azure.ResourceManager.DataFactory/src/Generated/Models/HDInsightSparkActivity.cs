@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             RootPath = rootPath;
             EntryFilePath = entryFilePath;
-            Arguments = new Core.ChangeTrackingList<BinaryData>();
-            SparkConfig = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Arguments = new ChangeTrackingList<BinaryData>();
+            SparkConfig = new ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "HDInsightSpark";
         }
 

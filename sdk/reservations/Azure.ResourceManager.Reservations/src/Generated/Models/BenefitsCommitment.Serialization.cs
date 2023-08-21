@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class BenefitsCommitment : Core.IUtf8JsonSerializable
+    public partial class BenefitsCommitment : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Grain))
+            if (Optional.IsDefined(Grain))
             {
                 writer.WritePropertyName("grain"u8);
                 writer.WriteStringValue(Grain.Value.ToString());
             }
-            if (Core.Optional.IsDefined(CurrencyCode))
+            if (Optional.IsDefined(CurrencyCode))
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (Core.Optional.IsDefined(Amount))
+            if (Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Core.Optional<BenefitsCommitmentGrain> grain = default;
-            Core.Optional<string> currencyCode = default;
-            Core.Optional<double> amount = default;
+            Optional<BenefitsCommitmentGrain> grain = default;
+            Optional<string> currencyCode = default;
+            Optional<double> amount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("grain"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new BenefitsCommitment(currencyCode.Value, Core.Optional.ToNullable(amount), Core.Optional.ToNullable(grain));
+            return new BenefitsCommitment(currencyCode.Value, Optional.ToNullable(amount), Optional.ToNullable(grain));
         }
     }
 }

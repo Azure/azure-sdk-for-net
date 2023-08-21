@@ -19,8 +19,8 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AcsCallParticipantInternal>> participants = default;
-            Core.Optional<string> operationContext = default;
+            Optional<IReadOnlyList<AcsCallParticipantInternal>> participants = default;
+            Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("participants"u8))
@@ -43,7 +43,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new AddParticipantsResponseInternal(Core.Optional.ToList(participants), operationContext.Value);
+            return new AddParticipantsResponseInternal(Optional.ToList(participants), operationContext.Value);
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class EncryptionSettingsElement : Core.IUtf8JsonSerializable
+    public partial class EncryptionSettingsElement : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DiskEncryptionKey))
+            if (Optional.IsDefined(DiskEncryptionKey))
             {
                 writer.WritePropertyName("diskEncryptionKey"u8);
                 writer.WriteObjectValue(DiskEncryptionKey);
             }
-            if (Core.Optional.IsDefined(KeyEncryptionKey))
+            if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<KeyVaultAndSecretReference> diskEncryptionKey = default;
-            Core.Optional<KeyVaultAndKeyReference> keyEncryptionKey = default;
+            Optional<KeyVaultAndSecretReference> diskEncryptionKey = default;
+            Optional<KeyVaultAndKeyReference> keyEncryptionKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskEncryptionKey"u8))

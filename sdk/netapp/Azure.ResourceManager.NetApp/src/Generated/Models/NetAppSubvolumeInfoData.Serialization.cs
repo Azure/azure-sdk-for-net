@@ -11,19 +11,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppSubvolumeInfoData : Core.IUtf8JsonSerializable
+    public partial class NetAppSubvolumeInfoData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Core.Optional.IsDefined(Size))
+            if (Optional.IsDefined(Size))
             {
                 if (Size != null)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("size");
                 }
             }
-            if (Core.Optional.IsDefined(ParentPath))
+            if (Optional.IsDefined(ParentPath))
             {
                 if (ParentPath != null)
                 {
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.NetApp
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> path = default;
-            Core.Optional<long?> size = default;
-            Core.Optional<string> parentPath = default;
-            Core.Optional<string> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> path = default;
+            Optional<long?> size = default;
+            Optional<string> parentPath = default;
+            Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.NetApp
                     continue;
                 }
             }
-            return new NetAppSubvolumeInfoData(id, name, type, systemData.Value, path.Value, Core.Optional.ToNullable(size), parentPath.Value, provisioningState.Value);
+            return new NetAppSubvolumeInfoData(id, name, type, systemData.Value, path.Value, Optional.ToNullable(size), parentPath.Value, provisioningState.Value);
         }
     }
 }

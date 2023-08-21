@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class PublishingUserOperationSource : Core.IOperationSource<PublishingUserResource>
+    internal class PublishingUserOperationSource : IOperationSource<PublishingUserResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppService
             _client = client;
         }
 
-        PublishingUserResource Core.IOperationSource<PublishingUserResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PublishingUserResource IOperationSource<PublishingUserResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PublishingUserData.DeserializePublishingUserData(document.RootElement);
             return new PublishingUserResource(_client, data);
         }
 
-        async ValueTask<PublishingUserResource> Core.IOperationSource<PublishingUserResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PublishingUserResource> IOperationSource<PublishingUserResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PublishingUserData.DeserializePublishingUserData(document.RootElement);

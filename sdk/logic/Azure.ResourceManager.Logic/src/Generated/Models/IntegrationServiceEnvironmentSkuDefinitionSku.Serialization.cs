@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<IntegrationServiceEnvironmentSkuName> name = default;
-            Core.Optional<string> tier = default;
+            Optional<IntegrationServiceEnvironmentSkuName> name = default;
+            Optional<string> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new IntegrationServiceEnvironmentSkuDefinitionSku(Core.Optional.ToNullable(name), tier.Value);
+            return new IntegrationServiceEnvironmentSkuDefinitionSku(Optional.ToNullable(name), tier.Value);
         }
     }
 }

@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ManagedIdentityConverter))]
-    public partial class ManagedIdentity : Core.IUtf8JsonSerializable
+    public partial class ManagedIdentity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Type))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToSerialString());
@@ -32,9 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> principalId = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<ResourceIdentityType> type = default;
+            Optional<string> principalId = default;
+            Optional<Guid> tenantId = default;
+            Optional<ResourceIdentityType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ManagedIdentity(principalId.Value, Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(type));
+            return new ManagedIdentity(principalId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(type));
         }
 
         internal partial class ManagedIdentityConverter : JsonConverter<ManagedIdentity>

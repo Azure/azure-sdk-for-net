@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DynatraceMonitoredResourceDetails>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DynatraceMonitoredResourceDetails>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new MonitoredResourceListResponse(Core.Optional.ToList(value), nextLink.Value);
+            return new MonitoredResourceListResponse(Optional.ToList(value), nextLink.Value);
         }
     }
 }

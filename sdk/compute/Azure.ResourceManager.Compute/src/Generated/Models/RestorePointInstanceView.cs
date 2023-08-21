@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RestorePointInstanceView. </summary>
         internal RestorePointInstanceView()
         {
-            DiskRestorePoints = new Core.ChangeTrackingList<DiskRestorePointInstanceView>();
-            Statuses = new Core.ChangeTrackingList<InstanceViewStatus>();
+            DiskRestorePoints = new ChangeTrackingList<DiskRestorePointInstanceView>();
+            Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of RestorePointInstanceView. </summary>

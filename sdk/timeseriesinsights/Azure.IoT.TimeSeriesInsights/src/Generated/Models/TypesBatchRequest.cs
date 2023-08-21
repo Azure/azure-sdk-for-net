@@ -16,7 +16,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of TypesBatchRequest. </summary>
         public TypesBatchRequest()
         {
-            Put = new Core.ChangeTrackingList<TimeSeriesType>();
+            Put = new ChangeTrackingList<TimeSeriesType>();
         }
 
         /// <summary> Definition of what time series types to return. </summary>

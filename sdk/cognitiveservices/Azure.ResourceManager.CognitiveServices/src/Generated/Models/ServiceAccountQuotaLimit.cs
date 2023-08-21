@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of ServiceAccountQuotaLimit. </summary>
         internal ServiceAccountQuotaLimit()
         {
-            Rules = new Core.ChangeTrackingList<ServiceAccountThrottlingRule>();
+            Rules = new ChangeTrackingList<ServiceAccountThrottlingRule>();
         }
 
         /// <summary> Initializes a new instance of ServiceAccountQuotaLimit. </summary>

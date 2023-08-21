@@ -14,17 +14,17 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     [JsonConverter(typeof(DatasetDataElementConverter))]
-    public partial class DatasetDataElement : Core.IUtf8JsonSerializable
+    public partial class DatasetDataElement : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ColumnName))
+            if (Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("name"u8);
                 JsonSerializer.Serialize(writer, ColumnName);
             }
-            if (Core.Optional.IsDefined(ColumnType))
+            if (Optional.IsDefined(ColumnType))
             {
                 writer.WritePropertyName("type"u8);
                 JsonSerializer.Serialize(writer, ColumnType);
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<DataFactoryElement<string>> name = default;
-            Core.Optional<DataFactoryElement<string>> type = default;
+            Optional<DataFactoryElement<string>> name = default;
+            Optional<DataFactoryElement<string>> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

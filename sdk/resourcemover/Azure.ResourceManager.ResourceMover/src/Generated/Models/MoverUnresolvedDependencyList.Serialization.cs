@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<MoverUnresolvedDependency>> value = default;
-            Core.Optional<string> nextLink = default;
-            Core.Optional<MoverSummaryList> summaryCollection = default;
-            Core.Optional<long> totalCount = default;
+            Optional<IReadOnlyList<MoverUnresolvedDependency>> value = default;
+            Optional<string> nextLink = default;
+            Optional<MoverSummaryList> summaryCollection = default;
+            Optional<long> totalCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverUnresolvedDependencyList(Core.Optional.ToList(value), nextLink.Value, summaryCollection.Value, Core.Optional.ToNullable(totalCount));
+            return new MoverUnresolvedDependencyList(Optional.ToList(value), nextLink.Value, summaryCollection.Value, Optional.ToNullable(totalCount));
         }
     }
 }

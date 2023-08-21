@@ -19,14 +19,14 @@ namespace Azure.Communication.CallAutomation.Models.Events
             {
                 return null;
             }
-            Core.Optional<string> callConnectionId = default;
-            Core.Optional<string> serverCallId = default;
-            Core.Optional<string> correlationId = default;
-            Core.Optional<string> operationContext = default;
-            Core.Optional<ResultInformation> resultInformation = default;
-            Core.Optional<DialogInputType> dialogInputType = default;
-            Core.Optional<UserConsent> userConsent = default;
-            Core.Optional<string> dialogId = default;
+            Optional<string> callConnectionId = default;
+            Optional<string> serverCallId = default;
+            Optional<string> correlationId = default;
+            Optional<string> operationContext = default;
+            Optional<ResultInformation> resultInformation = default;
+            Optional<DialogInputType> dialogInputType = default;
+            Optional<UserConsent> userConsent = default;
+            Optional<string> dialogId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -82,7 +82,7 @@ namespace Azure.Communication.CallAutomation.Models.Events
                     continue;
                 }
             }
-            return new DialogConsentInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, Core.Optional.ToNullable(dialogInputType), userConsent.Value, dialogId.Value);
+            return new DialogConsentInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), userConsent.Value, dialogId.Value);
         }
     }
 }

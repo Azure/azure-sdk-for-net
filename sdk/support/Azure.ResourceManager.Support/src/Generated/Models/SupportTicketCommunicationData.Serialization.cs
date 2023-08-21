@@ -13,24 +13,24 @@ using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support
 {
-    public partial class SupportTicketCommunicationData : Core.IUtf8JsonSerializable
+    public partial class SupportTicketCommunicationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sender))
+            if (Optional.IsDefined(Sender))
             {
                 writer.WritePropertyName("sender"u8);
                 writer.WriteStringValue(Sender);
             }
-            if (Core.Optional.IsDefined(Subject))
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (Core.Optional.IsDefined(Body))
+            if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.Support
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SupportTicketCommunicationType> communicationType = default;
-            Core.Optional<SupportTicketCommunicationDirection> communicationDirection = default;
-            Core.Optional<string> sender = default;
-            Core.Optional<string> subject = default;
-            Core.Optional<string> body = default;
-            Core.Optional<DateTimeOffset> createdDate = default;
+            Optional<SystemData> systemData = default;
+            Optional<SupportTicketCommunicationType> communicationType = default;
+            Optional<SupportTicketCommunicationDirection> communicationDirection = default;
+            Optional<string> sender = default;
+            Optional<string> subject = default;
+            Optional<string> body = default;
+            Optional<DateTimeOffset> createdDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Support
                     continue;
                 }
             }
-            return new SupportTicketCommunicationData(id, name, type, systemData.Value, Core.Optional.ToNullable(communicationType), Core.Optional.ToNullable(communicationDirection), sender.Value, subject.Value, body.Value, Core.Optional.ToNullable(createdDate));
+            return new SupportTicketCommunicationData(id, name, type, systemData.Value, Optional.ToNullable(communicationType), Optional.ToNullable(communicationDirection), sender.Value, subject.Value, body.Value, Optional.ToNullable(createdDate));
         }
     }
 }

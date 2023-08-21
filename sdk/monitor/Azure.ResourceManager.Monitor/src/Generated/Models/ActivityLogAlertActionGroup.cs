@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Argument.AssertNotNull(actionGroupId, nameof(actionGroupId));
 
             ActionGroupId = actionGroupId;
-            WebhookProperties = new Core.ChangeTrackingDictionary<string, string>();
+            WebhookProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ActivityLogAlertActionGroup. </summary>

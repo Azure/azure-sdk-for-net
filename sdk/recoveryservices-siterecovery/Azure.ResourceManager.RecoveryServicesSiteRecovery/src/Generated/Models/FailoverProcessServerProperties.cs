@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of FailoverProcessServerProperties. </summary>
         public FailoverProcessServerProperties()
         {
-            VmsToMigrate = new Core.ChangeTrackingList<string>();
+            VmsToMigrate = new ChangeTrackingList<string>();
         }
 
         /// <summary> The container identifier. </summary>

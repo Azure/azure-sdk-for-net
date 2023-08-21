@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Core.Optional<int> targetDedicatedNodes = default;
-            Core.Optional<int> targetLowPriorityNodes = default;
-            Core.Optional<TimeSpan> resizeTimeout = default;
-            Core.Optional<BatchNodeDeallocationOption> nodeDeallocationOption = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<IReadOnlyList<ResponseError>> errors = default;
+            Optional<int> targetDedicatedNodes = default;
+            Optional<int> targetLowPriorityNodes = default;
+            Optional<TimeSpan> resizeTimeout = default;
+            Optional<BatchNodeDeallocationOption> nodeDeallocationOption = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<IReadOnlyList<ResponseError>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetDedicatedNodes"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchResizeOperationStatus(Core.Optional.ToNullable(targetDedicatedNodes), Core.Optional.ToNullable(targetLowPriorityNodes), Core.Optional.ToNullable(resizeTimeout), Core.Optional.ToNullable(nodeDeallocationOption), Core.Optional.ToNullable(startTime), Core.Optional.ToList(errors));
+            return new BatchResizeOperationStatus(Optional.ToNullable(targetDedicatedNodes), Optional.ToNullable(targetLowPriorityNodes), Optional.ToNullable(resizeTimeout), Optional.ToNullable(nodeDeallocationOption), Optional.ToNullable(startTime), Optional.ToList(errors));
         }
     }
 }

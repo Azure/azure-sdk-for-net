@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class PublicIPAddressResourceSettings : Core.IUtf8JsonSerializable
+    public partial class PublicIPAddressResourceSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -27,27 +27,27 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(DomainNameLabel))
+            if (Optional.IsDefined(DomainNameLabel))
             {
                 writer.WritePropertyName("domainNameLabel"u8);
                 writer.WriteStringValue(DomainNameLabel);
             }
-            if (Core.Optional.IsDefined(Fqdn))
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Core.Optional.IsDefined(PublicIPAllocationMethod))
+            if (Optional.IsDefined(PublicIPAllocationMethod))
             {
                 writer.WritePropertyName("publicIpAllocationMethod"u8);
                 writer.WriteStringValue(PublicIPAllocationMethod);
             }
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Core.Optional.IsDefined(Zones))
+            if (Optional.IsDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStringValue(Zones);
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<string> domainNameLabel = default;
-            Core.Optional<string> fqdn = default;
-            Core.Optional<string> publicIPAllocationMethod = default;
-            Core.Optional<string> sku = default;
-            Core.Optional<string> zones = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> domainNameLabel = default;
+            Optional<string> fqdn = default;
+            Optional<string> publicIPAllocationMethod = default;
+            Optional<string> sku = default;
+            Optional<string> zones = default;
             string resourceType = default;
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new PublicIPAddressResourceSettings(resourceType, targetResourceName, Core.Optional.ToDictionary(tags), domainNameLabel.Value, fqdn.Value, publicIPAllocationMethod.Value, sku.Value, zones.Value);
+            return new PublicIPAddressResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), domainNameLabel.Value, fqdn.Value, publicIPAllocationMethod.Value, sku.Value, zones.Value);
         }
     }
 }

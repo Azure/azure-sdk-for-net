@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleDefinitionPermission : Core.IUtf8JsonSerializable
+    public partial class RoleDefinitionPermission : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Actions))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(NotActions))
+            if (Optional.IsCollectionDefined(NotActions))
             {
                 writer.WritePropertyName("notActions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DataActions))
+            if (Optional.IsCollectionDefined(DataActions))
             {
                 writer.WritePropertyName("dataActions"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(NotDataActions))
+            if (Optional.IsCollectionDefined(NotDataActions))
             {
                 writer.WritePropertyName("notDataActions"u8);
                 writer.WriteStartArray();
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> actions = default;
-            Core.Optional<IList<string>> notActions = default;
-            Core.Optional<IList<string>> dataActions = default;
-            Core.Optional<IList<string>> notDataActions = default;
+            Optional<IList<string>> actions = default;
+            Optional<IList<string>> notActions = default;
+            Optional<IList<string>> dataActions = default;
+            Optional<IList<string>> notDataActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleDefinitionPermission(Core.Optional.ToList(actions), Core.Optional.ToList(notActions), Core.Optional.ToList(dataActions), Core.Optional.ToList(notDataActions));
+            return new RoleDefinitionPermission(Optional.ToList(actions), Optional.ToList(notActions), Optional.ToList(dataActions), Optional.ToList(notDataActions));
         }
     }
 }

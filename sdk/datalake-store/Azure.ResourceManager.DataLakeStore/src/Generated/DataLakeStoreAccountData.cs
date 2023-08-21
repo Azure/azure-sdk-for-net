@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <summary> Initializes a new instance of DataLakeStoreAccountData. </summary>
         internal DataLakeStoreAccountData()
         {
-            FirewallRules = new Core.ChangeTrackingList<DataLakeStoreFirewallRuleData>();
-            VirtualNetworkRules = new Core.ChangeTrackingList<DataLakeStoreVirtualNetworkRuleData>();
-            TrustedIdProviders = new Core.ChangeTrackingList<DataLakeStoreTrustedIdProviderData>();
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            FirewallRules = new ChangeTrackingList<DataLakeStoreFirewallRuleData>();
+            VirtualNetworkRules = new ChangeTrackingList<DataLakeStoreVirtualNetworkRuleData>();
+            TrustedIdProviders = new ChangeTrackingList<DataLakeStoreTrustedIdProviderData>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreAccountData. </summary>

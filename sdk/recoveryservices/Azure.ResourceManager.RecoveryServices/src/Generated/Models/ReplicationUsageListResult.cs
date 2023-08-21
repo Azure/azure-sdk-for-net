@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Initializes a new instance of ReplicationUsageListResult. </summary>
         internal ReplicationUsageListResult()
         {
-            Value = new Core.ChangeTrackingList<ReplicationUsage>();
+            Value = new ChangeTrackingList<ReplicationUsage>();
         }
 
         /// <summary> Initializes a new instance of ReplicationUsageListResult. </summary>

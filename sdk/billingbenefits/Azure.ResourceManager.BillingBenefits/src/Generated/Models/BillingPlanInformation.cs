@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of BillingPlanInformation. </summary>
         public BillingPlanInformation()
         {
-            Transactions = new Core.ChangeTrackingList<SavingsPlanOrderPaymentDetail>();
+            Transactions = new ChangeTrackingList<SavingsPlanOrderPaymentDetail>();
         }
 
         /// <summary> Initializes a new instance of BillingPlanInformation. </summary>

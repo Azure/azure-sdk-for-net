@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
             SelectedDatabases = selectedDatabases.ToList();
-            SelectedLogins = new Core.ChangeTrackingList<string>();
+            SelectedLogins = new ChangeTrackingList<string>();
             BackupBlobShare = backupBlobShare;
         }
 

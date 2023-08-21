@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<HDInsightAsyncOperationState> status = default;
-            Core.Optional<ResponseError> error = default;
+            Optional<HDInsightAsyncOperationState> status = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightAsyncOperationResult(Core.Optional.ToNullable(status), error.Value);
+            return new HDInsightAsyncOperationResult(Optional.ToNullable(status), error.Value);
         }
     }
 }

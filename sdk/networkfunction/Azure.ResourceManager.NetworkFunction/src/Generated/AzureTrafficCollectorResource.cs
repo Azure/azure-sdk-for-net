@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetworkFunction
             try
             {
                 var response = await _azureTrafficCollectorRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkFunctionArmOperation(_azureTrafficCollectorClientDiagnostics, Pipeline, _azureTrafficCollectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetworkFunctionArmOperation(_azureTrafficCollectorClientDiagnostics, Pipeline, _azureTrafficCollectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.NetworkFunction
             try
             {
                 var response = _azureTrafficCollectorRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkFunctionArmOperation(_azureTrafficCollectorClientDiagnostics, Pipeline, _azureTrafficCollectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetworkFunctionArmOperation(_azureTrafficCollectorClientDiagnostics, Pipeline, _azureTrafficCollectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud
             JumpHostsAllowed = jumpHostsAllowed.ToList();
             PrivilegeLevel = privilegeLevel;
             UserList = userList.ToList();
-            UserListStatus = new Core.ChangeTrackingList<KeySetUserStatus>();
+            UserListStatus = new ChangeTrackingList<KeySetUserStatus>();
         }
 
         /// <summary> Initializes a new instance of NetworkCloudBareMetalMachineKeySetData. </summary>

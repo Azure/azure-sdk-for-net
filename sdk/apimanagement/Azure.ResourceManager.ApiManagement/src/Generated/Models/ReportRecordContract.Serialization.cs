@@ -19,32 +19,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<DateTimeOffset> timestamp = default;
-            Core.Optional<string> interval = default;
-            Core.Optional<string> country = default;
-            Core.Optional<string> region = default;
-            Core.Optional<string> zip = default;
-            Core.Optional<string> userId = default;
-            Core.Optional<string> productId = default;
-            Core.Optional<string> apiId = default;
-            Core.Optional<string> operationId = default;
-            Core.Optional<string> apiRegion = default;
-            Core.Optional<ResourceIdentifier> subscriptionId = default;
-            Core.Optional<int> callCountSuccess = default;
-            Core.Optional<int> callCountBlocked = default;
-            Core.Optional<int> callCountFailed = default;
-            Core.Optional<int> callCountOther = default;
-            Core.Optional<int> callCountTotal = default;
-            Core.Optional<long> bandwidth = default;
-            Core.Optional<int> cacheHitCount = default;
-            Core.Optional<int> cacheMissCount = default;
-            Core.Optional<double> apiTimeAvg = default;
-            Core.Optional<double> apiTimeMin = default;
-            Core.Optional<double> apiTimeMax = default;
-            Core.Optional<double> serviceTimeAvg = default;
-            Core.Optional<double> serviceTimeMin = default;
-            Core.Optional<double> serviceTimeMax = default;
+            Optional<string> name = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<string> interval = default;
+            Optional<string> country = default;
+            Optional<string> region = default;
+            Optional<string> zip = default;
+            Optional<string> userId = default;
+            Optional<string> productId = default;
+            Optional<string> apiId = default;
+            Optional<string> operationId = default;
+            Optional<string> apiRegion = default;
+            Optional<ResourceIdentifier> subscriptionId = default;
+            Optional<int> callCountSuccess = default;
+            Optional<int> callCountBlocked = default;
+            Optional<int> callCountFailed = default;
+            Optional<int> callCountOther = default;
+            Optional<int> callCountTotal = default;
+            Optional<long> bandwidth = default;
+            Optional<int> cacheHitCount = default;
+            Optional<int> cacheMissCount = default;
+            Optional<double> apiTimeAvg = default;
+            Optional<double> apiTimeMin = default;
+            Optional<double> apiTimeMax = default;
+            Optional<double> serviceTimeAvg = default;
+            Optional<double> serviceTimeMin = default;
+            Optional<double> serviceTimeMax = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ReportRecordContract(name.Value, Core.Optional.ToNullable(timestamp), interval.Value, country.Value, region.Value, zip.Value, userId.Value, productId.Value, apiId.Value, operationId.Value, apiRegion.Value, subscriptionId.Value, Core.Optional.ToNullable(callCountSuccess), Core.Optional.ToNullable(callCountBlocked), Core.Optional.ToNullable(callCountFailed), Core.Optional.ToNullable(callCountOther), Core.Optional.ToNullable(callCountTotal), Core.Optional.ToNullable(bandwidth), Core.Optional.ToNullable(cacheHitCount), Core.Optional.ToNullable(cacheMissCount), Core.Optional.ToNullable(apiTimeAvg), Core.Optional.ToNullable(apiTimeMin), Core.Optional.ToNullable(apiTimeMax), Core.Optional.ToNullable(serviceTimeAvg), Core.Optional.ToNullable(serviceTimeMin), Core.Optional.ToNullable(serviceTimeMax));
+            return new ReportRecordContract(name.Value, Optional.ToNullable(timestamp), interval.Value, country.Value, region.Value, zip.Value, userId.Value, productId.Value, apiId.Value, operationId.Value, apiRegion.Value, subscriptionId.Value, Optional.ToNullable(callCountSuccess), Optional.ToNullable(callCountBlocked), Optional.ToNullable(callCountFailed), Optional.ToNullable(callCountOther), Optional.ToNullable(callCountTotal), Optional.ToNullable(bandwidth), Optional.ToNullable(cacheHitCount), Optional.ToNullable(cacheMissCount), Optional.ToNullable(apiTimeAvg), Optional.ToNullable(apiTimeMin), Optional.ToNullable(apiTimeMax), Optional.ToNullable(serviceTimeAvg), Optional.ToNullable(serviceTimeMin), Optional.ToNullable(serviceTimeMax));
         }
     }
 }

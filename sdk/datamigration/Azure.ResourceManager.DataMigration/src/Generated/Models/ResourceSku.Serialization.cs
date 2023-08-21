@@ -19,18 +19,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> resourceType = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> tier = default;
-            Core.Optional<string> size = default;
-            Core.Optional<string> family = default;
-            Core.Optional<string> kind = default;
-            Core.Optional<ResourceSkuCapacity> capacity = default;
-            Core.Optional<IReadOnlyList<string>> locations = default;
-            Core.Optional<IReadOnlyList<string>> apiVersions = default;
-            Core.Optional<IReadOnlyList<ResourceSkuCosts>> costs = default;
-            Core.Optional<IReadOnlyList<ResourceSkuCapabilities>> capabilities = default;
-            Core.Optional<IReadOnlyList<ResourceSkuRestrictions>> restrictions = default;
+            Optional<string> resourceType = default;
+            Optional<string> name = default;
+            Optional<string> tier = default;
+            Optional<string> size = default;
+            Optional<string> family = default;
+            Optional<string> kind = default;
+            Optional<ResourceSkuCapacity> capacity = default;
+            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<string>> apiVersions = default;
+            Optional<IReadOnlyList<ResourceSkuCosts>> costs = default;
+            Optional<IReadOnlyList<ResourceSkuCapabilities>> capabilities = default;
+            Optional<IReadOnlyList<ResourceSkuRestrictions>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ResourceSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, Core.Optional.ToList(locations), Core.Optional.ToList(apiVersions), Core.Optional.ToList(costs), Core.Optional.ToList(capabilities), Core.Optional.ToList(restrictions));
+            return new ResourceSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(apiVersions), Optional.ToList(costs), Optional.ToList(capabilities), Optional.ToList(restrictions));
         }
     }
 }

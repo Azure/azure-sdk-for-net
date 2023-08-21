@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of SignalRSkuListResult. </summary>
         internal SignalRSkuListResult()
         {
-            Value = new Core.ChangeTrackingList<SignalRSku>();
+            Value = new ChangeTrackingList<SignalRSku>();
         }
 
         /// <summary> Initializes a new instance of SignalRSkuListResult. </summary>

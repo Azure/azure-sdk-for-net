@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<StreamingPath>> streamingPaths = default;
-            Core.Optional<IReadOnlyList<string>> downloadPaths = default;
+            Optional<IReadOnlyList<StreamingPath>> streamingPaths = default;
+            Optional<IReadOnlyList<string>> downloadPaths = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streamingPaths"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new StreamingPathsResult(Core.Optional.ToList(streamingPaths), Core.Optional.ToList(downloadPaths));
+            return new StreamingPathsResult(Optional.ToList(streamingPaths), Optional.ToList(downloadPaths));
         }
     }
 }

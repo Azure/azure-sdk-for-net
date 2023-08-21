@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<CosmosDBServiceStatus> status = default;
+            Optional<string> name = default;
+            Optional<AzureLocation> location = default;
+            Optional<CosmosDBServiceStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new DataTransferRegionalService(name.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(status));
+            return new DataTransferRegionalService(name.Value, Optional.ToNullable(location), Optional.ToNullable(status));
         }
     }
 }

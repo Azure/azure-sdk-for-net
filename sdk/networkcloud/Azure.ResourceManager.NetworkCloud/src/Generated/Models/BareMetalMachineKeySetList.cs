@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of BareMetalMachineKeySetList. </summary>
         internal BareMetalMachineKeySetList()
         {
-            Value = new Core.ChangeTrackingList<NetworkCloudBareMetalMachineKeySetData>();
+            Value = new ChangeTrackingList<NetworkCloudBareMetalMachineKeySetData>();
         }
 
         /// <summary> Initializes a new instance of BareMetalMachineKeySetList. </summary>

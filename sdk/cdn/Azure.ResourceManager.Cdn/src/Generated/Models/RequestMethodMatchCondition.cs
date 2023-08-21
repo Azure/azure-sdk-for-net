@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             ConditionType = conditionType;
             RequestMethodOperator = requestMethodOperator;
-            Transforms = new Core.ChangeTrackingList<PreTransformCategory>();
-            MatchValues = new Core.ChangeTrackingList<RequestMethodMatchConditionMatchValue>();
+            Transforms = new ChangeTrackingList<PreTransformCategory>();
+            MatchValues = new ChangeTrackingList<RequestMethodMatchConditionMatchValue>();
         }
 
         /// <summary> Initializes a new instance of RequestMethodMatchCondition. </summary>

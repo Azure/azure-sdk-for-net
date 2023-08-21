@@ -14,18 +14,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DigitalTwins
 {
-    public partial class DigitalTwinsDescriptionData : Core.IUtf8JsonSerializable
+    public partial class DigitalTwinsDescriptionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DigitalTwins
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 if (PrivateEndpointConnections != null)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     writer.WriteNull("privateEndpointConnections");
                 }
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 if (PublicNetworkAccess != null)
                 {
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.DigitalTwins
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<DateTimeOffset> lastUpdatedTime = default;
-            Core.Optional<DigitalTwinsProvisioningState> provisioningState = default;
-            Core.Optional<string> hostName = default;
-            Core.Optional<IList<DigitalTwinsPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Core.Optional<DigitalTwinsPublicNetworkAccess?> publicNetworkAccess = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> lastUpdatedTime = default;
+            Optional<DigitalTwinsProvisioningState> provisioningState = default;
+            Optional<string> hostName = default;
+            Optional<IList<DigitalTwinsPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<DigitalTwinsPublicNetworkAccess?> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     continue;
                 }
             }
-            return new DigitalTwinsDescriptionData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(lastUpdatedTime), Core.Optional.ToNullable(provisioningState), hostName.Value, Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(publicNetworkAccess), identity);
+            return new DigitalTwinsDescriptionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), hostName.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), identity);
         }
     }
 }

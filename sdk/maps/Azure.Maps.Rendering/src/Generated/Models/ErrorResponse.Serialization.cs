@@ -18,7 +18,7 @@ namespace Azure.Maps.Rendering
             {
                 return null;
             }
-            Core.Optional<ErrorDetail> error = default;
+            Optional<ErrorDetail> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))

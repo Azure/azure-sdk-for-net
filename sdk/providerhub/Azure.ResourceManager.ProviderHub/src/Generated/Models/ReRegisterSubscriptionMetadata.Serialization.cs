@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             bool enabled = default;
-            Core.Optional<int> concurrencyLimit = default;
+            Optional<int> concurrencyLimit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ReRegisterSubscriptionMetadata(enabled, Core.Optional.ToNullable(concurrencyLimit));
+            return new ReRegisterSubscriptionMetadata(enabled, Optional.ToNullable(concurrencyLimit));
         }
     }
 }

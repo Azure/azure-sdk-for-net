@@ -14,15 +14,15 @@ using Azure.ResourceManager.RedisEnterprise.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
-    internal class RedisEnterpriseDataAccessKeysOperationSource : Core.IOperationSource<RedisEnterpriseDataAccessKeys>
+    internal class RedisEnterpriseDataAccessKeysOperationSource : IOperationSource<RedisEnterpriseDataAccessKeys>
     {
-        RedisEnterpriseDataAccessKeys Core.IOperationSource<RedisEnterpriseDataAccessKeys>.CreateResult(Response response, CancellationToken cancellationToken)
+        RedisEnterpriseDataAccessKeys IOperationSource<RedisEnterpriseDataAccessKeys>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return RedisEnterpriseDataAccessKeys.DeserializeRedisEnterpriseDataAccessKeys(document.RootElement);
         }
 
-        async ValueTask<RedisEnterpriseDataAccessKeys> Core.IOperationSource<RedisEnterpriseDataAccessKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RedisEnterpriseDataAccessKeys> IOperationSource<RedisEnterpriseDataAccessKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return RedisEnterpriseDataAccessKeys.DeserializeRedisEnterpriseDataAccessKeys(document.RootElement);

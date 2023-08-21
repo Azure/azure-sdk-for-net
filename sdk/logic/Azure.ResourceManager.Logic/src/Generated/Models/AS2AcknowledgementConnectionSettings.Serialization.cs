@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class AS2AcknowledgementConnectionSettings : Core.IUtf8JsonSerializable
+    public partial class AS2AcknowledgementConnectionSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ignoreCertificateNameMismatch"u8);

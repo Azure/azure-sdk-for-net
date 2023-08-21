@@ -16,7 +16,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <summary> Initializes a new instance of ProviderStatus. </summary>
         internal ProviderStatus()
         {
-            Targets = new Core.ChangeTrackingList<TargetStatus>();
+            Targets = new ChangeTrackingList<TargetStatus>();
         }
 
         /// <summary> Initializes a new instance of ProviderStatus. </summary>

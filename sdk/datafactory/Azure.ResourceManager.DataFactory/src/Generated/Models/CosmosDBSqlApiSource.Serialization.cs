@@ -13,32 +13,32 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CosmosDBSqlApiSource : Core.IUtf8JsonSerializable
+    public partial class CosmosDBSqlApiSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Query))
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 JsonSerializer.Serialize(writer, Query);
             }
-            if (Core.Optional.IsDefined(PageSize))
+            if (Optional.IsDefined(PageSize))
             {
                 writer.WritePropertyName("pageSize"u8);
                 JsonSerializer.Serialize(writer, PageSize);
             }
-            if (Core.Optional.IsDefined(PreferredRegions))
+            if (Optional.IsDefined(PreferredRegions))
             {
                 writer.WritePropertyName("preferredRegions"u8);
                 JsonSerializer.Serialize(writer, PreferredRegions);
             }
-            if (Core.Optional.IsDefined(DetectDatetime))
+            if (Optional.IsDefined(DetectDatetime))
             {
                 writer.WritePropertyName("detectDatetime"u8);
                 JsonSerializer.Serialize(writer, DetectDatetime);
             }
-            if (Core.Optional.IsDefined(AdditionalColumns))
+            if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
 #if NET6_0_OR_GREATER
@@ -49,22 +49,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
-            if (Core.Optional.IsDefined(SourceRetryCount))
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 JsonSerializer.Serialize(writer, SourceRetryCount);
             }
-            if (Core.Optional.IsDefined(SourceRetryWait))
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 JsonSerializer.Serialize(writer, SourceRetryWait);
             }
-            if (Core.Optional.IsDefined(MaxConcurrentConnections))
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Core.Optional.IsDefined(DisableMetricsCollection))
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -87,16 +87,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<DataFactoryElement<string>> query = default;
-            Core.Optional<DataFactoryElement<int>> pageSize = default;
-            Core.Optional<DataFactoryElement<IList<string>>> preferredRegions = default;
-            Core.Optional<DataFactoryElement<bool>> detectDatetime = default;
-            Core.Optional<BinaryData> additionalColumns = default;
+            Optional<DataFactoryElement<string>> query = default;
+            Optional<DataFactoryElement<int>> pageSize = default;
+            Optional<DataFactoryElement<IList<string>>> preferredRegions = default;
+            Optional<DataFactoryElement<bool>> detectDatetime = default;
+            Optional<BinaryData> additionalColumns = default;
             string type = default;
-            Core.Optional<DataFactoryElement<int>> sourceRetryCount = default;
-            Core.Optional<DataFactoryElement<string>> sourceRetryWait = default;
-            Core.Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Core.Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            Optional<DataFactoryElement<int>> sourceRetryCount = default;
+            Optional<DataFactoryElement<string>> sourceRetryWait = default;
+            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
+            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

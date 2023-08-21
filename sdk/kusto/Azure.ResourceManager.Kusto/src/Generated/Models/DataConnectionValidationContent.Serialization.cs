@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class DataConnectionValidationContent : Core.IUtf8JsonSerializable
+    public partial class DataConnectionValidationContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DataConnectionName))
+            if (Optional.IsDefined(DataConnectionName))
             {
                 writer.WritePropertyName("dataConnectionName"u8);
                 writer.WriteStringValue(DataConnectionName);
             }
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);

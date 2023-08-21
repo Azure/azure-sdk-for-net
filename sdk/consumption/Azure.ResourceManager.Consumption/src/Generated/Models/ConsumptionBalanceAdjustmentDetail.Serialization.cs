@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<decimal> value = default;
+            Optional<string> name = default;
+            Optional<decimal> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionBalanceAdjustmentDetail(name.Value, Core.Optional.ToNullable(value));
+            return new ConsumptionBalanceAdjustmentDetail(name.Value, Optional.ToNullable(value));
         }
     }
 }

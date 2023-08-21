@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of ConsumptionModernReservationRecommendation. </summary>
         internal ConsumptionModernReservationRecommendation()
         {
-            SkuProperties = new Core.ChangeTrackingList<ConsumptionSkuProperty>();
+            SkuProperties = new ChangeTrackingList<ConsumptionSkuProperty>();
             Kind = ReservationRecommendationKind.Modern;
         }
 

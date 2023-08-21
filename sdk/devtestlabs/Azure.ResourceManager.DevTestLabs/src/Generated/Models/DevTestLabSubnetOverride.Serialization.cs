@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabSubnetOverride : Core.IUtf8JsonSerializable
+    public partial class DevTestLabSubnetOverride : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Core.Optional.IsDefined(LabSubnetName))
+            if (Optional.IsDefined(LabSubnetName))
             {
                 writer.WritePropertyName("labSubnetName"u8);
                 writer.WriteStringValue(LabSubnetName);
             }
-            if (Core.Optional.IsDefined(UseInVmCreationPermission))
+            if (Optional.IsDefined(UseInVmCreationPermission))
             {
                 writer.WritePropertyName("useInVmCreationPermission"u8);
                 writer.WriteStringValue(UseInVmCreationPermission.Value.ToString());
             }
-            if (Core.Optional.IsDefined(UsePublicIPAddressPermission))
+            if (Optional.IsDefined(UsePublicIPAddressPermission))
             {
                 writer.WritePropertyName("usePublicIpAddressPermission"u8);
                 writer.WriteStringValue(UsePublicIPAddressPermission.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SharedPublicIPAddressConfiguration))
+            if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
                 writer.WriteObjectValue(SharedPublicIPAddressConfiguration);
             }
-            if (Core.Optional.IsDefined(VirtualNetworkPoolName))
+            if (Optional.IsDefined(VirtualNetworkPoolName))
             {
                 writer.WritePropertyName("virtualNetworkPoolName"u8);
                 writer.WriteStringValue(VirtualNetworkPoolName);
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<string> labSubnetName = default;
-            Core.Optional<DevTestLabUsagePermissionType> useInVmCreationPermission = default;
-            Core.Optional<DevTestLabUsagePermissionType> usePublicIPAddressPermission = default;
-            Core.Optional<SubnetSharedPublicIPAddressConfiguration> sharedPublicIPAddressConfiguration = default;
-            Core.Optional<string> virtualNetworkPoolName = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<string> labSubnetName = default;
+            Optional<DevTestLabUsagePermissionType> useInVmCreationPermission = default;
+            Optional<DevTestLabUsagePermissionType> usePublicIPAddressPermission = default;
+            Optional<SubnetSharedPublicIPAddressConfiguration> sharedPublicIPAddressConfiguration = default;
+            Optional<string> virtualNetworkPoolName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabSubnetOverride(resourceId.Value, labSubnetName.Value, Core.Optional.ToNullable(useInVmCreationPermission), Core.Optional.ToNullable(usePublicIPAddressPermission), sharedPublicIPAddressConfiguration.Value, virtualNetworkPoolName.Value);
+            return new DevTestLabSubnetOverride(resourceId.Value, labSubnetName.Value, Optional.ToNullable(useInVmCreationPermission), Optional.ToNullable(usePublicIPAddressPermission), sharedPublicIPAddressConfiguration.Value, virtualNetworkPoolName.Value);
         }
     }
 }

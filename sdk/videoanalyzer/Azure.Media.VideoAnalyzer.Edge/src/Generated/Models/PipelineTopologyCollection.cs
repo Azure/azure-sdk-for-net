@@ -16,7 +16,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of PipelineTopologyCollection. </summary>
         public PipelineTopologyCollection()
         {
-            Value = new Core.ChangeTrackingList<PipelineTopology>();
+            Value = new ChangeTrackingList<PipelineTopology>();
         }
 
         /// <summary> Initializes a new instance of PipelineTopologyCollection. </summary>

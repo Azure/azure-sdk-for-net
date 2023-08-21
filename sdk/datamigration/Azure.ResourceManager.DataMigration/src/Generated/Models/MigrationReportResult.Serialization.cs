@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<Uri> reportUrl = default;
+            Optional<string> id = default;
+            Optional<Uri> reportUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

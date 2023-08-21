@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    public partial class RolloutCreateOrUpdateContent : Core.IUtf8JsonSerializable
+    public partial class RolloutCreateOrUpdateContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("identity"u8);
             writer.WriteObjectValue(Identity);
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             writer.WriteStartObject();
             writer.WritePropertyName("buildVersion"u8);
             writer.WriteStringValue(BuildVersion);
-            if (Core.Optional.IsDefined(ArtifactSourceId))
+            if (Optional.IsDefined(ArtifactSourceId))
             {
                 writer.WritePropertyName("artifactSourceId"u8);
                 writer.WriteStringValue(ArtifactSourceId);
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 return null;
             }
             Identity identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             string buildVersion = default;
-            Core.Optional<string> artifactSourceId = default;
+            Optional<string> artifactSourceId = default;
             string targetServiceTopologyId = default;
             IList<StepGroup> stepGroups = default;
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     continue;
                 }
             }
-            return new RolloutCreateOrUpdateContent(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, buildVersion, artifactSourceId.Value, targetServiceTopologyId, stepGroups);
+            return new RolloutCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, buildVersion, artifactSourceId.Value, targetServiceTopologyId, stepGroups);
         }
     }
 }

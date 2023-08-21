@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class IotEdgeAgentInfo : Core.IUtf8JsonSerializable
+    public partial class IotEdgeAgentInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("imageName"u8);
             writer.WriteStringValue(ImageName);
             writer.WritePropertyName("tag"u8);
             writer.WriteStringValue(Tag);
-            if (Core.Optional.IsDefined(ImageRepository))
+            if (Optional.IsDefined(ImageRepository))
             {
                 writer.WritePropertyName("imageRepository"u8);
                 writer.WriteObjectValue(ImageRepository);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             string imageName = default;
             string tag = default;
-            Core.Optional<ImageRepositoryCredential> imageRepository = default;
+            Optional<ImageRepositoryCredential> imageRepository = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageName"u8))

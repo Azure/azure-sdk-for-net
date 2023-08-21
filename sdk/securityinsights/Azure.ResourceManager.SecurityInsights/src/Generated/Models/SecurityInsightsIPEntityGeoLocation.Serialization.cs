@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Core.Optional<int> asn = default;
-            Core.Optional<string> city = default;
-            Core.Optional<string> countryCode = default;
-            Core.Optional<string> countryName = default;
-            Core.Optional<double> latitude = default;
-            Core.Optional<double> longitude = default;
-            Core.Optional<string> state = default;
+            Optional<int> asn = default;
+            Optional<string> city = default;
+            Optional<string> countryCode = default;
+            Optional<string> countryName = default;
+            Optional<double> latitude = default;
+            Optional<double> longitude = default;
+            Optional<string> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("asn"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsIPEntityGeoLocation(Core.Optional.ToNullable(asn), city.Value, countryCode.Value, countryName.Value, Core.Optional.ToNullable(latitude), Core.Optional.ToNullable(longitude), state.Value);
+            return new SecurityInsightsIPEntityGeoLocation(Optional.ToNullable(asn), city.Value, countryCode.Value, countryName.Value, Optional.ToNullable(latitude), Optional.ToNullable(longitude), state.Value);
         }
     }
 }

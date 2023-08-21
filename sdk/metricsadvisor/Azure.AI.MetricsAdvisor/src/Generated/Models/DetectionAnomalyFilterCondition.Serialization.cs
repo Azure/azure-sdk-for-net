@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class DetectionAnomalyFilterCondition : Core.IUtf8JsonSerializable
+    internal partial class DetectionAnomalyFilterCondition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(DimensionFilter))
+            if (Optional.IsCollectionDefined(DimensionFilter))
             {
                 writer.WritePropertyName("dimensionFilter"u8);
                 writer.WriteStartArray();
@@ -25,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SeverityFilter))
+            if (Optional.IsDefined(SeverityFilter))
             {
                 writer.WritePropertyName("severityFilter"u8);
                 writer.WriteObjectValue(SeverityFilter);

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<LogicWorkflowData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<LogicWorkflowData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicWorkflowListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new LogicWorkflowListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

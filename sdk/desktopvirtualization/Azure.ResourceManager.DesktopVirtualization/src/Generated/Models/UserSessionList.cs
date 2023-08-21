@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of UserSessionList. </summary>
         internal UserSessionList()
         {
-            Value = new Core.ChangeTrackingList<UserSessionData>();
+            Value = new ChangeTrackingList<UserSessionData>();
         }
 
         /// <summary> Initializes a new instance of UserSessionList. </summary>

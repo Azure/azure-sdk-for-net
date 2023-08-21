@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementIdentityProviderCreateOrUpdateContent : Core.IUtf8JsonSerializable
+    public partial class ApiManagementIdentityProviderCreateOrUpdateContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IdentityProviderType))
+            if (Optional.IsDefined(IdentityProviderType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityProviderType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SignInTenant))
+            if (Optional.IsDefined(SignInTenant))
             {
                 writer.WritePropertyName("signinTenant"u8);
                 writer.WriteStringValue(SignInTenant);
             }
-            if (Core.Optional.IsCollectionDefined(AllowedTenants))
+            if (Optional.IsCollectionDefined(AllowedTenants))
             {
                 writer.WritePropertyName("allowedTenants"u8);
                 writer.WriteStartArray();
@@ -39,37 +39,37 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Authority))
+            if (Optional.IsDefined(Authority))
             {
                 writer.WritePropertyName("authority"u8);
                 writer.WriteStringValue(Authority);
             }
-            if (Core.Optional.IsDefined(SignUpPolicyName))
+            if (Optional.IsDefined(SignUpPolicyName))
             {
                 writer.WritePropertyName("signupPolicyName"u8);
                 writer.WriteStringValue(SignUpPolicyName);
             }
-            if (Core.Optional.IsDefined(SignInPolicyName))
+            if (Optional.IsDefined(SignInPolicyName))
             {
                 writer.WritePropertyName("signinPolicyName"u8);
                 writer.WriteStringValue(SignInPolicyName);
             }
-            if (Core.Optional.IsDefined(ProfileEditingPolicyName))
+            if (Optional.IsDefined(ProfileEditingPolicyName))
             {
                 writer.WritePropertyName("profileEditingPolicyName"u8);
                 writer.WriteStringValue(ProfileEditingPolicyName);
             }
-            if (Core.Optional.IsDefined(PasswordResetPolicyName))
+            if (Optional.IsDefined(PasswordResetPolicyName))
             {
                 writer.WritePropertyName("passwordResetPolicyName"u8);
                 writer.WriteStringValue(PasswordResetPolicyName);
             }
-            if (Core.Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Core.Optional.IsDefined(ClientSecret))
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
@@ -87,17 +87,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IdentityProviderType> type0 = default;
-            Core.Optional<string> signinTenant = default;
-            Core.Optional<IList<string>> allowedTenants = default;
-            Core.Optional<string> authority = default;
-            Core.Optional<string> signupPolicyName = default;
-            Core.Optional<string> signinPolicyName = default;
-            Core.Optional<string> profileEditingPolicyName = default;
-            Core.Optional<string> passwordResetPolicyName = default;
-            Core.Optional<string> clientId = default;
-            Core.Optional<string> clientSecret = default;
+            Optional<SystemData> systemData = default;
+            Optional<IdentityProviderType> type0 = default;
+            Optional<string> signinTenant = default;
+            Optional<IList<string>> allowedTenants = default;
+            Optional<string> authority = default;
+            Optional<string> signupPolicyName = default;
+            Optional<string> signinPolicyName = default;
+            Optional<string> profileEditingPolicyName = default;
+            Optional<string> passwordResetPolicyName = default;
+            Optional<string> clientId = default;
+            Optional<string> clientSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiManagementIdentityProviderCreateOrUpdateContent(id, name, type, systemData.Value, Core.Optional.ToNullable(type0), signinTenant.Value, Core.Optional.ToList(allowedTenants), authority.Value, signupPolicyName.Value, signinPolicyName.Value, profileEditingPolicyName.Value, passwordResetPolicyName.Value, clientId.Value, clientSecret.Value);
+            return new ApiManagementIdentityProviderCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToNullable(type0), signinTenant.Value, Optional.ToList(allowedTenants), authority.Value, signupPolicyName.Value, signinPolicyName.Value, profileEditingPolicyName.Value, passwordResetPolicyName.Value, clientId.Value, clientSecret.Value);
         }
     }
 }

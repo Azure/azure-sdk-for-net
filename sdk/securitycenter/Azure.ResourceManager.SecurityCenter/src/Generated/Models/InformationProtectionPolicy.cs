@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of InformationProtectionPolicy. </summary>
         public InformationProtectionPolicy()
         {
-            Labels = new Core.ChangeTrackingDictionary<string, SensitivityLabel>();
-            InformationTypes = new Core.ChangeTrackingDictionary<string, SecurityInformationTypeInfo>();
+            Labels = new ChangeTrackingDictionary<string, SensitivityLabel>();
+            InformationTypes = new ChangeTrackingDictionary<string, SecurityInformationTypeInfo>();
         }
 
         /// <summary> Initializes a new instance of InformationProtectionPolicy. </summary>

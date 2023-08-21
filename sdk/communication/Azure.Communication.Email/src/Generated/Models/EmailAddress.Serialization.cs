@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Communication.Email
 {
-    public partial struct EmailAddress : Core.IUtf8JsonSerializable
+    public partial struct EmailAddress : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("address"u8);
             writer.WriteStringValue(Address);
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);

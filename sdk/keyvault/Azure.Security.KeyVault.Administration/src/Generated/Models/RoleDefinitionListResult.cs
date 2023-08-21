@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> Initializes a new instance of RoleDefinitionListResult. </summary>
         internal RoleDefinitionListResult()
         {
-            Value = new Core.ChangeTrackingList<KeyVaultRoleDefinition>();
+            Value = new ChangeTrackingList<KeyVaultRoleDefinition>();
         }
 
         /// <summary> Initializes a new instance of RoleDefinitionListResult. </summary>

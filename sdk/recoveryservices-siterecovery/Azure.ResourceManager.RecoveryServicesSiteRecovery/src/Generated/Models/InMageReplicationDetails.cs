@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageReplicationDetails. </summary>
         internal InMageReplicationDetails()
         {
-            ProtectedDisks = new Core.ChangeTrackingList<InMageProtectedDiskDetails>();
-            ConsistencyPoints = new Core.ChangeTrackingDictionary<string, DateTimeOffset>();
-            VmNics = new Core.ChangeTrackingList<VmNicDetails>();
-            Datastores = new Core.ChangeTrackingList<string>();
-            ValidationErrors = new Core.ChangeTrackingList<SiteRecoveryHealthError>();
+            ProtectedDisks = new ChangeTrackingList<InMageProtectedDiskDetails>();
+            ConsistencyPoints = new ChangeTrackingDictionary<string, DateTimeOffset>();
+            VmNics = new ChangeTrackingList<VmNicDetails>();
+            Datastores = new ChangeTrackingList<string>();
+            ValidationErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
             InstanceType = "InMage";
         }
 

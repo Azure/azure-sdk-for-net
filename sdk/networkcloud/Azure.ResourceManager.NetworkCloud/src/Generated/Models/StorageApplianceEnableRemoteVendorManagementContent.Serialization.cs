@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class StorageApplianceEnableRemoteVendorManagementContent : Core.IUtf8JsonSerializable
+    public partial class StorageApplianceEnableRemoteVendorManagementContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(SupportEndpoints))
+            if (Optional.IsCollectionDefined(SupportEndpoints))
             {
                 writer.WritePropertyName("supportEndpoints"u8);
                 writer.WriteStartArray();

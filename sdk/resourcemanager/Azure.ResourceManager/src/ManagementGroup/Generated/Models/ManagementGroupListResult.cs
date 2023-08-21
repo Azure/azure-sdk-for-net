@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// <summary> Initializes a new instance of ManagementGroupListResult. </summary>
         internal ManagementGroupListResult()
         {
-            Value = new Core.ChangeTrackingList<ManagementGroupData>();
+            Value = new ChangeTrackingList<ManagementGroupData>();
         }
 
         /// <summary> Initializes a new instance of ManagementGroupListResult. </summary>

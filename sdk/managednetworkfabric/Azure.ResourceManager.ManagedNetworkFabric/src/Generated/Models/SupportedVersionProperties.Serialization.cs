@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class SupportedVersionProperties : Core.IUtf8JsonSerializable
+    public partial class SupportedVersionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Core.Optional.IsDefined(VendorOSVersion))
+            if (Optional.IsDefined(VendorOSVersion))
             {
                 writer.WritePropertyName("vendorOsVersion"u8);
                 writer.WriteStringValue(VendorOSVersion);
             }
-            if (Core.Optional.IsDefined(VendorFirmwareVersion))
+            if (Optional.IsDefined(VendorFirmwareVersion))
             {
                 writer.WritePropertyName("vendorFirmwareVersion"u8);
                 writer.WriteStringValue(VendorFirmwareVersion);
             }
-            if (Core.Optional.IsDefined(IsDefault))
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteStringValue(IsDefault.Value.ToString());
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<string> version = default;
-            Core.Optional<string> vendorOSVersion = default;
-            Core.Optional<string> vendorFirmwareVersion = default;
-            Core.Optional<NetworkFabricBooleanValue> isDefault = default;
+            Optional<string> version = default;
+            Optional<string> vendorOSVersion = default;
+            Optional<string> vendorFirmwareVersion = default;
+            Optional<NetworkFabricBooleanValue> isDefault = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new SupportedVersionProperties(version.Value, vendorOSVersion.Value, vendorFirmwareVersion.Value, Core.Optional.ToNullable(isDefault));
+            return new SupportedVersionProperties(version.Value, vendorOSVersion.Value, vendorFirmwareVersion.Value, Optional.ToNullable(isDefault));
         }
     }
 }

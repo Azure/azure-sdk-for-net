@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class MyWorkbookUserAssignedIdentities : Core.IUtf8JsonSerializable
+    public partial class MyWorkbookUserAssignedIdentities : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> principalId = default;
-            Core.Optional<Guid> tenantId = default;
+            Optional<string> principalId = default;
+            Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new MyWorkbookUserAssignedIdentities(principalId.Value, Core.Optional.ToNullable(tenantId));
+            return new MyWorkbookUserAssignedIdentities(principalId.Value, Optional.ToNullable(tenantId));
         }
     }
 }

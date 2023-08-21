@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of ThreatIntelligenceAppendTags. </summary>
         public ThreatIntelligenceAppendTags()
         {
-            ThreatIntelligenceTags = new Core.ChangeTrackingList<string>();
+            ThreatIntelligenceTags = new ChangeTrackingList<string>();
         }
 
         /// <summary> List of tags to be appended. </summary>

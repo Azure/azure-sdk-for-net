@@ -20,20 +20,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<ResourceProviderAuthentication> providerAuthentication = default;
-            Core.Optional<IReadOnlyList<ResourceProviderAuthorization>> providerAuthorizations = default;
-            Core.Optional<string> @namespace = default;
-            Core.Optional<string> providerVersion = default;
-            Core.Optional<ResourceProviderType> providerType = default;
-            Core.Optional<IReadOnlyList<string>> requiredFeatures = default;
-            Core.Optional<FeaturesRule> featuresRule = default;
-            Core.Optional<RequestHeaderOptions> requestHeaderOptions = default;
-            Core.Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
-            Core.Optional<ResourceProviderManagement> management = default;
-            Core.Optional<IReadOnlyList<ResourceProviderCapabilities>> capabilities = default;
-            Core.Optional<BinaryData> metadata = default;
-            Core.Optional<IReadOnlyList<ResourceProviderEndpoint>> globalNotificationEndpoints = default;
-            Core.Optional<ReRegisterSubscriptionMetadata> reRegisterSubscriptionMetadata = default;
+            Optional<ResourceProviderAuthentication> providerAuthentication = default;
+            Optional<IReadOnlyList<ResourceProviderAuthorization>> providerAuthorizations = default;
+            Optional<string> @namespace = default;
+            Optional<string> providerVersion = default;
+            Optional<ResourceProviderType> providerType = default;
+            Optional<IReadOnlyList<string>> requiredFeatures = default;
+            Optional<FeaturesRule> featuresRule = default;
+            Optional<RequestHeaderOptions> requestHeaderOptions = default;
+            Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
+            Optional<ResourceProviderManagement> management = default;
+            Optional<IReadOnlyList<ResourceProviderCapabilities>> capabilities = default;
+            Optional<BinaryData> metadata = default;
+            Optional<IReadOnlyList<ResourceProviderEndpoint>> globalNotificationEndpoints = default;
+            Optional<ReRegisterSubscriptionMetadata> reRegisterSubscriptionMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerAuthentication"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ResourceProviderManifest(providerAuthentication.Value, Core.Optional.ToList(providerAuthorizations), @namespace.Value, providerVersion.Value, Core.Optional.ToNullable(providerType), Core.Optional.ToList(requiredFeatures), featuresRule.Value, requestHeaderOptions.Value, Core.Optional.ToList(resourceTypes), management.Value, Core.Optional.ToList(capabilities), metadata.Value, Core.Optional.ToList(globalNotificationEndpoints), reRegisterSubscriptionMetadata.Value);
+            return new ResourceProviderManifest(providerAuthentication.Value, Optional.ToList(providerAuthorizations), @namespace.Value, providerVersion.Value, Optional.ToNullable(providerType), Optional.ToList(requiredFeatures), featuresRule.Value, requestHeaderOptions.Value, Optional.ToList(resourceTypes), management.Value, Optional.ToList(capabilities), metadata.Value, Optional.ToList(globalNotificationEndpoints), reRegisterSubscriptionMetadata.Value);
         }
     }
 }

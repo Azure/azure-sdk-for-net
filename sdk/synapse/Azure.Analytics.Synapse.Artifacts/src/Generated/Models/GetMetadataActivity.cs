@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(dataset, nameof(dataset));
 
             Dataset = dataset;
-            FieldList = new Core.ChangeTrackingList<object>();
+            FieldList = new ChangeTrackingList<object>();
             Type = "GetMetadata";
         }
 

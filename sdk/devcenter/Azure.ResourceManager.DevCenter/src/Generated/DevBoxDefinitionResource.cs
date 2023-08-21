@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devBoxDefinitionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation(_devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devBoxDefinitionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevCenterArmOperation(_devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devBoxDefinitionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevBoxDefinitionResource>(new DevBoxDefinitionOperationSource(Client), _devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevBoxDefinitionResource>(new DevBoxDefinitionOperationSource(Client), _devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devBoxDefinitionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new DevCenterArmOperation<DevBoxDefinitionResource>(new DevBoxDefinitionOperationSource(Client), _devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevBoxDefinitionResource>(new DevBoxDefinitionOperationSource(Client), _devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

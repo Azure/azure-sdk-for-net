@@ -19,13 +19,13 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<IndexingMode> mode = default;
-            Core.Optional<string> allDocsInitialChangeTrackingState = default;
-            Core.Optional<string> allDocsFinalChangeTrackingState = default;
-            Core.Optional<string> resetDocsInitialChangeTrackingState = default;
-            Core.Optional<string> resetDocsFinalChangeTrackingState = default;
-            Core.Optional<IReadOnlyList<string>> resetDocumentKeys = default;
-            Core.Optional<IReadOnlyList<string>> resetDatasourceDocumentIds = default;
+            Optional<IndexingMode> mode = default;
+            Optional<string> allDocsInitialChangeTrackingState = default;
+            Optional<string> allDocsFinalChangeTrackingState = default;
+            Optional<string> resetDocsInitialChangeTrackingState = default;
+            Optional<string> resetDocsFinalChangeTrackingState = default;
+            Optional<IReadOnlyList<string>> resetDocumentKeys = default;
+            Optional<IReadOnlyList<string>> resetDatasourceDocumentIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new IndexerState(Core.Optional.ToNullable(mode), allDocsInitialChangeTrackingState.Value, allDocsFinalChangeTrackingState.Value, resetDocsInitialChangeTrackingState.Value, resetDocsFinalChangeTrackingState.Value, Core.Optional.ToList(resetDocumentKeys), Core.Optional.ToList(resetDatasourceDocumentIds));
+            return new IndexerState(Optional.ToNullable(mode), allDocsInitialChangeTrackingState.Value, allDocsFinalChangeTrackingState.Value, resetDocsInitialChangeTrackingState.Value, resetDocsFinalChangeTrackingState.Value, Optional.ToList(resetDocumentKeys), Optional.ToList(resetDatasourceDocumentIds));
         }
     }
 }

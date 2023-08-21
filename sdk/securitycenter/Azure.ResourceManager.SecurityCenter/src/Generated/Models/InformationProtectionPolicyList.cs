@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of InformationProtectionPolicyList. </summary>
         internal InformationProtectionPolicyList()
         {
-            Value = new Core.ChangeTrackingList<InformationProtectionPolicy>();
+            Value = new ChangeTrackingList<InformationProtectionPolicy>();
         }
 
         /// <summary> Initializes a new instance of InformationProtectionPolicyList. </summary>

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ScaleInPolicy : Core.IUtf8JsonSerializable
+    public partial class ScaleInPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Rules))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ForceDeletion))
+            if (Optional.IsDefined(ForceDeletion))
             {
                 writer.WritePropertyName("forceDeletion"u8);
                 writer.WriteBooleanValue(ForceDeletion.Value);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<IList<VirtualMachineScaleSetScaleInRule>> rules = default;
-            Core.Optional<bool> forceDeletion = default;
+            Optional<IList<VirtualMachineScaleSetScaleInRule>> rules = default;
+            Optional<bool> forceDeletion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rules"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ScaleInPolicy(Core.Optional.ToList(rules), Core.Optional.ToNullable(forceDeletion));
+            return new ScaleInPolicy(Optional.ToList(rules), Optional.ToNullable(forceDeletion));
         }
     }
 }

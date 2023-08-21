@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> Initializes a new instance of StorageTargetData. </summary>
         public StorageTargetData()
         {
-            Junctions = new Core.ChangeTrackingList<NamespaceJunction>();
+            Junctions = new ChangeTrackingList<NamespaceJunction>();
         }
 
         /// <summary> Initializes a new instance of StorageTargetData. </summary>

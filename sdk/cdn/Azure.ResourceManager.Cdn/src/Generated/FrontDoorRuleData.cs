@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of FrontDoorRuleData. </summary>
         public FrontDoorRuleData()
         {
-            Conditions = new Core.ChangeTrackingList<DeliveryRuleCondition>();
-            Actions = new Core.ChangeTrackingList<DeliveryRuleAction>();
+            Conditions = new ChangeTrackingList<DeliveryRuleCondition>();
+            Actions = new ChangeTrackingList<DeliveryRuleAction>();
         }
 
         /// <summary> Initializes a new instance of FrontDoorRuleData. </summary>

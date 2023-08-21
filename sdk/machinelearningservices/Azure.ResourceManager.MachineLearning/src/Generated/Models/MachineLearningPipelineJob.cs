@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningPipelineJob. </summary>
         public MachineLearningPipelineJob()
         {
-            Inputs = new Core.ChangeTrackingDictionary<string, MachineLearningJobInput>();
-            Jobs = new Core.ChangeTrackingDictionary<string, BinaryData>();
-            Outputs = new Core.ChangeTrackingDictionary<string, MachineLearningJobOutput>();
+            Inputs = new ChangeTrackingDictionary<string, MachineLearningJobInput>();
+            Jobs = new ChangeTrackingDictionary<string, BinaryData>();
+            Outputs = new ChangeTrackingDictionary<string, MachineLearningJobOutput>();
             JobType = JobType.Pipeline;
         }
 

@@ -13,27 +13,27 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkConnectionLandingZoneConverter))]
-    public partial class LinkConnectionLandingZone : Core.IUtf8JsonSerializable
+    public partial class LinkConnectionLandingZone : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LinkedService))
+            if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
                 writer.WriteObjectValue(LinkedService);
             }
-            if (Core.Optional.IsDefined(FileSystem))
+            if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
                 writer.WriteStringValue(FileSystem);
             }
-            if (Core.Optional.IsDefined(FolderPath))
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (Core.Optional.IsDefined(SasToken))
+            if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
                 writer.WriteObjectValue(SasToken);
@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<LinkedServiceReference> linkedService = default;
-            Core.Optional<string> fileSystem = default;
-            Core.Optional<string> folderPath = default;
-            Core.Optional<SecureString> sasToken = default;
+            Optional<LinkedServiceReference> linkedService = default;
+            Optional<string> fileSystem = default;
+            Optional<string> folderPath = default;
+            Optional<SecureString> sasToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"u8))

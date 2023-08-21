@@ -15,24 +15,24 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    public partial class KeyVaultPrivateEndpointConnectionData : Core.IUtf8JsonSerializable
+    public partial class KeyVaultPrivateEndpointConnectionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Core.Optional.IsDefined(ConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
@@ -47,16 +47,16 @@ namespace Azure.ResourceManager.KeyVault
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<ETag> etag = default;
+            Optional<AzureLocation> location = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SubResource> privateEndpoint = default;
-            Core.Optional<KeyVaultPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Core.Optional<KeyVaultPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<SubResource> privateEndpoint = default;
+            Optional<KeyVaultPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<KeyVaultPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.KeyVault
                     continue;
                 }
             }
-            return new KeyVaultPrivateEndpointConnectionData(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags));
+            return new KeyVaultPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }

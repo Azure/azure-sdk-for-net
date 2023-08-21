@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<string> mgsAddress = default;
-            Core.Optional<string> mountCommand = default;
-            Core.Optional<string> lustreVersion = default;
-            Core.Optional<AmlFileSystemContainerStorageInterface> containerStorageInterface = default;
+            Optional<string> mgsAddress = default;
+            Optional<string> mountCommand = default;
+            Optional<string> lustreVersion = default;
+            Optional<AmlFileSystemContainerStorageInterface> containerStorageInterface = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mgsAddress"u8))

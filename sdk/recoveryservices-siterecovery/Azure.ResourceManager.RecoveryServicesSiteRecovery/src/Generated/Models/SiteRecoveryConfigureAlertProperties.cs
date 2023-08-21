@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryConfigureAlertProperties. </summary>
         public SiteRecoveryConfigureAlertProperties()
         {
-            CustomEmailAddresses = new Core.ChangeTrackingList<string>();
+            CustomEmailAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> A value indicating whether to send email to subscription administrator. </summary>

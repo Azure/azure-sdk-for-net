@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupTargetDiskNetworkAccessSettings : Core.IUtf8JsonSerializable
+    public partial class BackupTargetDiskNetworkAccessSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TargetDiskNetworkAccessOption))
+            if (Optional.IsDefined(TargetDiskNetworkAccessOption))
             {
                 writer.WritePropertyName("targetDiskNetworkAccessOption"u8);
                 writer.WriteStringValue(TargetDiskNetworkAccessOption.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(TargetDiskAccessId))
+            if (Optional.IsDefined(TargetDiskAccessId))
             {
                 writer.WritePropertyName("targetDiskAccessId"u8);
                 writer.WriteStringValue(TargetDiskAccessId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<BackupTargetDiskNetworkAccessOption> targetDiskNetworkAccessOption = default;
-            Core.Optional<ResourceIdentifier> targetDiskAccessId = default;
+            Optional<BackupTargetDiskNetworkAccessOption> targetDiskNetworkAccessOption = default;
+            Optional<ResourceIdentifier> targetDiskAccessId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetDiskNetworkAccessOption"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new BackupTargetDiskNetworkAccessSettings(Core.Optional.ToNullable(targetDiskNetworkAccessOption), targetDiskAccessId.Value);
+            return new BackupTargetDiskNetworkAccessSettings(Optional.ToNullable(targetDiskNetworkAccessOption), targetDiskAccessId.Value);
         }
     }
 }

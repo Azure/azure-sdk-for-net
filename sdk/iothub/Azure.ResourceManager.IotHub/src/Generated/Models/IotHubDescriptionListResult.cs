@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of IotHubDescriptionListResult. </summary>
         internal IotHubDescriptionListResult()
         {
-            Value = new Core.ChangeTrackingList<IotHubDescriptionData>();
+            Value = new ChangeTrackingList<IotHubDescriptionData>();
         }
 
         /// <summary> Initializes a new instance of IotHubDescriptionListResult. </summary>

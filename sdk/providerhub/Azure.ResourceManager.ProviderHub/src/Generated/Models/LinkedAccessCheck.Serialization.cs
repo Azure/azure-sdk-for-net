@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class LinkedAccessCheck : Core.IUtf8JsonSerializable
+    public partial class LinkedAccessCheck : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ActionName))
+            if (Optional.IsDefined(ActionName))
             {
                 writer.WritePropertyName("actionName"u8);
                 writer.WriteStringValue(ActionName);
             }
-            if (Core.Optional.IsDefined(LinkedProperty))
+            if (Optional.IsDefined(LinkedProperty))
             {
                 writer.WritePropertyName("linkedProperty"u8);
                 writer.WriteStringValue(LinkedProperty);
             }
-            if (Core.Optional.IsDefined(LinkedAction))
+            if (Optional.IsDefined(LinkedAction))
             {
                 writer.WritePropertyName("linkedAction"u8);
                 writer.WriteStringValue(LinkedAction);
             }
-            if (Core.Optional.IsDefined(LinkedActionVerb))
+            if (Optional.IsDefined(LinkedActionVerb))
             {
                 writer.WritePropertyName("linkedActionVerb"u8);
                 writer.WriteStringValue(LinkedActionVerb);
             }
-            if (Core.Optional.IsDefined(LinkedType))
+            if (Optional.IsDefined(LinkedType))
             {
                 writer.WritePropertyName("linkedType"u8);
                 writer.WriteStringValue(LinkedType);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<string> actionName = default;
-            Core.Optional<string> linkedProperty = default;
-            Core.Optional<string> linkedAction = default;
-            Core.Optional<string> linkedActionVerb = default;
-            Core.Optional<string> linkedType = default;
+            Optional<string> actionName = default;
+            Optional<string> linkedProperty = default;
+            Optional<string> linkedAction = default;
+            Optional<string> linkedActionVerb = default;
+            Optional<string> linkedType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionName"u8))

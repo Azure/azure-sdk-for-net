@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Core.Optional<int> canonicalProfileId = default;
-            Core.Optional<IReadOnlyList<CanonicalProfileDefinitionPropertiesItem>> properties = default;
+            Optional<int> canonicalProfileId = default;
+            Optional<IReadOnlyList<CanonicalProfileDefinitionPropertiesItem>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("canonicalProfileId"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new CanonicalProfileDefinition(Core.Optional.ToNullable(canonicalProfileId), Core.Optional.ToList(properties));
+            return new CanonicalProfileDefinition(Optional.ToNullable(canonicalProfileId), Optional.ToList(properties));
         }
     }
 }

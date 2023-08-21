@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Initializes a new instance of DeletedAppConfigurationStoreData. </summary>
         internal DeletedAppConfigurationStoreData()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DeletedAppConfigurationStoreData. </summary>

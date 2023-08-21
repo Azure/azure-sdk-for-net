@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<TimeSpan> timeGrain = default;
-            Core.Optional<TimeSpan> retention = default;
+            Optional<TimeSpan> timeGrain = default;
+            Optional<TimeSpan> retention = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeGrain"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorMetricAvailability(Core.Optional.ToNullable(timeGrain), Core.Optional.ToNullable(retention));
+            return new MonitorMetricAvailability(Optional.ToNullable(timeGrain), Optional.ToNullable(retention));
         }
     }
 }

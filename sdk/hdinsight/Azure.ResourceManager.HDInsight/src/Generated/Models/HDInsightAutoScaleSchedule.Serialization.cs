@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightAutoScaleSchedule : Core.IUtf8JsonSerializable
+    public partial class HDInsightAutoScaleSchedule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Days))
+            if (Optional.IsCollectionDefined(Days))
             {
                 writer.WritePropertyName("days"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TimeAndCapacity))
+            if (Optional.IsDefined(TimeAndCapacity))
             {
                 writer.WritePropertyName("timeAndCapacity"u8);
                 writer.WriteObjectValue(TimeAndCapacity);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<IList<HDInsightDayOfWeek>> days = default;
-            Core.Optional<HDInsightAutoScaleTimeAndCapacity> timeAndCapacity = default;
+            Optional<IList<HDInsightDayOfWeek>> days = default;
+            Optional<HDInsightAutoScaleTimeAndCapacity> timeAndCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("days"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightAutoScaleSchedule(Core.Optional.ToList(days), timeAndCapacity.Value);
+            return new HDInsightAutoScaleSchedule(Optional.ToList(days), timeAndCapacity.Value);
         }
     }
 }

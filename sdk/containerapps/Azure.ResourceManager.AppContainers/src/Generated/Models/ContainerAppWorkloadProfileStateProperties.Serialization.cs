@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppWorkloadProfileStateProperties : Core.IUtf8JsonSerializable
+    public partial class ContainerAppWorkloadProfileStateProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MinimumCount))
+            if (Optional.IsDefined(MinimumCount))
             {
                 writer.WritePropertyName("minimumCount"u8);
                 writer.WriteNumberValue(MinimumCount.Value);
             }
-            if (Core.Optional.IsDefined(MaximumCount))
+            if (Optional.IsDefined(MaximumCount))
             {
                 writer.WritePropertyName("maximumCount"u8);
                 writer.WriteNumberValue(MaximumCount.Value);
             }
-            if (Core.Optional.IsDefined(CurrentCount))
+            if (Optional.IsDefined(CurrentCount))
             {
                 writer.WritePropertyName("currentCount"u8);
                 writer.WriteNumberValue(CurrentCount.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<int> minimumCount = default;
-            Core.Optional<int> maximumCount = default;
-            Core.Optional<int> currentCount = default;
+            Optional<int> minimumCount = default;
+            Optional<int> maximumCount = default;
+            Optional<int> currentCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimumCount"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppWorkloadProfileStateProperties(Core.Optional.ToNullable(minimumCount), Core.Optional.ToNullable(maximumCount), Core.Optional.ToNullable(currentCount));
+            return new ContainerAppWorkloadProfileStateProperties(Optional.ToNullable(minimumCount), Optional.ToNullable(maximumCount), Optional.ToNullable(currentCount));
         }
     }
 }

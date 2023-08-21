@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class GraphApiComputeServiceProperties : Core.IUtf8JsonSerializable
+    public partial class GraphApiComputeServiceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(GraphApiComputeEndpoint))
+            if (Optional.IsDefined(GraphApiComputeEndpoint))
             {
                 writer.WritePropertyName("graphApiComputeEndpoint"u8);
                 writer.WriteStringValue(GraphApiComputeEndpoint);
             }
-            if (Core.Optional.IsDefined(InstanceSize))
+            if (Optional.IsDefined(InstanceSize))
             {
                 writer.WritePropertyName("instanceSize"u8);
                 writer.WriteStringValue(InstanceSize.Value.ToString());
             }
-            if (Core.Optional.IsDefined(InstanceCount))
+            if (Optional.IsDefined(InstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<string> graphApiComputeEndpoint = default;
-            Core.Optional<IReadOnlyList<GraphApiComputeRegionalService>> locations = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<CosmosDBServiceSize> instanceSize = default;
-            Core.Optional<int> instanceCount = default;
+            Optional<string> graphApiComputeEndpoint = default;
+            Optional<IReadOnlyList<GraphApiComputeRegionalService>> locations = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<CosmosDBServiceSize> instanceSize = default;
+            Optional<int> instanceCount = default;
             CosmosDBServiceType serviceType = default;
-            Core.Optional<CosmosDBServiceStatus> status = default;
+            Optional<CosmosDBServiceStatus> status = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GraphApiComputeServiceProperties(Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(instanceSize), Core.Optional.ToNullable(instanceCount), serviceType, Core.Optional.ToNullable(status), additionalProperties, graphApiComputeEndpoint.Value, Core.Optional.ToList(locations));
+            return new GraphApiComputeServiceProperties(Optional.ToNullable(creationTime), Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), serviceType, Optional.ToNullable(status), additionalProperties, graphApiComputeEndpoint.Value, Optional.ToList(locations));
         }
     }
 }

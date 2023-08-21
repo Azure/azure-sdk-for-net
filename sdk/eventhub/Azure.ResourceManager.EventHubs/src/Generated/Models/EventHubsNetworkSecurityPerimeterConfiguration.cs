@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="location"> The location. </param>
         public EventHubsNetworkSecurityPerimeterConfiguration(AzureLocation location) : base(location)
         {
-            ProvisioningIssues = new Core.ChangeTrackingList<EventHubsProvisioningIssue>();
+            ProvisioningIssues = new ChangeTrackingList<EventHubsProvisioningIssue>();
         }
 
         /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfiguration. </summary>

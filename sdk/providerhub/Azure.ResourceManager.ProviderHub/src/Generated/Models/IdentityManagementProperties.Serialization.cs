@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class IdentityManagementProperties : Core.IUtf8JsonSerializable
+    public partial class IdentityManagementProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ManagementType))
+            if (Optional.IsDefined(ManagementType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ManagementType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ApplicationId))
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<IdentityManagementType> type = default;
-            Core.Optional<string> applicationId = default;
+            Optional<IdentityManagementType> type = default;
+            Optional<string> applicationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new IdentityManagementProperties(Core.Optional.ToNullable(type), applicationId.Value);
+            return new IdentityManagementProperties(Optional.ToNullable(type), applicationId.Value);
         }
     }
 }

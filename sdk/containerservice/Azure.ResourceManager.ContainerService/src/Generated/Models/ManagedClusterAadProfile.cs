@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ManagedClusterAadProfile. </summary>
         public ManagedClusterAadProfile()
         {
-            AdminGroupObjectIds = new Core.ChangeTrackingList<Guid>();
+            AdminGroupObjectIds = new ChangeTrackingList<Guid>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterAadProfile. </summary>

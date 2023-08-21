@@ -46,7 +46,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="multipartContentType"/> or <paramref name="body"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<Stream, ContainerSubmitBatchHeaders>> SubmitBatchAsync(string containerName, long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, ContainerSubmitBatchHeaders>> SubmitBatchAsync(string containerName, long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {
@@ -69,7 +69,7 @@ namespace Azure.Storage.Blobs.Batch
                 case 202:
                     {
                         var value = message.ExtractResponseContent();
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -84,7 +84,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="multipartContentType"/> or <paramref name="body"/> is null. </exception>
-        public Core.ResponseWithHeaders<Stream, ContainerSubmitBatchHeaders> SubmitBatch(string containerName, long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, ContainerSubmitBatchHeaders> SubmitBatch(string containerName, long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {
@@ -107,7 +107,7 @@ namespace Azure.Storage.Blobs.Batch
                 case 202:
                     {
                         var value = message.ExtractResponseContent();
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

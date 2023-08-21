@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Media
         /// <summary> Initializes a new instance of MediaJobData. </summary>
         public MediaJobData()
         {
-            Outputs = new Core.ChangeTrackingList<MediaJobOutput>();
-            CorrelationData = new Core.ChangeTrackingDictionary<string, string>();
+            Outputs = new ChangeTrackingList<MediaJobOutput>();
+            CorrelationData = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of MediaJobData. </summary>

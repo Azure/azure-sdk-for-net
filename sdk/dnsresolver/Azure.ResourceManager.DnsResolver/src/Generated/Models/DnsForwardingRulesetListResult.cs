@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of DnsForwardingRulesetListResult. </summary>
         internal DnsForwardingRulesetListResult()
         {
-            Value = new Core.ChangeTrackingList<DnsForwardingRulesetData>();
+            Value = new ChangeTrackingList<DnsForwardingRulesetData>();
         }
 
         /// <summary> Initializes a new instance of DnsForwardingRulesetListResult. </summary>

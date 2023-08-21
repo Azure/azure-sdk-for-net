@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of ApplicationDeltaHealthPolicy. </summary>
         public ApplicationDeltaHealthPolicy()
         {
-            ServiceTypeDeltaHealthPolicies = new Core.ChangeTrackingDictionary<string, ServiceTypeDeltaHealthPolicy>();
+            ServiceTypeDeltaHealthPolicies = new ChangeTrackingDictionary<string, ServiceTypeDeltaHealthPolicy>();
         }
 
         /// <summary> Initializes a new instance of ApplicationDeltaHealthPolicy. </summary>

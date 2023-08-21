@@ -19,21 +19,21 @@ namespace Azure.Maps.Rendering
             {
                 return null;
             }
-            Core.Optional<string> tilejson = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> version = default;
-            Core.Optional<string> attribution = default;
-            Core.Optional<string> template = default;
-            Core.Optional<string> legend = default;
-            Core.Optional<string> scheme = default;
-            Core.Optional<IReadOnlyList<string>> tiles = default;
-            Core.Optional<IReadOnlyList<string>> grids = default;
-            Core.Optional<IReadOnlyList<string>> data = default;
-            Core.Optional<int> minzoom = default;
-            Core.Optional<int> maxzoom = default;
-            Core.Optional<IReadOnlyList<float>> bounds = default;
-            Core.Optional<IReadOnlyList<float>> center = default;
+            Optional<string> tilejson = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<string> version = default;
+            Optional<string> attribution = default;
+            Optional<string> template = default;
+            Optional<string> legend = default;
+            Optional<string> scheme = default;
+            Optional<IReadOnlyList<string>> tiles = default;
+            Optional<IReadOnlyList<string>> grids = default;
+            Optional<IReadOnlyList<string>> data = default;
+            Optional<int> minzoom = default;
+            Optional<int> maxzoom = default;
+            Optional<IReadOnlyList<float>> bounds = default;
+            Optional<IReadOnlyList<float>> center = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tilejson"u8))
@@ -165,7 +165,7 @@ namespace Azure.Maps.Rendering
                     continue;
                 }
             }
-            return new MapTileSet(tilejson.Value, name.Value, description.Value, version.Value, attribution.Value, template.Value, legend.Value, scheme.Value, Core.Optional.ToList(tiles), Core.Optional.ToList(grids), Core.Optional.ToList(data), Core.Optional.ToNullable(minzoom), Core.Optional.ToNullable(maxzoom), Core.Optional.ToList(bounds), Core.Optional.ToList(center));
+            return new MapTileSet(tilejson.Value, name.Value, description.Value, version.Value, attribution.Value, template.Value, legend.Value, scheme.Value, Optional.ToList(tiles), Optional.ToList(grids), Optional.ToList(data), Optional.ToNullable(minzoom), Optional.ToNullable(maxzoom), Optional.ToList(bounds), Optional.ToList(center));
         }
     }
 }

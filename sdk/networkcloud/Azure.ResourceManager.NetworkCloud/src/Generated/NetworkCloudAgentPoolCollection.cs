@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudAgentPoolAgentPoolsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudAgentPoolResource>(new NetworkCloudAgentPoolOperationSource(Client), _networkCloudAgentPoolAgentPoolsClientDiagnostics, Pipeline, _networkCloudAgentPoolAgentPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudAgentPoolResource>(new NetworkCloudAgentPoolOperationSource(Client), _networkCloudAgentPoolAgentPoolsClientDiagnostics, Pipeline, _networkCloudAgentPoolAgentPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudAgentPoolAgentPoolsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudAgentPoolResource>(new NetworkCloudAgentPoolOperationSource(Client), _networkCloudAgentPoolAgentPoolsClientDiagnostics, Pipeline, _networkCloudAgentPoolAgentPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudAgentPoolResource>(new NetworkCloudAgentPoolOperationSource(Client), _networkCloudAgentPoolAgentPoolsClientDiagnostics, Pipeline, _networkCloudAgentPoolAgentPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudAgentPoolAgentPoolsRestClient.CreateListByKubernetesClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudAgentPoolAgentPoolsRestClient.CreateListByKubernetesClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudAgentPoolResource(Client, NetworkCloudAgentPoolData.DeserializeNetworkCloudAgentPoolData(e)), _networkCloudAgentPoolAgentPoolsClientDiagnostics, Pipeline, "NetworkCloudAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudAgentPoolResource(Client, NetworkCloudAgentPoolData.DeserializeNetworkCloudAgentPoolData(e)), _networkCloudAgentPoolAgentPoolsClientDiagnostics, Pipeline, "NetworkCloudAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudAgentPoolAgentPoolsRestClient.CreateListByKubernetesClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudAgentPoolAgentPoolsRestClient.CreateListByKubernetesClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudAgentPoolResource(Client, NetworkCloudAgentPoolData.DeserializeNetworkCloudAgentPoolData(e)), _networkCloudAgentPoolAgentPoolsClientDiagnostics, Pipeline, "NetworkCloudAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudAgentPoolResource(Client, NetworkCloudAgentPoolData.DeserializeNetworkCloudAgentPoolData(e)), _networkCloudAgentPoolAgentPoolsClientDiagnostics, Pipeline, "NetworkCloudAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

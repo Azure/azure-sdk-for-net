@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             HostSubscriptionId = hostSubscriptionId;
             Tenant = tenant;
             ClusterResourceGroup = clusterResourceGroup;
-            AdditionalLinkedServiceNames = new Core.ChangeTrackingList<DataFactoryLinkedServiceReference>();
-            ScriptActions = new Core.ChangeTrackingList<DataFactoryScriptAction>();
+            AdditionalLinkedServiceNames = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
+            ScriptActions = new ChangeTrackingList<DataFactoryScriptAction>();
             LinkedServiceType = "HDInsightOnDemand";
         }
 

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFileSystemPropertiesMaintenanceWindow : Core.IUtf8JsonSerializable
+    public partial class AmlFileSystemPropertiesMaintenanceWindow : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DayOfWeek))
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(TimeOfDayUTC))
+            if (Optional.IsDefined(TimeOfDayUTC))
             {
                 writer.WritePropertyName("timeOfDayUTC"u8);
                 writer.WriteStringValue(TimeOfDayUTC);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<MaintenanceDayOfWeekType> dayOfWeek = default;
-            Core.Optional<string> timeOfDayUTC = default;
+            Optional<MaintenanceDayOfWeekType> dayOfWeek = default;
+            Optional<string> timeOfDayUTC = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dayOfWeek"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new AmlFileSystemPropertiesMaintenanceWindow(Core.Optional.ToNullable(dayOfWeek), timeOfDayUTC.Value);
+            return new AmlFileSystemPropertiesMaintenanceWindow(Optional.ToNullable(dayOfWeek), timeOfDayUTC.Value);
         }
     }
 }

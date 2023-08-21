@@ -10,47 +10,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ContainerNetworkInterfaceStatistics : Core.IUtf8JsonSerializable
+    public partial class ContainerNetworkInterfaceStatistics : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RxBytes))
+            if (Optional.IsDefined(RxBytes))
             {
                 writer.WritePropertyName("rxBytes"u8);
                 writer.WriteNumberValue(RxBytes.Value);
             }
-            if (Core.Optional.IsDefined(RxPackets))
+            if (Optional.IsDefined(RxPackets))
             {
                 writer.WritePropertyName("rxPackets"u8);
                 writer.WriteNumberValue(RxPackets.Value);
             }
-            if (Core.Optional.IsDefined(RxErrors))
+            if (Optional.IsDefined(RxErrors))
             {
                 writer.WritePropertyName("rxErrors"u8);
                 writer.WriteNumberValue(RxErrors.Value);
             }
-            if (Core.Optional.IsDefined(RxDropped))
+            if (Optional.IsDefined(RxDropped))
             {
                 writer.WritePropertyName("rxDropped"u8);
                 writer.WriteNumberValue(RxDropped.Value);
             }
-            if (Core.Optional.IsDefined(TxBytes))
+            if (Optional.IsDefined(TxBytes))
             {
                 writer.WritePropertyName("txBytes"u8);
                 writer.WriteNumberValue(TxBytes.Value);
             }
-            if (Core.Optional.IsDefined(TxPackets))
+            if (Optional.IsDefined(TxPackets))
             {
                 writer.WritePropertyName("txPackets"u8);
                 writer.WriteNumberValue(TxPackets.Value);
             }
-            if (Core.Optional.IsDefined(TxErrors))
+            if (Optional.IsDefined(TxErrors))
             {
                 writer.WritePropertyName("txErrors"u8);
                 writer.WriteNumberValue(TxErrors.Value);
             }
-            if (Core.Optional.IsDefined(TxDropped))
+            if (Optional.IsDefined(TxDropped))
             {
                 writer.WritePropertyName("txDropped"u8);
                 writer.WriteNumberValue(TxDropped.Value);
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<long> rxBytes = default;
-            Core.Optional<long> rxPackets = default;
-            Core.Optional<long> rxErrors = default;
-            Core.Optional<long> rxDropped = default;
-            Core.Optional<long> txBytes = default;
-            Core.Optional<long> txPackets = default;
-            Core.Optional<long> txErrors = default;
-            Core.Optional<long> txDropped = default;
+            Optional<long> rxBytes = default;
+            Optional<long> rxPackets = default;
+            Optional<long> rxErrors = default;
+            Optional<long> rxDropped = default;
+            Optional<long> txBytes = default;
+            Optional<long> txPackets = default;
+            Optional<long> txErrors = default;
+            Optional<long> txDropped = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rxBytes"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ContainerNetworkInterfaceStatistics(Core.Optional.ToNullable(rxBytes), Core.Optional.ToNullable(rxPackets), Core.Optional.ToNullable(rxErrors), Core.Optional.ToNullable(rxDropped), Core.Optional.ToNullable(txBytes), Core.Optional.ToNullable(txPackets), Core.Optional.ToNullable(txErrors), Core.Optional.ToNullable(txDropped));
+            return new ContainerNetworkInterfaceStatistics(Optional.ToNullable(rxBytes), Optional.ToNullable(rxPackets), Optional.ToNullable(rxErrors), Optional.ToNullable(rxDropped), Optional.ToNullable(txBytes), Optional.ToNullable(txPackets), Optional.ToNullable(txErrors), Optional.ToNullable(txDropped));
         }
     }
 }

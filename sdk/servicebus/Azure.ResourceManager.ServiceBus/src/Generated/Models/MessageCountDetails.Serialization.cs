@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Core.Optional<long> activeMessageCount = default;
-            Core.Optional<long> deadLetterMessageCount = default;
-            Core.Optional<long> scheduledMessageCount = default;
-            Core.Optional<long> transferMessageCount = default;
-            Core.Optional<long> transferDeadLetterMessageCount = default;
+            Optional<long> activeMessageCount = default;
+            Optional<long> deadLetterMessageCount = default;
+            Optional<long> scheduledMessageCount = default;
+            Optional<long> transferMessageCount = default;
+            Optional<long> transferDeadLetterMessageCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activeMessageCount"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new MessageCountDetails(Core.Optional.ToNullable(activeMessageCount), Core.Optional.ToNullable(deadLetterMessageCount), Core.Optional.ToNullable(scheduledMessageCount), Core.Optional.ToNullable(transferMessageCount), Core.Optional.ToNullable(transferDeadLetterMessageCount));
+            return new MessageCountDetails(Optional.ToNullable(activeMessageCount), Optional.ToNullable(deadLetterMessageCount), Optional.ToNullable(scheduledMessageCount), Optional.ToNullable(transferMessageCount), Optional.ToNullable(transferDeadLetterMessageCount));
         }
     }
 }

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<ResourceType> resourceType = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> tier = default;
-            Core.Optional<AppPlatformSkuCapacity> capacity = default;
-            Core.Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Core.Optional<IReadOnlyList<AppPlatformSkuLocationInfo>> locationInfo = default;
-            Core.Optional<IReadOnlyList<AppPlatformSkuRestrictions>> restrictions = default;
+            Optional<ResourceType> resourceType = default;
+            Optional<string> name = default;
+            Optional<string> tier = default;
+            Optional<AppPlatformSkuCapacity> capacity = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
+            Optional<IReadOnlyList<AppPlatformSkuLocationInfo>> locationInfo = default;
+            Optional<IReadOnlyList<AppPlatformSkuRestrictions>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AvailableAppPlatformSku(Core.Optional.ToNullable(resourceType), name.Value, tier.Value, capacity.Value, Core.Optional.ToList(locations), Core.Optional.ToList(locationInfo), Core.Optional.ToList(restrictions));
+            return new AvailableAppPlatformSku(Optional.ToNullable(resourceType), name.Value, tier.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(restrictions));
         }
     }
 }

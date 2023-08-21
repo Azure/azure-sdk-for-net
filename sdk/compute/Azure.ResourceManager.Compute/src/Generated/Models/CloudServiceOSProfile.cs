@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CloudServiceOSProfile. </summary>
         public CloudServiceOSProfile()
         {
-            Secrets = new Core.ChangeTrackingList<CloudServiceVaultSecretGroup>();
+            Secrets = new ChangeTrackingList<CloudServiceVaultSecretGroup>();
         }
 
         /// <summary> Initializes a new instance of CloudServiceOSProfile. </summary>

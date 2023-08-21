@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of NodeTypeListResult. </summary>
         internal NodeTypeListResult()
         {
-            Value = new Core.ChangeTrackingList<ServiceFabricManagedNodeTypeData>();
+            Value = new ChangeTrackingList<ServiceFabricManagedNodeTypeData>();
         }
 
         /// <summary> Initializes a new instance of NodeTypeListResult. </summary>

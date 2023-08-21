@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkTapRuleAction : Core.IUtf8JsonSerializable
+    public partial class NetworkTapRuleAction : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TapRuleActionType))
+            if (Optional.IsDefined(TapRuleActionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TapRuleActionType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Truncate))
+            if (Optional.IsDefined(Truncate))
             {
                 writer.WritePropertyName("truncate"u8);
                 writer.WriteStringValue(Truncate);
             }
-            if (Core.Optional.IsDefined(IsTimestampEnabled))
+            if (Optional.IsDefined(IsTimestampEnabled))
             {
                 writer.WritePropertyName("isTimestampEnabled"u8);
                 writer.WriteStringValue(IsTimestampEnabled.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DestinationId))
+            if (Optional.IsDefined(DestinationId))
             {
                 writer.WritePropertyName("destinationId"u8);
                 writer.WriteStringValue(DestinationId);
             }
-            if (Core.Optional.IsDefined(MatchConfigurationName))
+            if (Optional.IsDefined(MatchConfigurationName))
             {
                 writer.WritePropertyName("matchConfigurationName"u8);
                 writer.WriteStringValue(MatchConfigurationName);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<TapRuleActionType> type = default;
-            Core.Optional<string> truncate = default;
-            Core.Optional<NetworkFabricBooleanValue> isTimestampEnabled = default;
-            Core.Optional<ResourceIdentifier> destinationId = default;
-            Core.Optional<string> matchConfigurationName = default;
+            Optional<TapRuleActionType> type = default;
+            Optional<string> truncate = default;
+            Optional<NetworkFabricBooleanValue> isTimestampEnabled = default;
+            Optional<ResourceIdentifier> destinationId = default;
+            Optional<string> matchConfigurationName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new NetworkTapRuleAction(Core.Optional.ToNullable(type), truncate.Value, Core.Optional.ToNullable(isTimestampEnabled), destinationId.Value, matchConfigurationName.Value);
+            return new NetworkTapRuleAction(Optional.ToNullable(type), truncate.Value, Optional.ToNullable(isTimestampEnabled), destinationId.Value, matchConfigurationName.Value);
         }
     }
 }

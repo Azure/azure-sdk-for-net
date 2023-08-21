@@ -12,19 +12,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ScheduleProperties : Core.IUtf8JsonSerializable
+    public partial class ScheduleProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToString());
-            if (Core.Optional.IsDefined(HourOfDay))
+            if (Optional.IsDefined(HourOfDay))
             {
                 writer.WritePropertyName("hourOfDay"u8);
                 writer.WriteNumberValue(HourOfDay.Value);
             }
-            if (Core.Optional.IsCollectionDefined(DaysOfWeek))
+            if (Optional.IsCollectionDefined(DaysOfWeek))
             {
                 writer.WritePropertyName("daysOfWeek"u8);
                 writer.WriteStartArray();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(WeeksOfMonth))
+            if (Optional.IsCollectionDefined(WeeksOfMonth))
             {
                 writer.WritePropertyName("weeksOfMonth"u8);
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DayOfMonth))
+            if (Optional.IsDefined(DayOfMonth))
             {
                 writer.WritePropertyName("dayOfMonth"u8);
                 writer.WriteNumberValue(DayOfMonth.Value);
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                 return null;
             }
             ScheduleFrequency frequency = default;
-            Core.Optional<int> hourOfDay = default;
-            Core.Optional<IList<ScheduledActionDaysOfWeek>> daysOfWeek = default;
-            Core.Optional<IList<ScheduledActionWeeksOfMonth>> weeksOfMonth = default;
-            Core.Optional<int> dayOfMonth = default;
+            Optional<int> hourOfDay = default;
+            Optional<IList<ScheduledActionDaysOfWeek>> daysOfWeek = default;
+            Optional<IList<ScheduledActionWeeksOfMonth>> weeksOfMonth = default;
+            Optional<int> dayOfMonth = default;
             DateTimeOffset startDate = default;
             DateTimeOffset endDate = default;
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new ScheduleProperties(frequency, Core.Optional.ToNullable(hourOfDay), Core.Optional.ToList(daysOfWeek), Core.Optional.ToList(weeksOfMonth), Core.Optional.ToNullable(dayOfMonth), startDate, endDate);
+            return new ScheduleProperties(frequency, Optional.ToNullable(hourOfDay), Optional.ToList(daysOfWeek), Optional.ToList(weeksOfMonth), Optional.ToNullable(dayOfMonth), startDate, endDate);
         }
     }
 }

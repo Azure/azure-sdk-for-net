@@ -24,8 +24,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(@on, nameof(@on));
 
             On = @on;
-            Cases = new Core.ChangeTrackingList<SwitchCase>();
-            DefaultActivities = new Core.ChangeTrackingList<Activity>();
+            Cases = new ChangeTrackingList<SwitchCase>();
+            DefaultActivities = new ChangeTrackingList<Activity>();
             Type = "Switch";
         }
 

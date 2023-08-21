@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<ContainerRegistryPasswordName> name = default;
-            Core.Optional<string> value = default;
+            Optional<ContainerRegistryPasswordName> name = default;
+            Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryPassword(Core.Optional.ToNullable(name), value.Value);
+            return new ContainerRegistryPassword(Optional.ToNullable(name), value.Value);
         }
     }
 }

@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicSingleSignOnProperties : Core.IUtf8JsonSerializable
+    public partial class NewRelicSingleSignOnProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SingleSignOnState))
+            if (Optional.IsDefined(SingleSignOnState))
             {
                 writer.WritePropertyName("singleSignOnState"u8);
                 writer.WriteStringValue(SingleSignOnState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(EnterpriseAppId))
+            if (Optional.IsDefined(EnterpriseAppId))
             {
                 writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId);
             }
-            if (Core.Optional.IsDefined(SingleSignOnUri))
+            if (Optional.IsDefined(SingleSignOnUri))
             {
                 writer.WritePropertyName("singleSignOnUrl"u8);
                 writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Core.Optional<NewRelicSingleSignOnState> singleSignOnState = default;
-            Core.Optional<string> enterpriseAppId = default;
-            Core.Optional<Uri> singleSignOnUrl = default;
-            Core.Optional<NewRelicProvisioningState> provisioningState = default;
+            Optional<NewRelicSingleSignOnState> singleSignOnState = default;
+            Optional<string> enterpriseAppId = default;
+            Optional<Uri> singleSignOnUrl = default;
+            Optional<NewRelicProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("singleSignOnState"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new NewRelicSingleSignOnProperties(Core.Optional.ToNullable(singleSignOnState), enterpriseAppId.Value, singleSignOnUrl.Value, Core.Optional.ToNullable(provisioningState));
+            return new NewRelicSingleSignOnProperties(Optional.ToNullable(singleSignOnState), enterpriseAppId.Value, singleSignOnUrl.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

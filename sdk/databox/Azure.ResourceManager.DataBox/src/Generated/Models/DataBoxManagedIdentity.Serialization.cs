@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxManagedIdentity : Core.IUtf8JsonSerializable
+    public partial class DataBoxManagedIdentity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IdentityType))
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType);
             }
-            if (Core.Optional.IsDefined(UserAssigned))
+            if (Optional.IsDefined(UserAssigned))
             {
                 writer.WritePropertyName("userAssigned"u8);
                 writer.WriteObjectValue(UserAssigned);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<DataBoxUserAssignedIdentity> userAssigned = default;
+            Optional<string> type = default;
+            Optional<DataBoxUserAssignedIdentity> userAssigned = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

@@ -13,19 +13,19 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    public partial class SapProviderInstanceData : Core.IUtf8JsonSerializable
+    public partial class SapProviderInstanceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProviderSettings))
+            if (Optional.IsDefined(ProviderSettings))
             {
                 writer.WritePropertyName("providerSettings"u8);
                 writer.WriteObjectValue(ProviderSettings);
@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.Workloads
             {
                 return null;
             }
-            Core.Optional<UserAssignedServiceIdentity> identity = default;
+            Optional<UserAssignedServiceIdentity> identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<WorkloadMonitorProvisioningState> provisioningState = default;
-            Core.Optional<ResponseError> errors = default;
-            Core.Optional<ProviderSpecificProperties> providerSettings = default;
+            Optional<SystemData> systemData = default;
+            Optional<WorkloadMonitorProvisioningState> provisioningState = default;
+            Optional<ResponseError> errors = default;
+            Optional<ProviderSpecificProperties> providerSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Workloads
                     continue;
                 }
             }
-            return new SapProviderInstanceData(id, name, type, systemData.Value, identity.Value, Core.Optional.ToNullable(provisioningState), errors.Value, providerSettings.Value);
+            return new SapProviderInstanceData(id, name, type, systemData.Value, identity.Value, Optional.ToNullable(provisioningState), errors.Value, providerSettings.Value);
         }
     }
 }

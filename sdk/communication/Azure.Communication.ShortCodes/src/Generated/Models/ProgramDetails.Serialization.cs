@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class ProgramDetails : Core.IUtf8JsonSerializable
+    public partial class ProgramDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsVanity))
+            if (Optional.IsDefined(IsVanity))
             {
                 writer.WritePropertyName("isVanity"u8);
                 writer.WriteBooleanValue(IsVanity.Value);
             }
-            if (Core.Optional.IsCollectionDefined(PreferredVanityNumbers))
+            if (Optional.IsCollectionDefined(PreferredVanityNumbers))
             {
                 writer.WritePropertyName("preferredVanityNumbers"u8);
                 writer.WriteStartArray();
@@ -32,32 +32,32 @@ namespace Azure.Communication.ShortCodes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(NumberType))
+            if (Optional.IsDefined(NumberType))
             {
                 writer.WritePropertyName("numberType"u8);
                 writer.WriteStringValue(NumberType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IsPoliticalCampaign))
+            if (Optional.IsDefined(IsPoliticalCampaign))
             {
                 writer.WritePropertyName("isPoliticalCampaign"u8);
                 writer.WriteBooleanValue(IsPoliticalCampaign.Value);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(Url))
+            if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
             }
-            if (Core.Optional.IsCollectionDefined(SignUpTypes))
+            if (Optional.IsCollectionDefined(SignUpTypes))
             {
                 writer.WritePropertyName("signUpTypes"u8);
                 writer.WriteStartArray();
@@ -67,22 +67,22 @@ namespace Azure.Communication.ShortCodes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SignUpUrl))
+            if (Optional.IsDefined(SignUpUrl))
             {
                 writer.WritePropertyName("signUpUrl"u8);
                 writer.WriteStringValue(SignUpUrl.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(TermsOfServiceUrl))
+            if (Optional.IsDefined(TermsOfServiceUrl))
             {
                 writer.WritePropertyName("termsOfServiceUrl"u8);
                 writer.WriteStringValue(TermsOfServiceUrl.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(PrivacyPolicyUrl))
+            if (Optional.IsDefined(PrivacyPolicyUrl))
             {
                 writer.WritePropertyName("privacyPolicyUrl"u8);
                 writer.WriteStringValue(PrivacyPolicyUrl.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(ExpectedDateOfService))
+            if (Optional.IsDefined(ExpectedDateOfService))
             {
                 writer.WritePropertyName("expectedDateOfService"u8);
                 writer.WriteStringValue(ExpectedDateOfService.Value, "O");
@@ -96,18 +96,18 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Core.Optional<bool> isVanity = default;
-            Core.Optional<IList<string>> preferredVanityNumbers = default;
-            Core.Optional<NumberType> numberType = default;
-            Core.Optional<bool> isPoliticalCampaign = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
-            Core.Optional<Uri> url = default;
-            Core.Optional<IList<ProgramSignUpType>> signUpTypes = default;
-            Core.Optional<Uri> signUpUrl = default;
-            Core.Optional<Uri> termsOfServiceUrl = default;
-            Core.Optional<Uri> privacyPolicyUrl = default;
-            Core.Optional<DateTimeOffset> expectedDateOfService = default;
+            Optional<bool> isVanity = default;
+            Optional<IList<string>> preferredVanityNumbers = default;
+            Optional<NumberType> numberType = default;
+            Optional<bool> isPoliticalCampaign = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<Uri> url = default;
+            Optional<IList<ProgramSignUpType>> signUpTypes = default;
+            Optional<Uri> signUpUrl = default;
+            Optional<Uri> termsOfServiceUrl = default;
+            Optional<Uri> privacyPolicyUrl = default;
+            Optional<DateTimeOffset> expectedDateOfService = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isVanity"u8))
@@ -221,7 +221,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new ProgramDetails(Core.Optional.ToNullable(isVanity), Core.Optional.ToList(preferredVanityNumbers), Core.Optional.ToNullable(numberType), Core.Optional.ToNullable(isPoliticalCampaign), name.Value, description.Value, url.Value, Core.Optional.ToList(signUpTypes), signUpUrl.Value, termsOfServiceUrl.Value, privacyPolicyUrl.Value, Core.Optional.ToNullable(expectedDateOfService));
+            return new ProgramDetails(Optional.ToNullable(isVanity), Optional.ToList(preferredVanityNumbers), Optional.ToNullable(numberType), Optional.ToNullable(isPoliticalCampaign), name.Value, description.Value, url.Value, Optional.ToList(signUpTypes), signUpUrl.Value, termsOfServiceUrl.Value, privacyPolicyUrl.Value, Optional.ToNullable(expectedDateOfService));
         }
     }
 }

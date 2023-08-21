@@ -11,47 +11,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions : Core.IUtf8JsonSerializable
+    public partial class ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("DisplayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("Description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(HelpUri))
+            if (Optional.IsDefined(HelpUri))
             {
                 writer.WritePropertyName("HelpUrl"u8);
                 writer.WriteStringValue(HelpUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(IsHidden))
+            if (Optional.IsDefined(IsHidden))
             {
                 writer.WritePropertyName("IsHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);
             }
-            if (Core.Optional.IsDefined(IsEnabledByDefault))
+            if (Optional.IsDefined(IsEnabledByDefault))
             {
                 writer.WritePropertyName("IsEnabledByDefault"u8);
                 writer.WriteBooleanValue(IsEnabledByDefault.Value);
             }
-            if (Core.Optional.IsDefined(IsInPreview))
+            if (Optional.IsDefined(IsInPreview))
             {
                 writer.WritePropertyName("IsInPreview"u8);
                 writer.WriteBooleanValue(IsInPreview.Value);
             }
-            if (Core.Optional.IsDefined(SupportsEmailNotifications))
+            if (Optional.IsDefined(SupportsEmailNotifications))
             {
                 writer.WritePropertyName("SupportsEmailNotifications"u8);
                 writer.WriteBooleanValue(SupportsEmailNotifications.Value);
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<Uri> helpUrl = default;
-            Core.Optional<bool> isHidden = default;
-            Core.Optional<bool> isEnabledByDefault = default;
-            Core.Optional<bool> isInPreview = default;
-            Core.Optional<bool> supportsEmailNotifications = default;
+            Optional<string> name = default;
+            Optional<string> displayName = default;
+            Optional<string> description = default;
+            Optional<Uri> helpUrl = default;
+            Optional<bool> isHidden = default;
+            Optional<bool> isEnabledByDefault = default;
+            Optional<bool> isInPreview = default;
+            Optional<bool> supportsEmailNotifications = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Name"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(name.Value, displayName.Value, description.Value, helpUrl.Value, Core.Optional.ToNullable(isHidden), Core.Optional.ToNullable(isEnabledByDefault), Core.Optional.ToNullable(isInPreview), Core.Optional.ToNullable(supportsEmailNotifications));
+            return new ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(name.Value, displayName.Value, description.Value, helpUrl.Value, Optional.ToNullable(isHidden), Optional.ToNullable(isEnabledByDefault), Optional.ToNullable(isInPreview), Optional.ToNullable(supportsEmailNotifications));
         }
     }
 }

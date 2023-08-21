@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<MoverOperationsDiscovery>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<MoverOperationsDiscovery>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverOperationsDiscoveryList(Core.Optional.ToList(value), nextLink.Value);
+            return new MoverOperationsDiscoveryList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

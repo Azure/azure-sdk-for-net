@@ -15,17 +15,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class AutomationRunbookData : Core.IUtf8JsonSerializable
+    public partial class AutomationRunbookData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,42 +40,42 @@ namespace Azure.ResourceManager.Automation
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RunbookType))
+            if (Optional.IsDefined(RunbookType))
             {
                 writer.WritePropertyName("runbookType"u8);
                 writer.WriteStringValue(RunbookType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PublishContentLink))
+            if (Optional.IsDefined(PublishContentLink))
             {
                 writer.WritePropertyName("publishContentLink"u8);
                 writer.WriteObjectValue(PublishContentLink);
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IsLogVerboseEnabled))
+            if (Optional.IsDefined(IsLogVerboseEnabled))
             {
                 writer.WritePropertyName("logVerbose"u8);
                 writer.WriteBooleanValue(IsLogVerboseEnabled.Value);
             }
-            if (Core.Optional.IsDefined(IsLogProgressEnabled))
+            if (Optional.IsDefined(IsLogProgressEnabled))
             {
                 writer.WritePropertyName("logProgress"u8);
                 writer.WriteBooleanValue(IsLogProgressEnabled.Value);
             }
-            if (Core.Optional.IsDefined(LogActivityTrace))
+            if (Optional.IsDefined(LogActivityTrace))
             {
                 writer.WritePropertyName("logActivityTrace"u8);
                 writer.WriteNumberValue(LogActivityTrace.Value);
             }
-            if (Core.Optional.IsDefined(JobCount))
+            if (Optional.IsDefined(JobCount))
             {
                 writer.WritePropertyName("jobCount"u8);
                 writer.WriteNumberValue(JobCount.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Automation
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(OutputTypes))
+            if (Optional.IsCollectionDefined(OutputTypes))
             {
                 writer.WritePropertyName("outputTypes"u8);
                 writer.WriteStartArray();
@@ -96,32 +96,32 @@ namespace Azure.ResourceManager.Automation
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Draft))
+            if (Optional.IsDefined(Draft))
             {
                 writer.WritePropertyName("draft"u8);
                 writer.WriteObjectValue(Draft);
             }
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(LastModifiedBy))
+            if (Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(LastModifiedOn))
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -136,28 +136,28 @@ namespace Azure.ResourceManager.Automation
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<AutomationRunbookType> runbookType = default;
-            Core.Optional<AutomationContentLink> publishContentLink = default;
-            Core.Optional<RunbookState> state = default;
-            Core.Optional<bool> logVerbose = default;
-            Core.Optional<bool> logProgress = default;
-            Core.Optional<int> logActivityTrace = default;
-            Core.Optional<int> jobCount = default;
-            Core.Optional<IDictionary<string, RunbookParameterDefinition>> parameters = default;
-            Core.Optional<IList<string>> outputTypes = default;
-            Core.Optional<AutomationRunbookDraft> draft = default;
-            Core.Optional<RunbookProvisioningState> provisioningState = default;
-            Core.Optional<string> lastModifiedBy = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<string> description = default;
+            Optional<SystemData> systemData = default;
+            Optional<AutomationRunbookType> runbookType = default;
+            Optional<AutomationContentLink> publishContentLink = default;
+            Optional<RunbookState> state = default;
+            Optional<bool> logVerbose = default;
+            Optional<bool> logProgress = default;
+            Optional<int> logActivityTrace = default;
+            Optional<int> jobCount = default;
+            Optional<IDictionary<string, RunbookParameterDefinition>> parameters = default;
+            Optional<IList<string>> outputTypes = default;
+            Optional<AutomationRunbookDraft> draft = default;
+            Optional<RunbookProvisioningState> provisioningState = default;
+            Optional<string> lastModifiedBy = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Automation
                     continue;
                 }
             }
-            return new AutomationRunbookData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), Core.Optional.ToNullable(runbookType), publishContentLink.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(logVerbose), Core.Optional.ToNullable(logProgress), Core.Optional.ToNullable(logActivityTrace), Core.Optional.ToNullable(jobCount), Core.Optional.ToDictionary(parameters), Core.Optional.ToList(outputTypes), draft.Value, Core.Optional.ToNullable(provisioningState), lastModifiedBy.Value, Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime), description.Value);
+            return new AutomationRunbookData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(runbookType), publishContentLink.Value, Optional.ToNullable(state), Optional.ToNullable(logVerbose), Optional.ToNullable(logProgress), Optional.ToNullable(logActivityTrace), Optional.ToNullable(jobCount), Optional.ToDictionary(parameters), Optional.ToList(outputTypes), draft.Value, Optional.ToNullable(provisioningState), lastModifiedBy.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value);
         }
     }
 }

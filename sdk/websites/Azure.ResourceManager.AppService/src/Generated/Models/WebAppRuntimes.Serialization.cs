@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<WebAppRuntimeSettings> linuxRuntimeSettings = default;
-            Core.Optional<WebAppRuntimeSettings> windowsRuntimeSettings = default;
-            Core.Optional<LinuxJavaContainerSettings> linuxContainerSettings = default;
-            Core.Optional<WindowsJavaContainerSettings> windowsContainerSettings = default;
+            Optional<WebAppRuntimeSettings> linuxRuntimeSettings = default;
+            Optional<WebAppRuntimeSettings> windowsRuntimeSettings = default;
+            Optional<LinuxJavaContainerSettings> linuxContainerSettings = default;
+            Optional<WindowsJavaContainerSettings> windowsContainerSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linuxRuntimeSettings"u8))

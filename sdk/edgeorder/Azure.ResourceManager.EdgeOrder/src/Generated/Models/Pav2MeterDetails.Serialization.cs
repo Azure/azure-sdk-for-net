@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Core.Optional<Guid> meterGuid = default;
+            Optional<Guid> meterGuid = default;
             BillingType billingType = default;
-            Core.Optional<double> multiplier = default;
-            Core.Optional<EdgeOrderProductChargingType> chargingType = default;
+            Optional<double> multiplier = default;
+            Optional<EdgeOrderProductChargingType> chargingType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterGuid"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new Pav2MeterDetails(billingType, Core.Optional.ToNullable(multiplier), Core.Optional.ToNullable(chargingType), Core.Optional.ToNullable(meterGuid));
+            return new Pav2MeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType), Optional.ToNullable(meterGuid));
         }
     }
 }

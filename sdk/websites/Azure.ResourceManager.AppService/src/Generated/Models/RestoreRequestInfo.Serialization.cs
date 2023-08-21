@@ -13,39 +13,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class RestoreRequestInfo : Core.IUtf8JsonSerializable
+    public partial class RestoreRequestInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StorageAccountUri))
+            if (Optional.IsDefined(StorageAccountUri))
             {
                 writer.WritePropertyName("storageAccountUrl"u8);
                 writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(BlobName))
+            if (Optional.IsDefined(BlobName))
             {
                 writer.WritePropertyName("blobName"u8);
                 writer.WriteStringValue(BlobName);
             }
-            if (Core.Optional.IsDefined(CanOverwrite))
+            if (Optional.IsDefined(CanOverwrite))
             {
                 writer.WritePropertyName("overwrite"u8);
                 writer.WriteBooleanValue(CanOverwrite.Value);
             }
-            if (Core.Optional.IsDefined(SiteName))
+            if (Optional.IsDefined(SiteName))
             {
                 writer.WritePropertyName("siteName"u8);
                 writer.WriteStringValue(SiteName);
             }
-            if (Core.Optional.IsCollectionDefined(Databases))
+            if (Optional.IsCollectionDefined(Databases))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
@@ -55,32 +55,32 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IgnoreConflictingHostNames))
+            if (Optional.IsDefined(IgnoreConflictingHostNames))
             {
                 writer.WritePropertyName("ignoreConflictingHostNames"u8);
                 writer.WriteBooleanValue(IgnoreConflictingHostNames.Value);
             }
-            if (Core.Optional.IsDefined(IgnoreDatabases))
+            if (Optional.IsDefined(IgnoreDatabases))
             {
                 writer.WritePropertyName("ignoreDatabases"u8);
                 writer.WriteBooleanValue(IgnoreDatabases.Value);
             }
-            if (Core.Optional.IsDefined(AppServicePlan))
+            if (Optional.IsDefined(AppServicePlan))
             {
                 writer.WritePropertyName("appServicePlan"u8);
                 writer.WriteStringValue(AppServicePlan);
             }
-            if (Core.Optional.IsDefined(OperationType))
+            if (Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(AdjustConnectionStrings))
+            if (Optional.IsDefined(AdjustConnectionStrings))
             {
                 writer.WritePropertyName("adjustConnectionStrings"u8);
                 writer.WriteBooleanValue(AdjustConnectionStrings.Value);
             }
-            if (Core.Optional.IsDefined(HostingEnvironment))
+            if (Optional.IsDefined(HostingEnvironment))
             {
                 writer.WritePropertyName("hostingEnvironment"u8);
                 writer.WriteStringValue(HostingEnvironment);
@@ -95,22 +95,22 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Uri> storageAccountUrl = default;
-            Core.Optional<string> blobName = default;
-            Core.Optional<bool> overwrite = default;
-            Core.Optional<string> siteName = default;
-            Core.Optional<IList<AppServiceDatabaseBackupSetting>> databases = default;
-            Core.Optional<bool> ignoreConflictingHostNames = default;
-            Core.Optional<bool> ignoreDatabases = default;
-            Core.Optional<string> appServicePlan = default;
-            Core.Optional<BackupRestoreOperationType> operationType = default;
-            Core.Optional<bool> adjustConnectionStrings = default;
-            Core.Optional<string> hostingEnvironment = default;
+            Optional<SystemData> systemData = default;
+            Optional<Uri> storageAccountUrl = default;
+            Optional<string> blobName = default;
+            Optional<bool> overwrite = default;
+            Optional<string> siteName = default;
+            Optional<IList<AppServiceDatabaseBackupSetting>> databases = default;
+            Optional<bool> ignoreConflictingHostNames = default;
+            Optional<bool> ignoreDatabases = default;
+            Optional<string> appServicePlan = default;
+            Optional<BackupRestoreOperationType> operationType = default;
+            Optional<bool> adjustConnectionStrings = default;
+            Optional<string> hostingEnvironment = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new RestoreRequestInfo(id, name, type, systemData.Value, storageAccountUrl.Value, blobName.Value, Core.Optional.ToNullable(overwrite), siteName.Value, Core.Optional.ToList(databases), Core.Optional.ToNullable(ignoreConflictingHostNames), Core.Optional.ToNullable(ignoreDatabases), appServicePlan.Value, Core.Optional.ToNullable(operationType), Core.Optional.ToNullable(adjustConnectionStrings), hostingEnvironment.Value, kind.Value);
+            return new RestoreRequestInfo(id, name, type, systemData.Value, storageAccountUrl.Value, blobName.Value, Optional.ToNullable(overwrite), siteName.Value, Optional.ToList(databases), Optional.ToNullable(ignoreConflictingHostNames), Optional.ToNullable(ignoreDatabases), appServicePlan.Value, Optional.ToNullable(operationType), Optional.ToNullable(adjustConnectionStrings), hostingEnvironment.Value, kind.Value);
         }
     }
 }

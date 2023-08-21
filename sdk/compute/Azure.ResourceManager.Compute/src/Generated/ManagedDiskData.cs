@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public ManagedDiskData(AzureLocation location) : base(location)
         {
-            ManagedByExtended = new Core.ChangeTrackingList<ResourceIdentifier>();
-            Zones = new Core.ChangeTrackingList<string>();
-            ShareInfo = new Core.ChangeTrackingList<ShareInfoElement>();
+            ManagedByExtended = new ChangeTrackingList<ResourceIdentifier>();
+            Zones = new ChangeTrackingList<string>();
+            ShareInfo = new ChangeTrackingList<ShareInfoElement>();
         }
 
         /// <summary> Initializes a new instance of ManagedDiskData. </summary>

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> jobName = default;
-            Core.Optional<ResourceIdentifier> jobId = default;
-            Core.Optional<DateTimeOffset> startTime = default;
+            Optional<string> jobName = default;
+            Optional<ResourceIdentifier> jobId = default;
+            Optional<DateTimeOffset> startTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobName"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new CurrentJobDetails(jobName.Value, jobId.Value, Core.Optional.ToNullable(startTime));
+            return new CurrentJobDetails(jobName.Value, jobId.Value, Optional.ToNullable(startTime));
         }
     }
 }

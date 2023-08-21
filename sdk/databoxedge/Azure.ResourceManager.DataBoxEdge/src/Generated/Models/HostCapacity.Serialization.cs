@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class HostCapacity : Core.IUtf8JsonSerializable
+    public partial class HostCapacity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HostName))
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Core.Optional.IsDefined(EffectiveAvailableMemoryInMBOnHost))
+            if (Optional.IsDefined(EffectiveAvailableMemoryInMBOnHost))
             {
                 writer.WritePropertyName("effectiveAvailableMemoryMbOnHost"u8);
                 writer.WriteNumberValue(EffectiveAvailableMemoryInMBOnHost.Value);
             }
-            if (Core.Optional.IsDefined(AvailableGpuCount))
+            if (Optional.IsDefined(AvailableGpuCount))
             {
                 writer.WritePropertyName("availableGpuCount"u8);
                 writer.WriteNumberValue(AvailableGpuCount.Value);
             }
-            if (Core.Optional.IsCollectionDefined(VmUsedMemory))
+            if (Optional.IsCollectionDefined(VmUsedMemory))
             {
                 writer.WritePropertyName("vmUsedMemory"u8);
                 writer.WriteStartObject();
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(GpuType))
+            if (Optional.IsDefined(GpuType))
             {
                 writer.WritePropertyName("gpuType"u8);
                 writer.WriteStringValue(GpuType);
             }
-            if (Core.Optional.IsCollectionDefined(NumaNodesData))
+            if (Optional.IsCollectionDefined(NumaNodesData))
             {
                 writer.WritePropertyName("numaNodesData"u8);
                 writer.WriteStartArray();
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<string> hostName = default;
-            Core.Optional<long> effectiveAvailableMemoryMbOnHost = default;
-            Core.Optional<int> availableGpuCount = default;
-            Core.Optional<IDictionary<string, DataBoxEdgeVmMemory>> vmUsedMemory = default;
-            Core.Optional<string> gpuType = default;
-            Core.Optional<IList<NumaNodeInfo>> numaNodesData = default;
+            Optional<string> hostName = default;
+            Optional<long> effectiveAvailableMemoryMbOnHost = default;
+            Optional<int> availableGpuCount = default;
+            Optional<IDictionary<string, DataBoxEdgeVmMemory>> vmUsedMemory = default;
+            Optional<string> gpuType = default;
+            Optional<IList<NumaNodeInfo>> numaNodesData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostName"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new HostCapacity(hostName.Value, Core.Optional.ToNullable(effectiveAvailableMemoryMbOnHost), Core.Optional.ToNullable(availableGpuCount), Core.Optional.ToDictionary(vmUsedMemory), gpuType.Value, Core.Optional.ToList(numaNodesData));
+            return new HostCapacity(hostName.Value, Optional.ToNullable(effectiveAvailableMemoryMbOnHost), Optional.ToNullable(availableGpuCount), Optional.ToDictionary(vmUsedMemory), gpuType.Value, Optional.ToList(numaNodesData));
         }
     }
 }

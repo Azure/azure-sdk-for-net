@@ -13,47 +13,47 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class BotChannelGetWithKeysResult : Core.IUtf8JsonSerializable
+    public partial class BotChannelGetWithKeysResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Resource))
+            if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteObjectValue(Resource);
             }
-            if (Core.Optional.IsDefined(Setting))
+            if (Optional.IsDefined(Setting))
             {
                 writer.WritePropertyName("setting"u8);
                 writer.WriteObjectValue(Setting);
             }
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Core.Optional.IsDefined(EntityTag))
+            if (Optional.IsDefined(EntityTag))
             {
                 writer.WritePropertyName("entityTag"u8);
                 writer.WriteStringValue(EntityTag);
             }
-            if (Core.Optional.IsDefined(ChangedTime))
+            if (Optional.IsDefined(ChangedTime))
             {
                 writer.WritePropertyName("changedTime"u8);
                 writer.WriteStringValue(ChangedTime);
             }
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 if (Kind != null)
                 {
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("kind");
                 }
             }
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -92,22 +92,22 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<BotChannelProperties> resource = default;
-            Core.Optional<BotChannelSettings> setting = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<string> entityTag = default;
-            Core.Optional<string> changedTime = default;
-            Core.Optional<BotChannelProperties> properties = default;
-            Core.Optional<BotServiceSku> sku = default;
-            Core.Optional<BotServiceKind?> kind = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IReadOnlyList<string>> zones = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<BotChannelProperties> resource = default;
+            Optional<BotChannelSettings> setting = default;
+            Optional<string> provisioningState = default;
+            Optional<string> entityTag = default;
+            Optional<string> changedTime = default;
+            Optional<BotChannelProperties> properties = default;
+            Optional<BotServiceSku> sku = default;
+            Optional<BotServiceKind?> kind = default;
+            Optional<ETag> etag = default;
+            Optional<IReadOnlyList<string>> zones = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resource"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new BotChannelGetWithKeysResult(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, resource.Value, setting.Value, provisioningState.Value, entityTag.Value, changedTime.Value, properties.Value, sku.Value, Core.Optional.ToNullable(kind), Core.Optional.ToNullable(etag), Core.Optional.ToList(zones));
+            return new BotChannelGetWithKeysResult(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource.Value, setting.Value, provisioningState.Value, entityTag.Value, changedTime.Value, properties.Value, sku.Value, Optional.ToNullable(kind), Optional.ToNullable(etag), Optional.ToList(zones));
         }
     }
 }

@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<string> status = default;
-            Core.Optional<string> linkerName = default;
-            Core.Optional<bool?> isConnectionAvailable = default;
-            Core.Optional<DateTimeOffset?> reportStartTimeUtc = default;
-            Core.Optional<DateTimeOffset?> reportEndTimeUtc = default;
-            Core.Optional<ResourceIdentifier> sourceId = default;
-            Core.Optional<ResourceIdentifier> targetId = default;
-            Core.Optional<LinkerAuthType?> authType = default;
-            Core.Optional<IReadOnlyList<LinkerValidationResultItemInfo>> validationDetail = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<string> status = default;
+            Optional<string> linkerName = default;
+            Optional<bool?> isConnectionAvailable = default;
+            Optional<DateTimeOffset?> reportStartTimeUtc = default;
+            Optional<DateTimeOffset?> reportEndTimeUtc = default;
+            Optional<ResourceIdentifier> sourceId = default;
+            Optional<ResourceIdentifier> targetId = default;
+            Optional<LinkerAuthType?> authType = default;
+            Optional<IReadOnlyList<LinkerValidationResultItemInfo>> validationDetail = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     continue;
                 }
             }
-            return new LinkerValidateOperationResult(resourceId.Value, status.Value, linkerName.Value, Core.Optional.ToNullable(isConnectionAvailable), Core.Optional.ToNullable(reportStartTimeUtc), Core.Optional.ToNullable(reportEndTimeUtc), sourceId.Value, targetId.Value, Core.Optional.ToNullable(authType), Core.Optional.ToList(validationDetail));
+            return new LinkerValidateOperationResult(resourceId.Value, status.Value, linkerName.Value, Optional.ToNullable(isConnectionAvailable), Optional.ToNullable(reportStartTimeUtc), Optional.ToNullable(reportEndTimeUtc), sourceId.Value, targetId.Value, Optional.ToNullable(authType), Optional.ToList(validationDetail));
         }
     }
 }

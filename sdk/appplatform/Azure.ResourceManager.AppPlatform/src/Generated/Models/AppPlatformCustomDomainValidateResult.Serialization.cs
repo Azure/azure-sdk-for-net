@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<bool> isValid = default;
-            Core.Optional<string> message = default;
+            Optional<bool> isValid = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isValid"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformCustomDomainValidateResult(Core.Optional.ToNullable(isValid), message.Value);
+            return new AppPlatformCustomDomainValidateResult(Optional.ToNullable(isValid), message.Value);
         }
     }
 }

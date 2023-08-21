@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Initializes a new instance of DataProtectionBackupInstanceData. </summary>
         public DataProtectionBackupInstanceData()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DataProtectionBackupInstanceData. </summary>

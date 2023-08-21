@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<PostgreSqlPerformanceTierProperties>> value = default;
+            Optional<IReadOnlyList<PostgreSqlPerformanceTierProperties>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     continue;
                 }
             }
-            return new PostgreSqlPerformanceTierListResult(Core.Optional.ToList(value));
+            return new PostgreSqlPerformanceTierListResult(Optional.ToList(value));
         }
     }
 }

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class RuleEmailAction : Core.IUtf8JsonSerializable
+    public partial class RuleEmailAction : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SendToServiceOwners))
+            if (Optional.IsDefined(SendToServiceOwners))
             {
                 writer.WritePropertyName("sendToServiceOwners"u8);
                 writer.WriteBooleanValue(SendToServiceOwners.Value);
             }
-            if (Core.Optional.IsCollectionDefined(CustomEmails))
+            if (Optional.IsCollectionDefined(CustomEmails))
             {
                 writer.WritePropertyName("customEmails"u8);
                 writer.WriteStartArray();
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<bool> sendToServiceOwners = default;
-            Core.Optional<IList<string>> customEmails = default;
+            Optional<bool> sendToServiceOwners = default;
+            Optional<IList<string>> customEmails = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new RuleEmailAction(odataType, Core.Optional.ToNullable(sendToServiceOwners), Core.Optional.ToList(customEmails));
+            return new RuleEmailAction(odataType, Optional.ToNullable(sendToServiceOwners), Optional.ToList(customEmails));
         }
     }
 }

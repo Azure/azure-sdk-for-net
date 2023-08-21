@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LabServices
         /// <summary> Initializes a new instance of LabVirtualMachineImageData. </summary>
         public LabVirtualMachineImageData()
         {
-            AvailableRegions = new Core.ChangeTrackingList<AzureLocation>();
+            AvailableRegions = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of LabVirtualMachineImageData. </summary>

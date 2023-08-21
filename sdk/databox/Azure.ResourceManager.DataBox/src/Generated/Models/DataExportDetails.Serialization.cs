@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataExportDetails : Core.IUtf8JsonSerializable
+    public partial class DataExportDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("transferConfiguration"u8);
             writer.WriteObjectValue(TransferConfiguration);
-            if (Core.Optional.IsDefined(LogCollectionLevel))
+            if (Optional.IsDefined(LogCollectionLevel))
             {
                 writer.WritePropertyName("logCollectionLevel"u8);
                 writer.WriteStringValue(LogCollectionLevel.Value.ToSerialString());
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             TransferConfiguration transferConfiguration = default;
-            Core.Optional<LogCollectionLevel> logCollectionLevel = default;
+            Optional<LogCollectionLevel> logCollectionLevel = default;
             DataAccountDetails accountDetails = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataExportDetails(transferConfiguration, Core.Optional.ToNullable(logCollectionLevel), accountDetails);
+            return new DataExportDetails(transferConfiguration, Optional.ToNullable(logCollectionLevel), accountDetails);
         }
     }
 }

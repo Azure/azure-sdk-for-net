@@ -14,54 +14,54 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureTableSinkConverter))]
-    public partial class AzureTableSink : Core.IUtf8JsonSerializable
+    public partial class AzureTableSink : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AzureTableDefaultPartitionKeyValue))
+            if (Optional.IsDefined(AzureTableDefaultPartitionKeyValue))
             {
                 writer.WritePropertyName("azureTableDefaultPartitionKeyValue"u8);
                 writer.WriteObjectValue(AzureTableDefaultPartitionKeyValue);
             }
-            if (Core.Optional.IsDefined(AzureTablePartitionKeyName))
+            if (Optional.IsDefined(AzureTablePartitionKeyName))
             {
                 writer.WritePropertyName("azureTablePartitionKeyName"u8);
                 writer.WriteObjectValue(AzureTablePartitionKeyName);
             }
-            if (Core.Optional.IsDefined(AzureTableRowKeyName))
+            if (Optional.IsDefined(AzureTableRowKeyName))
             {
                 writer.WritePropertyName("azureTableRowKeyName"u8);
                 writer.WriteObjectValue(AzureTableRowKeyName);
             }
-            if (Core.Optional.IsDefined(AzureTableInsertType))
+            if (Optional.IsDefined(AzureTableInsertType))
             {
                 writer.WritePropertyName("azureTableInsertType"u8);
                 writer.WriteObjectValue(AzureTableInsertType);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Core.Optional.IsDefined(WriteBatchSize))
+            if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 writer.WriteObjectValue(WriteBatchSize);
             }
-            if (Core.Optional.IsDefined(WriteBatchTimeout))
+            if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 writer.WriteObjectValue(WriteBatchTimeout);
             }
-            if (Core.Optional.IsDefined(SinkRetryCount))
+            if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 writer.WriteObjectValue(SinkRetryCount);
             }
-            if (Core.Optional.IsDefined(SinkRetryWait))
+            if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 writer.WriteObjectValue(SinkRetryWait);
             }
-            if (Core.Optional.IsDefined(MaxConcurrentConnections))
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -80,16 +80,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<object> azureTableDefaultPartitionKeyValue = default;
-            Core.Optional<object> azureTablePartitionKeyName = default;
-            Core.Optional<object> azureTableRowKeyName = default;
-            Core.Optional<object> azureTableInsertType = default;
+            Optional<object> azureTableDefaultPartitionKeyValue = default;
+            Optional<object> azureTablePartitionKeyName = default;
+            Optional<object> azureTableRowKeyName = default;
+            Optional<object> azureTableInsertType = default;
             string type = default;
-            Core.Optional<object> writeBatchSize = default;
-            Core.Optional<object> writeBatchTimeout = default;
-            Core.Optional<object> sinkRetryCount = default;
-            Core.Optional<object> sinkRetryWait = default;
-            Core.Optional<object> maxConcurrentConnections = default;
+            Optional<object> writeBatchSize = default;
+            Optional<object> writeBatchTimeout = default;
+            Optional<object> sinkRetryCount = default;
+            Optional<object> sinkRetryWait = default;
+            Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

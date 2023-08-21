@@ -16,8 +16,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of Platform. </summary>
         internal Platform()
         {
-            OsFeatures = new Core.ChangeTrackingList<string>();
-            Features = new Core.ChangeTrackingList<string>();
+            OsFeatures = new ChangeTrackingList<string>();
+            Features = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of Platform. </summary>

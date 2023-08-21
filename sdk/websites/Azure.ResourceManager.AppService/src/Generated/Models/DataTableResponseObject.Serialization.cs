@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DataTableResponseObject : Core.IUtf8JsonSerializable
+    public partial class DataTableResponseObject : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TableName))
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (Core.Optional.IsCollectionDefined(Columns))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Rows))
+            if (Optional.IsCollectionDefined(Rows))
             {
                 writer.WritePropertyName("rows"u8);
                 writer.WriteStartArray();
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> tableName = default;
-            Core.Optional<IList<DataTableResponseColumn>> columns = default;
-            Core.Optional<IList<IList<string>>> rows = default;
+            Optional<string> tableName = default;
+            Optional<IList<DataTableResponseColumn>> columns = default;
+            Optional<IList<IList<string>>> rows = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tableName"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DataTableResponseObject(tableName.Value, Core.Optional.ToList(columns), Core.Optional.ToList(rows));
+            return new DataTableResponseObject(tableName.Value, Optional.ToList(columns), Optional.ToList(rows));
         }
     }
 }

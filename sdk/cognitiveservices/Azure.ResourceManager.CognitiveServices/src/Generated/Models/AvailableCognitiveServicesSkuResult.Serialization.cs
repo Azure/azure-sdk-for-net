@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             IReadOnlyList<AvailableCognitiveServicesSku> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))

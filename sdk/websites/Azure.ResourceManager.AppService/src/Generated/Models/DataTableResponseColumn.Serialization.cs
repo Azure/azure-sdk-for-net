@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DataTableResponseColumn : Core.IUtf8JsonSerializable
+    public partial class DataTableResponseColumn : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ColumnName))
+            if (Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("columnName"u8);
                 writer.WriteStringValue(ColumnName);
             }
-            if (Core.Optional.IsDefined(DataType))
+            if (Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
-            if (Core.Optional.IsDefined(ColumnType))
+            if (Optional.IsDefined(ColumnType))
             {
                 writer.WritePropertyName("columnType"u8);
                 writer.WriteStringValue(ColumnType);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> columnName = default;
-            Core.Optional<string> dataType = default;
-            Core.Optional<string> columnType = default;
+            Optional<string> columnName = default;
+            Optional<string> dataType = default;
+            Optional<string> columnType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("columnName"u8))

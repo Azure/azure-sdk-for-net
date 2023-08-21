@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of SemanticSettings. </summary>
         public SemanticSettings()
         {
-            Configurations = new Core.ChangeTrackingList<SemanticConfiguration>();
+            Configurations = new ChangeTrackingList<SemanticConfiguration>();
         }
 
         /// <summary> Initializes a new instance of SemanticSettings. </summary>

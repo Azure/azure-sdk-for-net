@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(l3IsolationDomainId, nameof(l3IsolationDomainId));
 
             ExtendedLocation = extendedLocation;
-            AssociatedResourceIds = new Core.ChangeTrackingList<ResourceIdentifier>();
-            HybridAksClustersAssociatedIds = new Core.ChangeTrackingList<ResourceIdentifier>();
+            AssociatedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
+            HybridAksClustersAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
             L3IsolationDomainId = l3IsolationDomainId;
-            VirtualMachinesAssociatedIds = new Core.ChangeTrackingList<ResourceIdentifier>();
+            VirtualMachinesAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
             Vlan = vlan;
         }
 

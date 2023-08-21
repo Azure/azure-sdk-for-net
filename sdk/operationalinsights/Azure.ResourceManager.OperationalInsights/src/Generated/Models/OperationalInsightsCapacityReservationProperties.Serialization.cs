@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsCapacityReservationProperties : Core.IUtf8JsonSerializable
+    public partial class OperationalInsightsCapacityReservationProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> lastSkuUpdate = default;
-            Core.Optional<long> minCapacity = default;
+            Optional<DateTimeOffset> lastSkuUpdate = default;
+            Optional<long> minCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastSkuUpdate"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new OperationalInsightsCapacityReservationProperties(Core.Optional.ToNullable(lastSkuUpdate), Core.Optional.ToNullable(minCapacity));
+            return new OperationalInsightsCapacityReservationProperties(Optional.ToNullable(lastSkuUpdate), Optional.ToNullable(minCapacity));
         }
     }
 }

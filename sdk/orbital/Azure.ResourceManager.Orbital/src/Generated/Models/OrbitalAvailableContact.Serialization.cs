@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.Orbital.Models
             {
                 return null;
             }
-            Core.Optional<WritableSubResource> spacecraft = default;
-            Core.Optional<string> groundStationName = default;
-            Core.Optional<float> maximumElevationDegrees = default;
-            Core.Optional<DateTimeOffset> txStartTime = default;
-            Core.Optional<DateTimeOffset> txEndTime = default;
-            Core.Optional<DateTimeOffset> rxStartTime = default;
-            Core.Optional<DateTimeOffset> rxEndTime = default;
-            Core.Optional<float> startAzimuthDegrees = default;
-            Core.Optional<float> endAzimuthDegrees = default;
-            Core.Optional<float> startElevationDegrees = default;
-            Core.Optional<float> endElevationDegrees = default;
+            Optional<WritableSubResource> spacecraft = default;
+            Optional<string> groundStationName = default;
+            Optional<float> maximumElevationDegrees = default;
+            Optional<DateTimeOffset> txStartTime = default;
+            Optional<DateTimeOffset> txEndTime = default;
+            Optional<DateTimeOffset> rxStartTime = default;
+            Optional<DateTimeOffset> rxEndTime = default;
+            Optional<float> startAzimuthDegrees = default;
+            Optional<float> endAzimuthDegrees = default;
+            Optional<float> startElevationDegrees = default;
+            Optional<float> endElevationDegrees = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("spacecraft"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     continue;
                 }
             }
-            return new OrbitalAvailableContact(spacecraft, groundStationName.Value, Core.Optional.ToNullable(maximumElevationDegrees), Core.Optional.ToNullable(txStartTime), Core.Optional.ToNullable(txEndTime), Core.Optional.ToNullable(rxStartTime), Core.Optional.ToNullable(rxEndTime), Core.Optional.ToNullable(startAzimuthDegrees), Core.Optional.ToNullable(endAzimuthDegrees), Core.Optional.ToNullable(startElevationDegrees), Core.Optional.ToNullable(endElevationDegrees));
+            return new OrbitalAvailableContact(spacecraft, groundStationName.Value, Optional.ToNullable(maximumElevationDegrees), Optional.ToNullable(txStartTime), Optional.ToNullable(txEndTime), Optional.ToNullable(rxStartTime), Optional.ToNullable(rxEndTime), Optional.ToNullable(startAzimuthDegrees), Optional.ToNullable(endAzimuthDegrees), Optional.ToNullable(startElevationDegrees), Optional.ToNullable(endElevationDegrees));
         }
     }
 }

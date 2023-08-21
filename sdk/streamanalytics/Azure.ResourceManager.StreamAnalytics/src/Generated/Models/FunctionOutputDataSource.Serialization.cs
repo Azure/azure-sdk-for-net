@@ -10,36 +10,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class FunctionOutputDataSource : Core.IUtf8JsonSerializable
+    public partial class FunctionOutputDataSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FunctionAppName))
+            if (Optional.IsDefined(FunctionAppName))
             {
                 writer.WritePropertyName("functionAppName"u8);
                 writer.WriteStringValue(FunctionAppName);
             }
-            if (Core.Optional.IsDefined(FunctionName))
+            if (Optional.IsDefined(FunctionName))
             {
                 writer.WritePropertyName("functionName"u8);
                 writer.WriteStringValue(FunctionName);
             }
-            if (Core.Optional.IsDefined(ApiKey))
+            if (Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Core.Optional.IsDefined(MaxBatchSize))
+            if (Optional.IsDefined(MaxBatchSize))
             {
                 writer.WritePropertyName("maxBatchSize"u8);
                 writer.WriteNumberValue(MaxBatchSize.Value);
             }
-            if (Core.Optional.IsDefined(MaxBatchCount))
+            if (Optional.IsDefined(MaxBatchCount))
             {
                 writer.WritePropertyName("maxBatchCount"u8);
                 writer.WriteNumberValue(MaxBatchCount.Value);
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Core.Optional<string> functionAppName = default;
-            Core.Optional<string> functionName = default;
-            Core.Optional<string> apiKey = default;
-            Core.Optional<int> maxBatchSize = default;
-            Core.Optional<int> maxBatchCount = default;
+            Optional<string> functionAppName = default;
+            Optional<string> functionName = default;
+            Optional<string> apiKey = default;
+            Optional<int> maxBatchSize = default;
+            Optional<int> maxBatchCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new FunctionOutputDataSource(type, functionAppName.Value, functionName.Value, apiKey.Value, Core.Optional.ToNullable(maxBatchSize), Core.Optional.ToNullable(maxBatchCount));
+            return new FunctionOutputDataSource(type, functionAppName.Value, functionName.Value, apiKey.Value, Optional.ToNullable(maxBatchSize), Optional.ToNullable(maxBatchCount));
         }
     }
 }

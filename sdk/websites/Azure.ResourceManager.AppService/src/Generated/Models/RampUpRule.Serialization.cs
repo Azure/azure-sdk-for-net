@@ -11,47 +11,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class RampUpRule : Core.IUtf8JsonSerializable
+    public partial class RampUpRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ActionHostName))
+            if (Optional.IsDefined(ActionHostName))
             {
                 writer.WritePropertyName("actionHostName"u8);
                 writer.WriteStringValue(ActionHostName);
             }
-            if (Core.Optional.IsDefined(ReroutePercentage))
+            if (Optional.IsDefined(ReroutePercentage))
             {
                 writer.WritePropertyName("reroutePercentage"u8);
                 writer.WriteNumberValue(ReroutePercentage.Value);
             }
-            if (Core.Optional.IsDefined(ChangeStep))
+            if (Optional.IsDefined(ChangeStep))
             {
                 writer.WritePropertyName("changeStep"u8);
                 writer.WriteNumberValue(ChangeStep.Value);
             }
-            if (Core.Optional.IsDefined(ChangeIntervalInMinutes))
+            if (Optional.IsDefined(ChangeIntervalInMinutes))
             {
                 writer.WritePropertyName("changeIntervalInMinutes"u8);
                 writer.WriteNumberValue(ChangeIntervalInMinutes.Value);
             }
-            if (Core.Optional.IsDefined(MinReroutePercentage))
+            if (Optional.IsDefined(MinReroutePercentage))
             {
                 writer.WritePropertyName("minReroutePercentage"u8);
                 writer.WriteNumberValue(MinReroutePercentage.Value);
             }
-            if (Core.Optional.IsDefined(MaxReroutePercentage))
+            if (Optional.IsDefined(MaxReroutePercentage))
             {
                 writer.WritePropertyName("maxReroutePercentage"u8);
                 writer.WriteNumberValue(MaxReroutePercentage.Value);
             }
-            if (Core.Optional.IsDefined(ChangeDecisionCallbackUri))
+            if (Optional.IsDefined(ChangeDecisionCallbackUri))
             {
                 writer.WritePropertyName("changeDecisionCallbackUrl"u8);
                 writer.WriteStringValue(ChangeDecisionCallbackUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> actionHostName = default;
-            Core.Optional<double> reroutePercentage = default;
-            Core.Optional<double> changeStep = default;
-            Core.Optional<int> changeIntervalInMinutes = default;
-            Core.Optional<double> minReroutePercentage = default;
-            Core.Optional<double> maxReroutePercentage = default;
-            Core.Optional<Uri> changeDecisionCallbackUrl = default;
-            Core.Optional<string> name = default;
+            Optional<string> actionHostName = default;
+            Optional<double> reroutePercentage = default;
+            Optional<double> changeStep = default;
+            Optional<int> changeIntervalInMinutes = default;
+            Optional<double> minReroutePercentage = default;
+            Optional<double> maxReroutePercentage = default;
+            Optional<Uri> changeDecisionCallbackUrl = default;
+            Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionHostName"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new RampUpRule(actionHostName.Value, Core.Optional.ToNullable(reroutePercentage), Core.Optional.ToNullable(changeStep), Core.Optional.ToNullable(changeIntervalInMinutes), Core.Optional.ToNullable(minReroutePercentage), Core.Optional.ToNullable(maxReroutePercentage), changeDecisionCallbackUrl.Value, name.Value);
+            return new RampUpRule(actionHostName.Value, Optional.ToNullable(reroutePercentage), Optional.ToNullable(changeStep), Optional.ToNullable(changeIntervalInMinutes), Optional.ToNullable(minReroutePercentage), Optional.ToNullable(maxReroutePercentage), changeDecisionCallbackUrl.Value, name.Value);
         }
     }
 }

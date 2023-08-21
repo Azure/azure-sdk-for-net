@@ -21,14 +21,14 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Core.Optional<string> displayName = default;
+            Optional<string> displayName = default;
             DateTimeOffset createdDateTime = default;
-            Core.Optional<DateTimeOffset> expirationDateTime = default;
+            Optional<DateTimeOffset> expirationDateTime = default;
             string jobId = default;
             DateTimeOffset lastUpdatedDateTime = default;
             TextAnalyticsOperationStatus status = default;
-            Core.Optional<IReadOnlyList<Error>> errors = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<Error>> errors = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -85,7 +85,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new JobState(displayName.Value, createdDateTime, Core.Optional.ToNullable(expirationDateTime), jobId, lastUpdatedDateTime, status, Core.Optional.ToList(errors), nextLink.Value);
+            return new JobState(displayName.Value, createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdatedDateTime, status, Optional.ToList(errors), nextLink.Value);
         }
     }
 }

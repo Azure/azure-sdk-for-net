@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _devTestLabUserUsersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation<DevTestLabUserResource>(new DevTestLabUserOperationSource(Client), _devTestLabUserUsersClientDiagnostics, Pipeline, _devTestLabUserUsersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation<DevTestLabUserResource>(new DevTestLabUserOperationSource(Client), _devTestLabUserUsersClientDiagnostics, Pipeline, _devTestLabUserUsersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _devTestLabUserUsersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new DevTestLabsArmOperation<DevTestLabUserResource>(new DevTestLabUserOperationSource(Client), _devTestLabUserUsersClientDiagnostics, Pipeline, _devTestLabUserUsersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation<DevTestLabUserResource>(new DevTestLabUserOperationSource(Client), _devTestLabUserUsersClientDiagnostics, Pipeline, _devTestLabUserUsersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabUserUsersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabUserUsersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabUserResource(Client, DevTestLabUserData.DeserializeDevTestLabUserData(e)), _devTestLabUserUsersClientDiagnostics, Pipeline, "DevTestLabUserCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabUserResource(Client, DevTestLabUserData.DeserializeDevTestLabUserData(e)), _devTestLabUserUsersClientDiagnostics, Pipeline, "DevTestLabUserCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabUserUsersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabUserUsersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabUserResource(Client, DevTestLabUserData.DeserializeDevTestLabUserData(e)), _devTestLabUserUsersClientDiagnostics, Pipeline, "DevTestLabUserCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabUserResource(Client, DevTestLabUserData.DeserializeDevTestLabUserData(e)), _devTestLabUserUsersClientDiagnostics, Pipeline, "DevTestLabUserCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

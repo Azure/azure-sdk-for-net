@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Initializes a new instance of DenyAssignmentData. </summary>
         internal DenyAssignmentData()
         {
-            Permissions = new Core.ChangeTrackingList<DenyAssignmentPermission>();
-            Principals = new Core.ChangeTrackingList<RoleManagementPrincipal>();
-            ExcludePrincipals = new Core.ChangeTrackingList<RoleManagementPrincipal>();
+            Permissions = new ChangeTrackingList<DenyAssignmentPermission>();
+            Principals = new ChangeTrackingList<RoleManagementPrincipal>();
+            ExcludePrincipals = new ChangeTrackingList<RoleManagementPrincipal>();
         }
 
         /// <summary> Initializes a new instance of DenyAssignmentData. </summary>

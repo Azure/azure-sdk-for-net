@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of BaseBackupPolicyResourceList. </summary>
         internal BaseBackupPolicyResourceList()
         {
-            Value = new Core.ChangeTrackingList<DataProtectionBackupPolicyData>();
+            Value = new ChangeTrackingList<DataProtectionBackupPolicyData>();
         }
 
         /// <summary> Initializes a new instance of BaseBackupPolicyResourceList. </summary>

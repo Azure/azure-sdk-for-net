@@ -21,27 +21,27 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<ETag> etag = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> currency = default;
-            Core.Optional<decimal> beginningBalance = default;
-            Core.Optional<decimal> endingBalance = default;
-            Core.Optional<decimal> newPurchases = default;
-            Core.Optional<decimal> adjustments = default;
-            Core.Optional<decimal> utilized = default;
-            Core.Optional<decimal> serviceOverage = default;
-            Core.Optional<decimal> chargesBilledSeparately = default;
-            Core.Optional<decimal> totalOverage = default;
-            Core.Optional<decimal> totalUsage = default;
-            Core.Optional<decimal> azureMarketplaceServiceCharges = default;
-            Core.Optional<ConsumptionBillingFrequency> billingFrequency = default;
-            Core.Optional<bool> priceHidden = default;
-            Core.Optional<IReadOnlyList<ConsumptionBalanceNewPurchasesDetail>> newPurchasesDetails = default;
-            Core.Optional<IReadOnlyList<ConsumptionBalanceAdjustmentDetail>> adjustmentDetails = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> currency = default;
+            Optional<decimal> beginningBalance = default;
+            Optional<decimal> endingBalance = default;
+            Optional<decimal> newPurchases = default;
+            Optional<decimal> adjustments = default;
+            Optional<decimal> utilized = default;
+            Optional<decimal> serviceOverage = default;
+            Optional<decimal> chargesBilledSeparately = default;
+            Optional<decimal> totalOverage = default;
+            Optional<decimal> totalUsage = default;
+            Optional<decimal> azureMarketplaceServiceCharges = default;
+            Optional<ConsumptionBillingFrequency> billingFrequency = default;
+            Optional<bool> priceHidden = default;
+            Optional<IReadOnlyList<ConsumptionBalanceNewPurchasesDetail>> newPurchasesDetails = default;
+            Optional<IReadOnlyList<ConsumptionBalanceAdjustmentDetail>> adjustmentDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionBalanceResult(id, name, type, systemData.Value, currency.Value, Core.Optional.ToNullable(beginningBalance), Core.Optional.ToNullable(endingBalance), Core.Optional.ToNullable(newPurchases), Core.Optional.ToNullable(adjustments), Core.Optional.ToNullable(utilized), Core.Optional.ToNullable(serviceOverage), Core.Optional.ToNullable(chargesBilledSeparately), Core.Optional.ToNullable(totalOverage), Core.Optional.ToNullable(totalUsage), Core.Optional.ToNullable(azureMarketplaceServiceCharges), Core.Optional.ToNullable(billingFrequency), Core.Optional.ToNullable(priceHidden), Core.Optional.ToList(newPurchasesDetails), Core.Optional.ToList(adjustmentDetails), Core.Optional.ToNullable(etag), Core.Optional.ToDictionary(tags));
+            return new ConsumptionBalanceResult(id, name, type, systemData.Value, currency.Value, Optional.ToNullable(beginningBalance), Optional.ToNullable(endingBalance), Optional.ToNullable(newPurchases), Optional.ToNullable(adjustments), Optional.ToNullable(utilized), Optional.ToNullable(serviceOverage), Optional.ToNullable(chargesBilledSeparately), Optional.ToNullable(totalOverage), Optional.ToNullable(totalUsage), Optional.ToNullable(azureMarketplaceServiceCharges), Optional.ToNullable(billingFrequency), Optional.ToNullable(priceHidden), Optional.ToList(newPurchasesDetails), Optional.ToList(adjustmentDetails), Optional.ToNullable(etag), Optional.ToDictionary(tags));
         }
     }
 }

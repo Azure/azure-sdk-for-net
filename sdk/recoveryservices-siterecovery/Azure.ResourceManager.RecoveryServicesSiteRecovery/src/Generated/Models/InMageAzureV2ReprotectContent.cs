@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageAzureV2ReprotectContent. </summary>
         public InMageAzureV2ReprotectContent()
         {
-            DisksToInclude = new Core.ChangeTrackingList<string>();
+            DisksToInclude = new ChangeTrackingList<string>();
             InstanceType = "InMageAzureV2";
         }
 

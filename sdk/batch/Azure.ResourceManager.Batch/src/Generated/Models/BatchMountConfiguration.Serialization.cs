@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchMountConfiguration : Core.IUtf8JsonSerializable
+    public partial class BatchMountConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BlobFileSystemConfiguration))
+            if (Optional.IsDefined(BlobFileSystemConfiguration))
             {
                 writer.WritePropertyName("azureBlobFileSystemConfiguration"u8);
                 writer.WriteObjectValue(BlobFileSystemConfiguration);
             }
-            if (Core.Optional.IsDefined(NfsMountConfiguration))
+            if (Optional.IsDefined(NfsMountConfiguration))
             {
                 writer.WritePropertyName("nfsMountConfiguration"u8);
                 writer.WriteObjectValue(NfsMountConfiguration);
             }
-            if (Core.Optional.IsDefined(CifsMountConfiguration))
+            if (Optional.IsDefined(CifsMountConfiguration))
             {
                 writer.WritePropertyName("cifsMountConfiguration"u8);
                 writer.WriteObjectValue(CifsMountConfiguration);
             }
-            if (Core.Optional.IsDefined(FileShareConfiguration))
+            if (Optional.IsDefined(FileShareConfiguration))
             {
                 writer.WritePropertyName("azureFileShareConfiguration"u8);
                 writer.WriteObjectValue(FileShareConfiguration);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Core.Optional<BatchBlobFileSystemConfiguration> azureBlobFileSystemConfiguration = default;
-            Core.Optional<BatchNfsMountConfiguration> nfsMountConfiguration = default;
-            Core.Optional<BatchCifsMountConfiguration> cifsMountConfiguration = default;
-            Core.Optional<BatchFileShareConfiguration> azureFileShareConfiguration = default;
+            Optional<BatchBlobFileSystemConfiguration> azureBlobFileSystemConfiguration = default;
+            Optional<BatchNfsMountConfiguration> nfsMountConfiguration = default;
+            Optional<BatchCifsMountConfiguration> cifsMountConfiguration = default;
+            Optional<BatchFileShareConfiguration> azureFileShareConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureBlobFileSystemConfiguration"u8))

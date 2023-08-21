@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabArtifactGenerateArmTemplateContent : Core.IUtf8JsonSerializable
+    public partial class DevTestLabArtifactGenerateArmTemplateContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VmName))
+            if (Optional.IsDefined(VmName))
             {
                 writer.WritePropertyName("virtualMachineName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Core.Optional.IsDefined(FileUploadOptions))
+            if (Optional.IsDefined(FileUploadOptions))
             {
                 writer.WritePropertyName("fileUploadOptions"u8);
                 writer.WriteStringValue(FileUploadOptions.Value.ToString());

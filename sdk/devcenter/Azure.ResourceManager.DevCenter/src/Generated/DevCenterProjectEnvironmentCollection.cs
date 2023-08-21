@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectEnvironmentResource(Client, DevCenterProjectEnvironmentData.DeserializeDevCenterProjectEnvironmentData(e)), _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics, Pipeline, "DevCenterProjectEnvironmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectEnvironmentResource(Client, DevCenterProjectEnvironmentData.DeserializeDevCenterProjectEnvironmentData(e)), _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics, Pipeline, "DevCenterProjectEnvironmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectEnvironmentResource(Client, DevCenterProjectEnvironmentData.DeserializeDevCenterProjectEnvironmentData(e)), _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics, Pipeline, "DevCenterProjectEnvironmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectEnvironmentResource(Client, DevCenterProjectEnvironmentData.DeserializeDevCenterProjectEnvironmentData(e)), _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics, Pipeline, "DevCenterProjectEnvironmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

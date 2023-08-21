@@ -18,15 +18,15 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Core.Optional<string> query = default;
-            Core.Optional<MapsQueryType> queryType = default;
-            Core.Optional<int> queryTime = default;
-            Core.Optional<int> numResults = default;
-            Core.Optional<int> limit = default;
-            Core.Optional<int> offset = default;
-            Core.Optional<int> totalResults = default;
-            Core.Optional<int> fuzzyLevel = default;
-            Core.Optional<LatLongPairAbbreviated> geoBias = default;
+            Optional<string> query = default;
+            Optional<MapsQueryType> queryType = default;
+            Optional<int> queryTime = default;
+            Optional<int> numResults = default;
+            Optional<int> limit = default;
+            Optional<int> offset = default;
+            Optional<int> totalResults = default;
+            Optional<int> fuzzyLevel = default;
+            Optional<LatLongPairAbbreviated> geoBias = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("query"u8))
@@ -107,7 +107,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new SearchSummary(query.Value, Core.Optional.ToNullable(queryType), Core.Optional.ToNullable(queryTime), numResults, Core.Optional.ToNullable(limit), Core.Optional.ToNullable(offset), Core.Optional.ToNullable(totalResults), Core.Optional.ToNullable(fuzzyLevel), geoBias.Value);
+            return new SearchSummary(query.Value, Optional.ToNullable(queryType), Optional.ToNullable(queryTime), numResults, Optional.ToNullable(limit), Optional.ToNullable(offset), Optional.ToNullable(totalResults), Optional.ToNullable(fuzzyLevel), geoBias.Value);
         }
     }
 }

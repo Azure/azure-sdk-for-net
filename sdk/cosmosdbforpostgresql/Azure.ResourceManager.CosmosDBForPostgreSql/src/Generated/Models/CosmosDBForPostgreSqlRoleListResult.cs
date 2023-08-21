@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlRoleListResult. </summary>
         internal CosmosDBForPostgreSqlRoleListResult()
         {
-            Value = new Core.ChangeTrackingList<CosmosDBForPostgreSqlRoleData>();
+            Value = new ChangeTrackingList<CosmosDBForPostgreSqlRoleData>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlRoleListResult. </summary>

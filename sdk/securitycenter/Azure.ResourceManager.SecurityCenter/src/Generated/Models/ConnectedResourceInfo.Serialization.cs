@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> connectedResourceId = default;
-            Core.Optional<string> tcpPorts = default;
-            Core.Optional<string> udpPorts = default;
+            Optional<ResourceIdentifier> connectedResourceId = default;
+            Optional<string> tcpPorts = default;
+            Optional<string> udpPorts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectedResourceId"u8))

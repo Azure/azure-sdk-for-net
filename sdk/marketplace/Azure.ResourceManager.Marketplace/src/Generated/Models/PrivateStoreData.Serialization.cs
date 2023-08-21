@@ -15,39 +15,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    public partial class PrivateStoreData : Core.IUtf8JsonSerializable
+    public partial class PrivateStoreData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Availability))
+            if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
                 writer.WriteStringValue(Availability.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PrivateStoreName))
+            if (Optional.IsDefined(PrivateStoreName))
             {
                 writer.WritePropertyName("privateStoreName"u8);
                 writer.WriteStringValue(PrivateStoreName);
             }
-            if (Core.Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Core.Optional.IsDefined(IsGov))
+            if (Optional.IsDefined(IsGov))
             {
                 writer.WritePropertyName("isGov"u8);
                 writer.WriteBooleanValue(IsGov.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Branding))
+            if (Optional.IsCollectionDefined(Branding))
             {
                 writer.WritePropertyName("branding"u8);
                 writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Marketplace
             }
             writer.WritePropertyName("notificationsSettings"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Recipients))
+            if (Optional.IsCollectionDefined(Recipients))
             {
                 writer.WritePropertyName("recipients"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SendToAllMarketplaceAdmins))
+            if (Optional.IsDefined(SendToAllMarketplaceAdmins))
             {
                 writer.WritePropertyName("sendToAllMarketplaceAdmins"u8);
                 writer.WriteBooleanValue(SendToAllMarketplaceAdmins.Value);
@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.Marketplace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<PrivateStoreAvailability> availability = default;
-            Core.Optional<Guid> privateStoreId = default;
-            Core.Optional<ETag> eTag = default;
-            Core.Optional<string> privateStoreName = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<bool> isGov = default;
-            Core.Optional<IReadOnlyList<Guid>> collectionIds = default;
-            Core.Optional<IDictionary<string, string>> branding = default;
-            Core.Optional<IList<NotificationRecipient>> recipients = default;
-            Core.Optional<bool> sendToAllMarketplaceAdmins = default;
+            Optional<SystemData> systemData = default;
+            Optional<PrivateStoreAvailability> availability = default;
+            Optional<Guid> privateStoreId = default;
+            Optional<ETag> eTag = default;
+            Optional<string> privateStoreName = default;
+            Optional<Guid> tenantId = default;
+            Optional<bool> isGov = default;
+            Optional<IReadOnlyList<Guid>> collectionIds = default;
+            Optional<IDictionary<string, string>> branding = default;
+            Optional<IList<NotificationRecipient>> recipients = default;
+            Optional<bool> sendToAllMarketplaceAdmins = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Marketplace
                     continue;
                 }
             }
-            return new PrivateStoreData(id, name, type, systemData.Value, Core.Optional.ToNullable(availability), Core.Optional.ToNullable(privateStoreId), Core.Optional.ToNullable(eTag), privateStoreName.Value, Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(isGov), Core.Optional.ToList(collectionIds), Core.Optional.ToDictionary(branding), Core.Optional.ToList(recipients), Core.Optional.ToNullable(sendToAllMarketplaceAdmins));
+            return new PrivateStoreData(id, name, type, systemData.Value, Optional.ToNullable(availability), Optional.ToNullable(privateStoreId), Optional.ToNullable(eTag), privateStoreName.Value, Optional.ToNullable(tenantId), Optional.ToNullable(isGov), Optional.ToList(collectionIds), Optional.ToDictionary(branding), Optional.ToList(recipients), Optional.ToNullable(sendToAllMarketplaceAdmins));
         }
     }
 }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<MediaTransformData>> value = default;
-            Core.Optional<string> odataNextLink = default;
+            Optional<IReadOnlyList<MediaTransformData>> value = default;
+            Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaTransformListResult(Core.Optional.ToList(value), odataNextLink.Value);
+            return new MediaTransformListResult(Optional.ToList(value), odataNextLink.Value);
         }
     }
 }

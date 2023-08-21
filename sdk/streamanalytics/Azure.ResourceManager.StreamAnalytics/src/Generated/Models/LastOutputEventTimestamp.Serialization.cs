@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> lastOutputEventTime = default;
-            Core.Optional<DateTimeOffset> lastUpdateTime = default;
+            Optional<DateTimeOffset> lastOutputEventTime = default;
+            Optional<DateTimeOffset> lastUpdateTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastOutputEventTime"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new LastOutputEventTimestamp(Core.Optional.ToNullable(lastOutputEventTime), Core.Optional.ToNullable(lastUpdateTime));
+            return new LastOutputEventTimestamp(Optional.ToNullable(lastOutputEventTime), Optional.ToNullable(lastUpdateTime));
         }
     }
 }

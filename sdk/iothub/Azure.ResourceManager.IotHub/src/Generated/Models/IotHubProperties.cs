@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of IotHubProperties. </summary>
         public IotHubProperties()
         {
-            AuthorizationPolicies = new Core.ChangeTrackingList<SharedAccessSignatureAuthorizationRule>();
-            AllowedFqdns = new Core.ChangeTrackingList<string>();
-            IPFilterRules = new Core.ChangeTrackingList<IotHubIPFilterRule>();
-            PrivateEndpointConnections = new Core.ChangeTrackingList<IotHubPrivateEndpointConnectionData>();
-            EventHubEndpoints = new Core.ChangeTrackingDictionary<string, EventHubCompatibleEndpointProperties>();
-            StorageEndpoints = new Core.ChangeTrackingDictionary<string, IotHubStorageEndpointProperties>();
-            MessagingEndpoints = new Core.ChangeTrackingDictionary<string, MessagingEndpointProperties>();
-            Locations = new Core.ChangeTrackingList<IotHubLocationDescription>();
+            AuthorizationPolicies = new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>();
+            AllowedFqdns = new ChangeTrackingList<string>();
+            IPFilterRules = new ChangeTrackingList<IotHubIPFilterRule>();
+            PrivateEndpointConnections = new ChangeTrackingList<IotHubPrivateEndpointConnectionData>();
+            EventHubEndpoints = new ChangeTrackingDictionary<string, EventHubCompatibleEndpointProperties>();
+            StorageEndpoints = new ChangeTrackingDictionary<string, IotHubStorageEndpointProperties>();
+            MessagingEndpoints = new ChangeTrackingDictionary<string, MessagingEndpointProperties>();
+            Locations = new ChangeTrackingList<IotHubLocationDescription>();
         }
 
         /// <summary> Initializes a new instance of IotHubProperties. </summary>

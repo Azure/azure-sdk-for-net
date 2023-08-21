@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Initializes a new instance of EventHubData. </summary>
         public EventHubData()
         {
-            PartitionIds = new Core.ChangeTrackingList<string>();
+            PartitionIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of EventHubData. </summary>

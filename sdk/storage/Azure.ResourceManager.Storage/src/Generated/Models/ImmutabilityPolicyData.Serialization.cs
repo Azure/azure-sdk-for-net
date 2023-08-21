@@ -13,24 +13,24 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class ImmutabilityPolicyData : Core.IUtf8JsonSerializable
+    public partial class ImmutabilityPolicyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
+            if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
             {
                 writer.WritePropertyName("immutabilityPeriodSinceCreationInDays"u8);
                 writer.WriteNumberValue(ImmutabilityPeriodSinceCreationInDays.Value);
             }
-            if (Core.Optional.IsDefined(AllowProtectedAppendWrites))
+            if (Optional.IsDefined(AllowProtectedAppendWrites))
             {
                 writer.WritePropertyName("allowProtectedAppendWrites"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWrites.Value);
             }
-            if (Core.Optional.IsDefined(AllowProtectedAppendWritesAll))
+            if (Optional.IsDefined(AllowProtectedAppendWritesAll))
             {
                 writer.WritePropertyName("allowProtectedAppendWritesAll"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWritesAll.Value);
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.Storage
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<int> immutabilityPeriodSinceCreationInDays = default;
-            Core.Optional<ImmutabilityPolicyState> state = default;
-            Core.Optional<bool> allowProtectedAppendWrites = default;
-            Core.Optional<bool> allowProtectedAppendWritesAll = default;
+            Optional<SystemData> systemData = default;
+            Optional<int> immutabilityPeriodSinceCreationInDays = default;
+            Optional<ImmutabilityPolicyState> state = default;
+            Optional<bool> allowProtectedAppendWrites = default;
+            Optional<bool> allowProtectedAppendWritesAll = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new ImmutabilityPolicyData(id, name, type, systemData.Value, Core.Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Core.Optional.ToNullable(state), Core.Optional.ToNullable(allowProtectedAppendWrites), Core.Optional.ToNullable(allowProtectedAppendWritesAll), Core.Optional.ToNullable(etag));
+            return new ImmutabilityPolicyData(id, name, type, systemData.Value, Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(state), Optional.ToNullable(allowProtectedAppendWrites), Optional.ToNullable(allowProtectedAppendWritesAll), Optional.ToNullable(etag));
         }
     }
 }

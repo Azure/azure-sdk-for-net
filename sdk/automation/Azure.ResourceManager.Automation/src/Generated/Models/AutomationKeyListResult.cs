@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationKeyListResult. </summary>
         internal AutomationKeyListResult()
         {
-            Keys = new Core.ChangeTrackingList<AutomationKey>();
+            Keys = new ChangeTrackingList<AutomationKey>();
         }
 
         /// <summary> Initializes a new instance of AutomationKeyListResult. </summary>

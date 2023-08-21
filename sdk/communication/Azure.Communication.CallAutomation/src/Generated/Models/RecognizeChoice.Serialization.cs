@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class RecognizeChoice : Core.IUtf8JsonSerializable
+    public partial class RecognizeChoice : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("label"u8);
@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(Tone))
+            if (Optional.IsDefined(Tone))
             {
                 writer.WritePropertyName("tone"u8);
                 writer.WriteStringValue(Tone.Value.ToString());
@@ -41,7 +41,7 @@ namespace Azure.Communication.CallAutomation
             }
             string label = default;
             IList<string> phrases = default;
-            Core.Optional<DtmfTone> tone = default;
+            Optional<DtmfTone> tone = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("label"u8))
@@ -69,7 +69,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RecognizeChoice(label, phrases, Core.Optional.ToNullable(tone));
+            return new RecognizeChoice(label, phrases, Optional.ToNullable(tone));
         }
     }
 }

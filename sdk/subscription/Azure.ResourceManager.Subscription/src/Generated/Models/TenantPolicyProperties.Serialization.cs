@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Core.Optional<string> policyId = default;
-            Core.Optional<bool> blockSubscriptionsLeavingTenant = default;
-            Core.Optional<bool> blockSubscriptionsIntoTenant = default;
-            Core.Optional<IReadOnlyList<Guid>> exemptedPrincipals = default;
+            Optional<string> policyId = default;
+            Optional<bool> blockSubscriptionsLeavingTenant = default;
+            Optional<bool> blockSubscriptionsIntoTenant = default;
+            Optional<IReadOnlyList<Guid>> exemptedPrincipals = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyId"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     continue;
                 }
             }
-            return new TenantPolicyProperties(policyId.Value, Core.Optional.ToNullable(blockSubscriptionsLeavingTenant), Core.Optional.ToNullable(blockSubscriptionsIntoTenant), Core.Optional.ToList(exemptedPrincipals));
+            return new TenantPolicyProperties(policyId.Value, Optional.ToNullable(blockSubscriptionsLeavingTenant), Optional.ToNullable(blockSubscriptionsIntoTenant), Optional.ToList(exemptedPrincipals));
         }
     }
 }

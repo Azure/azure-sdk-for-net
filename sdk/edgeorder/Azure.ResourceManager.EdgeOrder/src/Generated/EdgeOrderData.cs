@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> Initializes a new instance of EdgeOrderData. </summary>
         public EdgeOrderData()
         {
-            OrderItemIds = new Core.ChangeTrackingList<ResourceIdentifier>();
-            OrderStageHistory = new Core.ChangeTrackingList<EdgeOrderStageDetails>();
+            OrderItemIds = new ChangeTrackingList<ResourceIdentifier>();
+            OrderStageHistory = new ChangeTrackingList<EdgeOrderStageDetails>();
         }
 
         /// <summary> Initializes a new instance of EdgeOrderData. </summary>

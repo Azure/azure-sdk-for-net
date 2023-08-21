@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningBuildContext : Core.IUtf8JsonSerializable
+    public partial class MachineLearningBuildContext : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("contextUri"u8);
             writer.WriteStringValue(ContextUri.AbsoluteUri);
-            if (Core.Optional.IsDefined(DockerfilePath))
+            if (Optional.IsDefined(DockerfilePath))
             {
                 writer.WritePropertyName("dockerfilePath"u8);
                 writer.WriteStringValue(DockerfilePath);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Uri contextUri = default;
-            Core.Optional<string> dockerfilePath = default;
+            Optional<string> dockerfilePath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contextUri"u8))

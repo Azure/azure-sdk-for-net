@@ -14,19 +14,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class ScriptExecutionData : Core.IUtf8JsonSerializable
+    public partial class ScriptExecutionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ScriptCmdletId))
+            if (Optional.IsDefined(ScriptCmdletId))
             {
                 writer.WritePropertyName("scriptCmdletId"u8);
                 writer.WriteStringValue(ScriptCmdletId);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(HiddenParameters))
+            if (Optional.IsCollectionDefined(HiddenParameters))
             {
                 writer.WritePropertyName("hiddenParameters"u8);
                 writer.WriteStartArray();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(FailureReason))
+            if (Optional.IsDefined(FailureReason))
             {
                 writer.WritePropertyName("failureReason"u8);
                 writer.WriteStringValue(FailureReason);
             }
-            if (Core.Optional.IsDefined(Timeout))
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
             }
-            if (Core.Optional.IsDefined(Retention))
+            if (Optional.IsDefined(Retention))
             {
                 writer.WritePropertyName("retention"u8);
                 writer.WriteStringValue(Retention);
             }
-            if (Core.Optional.IsCollectionDefined(Output))
+            if (Optional.IsCollectionDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(NamedOutputs))
+            if (Optional.IsDefined(NamedOutputs))
             {
                 writer.WritePropertyName("namedOutputs"u8);
 #if NET6_0_OR_GREATER
@@ -93,22 +93,22 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> scriptCmdletId = default;
-            Core.Optional<IList<ScriptExecutionParameterDetails>> parameters = default;
-            Core.Optional<IList<ScriptExecutionParameterDetails>> hiddenParameters = default;
-            Core.Optional<string> failureReason = default;
-            Core.Optional<string> timeout = default;
-            Core.Optional<string> retention = default;
-            Core.Optional<DateTimeOffset> submittedAt = default;
-            Core.Optional<DateTimeOffset> startedAt = default;
-            Core.Optional<DateTimeOffset> finishedAt = default;
-            Core.Optional<ScriptExecutionProvisioningState> provisioningState = default;
-            Core.Optional<IList<string>> output = default;
-            Core.Optional<BinaryData> namedOutputs = default;
-            Core.Optional<IReadOnlyList<string>> information = default;
-            Core.Optional<IReadOnlyList<string>> warnings = default;
-            Core.Optional<IReadOnlyList<string>> errors = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> scriptCmdletId = default;
+            Optional<IList<ScriptExecutionParameterDetails>> parameters = default;
+            Optional<IList<ScriptExecutionParameterDetails>> hiddenParameters = default;
+            Optional<string> failureReason = default;
+            Optional<string> timeout = default;
+            Optional<string> retention = default;
+            Optional<DateTimeOffset> submittedAt = default;
+            Optional<DateTimeOffset> startedAt = default;
+            Optional<DateTimeOffset> finishedAt = default;
+            Optional<ScriptExecutionProvisioningState> provisioningState = default;
+            Optional<IList<string>> output = default;
+            Optional<BinaryData> namedOutputs = default;
+            Optional<IReadOnlyList<string>> information = default;
+            Optional<IReadOnlyList<string>> warnings = default;
+            Optional<IReadOnlyList<string>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new ScriptExecutionData(id, name, type, systemData.Value, scriptCmdletId.Value, Core.Optional.ToList(parameters), Core.Optional.ToList(hiddenParameters), failureReason.Value, timeout.Value, retention.Value, Core.Optional.ToNullable(submittedAt), Core.Optional.ToNullable(startedAt), Core.Optional.ToNullable(finishedAt), Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(output), namedOutputs.Value, Core.Optional.ToList(information), Core.Optional.ToList(warnings), Core.Optional.ToList(errors));
+            return new ScriptExecutionData(id, name, type, systemData.Value, scriptCmdletId.Value, Optional.ToList(parameters), Optional.ToList(hiddenParameters), failureReason.Value, timeout.Value, retention.Value, Optional.ToNullable(submittedAt), Optional.ToNullable(startedAt), Optional.ToNullable(finishedAt), Optional.ToNullable(provisioningState), Optional.ToList(output), namedOutputs.Value, Optional.ToList(information), Optional.ToList(warnings), Optional.ToList(errors));
         }
     }
 }

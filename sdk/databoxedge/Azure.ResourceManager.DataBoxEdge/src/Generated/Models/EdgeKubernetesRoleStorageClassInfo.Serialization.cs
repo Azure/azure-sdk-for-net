@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> type = default;
-            Core.Optional<PosixComplianceStatus> posixCompliant = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<PosixComplianceStatus> posixCompliant = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new EdgeKubernetesRoleStorageClassInfo(name.Value, type.Value, Core.Optional.ToNullable(posixCompliant));
+            return new EdgeKubernetesRoleStorageClassInfo(name.Value, type.Value, Optional.ToNullable(posixCompliant));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of MobileNetworkResourcePatch. </summary>
         public MobileNetworkResourcePatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The managed service identity associated with this resource. </summary>

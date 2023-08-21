@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> Initializes a new instance of PagedLabPlans. </summary>
         internal PagedLabPlans()
         {
-            Value = new Core.ChangeTrackingList<LabPlanData>();
+            Value = new ChangeTrackingList<LabPlanData>();
         }
 
         /// <summary> Initializes a new instance of PagedLabPlans. </summary>

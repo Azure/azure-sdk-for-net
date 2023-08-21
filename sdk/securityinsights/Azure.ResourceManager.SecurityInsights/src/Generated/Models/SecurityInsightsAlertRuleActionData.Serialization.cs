@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsAlertRuleActionData : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsAlertRuleActionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LogicAppResourceId))
+            if (Optional.IsDefined(LogicAppResourceId))
             {
                 writer.WritePropertyName("logicAppResourceId"u8);
                 writer.WriteStringValue(LogicAppResourceId);
             }
-            if (Core.Optional.IsDefined(WorkflowId))
+            if (Optional.IsDefined(WorkflowId))
             {
                 writer.WritePropertyName("workflowId"u8);
                 writer.WriteStringValue(WorkflowId);
@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> logicAppResourceId = default;
-            Core.Optional<string> workflowId = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> logicAppResourceId = default;
+            Optional<string> workflowId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new SecurityInsightsAlertRuleActionData(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), logicAppResourceId.Value, workflowId.Value);
+            return new SecurityInsightsAlertRuleActionData(id, name, type, systemData.Value, Optional.ToNullable(etag), logicAppResourceId.Value, workflowId.Value);
         }
     }
 }

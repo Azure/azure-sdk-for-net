@@ -22,8 +22,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> nextLink = default;
-            Core.Optional<IReadOnlyList<SqlPool>> value = default;
+            Optional<string> nextLink = default;
+            Optional<IReadOnlyList<SqlPool>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SqlPoolInfoListResult(nextLink.Value, Core.Optional.ToList(value));
+            return new SqlPoolInfoListResult(nextLink.Value, Optional.ToList(value));
         }
 
         internal partial class SqlPoolInfoListResultConverter : JsonConverter<SqlPoolInfoListResult>

@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         internal SparkStatementOutput(int executionCount)
         {
             ExecutionCount = executionCount;
-            Traceback = new Core.ChangeTrackingList<string>();
+            Traceback = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SparkStatementOutput. </summary>

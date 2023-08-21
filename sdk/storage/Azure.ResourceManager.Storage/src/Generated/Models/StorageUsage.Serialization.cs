@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<StorageUsageUnit> unit = default;
-            Core.Optional<int> currentValue = default;
-            Core.Optional<int> limit = default;
-            Core.Optional<StorageUsageName> name = default;
+            Optional<StorageUsageUnit> unit = default;
+            Optional<int> currentValue = default;
+            Optional<int> limit = default;
+            Optional<StorageUsageName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StorageUsage(Core.Optional.ToNullable(unit), Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit), name.Value);
+            return new StorageUsage(Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
         }
     }
 }

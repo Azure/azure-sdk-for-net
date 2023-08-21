@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of ContainerInstanceView. </summary>
         internal ContainerInstanceView()
         {
-            Events = new Core.ChangeTrackingList<ContainerEvent>();
+            Events = new ChangeTrackingList<ContainerEvent>();
         }
 
         /// <summary> Initializes a new instance of ContainerInstanceView. </summary>

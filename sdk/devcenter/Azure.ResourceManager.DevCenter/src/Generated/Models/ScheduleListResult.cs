@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of ScheduleListResult. </summary>
         internal ScheduleListResult()
         {
-            Value = new Core.ChangeTrackingList<DevCenterScheduleData>();
+            Value = new ChangeTrackingList<DevCenterScheduleData>();
         }
 
         /// <summary> Initializes a new instance of ScheduleListResult. </summary>

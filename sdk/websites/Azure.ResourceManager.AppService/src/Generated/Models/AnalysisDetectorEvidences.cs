@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AnalysisDetectorEvidences. </summary>
         public AnalysisDetectorEvidences()
         {
-            Metrics = new Core.ChangeTrackingList<DiagnosticMetricSet>();
-            Data = new Core.ChangeTrackingList<IList<AppServiceNameValuePair>>();
+            Metrics = new ChangeTrackingList<DiagnosticMetricSet>();
+            Data = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
         }
 
         /// <summary> Initializes a new instance of AnalysisDetectorEvidences. </summary>

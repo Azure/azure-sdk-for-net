@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ExtensionOptions : Core.IUtf8JsonSerializable
+    public partial class ExtensionOptions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Request))
+            if (Optional.IsCollectionDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Response))
+            if (Optional.IsCollectionDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<IList<ExtensionOptionType>> request = default;
-            Core.Optional<IList<ExtensionOptionType>> response = default;
+            Optional<IList<ExtensionOptionType>> request = default;
+            Optional<IList<ExtensionOptionType>> response = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("request"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ExtensionOptions(Core.Optional.ToList(request), Core.Optional.ToList(response));
+            return new ExtensionOptions(Optional.ToList(request), Optional.ToList(response));
         }
     }
 }

@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterGuardrailsProfile : Core.IUtf8JsonSerializable
+    public partial class ManagedClusterGuardrailsProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("version"u8);
             writer.WriteStringValue(Version);
             writer.WritePropertyName("level"u8);
             writer.WriteStringValue(Level.ToString());
-            if (Core.Optional.IsCollectionDefined(ExcludedNamespaces))
+            if (Optional.IsCollectionDefined(ExcludedNamespaces))
             {
                 writer.WritePropertyName("excludedNamespaces"u8);
                 writer.WriteStartArray();
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> systemExcludedNamespaces = default;
+            Optional<IReadOnlyList<string>> systemExcludedNamespaces = default;
             string version = default;
             ManagedClusterGuardrailsProfileLevel level = default;
-            Core.Optional<IList<string>> excludedNamespaces = default;
+            Optional<IList<string>> excludedNamespaces = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("systemExcludedNamespaces"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterGuardrailsProfile(Core.Optional.ToList(systemExcludedNamespaces), version, level, Core.Optional.ToList(excludedNamespaces));
+            return new ManagedClusterGuardrailsProfile(Optional.ToList(systemExcludedNamespaces), version, level, Optional.ToList(excludedNamespaces));
         }
     }
 }

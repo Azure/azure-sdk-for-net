@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string periodKey = default;
             DateTimeOffset periodStartTime = default;
             DateTimeOffset periodEndTime = default;
-            Core.Optional<QuotaCounterValueContractProperties> value = default;
+            Optional<QuotaCounterValueContractProperties> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("counterKey"u8))

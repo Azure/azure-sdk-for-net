@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> databasesToSourceTables = default;
-            Core.Optional<string> databasesToTargetTables = default;
-            Core.Optional<string> tableValidationErrors = default;
-            Core.Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Optional<string> databasesToSourceTables = default;
+            Optional<string> databasesToTargetTables = default;
+            Optional<string> tableValidationErrors = default;
+            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databasesToSourceTables"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new GetUserTablesSqlSyncTaskOutput(databasesToSourceTables.Value, databasesToTargetTables.Value, tableValidationErrors.Value, Core.Optional.ToList(validationErrors));
+            return new GetUserTablesSqlSyncTaskOutput(databasesToSourceTables.Value, databasesToTargetTables.Value, tableValidationErrors.Value, Optional.ToList(validationErrors));
         }
     }
 }

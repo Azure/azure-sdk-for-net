@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<PrivateLinkData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<PrivateLinkData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     continue;
                 }
             }
-            return new DeviceUpdatePrivateLinkResourceListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new DeviceUpdatePrivateLinkResourceListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

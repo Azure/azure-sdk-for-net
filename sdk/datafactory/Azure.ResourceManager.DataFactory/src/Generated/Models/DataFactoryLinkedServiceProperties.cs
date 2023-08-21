@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DataFactoryLinkedServiceProperties. </summary>
         public DataFactoryLinkedServiceProperties()
         {
-            Parameters = new Core.ChangeTrackingDictionary<string, EntityParameterSpecification>();
-            Annotations = new Core.ChangeTrackingList<BinaryData>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Parameters = new ChangeTrackingDictionary<string, EntityParameterSpecification>();
+            Annotations = new ChangeTrackingList<BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DataFactoryLinkedServiceProperties. </summary>

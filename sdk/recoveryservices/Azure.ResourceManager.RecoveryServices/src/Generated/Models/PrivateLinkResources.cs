@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Initializes a new instance of PrivateLinkResources. </summary>
         internal PrivateLinkResources()
         {
-            Value = new Core.ChangeTrackingList<RecoveryServicesPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<RecoveryServicesPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResources. </summary>

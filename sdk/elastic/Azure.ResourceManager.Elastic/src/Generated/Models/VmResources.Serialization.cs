@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Core.Optional<string> vmResourceId = default;
+            Optional<string> vmResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmResourceId"u8))

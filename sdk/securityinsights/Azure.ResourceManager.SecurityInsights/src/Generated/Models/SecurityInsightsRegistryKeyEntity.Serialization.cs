@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsRegistryKeyEntity : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsRegistryKeyEntity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<SecurityInsightsRegistryHive> hive = default;
-            Core.Optional<string> key = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            Optional<string> friendlyName = default;
+            Optional<SecurityInsightsRegistryHive> hive = default;
+            Optional<string> key = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsRegistryKeyEntity(id, name, type, systemData.Value, kind, Core.Optional.ToDictionary(additionalData), friendlyName.Value, Core.Optional.ToNullable(hive), key.Value);
+            return new SecurityInsightsRegistryKeyEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToNullable(hive), key.Value);
         }
     }
 }

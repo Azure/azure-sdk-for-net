@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AuthenticationDetailsProperties. </summary>
         protected AuthenticationDetailsProperties()
         {
-            GrantedPermissions = new Core.ChangeTrackingList<SecurityCenterCloudPermission>();
+            GrantedPermissions = new ChangeTrackingList<SecurityCenterCloudPermission>();
         }
 
         /// <summary> Initializes a new instance of AuthenticationDetailsProperties. </summary>

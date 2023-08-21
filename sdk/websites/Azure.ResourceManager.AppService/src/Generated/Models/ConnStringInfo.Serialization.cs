@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ConnStringInfo : Core.IUtf8JsonSerializable
+    public partial class ConnStringInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(ConnectionString))
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (Core.Optional.IsDefined(ConnectionStringType))
+            if (Optional.IsDefined(ConnectionStringType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ConnectionStringType.Value.ToSerialString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> connectionString = default;
-            Core.Optional<ConnectionStringType> type = default;
+            Optional<string> name = default;
+            Optional<string> connectionString = default;
+            Optional<ConnectionStringType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ConnStringInfo(name.Value, connectionString.Value, Core.Optional.ToNullable(type));
+            return new ConnStringInfo(name.Value, connectionString.Value, Optional.ToNullable(type));
         }
     }
 }

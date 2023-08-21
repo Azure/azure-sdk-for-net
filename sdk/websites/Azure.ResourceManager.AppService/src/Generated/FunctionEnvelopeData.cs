@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of FunctionEnvelopeData. </summary>
         public FunctionEnvelopeData()
         {
-            Files = new Core.ChangeTrackingDictionary<string, string>();
+            Files = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of FunctionEnvelopeData. </summary>

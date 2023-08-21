@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaJobOutputAsset : Core.IUtf8JsonSerializable
+    public partial class MediaJobOutputAsset : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("assetName"u8);
             writer.WriteStringValue(AssetName);
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Core.Optional.IsDefined(PresetOverride))
+            if (Optional.IsDefined(PresetOverride))
             {
                 writer.WritePropertyName("presetOverride"u8);
                 writer.WriteObjectValue(PresetOverride);
             }
-            if (Core.Optional.IsDefined(Label))
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.Media.Models
             }
             string assetName = default;
             string odataType = default;
-            Core.Optional<MediaJobError> error = default;
-            Core.Optional<MediaTransformPreset> presetOverride = default;
-            Core.Optional<MediaJobState> state = default;
-            Core.Optional<int> progress = default;
-            Core.Optional<string> label = default;
-            Core.Optional<DateTimeOffset?> startTime = default;
-            Core.Optional<DateTimeOffset?> endTime = default;
+            Optional<MediaJobError> error = default;
+            Optional<MediaTransformPreset> presetOverride = default;
+            Optional<MediaJobState> state = default;
+            Optional<int> progress = default;
+            Optional<string> label = default;
+            Optional<DateTimeOffset?> startTime = default;
+            Optional<DateTimeOffset?> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assetName"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaJobOutputAsset(odataType, error.Value, presetOverride.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(progress), label.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), assetName);
+            return new MediaJobOutputAsset(odataType, error.Value, presetOverride.Value, Optional.ToNullable(state), Optional.ToNullable(progress), label.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), assetName);
         }
     }
 }

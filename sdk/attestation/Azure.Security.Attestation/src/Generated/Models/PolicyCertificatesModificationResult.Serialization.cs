@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.Security.Attestation
 {
     [JsonConverter(typeof(PolicyCertificatesModificationResultConverter))]
-    public partial class PolicyCertificatesModificationResult : Core.IUtf8JsonSerializable
+    public partial class PolicyCertificatesModificationResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CertificateThumbprint))
+            if (Optional.IsDefined(CertificateThumbprint))
             {
                 writer.WritePropertyName("x-ms-certificate-thumbprint"u8);
                 writer.WriteStringValue(CertificateThumbprint);
             }
-            if (Core.Optional.IsDefined(CertificateResolution))
+            if (Optional.IsDefined(CertificateResolution))
             {
                 writer.WritePropertyName("x-ms-policycertificates-result"u8);
                 writer.WriteStringValue(CertificateResolution.Value.ToString());
@@ -37,8 +37,8 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            Core.Optional<string> xMsCertificateThumbprint = default;
-            Core.Optional<PolicyCertificateResolution> xMsPolicycertificatesResult = default;
+            Optional<string> xMsCertificateThumbprint = default;
+            Optional<PolicyCertificateResolution> xMsPolicycertificatesResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x-ms-certificate-thumbprint"u8))
@@ -56,7 +56,7 @@ namespace Azure.Security.Attestation
                     continue;
                 }
             }
-            return new PolicyCertificatesModificationResult(xMsCertificateThumbprint.Value, Core.Optional.ToNullable(xMsPolicycertificatesResult));
+            return new PolicyCertificatesModificationResult(xMsCertificateThumbprint.Value, Optional.ToNullable(xMsPolicycertificatesResult));
         }
 
         internal partial class PolicyCertificatesModificationResultConverter : JsonConverter<PolicyCertificatesModificationResult>

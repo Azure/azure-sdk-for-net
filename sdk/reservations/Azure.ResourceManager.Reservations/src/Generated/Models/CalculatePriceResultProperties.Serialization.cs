@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Core.Optional<CalculatePriceResultPropertiesBillingCurrencyTotal> billingCurrencyTotal = default;
-            Core.Optional<double> netTotal = default;
-            Core.Optional<double> taxTotal = default;
-            Core.Optional<double> grandTotal = default;
-            Core.Optional<bool> isTaxIncluded = default;
-            Core.Optional<bool> isBillingPartnerManaged = default;
-            Core.Optional<Guid> reservationOrderId = default;
-            Core.Optional<string> skuTitle = default;
-            Core.Optional<string> skuDescription = default;
-            Core.Optional<CalculatePriceResultPropertiesPricingCurrencyTotal> pricingCurrencyTotal = default;
-            Core.Optional<IReadOnlyList<PaymentDetail>> paymentSchedule = default;
+            Optional<CalculatePriceResultPropertiesBillingCurrencyTotal> billingCurrencyTotal = default;
+            Optional<double> netTotal = default;
+            Optional<double> taxTotal = default;
+            Optional<double> grandTotal = default;
+            Optional<bool> isTaxIncluded = default;
+            Optional<bool> isBillingPartnerManaged = default;
+            Optional<Guid> reservationOrderId = default;
+            Optional<string> skuTitle = default;
+            Optional<string> skuDescription = default;
+            Optional<CalculatePriceResultPropertiesPricingCurrencyTotal> pricingCurrencyTotal = default;
+            Optional<IReadOnlyList<PaymentDetail>> paymentSchedule = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new CalculatePriceResultProperties(billingCurrencyTotal.Value, Core.Optional.ToNullable(netTotal), Core.Optional.ToNullable(taxTotal), Core.Optional.ToNullable(grandTotal), Core.Optional.ToNullable(isTaxIncluded), Core.Optional.ToNullable(isBillingPartnerManaged), Core.Optional.ToNullable(reservationOrderId), skuTitle.Value, skuDescription.Value, pricingCurrencyTotal.Value, Core.Optional.ToList(paymentSchedule));
+            return new CalculatePriceResultProperties(billingCurrencyTotal.Value, Optional.ToNullable(netTotal), Optional.ToNullable(taxTotal), Optional.ToNullable(grandTotal), Optional.ToNullable(isTaxIncluded), Optional.ToNullable(isBillingPartnerManaged), Optional.ToNullable(reservationOrderId), skuTitle.Value, skuDescription.Value, pricingCurrencyTotal.Value, Optional.ToList(paymentSchedule));
         }
     }
 }

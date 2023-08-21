@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ProviderRegistrationContent : Core.IUtf8JsonSerializable
+    public partial class ProviderRegistrationContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ThirdPartyProviderConsent))
+            if (Optional.IsDefined(ThirdPartyProviderConsent))
             {
                 writer.WritePropertyName("thirdPartyProviderConsent"u8);
                 writer.WriteObjectValue(ThirdPartyProviderConsent);

@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterHealthPolicy : Core.IUtf8JsonSerializable
+    public partial class ClusterHealthPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MaxPercentUnhealthyNodes))
+            if (Optional.IsDefined(MaxPercentUnhealthyNodes))
             {
                 writer.WritePropertyName("maxPercentUnhealthyNodes"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyNodes.Value);
             }
-            if (Core.Optional.IsDefined(MaxPercentUnhealthyApplications))
+            if (Optional.IsDefined(MaxPercentUnhealthyApplications))
             {
                 writer.WritePropertyName("maxPercentUnhealthyApplications"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyApplications.Value);
             }
-            if (Core.Optional.IsCollectionDefined(ApplicationHealthPolicies))
+            if (Optional.IsCollectionDefined(ApplicationHealthPolicies))
             {
                 writer.WritePropertyName("applicationHealthPolicies"u8);
                 writer.WriteStartObject();
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Core.Optional<int> maxPercentUnhealthyNodes = default;
-            Core.Optional<int> maxPercentUnhealthyApplications = default;
-            Core.Optional<IDictionary<string, ApplicationHealthPolicy>> applicationHealthPolicies = default;
+            Optional<int> maxPercentUnhealthyNodes = default;
+            Optional<int> maxPercentUnhealthyApplications = default;
+            Optional<IDictionary<string, ApplicationHealthPolicy>> applicationHealthPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxPercentUnhealthyNodes"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ClusterHealthPolicy(Core.Optional.ToNullable(maxPercentUnhealthyNodes), Core.Optional.ToNullable(maxPercentUnhealthyApplications), Core.Optional.ToDictionary(applicationHealthPolicies));
+            return new ClusterHealthPolicy(Optional.ToNullable(maxPercentUnhealthyNodes), Optional.ToNullable(maxPercentUnhealthyApplications), Optional.ToDictionary(applicationHealthPolicies));
         }
     }
 }

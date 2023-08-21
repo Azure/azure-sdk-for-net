@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class WebApplicationRuleMatchCondition : Core.IUtf8JsonSerializable
+    public partial class WebApplicationRuleMatchCondition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("matchVariable"u8);
             writer.WriteStringValue(MatchVariable.ToString());
-            if (Core.Optional.IsDefined(Selector))
+            if (Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
-            if (Core.Optional.IsDefined(IsNegateCondition))
+            if (Optional.IsDefined(IsNegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(IsNegateCondition.Value);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsCollectionDefined(Transforms))
+            if (Optional.IsCollectionDefined(Transforms))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             WebApplicationRuleMatchVariable matchVariable = default;
-            Core.Optional<string> selector = default;
+            Optional<string> selector = default;
             WebApplicationRuleMatchOperator @operator = default;
-            Core.Optional<bool> negateCondition = default;
+            Optional<bool> negateCondition = default;
             IList<string> matchValue = default;
-            Core.Optional<IList<WebApplicationRuleMatchTransformType>> transforms = default;
+            Optional<IList<WebApplicationRuleMatchTransformType>> transforms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("matchVariable"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new WebApplicationRuleMatchCondition(matchVariable, selector.Value, @operator, Core.Optional.ToNullable(negateCondition), matchValue, Core.Optional.ToList(transforms));
+            return new WebApplicationRuleMatchCondition(matchVariable, selector.Value, @operator, Optional.ToNullable(negateCondition), matchValue, Optional.ToList(transforms));
         }
     }
 }

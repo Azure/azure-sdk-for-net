@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<HealthMonitorData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<HealthMonitorData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
                     continue;
                 }
             }
-            return new HealthMonitorList(Core.Optional.ToList(value), nextLink.Value);
+            return new HealthMonitorList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

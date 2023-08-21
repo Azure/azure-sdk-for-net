@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Core.Optional<string> code = default;
-            Core.Optional<string> message = default;
-            Core.Optional<string> target = default;
-            Core.Optional<IReadOnlyList<StreamAnalyticsErrorDetails>> details = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<string> target = default;
+            Optional<IReadOnlyList<StreamAnalyticsErrorDetails>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamAnalyticsError(code.Value, message.Value, target.Value, Core.Optional.ToList(details));
+            return new StreamAnalyticsError(code.Value, message.Value, target.Value, Optional.ToList(details));
         }
     }
 }

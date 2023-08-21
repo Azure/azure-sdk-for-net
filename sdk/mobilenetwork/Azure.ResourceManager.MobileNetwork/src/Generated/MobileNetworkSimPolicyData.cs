@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MobileNetwork
             Argument.AssertNotNull(defaultSlice, nameof(defaultSlice));
             Argument.AssertNotNull(sliceConfigurations, nameof(sliceConfigurations));
 
-            SiteProvisioningState = new Core.ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>();
+            SiteProvisioningState = new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>();
             UeAmbr = ueAmbr;
             DefaultSlice = defaultSlice;
             SliceConfigurations = sliceConfigurations.ToList();

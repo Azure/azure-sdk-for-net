@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Core.Optional<string> uniqueOfferId = default;
-            Core.Optional<string> offerDisplayName = default;
-            Core.Optional<string> publisherDisplayName = default;
-            Core.Optional<ETag> eTag = default;
-            Core.Optional<Guid> privateStoreId = default;
-            Core.Optional<DateTimeOffset> createdAt = default;
-            Core.Optional<DateTimeOffset> modifiedAt = default;
-            Core.Optional<IReadOnlyList<string>> specificPlanIdsLimitation = default;
-            Core.Optional<bool> updateSuppressedDueIdempotence = default;
-            Core.Optional<IReadOnlyDictionary<string, Uri>> iconFileUris = default;
-            Core.Optional<IReadOnlyList<PrivateStorePlan>> plans = default;
+            Optional<string> uniqueOfferId = default;
+            Optional<string> offerDisplayName = default;
+            Optional<string> publisherDisplayName = default;
+            Optional<ETag> eTag = default;
+            Optional<Guid> privateStoreId = default;
+            Optional<DateTimeOffset> createdAt = default;
+            Optional<DateTimeOffset> modifiedAt = default;
+            Optional<IReadOnlyList<string>> specificPlanIdsLimitation = default;
+            Optional<bool> updateSuppressedDueIdempotence = default;
+            Optional<IReadOnlyDictionary<string, Uri>> iconFileUris = default;
+            Optional<IReadOnlyList<PrivateStorePlan>> plans = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uniqueOfferId"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new PrivateStoreOfferResult(uniqueOfferId.Value, offerDisplayName.Value, publisherDisplayName.Value, Core.Optional.ToNullable(eTag), Core.Optional.ToNullable(privateStoreId), Core.Optional.ToNullable(createdAt), Core.Optional.ToNullable(modifiedAt), Core.Optional.ToList(specificPlanIdsLimitation), Core.Optional.ToNullable(updateSuppressedDueIdempotence), Core.Optional.ToDictionary(iconFileUris), Core.Optional.ToList(plans));
+            return new PrivateStoreOfferResult(uniqueOfferId.Value, offerDisplayName.Value, publisherDisplayName.Value, Optional.ToNullable(eTag), Optional.ToNullable(privateStoreId), Optional.ToNullable(createdAt), Optional.ToNullable(modifiedAt), Optional.ToList(specificPlanIdsLimitation), Optional.ToNullable(updateSuppressedDueIdempotence), Optional.ToDictionary(iconFileUris), Optional.ToList(plans));
         }
     }
 }

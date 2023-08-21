@@ -12,17 +12,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
-    public partial class DiskPoolIscsiTargetCreateOrUpdateContent : Core.IUtf8JsonSerializable
+    public partial class DiskPoolIscsiTargetCreateOrUpdateContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ManagedBy))
+            if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Core.Optional.IsCollectionDefined(ManagedByExtended))
+            if (Optional.IsCollectionDefined(ManagedByExtended))
             {
                 writer.WritePropertyName("managedByExtended"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             writer.WriteStartObject();
             writer.WritePropertyName("aclMode"u8);
             writer.WriteStringValue(AclMode.ToString());
-            if (Core.Optional.IsDefined(TargetIqn))
+            if (Optional.IsDefined(TargetIqn))
             {
                 writer.WritePropertyName("targetIqn"u8);
                 writer.WriteStringValue(TargetIqn);
             }
-            if (Core.Optional.IsCollectionDefined(StaticAcls))
+            if (Optional.IsCollectionDefined(StaticAcls))
             {
                 writer.WritePropertyName("staticAcls"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Luns))
+            if (Optional.IsCollectionDefined(Luns))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
@@ -71,16 +71,16 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Core.Optional<string> managedBy = default;
-            Core.Optional<IList<string>> managedByExtended = default;
+            Optional<string> managedBy = default;
+            Optional<IList<string>> managedByExtended = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             DiskPoolIscsiTargetAclMode aclMode = default;
-            Core.Optional<string> targetIqn = default;
-            Core.Optional<IList<DiskPoolIscsiTargetPortalGroupAcl>> staticAcls = default;
-            Core.Optional<IList<ManagedDiskIscsiLun>> luns = default;
+            Optional<string> targetIqn = default;
+            Optional<IList<DiskPoolIscsiTargetPortalGroupAcl>> staticAcls = default;
+            Optional<IList<ManagedDiskIscsiLun>> luns = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     continue;
                 }
             }
-            return new DiskPoolIscsiTargetCreateOrUpdateContent(id, name, type, systemData.Value, managedBy.Value, Core.Optional.ToList(managedByExtended), aclMode, targetIqn.Value, Core.Optional.ToList(staticAcls), Core.Optional.ToList(luns));
+            return new DiskPoolIscsiTargetCreateOrUpdateContent(id, name, type, systemData.Value, managedBy.Value, Optional.ToList(managedByExtended), aclMode, targetIqn.Value, Optional.ToList(staticAcls), Optional.ToList(luns));
         }
     }
 }

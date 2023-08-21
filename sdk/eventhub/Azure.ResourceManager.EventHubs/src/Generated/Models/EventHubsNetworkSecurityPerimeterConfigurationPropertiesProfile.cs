@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile. </summary>
         internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile()
         {
-            AccessRules = new Core.ChangeTrackingList<EventHubsNspAccessRule>();
+            AccessRules = new ChangeTrackingList<EventHubsNspAccessRule>();
         }
 
         /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile. </summary>

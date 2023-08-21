@@ -14,24 +14,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class KpiResourceFormatData : Core.IUtf8JsonSerializable
+    public partial class KpiResourceFormatData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EntityType))
+            if (Optional.IsDefined(EntityType))
             {
                 writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(EntityTypeName))
+            if (Optional.IsDefined(EntityTypeName))
             {
                 writer.WritePropertyName("entityTypeName"u8);
                 writer.WriteStringValue(EntityTypeName);
             }
-            if (Core.Optional.IsCollectionDefined(DisplayName))
+            if (Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Description))
+            if (Optional.IsCollectionDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -53,37 +53,37 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(CalculationWindow))
+            if (Optional.IsDefined(CalculationWindow))
             {
                 writer.WritePropertyName("calculationWindow"u8);
                 writer.WriteStringValue(CalculationWindow.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(CalculationWindowFieldName))
+            if (Optional.IsDefined(CalculationWindowFieldName))
             {
                 writer.WritePropertyName("calculationWindowFieldName"u8);
                 writer.WriteStringValue(CalculationWindowFieldName);
             }
-            if (Core.Optional.IsDefined(Function))
+            if (Optional.IsDefined(Function))
             {
                 writer.WritePropertyName("function"u8);
                 writer.WriteStringValue(Function.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(Expression))
+            if (Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
             }
-            if (Core.Optional.IsDefined(Unit))
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Core.Optional.IsDefined(Filter))
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (Core.Optional.IsCollectionDefined(GroupBy))
+            if (Optional.IsCollectionDefined(GroupBy))
             {
                 writer.WritePropertyName("groupBy"u8);
                 writer.WriteStartArray();
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ThresHolds))
+            if (Optional.IsDefined(ThresHolds))
             {
                 writer.WritePropertyName("thresHolds"u8);
                 writer.WriteObjectValue(ThresHolds);
             }
-            if (Core.Optional.IsCollectionDefined(Aliases))
+            if (Optional.IsCollectionDefined(Aliases))
             {
                 writer.WritePropertyName("aliases"u8);
                 writer.WriteStartArray();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Extracts))
+            if (Optional.IsCollectionDefined(Extracts))
             {
                 writer.WritePropertyName("extracts"u8);
                 writer.WriteStartArray();
@@ -131,26 +131,26 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<EntityType> entityType = default;
-            Core.Optional<string> entityTypeName = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<string> kpiName = default;
-            Core.Optional<IDictionary<string, string>> displayName = default;
-            Core.Optional<IDictionary<string, string>> description = default;
-            Core.Optional<CalculationWindowType> calculationWindow = default;
-            Core.Optional<string> calculationWindowFieldName = default;
-            Core.Optional<KpiFunction> function = default;
-            Core.Optional<string> expression = default;
-            Core.Optional<string> unit = default;
-            Core.Optional<string> filter = default;
-            Core.Optional<IList<string>> groupBy = default;
-            Core.Optional<IReadOnlyList<KpiGroupByMetadata>> groupByMetadata = default;
-            Core.Optional<IReadOnlyList<KpiParticipantProfilesMetadata>> participantProfilesMetadata = default;
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<KpiThresholds> thresHolds = default;
-            Core.Optional<IList<KpiAlias>> aliases = default;
-            Core.Optional<IList<KpiExtract>> extracts = default;
+            Optional<SystemData> systemData = default;
+            Optional<EntityType> entityType = default;
+            Optional<string> entityTypeName = default;
+            Optional<Guid> tenantId = default;
+            Optional<string> kpiName = default;
+            Optional<IDictionary<string, string>> displayName = default;
+            Optional<IDictionary<string, string>> description = default;
+            Optional<CalculationWindowType> calculationWindow = default;
+            Optional<string> calculationWindowFieldName = default;
+            Optional<KpiFunction> function = default;
+            Optional<string> expression = default;
+            Optional<string> unit = default;
+            Optional<string> filter = default;
+            Optional<IList<string>> groupBy = default;
+            Optional<IReadOnlyList<KpiGroupByMetadata>> groupByMetadata = default;
+            Optional<IReadOnlyList<KpiParticipantProfilesMetadata>> participantProfilesMetadata = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<KpiThresholds> thresHolds = default;
+            Optional<IList<KpiAlias>> aliases = default;
+            Optional<IList<KpiExtract>> extracts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     continue;
                 }
             }
-            return new KpiResourceFormatData(id, name, type, systemData.Value, Core.Optional.ToNullable(entityType), entityTypeName.Value, Core.Optional.ToNullable(tenantId), kpiName.Value, Core.Optional.ToDictionary(displayName), Core.Optional.ToDictionary(description), Core.Optional.ToNullable(calculationWindow), calculationWindowFieldName.Value, Core.Optional.ToNullable(function), expression.Value, unit.Value, filter.Value, Core.Optional.ToList(groupBy), Core.Optional.ToList(groupByMetadata), Core.Optional.ToList(participantProfilesMetadata), Core.Optional.ToNullable(provisioningState), thresHolds.Value, Core.Optional.ToList(aliases), Core.Optional.ToList(extracts));
+            return new KpiResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(entityType), entityTypeName.Value, Optional.ToNullable(tenantId), kpiName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), Optional.ToNullable(calculationWindow), calculationWindowFieldName.Value, Optional.ToNullable(function), expression.Value, unit.Value, filter.Value, Optional.ToList(groupBy), Optional.ToList(groupByMetadata), Optional.ToList(participantProfilesMetadata), Optional.ToNullable(provisioningState), thresHolds.Value, Optional.ToList(aliases), Optional.ToList(extracts));
         }
     }
 }

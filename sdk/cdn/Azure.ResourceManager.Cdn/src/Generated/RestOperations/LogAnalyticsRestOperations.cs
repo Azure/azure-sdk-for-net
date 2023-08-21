@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getLogAnalyticsMetrics", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (metrics != null && Core.Optional.IsCollectionDefined(metrics))
+            if (metrics != null && Optional.IsCollectionDefined(metrics))
             {
                 foreach (var param in metrics)
                 {
@@ -63,35 +63,35 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
             uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
             uri.AppendQuery("granularity", granularity.ToString(), true);
-            if (groupBy != null && Core.Optional.IsCollectionDefined(groupBy))
+            if (groupBy != null && Optional.IsCollectionDefined(groupBy))
             {
                 foreach (var param in groupBy)
                 {
                     uri.AppendQuery("groupBy", param.ToString(), true);
                 }
             }
-            if (continents != null && Core.Optional.IsCollectionDefined(continents))
+            if (continents != null && Optional.IsCollectionDefined(continents))
             {
                 foreach (var param in continents)
                 {
                     uri.AppendQuery("continents", param, true);
                 }
             }
-            if (countryOrRegions != null && Core.Optional.IsCollectionDefined(countryOrRegions))
+            if (countryOrRegions != null && Optional.IsCollectionDefined(countryOrRegions))
             {
                 foreach (var param in countryOrRegions)
                 {
                     uri.AppendQuery("countryOrRegions", param, true);
                 }
             }
-            if (customDomains != null && Core.Optional.IsCollectionDefined(customDomains))
+            if (customDomains != null && Optional.IsCollectionDefined(customDomains))
             {
                 foreach (var param in customDomains)
                 {
                     uri.AppendQuery("customDomains", param, true);
                 }
             }
-            if (protocols != null && Core.Optional.IsCollectionDefined(protocols))
+            if (protocols != null && Optional.IsCollectionDefined(protocols))
             {
                 foreach (var param in protocols)
                 {
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getLogAnalyticsRankings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (rankings != null && Core.Optional.IsCollectionDefined(rankings))
+            if (rankings != null && Optional.IsCollectionDefined(rankings))
             {
                 foreach (var param in rankings)
                 {
                     uri.AppendQuery("rankings", param.ToString(), true);
                 }
             }
-            if (metrics != null && Core.Optional.IsCollectionDefined(metrics))
+            if (metrics != null && Optional.IsCollectionDefined(metrics))
             {
                 foreach (var param in metrics)
                 {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendQuery("maxRanking", maxRanking, true);
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
             uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
-            if (customDomains != null && Core.Optional.IsCollectionDefined(customDomains))
+            if (customDomains != null && Optional.IsCollectionDefined(customDomains))
             {
                 foreach (var param in customDomains)
                 {
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getWafLogAnalyticsMetrics", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (metrics != null && Core.Optional.IsCollectionDefined(metrics))
+            if (metrics != null && Optional.IsCollectionDefined(metrics))
             {
                 foreach (var param in metrics)
                 {
@@ -488,21 +488,21 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
             uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
             uri.AppendQuery("granularity", granularity.ToString(), true);
-            if (actions != null && Core.Optional.IsCollectionDefined(actions))
+            if (actions != null && Optional.IsCollectionDefined(actions))
             {
                 foreach (var param in actions)
                 {
                     uri.AppendQuery("actions", param.ToString(), true);
                 }
             }
-            if (groupBy != null && Core.Optional.IsCollectionDefined(groupBy))
+            if (groupBy != null && Optional.IsCollectionDefined(groupBy))
             {
                 foreach (var param in groupBy)
                 {
                     uri.AppendQuery("groupBy", param.ToString(), true);
                 }
             }
-            if (ruleTypes != null && Core.Optional.IsCollectionDefined(ruleTypes))
+            if (ruleTypes != null && Optional.IsCollectionDefined(ruleTypes))
             {
                 foreach (var param in ruleTypes)
                 {
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getWafLogAnalyticsRankings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (metrics != null && Core.Optional.IsCollectionDefined(metrics))
+            if (metrics != null && Optional.IsCollectionDefined(metrics))
             {
                 foreach (var param in metrics)
                 {
@@ -614,21 +614,21 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
             uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
             uri.AppendQuery("maxRanking", maxRanking, true);
-            if (rankings != null && Core.Optional.IsCollectionDefined(rankings))
+            if (rankings != null && Optional.IsCollectionDefined(rankings))
             {
                 foreach (var param in rankings)
                 {
                     uri.AppendQuery("rankings", param.ToString(), true);
                 }
             }
-            if (actions != null && Core.Optional.IsCollectionDefined(actions))
+            if (actions != null && Optional.IsCollectionDefined(actions))
             {
                 foreach (var param in actions)
                 {
                     uri.AppendQuery("actions", param.ToString(), true);
                 }
             }
-            if (ruleTypes != null && Core.Optional.IsCollectionDefined(ruleTypes))
+            if (ruleTypes != null && Optional.IsCollectionDefined(ruleTypes))
             {
                 foreach (var param in ruleTypes)
                 {

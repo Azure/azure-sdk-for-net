@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of HostCapacity. </summary>
         public HostCapacity()
         {
-            VmUsedMemory = new Core.ChangeTrackingDictionary<string, DataBoxEdgeVmMemory>();
-            NumaNodesData = new Core.ChangeTrackingList<NumaNodeInfo>();
+            VmUsedMemory = new ChangeTrackingDictionary<string, DataBoxEdgeVmMemory>();
+            NumaNodesData = new ChangeTrackingList<NumaNodeInfo>();
         }
 
         /// <summary> Initializes a new instance of HostCapacity. </summary>

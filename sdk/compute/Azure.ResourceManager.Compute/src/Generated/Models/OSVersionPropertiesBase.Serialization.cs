@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<string> version = default;
-            Core.Optional<string> label = default;
-            Core.Optional<bool> isDefault = default;
-            Core.Optional<bool> isActive = default;
+            Optional<string> version = default;
+            Optional<string> label = default;
+            Optional<bool> isDefault = default;
+            Optional<bool> isActive = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new OSVersionPropertiesBase(version.Value, label.Value, Core.Optional.ToNullable(isDefault), Core.Optional.ToNullable(isActive));
+            return new OSVersionPropertiesBase(version.Value, label.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isActive));
         }
     }
 }

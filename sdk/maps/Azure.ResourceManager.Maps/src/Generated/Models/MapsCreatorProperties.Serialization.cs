@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    public partial class MapsCreatorProperties : Core.IUtf8JsonSerializable
+    public partial class MapsCreatorProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageUnits"u8);
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Core.Optional<string> provisioningState = default;
+            Optional<string> provisioningState = default;
             int storageUnits = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.IotCentral.Models
             {
                 return null;
             }
-            Core.Optional<string> nextLink = default;
-            Core.Optional<IReadOnlyList<IotCentralAppData>> value = default;
+            Optional<string> nextLink = default;
+            Optional<IReadOnlyList<IotCentralAppData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     continue;
                 }
             }
-            return new IotCentralAppListResult(nextLink.Value, Core.Optional.ToList(value));
+            return new IotCentralAppListResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

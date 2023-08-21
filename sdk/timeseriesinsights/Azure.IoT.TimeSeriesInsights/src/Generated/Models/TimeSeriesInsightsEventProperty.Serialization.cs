@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class TimeSeriesInsightsEventProperty : Core.IUtf8JsonSerializable
+    public partial class TimeSeriesInsightsEventProperty : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(PropertyValueType))
+            if (Optional.IsDefined(PropertyValueType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PropertyValueType.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<TimeSeriesPropertyType> type = default;
+            Optional<string> name = default;
+            Optional<TimeSeriesPropertyType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,7 +53,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TimeSeriesInsightsEventProperty(name.Value, Core.Optional.ToNullable(type));
+            return new TimeSeriesInsightsEventProperty(name.Value, Optional.ToNullable(type));
         }
     }
 }

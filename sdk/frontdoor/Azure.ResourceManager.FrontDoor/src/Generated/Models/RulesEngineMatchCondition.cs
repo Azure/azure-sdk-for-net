@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             RulesEngineMatchVariable = rulesEngineMatchVariable;
             RulesEngineOperator = rulesEngineOperator;
             RulesEngineMatchValue = rulesEngineMatchValue.ToList();
-            Transforms = new Core.ChangeTrackingList<RulesEngineMatchTransform>();
+            Transforms = new ChangeTrackingList<RulesEngineMatchTransform>();
         }
 
         /// <summary> Initializes a new instance of RulesEngineMatchCondition. </summary>

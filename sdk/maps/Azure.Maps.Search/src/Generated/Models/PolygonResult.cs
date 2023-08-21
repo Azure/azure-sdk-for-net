@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of PolygonResult. </summary>
         internal PolygonResult()
         {
-            Polygons = new Core.ChangeTrackingList<PolygonObject>();
+            Polygons = new ChangeTrackingList<PolygonObject>();
         }
 
         /// <summary> Initializes a new instance of PolygonResult. </summary>

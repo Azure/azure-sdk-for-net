@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Initializes a new instance of DigitalTwinsDescriptionListResult. </summary>
         internal DigitalTwinsDescriptionListResult()
         {
-            Value = new Core.ChangeTrackingList<DigitalTwinsDescriptionData>();
+            Value = new ChangeTrackingList<DigitalTwinsDescriptionData>();
         }
 
         /// <summary> Initializes a new instance of DigitalTwinsDescriptionListResult. </summary>

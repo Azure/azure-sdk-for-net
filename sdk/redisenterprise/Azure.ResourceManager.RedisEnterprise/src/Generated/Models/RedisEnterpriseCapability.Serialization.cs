@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<bool> value = default;
+            Optional<string> name = default;
+            Optional<bool> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     continue;
                 }
             }
-            return new RedisEnterpriseCapability(name.Value, Core.Optional.ToNullable(value));
+            return new RedisEnterpriseCapability(name.Value, Optional.ToNullable(value));
         }
     }
 }

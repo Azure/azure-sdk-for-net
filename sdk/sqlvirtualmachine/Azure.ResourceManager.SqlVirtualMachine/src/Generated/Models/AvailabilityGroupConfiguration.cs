@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> Initializes a new instance of AvailabilityGroupConfiguration. </summary>
         public AvailabilityGroupConfiguration()
         {
-            Replicas = new Core.ChangeTrackingList<AvailabilityGroupReplica>();
+            Replicas = new ChangeTrackingList<AvailabilityGroupReplica>();
         }
 
         /// <summary> Initializes a new instance of AvailabilityGroupConfiguration. </summary>

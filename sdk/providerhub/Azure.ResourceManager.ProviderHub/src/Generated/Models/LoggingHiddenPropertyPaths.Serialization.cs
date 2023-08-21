@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class LoggingHiddenPropertyPaths : Core.IUtf8JsonSerializable
+    public partial class LoggingHiddenPropertyPaths : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(HiddenPathsOnRequest))
+            if (Optional.IsCollectionDefined(HiddenPathsOnRequest))
             {
                 writer.WritePropertyName("hiddenPathsOnRequest"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(HiddenPathsOnResponse))
+            if (Optional.IsCollectionDefined(HiddenPathsOnResponse))
             {
                 writer.WritePropertyName("hiddenPathsOnResponse"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> hiddenPathsOnRequest = default;
-            Core.Optional<IList<string>> hiddenPathsOnResponse = default;
+            Optional<IList<string>> hiddenPathsOnRequest = default;
+            Optional<IList<string>> hiddenPathsOnResponse = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hiddenPathsOnRequest"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new LoggingHiddenPropertyPaths(Core.Optional.ToList(hiddenPathsOnRequest), Core.Optional.ToList(hiddenPathsOnResponse));
+            return new LoggingHiddenPropertyPaths(Optional.ToList(hiddenPathsOnRequest), Optional.ToList(hiddenPathsOnResponse));
         }
     }
 }

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ManagedServiceBaseProperties : Core.IUtf8JsonSerializable
+    public partial class ManagedServiceBaseProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PlacementConstraints))
+            if (Optional.IsDefined(PlacementConstraints))
             {
                 writer.WritePropertyName("placementConstraints"u8);
                 writer.WriteStringValue(PlacementConstraints);
             }
-            if (Core.Optional.IsCollectionDefined(CorrelationScheme))
+            if (Optional.IsCollectionDefined(CorrelationScheme))
             {
                 writer.WritePropertyName("correlationScheme"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ServiceLoadMetrics))
+            if (Optional.IsCollectionDefined(ServiceLoadMetrics))
             {
                 writer.WritePropertyName("serviceLoadMetrics"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ServicePlacementPolicies))
+            if (Optional.IsCollectionDefined(ServicePlacementPolicies))
             {
                 writer.WritePropertyName("servicePlacementPolicies"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DefaultMoveCost))
+            if (Optional.IsDefined(DefaultMoveCost))
             {
                 writer.WritePropertyName("defaultMoveCost"u8);
                 writer.WriteStringValue(DefaultMoveCost.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(ScalingPolicies))
+            if (Optional.IsCollectionDefined(ScalingPolicies))
             {
                 writer.WritePropertyName("scalingPolicies"u8);
                 writer.WriteStartArray();
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Core.Optional<string> placementConstraints = default;
-            Core.Optional<IList<ManagedServiceCorrelation>> correlationScheme = default;
-            Core.Optional<IList<ManagedServiceLoadMetric>> serviceLoadMetrics = default;
-            Core.Optional<IList<ManagedServicePlacementPolicy>> servicePlacementPolicies = default;
-            Core.Optional<ServiceFabricManagedServiceMoveCost> defaultMoveCost = default;
-            Core.Optional<IList<ManagedServiceScalingPolicy>> scalingPolicies = default;
+            Optional<string> placementConstraints = default;
+            Optional<IList<ManagedServiceCorrelation>> correlationScheme = default;
+            Optional<IList<ManagedServiceLoadMetric>> serviceLoadMetrics = default;
+            Optional<IList<ManagedServicePlacementPolicy>> servicePlacementPolicies = default;
+            Optional<ServiceFabricManagedServiceMoveCost> defaultMoveCost = default;
+            Optional<IList<ManagedServiceScalingPolicy>> scalingPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("placementConstraints"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new ManagedServiceBaseProperties(placementConstraints.Value, Core.Optional.ToList(correlationScheme), Core.Optional.ToList(serviceLoadMetrics), Core.Optional.ToList(servicePlacementPolicies), Core.Optional.ToNullable(defaultMoveCost), Core.Optional.ToList(scalingPolicies));
+            return new ManagedServiceBaseProperties(placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToList(scalingPolicies));
         }
     }
 }

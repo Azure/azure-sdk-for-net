@@ -12,27 +12,27 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformBuildProperties : Core.IUtf8JsonSerializable
+    public partial class AppPlatformBuildProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RelativePath))
+            if (Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
-            if (Core.Optional.IsDefined(Builder))
+            if (Optional.IsDefined(Builder))
             {
                 writer.WritePropertyName("builder"u8);
                 writer.WriteStringValue(Builder);
             }
-            if (Core.Optional.IsDefined(AgentPool))
+            if (Optional.IsDefined(AgentPool))
             {
                 writer.WritePropertyName("agentPool"u8);
                 writer.WriteStringValue(AgentPool);
             }
-            if (Core.Optional.IsCollectionDefined(Env))
+            if (Optional.IsCollectionDefined(Env))
             {
                 writer.WritePropertyName("env"u8);
                 writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(ResourceRequests))
+            if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<string> relativePath = default;
-            Core.Optional<string> builder = default;
-            Core.Optional<string> agentPool = default;
-            Core.Optional<AppPlatformBuildProvisioningState> provisioningState = default;
-            Core.Optional<IDictionary<string, string>> env = default;
-            Core.Optional<SubResource> triggeredBuildResult = default;
-            Core.Optional<AppPlatformBuildResourceRequirements> resourceRequests = default;
+            Optional<string> relativePath = default;
+            Optional<string> builder = default;
+            Optional<string> agentPool = default;
+            Optional<AppPlatformBuildProvisioningState> provisioningState = default;
+            Optional<IDictionary<string, string>> env = default;
+            Optional<SubResource> triggeredBuildResult = default;
+            Optional<AppPlatformBuildResourceRequirements> resourceRequests = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("relativePath"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformBuildProperties(relativePath.Value, builder.Value, agentPool.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToDictionary(env), triggeredBuildResult, resourceRequests.Value);
+            return new AppPlatformBuildProperties(relativePath.Value, builder.Value, agentPool.Value, Optional.ToNullable(provisioningState), Optional.ToDictionary(env), triggeredBuildResult, resourceRequests.Value);
         }
     }
 }

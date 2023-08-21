@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of VirtualNetworksListResult. </summary>
         internal VirtualNetworksListResult()
         {
-            Value = new Core.ChangeTrackingList<HybridContainerServiceVirtualNetworkData>();
+            Value = new ChangeTrackingList<HybridContainerServiceVirtualNetworkData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworksListResult. </summary>

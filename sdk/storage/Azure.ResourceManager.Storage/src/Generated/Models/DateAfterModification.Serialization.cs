@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class DateAfterModification : Core.IUtf8JsonSerializable
+    public partial class DateAfterModification : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DaysAfterModificationGreaterThan))
+            if (Optional.IsDefined(DaysAfterModificationGreaterThan))
             {
                 writer.WritePropertyName("daysAfterModificationGreaterThan"u8);
                 writer.WriteNumberValue(DaysAfterModificationGreaterThan.Value);
             }
-            if (Core.Optional.IsDefined(DaysAfterLastAccessTimeGreaterThan))
+            if (Optional.IsDefined(DaysAfterLastAccessTimeGreaterThan))
             {
                 writer.WritePropertyName("daysAfterLastAccessTimeGreaterThan"u8);
                 writer.WriteNumberValue(DaysAfterLastAccessTimeGreaterThan.Value);
             }
-            if (Core.Optional.IsDefined(DaysAfterLastTierChangeGreaterThan))
+            if (Optional.IsDefined(DaysAfterLastTierChangeGreaterThan))
             {
                 writer.WritePropertyName("daysAfterLastTierChangeGreaterThan"u8);
                 writer.WriteNumberValue(DaysAfterLastTierChangeGreaterThan.Value);
             }
-            if (Core.Optional.IsDefined(DaysAfterCreationGreaterThan))
+            if (Optional.IsDefined(DaysAfterCreationGreaterThan))
             {
                 writer.WritePropertyName("daysAfterCreationGreaterThan"u8);
                 writer.WriteNumberValue(DaysAfterCreationGreaterThan.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<float> daysAfterModificationGreaterThan = default;
-            Core.Optional<float> daysAfterLastAccessTimeGreaterThan = default;
-            Core.Optional<float> daysAfterLastTierChangeGreaterThan = default;
-            Core.Optional<float> daysAfterCreationGreaterThan = default;
+            Optional<float> daysAfterModificationGreaterThan = default;
+            Optional<float> daysAfterLastAccessTimeGreaterThan = default;
+            Optional<float> daysAfterLastTierChangeGreaterThan = default;
+            Optional<float> daysAfterCreationGreaterThan = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysAfterModificationGreaterThan"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new DateAfterModification(Core.Optional.ToNullable(daysAfterModificationGreaterThan), Core.Optional.ToNullable(daysAfterLastAccessTimeGreaterThan), Core.Optional.ToNullable(daysAfterLastTierChangeGreaterThan), Core.Optional.ToNullable(daysAfterCreationGreaterThan));
+            return new DateAfterModification(Optional.ToNullable(daysAfterModificationGreaterThan), Optional.ToNullable(daysAfterLastAccessTimeGreaterThan), Optional.ToNullable(daysAfterLastTierChangeGreaterThan), Optional.ToNullable(daysAfterCreationGreaterThan));
         }
     }
 }

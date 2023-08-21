@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class IngressStickySessions : Core.IUtf8JsonSerializable
+    internal partial class IngressStickySessions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Affinity))
+            if (Optional.IsDefined(Affinity))
             {
                 writer.WritePropertyName("affinity"u8);
                 writer.WriteStringValue(Affinity.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<Affinity> affinity = default;
+            Optional<Affinity> affinity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("affinity"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new IngressStickySessions(Core.Optional.ToNullable(affinity));
+            return new IngressStickySessions(Optional.ToNullable(affinity));
         }
     }
 }

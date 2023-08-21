@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ScriptLogsList. </summary>
         internal ScriptLogsList()
         {
-            Value = new Core.ChangeTrackingList<ScriptLogData>();
+            Value = new ChangeTrackingList<ScriptLogData>();
         }
 
         /// <summary> Initializes a new instance of ScriptLogsList. </summary>

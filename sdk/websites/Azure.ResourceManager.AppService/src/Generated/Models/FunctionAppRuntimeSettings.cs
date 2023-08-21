@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of FunctionAppRuntimeSettings. </summary>
         internal FunctionAppRuntimeSettings()
         {
-            AppSettingsDictionary = new Core.ChangeTrackingDictionary<string, string>();
-            SupportedFunctionsExtensionVersions = new Core.ChangeTrackingList<string>();
+            AppSettingsDictionary = new ChangeTrackingDictionary<string, string>();
+            SupportedFunctionsExtensionVersions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of FunctionAppRuntimeSettings. </summary>

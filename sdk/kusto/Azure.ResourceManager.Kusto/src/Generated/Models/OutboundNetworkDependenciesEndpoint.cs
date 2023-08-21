@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of OutboundNetworkDependenciesEndpoint. </summary>
         public OutboundNetworkDependenciesEndpoint()
         {
-            Endpoints = new Core.ChangeTrackingList<EndpointDependency>();
+            Endpoints = new ChangeTrackingList<EndpointDependency>();
         }
 
         /// <summary> Initializes a new instance of OutboundNetworkDependenciesEndpoint. </summary>

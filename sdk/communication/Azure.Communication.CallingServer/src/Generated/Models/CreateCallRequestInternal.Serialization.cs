@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class CreateCallRequestInternal : Core.IUtf8JsonSerializable
+    internal partial class CreateCallRequestInternal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targets"u8);
@@ -24,14 +24,14 @@ namespace Azure.Communication.CallingServer
             writer.WriteEndArray();
             writer.WritePropertyName("source"u8);
             writer.WriteObjectValue(Source);
-            if (Core.Optional.IsDefined(Subject))
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
             writer.WritePropertyName("callbackUri"u8);
             writer.WriteStringValue(CallbackUri);
-            if (Core.Optional.IsDefined(MediaStreamingConfiguration))
+            if (Optional.IsDefined(MediaStreamingConfiguration))
             {
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);
                 writer.WriteObjectValue(MediaStreamingConfiguration);

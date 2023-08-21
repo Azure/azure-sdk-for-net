@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    internal partial class EncryptionInTransitProperties : Core.IUtf8JsonSerializable
+    internal partial class EncryptionInTransitProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEncryptionInTransitEnabled))
+            if (Optional.IsDefined(IsEncryptionInTransitEnabled))
             {
                 writer.WritePropertyName("isEncryptionInTransitEnabled"u8);
                 writer.WriteBooleanValue(IsEncryptionInTransitEnabled.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<bool> isEncryptionInTransitEnabled = default;
+            Optional<bool> isEncryptionInTransitEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isEncryptionInTransitEnabled"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new EncryptionInTransitProperties(Core.Optional.ToNullable(isEncryptionInTransitEnabled));
+            return new EncryptionInTransitProperties(Optional.ToNullable(isEncryptionInTransitEnabled));
         }
     }
 }

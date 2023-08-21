@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> osName = default;
-            Core.Optional<string> osType = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryOSVersionWrapper>> osVersions = default;
+            Optional<string> osName = default;
+            Optional<string> osType = default;
+            Optional<IReadOnlyList<SiteRecoveryOSVersionWrapper>> osVersions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osName"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoverySupportedOSDetails(osName.Value, osType.Value, Core.Optional.ToList(osVersions));
+            return new SiteRecoverySupportedOSDetails(osName.Value, osType.Value, Optional.ToList(osVersions));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InlineWorkflowTaskDetails. </summary>
         internal InlineWorkflowTaskDetails()
         {
-            WorkflowIds = new Core.ChangeTrackingList<string>();
+            WorkflowIds = new ChangeTrackingList<string>();
             InstanceType = "InlineWorkflowTaskDetails";
         }
 

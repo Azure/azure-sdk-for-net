@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<SendingLog> sendingLogs = default;
-            Core.Optional<string> reasonForLogsStatus = default;
+            Optional<string> id = default;
+            Optional<SendingLog> sendingLogs = default;
+            Optional<string> reasonForLogsStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     continue;
                 }
             }
-            return new MonitoredResource(id.Value, Core.Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
+            return new MonitoredResource(id.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
         }
     }
 }

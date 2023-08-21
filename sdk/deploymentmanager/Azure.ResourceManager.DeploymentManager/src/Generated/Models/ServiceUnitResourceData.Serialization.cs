@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeploymentManager
 {
-    public partial class ServiceUnitResourceData : Core.IUtf8JsonSerializable
+    public partial class ServiceUnitResourceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DeploymentManager
             writer.WriteStringValue(TargetResourceGroup);
             writer.WritePropertyName("deploymentMode"u8);
             writer.WriteStringValue(DeploymentMode.ToSerialString());
-            if (Core.Optional.IsDefined(Artifacts))
+            if (Optional.IsDefined(Artifacts))
             {
                 writer.WritePropertyName("artifacts"u8);
                 writer.WriteObjectValue(Artifacts);
@@ -52,15 +52,15 @@ namespace Azure.ResourceManager.DeploymentManager
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             string targetResourceGroup = default;
             DeploymentMode deploymentMode = default;
-            Core.Optional<ServiceUnitArtifacts> artifacts = default;
+            Optional<ServiceUnitArtifacts> artifacts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DeploymentManager
                     continue;
                 }
             }
-            return new ServiceUnitResourceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, targetResourceGroup, deploymentMode, artifacts.Value);
+            return new ServiceUnitResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, targetResourceGroup, deploymentMode, artifacts.Value);
         }
     }
 }

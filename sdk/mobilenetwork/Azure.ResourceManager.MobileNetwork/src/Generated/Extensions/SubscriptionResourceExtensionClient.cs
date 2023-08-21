@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MobileNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkResource(Client, MobileNetworkData.DeserializeMobileNetworkData(e)), MobileNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMobileNetworks", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkResource(Client, MobileNetworkData.DeserializeMobileNetworkData(e)), MobileNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMobileNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MobileNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkResource(Client, MobileNetworkData.DeserializeMobileNetworkData(e)), MobileNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMobileNetworks", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkResource(Client, MobileNetworkData.DeserializeMobileNetworkData(e)), MobileNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMobileNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneResource(Client, PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(e)), PacketCoreControlPlaneClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPacketCoreControlPlanes", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneResource(Client, PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(e)), PacketCoreControlPlaneClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPacketCoreControlPlanes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneResource(Client, PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(e)), PacketCoreControlPlaneClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPacketCoreControlPlanes", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneResource(Client, PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(e)), PacketCoreControlPlaneClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPacketCoreControlPlanes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), MobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMobileNetworkSimGroups", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), MobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMobileNetworkSimGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), MobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMobileNetworkSimGroups", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), MobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMobileNetworkSimGroups", "value", "nextLink", cancellationToken);
         }
     }
 }

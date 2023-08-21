@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> ipv4AddressSpaces = default;
-            Core.Optional<IReadOnlyList<string>> ipv6AddressSpaces = default;
+            Optional<IReadOnlyList<string>> ipv4AddressSpaces = default;
+            Optional<IReadOnlyList<string>> ipv6AddressSpaces = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipv4AddressSpaces"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new NetworkFabricControllerServices(Core.Optional.ToList(ipv4AddressSpaces), Core.Optional.ToList(ipv6AddressSpaces));
+            return new NetworkFabricControllerServices(Optional.ToList(ipv4AddressSpaces), Optional.ToList(ipv6AddressSpaces));
         }
     }
 }

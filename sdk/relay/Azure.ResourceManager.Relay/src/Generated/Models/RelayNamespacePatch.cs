@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Relay.Models
         /// <summary> Initializes a new instance of RelayNamespacePatch. </summary>
         public RelayNamespacePatch()
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<RelayPrivateEndpointConnectionData>();
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            PrivateEndpointConnections = new ChangeTrackingList<RelayPrivateEndpointConnectionData>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of RelayNamespacePatch. </summary>

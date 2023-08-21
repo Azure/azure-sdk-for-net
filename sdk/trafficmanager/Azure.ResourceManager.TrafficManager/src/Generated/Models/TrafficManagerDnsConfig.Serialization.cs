@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerDnsConfig : Core.IUtf8JsonSerializable
+    public partial class TrafficManagerDnsConfig : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RelativeName))
+            if (Optional.IsDefined(RelativeName))
             {
                 writer.WritePropertyName("relativeName"u8);
                 writer.WriteStringValue(RelativeName);
             }
-            if (Core.Optional.IsDefined(Ttl))
+            if (Optional.IsDefined(Ttl))
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(Ttl.Value);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Core.Optional<string> relativeName = default;
-            Core.Optional<string> fqdn = default;
-            Core.Optional<long> ttl = default;
+            Optional<string> relativeName = default;
+            Optional<string> fqdn = default;
+            Optional<long> ttl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("relativeName"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     continue;
                 }
             }
-            return new TrafficManagerDnsConfig(relativeName.Value, fqdn.Value, Core.Optional.ToNullable(ttl));
+            return new TrafficManagerDnsConfig(relativeName.Value, fqdn.Value, Optional.ToNullable(ttl));
         }
     }
 }

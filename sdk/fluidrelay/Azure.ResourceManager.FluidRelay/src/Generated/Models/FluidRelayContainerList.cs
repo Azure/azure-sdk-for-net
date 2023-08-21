@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
         /// <summary> Initializes a new instance of FluidRelayContainerList. </summary>
         internal FluidRelayContainerList()
         {
-            Value = new Core.ChangeTrackingList<FluidRelayContainerData>();
+            Value = new ChangeTrackingList<FluidRelayContainerData>();
         }
 
         /// <summary> Initializes a new instance of FluidRelayContainerList. </summary>

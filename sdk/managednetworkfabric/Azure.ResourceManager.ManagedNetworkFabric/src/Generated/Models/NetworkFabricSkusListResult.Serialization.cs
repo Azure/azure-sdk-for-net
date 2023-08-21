@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<NetworkFabricSkuData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<NetworkFabricSkuData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new NetworkFabricSkusListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new NetworkFabricSkusListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

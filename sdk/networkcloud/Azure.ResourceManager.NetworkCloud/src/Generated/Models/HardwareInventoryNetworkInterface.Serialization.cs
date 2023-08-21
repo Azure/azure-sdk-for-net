@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Core.Optional<string> linkStatus = default;
-            Core.Optional<string> macAddress = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> networkInterfaceId = default;
+            Optional<string> linkStatus = default;
+            Optional<string> macAddress = default;
+            Optional<string> name = default;
+            Optional<string> networkInterfaceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkStatus"u8))

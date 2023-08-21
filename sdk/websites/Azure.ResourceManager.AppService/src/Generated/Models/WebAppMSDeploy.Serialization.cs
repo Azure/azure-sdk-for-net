@@ -13,39 +13,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WebAppMSDeploy : Core.IUtf8JsonSerializable
+    public partial class WebAppMSDeploy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PackageUri))
+            if (Optional.IsDefined(PackageUri))
             {
                 writer.WritePropertyName("packageUri"u8);
                 writer.WriteStringValue(PackageUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(ConnectionString))
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (Core.Optional.IsDefined(DBType))
+            if (Optional.IsDefined(DBType))
             {
                 writer.WritePropertyName("dbType"u8);
                 writer.WriteStringValue(DBType);
             }
-            if (Core.Optional.IsDefined(SetParametersXmlFileUri))
+            if (Optional.IsDefined(SetParametersXmlFileUri))
             {
                 writer.WritePropertyName("setParametersXmlFileUri"u8);
                 writer.WriteStringValue(SetParametersXmlFileUri.AbsoluteUri);
             }
-            if (Core.Optional.IsCollectionDefined(SetParameters))
+            if (Optional.IsCollectionDefined(SetParameters))
             {
                 writer.WritePropertyName("setParameters"u8);
                 writer.WriteStartObject();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(SkipAppData))
+            if (Optional.IsDefined(SkipAppData))
             {
                 writer.WritePropertyName("skipAppData"u8);
                 writer.WriteBooleanValue(SkipAppData.Value);
             }
-            if (Core.Optional.IsDefined(IsAppOffline))
+            if (Optional.IsDefined(IsAppOffline))
             {
                 writer.WritePropertyName("appOffline"u8);
                 writer.WriteBooleanValue(IsAppOffline.Value);
@@ -76,18 +76,18 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Uri> packageUri = default;
-            Core.Optional<string> connectionString = default;
-            Core.Optional<string> dbType = default;
-            Core.Optional<Uri> setParametersXmlFileUri = default;
-            Core.Optional<IDictionary<string, string>> setParameters = default;
-            Core.Optional<bool> skipAppData = default;
-            Core.Optional<bool> appOffline = default;
+            Optional<SystemData> systemData = default;
+            Optional<Uri> packageUri = default;
+            Optional<string> connectionString = default;
+            Optional<string> dbType = default;
+            Optional<Uri> setParametersXmlFileUri = default;
+            Optional<IDictionary<string, string>> setParameters = default;
+            Optional<bool> skipAppData = default;
+            Optional<bool> appOffline = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new WebAppMSDeploy(id, name, type, systemData.Value, packageUri.Value, connectionString.Value, dbType.Value, setParametersXmlFileUri.Value, Core.Optional.ToDictionary(setParameters), Core.Optional.ToNullable(skipAppData), Core.Optional.ToNullable(appOffline), kind.Value);
+            return new WebAppMSDeploy(id, name, type, systemData.Value, packageUri.Value, connectionString.Value, dbType.Value, setParametersXmlFileUri.Value, Optional.ToDictionary(setParameters), Optional.ToNullable(skipAppData), Optional.ToNullable(appOffline), kind.Value);
         }
     }
 }

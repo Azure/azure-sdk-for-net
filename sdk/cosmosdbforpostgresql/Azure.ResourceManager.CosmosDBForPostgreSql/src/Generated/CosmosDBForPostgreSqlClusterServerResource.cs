@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ServerConfigurationData.DeserializeServerConfigurationData, _configurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ServerConfigurationData.DeserializeServerConfigurationData, _configurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ServerConfigurationData.DeserializeServerConfigurationData, _configurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ServerConfigurationData.DeserializeServerConfigurationData, _configurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations", "value", "nextLink", cancellationToken);
         }
     }
 }

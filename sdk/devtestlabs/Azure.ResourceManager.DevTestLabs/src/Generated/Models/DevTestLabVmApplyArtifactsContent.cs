@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of DevTestLabVmApplyArtifactsContent. </summary>
         public DevTestLabVmApplyArtifactsContent()
         {
-            Artifacts = new Core.ChangeTrackingList<DevTestLabArtifactInstallInfo>();
+            Artifacts = new ChangeTrackingList<DevTestLabArtifactInstallInfo>();
         }
 
         /// <summary> The list of artifacts to apply. </summary>

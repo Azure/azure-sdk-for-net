@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<float> size = default;
+            Optional<float> size = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("size"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new DatabaseStatistics(Core.Optional.ToNullable(size));
+            return new DatabaseStatistics(Optional.ToNullable(size));
         }
     }
 }

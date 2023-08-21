@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class BareMetalMachineConfiguration : Core.IUtf8JsonSerializable
+    public partial class BareMetalMachineConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("bmcCredentials"u8);
@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(BmcMacAddress);
             writer.WritePropertyName("bootMacAddress"u8);
             writer.WriteStringValue(BootMacAddress);
-            if (Core.Optional.IsDefined(MachineDetails))
+            if (Optional.IsDefined(MachineDetails))
             {
                 writer.WritePropertyName("machineDetails"u8);
                 writer.WriteStringValue(MachineDetails);
             }
-            if (Core.Optional.IsDefined(MachineName))
+            if (Optional.IsDefined(MachineName))
             {
                 writer.WritePropertyName("machineName"u8);
                 writer.WriteStringValue(MachineName);
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Core.Optional<string> bmcConnectionString = default;
+            Optional<string> bmcConnectionString = default;
             AdministrativeCredentials bmcCredentials = default;
             string bmcMacAddress = default;
             string bootMacAddress = default;
-            Core.Optional<string> machineDetails = default;
-            Core.Optional<string> machineName = default;
+            Optional<string> machineDetails = default;
+            Optional<string> machineName = default;
             long rackSlot = default;
             string serialNumber = default;
             foreach (var property in element.EnumerateObject())

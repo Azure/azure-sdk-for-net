@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubPolicyKey : Core.IUtf8JsonSerializable
+    public partial class NotificationHubPolicyKey : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PolicyKey))
+            if (Optional.IsDefined(PolicyKey))
             {
                 writer.WritePropertyName("policyKey"u8);
                 writer.WriteStringValue(PolicyKey);

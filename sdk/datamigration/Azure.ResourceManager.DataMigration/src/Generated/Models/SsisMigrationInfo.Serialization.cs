@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class SsisMigrationInfo : Core.IUtf8JsonSerializable
+    public partial class SsisMigrationInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SsisStoreType))
+            if (Optional.IsDefined(SsisStoreType))
             {
                 writer.WritePropertyName("ssisStoreType"u8);
                 writer.WriteStringValue(SsisStoreType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ProjectOverwriteOption))
+            if (Optional.IsDefined(ProjectOverwriteOption))
             {
                 writer.WritePropertyName("projectOverwriteOption"u8);
                 writer.WriteStringValue(ProjectOverwriteOption.Value.ToString());
             }
-            if (Core.Optional.IsDefined(EnvironmentOverwriteOption))
+            if (Optional.IsDefined(EnvironmentOverwriteOption))
             {
                 writer.WritePropertyName("environmentOverwriteOption"u8);
                 writer.WriteStringValue(EnvironmentOverwriteOption.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<SsisStoreType> ssisStoreType = default;
-            Core.Optional<SsisMigrationOverwriteOption> projectOverwriteOption = default;
-            Core.Optional<SsisMigrationOverwriteOption> environmentOverwriteOption = default;
+            Optional<SsisStoreType> ssisStoreType = default;
+            Optional<SsisMigrationOverwriteOption> projectOverwriteOption = default;
+            Optional<SsisMigrationOverwriteOption> environmentOverwriteOption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ssisStoreType"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new SsisMigrationInfo(Core.Optional.ToNullable(ssisStoreType), Core.Optional.ToNullable(projectOverwriteOption), Core.Optional.ToNullable(environmentOverwriteOption));
+            return new SsisMigrationInfo(Optional.ToNullable(ssisStoreType), Optional.ToNullable(projectOverwriteOption), Optional.ToNullable(environmentOverwriteOption));
         }
     }
 }

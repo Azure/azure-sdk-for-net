@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<string> status = default;
-            Core.Optional<string> data = default;
+            Optional<string> status = default;
+            Optional<string> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))

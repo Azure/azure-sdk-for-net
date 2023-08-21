@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class LogSchedulePolicy : Core.IUtf8JsonSerializable
+    public partial class LogSchedulePolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ScheduleFrequencyInMins))
+            if (Optional.IsDefined(ScheduleFrequencyInMins))
             {
                 writer.WritePropertyName("scheduleFrequencyInMins"u8);
                 writer.WriteNumberValue(ScheduleFrequencyInMins.Value);
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<int> scheduleFrequencyInMins = default;
+            Optional<int> scheduleFrequencyInMins = default;
             string schedulePolicyType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new LogSchedulePolicy(schedulePolicyType, Core.Optional.ToNullable(scheduleFrequencyInMins));
+            return new LogSchedulePolicy(schedulePolicyType, Optional.ToNullable(scheduleFrequencyInMins));
         }
     }
 }

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class ActionList : Core.IUtf8JsonSerializable
+    internal partial class ActionList : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ActionGroups))
+            if (Optional.IsCollectionDefined(ActionGroups))
             {
                 writer.WritePropertyName("actionGroups"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<IList<ActivityLogAlertActionGroup>> actionGroups = default;
+            Optional<IList<ActivityLogAlertActionGroup>> actionGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionGroups"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new ActionList(Core.Optional.ToList(actionGroups));
+            return new ActionList(Optional.ToList(actionGroups));
         }
     }
 }

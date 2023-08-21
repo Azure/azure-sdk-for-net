@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of EnvironmentTypeListResult. </summary>
         internal EnvironmentTypeListResult()
         {
-            Value = new Core.ChangeTrackingList<DevCenterEnvironmentTypeData>();
+            Value = new ChangeTrackingList<DevCenterEnvironmentTypeData>();
         }
 
         /// <summary> Initializes a new instance of EnvironmentTypeListResult. </summary>

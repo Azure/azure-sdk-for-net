@@ -12,32 +12,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ProviderRegistrationProperties : Core.IUtf8JsonSerializable
+    public partial class ProviderRegistrationProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProviderHubMetadata))
+            if (Optional.IsDefined(ProviderHubMetadata))
             {
                 writer.WritePropertyName("providerHubMetadata"u8);
                 writer.WriteObjectValue(ProviderHubMetadata);
             }
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SubscriptionLifecycleNotificationSpecifications))
+            if (Optional.IsDefined(SubscriptionLifecycleNotificationSpecifications))
             {
                 writer.WritePropertyName("subscriptionLifecycleNotificationSpecifications"u8);
                 writer.WriteObjectValue(SubscriptionLifecycleNotificationSpecifications);
             }
-            if (Core.Optional.IsDefined(ProviderAuthentication))
+            if (Optional.IsDefined(ProviderAuthentication))
             {
                 writer.WritePropertyName("providerAuthentication"u8);
                 writer.WriteObjectValue(ProviderAuthentication);
             }
-            if (Core.Optional.IsCollectionDefined(ProviderAuthorizations))
+            if (Optional.IsCollectionDefined(ProviderAuthorizations))
             {
                 writer.WritePropertyName("providerAuthorizations"u8);
                 writer.WriteStartArray();
@@ -47,22 +47,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Namespace))
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Core.Optional.IsDefined(ProviderVersion))
+            if (Optional.IsDefined(ProviderVersion))
             {
                 writer.WritePropertyName("providerVersion"u8);
                 writer.WriteStringValue(ProviderVersion);
             }
-            if (Core.Optional.IsDefined(ProviderType))
+            if (Optional.IsDefined(ProviderType))
             {
                 writer.WritePropertyName("providerType"u8);
                 writer.WriteStringValue(ProviderType.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(RequiredFeatures))
+            if (Optional.IsCollectionDefined(RequiredFeatures))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(FeaturesRule))
+            if (Optional.IsDefined(FeaturesRule))
             {
                 writer.WritePropertyName("featuresRule"u8);
                 writer.WriteObjectValue(FeaturesRule);
             }
-            if (Core.Optional.IsDefined(RequestHeaderOptions))
+            if (Optional.IsDefined(RequestHeaderOptions))
             {
                 writer.WritePropertyName("requestHeaderOptions"u8);
                 writer.WriteObjectValue(RequestHeaderOptions);
             }
-            if (Core.Optional.IsDefined(Management))
+            if (Optional.IsDefined(Management))
             {
                 writer.WritePropertyName("management"u8);
                 writer.WriteObjectValue(Management);
             }
-            if (Core.Optional.IsCollectionDefined(Capabilities))
+            if (Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Metadata))
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(TemplateDeploymentOptions))
+            if (Optional.IsDefined(TemplateDeploymentOptions))
             {
                 writer.WritePropertyName("templateDeploymentOptions"u8);
                 writer.WriteObjectValue(TemplateDeploymentOptions);
@@ -120,21 +120,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<ProviderHubMetadata> providerHubMetadata = default;
-            Core.Optional<ProviderHubProvisioningState> provisioningState = default;
-            Core.Optional<SubscriptionLifecycleNotificationSpecifications> subscriptionLifecycleNotificationSpecifications = default;
-            Core.Optional<ResourceProviderAuthentication> providerAuthentication = default;
-            Core.Optional<IList<ResourceProviderAuthorization>> providerAuthorizations = default;
-            Core.Optional<string> @namespace = default;
-            Core.Optional<string> providerVersion = default;
-            Core.Optional<ResourceProviderType> providerType = default;
-            Core.Optional<IList<string>> requiredFeatures = default;
-            Core.Optional<FeaturesRule> featuresRule = default;
-            Core.Optional<RequestHeaderOptions> requestHeaderOptions = default;
-            Core.Optional<ResourceProviderManagement> management = default;
-            Core.Optional<IList<ResourceProviderCapabilities>> capabilities = default;
-            Core.Optional<BinaryData> metadata = default;
-            Core.Optional<TemplateDeploymentOptions> templateDeploymentOptions = default;
+            Optional<ProviderHubMetadata> providerHubMetadata = default;
+            Optional<ProviderHubProvisioningState> provisioningState = default;
+            Optional<SubscriptionLifecycleNotificationSpecifications> subscriptionLifecycleNotificationSpecifications = default;
+            Optional<ResourceProviderAuthentication> providerAuthentication = default;
+            Optional<IList<ResourceProviderAuthorization>> providerAuthorizations = default;
+            Optional<string> @namespace = default;
+            Optional<string> providerVersion = default;
+            Optional<ResourceProviderType> providerType = default;
+            Optional<IList<string>> requiredFeatures = default;
+            Optional<FeaturesRule> featuresRule = default;
+            Optional<RequestHeaderOptions> requestHeaderOptions = default;
+            Optional<ResourceProviderManagement> management = default;
+            Optional<IList<ResourceProviderCapabilities>> capabilities = default;
+            Optional<BinaryData> metadata = default;
+            Optional<TemplateDeploymentOptions> templateDeploymentOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerHubMetadata"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ProviderRegistrationProperties(providerAuthentication.Value, Core.Optional.ToList(providerAuthorizations), @namespace.Value, providerVersion.Value, Core.Optional.ToNullable(providerType), Core.Optional.ToList(requiredFeatures), featuresRule.Value, requestHeaderOptions.Value, management.Value, Core.Optional.ToList(capabilities), metadata.Value, templateDeploymentOptions.Value, providerHubMetadata.Value, Core.Optional.ToNullable(provisioningState), subscriptionLifecycleNotificationSpecifications.Value);
+            return new ProviderRegistrationProperties(providerAuthentication.Value, Optional.ToList(providerAuthorizations), @namespace.Value, providerVersion.Value, Optional.ToNullable(providerType), Optional.ToList(requiredFeatures), featuresRule.Value, requestHeaderOptions.Value, management.Value, Optional.ToList(capabilities), metadata.Value, templateDeploymentOptions.Value, providerHubMetadata.Value, Optional.ToNullable(provisioningState), subscriptionLifecycleNotificationSpecifications.Value);
         }
     }
 }

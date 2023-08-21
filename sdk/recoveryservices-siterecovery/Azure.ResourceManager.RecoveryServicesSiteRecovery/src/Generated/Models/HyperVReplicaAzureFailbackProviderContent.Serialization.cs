@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaAzureFailbackProviderContent : Core.IUtf8JsonSerializable
+    public partial class HyperVReplicaAzureFailbackProviderContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DataSyncOption))
+            if (Optional.IsDefined(DataSyncOption))
             {
                 writer.WritePropertyName("dataSyncOption"u8);
                 writer.WriteStringValue(DataSyncOption);
             }
-            if (Core.Optional.IsDefined(RecoveryVmCreationOption))
+            if (Optional.IsDefined(RecoveryVmCreationOption))
             {
                 writer.WritePropertyName("recoveryVmCreationOption"u8);
                 writer.WriteStringValue(RecoveryVmCreationOption);
             }
-            if (Core.Optional.IsDefined(ProviderIdForAlternateRecovery))
+            if (Optional.IsDefined(ProviderIdForAlternateRecovery))
             {
                 writer.WritePropertyName("providerIdForAlternateRecovery"u8);
                 writer.WriteStringValue(ProviderIdForAlternateRecovery);

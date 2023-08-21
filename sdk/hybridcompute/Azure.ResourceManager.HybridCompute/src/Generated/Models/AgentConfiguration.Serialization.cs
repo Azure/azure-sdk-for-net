@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Core.Optional<Uri> proxyUrl = default;
-            Core.Optional<IReadOnlyList<string>> incomingConnectionsPorts = default;
-            Core.Optional<IReadOnlyList<ConfigurationExtension>> extensionsAllowList = default;
-            Core.Optional<IReadOnlyList<ConfigurationExtension>> extensionsBlockList = default;
-            Core.Optional<IReadOnlyList<string>> proxyBypass = default;
-            Core.Optional<string> extensionsEnabled = default;
-            Core.Optional<string> guestConfigurationEnabled = default;
-            Core.Optional<AgentConfigurationMode> configMode = default;
+            Optional<Uri> proxyUrl = default;
+            Optional<IReadOnlyList<string>> incomingConnectionsPorts = default;
+            Optional<IReadOnlyList<ConfigurationExtension>> extensionsAllowList = default;
+            Optional<IReadOnlyList<ConfigurationExtension>> extensionsBlockList = default;
+            Optional<IReadOnlyList<string>> proxyBypass = default;
+            Optional<string> extensionsEnabled = default;
+            Optional<string> guestConfigurationEnabled = default;
+            Optional<AgentConfigurationMode> configMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("proxyUrl"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     continue;
                 }
             }
-            return new AgentConfiguration(proxyUrl.Value, Core.Optional.ToList(incomingConnectionsPorts), Core.Optional.ToList(extensionsAllowList), Core.Optional.ToList(extensionsBlockList), Core.Optional.ToList(proxyBypass), extensionsEnabled.Value, guestConfigurationEnabled.Value, Core.Optional.ToNullable(configMode));
+            return new AgentConfiguration(proxyUrl.Value, Optional.ToList(incomingConnectionsPorts), Optional.ToList(extensionsAllowList), Optional.ToList(extensionsBlockList), Optional.ToList(proxyBypass), extensionsEnabled.Value, guestConfigurationEnabled.Value, Optional.ToNullable(configMode));
         }
     }
 }

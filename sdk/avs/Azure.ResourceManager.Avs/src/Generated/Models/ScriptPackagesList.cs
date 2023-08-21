@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of ScriptPackagesList. </summary>
         internal ScriptPackagesList()
         {
-            Value = new Core.ChangeTrackingList<ScriptPackageData>();
+            Value = new ChangeTrackingList<ScriptPackageData>();
         }
 
         /// <summary> Initializes a new instance of ScriptPackagesList. </summary>

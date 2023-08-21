@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Legacy
 
             Code = code;
             Message = message;
-            Details = new Core.ChangeTrackingDictionary<string, string>();
+            Details = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of InnerError. </summary>

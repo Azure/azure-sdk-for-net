@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of ResourceGuardResourceList. </summary>
         internal ResourceGuardResourceList()
         {
-            Value = new Core.ChangeTrackingList<ResourceGuardData>();
+            Value = new ChangeTrackingList<ResourceGuardData>();
         }
 
         /// <summary> Initializes a new instance of ResourceGuardResourceList. </summary>

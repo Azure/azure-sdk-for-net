@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
-    public partial class ServicePrincipalCredentialEntity : Core.IUtf8JsonSerializable
+    public partial class ServicePrincipalCredentialEntity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
@@ -22,7 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             writer.WriteStringValue(CredentialKind.ToString());
             writer.WritePropertyName("dataSourceCredentialName"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("dataSourceCredentialDescription"u8);
                 writer.WriteStringValue(Description);
@@ -38,9 +38,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
             ServicePrincipalParam parameters = default;
             DataSourceCredentialKind dataSourceCredentialType = default;
-            Core.Optional<string> dataSourceCredentialId = default;
+            Optional<string> dataSourceCredentialId = default;
             string dataSourceCredentialName = default;
-            Core.Optional<string> dataSourceCredentialDescription = default;
+            Optional<string> dataSourceCredentialDescription = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))

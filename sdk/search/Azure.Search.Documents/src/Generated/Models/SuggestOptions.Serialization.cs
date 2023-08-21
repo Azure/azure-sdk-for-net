@@ -10,56 +10,56 @@ using Azure.Core;
 
 namespace Azure.Search.Documents
 {
-    public partial class SuggestOptions : Core.IUtf8JsonSerializable
+    public partial class SuggestOptions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Filter))
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (Core.Optional.IsDefined(UseFuzzyMatching))
+            if (Optional.IsDefined(UseFuzzyMatching))
             {
                 writer.WritePropertyName("fuzzy"u8);
                 writer.WriteBooleanValue(UseFuzzyMatching.Value);
             }
-            if (Core.Optional.IsDefined(HighlightPostTag))
+            if (Optional.IsDefined(HighlightPostTag))
             {
                 writer.WritePropertyName("highlightPostTag"u8);
                 writer.WriteStringValue(HighlightPostTag);
             }
-            if (Core.Optional.IsDefined(HighlightPreTag))
+            if (Optional.IsDefined(HighlightPreTag))
             {
                 writer.WritePropertyName("highlightPreTag"u8);
                 writer.WriteStringValue(HighlightPreTag);
             }
-            if (Core.Optional.IsDefined(MinimumCoverage))
+            if (Optional.IsDefined(MinimumCoverage))
             {
                 writer.WritePropertyName("minimumCoverage"u8);
                 writer.WriteNumberValue(MinimumCoverage.Value);
             }
-            if (Core.Optional.IsDefined(OrderByRaw))
+            if (Optional.IsDefined(OrderByRaw))
             {
                 writer.WritePropertyName("orderby"u8);
                 writer.WriteStringValue(OrderByRaw);
             }
             writer.WritePropertyName("search"u8);
             writer.WriteStringValue(SearchText);
-            if (Core.Optional.IsDefined(SearchFieldsRaw))
+            if (Optional.IsDefined(SearchFieldsRaw))
             {
                 writer.WritePropertyName("searchFields"u8);
                 writer.WriteStringValue(SearchFieldsRaw);
             }
-            if (Core.Optional.IsDefined(SelectRaw))
+            if (Optional.IsDefined(SelectRaw))
             {
                 writer.WritePropertyName("select"u8);
                 writer.WriteStringValue(SelectRaw);
             }
             writer.WritePropertyName("suggesterName"u8);
             writer.WriteStringValue(SuggesterName);
-            if (Core.Optional.IsDefined(Size))
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("top"u8);
                 writer.WriteNumberValue(Size.Value);

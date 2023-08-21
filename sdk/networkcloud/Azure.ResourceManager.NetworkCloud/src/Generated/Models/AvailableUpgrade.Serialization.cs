@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Core.Optional<AvailabilityLifecycle> availabilityLifecycle = default;
-            Core.Optional<string> version = default;
+            Optional<AvailabilityLifecycle> availabilityLifecycle = default;
+            Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availabilityLifecycle"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new AvailableUpgrade(Core.Optional.ToNullable(availabilityLifecycle), version.Value);
+            return new AvailableUpgrade(Optional.ToNullable(availabilityLifecycle), version.Value);
         }
     }
 }

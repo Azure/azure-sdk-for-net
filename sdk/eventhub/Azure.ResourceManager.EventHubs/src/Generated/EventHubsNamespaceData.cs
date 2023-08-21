@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="location"> The location. </param>
         public EventHubsNamespaceData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<EventHubsPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of EventHubsNamespaceData. </summary>

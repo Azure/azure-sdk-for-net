@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of RolloutStatusBase. </summary>
         public RolloutStatusBase()
         {
-            CompletedRegions = new Core.ChangeTrackingList<AzureLocation>();
-            FailedOrSkippedRegions = new Core.ChangeTrackingDictionary<string, ExtendedErrorInfo>();
+            CompletedRegions = new ChangeTrackingList<AzureLocation>();
+            FailedOrSkippedRegions = new ChangeTrackingDictionary<string, ExtendedErrorInfo>();
         }
 
         /// <summary> Initializes a new instance of RolloutStatusBase. </summary>

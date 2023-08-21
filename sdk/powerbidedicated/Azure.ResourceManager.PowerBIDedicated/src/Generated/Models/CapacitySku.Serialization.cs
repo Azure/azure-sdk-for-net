@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
-    public partial class CapacitySku : Core.IUtf8JsonSerializable
+    public partial class CapacitySku : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Tier))
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Capacity))
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 return null;
             }
             string name = default;
-            Core.Optional<CapacitySkuTier> tier = default;
-            Core.Optional<int> capacity = default;
+            Optional<CapacitySkuTier> tier = default;
+            Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     continue;
                 }
             }
-            return new CapacitySku(name, Core.Optional.ToNullable(tier), Core.Optional.ToNullable(capacity));
+            return new CapacitySku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity));
         }
     }
 }

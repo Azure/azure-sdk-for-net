@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class DiscoveredOnvifDevice : Core.IUtf8JsonSerializable
+    public partial class DiscoveredOnvifDevice : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServiceIdentifier))
+            if (Optional.IsDefined(ServiceIdentifier))
             {
                 writer.WritePropertyName("serviceIdentifier"u8);
                 writer.WriteStringValue(ServiceIdentifier);
             }
-            if (Core.Optional.IsDefined(RemoteIPAddress))
+            if (Optional.IsDefined(RemoteIPAddress))
             {
                 writer.WritePropertyName("remoteIPAddress"u8);
                 writer.WriteStringValue(RemoteIPAddress);
             }
-            if (Core.Optional.IsCollectionDefined(Scopes))
+            if (Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Endpoints))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -55,10 +55,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<string> serviceIdentifier = default;
-            Core.Optional<string> remoteIPAddress = default;
-            Core.Optional<IList<string>> scopes = default;
-            Core.Optional<IList<string>> endpoints = default;
+            Optional<string> serviceIdentifier = default;
+            Optional<string> remoteIPAddress = default;
+            Optional<IList<string>> scopes = default;
+            Optional<IList<string>> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceIdentifier"u8))
@@ -100,7 +100,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new DiscoveredOnvifDevice(serviceIdentifier.Value, remoteIPAddress.Value, Core.Optional.ToList(scopes), Core.Optional.ToList(endpoints));
+            return new DiscoveredOnvifDevice(serviceIdentifier.Value, remoteIPAddress.Value, Optional.ToList(scopes), Optional.ToList(endpoints));
         }
     }
 }

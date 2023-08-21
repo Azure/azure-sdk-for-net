@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class SupportedConnectorProperties : Core.IUtf8JsonSerializable
+    public partial class SupportedConnectorProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ConnectorType))
+            if (Optional.IsDefined(ConnectorType))
             {
                 writer.WritePropertyName("connectorType"u8);
                 writer.WriteStringValue(ConnectorType);
             }
-            if (Core.Optional.IsDefined(MaxSpeedInMbps))
+            if (Optional.IsDefined(MaxSpeedInMbps))
             {
                 writer.WritePropertyName("maxSpeedInMbps"u8);
                 writer.WriteNumberValue(MaxSpeedInMbps.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<string> connectorType = default;
-            Core.Optional<int> maxSpeedInMbps = default;
+            Optional<string> connectorType = default;
+            Optional<int> maxSpeedInMbps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectorType"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new SupportedConnectorProperties(connectorType.Value, Core.Optional.ToNullable(maxSpeedInMbps));
+            return new SupportedConnectorProperties(connectorType.Value, Optional.ToNullable(maxSpeedInMbps));
         }
     }
 }

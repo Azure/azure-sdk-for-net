@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class ScriptActivityTypePropertiesLogSettings : Core.IUtf8JsonSerializable
+    public partial class ScriptActivityTypePropertiesLogSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("logDestination"u8);
             writer.WriteStringValue(LogDestination.ToString());
-            if (Core.Optional.IsDefined(LogLocationSettings))
+            if (Optional.IsDefined(LogLocationSettings))
             {
                 writer.WritePropertyName("logLocationSettings"u8);
                 writer.WriteObjectValue(LogLocationSettings);
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             ScriptActivityLogDestination logDestination = default;
-            Core.Optional<LogLocationSettings> logLocationSettings = default;
+            Optional<LogLocationSettings> logLocationSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logDestination"u8))

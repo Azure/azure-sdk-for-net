@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ArcSettingData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ArcSettingData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new ArcSettingList(Core.Optional.ToList(value), nextLink.Value);
+            return new ArcSettingList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

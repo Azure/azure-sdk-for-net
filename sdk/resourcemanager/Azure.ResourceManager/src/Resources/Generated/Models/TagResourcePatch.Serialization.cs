@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class TagResourcePatch : Core.IUtf8JsonSerializable
+    public partial class TagResourcePatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PatchMode))
+            if (Optional.IsDefined(PatchMode))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(PatchMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);

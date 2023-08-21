@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<long> limit = default;
-            Core.Optional<long> currentValue = default;
-            Core.Optional<ContainerRegistryUsageUnit> unit = default;
+            Optional<string> name = default;
+            Optional<long> limit = default;
+            Optional<long> currentValue = default;
+            Optional<ContainerRegistryUsageUnit> unit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryUsage(name.Value, Core.Optional.ToNullable(limit), Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(unit));
+            return new ContainerRegistryUsage(name.Value, Optional.ToNullable(limit), Optional.ToNullable(currentValue), Optional.ToNullable(unit));
         }
     }
 }

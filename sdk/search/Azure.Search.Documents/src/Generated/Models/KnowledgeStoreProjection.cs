@@ -16,9 +16,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of KnowledgeStoreProjection. </summary>
         public KnowledgeStoreProjection()
         {
-            Tables = new Core.ChangeTrackingList<KnowledgeStoreTableProjectionSelector>();
-            Objects = new Core.ChangeTrackingList<KnowledgeStoreObjectProjectionSelector>();
-            Files = new Core.ChangeTrackingList<KnowledgeStoreFileProjectionSelector>();
+            Tables = new ChangeTrackingList<KnowledgeStoreTableProjectionSelector>();
+            Objects = new ChangeTrackingList<KnowledgeStoreObjectProjectionSelector>();
+            Files = new ChangeTrackingList<KnowledgeStoreFileProjectionSelector>();
         }
 
         /// <summary> Initializes a new instance of KnowledgeStoreProjection. </summary>

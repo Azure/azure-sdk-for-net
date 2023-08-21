@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationJobCollectionItemData : Core.IUtf8JsonSerializable
+    public partial class AutomationJobCollectionItemData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RunOn))
+            if (Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
@@ -37,16 +37,16 @@ namespace Azure.ResourceManager.Automation.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<RunbookAssociationProperty> runbook = default;
-            Core.Optional<Guid> jobId = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<AutomationJobStatus> status = default;
-            Core.Optional<DateTimeOffset?> startTime = default;
-            Core.Optional<DateTimeOffset?> endTime = default;
-            Core.Optional<DateTimeOffset?> lastModifiedTime = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<string> runOn = default;
+            Optional<SystemData> systemData = default;
+            Optional<RunbookAssociationProperty> runbook = default;
+            Optional<Guid> jobId = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<AutomationJobStatus> status = default;
+            Optional<DateTimeOffset?> startTime = default;
+            Optional<DateTimeOffset?> endTime = default;
+            Optional<DateTimeOffset?> lastModifiedTime = default;
+            Optional<string> provisioningState = default;
+            Optional<string> runOn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationJobCollectionItemData(id, name, type, systemData.Value, runbook.Value, Core.Optional.ToNullable(jobId), Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(status), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(lastModifiedTime), provisioningState.Value, runOn.Value);
+            return new AutomationJobCollectionItemData(id, name, type, systemData.Value, runbook.Value, Optional.ToNullable(jobId), Optional.ToNullable(creationTime), Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), provisioningState.Value, runOn.Value);
         }
     }
 }

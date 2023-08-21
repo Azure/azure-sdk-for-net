@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DnsResolver
             Argument.AssertNotNull(virtualNetwork, nameof(virtualNetwork));
 
             VirtualNetwork = virtualNetwork;
-            Metadata = new Core.ChangeTrackingDictionary<string, string>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DnsForwardingRulesetVirtualNetworkLinkData. </summary>

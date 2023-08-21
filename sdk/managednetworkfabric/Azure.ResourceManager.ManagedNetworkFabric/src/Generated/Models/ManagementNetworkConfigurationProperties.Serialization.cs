@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ManagementNetworkConfigurationProperties : Core.IUtf8JsonSerializable
+    public partial class ManagementNetworkConfigurationProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("infrastructureVpnConfiguration"u8);

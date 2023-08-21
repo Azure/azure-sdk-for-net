@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             string displayName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<bool> builtIn = default;
-            Core.Optional<ApiManagementGroupType> type = default;
-            Core.Optional<string> externalId = default;
+            Optional<string> description = default;
+            Optional<bool> builtIn = default;
+            Optional<ApiManagementGroupType> type = default;
+            Optional<string> externalId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new GroupContractProperties(displayName, description.Value, Core.Optional.ToNullable(builtIn), Core.Optional.ToNullable(type), externalId.Value);
+            return new GroupContractProperties(displayName, description.Value, Optional.ToNullable(builtIn), Optional.ToNullable(type), externalId.Value);
         }
     }
 }

@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class WafPolicySettings : Core.IUtf8JsonSerializable
+    public partial class WafPolicySettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EnabledState))
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Mode))
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DefaultRedirectUri))
+            if (Optional.IsDefined(DefaultRedirectUri))
             {
                 writer.WritePropertyName("defaultRedirectUrl"u8);
                 writer.WriteStringValue(DefaultRedirectUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(DefaultCustomBlockResponseStatusCode))
+            if (Optional.IsDefined(DefaultCustomBlockResponseStatusCode))
             {
                 if (DefaultCustomBlockResponseStatusCode != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("defaultCustomBlockResponseStatusCode");
                 }
             }
-            if (Core.Optional.IsDefined(DefaultCustomBlockResponseBody))
+            if (Optional.IsDefined(DefaultCustomBlockResponseBody))
             {
                 if (DefaultCustomBlockResponseBody != null)
                 {
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Core.Optional<PolicyEnabledState> enabledState = default;
-            Core.Optional<PolicyMode> mode = default;
-            Core.Optional<Uri> defaultRedirectUri = default;
-            Core.Optional<PolicySettingsDefaultCustomBlockResponseStatusCode?> defaultCustomBlockResponseStatusCode = default;
-            Core.Optional<BinaryData> defaultCustomBlockResponseBody = default;
+            Optional<PolicyEnabledState> enabledState = default;
+            Optional<PolicyMode> mode = default;
+            Optional<Uri> defaultRedirectUri = default;
+            Optional<PolicySettingsDefaultCustomBlockResponseStatusCode?> defaultCustomBlockResponseStatusCode = default;
+            Optional<BinaryData> defaultCustomBlockResponseBody = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledState"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new WafPolicySettings(Core.Optional.ToNullable(enabledState), Core.Optional.ToNullable(mode), defaultRedirectUri.Value, Core.Optional.ToNullable(defaultCustomBlockResponseStatusCode), defaultCustomBlockResponseBody.Value);
+            return new WafPolicySettings(Optional.ToNullable(enabledState), Optional.ToNullable(mode), defaultRedirectUri.Value, Optional.ToNullable(defaultCustomBlockResponseStatusCode), defaultCustomBlockResponseBody.Value);
         }
     }
 }

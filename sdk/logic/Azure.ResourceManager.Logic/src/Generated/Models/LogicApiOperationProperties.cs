@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of LogicApiOperationProperties. </summary>
         public LogicApiOperationProperties()
         {
-            ResponsesDefinition = new Core.ChangeTrackingDictionary<string, SwaggerSchema>();
+            ResponsesDefinition = new ChangeTrackingDictionary<string, SwaggerSchema>();
         }
 
         /// <summary> Initializes a new instance of LogicApiOperationProperties. </summary>

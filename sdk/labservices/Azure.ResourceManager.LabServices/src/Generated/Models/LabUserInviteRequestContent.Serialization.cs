@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabUserInviteRequestContent : Core.IUtf8JsonSerializable
+    public partial class LabUserInviteRequestContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Text))
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
 #if NET6_0_OR_GREATER

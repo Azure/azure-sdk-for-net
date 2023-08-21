@@ -13,34 +13,34 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SftpWriteSettings : Core.IUtf8JsonSerializable
+    public partial class SftpWriteSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(OperationTimeout))
+            if (Optional.IsDefined(OperationTimeout))
             {
                 writer.WritePropertyName("operationTimeout"u8);
                 JsonSerializer.Serialize(writer, OperationTimeout);
             }
-            if (Core.Optional.IsDefined(UseTempFileRename))
+            if (Optional.IsDefined(UseTempFileRename))
             {
                 writer.WritePropertyName("useTempFileRename"u8);
                 JsonSerializer.Serialize(writer, UseTempFileRename);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreWriteSettingsType);
-            if (Core.Optional.IsDefined(MaxConcurrentConnections))
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Core.Optional.IsDefined(DisableMetricsCollection))
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
             }
-            if (Core.Optional.IsDefined(CopyBehavior))
+            if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
 #if NET6_0_OR_GREATER
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<DataFactoryElement<string>> operationTimeout = default;
-            Core.Optional<DataFactoryElement<bool>> useTempFileRename = default;
+            Optional<DataFactoryElement<string>> operationTimeout = default;
+            Optional<DataFactoryElement<bool>> useTempFileRename = default;
             string type = default;
-            Core.Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Core.Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
-            Core.Optional<BinaryData> copyBehavior = default;
+            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
+            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            Optional<BinaryData> copyBehavior = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

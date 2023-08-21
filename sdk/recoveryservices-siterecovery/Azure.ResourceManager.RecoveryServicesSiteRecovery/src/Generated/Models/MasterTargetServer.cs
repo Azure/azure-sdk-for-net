@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of MasterTargetServer. </summary>
         internal MasterTargetServer()
         {
-            RetentionVolumes = new Core.ChangeTrackingList<SiteRecoveryRetentionVolume>();
-            DataStores = new Core.ChangeTrackingList<SiteRecoveryDataStore>();
-            ValidationErrors = new Core.ChangeTrackingList<SiteRecoveryHealthError>();
-            HealthErrors = new Core.ChangeTrackingList<SiteRecoveryHealthError>();
+            RetentionVolumes = new ChangeTrackingList<SiteRecoveryRetentionVolume>();
+            DataStores = new ChangeTrackingList<SiteRecoveryDataStore>();
+            ValidationErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
+            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of MasterTargetServer. </summary>

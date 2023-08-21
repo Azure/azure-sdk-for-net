@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class SubscriptionKeyParameterNamesContract : Core.IUtf8JsonSerializable
+    public partial class SubscriptionKeyParameterNamesContract : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Header))
+            if (Optional.IsDefined(Header))
             {
                 writer.WritePropertyName("header"u8);
                 writer.WriteStringValue(Header);
             }
-            if (Core.Optional.IsDefined(Query))
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> header = default;
-            Core.Optional<string> query = default;
+            Optional<string> header = default;
+            Optional<string> query = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("header"u8))

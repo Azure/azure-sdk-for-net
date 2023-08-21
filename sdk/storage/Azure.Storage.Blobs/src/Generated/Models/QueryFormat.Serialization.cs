@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class QueryFormat : Core.IXmlSerializable
+    internal partial class QueryFormat : IXmlSerializable
     {
-        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "QueryFormat");
             writer.WriteStartElement("Type");
             writer.WriteValue(Type.ToSerialString());
             writer.WriteEndElement();
-            if (Core.Optional.IsDefined(DelimitedTextConfiguration))
+            if (Optional.IsDefined(DelimitedTextConfiguration))
             {
                 writer.WriteObjectValue(DelimitedTextConfiguration, "DelimitedTextConfiguration");
             }
-            if (Core.Optional.IsDefined(JsonTextConfiguration))
+            if (Optional.IsDefined(JsonTextConfiguration))
             {
                 writer.WriteObjectValue(JsonTextConfiguration, "JsonTextConfiguration");
             }
-            if (Core.Optional.IsDefined(ArrowConfiguration))
+            if (Optional.IsDefined(ArrowConfiguration))
             {
                 writer.WriteObjectValue(ArrowConfiguration, "ArrowConfiguration");
             }
-            if (Core.Optional.IsDefined(ParquetTextConfiguration))
+            if (Optional.IsDefined(ParquetTextConfiguration))
             {
                 writer.WriteObjectValue(ParquetTextConfiguration, "ParquetTextConfiguration");
             }

@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
             Name = name;
             Image = image;
-            Command = new Core.ChangeTrackingList<string>();
-            Ports = new Core.ChangeTrackingList<ContainerPort>();
-            EnvironmentVariables = new Core.ChangeTrackingList<ContainerEnvironmentVariable>();
+            Command = new ChangeTrackingList<string>();
+            Ports = new ChangeTrackingList<ContainerPort>();
+            EnvironmentVariables = new ChangeTrackingList<ContainerEnvironmentVariable>();
             Resources = resources;
-            VolumeMounts = new Core.ChangeTrackingList<ContainerVolumeMount>();
+            VolumeMounts = new ChangeTrackingList<ContainerVolumeMount>();
         }
 
         /// <summary> Initializes a new instance of ContainerInstanceContainer. </summary>

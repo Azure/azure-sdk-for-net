@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             Number = number;
             Protocol = protocol;
-            AllowedSourceAddressPrefixes = new Core.ChangeTrackingList<string>();
+            AllowedSourceAddressPrefixes = new ChangeTrackingList<string>();
             MaxRequestAccessDuration = maxRequestAccessDuration;
         }
 

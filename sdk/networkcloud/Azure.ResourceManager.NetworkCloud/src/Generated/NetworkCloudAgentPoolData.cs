@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(vmSkuName, nameof(vmSkuName));
 
-            AvailabilityZones = new Core.ChangeTrackingList<string>();
+            AvailabilityZones = new ChangeTrackingList<string>();
             Count = count;
-            Labels = new Core.ChangeTrackingList<KubernetesLabel>();
+            Labels = new ChangeTrackingList<KubernetesLabel>();
             Mode = mode;
-            Taints = new Core.ChangeTrackingList<KubernetesLabel>();
+            Taints = new ChangeTrackingList<KubernetesLabel>();
             VmSkuName = vmSkuName;
         }
 

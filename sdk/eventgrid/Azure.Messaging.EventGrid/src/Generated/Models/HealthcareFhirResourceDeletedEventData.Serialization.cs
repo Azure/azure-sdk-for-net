@@ -21,10 +21,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<HealthcareFhirResourceType> resourceType = default;
-            Core.Optional<string> resourceFhirAccount = default;
-            Core.Optional<string> resourceFhirId = default;
-            Core.Optional<long> resourceVersionId = default;
+            Optional<HealthcareFhirResourceType> resourceType = default;
+            Optional<string> resourceFhirAccount = default;
+            Optional<string> resourceFhirId = default;
+            Optional<long> resourceVersionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new HealthcareFhirResourceDeletedEventData(Core.Optional.ToNullable(resourceType), resourceFhirAccount.Value, resourceFhirId.Value, Core.Optional.ToNullable(resourceVersionId));
+            return new HealthcareFhirResourceDeletedEventData(Optional.ToNullable(resourceType), resourceFhirAccount.Value, resourceFhirId.Value, Optional.ToNullable(resourceVersionId));
         }
 
         internal partial class HealthcareFhirResourceDeletedEventDataConverter : JsonConverter<HealthcareFhirResourceDeletedEventData>

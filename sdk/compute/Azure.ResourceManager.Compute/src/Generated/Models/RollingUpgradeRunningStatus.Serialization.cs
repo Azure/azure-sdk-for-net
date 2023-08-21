@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<RollingUpgradeStatusCode> code = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<RollingUpgradeActionType> lastAction = default;
-            Core.Optional<DateTimeOffset> lastActionTime = default;
+            Optional<RollingUpgradeStatusCode> code = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<RollingUpgradeActionType> lastAction = default;
+            Optional<DateTimeOffset> lastActionTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RollingUpgradeRunningStatus(Core.Optional.ToNullable(code), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(lastAction), Core.Optional.ToNullable(lastActionTime));
+            return new RollingUpgradeRunningStatus(Optional.ToNullable(code), Optional.ToNullable(startTime), Optional.ToNullable(lastAction), Optional.ToNullable(lastActionTime));
         }
     }
 }

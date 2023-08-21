@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class SqlDedicatedGatewayServiceProperties : Core.IUtf8JsonSerializable
+    public partial class SqlDedicatedGatewayServiceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SqlDedicatedGatewayEndpoint))
+            if (Optional.IsDefined(SqlDedicatedGatewayEndpoint))
             {
                 writer.WritePropertyName("sqlDedicatedGatewayEndpoint"u8);
                 writer.WriteStringValue(SqlDedicatedGatewayEndpoint);
             }
-            if (Core.Optional.IsDefined(InstanceSize))
+            if (Optional.IsDefined(InstanceSize))
             {
                 writer.WritePropertyName("instanceSize"u8);
                 writer.WriteStringValue(InstanceSize.Value.ToString());
             }
-            if (Core.Optional.IsDefined(InstanceCount))
+            if (Optional.IsDefined(InstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<string> sqlDedicatedGatewayEndpoint = default;
-            Core.Optional<IReadOnlyList<SqlDedicatedGatewayRegionalService>> locations = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<CosmosDBServiceSize> instanceSize = default;
-            Core.Optional<int> instanceCount = default;
+            Optional<string> sqlDedicatedGatewayEndpoint = default;
+            Optional<IReadOnlyList<SqlDedicatedGatewayRegionalService>> locations = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<CosmosDBServiceSize> instanceSize = default;
+            Optional<int> instanceCount = default;
             CosmosDBServiceType serviceType = default;
-            Core.Optional<CosmosDBServiceStatus> status = default;
+            Optional<CosmosDBServiceStatus> status = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlDedicatedGatewayServiceProperties(Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(instanceSize), Core.Optional.ToNullable(instanceCount), serviceType, Core.Optional.ToNullable(status), additionalProperties, sqlDedicatedGatewayEndpoint.Value, Core.Optional.ToList(locations));
+            return new SqlDedicatedGatewayServiceProperties(Optional.ToNullable(creationTime), Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), serviceType, Optional.ToNullable(status), additionalProperties, sqlDedicatedGatewayEndpoint.Value, Optional.ToList(locations));
         }
     }
 }

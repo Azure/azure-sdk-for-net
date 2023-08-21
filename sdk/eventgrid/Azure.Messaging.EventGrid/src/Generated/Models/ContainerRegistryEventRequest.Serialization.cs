@@ -18,11 +18,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> addr = default;
-            Core.Optional<string> host = default;
-            Core.Optional<string> method = default;
-            Core.Optional<string> useragent = default;
+            Optional<string> id = default;
+            Optional<string> addr = default;
+            Optional<string> host = default;
+            Optional<string> method = default;
+            Optional<string> useragent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

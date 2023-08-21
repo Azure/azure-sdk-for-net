@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Type = type;
             ReferenceName = referenceName;
-            Parameters = new Core.ChangeTrackingDictionary<string, object>();
+            Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeReference. </summary>

@@ -13,9 +13,9 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlScriptResourceConverter))]
-    public partial class SqlScriptResource : Core.IUtf8JsonSerializable
+    public partial class SqlScriptResource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -31,10 +31,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
+            Optional<string> id = default;
             string name = default;
-            Core.Optional<string> type = default;
-            Core.Optional<string> etag = default;
+            Optional<string> type = default;
+            Optional<string> etag = default;
             SqlScript properties = default;
             foreach (var property in element.EnumerateObject())
             {

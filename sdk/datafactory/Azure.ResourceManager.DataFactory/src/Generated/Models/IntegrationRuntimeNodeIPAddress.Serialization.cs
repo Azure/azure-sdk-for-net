@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<IPAddress> ipAddress = default;
+            Optional<IPAddress> ipAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"u8))

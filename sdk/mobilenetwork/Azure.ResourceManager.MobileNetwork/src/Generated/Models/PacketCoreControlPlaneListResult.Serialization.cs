@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<PacketCoreControlPlaneData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<PacketCoreControlPlaneData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new PacketCoreControlPlaneListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new PacketCoreControlPlaneListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

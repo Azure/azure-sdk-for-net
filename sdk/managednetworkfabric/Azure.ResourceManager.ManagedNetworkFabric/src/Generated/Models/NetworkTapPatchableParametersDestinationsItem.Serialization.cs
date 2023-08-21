@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkTapPatchableParametersDestinationsItem : Core.IUtf8JsonSerializable
+    public partial class NetworkTapPatchableParametersDestinationsItem : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(DestinationType))
+            if (Optional.IsDefined(DestinationType))
             {
                 writer.WritePropertyName("destinationType"u8);
                 writer.WriteStringValue(DestinationType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DestinationId))
+            if (Optional.IsDefined(DestinationId))
             {
                 writer.WritePropertyName("destinationId"u8);
                 writer.WriteStringValue(DestinationId);
             }
-            if (Core.Optional.IsDefined(IsolationDomainProperties))
+            if (Optional.IsDefined(IsolationDomainProperties))
             {
                 writer.WritePropertyName("isolationDomainProperties"u8);
                 writer.WriteObjectValue(IsolationDomainProperties);
             }
-            if (Core.Optional.IsDefined(DestinationTapRuleId))
+            if (Optional.IsDefined(DestinationTapRuleId))
             {
                 writer.WritePropertyName("destinationTapRuleId"u8);
                 writer.WriteStringValue(DestinationTapRuleId);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<NetworkTapDestinationType> destinationType = default;
-            Core.Optional<ResourceIdentifier> destinationId = default;
-            Core.Optional<IsolationDomainProperties> isolationDomainProperties = default;
-            Core.Optional<ResourceIdentifier> destinationTapRuleId = default;
+            Optional<string> name = default;
+            Optional<NetworkTapDestinationType> destinationType = default;
+            Optional<ResourceIdentifier> destinationId = default;
+            Optional<IsolationDomainProperties> isolationDomainProperties = default;
+            Optional<ResourceIdentifier> destinationTapRuleId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new NetworkTapPatchableParametersDestinationsItem(name.Value, Core.Optional.ToNullable(destinationType), destinationId.Value, isolationDomainProperties.Value, destinationTapRuleId.Value);
+            return new NetworkTapPatchableParametersDestinationsItem(name.Value, Optional.ToNullable(destinationType), destinationId.Value, isolationDomainProperties.Value, destinationTapRuleId.Value);
         }
     }
 }

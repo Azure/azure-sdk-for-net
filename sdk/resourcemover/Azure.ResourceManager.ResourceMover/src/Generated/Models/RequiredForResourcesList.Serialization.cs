@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> sourceIds = default;
+            Optional<IReadOnlyList<string>> sourceIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceIds"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new RequiredForResourcesList(Core.Optional.ToList(sourceIds));
+            return new RequiredForResourcesList(Optional.ToList(sourceIds));
         }
     }
 }

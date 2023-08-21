@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of AttachedNetworkListResult. </summary>
         internal AttachedNetworkListResult()
         {
-            Value = new Core.ChangeTrackingList<AttachedNetworkConnectionData>();
+            Value = new ChangeTrackingList<AttachedNetworkConnectionData>();
         }
 
         /// <summary> Initializes a new instance of AttachedNetworkListResult. </summary>

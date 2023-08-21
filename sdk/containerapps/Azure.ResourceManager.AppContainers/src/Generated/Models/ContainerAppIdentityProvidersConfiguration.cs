@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppIdentityProvidersConfiguration. </summary>
         public ContainerAppIdentityProvidersConfiguration()
         {
-            CustomOpenIdConnectProviders = new Core.ChangeTrackingDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>();
+            CustomOpenIdConnectProviders = new ChangeTrackingDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppIdentityProvidersConfiguration. </summary>

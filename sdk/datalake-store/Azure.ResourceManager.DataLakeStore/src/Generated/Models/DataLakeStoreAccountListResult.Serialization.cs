@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DataLakeStoreAccountBasicData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DataLakeStoreAccountBasicData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     continue;
                 }
             }
-            return new DataLakeStoreAccountListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new DataLakeStoreAccountListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

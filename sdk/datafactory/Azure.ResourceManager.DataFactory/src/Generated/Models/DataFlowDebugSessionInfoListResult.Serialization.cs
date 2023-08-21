@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DataFlowDebugSessionInfo>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DataFlowDebugSessionInfo>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new DataFlowDebugSessionInfoListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new DataFlowDebugSessionInfoListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

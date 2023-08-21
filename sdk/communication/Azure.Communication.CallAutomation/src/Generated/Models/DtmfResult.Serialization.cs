@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DtmfTone>> tones = default;
+            Optional<IReadOnlyList<DtmfTone>> tones = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tones"u8))
@@ -37,7 +37,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new DtmfResult(Core.Optional.ToList(tones));
+            return new DtmfResult(Optional.ToList(tones));
         }
     }
 }

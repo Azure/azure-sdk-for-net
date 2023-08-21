@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
             Argument.AssertNotNull(operatorAddresses, nameof(operatorAddresses));
 
             OperatorAddresses = operatorAddresses.ToList();
-            EsrpAddresses = new Core.ChangeTrackingList<string>();
-            AllowedSignalingSourceAddressPrefixes = new Core.ChangeTrackingList<string>();
-            AllowedMediaSourceAddressPrefixes = new Core.ChangeTrackingList<string>();
+            EsrpAddresses = new ChangeTrackingList<string>();
+            AllowedSignalingSourceAddressPrefixes = new ChangeTrackingList<string>();
+            AllowedMediaSourceAddressPrefixes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VoiceServicesPrimaryRegionProperties. </summary>

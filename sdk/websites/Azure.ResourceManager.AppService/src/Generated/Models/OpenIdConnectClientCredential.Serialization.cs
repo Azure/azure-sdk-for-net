@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class OpenIdConnectClientCredential : Core.IUtf8JsonSerializable
+    public partial class OpenIdConnectClientCredential : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Method))
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ClientSecretSettingName))
+            if (Optional.IsDefined(ClientSecretSettingName))
             {
                 writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<ClientCredentialMethod> method = default;
-            Core.Optional<string> clientSecretSettingName = default;
+            Optional<ClientCredentialMethod> method = default;
+            Optional<string> clientSecretSettingName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("method"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new OpenIdConnectClientCredential(Core.Optional.ToNullable(method), clientSecretSettingName.Value);
+            return new OpenIdConnectClientCredential(Optional.ToNullable(method), clientSecretSettingName.Value);
         }
     }
 }

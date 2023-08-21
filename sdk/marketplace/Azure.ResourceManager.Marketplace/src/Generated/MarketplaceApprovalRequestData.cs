@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Initializes a new instance of MarketplaceApprovalRequestData. </summary>
         public MarketplaceApprovalRequestData()
         {
-            PlansDetails = new Core.ChangeTrackingList<PrivateStorePlanDetails>();
+            PlansDetails = new ChangeTrackingList<PrivateStorePlanDetails>();
         }
 
         /// <summary> Initializes a new instance of MarketplaceApprovalRequestData. </summary>

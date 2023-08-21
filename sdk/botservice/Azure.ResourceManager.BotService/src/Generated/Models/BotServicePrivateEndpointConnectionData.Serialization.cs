@@ -14,24 +14,24 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.BotService
 {
-    public partial class BotServicePrivateEndpointConnectionData : Core.IUtf8JsonSerializable
+    public partial class BotServicePrivateEndpointConnectionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Core.Optional.IsDefined(ConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
             }
-            if (Core.Optional.IsCollectionDefined(GroupIds))
+            if (Optional.IsCollectionDefined(GroupIds))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.BotService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SubResource> privateEndpoint = default;
-            Core.Optional<BotServicePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Core.Optional<BotServicePrivateEndpointConnectionProvisioningState> provisioningState = default;
-            Core.Optional<IList<string>> groupIds = default;
+            Optional<SystemData> systemData = default;
+            Optional<SubResource> privateEndpoint = default;
+            Optional<BotServicePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<BotServicePrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<IList<string>> groupIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.BotService
                     continue;
                 }
             }
-            return new BotServicePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(groupIds));
+            return new BotServicePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), Optional.ToList(groupIds));
         }
     }
 }

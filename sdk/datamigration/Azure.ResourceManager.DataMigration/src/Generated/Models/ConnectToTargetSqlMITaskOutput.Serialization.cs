@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> targetServerVersion = default;
-            Core.Optional<string> targetServerBrandVersion = default;
-            Core.Optional<IReadOnlyList<string>> logins = default;
-            Core.Optional<IReadOnlyList<string>> agentJobs = default;
-            Core.Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Optional<string> id = default;
+            Optional<string> targetServerVersion = default;
+            Optional<string> targetServerBrandVersion = default;
+            Optional<IReadOnlyList<string>> logins = default;
+            Optional<IReadOnlyList<string>> agentJobs = default;
+            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ConnectToTargetSqlMITaskOutput(id.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Core.Optional.ToList(logins), Core.Optional.ToList(agentJobs), Core.Optional.ToList(validationErrors));
+            return new ConnectToTargetSqlMITaskOutput(id.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToList(logins), Optional.ToList(agentJobs), Optional.ToList(validationErrors));
         }
     }
 }

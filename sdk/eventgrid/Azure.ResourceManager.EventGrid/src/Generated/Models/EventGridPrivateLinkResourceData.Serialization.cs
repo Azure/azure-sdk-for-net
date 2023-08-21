@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> groupId = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<IReadOnlyList<string>> requiredMembers = default;
-            Core.Optional<IReadOnlyList<string>> requiredZoneNames = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> groupId = default;
+            Optional<string> displayName = default;
+            Optional<IReadOnlyList<string>> requiredMembers = default;
+            Optional<IReadOnlyList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new EventGridPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, displayName.Value, Core.Optional.ToList(requiredMembers), Core.Optional.ToList(requiredZoneNames));
+            return new EventGridPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, displayName.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }

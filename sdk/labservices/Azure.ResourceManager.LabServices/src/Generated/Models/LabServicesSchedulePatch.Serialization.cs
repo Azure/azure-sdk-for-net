@@ -10,34 +10,34 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabServicesSchedulePatch : Core.IUtf8JsonSerializable
+    public partial class LabServicesSchedulePatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startAt"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(StopOn))
+            if (Optional.IsDefined(StopOn))
             {
                 writer.WritePropertyName("stopAt"u8);
                 writer.WriteStringValue(StopOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(RecurrencePattern))
+            if (Optional.IsDefined(RecurrencePattern))
             {
                 writer.WritePropertyName("recurrencePattern"u8);
                 writer.WriteObjectValue(RecurrencePattern);
             }
-            if (Core.Optional.IsDefined(TimeZoneId))
+            if (Optional.IsDefined(TimeZoneId))
             {
                 writer.WritePropertyName("timeZoneId"u8);
                 writer.WriteStringValue(TimeZoneId);
             }
-            if (Core.Optional.IsDefined(Notes))
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
 #if NET6_0_OR_GREATER

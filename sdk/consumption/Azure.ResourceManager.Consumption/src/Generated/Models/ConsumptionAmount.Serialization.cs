@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Core.Optional<string> currency = default;
-            Core.Optional<decimal> value = default;
+            Optional<string> currency = default;
+            Optional<decimal> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currency"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionAmount(currency.Value, Core.Optional.ToNullable(value));
+            return new ConsumptionAmount(currency.Value, Optional.ToNullable(value));
         }
     }
 }

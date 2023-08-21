@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<string> patchId = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> version = default;
-            Core.Optional<string> kbId = default;
-            Core.Optional<IReadOnlyList<string>> classifications = default;
-            Core.Optional<VmGuestPatchRebootBehavior> rebootBehavior = default;
-            Core.Optional<string> activityId = default;
-            Core.Optional<DateTimeOffset> publishedDate = default;
-            Core.Optional<DateTimeOffset> lastModifiedDateTime = default;
-            Core.Optional<PatchAssessmentState> assessmentState = default;
+            Optional<string> patchId = default;
+            Optional<string> name = default;
+            Optional<string> version = default;
+            Optional<string> kbId = default;
+            Optional<IReadOnlyList<string>> classifications = default;
+            Optional<VmGuestPatchRebootBehavior> rebootBehavior = default;
+            Optional<string> activityId = default;
+            Optional<DateTimeOffset> publishedDate = default;
+            Optional<DateTimeOffset> lastModifiedDateTime = default;
+            Optional<PatchAssessmentState> assessmentState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patchId"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineSoftwarePatchProperties(patchId.Value, name.Value, version.Value, kbId.Value, Core.Optional.ToList(classifications), Core.Optional.ToNullable(rebootBehavior), activityId.Value, Core.Optional.ToNullable(publishedDate), Core.Optional.ToNullable(lastModifiedDateTime), Core.Optional.ToNullable(assessmentState));
+            return new VirtualMachineSoftwarePatchProperties(patchId.Value, name.Value, version.Value, kbId.Value, Optional.ToList(classifications), Optional.ToNullable(rebootBehavior), activityId.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(lastModifiedDateTime), Optional.ToNullable(assessmentState));
         }
     }
 }

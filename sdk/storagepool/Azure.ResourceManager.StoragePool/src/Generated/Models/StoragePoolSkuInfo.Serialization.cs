@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Core.Optional<string> apiVersion = default;
-            Core.Optional<string> resourceType = default;
-            Core.Optional<IReadOnlyList<StoragePoolSkuCapability>> capabilities = default;
-            Core.Optional<StoragePoolSkuLocationInfo> locationInfo = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> tier = default;
-            Core.Optional<IReadOnlyList<StoragePoolSkuRestrictions>> restrictions = default;
+            Optional<string> apiVersion = default;
+            Optional<string> resourceType = default;
+            Optional<IReadOnlyList<StoragePoolSkuCapability>> capabilities = default;
+            Optional<StoragePoolSkuLocationInfo> locationInfo = default;
+            Optional<string> name = default;
+            Optional<string> tier = default;
+            Optional<IReadOnlyList<StoragePoolSkuRestrictions>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiVersion"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     continue;
                 }
             }
-            return new StoragePoolSkuInfo(apiVersion.Value, resourceType.Value, Core.Optional.ToList(capabilities), locationInfo.Value, name.Value, tier.Value, Core.Optional.ToList(restrictions));
+            return new StoragePoolSkuInfo(apiVersion.Value, resourceType.Value, Optional.ToList(capabilities), locationInfo.Value, name.Value, tier.Value, Optional.ToList(restrictions));
         }
     }
 }

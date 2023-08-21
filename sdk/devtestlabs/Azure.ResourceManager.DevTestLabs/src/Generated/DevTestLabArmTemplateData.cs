@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="location"> The location. </param>
         public DevTestLabArmTemplateData(AzureLocation location) : base(location)
         {
-            ParametersValueFilesInfo = new Core.ChangeTrackingList<DevTestLabParametersValueFileInfo>();
+            ParametersValueFilesInfo = new ChangeTrackingList<DevTestLabParametersValueFileInfo>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabArmTemplateData. </summary>

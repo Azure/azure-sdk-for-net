@@ -13,49 +13,49 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    public partial class MySqlRecommendationActionData : Core.IUtf8JsonSerializable
+    public partial class MySqlRecommendationActionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AdvisorName))
+            if (Optional.IsDefined(AdvisorName))
             {
                 writer.WritePropertyName("advisorName"u8);
                 writer.WriteStringValue(AdvisorName);
             }
-            if (Core.Optional.IsDefined(SessionId))
+            if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
-            if (Core.Optional.IsDefined(ActionId))
+            if (Optional.IsDefined(ActionId))
             {
                 writer.WritePropertyName("actionId"u8);
                 writer.WriteNumberValue(ActionId.Value);
             }
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Reason))
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Core.Optional.IsDefined(RecommendationType))
+            if (Optional.IsDefined(RecommendationType))
             {
                 writer.WritePropertyName("recommendationType"u8);
                 writer.WriteStringValue(RecommendationType);
             }
-            if (Core.Optional.IsCollectionDefined(Details))
+            if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartObject();
@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.MySql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> advisorName = default;
-            Core.Optional<Guid> sessionId = default;
-            Core.Optional<int> actionId = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<DateTimeOffset> expirationTime = default;
-            Core.Optional<string> reason = default;
-            Core.Optional<string> recommendationType = default;
-            Core.Optional<IDictionary<string, string>> details = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> advisorName = default;
+            Optional<Guid> sessionId = default;
+            Optional<int> actionId = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> expirationTime = default;
+            Optional<string> reason = default;
+            Optional<string> recommendationType = default;
+            Optional<IDictionary<string, string>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MySql
                     continue;
                 }
             }
-            return new MySqlRecommendationActionData(id, name, type, systemData.Value, advisorName.Value, Core.Optional.ToNullable(sessionId), Core.Optional.ToNullable(actionId), Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(expirationTime), reason.Value, recommendationType.Value, Core.Optional.ToDictionary(details));
+            return new MySqlRecommendationActionData(id, name, type, systemData.Value, advisorName.Value, Optional.ToNullable(sessionId), Optional.ToNullable(actionId), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), reason.Value, recommendationType.Value, Optional.ToDictionary(details));
         }
     }
 }

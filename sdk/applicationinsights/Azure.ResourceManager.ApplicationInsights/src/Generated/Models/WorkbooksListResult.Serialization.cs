@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<WorkbookData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<WorkbookData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new WorkbooksListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new WorkbooksListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

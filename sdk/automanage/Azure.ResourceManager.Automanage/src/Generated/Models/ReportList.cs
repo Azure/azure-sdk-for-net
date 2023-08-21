@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automanage.Models
         /// <summary> Initializes a new instance of ReportList. </summary>
         internal ReportList()
         {
-            Value = new Core.ChangeTrackingList<AutomanageConfigurationProfileAssignmentReportData>();
+            Value = new ChangeTrackingList<AutomanageConfigurationProfileAssignmentReportData>();
         }
 
         /// <summary> Initializes a new instance of ReportList. </summary>

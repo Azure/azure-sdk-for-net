@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = await _defaultRestClient.BMSPrepareDataMoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateBMSPrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesBackupArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateBMSPrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = _defaultRestClient.BMSPrepareDataMove(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateBMSPrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesBackupArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateBMSPrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = await _defaultRestClient.BMSTriggerDataMoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateBMSTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesBackupArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateBMSTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = _defaultRestClient.BMSTriggerDataMove(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateBMSTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesBackupArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateBMSTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

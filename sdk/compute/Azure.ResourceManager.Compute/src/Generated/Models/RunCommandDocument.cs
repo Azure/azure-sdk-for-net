@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
             Argument.AssertNotNull(script, nameof(script));
 
             Script = script.ToList();
-            Parameters = new Core.ChangeTrackingList<RunCommandParameterDefinition>();
+            Parameters = new ChangeTrackingList<RunCommandParameterDefinition>();
         }
 
         /// <summary> Initializes a new instance of RunCommandDocument. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of CloudProviderProfileInfraNetworkProfile. </summary>
         public CloudProviderProfileInfraNetworkProfile()
         {
-            VnetSubnetIds = new Core.ChangeTrackingList<string>();
+            VnetSubnetIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CloudProviderProfileInfraNetworkProfile. </summary>

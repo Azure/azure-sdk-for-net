@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabGalleryImage : Core.IUtf8JsonSerializable
+    public partial class DevTestLabGalleryImage : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,37 +33,37 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Author))
+            if (Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(ImageReference))
+            if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
                 writer.WriteObjectValue(ImageReference);
             }
-            if (Core.Optional.IsDefined(Icon))
+            if (Optional.IsDefined(Icon))
             {
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(Icon);
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(PlanId))
+            if (Optional.IsDefined(PlanId))
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (Core.Optional.IsDefined(IsPlanAuthorized))
+            if (Optional.IsDefined(IsPlanAuthorized))
             {
                 writer.WritePropertyName("isPlanAuthorized"u8);
                 writer.WriteBooleanValue(IsPlanAuthorized.Value);
@@ -78,20 +78,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> author = default;
-            Core.Optional<DateTimeOffset> createdDate = default;
-            Core.Optional<string> description = default;
-            Core.Optional<DevTestLabGalleryImageReference> imageReference = default;
-            Core.Optional<string> icon = default;
-            Core.Optional<bool> enabled = default;
-            Core.Optional<string> planId = default;
-            Core.Optional<bool> isPlanAuthorized = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> author = default;
+            Optional<DateTimeOffset> createdDate = default;
+            Optional<string> description = default;
+            Optional<DevTestLabGalleryImageReference> imageReference = default;
+            Optional<string> icon = default;
+            Optional<bool> enabled = default;
+            Optional<string> planId = default;
+            Optional<bool> isPlanAuthorized = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabGalleryImage(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, author.Value, Core.Optional.ToNullable(createdDate), description.Value, imageReference.Value, icon.Value, Core.Optional.ToNullable(enabled), planId.Value, Core.Optional.ToNullable(isPlanAuthorized));
+            return new DevTestLabGalleryImage(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, author.Value, Optional.ToNullable(createdDate), description.Value, imageReference.Value, icon.Value, Optional.ToNullable(enabled), planId.Value, Optional.ToNullable(isPlanAuthorized));
         }
     }
 }

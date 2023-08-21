@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ContainerRegistryTaskRunData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ContainerRegistryTaskRunData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryTaskRunListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ContainerRegistryTaskRunListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

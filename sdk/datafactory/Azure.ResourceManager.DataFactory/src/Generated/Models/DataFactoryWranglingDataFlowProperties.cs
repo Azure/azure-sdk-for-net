@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DataFactoryWranglingDataFlowProperties. </summary>
         public DataFactoryWranglingDataFlowProperties()
         {
-            Sources = new Core.ChangeTrackingList<PowerQuerySource>();
+            Sources = new ChangeTrackingList<PowerQuerySource>();
             DataFlowType = "WranglingDataFlow";
         }
 

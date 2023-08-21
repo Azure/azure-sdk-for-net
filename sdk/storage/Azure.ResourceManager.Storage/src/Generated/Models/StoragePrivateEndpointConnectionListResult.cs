@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of StoragePrivateEndpointConnectionListResult. </summary>
         internal StoragePrivateEndpointConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<StoragePrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<StoragePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of StoragePrivateEndpointConnectionListResult. </summary>

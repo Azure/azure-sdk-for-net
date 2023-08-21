@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class DscConfigurationParameterDefinition : Core.IUtf8JsonSerializable
+    public partial class DscConfigurationParameterDefinition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DscConfigurationParameterType))
+            if (Optional.IsDefined(DscConfigurationParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DscConfigurationParameterType);
             }
-            if (Core.Optional.IsDefined(IsMandatory))
+            if (Optional.IsDefined(IsMandatory))
             {
                 writer.WritePropertyName("isMandatory"u8);
                 writer.WriteBooleanValue(IsMandatory.Value);
             }
-            if (Core.Optional.IsDefined(Position))
+            if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteNumberValue(Position.Value);
             }
-            if (Core.Optional.IsDefined(DefaultValue))
+            if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<bool> isMandatory = default;
-            Core.Optional<int> position = default;
-            Core.Optional<string> defaultValue = default;
+            Optional<string> type = default;
+            Optional<bool> isMandatory = default;
+            Optional<int> position = default;
+            Optional<string> defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new DscConfigurationParameterDefinition(type.Value, Core.Optional.ToNullable(isMandatory), Core.Optional.ToNullable(position), defaultValue.Value);
+            return new DscConfigurationParameterDefinition(type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(position), defaultValue.Value);
         }
     }
 }

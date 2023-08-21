@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyDictionary<string, BinaryData>> additionalProperties = default;
-            Core.Optional<string> nodeName = default;
-            Core.Optional<int> availableMemoryInMB = default;
-            Core.Optional<int> cpuUtilization = default;
-            Core.Optional<int> concurrentJobsLimit = default;
-            Core.Optional<int> concurrentJobsRunning = default;
-            Core.Optional<int> maxConcurrentJobs = default;
-            Core.Optional<double> sentBytes = default;
-            Core.Optional<double> receivedBytes = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> additionalProperties = default;
+            Optional<string> nodeName = default;
+            Optional<int> availableMemoryInMB = default;
+            Optional<int> cpuUtilization = default;
+            Optional<int> concurrentJobsLimit = default;
+            Optional<int> concurrentJobsRunning = default;
+            Optional<int> maxConcurrentJobs = default;
+            Optional<double> sentBytes = default;
+            Optional<double> receivedBytes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("additionalProperties"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new NodeMonitoringData(Core.Optional.ToDictionary(additionalProperties), nodeName.Value, Core.Optional.ToNullable(availableMemoryInMB), Core.Optional.ToNullable(cpuUtilization), Core.Optional.ToNullable(concurrentJobsLimit), Core.Optional.ToNullable(concurrentJobsRunning), Core.Optional.ToNullable(maxConcurrentJobs), Core.Optional.ToNullable(sentBytes), Core.Optional.ToNullable(receivedBytes));
+            return new NodeMonitoringData(Optional.ToDictionary(additionalProperties), nodeName.Value, Optional.ToNullable(availableMemoryInMB), Optional.ToNullable(cpuUtilization), Optional.ToNullable(concurrentJobsLimit), Optional.ToNullable(concurrentJobsRunning), Optional.ToNullable(maxConcurrentJobs), Optional.ToNullable(sentBytes), Optional.ToNullable(receivedBytes));
         }
     }
 }

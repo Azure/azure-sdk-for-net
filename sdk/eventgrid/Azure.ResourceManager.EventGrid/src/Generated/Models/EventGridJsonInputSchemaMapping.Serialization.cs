@@ -10,41 +10,41 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class EventGridJsonInputSchemaMapping : Core.IUtf8JsonSerializable
+    public partial class EventGridJsonInputSchemaMapping : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("inputSchemaMappingType"u8);
             writer.WriteStringValue(InputSchemaMappingType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteObjectValue(Id);
             }
-            if (Core.Optional.IsDefined(Topic))
+            if (Optional.IsDefined(Topic))
             {
                 writer.WritePropertyName("topic"u8);
                 writer.WriteObjectValue(Topic);
             }
-            if (Core.Optional.IsDefined(EventTime))
+            if (Optional.IsDefined(EventTime))
             {
                 writer.WritePropertyName("eventTime"u8);
                 writer.WriteObjectValue(EventTime);
             }
-            if (Core.Optional.IsDefined(EventType))
+            if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteObjectValue(EventType);
             }
-            if (Core.Optional.IsDefined(Subject))
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteObjectValue(Subject);
             }
-            if (Core.Optional.IsDefined(DataVersion))
+            if (Optional.IsDefined(DataVersion))
             {
                 writer.WritePropertyName("dataVersion"u8);
                 writer.WriteObjectValue(DataVersion);
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             InputSchemaMappingType inputSchemaMappingType = default;
-            Core.Optional<JsonField> id = default;
-            Core.Optional<JsonField> topic = default;
-            Core.Optional<JsonField> eventTime = default;
-            Core.Optional<JsonFieldWithDefault> eventType = default;
-            Core.Optional<JsonFieldWithDefault> subject = default;
-            Core.Optional<JsonFieldWithDefault> dataVersion = default;
+            Optional<JsonField> id = default;
+            Optional<JsonField> topic = default;
+            Optional<JsonField> eventTime = default;
+            Optional<JsonFieldWithDefault> eventType = default;
+            Optional<JsonFieldWithDefault> subject = default;
+            Optional<JsonFieldWithDefault> dataVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputSchemaMappingType"u8))

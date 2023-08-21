@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of DeviceUpdateCommonPostActionResult. </summary>
         internal DeviceUpdateCommonPostActionResult()
         {
-            SuccessfulDevices = new Core.ChangeTrackingList<string>();
-            FailedDevices = new Core.ChangeTrackingList<string>();
+            SuccessfulDevices = new ChangeTrackingList<string>();
+            FailedDevices = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateCommonPostActionResult. </summary>

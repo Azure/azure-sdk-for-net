@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> initialReplicationType = default;
-            Core.Optional<string> initialReplicationProgressPercentage = default;
+            Optional<string> initialReplicationType = default;
+            Optional<string> initialReplicationProgressPercentage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("initialReplicationType"u8))

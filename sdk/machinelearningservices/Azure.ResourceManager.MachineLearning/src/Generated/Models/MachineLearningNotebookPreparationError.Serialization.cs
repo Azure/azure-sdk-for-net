@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> errorMessage = default;
-            Core.Optional<int> statusCode = default;
+            Optional<string> errorMessage = default;
+            Optional<int> statusCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorMessage"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningNotebookPreparationError(errorMessage.Value, Core.Optional.ToNullable(statusCode));
+            return new MachineLearningNotebookPreparationError(errorMessage.Value, Optional.ToNullable(statusCode));
         }
     }
 }

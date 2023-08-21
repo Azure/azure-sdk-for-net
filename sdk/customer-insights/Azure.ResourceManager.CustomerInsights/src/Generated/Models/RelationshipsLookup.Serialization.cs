@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> profileName = default;
-            Core.Optional<IReadOnlyList<ParticipantProfilePropertyReference>> profilePropertyReferences = default;
-            Core.Optional<string> relatedProfileName = default;
-            Core.Optional<IReadOnlyList<ParticipantProfilePropertyReference>> relatedProfilePropertyReferences = default;
-            Core.Optional<string> existingRelationshipName = default;
+            Optional<string> profileName = default;
+            Optional<IReadOnlyList<ParticipantProfilePropertyReference>> profilePropertyReferences = default;
+            Optional<string> relatedProfileName = default;
+            Optional<IReadOnlyList<ParticipantProfilePropertyReference>> relatedProfilePropertyReferences = default;
+            Optional<string> existingRelationshipName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profileName"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new RelationshipsLookup(profileName.Value, Core.Optional.ToList(profilePropertyReferences), relatedProfileName.Value, Core.Optional.ToList(relatedProfilePropertyReferences), existingRelationshipName.Value);
+            return new RelationshipsLookup(profileName.Value, Optional.ToList(profilePropertyReferences), relatedProfileName.Value, Optional.ToList(relatedProfilePropertyReferences), existingRelationshipName.Value);
         }
     }
 }

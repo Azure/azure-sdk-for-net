@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ProximityPlacementGroupPropertiesIntent. </summary>
         public ProximityPlacementGroupPropertiesIntent()
         {
-            VmSizes = new Core.ChangeTrackingList<string>();
+            VmSizes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ProximityPlacementGroupPropertiesIntent. </summary>

@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeMetricCounter : Core.IUtf8JsonSerializable
+    public partial class DataBoxEdgeMetricCounter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Instance))
+            if (Optional.IsDefined(Instance))
             {
                 writer.WritePropertyName("instance"u8);
                 writer.WriteStringValue(Instance);
             }
-            if (Core.Optional.IsCollectionDefined(DimensionFilter))
+            if (Optional.IsCollectionDefined(DimensionFilter))
             {
                 writer.WritePropertyName("dimensionFilter"u8);
                 writer.WriteStartArray();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(AdditionalDimensions))
+            if (Optional.IsCollectionDefined(AdditionalDimensions))
             {
                 writer.WritePropertyName("additionalDimensions"u8);
                 writer.WriteStartArray();
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             string name = default;
-            Core.Optional<string> instance = default;
-            Core.Optional<IList<DataBoxEdgeMetricDimension>> dimensionFilter = default;
-            Core.Optional<IList<DataBoxEdgeMetricDimension>> additionalDimensions = default;
+            Optional<string> instance = default;
+            Optional<IList<DataBoxEdgeMetricDimension>> dimensionFilter = default;
+            Optional<IList<DataBoxEdgeMetricDimension>> additionalDimensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeMetricCounter(name, instance.Value, Core.Optional.ToList(dimensionFilter), Core.Optional.ToList(additionalDimensions));
+            return new DataBoxEdgeMetricCounter(name, instance.Value, Optional.ToList(dimensionFilter), Optional.ToList(additionalDimensions));
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
             Code = code;
             Message = message;
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of FacetErrorDetails. </summary>

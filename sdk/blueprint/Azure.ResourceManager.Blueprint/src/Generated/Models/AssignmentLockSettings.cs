@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <summary> Initializes a new instance of AssignmentLockSettings. </summary>
         public AssignmentLockSettings()
         {
-            ExcludedPrincipals = new Core.ChangeTrackingList<string>();
-            ExcludedActions = new Core.ChangeTrackingList<string>();
+            ExcludedPrincipals = new ChangeTrackingList<string>();
+            ExcludedActions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AssignmentLockSettings. </summary>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<int> recoveryPointHistoryInMinutes = default;
-            Core.Optional<int> appConsistentFrequencyInMinutes = default;
-            Core.Optional<int> crashConsistentFrequencyInMinutes = default;
+            Optional<int> recoveryPointHistoryInMinutes = default;
+            Optional<int> appConsistentFrequencyInMinutes = default;
+            Optional<int> crashConsistentFrequencyInMinutes = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new VMwareCbtPolicyDetails(instanceType, Core.Optional.ToNullable(recoveryPointHistoryInMinutes), Core.Optional.ToNullable(appConsistentFrequencyInMinutes), Core.Optional.ToNullable(crashConsistentFrequencyInMinutes));
+            return new VMwareCbtPolicyDetails(instanceType, Optional.ToNullable(recoveryPointHistoryInMinutes), Optional.ToNullable(appConsistentFrequencyInMinutes), Optional.ToNullable(crashConsistentFrequencyInMinutes));
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Azure.Communication.ShortCodes.Models
         /// <summary> Initializes a new instance of MessageDetails. </summary>
         public MessageDetails()
         {
-            SupportedProtocols = new Core.ChangeTrackingList<MessageProtocol>();
-            UseCases = new Core.ChangeTrackingList<UseCase>();
+            SupportedProtocols = new ChangeTrackingList<MessageProtocol>();
+            UseCases = new ChangeTrackingList<UseCase>();
         }
 
         /// <summary> Initializes a new instance of MessageDetails. </summary>

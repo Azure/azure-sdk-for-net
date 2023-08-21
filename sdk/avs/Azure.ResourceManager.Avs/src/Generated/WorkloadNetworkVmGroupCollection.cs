@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateVmGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmGroupId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupOperationSource(Client), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateCreateVmGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmGroupId, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupOperationSource(Client), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateCreateVmGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmGroupId, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateVmGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmGroupId, data, cancellationToken);
-                var operation = new AvsArmOperation<WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupOperationSource(Client), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateCreateVmGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmGroupId, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupOperationSource(Client), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateCreateVmGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmGroupId, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateListVmGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateListVmGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkVmGroupResource(Client, WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(e)), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkVmGroupResource(Client, WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(e)), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateListVmGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateListVmGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkVmGroupResource(Client, WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(e)), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkVmGroupResource(Client, WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(e)), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

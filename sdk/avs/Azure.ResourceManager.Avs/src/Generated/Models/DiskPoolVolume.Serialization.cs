@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class DiskPoolVolume : Core.IUtf8JsonSerializable
+    public partial class DiskPoolVolume : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetId"u8);
             writer.WriteStringValue(TargetId);
             writer.WritePropertyName("lunName"u8);
             writer.WriteStringValue(LunName);
-            if (Core.Optional.IsDefined(MountOption))
+            if (Optional.IsDefined(MountOption))
             {
                 writer.WritePropertyName("mountOption"u8);
                 writer.WriteStringValue(MountOption.Value.ToString());
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Avs.Models
             }
             ResourceIdentifier targetId = default;
             string lunName = default;
-            Core.Optional<LunMountMode> mountOption = default;
-            Core.Optional<string> path = default;
+            Optional<LunMountMode> mountOption = default;
+            Optional<string> path = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetId"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new DiskPoolVolume(targetId, lunName, Core.Optional.ToNullable(mountOption), path.Value);
+            return new DiskPoolVolume(targetId, lunName, Optional.ToNullable(mountOption), path.Value);
         }
     }
 }

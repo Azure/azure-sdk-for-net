@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class ScheduleBasedBackupCriteria : Core.IUtf8JsonSerializable
+    public partial class ScheduleBasedBackupCriteria : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AbsoluteCriteria))
+            if (Optional.IsCollectionDefined(AbsoluteCriteria))
             {
                 writer.WritePropertyName("absoluteCriteria"u8);
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DaysOfMonth))
+            if (Optional.IsCollectionDefined(DaysOfMonth))
             {
                 writer.WritePropertyName("daysOfMonth"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DaysOfWeek))
+            if (Optional.IsCollectionDefined(DaysOfWeek))
             {
                 writer.WritePropertyName("daysOfTheWeek"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(MonthsOfYear))
+            if (Optional.IsCollectionDefined(MonthsOfYear))
             {
                 writer.WritePropertyName("monthsOfYear"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ScheduleTimes))
+            if (Optional.IsCollectionDefined(ScheduleTimes))
             {
                 writer.WritePropertyName("scheduleTimes"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(WeeksOfMonth))
+            if (Optional.IsCollectionDefined(WeeksOfMonth))
             {
                 writer.WritePropertyName("weeksOfTheMonth"u8);
                 writer.WriteStartArray();
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<IList<BackupAbsoluteMarker>> absoluteCriteria = default;
-            Core.Optional<IList<DataProtectionBackupDay>> daysOfMonth = default;
-            Core.Optional<IList<DataProtectionBackupDayOfWeek>> daysOfTheWeek = default;
-            Core.Optional<IList<DataProtectionBackupMonth>> monthsOfYear = default;
-            Core.Optional<IList<DateTimeOffset>> scheduleTimes = default;
-            Core.Optional<IList<DataProtectionBackupWeekNumber>> weeksOfTheMonth = default;
+            Optional<IList<BackupAbsoluteMarker>> absoluteCriteria = default;
+            Optional<IList<DataProtectionBackupDay>> daysOfMonth = default;
+            Optional<IList<DataProtectionBackupDayOfWeek>> daysOfTheWeek = default;
+            Optional<IList<DataProtectionBackupMonth>> monthsOfYear = default;
+            Optional<IList<DateTimeOffset>> scheduleTimes = default;
+            Optional<IList<DataProtectionBackupWeekNumber>> weeksOfTheMonth = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new ScheduleBasedBackupCriteria(objectType, Core.Optional.ToList(absoluteCriteria), Core.Optional.ToList(daysOfMonth), Core.Optional.ToList(daysOfTheWeek), Core.Optional.ToList(monthsOfYear), Core.Optional.ToList(scheduleTimes), Core.Optional.ToList(weeksOfTheMonth));
+            return new ScheduleBasedBackupCriteria(objectType, Optional.ToList(absoluteCriteria), Optional.ToList(daysOfMonth), Optional.ToList(daysOfTheWeek), Optional.ToList(monthsOfYear), Optional.ToList(scheduleTimes), Optional.ToList(weeksOfTheMonth));
         }
     }
 }

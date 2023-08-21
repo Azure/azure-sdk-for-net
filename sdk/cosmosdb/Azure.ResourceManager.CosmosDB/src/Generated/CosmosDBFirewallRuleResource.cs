@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBFirewallRuleMongoClustersRestClient.DeleteFirewallRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cosmosDBFirewallRuleMongoClustersClientDiagnostics, Pipeline, _cosmosDBFirewallRuleMongoClustersRestClient.CreateDeleteFirewallRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cosmosDBFirewallRuleMongoClustersClientDiagnostics, Pipeline, _cosmosDBFirewallRuleMongoClustersRestClient.CreateDeleteFirewallRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBFirewallRuleMongoClustersRestClient.DeleteFirewallRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cosmosDBFirewallRuleMongoClustersClientDiagnostics, Pipeline, _cosmosDBFirewallRuleMongoClustersRestClient.CreateDeleteFirewallRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cosmosDBFirewallRuleMongoClustersClientDiagnostics, Pipeline, _cosmosDBFirewallRuleMongoClustersRestClient.CreateDeleteFirewallRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBFirewallRuleMongoClustersRestClient.CreateOrUpdateFirewallRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBFirewallRuleResource>(new CosmosDBFirewallRuleOperationSource(Client), _cosmosDBFirewallRuleMongoClustersClientDiagnostics, Pipeline, _cosmosDBFirewallRuleMongoClustersRestClient.CreateCreateOrUpdateFirewallRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CosmosDBArmOperation<CosmosDBFirewallRuleResource>(new CosmosDBFirewallRuleOperationSource(Client), _cosmosDBFirewallRuleMongoClustersClientDiagnostics, Pipeline, _cosmosDBFirewallRuleMongoClustersRestClient.CreateCreateOrUpdateFirewallRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBFirewallRuleMongoClustersRestClient.CreateOrUpdateFirewallRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBFirewallRuleResource>(new CosmosDBFirewallRuleOperationSource(Client), _cosmosDBFirewallRuleMongoClustersClientDiagnostics, Pipeline, _cosmosDBFirewallRuleMongoClustersRestClient.CreateCreateOrUpdateFirewallRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CosmosDBArmOperation<CosmosDBFirewallRuleResource>(new CosmosDBFirewallRuleOperationSource(Client), _cosmosDBFirewallRuleMongoClustersClientDiagnostics, Pipeline, _cosmosDBFirewallRuleMongoClustersRestClient.CreateCreateOrUpdateFirewallRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

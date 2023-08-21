@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class NamespaceJunction : Core.IUtf8JsonSerializable
+    public partial class NamespaceJunction : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NamespacePath))
+            if (Optional.IsDefined(NamespacePath))
             {
                 writer.WritePropertyName("namespacePath"u8);
                 writer.WriteStringValue(NamespacePath);
             }
-            if (Core.Optional.IsDefined(TargetPath))
+            if (Optional.IsDefined(TargetPath))
             {
                 writer.WritePropertyName("targetPath"u8);
                 writer.WriteStringValue(TargetPath);
             }
-            if (Core.Optional.IsDefined(NfsExport))
+            if (Optional.IsDefined(NfsExport))
             {
                 writer.WritePropertyName("nfsExport"u8);
                 writer.WriteStringValue(NfsExport);
             }
-            if (Core.Optional.IsDefined(NfsAccessPolicy))
+            if (Optional.IsDefined(NfsAccessPolicy))
             {
                 writer.WritePropertyName("nfsAccessPolicy"u8);
                 writer.WriteStringValue(NfsAccessPolicy);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<string> namespacePath = default;
-            Core.Optional<string> targetPath = default;
-            Core.Optional<string> nfsExport = default;
-            Core.Optional<string> nfsAccessPolicy = default;
+            Optional<string> namespacePath = default;
+            Optional<string> targetPath = default;
+            Optional<string> nfsExport = default;
+            Optional<string> nfsAccessPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("namespacePath"u8))

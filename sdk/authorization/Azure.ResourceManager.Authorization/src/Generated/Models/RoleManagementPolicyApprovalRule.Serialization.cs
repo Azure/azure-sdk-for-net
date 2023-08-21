@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementPolicyApprovalRule : Core.IUtf8JsonSerializable
+    public partial class RoleManagementPolicyApprovalRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Settings))
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("setting"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Core.Optional.IsDefined(Target))
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Core.Optional<RoleManagementApprovalSettings> setting = default;
-            Core.Optional<string> id = default;
+            Optional<RoleManagementApprovalSettings> setting = default;
+            Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
-            Core.Optional<RoleManagementPolicyRuleTarget> target = default;
+            Optional<RoleManagementPolicyRuleTarget> target = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("setting"u8))

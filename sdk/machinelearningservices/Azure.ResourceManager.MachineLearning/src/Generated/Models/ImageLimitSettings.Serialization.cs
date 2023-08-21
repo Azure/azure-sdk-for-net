@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ImageLimitSettings : Core.IUtf8JsonSerializable
+    public partial class ImageLimitSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MaxConcurrentTrials))
+            if (Optional.IsDefined(MaxConcurrentTrials))
             {
                 writer.WritePropertyName("maxConcurrentTrials"u8);
                 writer.WriteNumberValue(MaxConcurrentTrials.Value);
             }
-            if (Core.Optional.IsDefined(MaxTrials))
+            if (Optional.IsDefined(MaxTrials))
             {
                 writer.WritePropertyName("maxTrials"u8);
                 writer.WriteNumberValue(MaxTrials.Value);
             }
-            if (Core.Optional.IsDefined(Timeout))
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<int> maxConcurrentTrials = default;
-            Core.Optional<int> maxTrials = default;
-            Core.Optional<TimeSpan> timeout = default;
+            Optional<int> maxConcurrentTrials = default;
+            Optional<int> maxTrials = default;
+            Optional<TimeSpan> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxConcurrentTrials"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new ImageLimitSettings(Core.Optional.ToNullable(maxConcurrentTrials), Core.Optional.ToNullable(maxTrials), Core.Optional.ToNullable(timeout));
+            return new ImageLimitSettings(Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxTrials), Optional.ToNullable(timeout));
         }
     }
 }

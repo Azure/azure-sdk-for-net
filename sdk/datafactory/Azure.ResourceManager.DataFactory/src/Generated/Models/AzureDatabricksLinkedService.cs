@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(domain, nameof(domain));
 
             Domain = domain;
-            NewClusterSparkConf = new Core.ChangeTrackingDictionary<string, BinaryData>();
-            NewClusterSparkEnvVars = new Core.ChangeTrackingDictionary<string, BinaryData>();
-            NewClusterCustomTags = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            NewClusterSparkConf = new ChangeTrackingDictionary<string, BinaryData>();
+            NewClusterSparkEnvVars = new ChangeTrackingDictionary<string, BinaryData>();
+            NewClusterCustomTags = new ChangeTrackingDictionary<string, BinaryData>();
             LinkedServiceType = "AzureDatabricks";
         }
 

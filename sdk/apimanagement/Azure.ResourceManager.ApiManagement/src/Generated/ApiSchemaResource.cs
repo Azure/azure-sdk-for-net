@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiSchemaRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiSchemaResource>(new ApiSchemaOperationSource(Client), _apiSchemaClientDiagnostics, Pipeline, _apiSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiSchemaResource>(new ApiSchemaOperationSource(Client), _apiSchemaClientDiagnostics, Pipeline, _apiSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiSchemaRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiSchemaResource>(new ApiSchemaOperationSource(Client), _apiSchemaClientDiagnostics, Pipeline, _apiSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiSchemaResource>(new ApiSchemaOperationSource(Client), _apiSchemaClientDiagnostics, Pipeline, _apiSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

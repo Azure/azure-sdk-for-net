@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Workloads
 {
-    internal class SapVirtualInstanceOperationSource : Core.IOperationSource<SapVirtualInstanceResource>
+    internal class SapVirtualInstanceOperationSource : IOperationSource<SapVirtualInstanceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Workloads
             _client = client;
         }
 
-        SapVirtualInstanceResource Core.IOperationSource<SapVirtualInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SapVirtualInstanceResource IOperationSource<SapVirtualInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(document.RootElement);
             return new SapVirtualInstanceResource(_client, data);
         }
 
-        async ValueTask<SapVirtualInstanceResource> Core.IOperationSource<SapVirtualInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SapVirtualInstanceResource> IOperationSource<SapVirtualInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(document.RootElement);

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class ServiceBusSqlFilter : Core.IUtf8JsonSerializable
+    public partial class ServiceBusSqlFilter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SqlExpression))
+            if (Optional.IsDefined(SqlExpression))
             {
                 writer.WritePropertyName("sqlExpression"u8);
                 writer.WriteStringValue(SqlExpression);
             }
-            if (Core.Optional.IsDefined(CompatibilityLevel))
+            if (Optional.IsDefined(CompatibilityLevel))
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteNumberValue(CompatibilityLevel.Value);
             }
-            if (Core.Optional.IsDefined(RequiresPreprocessing))
+            if (Optional.IsDefined(RequiresPreprocessing))
             {
                 writer.WritePropertyName("requiresPreprocessing"u8);
                 writer.WriteBooleanValue(RequiresPreprocessing.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Core.Optional<string> sqlExpression = default;
-            Core.Optional<int> compatibilityLevel = default;
-            Core.Optional<bool> requiresPreprocessing = default;
+            Optional<string> sqlExpression = default;
+            Optional<int> compatibilityLevel = default;
+            Optional<bool> requiresPreprocessing = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sqlExpression"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new ServiceBusSqlFilter(sqlExpression.Value, Core.Optional.ToNullable(compatibilityLevel), Core.Optional.ToNullable(requiresPreprocessing));
+            return new ServiceBusSqlFilter(sqlExpression.Value, Optional.ToNullable(compatibilityLevel), Optional.ToNullable(requiresPreprocessing));
         }
     }
 }

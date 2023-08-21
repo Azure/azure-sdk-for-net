@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Qumulo
             try
             {
                 var response = await _qumuloFileSystemResourceFileSystemsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new QumuloArmOperation(_qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, _qumuloFileSystemResourceFileSystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new QumuloArmOperation(_qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, _qumuloFileSystemResourceFileSystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Qumulo
             try
             {
                 var response = _qumuloFileSystemResourceFileSystemsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new QumuloArmOperation(_qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, _qumuloFileSystemResourceFileSystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new QumuloArmOperation(_qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, _qumuloFileSystemResourceFileSystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

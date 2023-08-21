@@ -13,19 +13,19 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagedNetwork.Models
 {
-    public partial class ManagedNetworkPeeringPolicyProperties : Core.IUtf8JsonSerializable
+    public partial class ManagedNetworkPeeringPolicyProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectivityType.ToString());
-            if (Core.Optional.IsDefined(Hub))
+            if (Optional.IsDefined(Hub))
             {
                 writer.WritePropertyName("hub"u8);
                 JsonSerializer.Serialize(writer, Hub);
             }
-            if (Core.Optional.IsCollectionDefined(Spokes))
+            if (Optional.IsCollectionDefined(Spokes))
             {
                 writer.WritePropertyName("spokes"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Mesh))
+            if (Optional.IsCollectionDefined(Mesh))
             {
                 writer.WritePropertyName("mesh"u8);
                 writer.WriteStartArray();
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 return null;
             }
             ConnectivityType type = default;
-            Core.Optional<WritableSubResource> hub = default;
-            Core.Optional<IList<WritableSubResource>> spokes = default;
-            Core.Optional<IList<WritableSubResource>> mesh = default;
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<ETag> etag = default;
+            Optional<WritableSubResource> hub = default;
+            Optional<IList<WritableSubResource>> spokes = default;
+            Optional<IList<WritableSubResource>> mesh = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<ETag> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     continue;
                 }
             }
-            return new ManagedNetworkPeeringPolicyProperties(Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(etag), type, hub, Core.Optional.ToList(spokes), Core.Optional.ToList(mesh));
+            return new ManagedNetworkPeeringPolicyProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(etag), type, hub, Optional.ToList(spokes), Optional.ToList(mesh));
         }
     }
 }

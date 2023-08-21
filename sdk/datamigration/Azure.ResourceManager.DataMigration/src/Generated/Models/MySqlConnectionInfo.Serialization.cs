@@ -10,43 +10,43 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MySqlConnectionInfo : Core.IUtf8JsonSerializable
+    public partial class MySqlConnectionInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("serverName"u8);
             writer.WriteStringValue(ServerName);
-            if (Core.Optional.IsDefined(DataSource))
+            if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteStringValue(DataSource);
             }
             writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
-            if (Core.Optional.IsDefined(EncryptConnection))
+            if (Optional.IsDefined(EncryptConnection))
             {
                 writer.WritePropertyName("encryptConnection"u8);
                 writer.WriteBooleanValue(EncryptConnection.Value);
             }
-            if (Core.Optional.IsDefined(Authentication))
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AdditionalSettings))
+            if (Optional.IsDefined(AdditionalSettings))
             {
                 writer.WritePropertyName("additionalSettings"u8);
                 writer.WriteStringValue(AdditionalSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectionInfoType);
-            if (Core.Optional.IsDefined(UserName))
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string serverName = default;
-            Core.Optional<string> dataSource = default;
+            Optional<string> dataSource = default;
             int port = default;
-            Core.Optional<bool> encryptConnection = default;
-            Core.Optional<AuthenticationType> authentication = default;
-            Core.Optional<string> additionalSettings = default;
+            Optional<bool> encryptConnection = default;
+            Optional<AuthenticationType> authentication = default;
+            Optional<string> additionalSettings = default;
             string type = default;
-            Core.Optional<string> userName = default;
-            Core.Optional<string> password = default;
+            Optional<string> userName = default;
+            Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverName"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MySqlConnectionInfo(type, userName.Value, password.Value, serverName, dataSource.Value, port, Core.Optional.ToNullable(encryptConnection), Core.Optional.ToNullable(authentication), additionalSettings.Value);
+            return new MySqlConnectionInfo(type, userName.Value, password.Value, serverName, dataSource.Value, port, Optional.ToNullable(encryptConnection), Optional.ToNullable(authentication), additionalSettings.Value);
         }
     }
 }

@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of ProductDescription. </summary>
         internal ProductDescription()
         {
-            Keywords = new Core.ChangeTrackingList<string>();
-            Attributes = new Core.ChangeTrackingList<string>();
-            Links = new Core.ChangeTrackingList<ProductLink>();
+            Keywords = new ChangeTrackingList<string>();
+            Attributes = new ChangeTrackingList<string>();
+            Links = new ChangeTrackingList<ProductLink>();
         }
 
         /// <summary> Initializes a new instance of ProductDescription. </summary>

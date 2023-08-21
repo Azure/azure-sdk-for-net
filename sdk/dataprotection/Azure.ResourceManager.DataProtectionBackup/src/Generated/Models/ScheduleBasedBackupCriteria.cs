@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of ScheduleBasedBackupCriteria. </summary>
         public ScheduleBasedBackupCriteria()
         {
-            AbsoluteCriteria = new Core.ChangeTrackingList<BackupAbsoluteMarker>();
-            DaysOfMonth = new Core.ChangeTrackingList<DataProtectionBackupDay>();
-            DaysOfWeek = new Core.ChangeTrackingList<DataProtectionBackupDayOfWeek>();
-            MonthsOfYear = new Core.ChangeTrackingList<DataProtectionBackupMonth>();
-            ScheduleTimes = new Core.ChangeTrackingList<DateTimeOffset>();
-            WeeksOfMonth = new Core.ChangeTrackingList<DataProtectionBackupWeekNumber>();
+            AbsoluteCriteria = new ChangeTrackingList<BackupAbsoluteMarker>();
+            DaysOfMonth = new ChangeTrackingList<DataProtectionBackupDay>();
+            DaysOfWeek = new ChangeTrackingList<DataProtectionBackupDayOfWeek>();
+            MonthsOfYear = new ChangeTrackingList<DataProtectionBackupMonth>();
+            ScheduleTimes = new ChangeTrackingList<DateTimeOffset>();
+            WeeksOfMonth = new ChangeTrackingList<DataProtectionBackupWeekNumber>();
             ObjectType = "ScheduleBasedBackupCriteria";
         }
 

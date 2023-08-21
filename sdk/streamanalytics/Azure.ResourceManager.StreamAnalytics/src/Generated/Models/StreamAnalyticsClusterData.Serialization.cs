@@ -14,22 +14,22 @@ using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    public partial class StreamAnalyticsClusterData : Core.IUtf8JsonSerializable
+    public partial class StreamAnalyticsClusterData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 return null;
             }
-            Core.Optional<StreamAnalyticsClusterSku> sku = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<StreamAnalyticsClusterProperties> properties = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<StreamAnalyticsClusterSku> sku = default;
+            Optional<ETag> etag = default;
+            Optional<StreamAnalyticsClusterProperties> properties = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     continue;
                 }
             }
-            return new StreamAnalyticsClusterData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, Core.Optional.ToNullable(etag), properties.Value);
+            return new StreamAnalyticsClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(etag), properties.Value);
         }
     }
 }

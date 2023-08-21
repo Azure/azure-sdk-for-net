@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountAutoStorageConfiguration : Core.IUtf8JsonSerializable
+    public partial class BatchAccountAutoStorageConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("lastKeySync"u8);
             writer.WriteStringValue(LastKeySyncedOn, "O");
             writer.WritePropertyName("storageAccountId"u8);
             writer.WriteStringValue(StorageAccountId);
-            if (Core.Optional.IsDefined(AuthenticationMode))
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(NodeIdentity))
+            if (Optional.IsDefined(NodeIdentity))
             {
                 writer.WritePropertyName("nodeIdentityReference"u8);
                 writer.WriteObjectValue(NodeIdentity);
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Batch.Models
             }
             DateTimeOffset lastKeySync = default;
             ResourceIdentifier storageAccountId = default;
-            Core.Optional<BatchAutoStorageAuthenticationMode> authenticationMode = default;
-            Core.Optional<ComputeNodeIdentityReference> nodeIdentityReference = default;
+            Optional<BatchAutoStorageAuthenticationMode> authenticationMode = default;
+            Optional<ComputeNodeIdentityReference> nodeIdentityReference = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastKeySync"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchAccountAutoStorageConfiguration(storageAccountId, Core.Optional.ToNullable(authenticationMode), nodeIdentityReference.Value, lastKeySync);
+            return new BatchAccountAutoStorageConfiguration(storageAccountId, Optional.ToNullable(authenticationMode), nodeIdentityReference.Value, lastKeySync);
         }
     }
 }

@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DiagnosticRemoteSupportSettingData : Core.IUtf8JsonSerializable
+    public partial class DiagnosticRemoteSupportSettingData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(RemoteSupportSettingsList))
+            if (Optional.IsCollectionDefined(RemoteSupportSettingsList))
             {
                 writer.WritePropertyName("remoteSupportSettingsList"u8);
                 writer.WriteStartArray();
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IList<EdgeRemoteSupportSettings>> remoteSupportSettingsList = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<EdgeRemoteSupportSettings>> remoteSupportSettingsList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     continue;
                 }
             }
-            return new DiagnosticRemoteSupportSettingData(id, name, type, systemData.Value, Core.Optional.ToList(remoteSupportSettingsList));
+            return new DiagnosticRemoteSupportSettingData(id, name, type, systemData.Value, Optional.ToList(remoteSupportSettingsList));
         }
     }
 }

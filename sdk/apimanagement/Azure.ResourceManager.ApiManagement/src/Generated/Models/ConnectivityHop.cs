@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ConnectivityHop. </summary>
         internal ConnectivityHop()
         {
-            NextHopIds = new Core.ChangeTrackingList<string>();
-            Issues = new Core.ChangeTrackingList<ConnectivityIssue>();
+            NextHopIds = new ChangeTrackingList<string>();
+            Issues = new ChangeTrackingList<ConnectivityIssue>();
         }
 
         /// <summary> Initializes a new instance of ConnectivityHop. </summary>

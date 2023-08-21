@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of WhatIfOperationResult. </summary>
         internal WhatIfOperationResult()
         {
-            Changes = new Core.ChangeTrackingList<WhatIfChange>();
+            Changes = new ChangeTrackingList<WhatIfChange>();
         }
 
         /// <summary> Initializes a new instance of WhatIfOperationResult. </summary>

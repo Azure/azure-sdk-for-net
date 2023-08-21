@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12EnvelopeSettings : Core.IUtf8JsonSerializable
+    public partial class X12EnvelopeSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("controlStandardsId"u8);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(RolloverInterchangeControlNumber);
             writer.WritePropertyName("enableDefaultGroupHeaders"u8);
             writer.WriteBooleanValue(EnableDefaultGroupHeaders);
-            if (Core.Optional.IsDefined(FunctionalGroupId))
+            if (Optional.IsDefined(FunctionalGroupId))
             {
                 writer.WritePropertyName("functionalGroupId"u8);
                 writer.WriteStringValue(FunctionalGroupId);
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteNumberValue(TransactionSetControlNumberUpperBound);
             writer.WritePropertyName("rolloverTransactionSetControlNumber"u8);
             writer.WriteBooleanValue(RolloverTransactionSetControlNumber);
-            if (Core.Optional.IsDefined(TransactionSetControlNumberPrefix))
+            if (Optional.IsDefined(TransactionSetControlNumberPrefix))
             {
                 writer.WritePropertyName("transactionSetControlNumberPrefix"u8);
                 writer.WriteStringValue(TransactionSetControlNumberPrefix);
             }
-            if (Core.Optional.IsDefined(TransactionSetControlNumberSuffix))
+            if (Optional.IsDefined(TransactionSetControlNumberSuffix))
             {
                 writer.WritePropertyName("transactionSetControlNumberSuffix"u8);
                 writer.WriteStringValue(TransactionSetControlNumberSuffix);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Logic.Models
             int interchangeControlNumberUpperBound = default;
             bool rolloverInterchangeControlNumber = default;
             bool enableDefaultGroupHeaders = default;
-            Core.Optional<string> functionalGroupId = default;
+            Optional<string> functionalGroupId = default;
             int groupControlNumberLowerBound = default;
             int groupControlNumberUpperBound = default;
             bool rolloverGroupControlNumber = default;
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.Logic.Models
             int transactionSetControlNumberLowerBound = default;
             int transactionSetControlNumberUpperBound = default;
             bool rolloverTransactionSetControlNumber = default;
-            Core.Optional<string> transactionSetControlNumberPrefix = default;
-            Core.Optional<string> transactionSetControlNumberSuffix = default;
+            Optional<string> transactionSetControlNumberPrefix = default;
+            Optional<string> transactionSetControlNumberSuffix = default;
             bool overwriteExistingTransactionSetControlNumber = default;
             X12DateFormat groupHeaderDateFormat = default;
             X12TimeFormat groupHeaderTimeFormat = default;

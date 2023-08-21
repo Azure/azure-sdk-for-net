@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningDeploymentLogsContent : Core.IUtf8JsonSerializable
+    public partial class MachineLearningDeploymentLogsContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ContainerType))
+            if (Optional.IsDefined(ContainerType))
             {
                 writer.WritePropertyName("containerType"u8);
                 writer.WriteStringValue(ContainerType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Tail))
+            if (Optional.IsDefined(Tail))
             {
                 if (Tail != null)
                 {

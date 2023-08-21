@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class TypePropertiesMapping : Core.IUtf8JsonSerializable
+    public partial class TypePropertiesMapping : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourcePropertyName"u8);
             writer.WriteStringValue(SourcePropertyName);
             writer.WritePropertyName("targetPropertyName"u8);
             writer.WriteStringValue(TargetPropertyName);
-            if (Core.Optional.IsDefined(LinkType))
+            if (Optional.IsDefined(LinkType))
             {
                 writer.WritePropertyName("linkType"u8);
                 writer.WriteStringValue(LinkType.Value.ToSerialString());
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             string sourcePropertyName = default;
             string targetPropertyName = default;
-            Core.Optional<LinkType> linkType = default;
+            Optional<LinkType> linkType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourcePropertyName"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new TypePropertiesMapping(sourcePropertyName, targetPropertyName, Core.Optional.ToNullable(linkType));
+            return new TypePropertiesMapping(sourcePropertyName, targetPropertyName, Optional.ToNullable(linkType));
         }
     }
 }

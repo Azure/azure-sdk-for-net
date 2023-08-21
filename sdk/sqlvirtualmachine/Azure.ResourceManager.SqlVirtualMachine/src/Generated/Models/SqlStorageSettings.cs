@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> Initializes a new instance of SqlStorageSettings. </summary>
         public SqlStorageSettings()
         {
-            Luns = new Core.ChangeTrackingList<int>();
+            Luns = new ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of SqlStorageSettings. </summary>

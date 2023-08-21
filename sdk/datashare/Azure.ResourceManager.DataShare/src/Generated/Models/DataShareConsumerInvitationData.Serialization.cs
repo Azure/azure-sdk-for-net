@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
-    public partial class DataShareConsumerInvitationData : Core.IUtf8JsonSerializable
+    public partial class DataShareConsumerInvitationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -35,22 +35,22 @@ namespace Azure.ResourceManager.DataShare
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<int> dataSetCount = default;
-            Core.Optional<string> description = default;
-            Core.Optional<DateTimeOffset> expirationDate = default;
+            Optional<SystemData> systemData = default;
+            Optional<int> dataSetCount = default;
+            Optional<string> description = default;
+            Optional<DateTimeOffset> expirationDate = default;
             Guid invitationId = default;
-            Core.Optional<DataShareInvitationStatus> invitationStatus = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<string> providerEmail = default;
-            Core.Optional<string> providerName = default;
-            Core.Optional<string> providerTenantName = default;
-            Core.Optional<DateTimeOffset> respondedAt = default;
-            Core.Optional<DateTimeOffset> sentAt = default;
-            Core.Optional<string> shareName = default;
-            Core.Optional<string> termsOfUse = default;
-            Core.Optional<string> userEmail = default;
-            Core.Optional<string> userName = default;
+            Optional<DataShareInvitationStatus> invitationStatus = default;
+            Optional<AzureLocation> location = default;
+            Optional<string> providerEmail = default;
+            Optional<string> providerName = default;
+            Optional<string> providerTenantName = default;
+            Optional<DateTimeOffset> respondedAt = default;
+            Optional<DateTimeOffset> sentAt = default;
+            Optional<string> shareName = default;
+            Optional<string> termsOfUse = default;
+            Optional<string> userEmail = default;
+            Optional<string> userName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataShare
                     continue;
                 }
             }
-            return new DataShareConsumerInvitationData(id, name, type, systemData.Value, Core.Optional.ToNullable(dataSetCount), description.Value, Core.Optional.ToNullable(expirationDate), invitationId, Core.Optional.ToNullable(invitationStatus), Core.Optional.ToNullable(location), providerEmail.Value, providerName.Value, providerTenantName.Value, Core.Optional.ToNullable(respondedAt), Core.Optional.ToNullable(sentAt), shareName.Value, termsOfUse.Value, userEmail.Value, userName.Value);
+            return new DataShareConsumerInvitationData(id, name, type, systemData.Value, Optional.ToNullable(dataSetCount), description.Value, Optional.ToNullable(expirationDate), invitationId, Optional.ToNullable(invitationStatus), Optional.ToNullable(location), providerEmail.Value, providerName.Value, providerTenantName.Value, Optional.ToNullable(respondedAt), Optional.ToNullable(sentAt), shareName.Value, termsOfUse.Value, userEmail.Value, userName.Value);
         }
     }
 }

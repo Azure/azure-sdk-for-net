@@ -12,29 +12,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    public partial class KustoManagedPrivateEndpointData : Core.IUtf8JsonSerializable
+    public partial class KustoManagedPrivateEndpointData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateLinkResourceId))
+            if (Optional.IsDefined(PrivateLinkResourceId))
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (Core.Optional.IsDefined(PrivateLinkResourceRegion))
+            if (Optional.IsDefined(PrivateLinkResourceRegion))
             {
                 writer.WritePropertyName("privateLinkResourceRegion"u8);
                 writer.WriteStringValue(PrivateLinkResourceRegion);
             }
-            if (Core.Optional.IsDefined(GroupId))
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Core.Optional.IsDefined(RequestMessage))
+            if (Optional.IsDefined(RequestMessage))
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Kusto
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Core.Optional<string> privateLinkResourceRegion = default;
-            Core.Optional<string> groupId = default;
-            Core.Optional<string> requestMessage = default;
-            Core.Optional<KustoProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> privateLinkResourceId = default;
+            Optional<string> privateLinkResourceRegion = default;
+            Optional<string> groupId = default;
+            Optional<string> requestMessage = default;
+            Optional<KustoProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Kusto
                     continue;
                 }
             }
-            return new KustoManagedPrivateEndpointData(id, name, type, systemData.Value, privateLinkResourceId.Value, privateLinkResourceRegion.Value, groupId.Value, requestMessage.Value, Core.Optional.ToNullable(provisioningState));
+            return new KustoManagedPrivateEndpointData(id, name, type, systemData.Value, privateLinkResourceId.Value, privateLinkResourceRegion.Value, groupId.Value, requestMessage.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

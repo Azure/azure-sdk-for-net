@@ -10,44 +10,44 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorHealthProbeSettingsData : Core.IUtf8JsonSerializable
+    public partial class FrontDoorHealthProbeSettingsData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Core.Optional.IsDefined(Protocol))
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IntervalInSeconds))
+            if (Optional.IsDefined(IntervalInSeconds))
             {
                 writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(HealthProbeMethod))
+            if (Optional.IsDefined(HealthProbeMethod))
             {
                 writer.WritePropertyName("healthProbeMethod"u8);
                 writer.WriteStringValue(HealthProbeMethod.Value.ToString());
             }
-            if (Core.Optional.IsDefined(EnabledState))
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
@@ -62,15 +62,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<string> path = default;
-            Core.Optional<FrontDoorProtocol> protocol = default;
-            Core.Optional<int> intervalInSeconds = default;
-            Core.Optional<FrontDoorHealthProbeMethod> healthProbeMethod = default;
-            Core.Optional<HealthProbeEnabled> enabledState = default;
-            Core.Optional<FrontDoorResourceState> resourceState = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<string> path = default;
+            Optional<FrontDoorProtocol> protocol = default;
+            Optional<int> intervalInSeconds = default;
+            Optional<FrontDoorHealthProbeMethod> healthProbeMethod = default;
+            Optional<HealthProbeEnabled> enabledState = default;
+            Optional<FrontDoorResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new FrontDoorHealthProbeSettingsData(id.Value, name.Value, Core.Optional.ToNullable(type), path.Value, Core.Optional.ToNullable(protocol), Core.Optional.ToNullable(intervalInSeconds), Core.Optional.ToNullable(healthProbeMethod), Core.Optional.ToNullable(enabledState), Core.Optional.ToNullable(resourceState));
+            return new FrontDoorHealthProbeSettingsData(id.Value, name.Value, Optional.ToNullable(type), path.Value, Optional.ToNullable(protocol), Optional.ToNullable(intervalInSeconds), Optional.ToNullable(healthProbeMethod), Optional.ToNullable(enabledState), Optional.ToNullable(resourceState));
         }
     }
 }

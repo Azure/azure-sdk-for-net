@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class RegistrationContactInfo : Core.IUtf8JsonSerializable
+    public partial class RegistrationContactInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AddressMailing))
+            if (Optional.IsDefined(AddressMailing))
             {
                 writer.WritePropertyName("addressMailing"u8);
                 writer.WriteObjectValue(AddressMailing);
             }
             writer.WritePropertyName("email"u8);
             writer.WriteStringValue(Email);
-            if (Core.Optional.IsDefined(Fax))
+            if (Optional.IsDefined(Fax))
             {
                 writer.WritePropertyName("fax"u8);
                 writer.WriteStringValue(Fax);
             }
-            if (Core.Optional.IsDefined(JobTitle))
+            if (Optional.IsDefined(JobTitle))
             {
                 writer.WritePropertyName("jobTitle"u8);
                 writer.WriteStringValue(JobTitle);
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStringValue(NameFirst);
             writer.WritePropertyName("nameLast"u8);
             writer.WriteStringValue(NameLast);
-            if (Core.Optional.IsDefined(NameMiddle))
+            if (Optional.IsDefined(NameMiddle))
             {
                 writer.WritePropertyName("nameMiddle"u8);
                 writer.WriteStringValue(NameMiddle);
             }
-            if (Core.Optional.IsDefined(Organization))
+            if (Optional.IsDefined(Organization))
             {
                 writer.WritePropertyName("organization"u8);
                 writer.WriteStringValue(Organization);
@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<RegistrationAddressInfo> addressMailing = default;
+            Optional<RegistrationAddressInfo> addressMailing = default;
             string email = default;
-            Core.Optional<string> fax = default;
-            Core.Optional<string> jobTitle = default;
+            Optional<string> fax = default;
+            Optional<string> jobTitle = default;
             string nameFirst = default;
             string nameLast = default;
-            Core.Optional<string> nameMiddle = default;
-            Core.Optional<string> organization = default;
+            Optional<string> nameMiddle = default;
+            Optional<string> organization = default;
             string phone = default;
             foreach (var property in element.EnumerateObject())
             {

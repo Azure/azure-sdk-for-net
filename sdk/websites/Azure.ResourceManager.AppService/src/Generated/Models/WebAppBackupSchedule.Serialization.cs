@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WebAppBackupSchedule : Core.IUtf8JsonSerializable
+    public partial class WebAppBackupSchedule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("frequencyInterval"u8);
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteBooleanValue(ShouldKeepAtLeastOneBackup);
             writer.WritePropertyName("retentionPeriodInDays"u8);
             writer.WriteNumberValue(RetentionPeriodInDays);
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.AppService.Models
             BackupFrequencyUnit frequencyUnit = default;
             bool keepAtLeastOneBackup = default;
             int retentionPeriodInDays = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> lastExecutionTime = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> lastExecutionTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("frequencyInterval"u8))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new WebAppBackupSchedule(frequencyInterval, frequencyUnit, keepAtLeastOneBackup, retentionPeriodInDays, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(lastExecutionTime));
+            return new WebAppBackupSchedule(frequencyInterval, frequencyUnit, keepAtLeastOneBackup, retentionPeriodInDays, Optional.ToNullable(startTime), Optional.ToNullable(lastExecutionTime));
         }
     }
 }

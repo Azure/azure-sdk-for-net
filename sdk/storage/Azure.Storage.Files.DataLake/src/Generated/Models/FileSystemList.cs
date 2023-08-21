@@ -16,7 +16,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary> Initializes a new instance of FileSystemList. </summary>
         internal FileSystemList()
         {
-            Filesystems = new Core.ChangeTrackingList<FileSystem>();
+            Filesystems = new ChangeTrackingList<FileSystem>();
         }
 
         /// <summary> Initializes a new instance of FileSystemList. </summary>

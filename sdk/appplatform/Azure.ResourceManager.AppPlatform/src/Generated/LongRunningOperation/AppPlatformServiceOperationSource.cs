@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    internal class AppPlatformServiceOperationSource : Core.IOperationSource<AppPlatformServiceResource>
+    internal class AppPlatformServiceOperationSource : IOperationSource<AppPlatformServiceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppPlatform
             _client = client;
         }
 
-        AppPlatformServiceResource Core.IOperationSource<AppPlatformServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AppPlatformServiceResource IOperationSource<AppPlatformServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AppPlatformServiceData.DeserializeAppPlatformServiceData(document.RootElement);
             return new AppPlatformServiceResource(_client, data);
         }
 
-        async ValueTask<AppPlatformServiceResource> Core.IOperationSource<AppPlatformServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AppPlatformServiceResource> IOperationSource<AppPlatformServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AppPlatformServiceData.DeserializeAppPlatformServiceData(document.RootElement);

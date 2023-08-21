@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <summary> Initializes a new instance of PostgreSqlDatabaseListResult. </summary>
         internal PostgreSqlDatabaseListResult()
         {
-            Value = new Core.ChangeTrackingList<PostgreSqlDatabaseData>();
+            Value = new ChangeTrackingList<PostgreSqlDatabaseData>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlDatabaseListResult. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of EncryptionScopeListResult. </summary>
         internal EncryptionScopeListResult()
         {
-            Value = new Core.ChangeTrackingList<EncryptionScopeData>();
+            Value = new ChangeTrackingList<EncryptionScopeData>();
         }
 
         /// <summary> Initializes a new instance of EncryptionScopeListResult. </summary>

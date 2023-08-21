@@ -14,12 +14,12 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class MetricAlertData : Core.IUtf8JsonSerializable
+    public partial class MetricAlertData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStringValue(EvaluationFrequency, "P");
             writer.WritePropertyName("windowSize"u8);
             writer.WriteStringValue(WindowSize, "P");
-            if (Core.Optional.IsDefined(TargetResourceType))
+            if (Optional.IsDefined(TargetResourceType))
             {
                 writer.WritePropertyName("targetResourceType"u8);
                 writer.WriteStringValue(TargetResourceType.Value);
             }
-            if (Core.Optional.IsDefined(TargetResourceRegion))
+            if (Optional.IsDefined(TargetResourceRegion))
             {
                 writer.WritePropertyName("targetResourceRegion"u8);
                 writer.WriteStringValue(TargetResourceRegion.Value);
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Monitor
             {
                 writer.WriteNull("criteria");
             }
-            if (Core.Optional.IsDefined(IsAutoMitigateEnabled))
+            if (Optional.IsDefined(IsAutoMitigateEnabled))
             {
                 writer.WritePropertyName("autoMitigate"u8);
                 writer.WriteBooleanValue(IsAutoMitigateEnabled.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Actions))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -98,25 +98,25 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
             int severity = default;
             bool enabled = default;
             IList<string> scopes = default;
             TimeSpan evaluationFrequency = default;
             TimeSpan windowSize = default;
-            Core.Optional<ResourceType> targetResourceType = default;
-            Core.Optional<AzureLocation> targetResourceRegion = default;
+            Optional<ResourceType> targetResourceType = default;
+            Optional<AzureLocation> targetResourceRegion = default;
             MetricAlertCriteria criteria = default;
-            Core.Optional<bool> autoMitigate = default;
-            Core.Optional<IList<MetricAlertAction>> actions = default;
-            Core.Optional<DateTimeOffset> lastUpdatedTime = default;
-            Core.Optional<bool> isMigrated = default;
+            Optional<bool> autoMitigate = default;
+            Optional<IList<MetricAlertAction>> actions = default;
+            Optional<DateTimeOffset> lastUpdatedTime = default;
+            Optional<bool> isMigrated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new MetricAlertData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, description.Value, severity, enabled, scopes, evaluationFrequency, windowSize, Core.Optional.ToNullable(targetResourceType), Core.Optional.ToNullable(targetResourceRegion), criteria, Core.Optional.ToNullable(autoMitigate), Core.Optional.ToList(actions), Core.Optional.ToNullable(lastUpdatedTime), Core.Optional.ToNullable(isMigrated));
+            return new MetricAlertData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, severity, enabled, scopes, evaluationFrequency, windowSize, Optional.ToNullable(targetResourceType), Optional.ToNullable(targetResourceRegion), criteria, Optional.ToNullable(autoMitigate), Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(isMigrated));
         }
     }
 }

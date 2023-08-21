@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkTapData : Core.IUtf8JsonSerializable
+    public partial class NetworkTapData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Annotation))
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(PollingType))
+            if (Optional.IsDefined(PollingType))
             {
                 writer.WritePropertyName("pollingType"u8);
                 writer.WriteStringValue(PollingType.Value.ToString());
@@ -62,20 +62,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> annotation = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> annotation = default;
             ResourceIdentifier networkPacketBrokerId = default;
-            Core.Optional<ResourceIdentifier> sourceTapRuleId = default;
+            Optional<ResourceIdentifier> sourceTapRuleId = default;
             IList<NetworkTapPropertiesDestinationsItem> destinations = default;
-            Core.Optional<NetworkTapPollingType> pollingType = default;
-            Core.Optional<NetworkFabricConfigurationState> configurationState = default;
-            Core.Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Core.Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            Optional<NetworkTapPollingType> pollingType = default;
+            Optional<NetworkFabricConfigurationState> configurationState = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            Optional<NetworkFabricAdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     continue;
                 }
             }
-            return new NetworkTapData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, annotation.Value, networkPacketBrokerId, sourceTapRuleId.Value, destinations, Core.Optional.ToNullable(pollingType), Core.Optional.ToNullable(configurationState), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(administrativeState));
+            return new NetworkTapData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, networkPacketBrokerId, sourceTapRuleId.Value, destinations, Optional.ToNullable(pollingType), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
         }
     }
 }

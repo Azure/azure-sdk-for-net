@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementSkuRestrictionInfo. </summary>
         internal ApiManagementSkuRestrictionInfo()
         {
-            Locations = new Core.ChangeTrackingList<AzureLocation>();
-            Zones = new Core.ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ApiManagementSkuRestrictionInfo. </summary>

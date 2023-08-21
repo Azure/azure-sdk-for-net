@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class AlexaChannelProperties : Core.IUtf8JsonSerializable
+    public partial class AlexaChannelProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("alexaSkillId"u8);
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             string alexaSkillId = default;
-            Core.Optional<string> urlFragment = default;
-            Core.Optional<Uri> serviceEndpointUri = default;
+            Optional<string> urlFragment = default;
+            Optional<Uri> serviceEndpointUri = default;
             bool isEnabled = default;
             foreach (var property in element.EnumerateObject())
             {

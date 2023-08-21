@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of ServiceAlertSummaryGroup. </summary>
         public ServiceAlertSummaryGroup()
         {
-            Values = new Core.ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>();
+            Values = new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>();
         }
 
         /// <summary> Initializes a new instance of ServiceAlertSummaryGroup. </summary>

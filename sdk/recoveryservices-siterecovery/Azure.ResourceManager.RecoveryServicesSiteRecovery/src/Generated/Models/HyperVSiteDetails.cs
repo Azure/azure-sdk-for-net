@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of HyperVSiteDetails. </summary>
         internal HyperVSiteDetails()
         {
-            HyperVHosts = new Core.ChangeTrackingList<HyperVHostDetails>();
+            HyperVHosts = new ChangeTrackingList<HyperVHostDetails>();
             InstanceType = "HyperVSite";
         }
 

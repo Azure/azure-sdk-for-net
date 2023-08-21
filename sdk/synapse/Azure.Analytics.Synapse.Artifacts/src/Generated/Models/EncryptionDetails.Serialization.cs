@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(EncryptionDetailsConverter))]
-    public partial class EncryptionDetails : Core.IUtf8JsonSerializable
+    public partial class EncryptionDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Cmk))
+            if (Optional.IsDefined(Cmk))
             {
                 writer.WritePropertyName("cmk"u8);
                 writer.WriteObjectValue(Cmk);
@@ -32,8 +32,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<bool> doubleEncryptionEnabled = default;
-            Core.Optional<CustomerManagedKeyDetails> cmk = default;
+            Optional<bool> doubleEncryptionEnabled = default;
+            Optional<CustomerManagedKeyDetails> cmk = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("doubleEncryptionEnabled"u8))
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new EncryptionDetails(Core.Optional.ToNullable(doubleEncryptionEnabled), cmk.Value);
+            return new EncryptionDetails(Optional.ToNullable(doubleEncryptionEnabled), cmk.Value);
         }
 
         internal partial class EncryptionDetailsConverter : JsonConverter<EncryptionDetails>

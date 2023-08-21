@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Relay
         /// <summary> Initializes a new instance of RelayNetworkRuleSetData. </summary>
         public RelayNetworkRuleSetData()
         {
-            IPRules = new Core.ChangeTrackingList<RelayNetworkRuleSetIPRule>();
+            IPRules = new ChangeTrackingList<RelayNetworkRuleSetIPRule>();
         }
 
         /// <summary> Initializes a new instance of RelayNetworkRuleSetData. </summary>

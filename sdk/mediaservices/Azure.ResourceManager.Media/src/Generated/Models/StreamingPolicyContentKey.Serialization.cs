@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class StreamingPolicyContentKey : Core.IUtf8JsonSerializable
+    public partial class StreamingPolicyContentKey : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Label))
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Core.Optional.IsDefined(PolicyName))
+            if (Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (Core.Optional.IsCollectionDefined(Tracks))
+            if (Optional.IsCollectionDefined(Tracks))
             {
                 writer.WritePropertyName("tracks"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<string> label = default;
-            Core.Optional<string> policyName = default;
-            Core.Optional<IList<MediaTrackSelection>> tracks = default;
+            Optional<string> label = default;
+            Optional<string> policyName = default;
+            Optional<IList<MediaTrackSelection>> tracks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("label"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new StreamingPolicyContentKey(label.Value, policyName.Value, Core.Optional.ToList(tracks));
+            return new StreamingPolicyContentKey(label.Value, policyName.Value, Optional.ToList(tracks));
         }
     }
 }

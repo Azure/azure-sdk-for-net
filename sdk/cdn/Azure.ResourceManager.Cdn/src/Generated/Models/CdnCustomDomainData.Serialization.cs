@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class CdnCustomDomainData : Core.IUtf8JsonSerializable
+    public partial class CdnCustomDomainData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HostName))
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Core.Optional.IsDefined(CustomDomainHttpsContent))
+            if (Optional.IsDefined(CustomDomainHttpsContent))
             {
                 if (CustomDomainHttpsContent != null)
                 {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("customHttpsParameters");
                 }
             }
-            if (Core.Optional.IsDefined(ValidationData))
+            if (Optional.IsDefined(ValidationData))
             {
                 writer.WritePropertyName("validationData"u8);
                 writer.WriteStringValue(ValidationData);
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> hostName = default;
-            Core.Optional<CustomDomainResourceState> resourceState = default;
-            Core.Optional<CustomHttpsProvisioningState> customHttpsProvisioningState = default;
-            Core.Optional<CustomHttpsAvailabilityState> customHttpsProvisioningSubstate = default;
-            Core.Optional<CustomDomainHttpsContent> customHttpsParameters = default;
-            Core.Optional<string> validationData = default;
-            Core.Optional<CustomHttpsProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> hostName = default;
+            Optional<CustomDomainResourceState> resourceState = default;
+            Optional<CustomHttpsProvisioningState> customHttpsProvisioningState = default;
+            Optional<CustomHttpsAvailabilityState> customHttpsProvisioningSubstate = default;
+            Optional<CustomDomainHttpsContent> customHttpsParameters = default;
+            Optional<string> validationData = default;
+            Optional<CustomHttpsProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new CdnCustomDomainData(id, name, type, systemData.Value, hostName.Value, Core.Optional.ToNullable(resourceState), Core.Optional.ToNullable(customHttpsProvisioningState), Core.Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsParameters.Value, validationData.Value, Core.Optional.ToNullable(provisioningState));
+            return new CdnCustomDomainData(id, name, type, systemData.Value, hostName.Value, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsParameters.Value, validationData.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

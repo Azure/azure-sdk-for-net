@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of FiltersConfiguration. </summary>
         public FiltersConfiguration()
         {
-            IncludedEventTypes = new Core.ChangeTrackingList<string>();
-            Filters = new Core.ChangeTrackingList<EventGridFilter>();
+            IncludedEventTypes = new ChangeTrackingList<string>();
+            Filters = new ChangeTrackingList<EventGridFilter>();
         }
 
         /// <summary> Initializes a new instance of FiltersConfiguration. </summary>

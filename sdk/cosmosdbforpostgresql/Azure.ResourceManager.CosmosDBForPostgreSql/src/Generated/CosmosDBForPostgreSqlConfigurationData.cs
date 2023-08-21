@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlConfigurationData. </summary>
         public CosmosDBForPostgreSqlConfigurationData()
         {
-            ServerRoleGroupConfigurations = new Core.ChangeTrackingList<CosmosDBForPostgreSqlServerRoleGroupConfiguration>();
+            ServerRoleGroupConfigurations = new ChangeTrackingList<CosmosDBForPostgreSqlServerRoleGroupConfiguration>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlConfigurationData. </summary>

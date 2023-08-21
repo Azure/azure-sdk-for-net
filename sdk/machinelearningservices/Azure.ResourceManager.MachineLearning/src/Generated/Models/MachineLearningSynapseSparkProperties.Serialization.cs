@@ -10,57 +10,57 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningSynapseSparkProperties : Core.IUtf8JsonSerializable
+    public partial class MachineLearningSynapseSparkProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AutoScaleProperties))
+            if (Optional.IsDefined(AutoScaleProperties))
             {
                 writer.WritePropertyName("autoScaleProperties"u8);
                 writer.WriteObjectValue(AutoScaleProperties);
             }
-            if (Core.Optional.IsDefined(AutoPauseProperties))
+            if (Optional.IsDefined(AutoPauseProperties))
             {
                 writer.WritePropertyName("autoPauseProperties"u8);
                 writer.WriteObjectValue(AutoPauseProperties);
             }
-            if (Core.Optional.IsDefined(SparkVersion))
+            if (Optional.IsDefined(SparkVersion))
             {
                 writer.WritePropertyName("sparkVersion"u8);
                 writer.WriteStringValue(SparkVersion);
             }
-            if (Core.Optional.IsDefined(NodeCount))
+            if (Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (Core.Optional.IsDefined(NodeSize))
+            if (Optional.IsDefined(NodeSize))
             {
                 writer.WritePropertyName("nodeSize"u8);
                 writer.WriteStringValue(NodeSize);
             }
-            if (Core.Optional.IsDefined(NodeSizeFamily))
+            if (Optional.IsDefined(NodeSizeFamily))
             {
                 writer.WritePropertyName("nodeSizeFamily"u8);
                 writer.WriteStringValue(NodeSizeFamily);
             }
-            if (Core.Optional.IsDefined(SubscriptionId))
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Core.Optional.IsDefined(ResourceGroup))
+            if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (Core.Optional.IsDefined(WorkspaceName))
+            if (Optional.IsDefined(WorkspaceName))
             {
                 writer.WritePropertyName("workspaceName"u8);
                 writer.WriteStringValue(WorkspaceName);
             }
-            if (Core.Optional.IsDefined(PoolName))
+            if (Optional.IsDefined(PoolName))
             {
                 writer.WritePropertyName("poolName"u8);
                 writer.WriteStringValue(PoolName);
@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<MachineLearningAutoScaleProperties> autoScaleProperties = default;
-            Core.Optional<MachineLearningAutoPauseProperties> autoPauseProperties = default;
-            Core.Optional<string> sparkVersion = default;
-            Core.Optional<int> nodeCount = default;
-            Core.Optional<string> nodeSize = default;
-            Core.Optional<string> nodeSizeFamily = default;
-            Core.Optional<string> subscriptionId = default;
-            Core.Optional<string> resourceGroup = default;
-            Core.Optional<string> workspaceName = default;
-            Core.Optional<string> poolName = default;
+            Optional<MachineLearningAutoScaleProperties> autoScaleProperties = default;
+            Optional<MachineLearningAutoPauseProperties> autoPauseProperties = default;
+            Optional<string> sparkVersion = default;
+            Optional<int> nodeCount = default;
+            Optional<string> nodeSize = default;
+            Optional<string> nodeSizeFamily = default;
+            Optional<string> subscriptionId = default;
+            Optional<string> resourceGroup = default;
+            Optional<string> workspaceName = default;
+            Optional<string> poolName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("autoScaleProperties"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningSynapseSparkProperties(autoScaleProperties.Value, autoPauseProperties.Value, sparkVersion.Value, Core.Optional.ToNullable(nodeCount), nodeSize.Value, nodeSizeFamily.Value, subscriptionId.Value, resourceGroup.Value, workspaceName.Value, poolName.Value);
+            return new MachineLearningSynapseSparkProperties(autoScaleProperties.Value, autoPauseProperties.Value, sparkVersion.Value, Optional.ToNullable(nodeCount), nodeSize.Value, nodeSizeFamily.Value, subscriptionId.Value, resourceGroup.Value, workspaceName.Value, poolName.Value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of PolicySetDefinitionListResult. </summary>
         internal PolicySetDefinitionListResult()
         {
-            Value = new Core.ChangeTrackingList<PolicySetDefinitionData>();
+            Value = new ChangeTrackingList<PolicySetDefinitionData>();
         }
 
         /// <summary> Initializes a new instance of PolicySetDefinitionListResult. </summary>

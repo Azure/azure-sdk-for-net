@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Initializes a new instance of CapabilitiesResultProperties. </summary>
         public CapabilitiesResultProperties()
         {
-            DnsZones = new Core.ChangeTrackingList<DnsZoneResult>();
+            DnsZones = new ChangeTrackingList<DnsZoneResult>();
         }
 
         /// <summary> Initializes a new instance of CapabilitiesResultProperties. </summary>

@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsThreatIntelligenceIndicatorData. </summary>
         public SecurityInsightsThreatIntelligenceIndicatorData()
         {
-            AdditionalData = new Core.ChangeTrackingDictionary<string, BinaryData>();
-            ThreatIntelligenceTags = new Core.ChangeTrackingList<string>();
-            IndicatorTypes = new Core.ChangeTrackingList<string>();
-            KillChainPhases = new Core.ChangeTrackingList<ThreatIntelligenceKillChainPhase>();
-            ParsedPattern = new Core.ChangeTrackingList<ThreatIntelligenceParsedPattern>();
-            ExternalReferences = new Core.ChangeTrackingList<ThreatIntelligenceExternalReference>();
-            GranularMarkings = new Core.ChangeTrackingList<ThreatIntelligenceGranularMarkingEntity>();
-            Labels = new Core.ChangeTrackingList<string>();
-            ObjectMarkingRefs = new Core.ChangeTrackingList<string>();
-            ThreatTypes = new Core.ChangeTrackingList<string>();
-            Extensions = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
+            ThreatIntelligenceTags = new ChangeTrackingList<string>();
+            IndicatorTypes = new ChangeTrackingList<string>();
+            KillChainPhases = new ChangeTrackingList<ThreatIntelligenceKillChainPhase>();
+            ParsedPattern = new ChangeTrackingList<ThreatIntelligenceParsedPattern>();
+            ExternalReferences = new ChangeTrackingList<ThreatIntelligenceExternalReference>();
+            GranularMarkings = new ChangeTrackingList<ThreatIntelligenceGranularMarkingEntity>();
+            Labels = new ChangeTrackingList<string>();
+            ObjectMarkingRefs = new ChangeTrackingList<string>();
+            ThreatTypes = new ChangeTrackingList<string>();
+            Extensions = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = ThreatIntelligenceResourceInnerKind.Indicator;
         }
 

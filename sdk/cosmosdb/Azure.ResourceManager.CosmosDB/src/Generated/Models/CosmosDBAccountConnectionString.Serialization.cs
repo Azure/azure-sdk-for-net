@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<string> connectionString = default;
-            Core.Optional<string> description = default;
-            Core.Optional<CosmosDBKind> keyKind = default;
-            Core.Optional<CosmosDBType> type = default;
+            Optional<string> connectionString = default;
+            Optional<string> description = default;
+            Optional<CosmosDBKind> keyKind = default;
+            Optional<CosmosDBType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionString"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBAccountConnectionString(connectionString.Value, description.Value, Core.Optional.ToNullable(keyKind), Core.Optional.ToNullable(type));
+            return new CosmosDBAccountConnectionString(connectionString.Value, description.Value, Optional.ToNullable(keyKind), Optional.ToNullable(type));
         }
     }
 }

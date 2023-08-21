@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <summary> Initializes a new instance of RelationshipResourceFormatData. </summary>
         public RelationshipResourceFormatData()
         {
-            DisplayName = new Core.ChangeTrackingDictionary<string, string>();
-            Description = new Core.ChangeTrackingDictionary<string, string>();
-            Fields = new Core.ChangeTrackingList<PropertyDefinition>();
-            LookupMappings = new Core.ChangeTrackingList<RelationshipTypeMapping>();
+            DisplayName = new ChangeTrackingDictionary<string, string>();
+            Description = new ChangeTrackingDictionary<string, string>();
+            Fields = new ChangeTrackingList<PropertyDefinition>();
+            LookupMappings = new ChangeTrackingList<RelationshipTypeMapping>();
         }
 
         /// <summary> Initializes a new instance of RelationshipResourceFormatData. </summary>

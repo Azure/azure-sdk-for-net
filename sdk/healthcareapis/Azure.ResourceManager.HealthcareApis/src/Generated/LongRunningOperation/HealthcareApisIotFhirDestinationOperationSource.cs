@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    internal class HealthcareApisIotFhirDestinationOperationSource : Core.IOperationSource<HealthcareApisIotFhirDestinationResource>
+    internal class HealthcareApisIotFhirDestinationOperationSource : IOperationSource<HealthcareApisIotFhirDestinationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HealthcareApis
             _client = client;
         }
 
-        HealthcareApisIotFhirDestinationResource Core.IOperationSource<HealthcareApisIotFhirDestinationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HealthcareApisIotFhirDestinationResource IOperationSource<HealthcareApisIotFhirDestinationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(document.RootElement);
             return new HealthcareApisIotFhirDestinationResource(_client, data);
         }
 
-        async ValueTask<HealthcareApisIotFhirDestinationResource> Core.IOperationSource<HealthcareApisIotFhirDestinationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HealthcareApisIotFhirDestinationResource> IOperationSource<HealthcareApisIotFhirDestinationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(document.RootElement);

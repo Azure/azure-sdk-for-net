@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Argument.AssertNotNull(trainingData, nameof(trainingData));
             Argument.AssertNotNull(limitSettings, nameof(limitSettings));
 
-            SearchSpace = new Core.ChangeTrackingList<ImageModelDistributionSettingsClassification>();
+            SearchSpace = new ChangeTrackingList<ImageModelDistributionSettingsClassification>();
             LimitSettings = limitSettings;
             TaskType = TaskType.ImageClassificationMultilabel;
         }

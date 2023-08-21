@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             Hours = hours.ToList();
             Minutes = minutes.ToList();
-            MonthDays = new Core.ChangeTrackingList<int>();
-            WeekDays = new Core.ChangeTrackingList<MachineLearningDayOfWeek>();
+            MonthDays = new ChangeTrackingList<int>();
+            WeekDays = new ChangeTrackingList<MachineLearningDayOfWeek>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningRecurrenceSchedule. </summary>

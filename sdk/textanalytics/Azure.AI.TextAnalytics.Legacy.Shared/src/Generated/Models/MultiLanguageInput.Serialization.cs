@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class MultiLanguageInput : Core.IUtf8JsonSerializable
+    internal partial class MultiLanguageInput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Id != null)
@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 writer.WriteNull("text");
             }
-            if (Core.Optional.IsDefined(Language))
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);

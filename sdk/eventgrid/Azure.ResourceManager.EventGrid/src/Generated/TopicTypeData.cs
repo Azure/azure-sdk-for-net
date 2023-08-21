@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Initializes a new instance of TopicTypeData. </summary>
         public TopicTypeData()
         {
-            SupportedLocations = new Core.ChangeTrackingList<string>();
-            SupportedScopesForSource = new Core.ChangeTrackingList<TopicTypeSourceScope>();
+            SupportedLocations = new ChangeTrackingList<string>();
+            SupportedScopesForSource = new ChangeTrackingList<TopicTypeSourceScope>();
         }
 
         /// <summary> Initializes a new instance of TopicTypeData. </summary>

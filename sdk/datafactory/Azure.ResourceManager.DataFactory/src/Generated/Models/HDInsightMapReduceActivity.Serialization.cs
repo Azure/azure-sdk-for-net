@@ -13,17 +13,17 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class HDInsightMapReduceActivity : Core.IUtf8JsonSerializable
+    public partial class HDInsightMapReduceActivity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LinkedServiceName))
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Core.Optional.IsDefined(Policy))
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsDefined(OnInactiveMarkAs))
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(DependsOn))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(UserProperties))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(StorageLinkedServices))
+            if (Optional.IsCollectionDefined(StorageLinkedServices))
             {
                 writer.WritePropertyName("storageLinkedServices"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Arguments))
+            if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(GetDebugInfo))
+            if (Optional.IsDefined(GetDebugInfo))
             {
                 writer.WritePropertyName("getDebugInfo"u8);
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, ClassName);
             writer.WritePropertyName("jarFilePath"u8);
             JsonSerializer.Serialize(writer, JarFilePath);
-            if (Core.Optional.IsDefined(JarLinkedService))
+            if (Optional.IsDefined(JarLinkedService))
             {
                 writer.WritePropertyName("jarLinkedService"u8);
                 JsonSerializer.Serialize(writer, JarLinkedService);
             }
-            if (Core.Optional.IsCollectionDefined(JarLibs))
+            if (Optional.IsCollectionDefined(JarLibs))
             {
                 writer.WritePropertyName("jarLibs"u8);
                 writer.WriteStartArray();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Defines))
+            if (Optional.IsCollectionDefined(Defines))
             {
                 writer.WritePropertyName("defines"u8);
                 writer.WriteStartObject();
@@ -170,23 +170,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Core.Optional<PipelineActivityPolicy> policy = default;
+            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
+            Optional<PipelineActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            Core.Optional<string> description = default;
-            Core.Optional<PipelineActivityState> state = default;
-            Core.Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Core.Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Core.Optional<IList<PipelineActivityUserProperty>> userProperties = default;
-            Core.Optional<IList<DataFactoryLinkedServiceReference>> storageLinkedServices = default;
-            Core.Optional<IList<BinaryData>> arguments = default;
-            Core.Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
+            Optional<string> description = default;
+            Optional<PipelineActivityState> state = default;
+            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Optional<IList<PipelineActivityDependency>> dependsOn = default;
+            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            Optional<IList<DataFactoryLinkedServiceReference>> storageLinkedServices = default;
+            Optional<IList<BinaryData>> arguments = default;
+            Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
             DataFactoryElement<string> className = default;
             DataFactoryElement<string> jarFilePath = default;
-            Core.Optional<DataFactoryLinkedServiceReference> jarLinkedService = default;
-            Core.Optional<IList<BinaryData>> jarLibs = default;
-            Core.Optional<IDictionary<string, BinaryData>> defines = default;
+            Optional<DataFactoryLinkedServiceReference> jarLinkedService = default;
+            Optional<IList<BinaryData>> jarLibs = default;
+            Optional<IDictionary<string, BinaryData>> defines = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightMapReduceActivity(name, type, description.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(onInactiveMarkAs), Core.Optional.ToList(dependsOn), Core.Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, Core.Optional.ToList(storageLinkedServices), Core.Optional.ToList(arguments), Core.Optional.ToNullable(getDebugInfo), className, jarFilePath, jarLinkedService, Core.Optional.ToList(jarLibs), Core.Optional.ToDictionary(defines));
+            return new HDInsightMapReduceActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, Optional.ToList(storageLinkedServices), Optional.ToList(arguments), Optional.ToNullable(getDebugInfo), className, jarFilePath, jarLinkedService, Optional.ToList(jarLibs), Optional.ToDictionary(defines));
         }
     }
 }

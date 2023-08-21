@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class LimitTokenFilter : Core.IUtf8JsonSerializable
+    public partial class LimitTokenFilter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MaxTokenCount))
+            if (Optional.IsDefined(MaxTokenCount))
             {
                 writer.WritePropertyName("maxTokenCount"u8);
                 writer.WriteNumberValue(MaxTokenCount.Value);
             }
-            if (Core.Optional.IsDefined(ConsumeAllTokens))
+            if (Optional.IsDefined(ConsumeAllTokens))
             {
                 writer.WritePropertyName("consumeAllTokens"u8);
                 writer.WriteBooleanValue(ConsumeAllTokens.Value);
@@ -38,8 +38,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<int> maxTokenCount = default;
-            Core.Optional<bool> consumeAllTokens = default;
+            Optional<int> maxTokenCount = default;
+            Optional<bool> consumeAllTokens = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -73,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new LimitTokenFilter(odataType, name, Core.Optional.ToNullable(maxTokenCount), Core.Optional.ToNullable(consumeAllTokens));
+            return new LimitTokenFilter(odataType, name, Optional.ToNullable(maxTokenCount), Optional.ToNullable(consumeAllTokens));
         }
     }
 }

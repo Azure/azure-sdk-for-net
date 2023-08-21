@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class BlobFolderDataSetMapping : Core.IUtf8JsonSerializable
+    public partial class BlobFolderDataSetMapping : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             string containerName = default;
             Guid dataSetId = default;
-            Core.Optional<DataSetMappingStatus> dataSetMappingStatus = default;
+            Optional<DataSetMappingStatus> dataSetMappingStatus = default;
             string prefix = default;
-            Core.Optional<DataShareProvisioningState> provisioningState = default;
+            Optional<DataShareProvisioningState> provisioningState = default;
             string resourceGroup = default;
             string storageAccountName = default;
             string subscriptionId = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new BlobFolderDataSetMapping(id, name, type, systemData.Value, kind, containerName, dataSetId, Core.Optional.ToNullable(dataSetMappingStatus), prefix, Core.Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
+            return new BlobFolderDataSetMapping(id, name, type, systemData.Value, kind, containerName, dataSetId, Optional.ToNullable(dataSetMappingStatus), prefix, Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
         }
     }
 }

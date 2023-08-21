@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Analysis
             try
             {
                 var response = await _analysisServerServersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AnalysisArmOperation<AnalysisServerResource>(new AnalysisServerOperationSource(Client), _analysisServerServersClientDiagnostics, Pipeline, _analysisServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AnalysisArmOperation<AnalysisServerResource>(new AnalysisServerOperationSource(Client), _analysisServerServersClientDiagnostics, Pipeline, _analysisServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Analysis
             try
             {
                 var response = _analysisServerServersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, serverName, data, cancellationToken);
-                var operation = new AnalysisArmOperation<AnalysisServerResource>(new AnalysisServerOperationSource(Client), _analysisServerServersClientDiagnostics, Pipeline, _analysisServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AnalysisArmOperation<AnalysisServerResource>(new AnalysisServerOperationSource(Client), _analysisServerServersClientDiagnostics, Pipeline, _analysisServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Analysis
         public virtual AsyncPageable<AnalysisServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _analysisServerServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AnalysisServerResource(Client, AnalysisServerData.DeserializeAnalysisServerData(e)), _analysisServerServersClientDiagnostics, Pipeline, "AnalysisServerCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AnalysisServerResource(Client, AnalysisServerData.DeserializeAnalysisServerData(e)), _analysisServerServersClientDiagnostics, Pipeline, "AnalysisServerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Analysis
         public virtual Pageable<AnalysisServerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _analysisServerServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AnalysisServerResource(Client, AnalysisServerData.DeserializeAnalysisServerData(e)), _analysisServerServersClientDiagnostics, Pipeline, "AnalysisServerCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AnalysisServerResource(Client, AnalysisServerData.DeserializeAnalysisServerData(e)), _analysisServerServersClientDiagnostics, Pipeline, "AnalysisServerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

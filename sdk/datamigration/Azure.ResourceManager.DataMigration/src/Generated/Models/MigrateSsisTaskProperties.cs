@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrateSsisTaskProperties. </summary>
         public MigrateSsisTaskProperties()
         {
-            Output = new Core.ChangeTrackingList<MigrateSsisTaskOutput>();
+            Output = new ChangeTrackingList<MigrateSsisTaskOutput>();
             TaskType = TaskType.MigrateSsis;
         }
 

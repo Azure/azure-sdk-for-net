@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of DpmProtectedItemExtendedInfo. </summary>
         public DpmProtectedItemExtendedInfo()
         {
-            ProtectableObjectLoadPath = new Core.ChangeTrackingDictionary<string, string>();
+            ProtectableObjectLoadPath = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DpmProtectedItemExtendedInfo. </summary>

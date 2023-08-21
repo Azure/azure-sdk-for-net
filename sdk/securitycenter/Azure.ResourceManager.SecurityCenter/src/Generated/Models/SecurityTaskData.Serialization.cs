@@ -13,14 +13,14 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityTaskData : Core.IUtf8JsonSerializable
+    public partial class SecurityTaskData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SecurityTaskParameters))
+            if (Optional.IsDefined(SecurityTaskParameters))
             {
                 writer.WritePropertyName("securityTaskParameters"u8);
                 writer.WriteObjectValue(SecurityTaskParameters);
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> state = default;
-            Core.Optional<DateTimeOffset> creationTimeUtc = default;
-            Core.Optional<SecurityTaskProperties> securityTaskParameters = default;
-            Core.Optional<DateTimeOffset> lastStateChangeTimeUtc = default;
-            Core.Optional<string> subState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> state = default;
+            Optional<DateTimeOffset> creationTimeUtc = default;
+            Optional<SecurityTaskProperties> securityTaskParameters = default;
+            Optional<DateTimeOffset> lastStateChangeTimeUtc = default;
+            Optional<string> subState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new SecurityTaskData(id, name, type, systemData.Value, state.Value, Core.Optional.ToNullable(creationTimeUtc), securityTaskParameters.Value, Core.Optional.ToNullable(lastStateChangeTimeUtc), subState.Value);
+            return new SecurityTaskData(id, name, type, systemData.Value, state.Value, Optional.ToNullable(creationTimeUtc), securityTaskParameters.Value, Optional.ToNullable(lastStateChangeTimeUtc), subState.Value);
         }
     }
 }

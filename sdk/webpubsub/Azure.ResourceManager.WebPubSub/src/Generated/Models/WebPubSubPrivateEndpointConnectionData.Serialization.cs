@@ -13,19 +13,19 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    public partial class WebPubSubPrivateEndpointConnectionData : Core.IUtf8JsonSerializable
+    public partial class WebPubSubPrivateEndpointConnectionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 writer.WriteObjectValue(PrivateEndpoint);
             }
-            if (Core.Optional.IsDefined(ConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.WebPubSub
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<WebPubSubProvisioningState> provisioningState = default;
-            Core.Optional<PrivateEndpoint> privateEndpoint = default;
-            Core.Optional<IReadOnlyList<string>> groupIds = default;
-            Core.Optional<WebPubSubPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<SystemData> systemData = default;
+            Optional<WebPubSubProvisioningState> provisioningState = default;
+            Optional<PrivateEndpoint> privateEndpoint = default;
+            Optional<IReadOnlyList<string>> groupIds = default;
+            Optional<WebPubSubPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.WebPubSub
                     continue;
                 }
             }
-            return new WebPubSubPrivateEndpointConnectionData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), privateEndpoint.Value, Core.Optional.ToList(groupIds), privateLinkServiceConnectionState.Value);
+            return new WebPubSubPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint.Value, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value);
         }
     }
 }

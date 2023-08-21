@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of WindowsUpdateConfigurationProperties. </summary>
         public WindowsUpdateConfigurationProperties()
         {
-            ExcludedKBNumbers = new Core.ChangeTrackingList<string>();
-            IncludedKBNumbers = new Core.ChangeTrackingList<string>();
+            ExcludedKBNumbers = new ChangeTrackingList<string>();
+            IncludedKBNumbers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of WindowsUpdateConfigurationProperties. </summary>

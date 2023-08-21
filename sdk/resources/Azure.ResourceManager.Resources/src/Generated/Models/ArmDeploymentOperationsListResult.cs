@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmDeploymentOperationsListResult. </summary>
         internal ArmDeploymentOperationsListResult()
         {
-            Value = new Core.ChangeTrackingList<ArmDeploymentOperation>();
+            Value = new ChangeTrackingList<ArmDeploymentOperation>();
         }
 
         /// <summary> Initializes a new instance of ArmDeploymentOperationsListResult. </summary>

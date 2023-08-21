@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<ResourceIdentifier> pesId = default;
+            Optional<string> id = default;
+            Optional<ResourceIdentifier> pesId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

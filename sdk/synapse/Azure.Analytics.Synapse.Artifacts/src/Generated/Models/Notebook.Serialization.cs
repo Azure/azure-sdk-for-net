@@ -14,17 +14,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(NotebookConverter))]
-    public partial class Notebook : Core.IUtf8JsonSerializable
+    public partial class Notebook : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(BigDataPool))
+            if (Optional.IsDefined(BigDataPool))
             {
                 if (BigDataPool != null)
                 {
@@ -36,12 +36,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     writer.WriteNull("bigDataPool");
                 }
             }
-            if (Core.Optional.IsDefined(TargetSparkConfiguration))
+            if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
                 writer.WriteObjectValue(TargetSparkConfiguration);
             }
-            if (Core.Optional.IsDefined(SessionProperties))
+            if (Optional.IsDefined(SessionProperties))
             {
                 if (SessionProperties != null)
                 {
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(Folder))
+            if (Optional.IsDefined(Folder))
             {
                 if (Folder != null)
                 {
@@ -92,15 +92,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> description = default;
-            Core.Optional<BigDataPoolReference> bigDataPool = default;
-            Core.Optional<SparkConfigurationReference> targetSparkConfiguration = default;
-            Core.Optional<NotebookSessionProperties> sessionProperties = default;
+            Optional<string> description = default;
+            Optional<BigDataPoolReference> bigDataPool = default;
+            Optional<SparkConfigurationReference> targetSparkConfiguration = default;
+            Optional<NotebookSessionProperties> sessionProperties = default;
             NotebookMetadata metadata = default;
             int nbformat = default;
             int nbformatMinor = default;
             IList<NotebookCell> cells = default;
-            Core.Optional<NotebookFolder> folder = default;
+            Optional<NotebookFolder> folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

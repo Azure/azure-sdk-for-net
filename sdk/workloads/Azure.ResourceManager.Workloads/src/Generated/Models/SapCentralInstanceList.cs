@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of SapCentralInstanceList. </summary>
         internal SapCentralInstanceList()
         {
-            Value = new Core.ChangeTrackingList<SapCentralServerInstanceData>();
+            Value = new ChangeTrackingList<SapCentralServerInstanceData>();
         }
 
         /// <summary> Initializes a new instance of SapCentralInstanceList. </summary>

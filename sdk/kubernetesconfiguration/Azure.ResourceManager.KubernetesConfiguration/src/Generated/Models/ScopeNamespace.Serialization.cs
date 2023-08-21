@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    internal partial class ScopeNamespace : Core.IUtf8JsonSerializable
+    internal partial class ScopeNamespace : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TargetNamespace))
+            if (Optional.IsDefined(TargetNamespace))
             {
                 writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<string> targetNamespace = default;
+            Optional<string> targetNamespace = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetNamespace"u8))

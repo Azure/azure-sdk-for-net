@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of ObjectReplicationPolicyFilter. </summary>
         public ObjectReplicationPolicyFilter()
         {
-            PrefixMatch = new Core.ChangeTrackingList<string>();
+            PrefixMatch = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ObjectReplicationPolicyFilter. </summary>

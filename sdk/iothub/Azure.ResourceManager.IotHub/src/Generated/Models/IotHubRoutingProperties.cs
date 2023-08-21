@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of IotHubRoutingProperties. </summary>
         public IotHubRoutingProperties()
         {
-            Routes = new Core.ChangeTrackingList<RoutingRuleProperties>();
-            Enrichments = new Core.ChangeTrackingList<IotHubEnrichmentProperties>();
+            Routes = new ChangeTrackingList<RoutingRuleProperties>();
+            Enrichments = new ChangeTrackingList<IotHubEnrichmentProperties>();
         }
 
         /// <summary> Initializes a new instance of IotHubRoutingProperties. </summary>

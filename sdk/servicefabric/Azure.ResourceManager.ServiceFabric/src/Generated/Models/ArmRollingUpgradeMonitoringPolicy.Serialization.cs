@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ArmRollingUpgradeMonitoringPolicy : Core.IUtf8JsonSerializable
+    public partial class ArmRollingUpgradeMonitoringPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FailureAction))
+            if (Optional.IsDefined(FailureAction))
             {
                 writer.WritePropertyName("failureAction"u8);
                 writer.WriteStringValue(FailureAction.Value.ToString());
             }
-            if (Core.Optional.IsDefined(HealthCheckWaitDuration))
+            if (Optional.IsDefined(HealthCheckWaitDuration))
             {
                 writer.WritePropertyName("healthCheckWaitDuration"u8);
                 writer.WriteStringValue(HealthCheckWaitDuration.Value, "c");
             }
-            if (Core.Optional.IsDefined(HealthCheckStableDuration))
+            if (Optional.IsDefined(HealthCheckStableDuration))
             {
                 writer.WritePropertyName("healthCheckStableDuration"u8);
                 writer.WriteStringValue(HealthCheckStableDuration.Value, "c");
             }
-            if (Core.Optional.IsDefined(HealthCheckRetryTimeout))
+            if (Optional.IsDefined(HealthCheckRetryTimeout))
             {
                 writer.WritePropertyName("healthCheckRetryTimeout"u8);
                 writer.WriteStringValue(HealthCheckRetryTimeout.Value, "c");
             }
-            if (Core.Optional.IsDefined(UpgradeTimeout))
+            if (Optional.IsDefined(UpgradeTimeout))
             {
                 writer.WritePropertyName("upgradeTimeout"u8);
                 writer.WriteStringValue(UpgradeTimeout.Value, "c");
             }
-            if (Core.Optional.IsDefined(UpgradeDomainTimeout))
+            if (Optional.IsDefined(UpgradeDomainTimeout))
             {
                 writer.WritePropertyName("upgradeDomainTimeout"u8);
                 writer.WriteStringValue(UpgradeDomainTimeout.Value, "c");
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Core.Optional<ArmUpgradeFailureAction> failureAction = default;
-            Core.Optional<TimeSpan> healthCheckWaitDuration = default;
-            Core.Optional<TimeSpan> healthCheckStableDuration = default;
-            Core.Optional<TimeSpan> healthCheckRetryTimeout = default;
-            Core.Optional<TimeSpan> upgradeTimeout = default;
-            Core.Optional<TimeSpan> upgradeDomainTimeout = default;
+            Optional<ArmUpgradeFailureAction> failureAction = default;
+            Optional<TimeSpan> healthCheckWaitDuration = default;
+            Optional<TimeSpan> healthCheckStableDuration = default;
+            Optional<TimeSpan> healthCheckRetryTimeout = default;
+            Optional<TimeSpan> upgradeTimeout = default;
+            Optional<TimeSpan> upgradeDomainTimeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failureAction"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ArmRollingUpgradeMonitoringPolicy(Core.Optional.ToNullable(failureAction), Core.Optional.ToNullable(healthCheckWaitDuration), Core.Optional.ToNullable(healthCheckStableDuration), Core.Optional.ToNullable(healthCheckRetryTimeout), Core.Optional.ToNullable(upgradeTimeout), Core.Optional.ToNullable(upgradeDomainTimeout));
+            return new ArmRollingUpgradeMonitoringPolicy(Optional.ToNullable(failureAction), Optional.ToNullable(healthCheckWaitDuration), Optional.ToNullable(healthCheckStableDuration), Optional.ToNullable(healthCheckRetryTimeout), Optional.ToNullable(upgradeTimeout), Optional.ToNullable(upgradeDomainTimeout));
         }
     }
 }

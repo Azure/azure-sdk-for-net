@@ -12,19 +12,19 @@ using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class CustomRolloutSpecification : Core.IUtf8JsonSerializable
+    public partial class CustomRolloutSpecification : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("canary"u8);
             writer.WriteObjectValue(Canary);
-            if (Core.Optional.IsDefined(ProviderRegistration))
+            if (Optional.IsDefined(ProviderRegistration))
             {
                 writer.WritePropertyName("providerRegistration"u8);
                 writer.WriteObjectValue(ProviderRegistration);
             }
-            if (Core.Optional.IsCollectionDefined(ResourceTypeRegistrations))
+            if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
             {
                 writer.WritePropertyName("resourceTypeRegistrations"u8);
                 writer.WriteStartArray();
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             TrafficRegions canary = default;
-            Core.Optional<ProviderRegistrationData> providerRegistration = default;
-            Core.Optional<IList<ResourceTypeRegistrationData>> resourceTypeRegistrations = default;
+            Optional<ProviderRegistrationData> providerRegistration = default;
+            Optional<IList<ResourceTypeRegistrationData>> resourceTypeRegistrations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("canary"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new CustomRolloutSpecification(canary, providerRegistration.Value, Core.Optional.ToList(resourceTypeRegistrations));
+            return new CustomRolloutSpecification(canary, providerRegistration.Value, Optional.ToList(resourceTypeRegistrations));
         }
     }
 }

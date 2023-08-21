@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class AllowedAudiencesValidation : Core.IUtf8JsonSerializable
+    internal partial class AllowedAudiencesValidation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AllowedAudiences))
+            if (Optional.IsCollectionDefined(AllowedAudiences))
             {
                 writer.WritePropertyName("allowedAudiences"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> allowedAudiences = default;
+            Optional<IList<string>> allowedAudiences = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedAudiences"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new AllowedAudiencesValidation(Core.Optional.ToList(allowedAudiences));
+            return new AllowedAudiencesValidation(Optional.ToList(allowedAudiences));
         }
     }
 }

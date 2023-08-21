@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyTokenClaim : Core.IUtf8JsonSerializable
+    public partial class ContentKeyPolicyTokenClaim : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ClaimType))
+            if (Optional.IsDefined(ClaimType))
             {
                 writer.WritePropertyName("claimType"u8);
                 writer.WriteStringValue(ClaimType);
             }
-            if (Core.Optional.IsDefined(ClaimValue))
+            if (Optional.IsDefined(ClaimValue))
             {
                 writer.WritePropertyName("claimValue"u8);
                 writer.WriteStringValue(ClaimValue);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<string> claimType = default;
-            Core.Optional<string> claimValue = default;
+            Optional<string> claimType = default;
+            Optional<string> claimValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("claimType"u8))

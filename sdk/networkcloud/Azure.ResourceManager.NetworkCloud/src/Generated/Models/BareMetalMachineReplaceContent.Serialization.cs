@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class BareMetalMachineReplaceContent : Core.IUtf8JsonSerializable
+    public partial class BareMetalMachineReplaceContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BmcCredentials))
+            if (Optional.IsDefined(BmcCredentials))
             {
                 writer.WritePropertyName("bmcCredentials"u8);
                 writer.WriteObjectValue(BmcCredentials);
             }
-            if (Core.Optional.IsDefined(BmcMacAddress))
+            if (Optional.IsDefined(BmcMacAddress))
             {
                 writer.WritePropertyName("bmcMacAddress"u8);
                 writer.WriteStringValue(BmcMacAddress);
             }
-            if (Core.Optional.IsDefined(BootMacAddress))
+            if (Optional.IsDefined(BootMacAddress))
             {
                 writer.WritePropertyName("bootMacAddress"u8);
                 writer.WriteStringValue(BootMacAddress);
             }
-            if (Core.Optional.IsDefined(MachineName))
+            if (Optional.IsDefined(MachineName))
             {
                 writer.WritePropertyName("machineName"u8);
                 writer.WriteStringValue(MachineName);
             }
-            if (Core.Optional.IsDefined(SerialNumber))
+            if (Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);

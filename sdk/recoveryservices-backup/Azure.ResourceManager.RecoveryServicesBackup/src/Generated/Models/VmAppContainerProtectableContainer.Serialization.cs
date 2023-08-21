@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmAppContainerProtectableContainer : Core.IUtf8JsonSerializable
+    public partial class VmAppContainerProtectableContainer : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FriendlyName))
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Core.Optional.IsDefined(BackupManagementType))
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
             writer.WritePropertyName("protectableContainerType"u8);
             writer.WriteStringValue(ProtectableContainerType.ToSerialString());
-            if (Core.Optional.IsDefined(HealthStatus))
+            if (Optional.IsDefined(HealthStatus))
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
-            if (Core.Optional.IsDefined(ContainerId))
+            if (Optional.IsDefined(ContainerId))
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<BackupManagementType> backupManagementType = default;
+            Optional<string> friendlyName = default;
+            Optional<BackupManagementType> backupManagementType = default;
             ProtectableContainerType protectableContainerType = default;
-            Core.Optional<string> healthStatus = default;
-            Core.Optional<string> containerId = default;
+            Optional<string> healthStatus = default;
+            Optional<string> containerId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new VmAppContainerProtectableContainer(friendlyName.Value, Core.Optional.ToNullable(backupManagementType), protectableContainerType, healthStatus.Value, containerId.Value);
+            return new VmAppContainerProtectableContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), protectableContainerType, healthStatus.Value, containerId.Value);
         }
     }
 }

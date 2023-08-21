@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of ArmDisasterRecoveryListResult. </summary>
         internal ArmDisasterRecoveryListResult()
         {
-            Value = new Core.ChangeTrackingList<EventHubsDisasterRecoveryData>();
+            Value = new ChangeTrackingList<EventHubsDisasterRecoveryData>();
         }
 
         /// <summary> Initializes a new instance of ArmDisasterRecoveryListResult. </summary>

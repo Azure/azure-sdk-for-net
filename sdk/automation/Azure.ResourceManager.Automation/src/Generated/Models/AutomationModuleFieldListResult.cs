@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationModuleFieldListResult. </summary>
         internal AutomationModuleFieldListResult()
         {
-            Value = new Core.ChangeTrackingList<AutomationModuleField>();
+            Value = new ChangeTrackingList<AutomationModuleField>();
         }
 
         /// <summary> Initializes a new instance of AutomationModuleFieldListResult. </summary>

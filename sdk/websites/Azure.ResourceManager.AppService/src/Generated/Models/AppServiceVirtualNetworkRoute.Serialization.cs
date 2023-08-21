@@ -11,29 +11,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceVirtualNetworkRoute : Core.IUtf8JsonSerializable
+    public partial class AppServiceVirtualNetworkRoute : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StartAddress))
+            if (Optional.IsDefined(StartAddress))
             {
                 writer.WritePropertyName("startAddress"u8);
                 writer.WriteStringValue(StartAddress);
             }
-            if (Core.Optional.IsDefined(EndAddress))
+            if (Optional.IsDefined(EndAddress))
             {
                 writer.WritePropertyName("endAddress"u8);
                 writer.WriteStringValue(EndAddress);
             }
-            if (Core.Optional.IsDefined(RouteType))
+            if (Optional.IsDefined(RouteType))
             {
                 writer.WritePropertyName("routeType"u8);
                 writer.WriteStringValue(RouteType.Value.ToString());
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> startAddress = default;
-            Core.Optional<string> endAddress = default;
-            Core.Optional<AppServiceVirtualNetworkRouteType> routeType = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> startAddress = default;
+            Optional<string> endAddress = default;
+            Optional<AppServiceVirtualNetworkRouteType> routeType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceVirtualNetworkRoute(id, name, type, systemData.Value, startAddress.Value, endAddress.Value, Core.Optional.ToNullable(routeType), kind.Value);
+            return new AppServiceVirtualNetworkRoute(id, name, type, systemData.Value, startAddress.Value, endAddress.Value, Optional.ToNullable(routeType), kind.Value);
         }
     }
 }

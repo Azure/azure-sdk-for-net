@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Core.Optional<long> capacityGB = default;
-            Core.Optional<MachineSkuDiskConnectionType> connection = default;
-            Core.Optional<DiskType> type = default;
+            Optional<long> capacityGB = default;
+            Optional<MachineSkuDiskConnectionType> connection = default;
+            Optional<DiskType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("capacityGB"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new MachineDisk(Core.Optional.ToNullable(capacityGB), Core.Optional.ToNullable(connection), Core.Optional.ToNullable(type));
+            return new MachineDisk(Optional.ToNullable(capacityGB), Optional.ToNullable(connection), Optional.ToNullable(type));
         }
     }
 }

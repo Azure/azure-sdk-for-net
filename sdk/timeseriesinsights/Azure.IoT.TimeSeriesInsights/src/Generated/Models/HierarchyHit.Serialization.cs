@@ -18,9 +18,9 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<int> cumulativeInstanceCount = default;
-            Core.Optional<SearchHierarchyNodesResponse> hierarchyNodes = default;
+            Optional<string> name = default;
+            Optional<int> cumulativeInstanceCount = default;
+            Optional<SearchHierarchyNodesResponse> hierarchyNodes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -47,7 +47,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new HierarchyHit(name.Value, Core.Optional.ToNullable(cumulativeInstanceCount), hierarchyNodes.Value);
+            return new HierarchyHit(name.Value, Optional.ToNullable(cumulativeInstanceCount), hierarchyNodes.Value);
         }
     }
 }

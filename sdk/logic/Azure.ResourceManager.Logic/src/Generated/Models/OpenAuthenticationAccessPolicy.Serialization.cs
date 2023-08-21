@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class OpenAuthenticationAccessPolicy : Core.IUtf8JsonSerializable
+    public partial class OpenAuthenticationAccessPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProviderType))
+            if (Optional.IsDefined(ProviderType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ProviderType.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Claims))
+            if (Optional.IsCollectionDefined(Claims))
             {
                 writer.WritePropertyName("claims"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<OpenAuthenticationProviderType> type = default;
-            Core.Optional<IList<OpenAuthenticationPolicyClaim>> claims = default;
+            Optional<OpenAuthenticationProviderType> type = default;
+            Optional<IList<OpenAuthenticationPolicyClaim>> claims = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new OpenAuthenticationAccessPolicy(Core.Optional.ToNullable(type), Core.Optional.ToList(claims));
+            return new OpenAuthenticationAccessPolicy(Optional.ToNullable(type), Optional.ToList(claims));
         }
     }
 }

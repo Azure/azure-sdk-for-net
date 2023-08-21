@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    internal partial class DiskEncryptionConfiguration : Core.IUtf8JsonSerializable
+    internal partial class DiskEncryptionConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Targets))
+            if (Optional.IsCollectionDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Core.Optional<IList<BatchDiskEncryptionTarget>> targets = default;
+            Optional<IList<BatchDiskEncryptionTarget>> targets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targets"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new DiskEncryptionConfiguration(Core.Optional.ToList(targets));
+            return new DiskEncryptionConfiguration(Optional.ToList(targets));
         }
     }
 }

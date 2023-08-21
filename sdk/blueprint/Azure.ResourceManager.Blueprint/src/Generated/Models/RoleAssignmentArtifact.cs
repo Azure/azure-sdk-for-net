@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
             Argument.AssertNotNull(principalIds, nameof(principalIds));
 
-            DependsOn = new Core.ChangeTrackingList<string>();
+            DependsOn = new ChangeTrackingList<string>();
             RoleDefinitionId = roleDefinitionId;
             PrincipalIds = principalIds;
             Kind = ArtifactKind.RoleAssignment;

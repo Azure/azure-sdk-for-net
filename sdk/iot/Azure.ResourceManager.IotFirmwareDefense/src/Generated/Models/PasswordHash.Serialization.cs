@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Core.Optional<string> passwordHashId = default;
-            Core.Optional<string> filePath = default;
-            Core.Optional<string> salt = default;
-            Core.Optional<string> hash = default;
-            Core.Optional<string> context = default;
-            Core.Optional<string> username = default;
-            Core.Optional<string> algorithm = default;
+            Optional<string> passwordHashId = default;
+            Optional<string> filePath = default;
+            Optional<string> salt = default;
+            Optional<string> hash = default;
+            Optional<string> context = default;
+            Optional<string> username = default;
+            Optional<string> algorithm = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("passwordHashId"u8))

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<int> port = default;
-            Core.Optional<string> region = default;
+            Optional<int> port = default;
+            Optional<string> region = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new EndpointDetail(Core.Optional.ToNullable(port), region.Value);
+            return new EndpointDetail(Optional.ToNullable(port), region.Value);
         }
     }
 }

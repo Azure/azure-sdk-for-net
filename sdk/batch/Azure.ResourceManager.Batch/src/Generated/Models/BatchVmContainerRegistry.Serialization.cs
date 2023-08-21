@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchVmContainerRegistry : Core.IUtf8JsonSerializable
+    public partial class BatchVmContainerRegistry : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(UserName))
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Core.Optional.IsDefined(RegistryServer))
+            if (Optional.IsDefined(RegistryServer))
             {
                 writer.WritePropertyName("registryServer"u8);
                 writer.WriteStringValue(RegistryServer);
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identityReference"u8);
                 writer.WriteObjectValue(Identity);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Core.Optional<string> username = default;
-            Core.Optional<string> password = default;
-            Core.Optional<string> registryServer = default;
-            Core.Optional<ComputeNodeIdentityReference> identityReference = default;
+            Optional<string> username = default;
+            Optional<string> password = default;
+            Optional<string> registryServer = default;
+            Optional<ComputeNodeIdentityReference> identityReference = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))

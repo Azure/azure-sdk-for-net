@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> verbs = default;
-            Core.Optional<IReadOnlyList<string>> apiGroups = default;
-            Core.Optional<IReadOnlyList<string>> resources = default;
-            Core.Optional<IReadOnlyList<string>> resourceNames = default;
-            Core.Optional<IReadOnlyList<string>> nonResourceUrls = default;
+            Optional<IReadOnlyList<string>> verbs = default;
+            Optional<IReadOnlyList<string>> apiGroups = default;
+            Optional<IReadOnlyList<string>> resources = default;
+            Optional<IReadOnlyList<string>> resourceNames = default;
+            Optional<IReadOnlyList<string>> nonResourceUrls = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("verbs"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServiceTrustedAccessRoleRule(Core.Optional.ToList(verbs), Core.Optional.ToList(apiGroups), Core.Optional.ToList(resources), Core.Optional.ToList(resourceNames), Core.Optional.ToList(nonResourceUrls));
+            return new ContainerServiceTrustedAccessRoleRule(Optional.ToList(verbs), Optional.ToList(apiGroups), Optional.ToList(resources), Optional.ToList(resourceNames), Optional.ToList(nonResourceUrls));
         }
     }
 }

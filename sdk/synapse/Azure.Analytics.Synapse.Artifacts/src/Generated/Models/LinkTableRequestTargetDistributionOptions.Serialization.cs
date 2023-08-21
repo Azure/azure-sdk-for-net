@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkTableRequestTargetDistributionOptionsConverter))]
-    public partial class LinkTableRequestTargetDistributionOptions : Core.IUtf8JsonSerializable
+    public partial class LinkTableRequestTargetDistributionOptions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Type))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type);
             }
-            if (Core.Optional.IsDefined(DistributionColumn))
+            if (Optional.IsDefined(DistributionColumn))
             {
                 writer.WritePropertyName("distributionColumn"u8);
                 writer.WriteStringValue(DistributionColumn);
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<string> distributionColumn = default;
+            Optional<string> type = default;
+            Optional<string> distributionColumn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

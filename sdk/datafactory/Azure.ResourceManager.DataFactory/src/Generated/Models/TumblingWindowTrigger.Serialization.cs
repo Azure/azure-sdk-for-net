@@ -13,21 +13,21 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class TumblingWindowTrigger : Core.IUtf8JsonSerializable
+    public partial class TumblingWindowTrigger : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("pipeline"u8);
             writer.WriteObjectValue(Pipeline);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(Annotations))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -54,24 +54,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteNumberValue(Interval);
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartOn, "O");
-            if (Core.Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Delay))
+            if (Optional.IsDefined(Delay))
             {
                 writer.WritePropertyName("delay"u8);
                 JsonSerializer.Serialize(writer, Delay);
             }
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);
-            if (Core.Optional.IsDefined(RetryPolicy))
+            if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
                 writer.WriteObjectValue(RetryPolicy);
             }
-            if (Core.Optional.IsCollectionDefined(DependsOn))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -102,17 +102,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             TriggerPipelineReference pipeline = default;
             string type = default;
-            Core.Optional<string> description = default;
-            Core.Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
-            Core.Optional<IList<BinaryData>> annotations = default;
+            Optional<string> description = default;
+            Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
+            Optional<IList<BinaryData>> annotations = default;
             TumblingWindowFrequency frequency = default;
             int interval = default;
             DateTimeOffset startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<DataFactoryElement<string>> delay = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<DataFactoryElement<string>> delay = default;
             int maxConcurrency = default;
-            Core.Optional<RetryPolicy> retryPolicy = default;
-            Core.Optional<IList<DependencyReference>> dependsOn = default;
+            Optional<RetryPolicy> retryPolicy = default;
+            Optional<IList<DependencyReference>> dependsOn = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TumblingWindowTrigger(type, description.Value, Core.Optional.ToNullable(runtimeState), Core.Optional.ToList(annotations), additionalProperties, pipeline, frequency, interval, startTime, Core.Optional.ToNullable(endTime), delay.Value, maxConcurrency, retryPolicy.Value, Core.Optional.ToList(dependsOn));
+            return new TumblingWindowTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, pipeline, frequency, interval, startTime, Optional.ToNullable(endTime), delay.Value, maxConcurrency, retryPolicy.Value, Optional.ToList(dependsOn));
         }
     }
 }

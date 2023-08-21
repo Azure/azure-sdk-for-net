@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<StreamingJobDiagnosticCondition>> conditions = default;
+            Optional<IReadOnlyList<StreamingJobDiagnosticCondition>> conditions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditions"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamingJobDiagnostics(Core.Optional.ToList(conditions));
+            return new StreamingJobDiagnostics(Optional.ToList(conditions));
         }
     }
 }

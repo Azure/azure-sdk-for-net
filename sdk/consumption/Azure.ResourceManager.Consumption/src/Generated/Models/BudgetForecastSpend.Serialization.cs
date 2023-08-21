@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Core.Optional<decimal> amount = default;
-            Core.Optional<string> unit = default;
+            Optional<decimal> amount = default;
+            Optional<string> unit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("amount"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new BudgetForecastSpend(Core.Optional.ToNullable(amount), unit.Value);
+            return new BudgetForecastSpend(Optional.ToNullable(amount), unit.Value);
         }
     }
 }

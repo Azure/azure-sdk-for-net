@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of StorageAccountList. </summary>
         internal StorageAccountList()
         {
-            Value = new Core.ChangeTrackingList<DataBoxEdgeStorageAccountData>();
+            Value = new ChangeTrackingList<DataBoxEdgeStorageAccountData>();
         }
 
         /// <summary> Initializes a new instance of StorageAccountList. </summary>

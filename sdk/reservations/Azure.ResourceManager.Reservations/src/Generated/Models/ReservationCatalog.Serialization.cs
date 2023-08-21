@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Core.Optional<string> resourceType = default;
-            Core.Optional<string> name = default;
-            Core.Optional<IReadOnlyDictionary<string, IList<ReservationBillingPlan>>> billingPlans = default;
-            Core.Optional<IReadOnlyList<ReservationTerm>> terms = default;
-            Core.Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Core.Optional<IReadOnlyList<SkuProperty>> skuProperties = default;
-            Core.Optional<ReservationCatalogMsrp> msrp = default;
-            Core.Optional<IReadOnlyList<SkuRestriction>> restrictions = default;
-            Core.Optional<string> tier = default;
-            Core.Optional<string> size = default;
-            Core.Optional<IReadOnlyList<SkuCapability>> capabilities = default;
+            Optional<string> resourceType = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyDictionary<string, IList<ReservationBillingPlan>>> billingPlans = default;
+            Optional<IReadOnlyList<ReservationTerm>> terms = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
+            Optional<IReadOnlyList<SkuProperty>> skuProperties = default;
+            Optional<ReservationCatalogMsrp> msrp = default;
+            Optional<IReadOnlyList<SkuRestriction>> restrictions = default;
+            Optional<string> tier = default;
+            Optional<string> size = default;
+            Optional<IReadOnlyList<SkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ReservationCatalog(resourceType.Value, name.Value, Core.Optional.ToDictionary(billingPlans), Core.Optional.ToList(terms), Core.Optional.ToList(locations), Core.Optional.ToList(skuProperties), msrp.Value, Core.Optional.ToList(restrictions), tier.Value, size.Value, Core.Optional.ToList(capabilities));
+            return new ReservationCatalog(resourceType.Value, name.Value, Optional.ToDictionary(billingPlans), Optional.ToList(terms), Optional.ToList(locations), Optional.ToList(skuProperties), msrp.Value, Optional.ToList(restrictions), tier.Value, size.Value, Optional.ToList(capabilities));
         }
     }
 }

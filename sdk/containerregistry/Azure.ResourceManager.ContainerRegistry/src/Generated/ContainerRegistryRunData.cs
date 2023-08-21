@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> Initializes a new instance of ContainerRegistryRunData. </summary>
         public ContainerRegistryRunData()
         {
-            OutputImages = new Core.ChangeTrackingList<ContainerRegistryImageDescriptor>();
-            CustomRegistries = new Core.ChangeTrackingList<string>();
+            OutputImages = new ChangeTrackingList<ContainerRegistryImageDescriptor>();
+            CustomRegistries = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryRunData. </summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 return null;
             }
-            Core.Optional<AnalysisStatus> status = default;
+            Optional<AnalysisStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     continue;
                 }
             }
-            return new AnalysisGatewayStatus(Core.Optional.ToNullable(status));
+            return new AnalysisGatewayStatus(Optional.ToNullable(status));
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class EventGroupingSettings : Core.IUtf8JsonSerializable
+    internal partial class EventGroupingSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AggregationKind))
+            if (Optional.IsDefined(AggregationKind))
             {
                 writer.WritePropertyName("aggregationKind"u8);
                 writer.WriteStringValue(AggregationKind.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Core.Optional<EventGroupingAggregationKind> aggregationKind = default;
+            Optional<EventGroupingAggregationKind> aggregationKind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aggregationKind"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new EventGroupingSettings(Core.Optional.ToNullable(aggregationKind));
+            return new EventGroupingSettings(Optional.ToNullable(aggregationKind));
         }
     }
 }

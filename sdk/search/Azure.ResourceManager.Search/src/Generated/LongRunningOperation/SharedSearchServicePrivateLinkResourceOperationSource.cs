@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Search
 {
-    internal class SharedSearchServicePrivateLinkResourceOperationSource : Core.IOperationSource<SharedSearchServicePrivateLinkResource>
+    internal class SharedSearchServicePrivateLinkResourceOperationSource : IOperationSource<SharedSearchServicePrivateLinkResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Search
             _client = client;
         }
 
-        SharedSearchServicePrivateLinkResource Core.IOperationSource<SharedSearchServicePrivateLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SharedSearchServicePrivateLinkResource IOperationSource<SharedSearchServicePrivateLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(document.RootElement);
             return new SharedSearchServicePrivateLinkResource(_client, data);
         }
 
-        async ValueTask<SharedSearchServicePrivateLinkResource> Core.IOperationSource<SharedSearchServicePrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SharedSearchServicePrivateLinkResource> IOperationSource<SharedSearchServicePrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(document.RootElement);

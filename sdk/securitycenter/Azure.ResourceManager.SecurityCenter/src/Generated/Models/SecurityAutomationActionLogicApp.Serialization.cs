@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAutomationActionLogicApp : Core.IUtf8JsonSerializable
+    public partial class SecurityAutomationActionLogicApp : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LogicAppResourceId))
+            if (Optional.IsDefined(LogicAppResourceId))
             {
                 writer.WritePropertyName("logicAppResourceId"u8);
                 writer.WriteStringValue(LogicAppResourceId);
             }
-            if (Core.Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> logicAppResourceId = default;
-            Core.Optional<Uri> uri = default;
+            Optional<ResourceIdentifier> logicAppResourceId = default;
+            Optional<Uri> uri = default;
             ActionType actionType = default;
             foreach (var property in element.EnumerateObject())
             {

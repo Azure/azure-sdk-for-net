@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of StringNotContainsFilter. </summary>
         public StringNotContainsFilter()
         {
-            Values = new Core.ChangeTrackingList<string>();
+            Values = new ChangeTrackingList<string>();
             OperatorType = FilterOperatorType.StringNotContains;
         }
 

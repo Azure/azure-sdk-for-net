@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    public partial class ContainerRegistryAgentPoolData : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryAgentPoolData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,22 +33,22 @@ namespace Azure.ResourceManager.ContainerRegistry
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Count))
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Core.Optional.IsDefined(Tier))
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Core.Optional.IsDefined(OS))
+            if (Optional.IsDefined(OS))
             {
                 writer.WritePropertyName("os"u8);
                 writer.WriteStringValue(OS.Value.ToString());
             }
-            if (Core.Optional.IsDefined(VirtualNetworkSubnetResourceId))
+            if (Optional.IsDefined(VirtualNetworkSubnetResourceId))
             {
                 writer.WritePropertyName("virtualNetworkSubnetResourceId"u8);
                 writer.WriteStringValue(VirtualNetworkSubnetResourceId);
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<int> count = default;
-            Core.Optional<string> tier = default;
-            Core.Optional<ContainerRegistryOS> os = default;
-            Core.Optional<ResourceIdentifier> virtualNetworkSubnetResourceId = default;
-            Core.Optional<ContainerRegistryProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<int> count = default;
+            Optional<string> tier = default;
+            Optional<ContainerRegistryOS> os = default;
+            Optional<ResourceIdentifier> virtualNetworkSubnetResourceId = default;
+            Optional<ContainerRegistryProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     continue;
                 }
             }
-            return new ContainerRegistryAgentPoolData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(count), tier.Value, Core.Optional.ToNullable(os), virtualNetworkSubnetResourceId.Value, Core.Optional.ToNullable(provisioningState));
+            return new ContainerRegistryAgentPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(count), tier.Value, Optional.ToNullable(os), virtualNetworkSubnetResourceId.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

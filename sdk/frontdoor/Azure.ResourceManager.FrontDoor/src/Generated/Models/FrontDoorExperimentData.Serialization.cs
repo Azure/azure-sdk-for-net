@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    public partial class FrontDoorExperimentData : Core.IUtf8JsonSerializable
+    public partial class FrontDoorExperimentData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.FrontDoor
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(ExperimentEndpointA))
+            if (Optional.IsDefined(ExperimentEndpointA))
             {
                 writer.WritePropertyName("endpointA"u8);
                 writer.WriteObjectValue(ExperimentEndpointA);
             }
-            if (Core.Optional.IsDefined(ExperimentEndpointB))
+            if (Optional.IsDefined(ExperimentEndpointB))
             {
                 writer.WritePropertyName("endpointB"u8);
                 writer.WriteObjectValue(ExperimentEndpointB);
             }
-            if (Core.Optional.IsDefined(EnabledState))
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
@@ -64,19 +64,19 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<FrontDoorExperimentEndpointProperties> endpointA = default;
-            Core.Optional<FrontDoorExperimentEndpointProperties> endpointB = default;
-            Core.Optional<FrontDoorExperimentState> enabledState = default;
-            Core.Optional<NetworkExperimentResourceState> resourceState = default;
-            Core.Optional<string> status = default;
-            Core.Optional<Uri> scriptFileUri = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<FrontDoorExperimentEndpointProperties> endpointA = default;
+            Optional<FrontDoorExperimentEndpointProperties> endpointB = default;
+            Optional<FrontDoorExperimentState> enabledState = default;
+            Optional<NetworkExperimentResourceState> resourceState = default;
+            Optional<string> status = default;
+            Optional<Uri> scriptFileUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.FrontDoor
                     continue;
                 }
             }
-            return new FrontDoorExperimentData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, description.Value, endpointA.Value, endpointB.Value, Core.Optional.ToNullable(enabledState), Core.Optional.ToNullable(resourceState), status.Value, scriptFileUri.Value);
+            return new FrontDoorExperimentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, endpointA.Value, endpointB.Value, Optional.ToNullable(enabledState), Optional.ToNullable(resourceState), status.Value, scriptFileUri.Value);
         }
     }
 }

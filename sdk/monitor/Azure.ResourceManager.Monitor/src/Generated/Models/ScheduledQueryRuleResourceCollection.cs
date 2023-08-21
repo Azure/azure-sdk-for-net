@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of ScheduledQueryRuleResourceCollection. </summary>
         internal ScheduledQueryRuleResourceCollection()
         {
-            Value = new Core.ChangeTrackingList<ScheduledQueryRuleData>();
+            Value = new ChangeTrackingList<ScheduledQueryRuleData>();
         }
 
         /// <summary> Initializes a new instance of ScheduledQueryRuleResourceCollection. </summary>

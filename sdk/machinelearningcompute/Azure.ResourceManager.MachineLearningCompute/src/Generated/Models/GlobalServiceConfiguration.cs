@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <summary> Initializes a new instance of GlobalServiceConfiguration. </summary>
         public GlobalServiceConfiguration()
         {
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of GlobalServiceConfiguration. </summary>

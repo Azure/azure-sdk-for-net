@@ -21,35 +21,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> biosId = default;
-            Core.Optional<ResourceIdentifier> fabricObjectId = default;
-            Core.Optional<string> fqdn = default;
-            Core.Optional<IReadOnlyList<IPAddress>> ipAddresses = default;
-            Core.Optional<string> version = default;
-            Core.Optional<DateTimeOffset> lastHeartbeatUtc = default;
-            Core.Optional<long> totalMemoryInBytes = default;
-            Core.Optional<long> availableMemoryInBytes = default;
-            Core.Optional<long> usedMemoryInBytes = default;
-            Core.Optional<double> memoryUsagePercentage = default;
-            Core.Optional<long> totalSpaceInBytes = default;
-            Core.Optional<long> availableSpaceInBytes = default;
-            Core.Optional<long> usedSpaceInBytes = default;
-            Core.Optional<double> freeSpacePercentage = default;
-            Core.Optional<long> throughputUploadPendingDataInBytes = default;
-            Core.Optional<long> throughputInBytes = default;
-            Core.Optional<double> processorUsagePercentage = default;
-            Core.Optional<RcmComponentStatus> throughputStatus = default;
-            Core.Optional<long> systemLoad = default;
-            Core.Optional<RcmComponentStatus> systemLoadStatus = default;
-            Core.Optional<RcmComponentStatus> diskUsageStatus = default;
-            Core.Optional<RcmComponentStatus> memoryUsageStatus = default;
-            Core.Optional<RcmComponentStatus> processorUsageStatus = default;
-            Core.Optional<SiteRecoveryProtectionHealth> health = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
-            Core.Optional<int> protectedItemCount = default;
-            Core.Optional<SiteRecoveryProtectionHealth> historicHealth = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> biosId = default;
+            Optional<ResourceIdentifier> fabricObjectId = default;
+            Optional<string> fqdn = default;
+            Optional<IReadOnlyList<IPAddress>> ipAddresses = default;
+            Optional<string> version = default;
+            Optional<DateTimeOffset> lastHeartbeatUtc = default;
+            Optional<long> totalMemoryInBytes = default;
+            Optional<long> availableMemoryInBytes = default;
+            Optional<long> usedMemoryInBytes = default;
+            Optional<double> memoryUsagePercentage = default;
+            Optional<long> totalSpaceInBytes = default;
+            Optional<long> availableSpaceInBytes = default;
+            Optional<long> usedSpaceInBytes = default;
+            Optional<double> freeSpacePercentage = default;
+            Optional<long> throughputUploadPendingDataInBytes = default;
+            Optional<long> throughputInBytes = default;
+            Optional<double> processorUsagePercentage = default;
+            Optional<RcmComponentStatus> throughputStatus = default;
+            Optional<long> systemLoad = default;
+            Optional<RcmComponentStatus> systemLoadStatus = default;
+            Optional<RcmComponentStatus> diskUsageStatus = default;
+            Optional<RcmComponentStatus> memoryUsageStatus = default;
+            Optional<RcmComponentStatus> processorUsageStatus = default;
+            Optional<SiteRecoveryProtectionHealth> health = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            Optional<int> protectedItemCount = default;
+            Optional<SiteRecoveryProtectionHealth> historicHealth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryProcessServerDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, Core.Optional.ToList(ipAddresses), version.Value, Core.Optional.ToNullable(lastHeartbeatUtc), Core.Optional.ToNullable(totalMemoryInBytes), Core.Optional.ToNullable(availableMemoryInBytes), Core.Optional.ToNullable(usedMemoryInBytes), Core.Optional.ToNullable(memoryUsagePercentage), Core.Optional.ToNullable(totalSpaceInBytes), Core.Optional.ToNullable(availableSpaceInBytes), Core.Optional.ToNullable(usedSpaceInBytes), Core.Optional.ToNullable(freeSpacePercentage), Core.Optional.ToNullable(throughputUploadPendingDataInBytes), Core.Optional.ToNullable(throughputInBytes), Core.Optional.ToNullable(processorUsagePercentage), Core.Optional.ToNullable(throughputStatus), Core.Optional.ToNullable(systemLoad), Core.Optional.ToNullable(systemLoadStatus), Core.Optional.ToNullable(diskUsageStatus), Core.Optional.ToNullable(memoryUsageStatus), Core.Optional.ToNullable(processorUsageStatus), Core.Optional.ToNullable(health), Core.Optional.ToList(healthErrors), Core.Optional.ToNullable(protectedItemCount), Core.Optional.ToNullable(historicHealth));
+            return new SiteRecoveryProcessServerDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, Optional.ToList(ipAddresses), version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), Optional.ToNullable(usedMemoryInBytes), Optional.ToNullable(memoryUsagePercentage), Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), Optional.ToNullable(usedSpaceInBytes), Optional.ToNullable(freeSpacePercentage), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInBytes), Optional.ToNullable(processorUsagePercentage), Optional.ToNullable(throughputStatus), Optional.ToNullable(systemLoad), Optional.ToNullable(systemLoadStatus), Optional.ToNullable(diskUsageStatus), Optional.ToNullable(memoryUsageStatus), Optional.ToNullable(processorUsageStatus), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(protectedItemCount), Optional.ToNullable(historicHealth));
         }
     }
 }

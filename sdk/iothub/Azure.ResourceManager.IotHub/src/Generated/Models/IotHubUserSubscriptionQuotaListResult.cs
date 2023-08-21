@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of IotHubUserSubscriptionQuotaListResult. </summary>
         internal IotHubUserSubscriptionQuotaListResult()
         {
-            Value = new Core.ChangeTrackingList<IotHubUserSubscriptionQuota>();
+            Value = new ChangeTrackingList<IotHubUserSubscriptionQuota>();
         }
 
         /// <summary> Initializes a new instance of IotHubUserSubscriptionQuotaListResult. </summary>

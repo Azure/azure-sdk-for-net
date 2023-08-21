@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DataBoxEdgeJobErrorItem>> errorDetails = default;
-            Core.Optional<string> code = default;
-            Core.Optional<string> message = default;
+            Optional<IReadOnlyList<DataBoxEdgeJobErrorItem>> errorDetails = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorDetails"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeJobErrorDetails(Core.Optional.ToList(errorDetails), code.Value, message.Value);
+            return new DataBoxEdgeJobErrorDetails(Optional.ToList(errorDetails), code.Value, message.Value);
         }
     }
 }

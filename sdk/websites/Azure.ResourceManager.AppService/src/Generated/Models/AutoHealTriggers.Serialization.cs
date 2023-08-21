@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AutoHealTriggers : Core.IUtf8JsonSerializable
+    public partial class AutoHealTriggers : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Requests))
+            if (Optional.IsDefined(Requests))
             {
                 writer.WritePropertyName("requests"u8);
                 writer.WriteObjectValue(Requests);
             }
-            if (Core.Optional.IsDefined(PrivateBytesInKB))
+            if (Optional.IsDefined(PrivateBytesInKB))
             {
                 writer.WritePropertyName("privateBytesInKB"u8);
                 writer.WriteNumberValue(PrivateBytesInKB.Value);
             }
-            if (Core.Optional.IsCollectionDefined(StatusCodes))
+            if (Optional.IsCollectionDefined(StatusCodes))
             {
                 writer.WritePropertyName("statusCodes"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SlowRequests))
+            if (Optional.IsDefined(SlowRequests))
             {
                 writer.WritePropertyName("slowRequests"u8);
                 writer.WriteObjectValue(SlowRequests);
             }
-            if (Core.Optional.IsCollectionDefined(SlowRequestsWithPath))
+            if (Optional.IsCollectionDefined(SlowRequestsWithPath))
             {
                 writer.WritePropertyName("slowRequestsWithPath"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(StatusCodesRange))
+            if (Optional.IsCollectionDefined(StatusCodesRange))
             {
                 writer.WritePropertyName("statusCodesRange"u8);
                 writer.WriteStartArray();
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<RequestsBasedTrigger> requests = default;
-            Core.Optional<int> privateBytesInKB = default;
-            Core.Optional<IList<StatusCodesBasedTrigger>> statusCodes = default;
-            Core.Optional<SlowRequestsBasedTrigger> slowRequests = default;
-            Core.Optional<IList<SlowRequestsBasedTrigger>> slowRequestsWithPath = default;
-            Core.Optional<IList<StatusCodesRangeBasedTrigger>> statusCodesRange = default;
+            Optional<RequestsBasedTrigger> requests = default;
+            Optional<int> privateBytesInKB = default;
+            Optional<IList<StatusCodesBasedTrigger>> statusCodes = default;
+            Optional<SlowRequestsBasedTrigger> slowRequests = default;
+            Optional<IList<SlowRequestsBasedTrigger>> slowRequestsWithPath = default;
+            Optional<IList<StatusCodesRangeBasedTrigger>> statusCodesRange = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requests"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AutoHealTriggers(requests.Value, Core.Optional.ToNullable(privateBytesInKB), Core.Optional.ToList(statusCodes), slowRequests.Value, Core.Optional.ToList(slowRequestsWithPath), Core.Optional.ToList(statusCodesRange));
+            return new AutoHealTriggers(requests.Value, Optional.ToNullable(privateBytesInKB), Optional.ToList(statusCodes), slowRequests.Value, Optional.ToList(slowRequestsWithPath), Optional.ToList(statusCodesRange));
         }
     }
 }

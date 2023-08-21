@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchEndpointAccessProfile : Core.IUtf8JsonSerializable
+    public partial class BatchEndpointAccessProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("defaultAction"u8);
             writer.WriteStringValue(DefaultAction.ToSerialString());
-            if (Core.Optional.IsCollectionDefined(IPRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             BatchEndpointAccessDefaultAction defaultAction = default;
-            Core.Optional<IList<BatchIPRule>> ipRules = default;
+            Optional<IList<BatchIPRule>> ipRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultAction"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchEndpointAccessProfile(defaultAction, Core.Optional.ToList(ipRules));
+            return new BatchEndpointAccessProfile(defaultAction, Optional.ToList(ipRules));
         }
     }
 }

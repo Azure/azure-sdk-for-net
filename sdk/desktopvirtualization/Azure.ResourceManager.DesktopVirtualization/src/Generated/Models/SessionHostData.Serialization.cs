@@ -14,64 +14,64 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class SessionHostData : Core.IUtf8JsonSerializable
+    public partial class SessionHostData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LastHeartBeatOn))
+            if (Optional.IsDefined(LastHeartBeatOn))
             {
                 writer.WritePropertyName("lastHeartBeat"u8);
                 writer.WriteStringValue(LastHeartBeatOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Sessions))
+            if (Optional.IsDefined(Sessions))
             {
                 writer.WritePropertyName("sessions"u8);
                 writer.WriteNumberValue(Sessions.Value);
             }
-            if (Core.Optional.IsDefined(AgentVersion))
+            if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Core.Optional.IsDefined(AllowNewSession))
+            if (Optional.IsDefined(AllowNewSession))
             {
                 writer.WritePropertyName("allowNewSession"u8);
                 writer.WriteBooleanValue(AllowNewSession.Value);
             }
-            if (Core.Optional.IsDefined(AssignedUser))
+            if (Optional.IsDefined(AssignedUser))
             {
                 writer.WritePropertyName("assignedUser"u8);
                 writer.WriteStringValue(AssignedUser);
             }
-            if (Core.Optional.IsDefined(FriendlyName))
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(OSVersion))
+            if (Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
-            if (Core.Optional.IsDefined(SxsStackVersion))
+            if (Optional.IsDefined(SxsStackVersion))
             {
                 writer.WritePropertyName("sxSStackVersion"u8);
                 writer.WriteStringValue(SxsStackVersion);
             }
-            if (Core.Optional.IsDefined(UpdateState))
+            if (Optional.IsDefined(UpdateState))
             {
                 writer.WritePropertyName("updateState"u8);
                 writer.WriteStringValue(UpdateState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(UpdateErrorMessage))
+            if (Optional.IsDefined(UpdateErrorMessage))
             {
                 writer.WritePropertyName("updateErrorMessage"u8);
                 writer.WriteStringValue(UpdateErrorMessage);
@@ -89,24 +89,24 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> objectId = default;
-            Core.Optional<DateTimeOffset> lastHeartBeat = default;
-            Core.Optional<int> sessions = default;
-            Core.Optional<string> agentVersion = default;
-            Core.Optional<bool> allowNewSession = default;
-            Core.Optional<string> virtualMachineId = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<string> assignedUser = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<SessionHostStatus> status = default;
-            Core.Optional<DateTimeOffset> statusTimestamp = default;
-            Core.Optional<string> osVersion = default;
-            Core.Optional<string> sxsStackVersion = default;
-            Core.Optional<SessionHostUpdateState> updateState = default;
-            Core.Optional<DateTimeOffset> lastUpdateTime = default;
-            Core.Optional<string> updateErrorMessage = default;
-            Core.Optional<IReadOnlyList<SessionHostHealthCheckReport>> sessionHostHealthCheckResults = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> objectId = default;
+            Optional<DateTimeOffset> lastHeartBeat = default;
+            Optional<int> sessions = default;
+            Optional<string> agentVersion = default;
+            Optional<bool> allowNewSession = default;
+            Optional<string> virtualMachineId = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<string> assignedUser = default;
+            Optional<string> friendlyName = default;
+            Optional<SessionHostStatus> status = default;
+            Optional<DateTimeOffset> statusTimestamp = default;
+            Optional<string> osVersion = default;
+            Optional<string> sxsStackVersion = default;
+            Optional<SessionHostUpdateState> updateState = default;
+            Optional<DateTimeOffset> lastUpdateTime = default;
+            Optional<string> updateErrorMessage = default;
+            Optional<IReadOnlyList<SessionHostHealthCheckReport>> sessionHostHealthCheckResults = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new SessionHostData(id, name, type, systemData.Value, objectId.Value, Core.Optional.ToNullable(lastHeartBeat), Core.Optional.ToNullable(sessions), agentVersion.Value, Core.Optional.ToNullable(allowNewSession), virtualMachineId.Value, resourceId.Value, assignedUser.Value, friendlyName.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(statusTimestamp), osVersion.Value, sxsStackVersion.Value, Core.Optional.ToNullable(updateState), Core.Optional.ToNullable(lastUpdateTime), updateErrorMessage.Value, Core.Optional.ToList(sessionHostHealthCheckResults));
+            return new SessionHostData(id, name, type, systemData.Value, objectId.Value, Optional.ToNullable(lastHeartBeat), Optional.ToNullable(sessions), agentVersion.Value, Optional.ToNullable(allowNewSession), virtualMachineId.Value, resourceId.Value, assignedUser.Value, friendlyName.Value, Optional.ToNullable(status), Optional.ToNullable(statusTimestamp), osVersion.Value, sxsStackVersion.Value, Optional.ToNullable(updateState), Optional.ToNullable(lastUpdateTime), updateErrorMessage.Value, Optional.ToList(sessionHostHealthCheckResults));
         }
     }
 }

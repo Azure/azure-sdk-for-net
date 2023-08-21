@@ -18,10 +18,10 @@ namespace Azure.AI.Language.QuestionAnswering
             {
                 return null;
             }
-            Core.Optional<string> text = default;
-            Core.Optional<double> confidenceScore = default;
-            Core.Optional<int> offset = default;
-            Core.Optional<int> length = default;
+            Optional<string> text = default;
+            Optional<double> confidenceScore = default;
+            Optional<int> offset = default;
+            Optional<int> length = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -57,7 +57,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     continue;
                 }
             }
-            return new AnswerSpan(text.Value, Core.Optional.ToNullable(confidenceScore), Core.Optional.ToNullable(offset), Core.Optional.ToNullable(length));
+            return new AnswerSpan(text.Value, Optional.ToNullable(confidenceScore), Optional.ToNullable(offset), Optional.ToNullable(length));
         }
     }
 }

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<OverallValidationStatus> status = default;
-            Core.Optional<IReadOnlyList<DataBoxValidationInputResult>> individualResponseDetails = default;
+            Optional<OverallValidationStatus> status = default;
+            Optional<IReadOnlyList<DataBoxValidationInputResult>> individualResponseDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxValidationResult(Core.Optional.ToNullable(status), Core.Optional.ToList(individualResponseDetails));
+            return new DataBoxValidationResult(Optional.ToNullable(status), Optional.ToList(individualResponseDetails));
         }
     }
 }

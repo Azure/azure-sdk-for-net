@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of SharedGalleryImageVersionStorageProfile. </summary>
         internal SharedGalleryImageVersionStorageProfile()
         {
-            DataDiskImages = new Core.ChangeTrackingList<SharedGalleryDataDiskImage>();
+            DataDiskImages = new ChangeTrackingList<SharedGalleryDataDiskImage>();
         }
 
         /// <summary> Initializes a new instance of SharedGalleryImageVersionStorageProfile. </summary>

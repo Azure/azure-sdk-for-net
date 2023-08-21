@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> Initializes a new instance of CognitiveServicesPrivateEndpointConnectionData. </summary>
         public CognitiveServicesPrivateEndpointConnectionData()
         {
-            GroupIds = new Core.ChangeTrackingList<string>();
+            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesPrivateEndpointConnectionData. </summary>

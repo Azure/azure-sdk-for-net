@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubNetworkRuleSetProperties : Core.IUtf8JsonSerializable
+    public partial class IotHubNetworkRuleSetProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DefaultAction))
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Core.Optional<IotHubNetworkRuleSetDefaultAction> defaultAction = default;
+            Optional<IotHubNetworkRuleSetDefaultAction> defaultAction = default;
             bool applyToBuiltInEventHubEndpoint = default;
             IList<IotHubNetworkRuleSetIPRule> ipRules = default;
             foreach (var property in element.EnumerateObject())
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubNetworkRuleSetProperties(Core.Optional.ToNullable(defaultAction), applyToBuiltInEventHubEndpoint, ipRules);
+            return new IotHubNetworkRuleSetProperties(Optional.ToNullable(defaultAction), applyToBuiltInEventHubEndpoint, ipRules);
         }
     }
 }

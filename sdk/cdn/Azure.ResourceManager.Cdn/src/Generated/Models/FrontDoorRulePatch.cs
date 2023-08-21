@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of FrontDoorRulePatch. </summary>
         public FrontDoorRulePatch()
         {
-            Conditions = new Core.ChangeTrackingList<DeliveryRuleCondition>();
-            Actions = new Core.ChangeTrackingList<DeliveryRuleAction>();
+            Conditions = new ChangeTrackingList<DeliveryRuleCondition>();
+            Actions = new ChangeTrackingList<DeliveryRuleAction>();
         }
 
         /// <summary> The name of the rule set containing the rule. </summary>

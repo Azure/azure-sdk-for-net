@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<string> nodeName = default;
-            Core.Optional<int> availableMemoryInMB = default;
-            Core.Optional<int> cpuUtilization = default;
-            Core.Optional<int> concurrentJobsLimit = default;
-            Core.Optional<int> concurrentJobsRunning = default;
-            Core.Optional<int> maxConcurrentJobs = default;
-            Core.Optional<float> sentBytes = default;
-            Core.Optional<float> receivedBytes = default;
+            Optional<string> nodeName = default;
+            Optional<int> availableMemoryInMB = default;
+            Optional<int> cpuUtilization = default;
+            Optional<int> concurrentJobsLimit = default;
+            Optional<int> concurrentJobsRunning = default;
+            Optional<int> maxConcurrentJobs = default;
+            Optional<float> sentBytes = default;
+            Optional<float> receivedBytes = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeNodeMonitoringData(nodeName.Value, Core.Optional.ToNullable(availableMemoryInMB), Core.Optional.ToNullable(cpuUtilization), Core.Optional.ToNullable(concurrentJobsLimit), Core.Optional.ToNullable(concurrentJobsRunning), Core.Optional.ToNullable(maxConcurrentJobs), Core.Optional.ToNullable(sentBytes), Core.Optional.ToNullable(receivedBytes), additionalProperties);
+            return new IntegrationRuntimeNodeMonitoringData(nodeName.Value, Optional.ToNullable(availableMemoryInMB), Optional.ToNullable(cpuUtilization), Optional.ToNullable(concurrentJobsLimit), Optional.ToNullable(concurrentJobsRunning), Optional.ToNullable(maxConcurrentJobs), Optional.ToNullable(sentBytes), Optional.ToNullable(receivedBytes), additionalProperties);
         }
     }
 }

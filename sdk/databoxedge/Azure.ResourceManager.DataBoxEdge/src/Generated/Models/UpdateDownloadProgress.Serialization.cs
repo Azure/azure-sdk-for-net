@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<DataBoxEdgeDownloadPhase> downloadPhase = default;
-            Core.Optional<int> percentComplete = default;
-            Core.Optional<double> totalBytesToDownload = default;
-            Core.Optional<double> totalBytesDownloaded = default;
-            Core.Optional<int> numberOfUpdatesToDownload = default;
-            Core.Optional<int> numberOfUpdatesDownloaded = default;
+            Optional<DataBoxEdgeDownloadPhase> downloadPhase = default;
+            Optional<int> percentComplete = default;
+            Optional<double> totalBytesToDownload = default;
+            Optional<double> totalBytesDownloaded = default;
+            Optional<int> numberOfUpdatesToDownload = default;
+            Optional<int> numberOfUpdatesDownloaded = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("downloadPhase"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new UpdateDownloadProgress(Core.Optional.ToNullable(downloadPhase), Core.Optional.ToNullable(percentComplete), Core.Optional.ToNullable(totalBytesToDownload), Core.Optional.ToNullable(totalBytesDownloaded), Core.Optional.ToNullable(numberOfUpdatesToDownload), Core.Optional.ToNullable(numberOfUpdatesDownloaded));
+            return new UpdateDownloadProgress(Optional.ToNullable(downloadPhase), Optional.ToNullable(percentComplete), Optional.ToNullable(totalBytesToDownload), Optional.ToNullable(totalBytesDownloaded), Optional.ToNullable(numberOfUpdatesToDownload), Optional.ToNullable(numberOfUpdatesDownloaded));
         }
     }
 }

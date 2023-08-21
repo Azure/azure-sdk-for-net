@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class CloudProviderProfileInfraNetworkProfile : Core.IUtf8JsonSerializable
+    internal partial class CloudProviderProfileInfraNetworkProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(VnetSubnetIds))
+            if (Optional.IsCollectionDefined(VnetSubnetIds))
             {
                 writer.WritePropertyName("vnetSubnetIds"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> vnetSubnetIds = default;
+            Optional<IList<string>> vnetSubnetIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vnetSubnetIds"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new CloudProviderProfileInfraNetworkProfile(Core.Optional.ToList(vnetSubnetIds));
+            return new CloudProviderProfileInfraNetworkProfile(Optional.ToList(vnetSubnetIds));
         }
     }
 }

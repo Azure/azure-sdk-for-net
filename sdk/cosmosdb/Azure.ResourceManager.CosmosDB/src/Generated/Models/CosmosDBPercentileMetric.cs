@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBPercentileMetric. </summary>
         internal CosmosDBPercentileMetric()
         {
-            MetricValues = new Core.ChangeTrackingList<PercentileMetricValue>();
+            MetricValues = new ChangeTrackingList<PercentileMetricValue>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBPercentileMetric. </summary>

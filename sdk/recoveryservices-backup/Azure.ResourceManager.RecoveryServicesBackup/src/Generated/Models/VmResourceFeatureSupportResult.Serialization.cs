@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<VmResourceFeatureSupportStatus> supportStatus = default;
+            Optional<VmResourceFeatureSupportStatus> supportStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportStatus"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new VmResourceFeatureSupportResult(Core.Optional.ToNullable(supportStatus));
+            return new VmResourceFeatureSupportResult(Optional.ToNullable(supportStatus));
         }
     }
 }

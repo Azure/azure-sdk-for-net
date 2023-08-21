@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterGalleryGalleriesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation(_devCenterGalleryGalleriesClientDiagnostics, Pipeline, _devCenterGalleryGalleriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devCenterGalleryGalleriesClientDiagnostics, Pipeline, _devCenterGalleryGalleriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterGalleryGalleriesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevCenterArmOperation(_devCenterGalleryGalleriesClientDiagnostics, Pipeline, _devCenterGalleryGalleriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devCenterGalleryGalleriesClientDiagnostics, Pipeline, _devCenterGalleryGalleriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterGalleryGalleriesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevCenterGalleryResource>(new DevCenterGalleryOperationSource(Client), _devCenterGalleryGalleriesClientDiagnostics, Pipeline, _devCenterGalleryGalleriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterGalleryResource>(new DevCenterGalleryOperationSource(Client), _devCenterGalleryGalleriesClientDiagnostics, Pipeline, _devCenterGalleryGalleriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterGalleryGalleriesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new DevCenterArmOperation<DevCenterGalleryResource>(new DevCenterGalleryOperationSource(Client), _devCenterGalleryGalleriesClientDiagnostics, Pipeline, _devCenterGalleryGalleriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterGalleryResource>(new DevCenterGalleryOperationSource(Client), _devCenterGalleryGalleriesClientDiagnostics, Pipeline, _devCenterGalleryGalleriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

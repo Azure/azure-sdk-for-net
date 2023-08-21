@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of AgentPoolNetworkProfile. </summary>
         public AgentPoolNetworkProfile()
         {
-            NodePublicIPTags = new Core.ChangeTrackingList<ContainerServiceIPTag>();
-            AllowedHostPorts = new Core.ChangeTrackingList<AgentPoolNetworkPortRange>();
-            ApplicationSecurityGroups = new Core.ChangeTrackingList<ResourceIdentifier>();
+            NodePublicIPTags = new ChangeTrackingList<ContainerServiceIPTag>();
+            AllowedHostPorts = new ChangeTrackingList<AgentPoolNetworkPortRange>();
+            ApplicationSecurityGroups = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of AgentPoolNetworkProfile. </summary>

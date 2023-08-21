@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyList<AttestationProviderData>> value = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyList<AttestationProviderData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("systemData"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     continue;
                 }
             }
-            return new AttestationProviderListResult(systemData, Core.Optional.ToList(value));
+            return new AttestationProviderListResult(systemData, Optional.ToList(value));
         }
     }
 }

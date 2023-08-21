@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of LogicWorkflowRecurrenceSchedule. </summary>
         public LogicWorkflowRecurrenceSchedule()
         {
-            Minutes = new Core.ChangeTrackingList<int>();
-            Hours = new Core.ChangeTrackingList<int>();
-            WeekDays = new Core.ChangeTrackingList<LogicWorkflowDayOfWeek>();
-            MonthDays = new Core.ChangeTrackingList<int>();
-            MonthlyOccurrences = new Core.ChangeTrackingList<LogicWorkflowRecurrenceScheduleOccurrence>();
+            Minutes = new ChangeTrackingList<int>();
+            Hours = new ChangeTrackingList<int>();
+            WeekDays = new ChangeTrackingList<LogicWorkflowDayOfWeek>();
+            MonthDays = new ChangeTrackingList<int>();
+            MonthlyOccurrences = new ChangeTrackingList<LogicWorkflowRecurrenceScheduleOccurrence>();
         }
 
         /// <summary> Initializes a new instance of LogicWorkflowRecurrenceSchedule. </summary>

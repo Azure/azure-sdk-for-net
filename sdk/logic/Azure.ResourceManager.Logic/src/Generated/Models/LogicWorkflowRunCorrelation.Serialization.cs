@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowRunCorrelation : Core.IUtf8JsonSerializable
+    public partial class LogicWorkflowRunCorrelation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ClientTrackingId))
+            if (Optional.IsDefined(ClientTrackingId))
             {
                 writer.WritePropertyName("clientTrackingId"u8);
                 writer.WriteStringValue(ClientTrackingId);
             }
-            if (Core.Optional.IsCollectionDefined(ClientKeywords))
+            if (Optional.IsCollectionDefined(ClientKeywords))
             {
                 writer.WritePropertyName("clientKeywords"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<string> clientTrackingId = default;
-            Core.Optional<IList<string>> clientKeywords = default;
+            Optional<string> clientTrackingId = default;
+            Optional<IList<string>> clientKeywords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientTrackingId"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicWorkflowRunCorrelation(clientTrackingId.Value, Core.Optional.ToList(clientKeywords));
+            return new LogicWorkflowRunCorrelation(clientTrackingId.Value, Optional.ToList(clientKeywords));
         }
     }
 }

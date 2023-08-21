@@ -11,34 +11,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceVirtualNetworkValidationContent : Core.IUtf8JsonSerializable
+    public partial class AppServiceVirtualNetworkValidationContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VnetResourceGroup))
+            if (Optional.IsDefined(VnetResourceGroup))
             {
                 writer.WritePropertyName("vnetResourceGroup"u8);
                 writer.WriteStringValue(VnetResourceGroup);
             }
-            if (Core.Optional.IsDefined(VnetName))
+            if (Optional.IsDefined(VnetName))
             {
                 writer.WritePropertyName("vnetName"u8);
                 writer.WriteStringValue(VnetName);
             }
-            if (Core.Optional.IsDefined(VnetSubnetName))
+            if (Optional.IsDefined(VnetSubnetName))
             {
                 writer.WritePropertyName("vnetSubnetName"u8);
                 writer.WriteStringValue(VnetSubnetName);
             }
-            if (Core.Optional.IsDefined(SubnetResourceId))
+            if (Optional.IsDefined(SubnetResourceId))
             {
                 writer.WritePropertyName("subnetResourceId"u8);
                 writer.WriteStringValue(SubnetResourceId);
@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> vnetResourceGroup = default;
-            Core.Optional<string> vnetName = default;
-            Core.Optional<string> vnetSubnetName = default;
-            Core.Optional<ResourceIdentifier> subnetResourceId = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> vnetResourceGroup = default;
+            Optional<string> vnetName = default;
+            Optional<string> vnetSubnetName = default;
+            Optional<ResourceIdentifier> subnetResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))

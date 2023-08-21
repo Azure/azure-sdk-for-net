@@ -12,59 +12,59 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class WebAppDeploymentData : Core.IUtf8JsonSerializable
+    public partial class WebAppDeploymentData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteNumberValue(Status.Value);
             }
-            if (Core.Optional.IsDefined(Message))
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Core.Optional.IsDefined(Author))
+            if (Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (Core.Optional.IsDefined(Deployer))
+            if (Optional.IsDefined(Deployer))
             {
                 writer.WritePropertyName("deployer"u8);
                 writer.WriteStringValue(Deployer);
             }
-            if (Core.Optional.IsDefined(AuthorEmail))
+            if (Optional.IsDefined(AuthorEmail))
             {
                 writer.WritePropertyName("author_email"u8);
                 writer.WriteStringValue(AuthorEmail);
             }
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("start_time"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("end_time"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(IsActive))
+            if (Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("active"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
-            if (Core.Optional.IsDefined(Details))
+            if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStringValue(Details);
@@ -79,20 +79,20 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<int> status = default;
-            Core.Optional<string> message = default;
-            Core.Optional<string> author = default;
-            Core.Optional<string> deployer = default;
-            Core.Optional<string> authorEmail = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<bool> active = default;
-            Core.Optional<string> details = default;
+            Optional<SystemData> systemData = default;
+            Optional<int> status = default;
+            Optional<string> message = default;
+            Optional<string> author = default;
+            Optional<string> deployer = default;
+            Optional<string> authorEmail = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<bool> active = default;
+            Optional<string> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new WebAppDeploymentData(id, name, type, systemData.Value, Core.Optional.ToNullable(status), message.Value, author.Value, deployer.Value, authorEmail.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(active), details.Value, kind.Value);
+            return new WebAppDeploymentData(id, name, type, systemData.Value, Optional.ToNullable(status), message.Value, author.Value, deployer.Value, authorEmail.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(active), details.Value, kind.Value);
         }
     }
 }

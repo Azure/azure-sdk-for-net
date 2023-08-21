@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceOperation. </summary>
         internal AppServiceOperation()
         {
-            Errors = new Core.ChangeTrackingList<ResponseError>();
+            Errors = new ChangeTrackingList<ResponseError>();
         }
 
         /// <summary> Initializes a new instance of AppServiceOperation. </summary>

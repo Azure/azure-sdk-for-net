@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class ServiceManagedResourcesSettings : Core.IUtf8JsonSerializable
+    internal partial class ServiceManagedResourcesSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CosmosDb))
+            if (Optional.IsDefined(CosmosDb))
             {
                 writer.WritePropertyName("cosmosDb"u8);
                 writer.WriteObjectValue(CosmosDb);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<CosmosDbSettings> cosmosDb = default;
+            Optional<CosmosDbSettings> cosmosDb = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cosmosDb"u8))

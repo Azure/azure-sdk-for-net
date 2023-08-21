@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class IntegrationRuntimeReference : Core.IUtf8JsonSerializable
+    public partial class IntegrationRuntimeReference : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             IntegrationRuntimeReferenceType type = default;
             string referenceName = default;
-            Core.Optional<IDictionary<string, BinaryData>> parameters = default;
+            Optional<IDictionary<string, BinaryData>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new IntegrationRuntimeReference(type, referenceName, Core.Optional.ToDictionary(parameters));
+            return new IntegrationRuntimeReference(type, referenceName, Optional.ToDictionary(parameters));
         }
     }
 }

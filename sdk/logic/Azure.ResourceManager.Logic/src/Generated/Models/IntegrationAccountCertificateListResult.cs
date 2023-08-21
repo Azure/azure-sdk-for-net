@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of IntegrationAccountCertificateListResult. </summary>
         internal IntegrationAccountCertificateListResult()
         {
-            Value = new Core.ChangeTrackingList<IntegrationAccountCertificateData>();
+            Value = new ChangeTrackingList<IntegrationAccountCertificateData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountCertificateListResult. </summary>

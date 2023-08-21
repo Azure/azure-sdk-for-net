@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryAddRecoveryServicesProviderProperties : Core.IUtf8JsonSerializable
+    public partial class SiteRecoveryAddRecoveryServicesProviderProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("machineName"u8);
             writer.WriteStringValue(MachineName);
-            if (Core.Optional.IsDefined(MachineId))
+            if (Optional.IsDefined(MachineId))
             {
                 writer.WritePropertyName("machineId"u8);
                 writer.WriteStringValue(MachineId);
             }
-            if (Core.Optional.IsDefined(BiosId))
+            if (Optional.IsDefined(BiosId))
             {
                 writer.WritePropertyName("biosId"u8);
                 writer.WriteStringValue(BiosId);
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteObjectValue(AuthenticationIdentityContent);
             writer.WritePropertyName("resourceAccessIdentityInput"u8);
             writer.WriteObjectValue(ResourceAccessIdentityContent);
-            if (Core.Optional.IsDefined(DataPlaneAuthenticationIdentityContent))
+            if (Optional.IsDefined(DataPlaneAuthenticationIdentityContent))
             {
                 writer.WritePropertyName("dataPlaneAuthenticationIdentityInput"u8);
                 writer.WriteObjectValue(DataPlaneAuthenticationIdentityContent);

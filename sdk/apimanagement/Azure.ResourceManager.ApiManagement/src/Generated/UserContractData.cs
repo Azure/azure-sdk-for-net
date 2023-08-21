@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of UserContractData. </summary>
         public UserContractData()
         {
-            Identities = new Core.ChangeTrackingList<UserIdentityContract>();
-            Groups = new Core.ChangeTrackingList<GroupContractProperties>();
+            Identities = new ChangeTrackingList<UserIdentityContract>();
+            Groups = new ChangeTrackingList<GroupContractProperties>();
         }
 
         /// <summary> Initializes a new instance of UserContractData. </summary>

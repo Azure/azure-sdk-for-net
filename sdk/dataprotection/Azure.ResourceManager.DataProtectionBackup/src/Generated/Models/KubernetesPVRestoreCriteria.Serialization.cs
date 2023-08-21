@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class KubernetesPVRestoreCriteria : Core.IUtf8JsonSerializable
+    public partial class KubernetesPVRestoreCriteria : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(StorageClassName))
+            if (Optional.IsDefined(StorageClassName))
             {
                 writer.WritePropertyName("storageClassName"u8);
                 writer.WriteStringValue(StorageClassName);

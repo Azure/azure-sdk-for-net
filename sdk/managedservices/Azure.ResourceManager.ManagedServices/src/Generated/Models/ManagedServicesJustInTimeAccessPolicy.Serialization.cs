@@ -12,19 +12,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesJustInTimeAccessPolicy : Core.IUtf8JsonSerializable
+    public partial class ManagedServicesJustInTimeAccessPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("multiFactorAuthProvider"u8);
             writer.WriteStringValue(MultiFactorAuthProvider.ToString());
-            if (Core.Optional.IsDefined(MaximumActivationDuration))
+            if (Optional.IsDefined(MaximumActivationDuration))
             {
                 writer.WritePropertyName("maximumActivationDuration"u8);
                 writer.WriteStringValue(MaximumActivationDuration.Value, "P");
             }
-            if (Core.Optional.IsCollectionDefined(ManagedByTenantApprovers))
+            if (Optional.IsCollectionDefined(ManagedByTenantApprovers))
             {
                 writer.WritePropertyName("managedByTenantApprovers"u8);
                 writer.WriteStartArray();
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 return null;
             }
             MultiFactorAuthProvider multiFactorAuthProvider = default;
-            Core.Optional<TimeSpan> maximumActivationDuration = default;
-            Core.Optional<IList<ManagedServicesEligibleApprover>> managedByTenantApprovers = default;
+            Optional<TimeSpan> maximumActivationDuration = default;
+            Optional<IList<ManagedServicesEligibleApprover>> managedByTenantApprovers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("multiFactorAuthProvider"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     continue;
                 }
             }
-            return new ManagedServicesJustInTimeAccessPolicy(multiFactorAuthProvider, Core.Optional.ToNullable(maximumActivationDuration), Core.Optional.ToList(managedByTenantApprovers));
+            return new ManagedServicesJustInTimeAccessPolicy(multiFactorAuthProvider, Optional.ToNullable(maximumActivationDuration), Optional.ToList(managedByTenantApprovers));
         }
     }
 }

@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateMySqlAzureDBForMySqlOfflineDatabaseInput : Core.IUtf8JsonSerializable
+    public partial class MigrateMySqlAzureDBForMySqlOfflineDatabaseInput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(TargetDatabaseName))
+            if (Optional.IsDefined(TargetDatabaseName))
             {
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (Core.Optional.IsCollectionDefined(TableMap))
+            if (Optional.IsCollectionDefined(TableMap))
             {
                 writer.WritePropertyName("tableMap"u8);
                 writer.WriteStartObject();
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> targetDatabaseName = default;
-            Core.Optional<IDictionary<string, string>> tableMap = default;
+            Optional<string> name = default;
+            Optional<string> targetDatabaseName = default;
+            Optional<IDictionary<string, string>> tableMap = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateMySqlAzureDBForMySqlOfflineDatabaseInput(name.Value, targetDatabaseName.Value, Core.Optional.ToDictionary(tableMap));
+            return new MigrateMySqlAzureDBForMySqlOfflineDatabaseInput(name.Value, targetDatabaseName.Value, Optional.ToDictionary(tableMap));
         }
     }
 }

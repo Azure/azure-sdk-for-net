@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DataBoxJobData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DataBoxJobData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxJobListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new DataBoxJobListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

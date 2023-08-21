@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of BatchSupportedSku. </summary>
         internal BatchSupportedSku()
         {
-            Capabilities = new Core.ChangeTrackingList<BatchSkuCapability>();
+            Capabilities = new ChangeTrackingList<BatchSkuCapability>();
         }
 
         /// <summary> Initializes a new instance of BatchSupportedSku. </summary>

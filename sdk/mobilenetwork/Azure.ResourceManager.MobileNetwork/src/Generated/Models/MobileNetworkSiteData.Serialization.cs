@@ -14,12 +14,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class MobileNetworkSiteData : Core.IUtf8JsonSerializable
+    public partial class MobileNetworkSiteData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<MobileNetworkProvisioningState> provisioningState = default;
-            Core.Optional<IReadOnlyList<SubResource>> networkFunctions = default;
+            Optional<SystemData> systemData = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Optional<IReadOnlyList<SubResource>> networkFunctions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     continue;
                 }
             }
-            return new MobileNetworkSiteData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(networkFunctions));
+            return new MobileNetworkSiteData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToList(networkFunctions));
         }
     }
 }

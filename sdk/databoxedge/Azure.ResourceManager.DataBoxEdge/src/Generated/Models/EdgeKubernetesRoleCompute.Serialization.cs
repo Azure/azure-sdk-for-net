@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeKubernetesRoleCompute : Core.IUtf8JsonSerializable
+    public partial class EdgeKubernetesRoleCompute : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("vmProfile"u8);
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             string vmProfile = default;
-            Core.Optional<long> memoryInBytes = default;
-            Core.Optional<int> processorCount = default;
+            Optional<long> memoryInBytes = default;
+            Optional<int> processorCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmProfile"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new EdgeKubernetesRoleCompute(vmProfile, Core.Optional.ToNullable(memoryInBytes), Core.Optional.ToNullable(processorCount));
+            return new EdgeKubernetesRoleCompute(vmProfile, Optional.ToNullable(memoryInBytes), Optional.ToNullable(processorCount));
         }
     }
 }

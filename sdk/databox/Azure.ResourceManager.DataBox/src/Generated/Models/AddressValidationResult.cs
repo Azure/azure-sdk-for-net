@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of AddressValidationResult. </summary>
         internal AddressValidationResult()
         {
-            AlternateAddresses = new Core.ChangeTrackingList<DataBoxShippingAddress>();
+            AlternateAddresses = new ChangeTrackingList<DataBoxShippingAddress>();
             ValidationType = DataBoxValidationInputDiscriminator.ValidateAddress;
         }
 

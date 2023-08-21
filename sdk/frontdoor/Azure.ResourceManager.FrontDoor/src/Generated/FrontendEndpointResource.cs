@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = await _frontendEndpointRestClient.EnableHttpsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customHttpsConfiguration, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation(_frontendEndpointClientDiagnostics, Pipeline, _frontendEndpointRestClient.CreateEnableHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customHttpsConfiguration).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FrontDoorArmOperation(_frontendEndpointClientDiagnostics, Pipeline, _frontendEndpointRestClient.CreateEnableHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customHttpsConfiguration).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = _frontendEndpointRestClient.EnableHttps(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customHttpsConfiguration, cancellationToken);
-                var operation = new FrontDoorArmOperation(_frontendEndpointClientDiagnostics, Pipeline, _frontendEndpointRestClient.CreateEnableHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customHttpsConfiguration).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FrontDoorArmOperation(_frontendEndpointClientDiagnostics, Pipeline, _frontendEndpointRestClient.CreateEnableHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customHttpsConfiguration).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = await _frontendEndpointRestClient.DisableHttpsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation(_frontendEndpointClientDiagnostics, Pipeline, _frontendEndpointRestClient.CreateDisableHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FrontDoorArmOperation(_frontendEndpointClientDiagnostics, Pipeline, _frontendEndpointRestClient.CreateDisableHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = _frontendEndpointRestClient.DisableHttps(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new FrontDoorArmOperation(_frontendEndpointClientDiagnostics, Pipeline, _frontendEndpointRestClient.CreateDisableHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FrontDoorArmOperation(_frontendEndpointClientDiagnostics, Pipeline, _frontendEndpointRestClient.CreateDisableHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

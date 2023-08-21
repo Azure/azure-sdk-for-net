@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <summary> Initializes a new instance of DataLakeAnalyticsAccountListResult. </summary>
         internal DataLakeAnalyticsAccountListResult()
         {
-            Value = new Core.ChangeTrackingList<DataLakeAnalyticsAccountBasic>();
+            Value = new ChangeTrackingList<DataLakeAnalyticsAccountBasic>();
         }
 
         /// <summary> Initializes a new instance of DataLakeAnalyticsAccountListResult. </summary>

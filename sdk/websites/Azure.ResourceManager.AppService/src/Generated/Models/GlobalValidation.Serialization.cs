@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class GlobalValidation : Core.IUtf8JsonSerializable
+    public partial class GlobalValidation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsAuthenticationRequired))
+            if (Optional.IsDefined(IsAuthenticationRequired))
             {
                 writer.WritePropertyName("requireAuthentication"u8);
                 writer.WriteBooleanValue(IsAuthenticationRequired.Value);
             }
-            if (Core.Optional.IsDefined(UnauthenticatedClientAction))
+            if (Optional.IsDefined(UnauthenticatedClientAction))
             {
                 writer.WritePropertyName("unauthenticatedClientAction"u8);
                 writer.WriteStringValue(UnauthenticatedClientAction.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(RedirectToProvider))
+            if (Optional.IsDefined(RedirectToProvider))
             {
                 writer.WritePropertyName("redirectToProvider"u8);
                 writer.WriteStringValue(RedirectToProvider);
             }
-            if (Core.Optional.IsCollectionDefined(ExcludedPaths))
+            if (Optional.IsCollectionDefined(ExcludedPaths))
             {
                 writer.WritePropertyName("excludedPaths"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<bool> requireAuthentication = default;
-            Core.Optional<UnauthenticatedClientActionV2> unauthenticatedClientAction = default;
-            Core.Optional<string> redirectToProvider = default;
-            Core.Optional<IList<string>> excludedPaths = default;
+            Optional<bool> requireAuthentication = default;
+            Optional<UnauthenticatedClientActionV2> unauthenticatedClientAction = default;
+            Optional<string> redirectToProvider = default;
+            Optional<IList<string>> excludedPaths = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requireAuthentication"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new GlobalValidation(Core.Optional.ToNullable(requireAuthentication), Core.Optional.ToNullable(unauthenticatedClientAction), redirectToProvider.Value, Core.Optional.ToList(excludedPaths));
+            return new GlobalValidation(Optional.ToNullable(requireAuthentication), Optional.ToNullable(unauthenticatedClientAction), redirectToProvider.Value, Optional.ToList(excludedPaths));
         }
     }
 }

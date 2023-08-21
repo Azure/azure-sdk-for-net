@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MabContainerExtendedInfo : Core.IUtf8JsonSerializable
+    public partial class MabContainerExtendedInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LastRefreshedOn))
+            if (Optional.IsDefined(LastRefreshedOn))
             {
                 writer.WritePropertyName("lastRefreshedAt"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(BackupItemType))
+            if (Optional.IsDefined(BackupItemType))
             {
                 writer.WritePropertyName("backupItemType"u8);
                 writer.WriteStringValue(BackupItemType.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(BackupItems))
+            if (Optional.IsCollectionDefined(BackupItems))
             {
                 writer.WritePropertyName("backupItems"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(PolicyName))
+            if (Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (Core.Optional.IsDefined(LastBackupStatus))
+            if (Optional.IsDefined(LastBackupStatus))
             {
                 writer.WritePropertyName("lastBackupStatus"u8);
                 writer.WriteStringValue(LastBackupStatus);
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> lastRefreshedAt = default;
-            Core.Optional<BackupItemType> backupItemType = default;
-            Core.Optional<IList<string>> backupItems = default;
-            Core.Optional<string> policyName = default;
-            Core.Optional<string> lastBackupStatus = default;
+            Optional<DateTimeOffset> lastRefreshedAt = default;
+            Optional<BackupItemType> backupItemType = default;
+            Optional<IList<string>> backupItems = default;
+            Optional<string> policyName = default;
+            Optional<string> lastBackupStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastRefreshedAt"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new MabContainerExtendedInfo(Core.Optional.ToNullable(lastRefreshedAt), Core.Optional.ToNullable(backupItemType), Core.Optional.ToList(backupItems), policyName.Value, lastBackupStatus.Value);
+            return new MabContainerExtendedInfo(Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(backupItemType), Optional.ToList(backupItems), policyName.Value, lastBackupStatus.Value);
         }
     }
 }

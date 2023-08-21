@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class TwinData : Core.IUtf8JsonSerializable
+    public partial class TwinData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DeviceId))
+            if (Optional.IsDefined(DeviceId))
             {
                 writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
             }
-            if (Core.Optional.IsDefined(ModuleId))
+            if (Optional.IsDefined(ModuleId))
             {
                 writer.WritePropertyName("moduleId"u8);
                 writer.WriteStringValue(ModuleId);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,72 +43,72 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Core.Optional.IsDefined(Etag))
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(Etag);
             }
-            if (Core.Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (Core.Optional.IsDefined(DeviceEtag))
+            if (Optional.IsDefined(DeviceEtag))
             {
                 writer.WritePropertyName("deviceEtag"u8);
                 writer.WriteStringValue(DeviceEtag);
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(StatusReason))
+            if (Optional.IsDefined(StatusReason))
             {
                 writer.WritePropertyName("statusReason"u8);
                 writer.WriteStringValue(StatusReason);
             }
-            if (Core.Optional.IsDefined(StatusUpdateTime))
+            if (Optional.IsDefined(StatusUpdateTime))
             {
                 writer.WritePropertyName("statusUpdateTime"u8);
                 writer.WriteStringValue(StatusUpdateTime.Value, "O");
             }
-            if (Core.Optional.IsDefined(ConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteStringValue(ConnectionState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(LastActivityTime))
+            if (Optional.IsDefined(LastActivityTime))
             {
                 writer.WritePropertyName("lastActivityTime"u8);
                 writer.WriteStringValue(LastActivityTime.Value, "O");
             }
-            if (Core.Optional.IsDefined(CloudToDeviceMessageCount))
+            if (Optional.IsDefined(CloudToDeviceMessageCount))
             {
                 writer.WritePropertyName("cloudToDeviceMessageCount"u8);
                 writer.WriteNumberValue(CloudToDeviceMessageCount.Value);
             }
-            if (Core.Optional.IsDefined(AuthenticationType))
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(X509Thumbprint))
+            if (Optional.IsDefined(X509Thumbprint))
             {
                 writer.WritePropertyName("x509Thumbprint"u8);
                 writer.WriteObjectValue(X509Thumbprint);
             }
-            if (Core.Optional.IsDefined(Capabilities))
+            if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteObjectValue(Capabilities);
             }
-            if (Core.Optional.IsDefined(DeviceScope))
+            if (Optional.IsDefined(DeviceScope))
             {
                 writer.WritePropertyName("deviceScope"u8);
                 writer.WriteStringValue(DeviceScope);
@@ -122,23 +122,23 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Core.Optional<string> deviceId = default;
-            Core.Optional<string> moduleId = default;
-            Core.Optional<IDictionary<string, object>> tags = default;
-            Core.Optional<TwinProperties> properties = default;
-            Core.Optional<string> etag = default;
-            Core.Optional<long> version = default;
-            Core.Optional<string> deviceEtag = default;
-            Core.Optional<TwinStatus> status = default;
-            Core.Optional<string> statusReason = default;
-            Core.Optional<DateTimeOffset> statusUpdateTime = default;
-            Core.Optional<TwinConnectionState> connectionState = default;
-            Core.Optional<DateTimeOffset> lastActivityTime = default;
-            Core.Optional<int> cloudToDeviceMessageCount = default;
-            Core.Optional<TwinAuthenticationType> authenticationType = default;
-            Core.Optional<X509Thumbprint> x509Thumbprint = default;
-            Core.Optional<DeviceCapabilities> capabilities = default;
-            Core.Optional<string> deviceScope = default;
+            Optional<string> deviceId = default;
+            Optional<string> moduleId = default;
+            Optional<IDictionary<string, object>> tags = default;
+            Optional<TwinProperties> properties = default;
+            Optional<string> etag = default;
+            Optional<long> version = default;
+            Optional<string> deviceEtag = default;
+            Optional<TwinStatus> status = default;
+            Optional<string> statusReason = default;
+            Optional<DateTimeOffset> statusUpdateTime = default;
+            Optional<TwinConnectionState> connectionState = default;
+            Optional<DateTimeOffset> lastActivityTime = default;
+            Optional<int> cloudToDeviceMessageCount = default;
+            Optional<TwinAuthenticationType> authenticationType = default;
+            Optional<X509Thumbprint> x509Thumbprint = default;
+            Optional<DeviceCapabilities> capabilities = default;
+            Optional<string> deviceScope = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -283,7 +283,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new TwinData(deviceId.Value, moduleId.Value, Core.Optional.ToDictionary(tags), properties.Value, etag.Value, Core.Optional.ToNullable(version), deviceEtag.Value, Core.Optional.ToNullable(status), statusReason.Value, Core.Optional.ToNullable(statusUpdateTime), Core.Optional.ToNullable(connectionState), Core.Optional.ToNullable(lastActivityTime), Core.Optional.ToNullable(cloudToDeviceMessageCount), Core.Optional.ToNullable(authenticationType), x509Thumbprint.Value, capabilities.Value, deviceScope.Value);
+            return new TwinData(deviceId.Value, moduleId.Value, Optional.ToDictionary(tags), properties.Value, etag.Value, Optional.ToNullable(version), deviceEtag.Value, Optional.ToNullable(status), statusReason.Value, Optional.ToNullable(statusUpdateTime), Optional.ToNullable(connectionState), Optional.ToNullable(lastActivityTime), Optional.ToNullable(cloudToDeviceMessageCount), Optional.ToNullable(authenticationType), x509Thumbprint.Value, capabilities.Value, deviceScope.Value);
         }
     }
 }

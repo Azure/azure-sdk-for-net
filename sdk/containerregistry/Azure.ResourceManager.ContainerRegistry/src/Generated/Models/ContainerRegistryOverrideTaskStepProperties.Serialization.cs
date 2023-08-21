@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryOverrideTaskStepProperties : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryOverrideTaskStepProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ContextPath))
+            if (Optional.IsDefined(ContextPath))
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (Core.Optional.IsDefined(File))
+            if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
                 writer.WriteStringValue(File);
             }
-            if (Core.Optional.IsCollectionDefined(Arguments))
+            if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Target))
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Core.Optional.IsCollectionDefined(Values))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(UpdateTriggerToken))
+            if (Optional.IsDefined(UpdateTriggerToken))
             {
                 writer.WritePropertyName("updateTriggerToken"u8);
                 writer.WriteStringValue(UpdateTriggerToken);
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<string> contextPath = default;
-            Core.Optional<string> file = default;
-            Core.Optional<IList<ContainerRegistryRunArgument>> arguments = default;
-            Core.Optional<string> target = default;
-            Core.Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
-            Core.Optional<string> updateTriggerToken = default;
+            Optional<string> contextPath = default;
+            Optional<string> file = default;
+            Optional<IList<ContainerRegistryRunArgument>> arguments = default;
+            Optional<string> target = default;
+            Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
+            Optional<string> updateTriggerToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contextPath"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryOverrideTaskStepProperties(contextPath.Value, file.Value, Core.Optional.ToList(arguments), target.Value, Core.Optional.ToList(values), updateTriggerToken.Value);
+            return new ContainerRegistryOverrideTaskStepProperties(contextPath.Value, file.Value, Optional.ToList(arguments), target.Value, Optional.ToList(values), updateTriggerToken.Value);
         }
     }
 }

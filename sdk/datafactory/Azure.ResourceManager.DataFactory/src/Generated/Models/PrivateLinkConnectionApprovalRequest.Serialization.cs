@@ -11,17 +11,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PrivateLinkConnectionApprovalRequest : Core.IUtf8JsonSerializable
+    public partial class PrivateLinkConnectionApprovalRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
             }
-            if (Core.Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
-            Core.Optional<WritableSubResource> privateEndpoint = default;
+            Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
+            Optional<WritableSubResource> privateEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateLinkServiceConnectionState"u8))

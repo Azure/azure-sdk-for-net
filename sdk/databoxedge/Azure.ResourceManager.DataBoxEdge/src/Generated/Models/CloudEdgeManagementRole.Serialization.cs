@@ -11,16 +11,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class CloudEdgeManagementRole : Core.IUtf8JsonSerializable
+    public partial class CloudEdgeManagementRole : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RoleStatus))
+            if (Optional.IsDefined(RoleStatus))
             {
                 writer.WritePropertyName("roleStatus"u8);
                 writer.WriteStringValue(RoleStatus.Value.ToString());
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DataBoxEdgeRoleStatus> localManagementStatus = default;
-            Core.Optional<EdgeProfile> edgeProfile = default;
-            Core.Optional<DataBoxEdgeRoleStatus> roleStatus = default;
+            Optional<SystemData> systemData = default;
+            Optional<DataBoxEdgeRoleStatus> localManagementStatus = default;
+            Optional<EdgeProfile> edgeProfile = default;
+            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new CloudEdgeManagementRole(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(localManagementStatus), edgeProfile.Value, Core.Optional.ToNullable(roleStatus));
+            return new CloudEdgeManagementRole(id, name, type, systemData.Value, kind, Optional.ToNullable(localManagementStatus), edgeProfile.Value, Optional.ToNullable(roleStatus));
         }
     }
 }

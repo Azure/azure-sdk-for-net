@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseDataLakeStorageAccountDetails : Core.IUtf8JsonSerializable
+    public partial class SynapseDataLakeStorageAccountDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AccountUri))
+            if (Optional.IsDefined(AccountUri))
             {
                 writer.WritePropertyName("accountUrl"u8);
                 writer.WriteStringValue(AccountUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(Filesystem))
+            if (Optional.IsDefined(Filesystem))
             {
                 writer.WritePropertyName("filesystem"u8);
                 writer.WriteStringValue(Filesystem);
             }
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Core.Optional.IsDefined(CreateManagedPrivateEndpoint))
+            if (Optional.IsDefined(CreateManagedPrivateEndpoint))
             {
                 writer.WritePropertyName("createManagedPrivateEndpoint"u8);
                 writer.WriteBooleanValue(CreateManagedPrivateEndpoint.Value);
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<Uri> accountUrl = default;
-            Core.Optional<string> filesystem = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<bool> createManagedPrivateEndpoint = default;
+            Optional<Uri> accountUrl = default;
+            Optional<string> filesystem = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<bool> createManagedPrivateEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountUrl"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseDataLakeStorageAccountDetails(accountUrl.Value, filesystem.Value, resourceId.Value, Core.Optional.ToNullable(createManagedPrivateEndpoint));
+            return new SynapseDataLakeStorageAccountDetails(accountUrl.Value, filesystem.Value, resourceId.Value, Optional.ToNullable(createManagedPrivateEndpoint));
         }
     }
 }

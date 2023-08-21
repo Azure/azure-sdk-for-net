@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> serviceProviderName = default;
-            Core.Optional<Uri> devPortalUrl = default;
-            Core.Optional<Uri> iconUrl = default;
-            Core.Optional<IReadOnlyList<BotServiceProviderParameter>> parameters = default;
+            Optional<string> id = default;
+            Optional<string> displayName = default;
+            Optional<string> serviceProviderName = default;
+            Optional<Uri> devPortalUrl = default;
+            Optional<Uri> iconUrl = default;
+            Optional<IReadOnlyList<BotServiceProviderParameter>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new BotServiceProviderProperties(id.Value, displayName.Value, serviceProviderName.Value, devPortalUrl.Value, iconUrl.Value, Core.Optional.ToList(parameters));
+            return new BotServiceProviderProperties(id.Value, displayName.Value, serviceProviderName.Value, devPortalUrl.Value, iconUrl.Value, Optional.ToList(parameters));
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<string> minifiedTemplate = default;
-            Core.Optional<string> templateHash = default;
+            Optional<string> minifiedTemplate = default;
+            Optional<string> templateHash = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minifiedTemplate"u8))

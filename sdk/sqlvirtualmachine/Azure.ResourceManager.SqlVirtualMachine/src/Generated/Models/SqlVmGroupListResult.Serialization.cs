@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SqlVmGroupData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<SqlVmGroupData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new SqlVmGroupListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new SqlVmGroupListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

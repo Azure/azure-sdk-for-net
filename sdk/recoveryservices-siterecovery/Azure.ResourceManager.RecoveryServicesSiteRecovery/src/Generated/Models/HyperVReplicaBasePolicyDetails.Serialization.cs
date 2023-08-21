@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<int> recoveryPoints = default;
-            Core.Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
-            Core.Optional<string> compression = default;
-            Core.Optional<string> initialReplicationMethod = default;
-            Core.Optional<string> onlineReplicationStartTime = default;
-            Core.Optional<string> offlineReplicationImportPath = default;
-            Core.Optional<string> offlineReplicationExportPath = default;
-            Core.Optional<int> replicationPort = default;
-            Core.Optional<int> allowedAuthenticationType = default;
-            Core.Optional<string> replicaDeletionOption = default;
+            Optional<int> recoveryPoints = default;
+            Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
+            Optional<string> compression = default;
+            Optional<string> initialReplicationMethod = default;
+            Optional<string> onlineReplicationStartTime = default;
+            Optional<string> offlineReplicationImportPath = default;
+            Optional<string> offlineReplicationExportPath = default;
+            Optional<int> replicationPort = default;
+            Optional<int> allowedAuthenticationType = default;
+            Optional<string> replicaDeletionOption = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new HyperVReplicaBasePolicyDetails(instanceType, Core.Optional.ToNullable(recoveryPoints), Core.Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), compression.Value, initialReplicationMethod.Value, onlineReplicationStartTime.Value, offlineReplicationImportPath.Value, offlineReplicationExportPath.Value, Core.Optional.ToNullable(replicationPort), Core.Optional.ToNullable(allowedAuthenticationType), replicaDeletionOption.Value);
+            return new HyperVReplicaBasePolicyDetails(instanceType, Optional.ToNullable(recoveryPoints), Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), compression.Value, initialReplicationMethod.Value, onlineReplicationStartTime.Value, offlineReplicationImportPath.Value, offlineReplicationExportPath.Value, Optional.ToNullable(replicationPort), Optional.ToNullable(allowedAuthenticationType), replicaDeletionOption.Value);
         }
     }
 }

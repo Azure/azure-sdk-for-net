@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> groupId = default;
-            Core.Optional<string> rpGroupType = default;
+            Optional<string> name = default;
+            Optional<string> groupId = default;
+            Optional<string> rpGroupType = default;
             string instanceType = default;
-            Core.Optional<IReadOnlyList<AsrTask>> childTasks = default;
+            Optional<IReadOnlyList<AsrTask>> childTasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new RecoveryPlanShutdownGroupTaskDetails(instanceType, Core.Optional.ToList(childTasks), name.Value, groupId.Value, rpGroupType.Value);
+            return new RecoveryPlanShutdownGroupTaskDetails(instanceType, Optional.ToList(childTasks), name.Value, groupId.Value, rpGroupType.Value);
         }
     }
 }

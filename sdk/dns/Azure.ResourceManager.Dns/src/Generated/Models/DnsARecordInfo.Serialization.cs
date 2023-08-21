@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DnsARecordInfo : Core.IUtf8JsonSerializable
+    public partial class DnsARecordInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IPv4Address))
+            if (Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address.ToString());
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Core.Optional<IPAddress> ipv4Address = default;
+            Optional<IPAddress> ipv4Address = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipv4Address"u8))

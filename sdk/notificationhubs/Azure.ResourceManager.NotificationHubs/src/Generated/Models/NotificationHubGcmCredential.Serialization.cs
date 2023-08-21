@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubGcmCredential : Core.IUtf8JsonSerializable
+    public partial class NotificationHubGcmCredential : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(GcmEndpoint))
+            if (Optional.IsDefined(GcmEndpoint))
             {
                 writer.WritePropertyName("gcmEndpoint"u8);
                 writer.WriteStringValue(GcmEndpoint.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(GcmApiKey))
+            if (Optional.IsDefined(GcmApiKey))
             {
                 writer.WritePropertyName("googleApiKey"u8);
                 writer.WriteStringValue(GcmApiKey);
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Core.Optional<Uri> gcmEndpoint = default;
-            Core.Optional<string> googleApiKey = default;
+            Optional<Uri> gcmEndpoint = default;
+            Optional<string> googleApiKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

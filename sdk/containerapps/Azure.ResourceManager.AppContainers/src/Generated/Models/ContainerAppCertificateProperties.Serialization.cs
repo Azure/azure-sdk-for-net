@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppCertificateProperties : Core.IUtf8JsonSerializable
+    public partial class ContainerAppCertificateProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteBase64StringValue(Value, "D");
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<ContainerAppCertificateProvisioningState> provisioningState = default;
-            Core.Optional<string> password = default;
-            Core.Optional<string> subjectName = default;
-            Core.Optional<IReadOnlyList<string>> subjectAlternativeNames = default;
-            Core.Optional<byte[]> value = default;
-            Core.Optional<string> issuer = default;
-            Core.Optional<DateTimeOffset> issueDate = default;
-            Core.Optional<DateTimeOffset> expirationDate = default;
-            Core.Optional<string> thumbprint = default;
-            Core.Optional<bool> valid = default;
-            Core.Optional<string> publicKeyHash = default;
+            Optional<ContainerAppCertificateProvisioningState> provisioningState = default;
+            Optional<string> password = default;
+            Optional<string> subjectName = default;
+            Optional<IReadOnlyList<string>> subjectAlternativeNames = default;
+            Optional<byte[]> value = default;
+            Optional<string> issuer = default;
+            Optional<DateTimeOffset> issueDate = default;
+            Optional<DateTimeOffset> expirationDate = default;
+            Optional<string> thumbprint = default;
+            Optional<bool> valid = default;
+            Optional<string> publicKeyHash = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppCertificateProperties(Core.Optional.ToNullable(provisioningState), password.Value, subjectName.Value, Core.Optional.ToList(subjectAlternativeNames), value.Value, issuer.Value, Core.Optional.ToNullable(issueDate), Core.Optional.ToNullable(expirationDate), thumbprint.Value, Core.Optional.ToNullable(valid), publicKeyHash.Value);
+            return new ContainerAppCertificateProperties(Optional.ToNullable(provisioningState), password.Value, subjectName.Value, Optional.ToList(subjectAlternativeNames), value.Value, issuer.Value, Optional.ToNullable(issueDate), Optional.ToNullable(expirationDate), thumbprint.Value, Optional.ToNullable(valid), publicKeyHash.Value);
         }
     }
 }

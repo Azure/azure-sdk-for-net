@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    public partial class SupportQuotaChangeContent : Core.IUtf8JsonSerializable
+    public partial class SupportQuotaChangeContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Region))
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (Core.Optional.IsDefined(Payload))
+            if (Optional.IsDefined(Payload))
             {
                 writer.WritePropertyName("payload"u8);
                 writer.WriteStringValue(Payload);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Core.Optional<string> region = default;
-            Core.Optional<string> payload = default;
+            Optional<string> region = default;
+            Optional<string> payload = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("region"u8))

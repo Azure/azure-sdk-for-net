@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AutomationConnectionTypeData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<AutomationConnectionTypeData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationConnectionTypeListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new AutomationConnectionTypeListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

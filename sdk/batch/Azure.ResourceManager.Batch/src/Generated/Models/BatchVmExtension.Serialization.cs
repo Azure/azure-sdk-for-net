@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchVmExtension : Core.IUtf8JsonSerializable
+    public partial class BatchVmExtension : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -23,22 +23,22 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(Publisher);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ExtensionType);
-            if (Core.Optional.IsDefined(TypeHandlerVersion))
+            if (Optional.IsDefined(TypeHandlerVersion))
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Core.Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (Optional.IsDefined(AutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (Core.Optional.IsDefined(EnableAutomaticUpgrade))
+            if (Optional.IsDefined(EnableAutomaticUpgrade))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
             }
-            if (Core.Optional.IsDefined(Settings))
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Batch.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Settings.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(ProtectedSettings))
+            if (Optional.IsDefined(ProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettings"u8);
 #if NET6_0_OR_GREATER
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Batch.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettings.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsCollectionDefined(ProvisionAfterExtensions))
+            if (Optional.IsCollectionDefined(ProvisionAfterExtensions))
             {
                 writer.WritePropertyName("provisionAfterExtensions"u8);
                 writer.WriteStartArray();
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.Batch.Models
             string name = default;
             string publisher = default;
             string type = default;
-            Core.Optional<string> typeHandlerVersion = default;
-            Core.Optional<bool> autoUpgradeMinorVersion = default;
-            Core.Optional<bool> enableAutomaticUpgrade = default;
-            Core.Optional<BinaryData> settings = default;
-            Core.Optional<BinaryData> protectedSettings = default;
-            Core.Optional<IList<string>> provisionAfterExtensions = default;
+            Optional<string> typeHandlerVersion = default;
+            Optional<bool> autoUpgradeMinorVersion = default;
+            Optional<bool> enableAutomaticUpgrade = default;
+            Optional<BinaryData> settings = default;
+            Optional<BinaryData> protectedSettings = default;
+            Optional<IList<string>> provisionAfterExtensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchVmExtension(name, publisher, type, typeHandlerVersion.Value, Core.Optional.ToNullable(autoUpgradeMinorVersion), Core.Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, Core.Optional.ToList(provisionAfterExtensions));
+            return new BatchVmExtension(name, publisher, type, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, Optional.ToList(provisionAfterExtensions));
         }
     }
 }

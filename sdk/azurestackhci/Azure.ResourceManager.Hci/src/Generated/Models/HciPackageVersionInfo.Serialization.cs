@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciPackageVersionInfo : Core.IUtf8JsonSerializable
+    public partial class HciPackageVersionInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PackageType))
+            if (Optional.IsDefined(PackageType))
             {
                 writer.WritePropertyName("packageType"u8);
                 writer.WriteStringValue(PackageType);
             }
-            if (Core.Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Core.Optional.IsDefined(LastUpdated))
+            if (Optional.IsDefined(LastUpdated))
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Core.Optional<string> packageType = default;
-            Core.Optional<string> version = default;
-            Core.Optional<DateTimeOffset> lastUpdated = default;
+            Optional<string> packageType = default;
+            Optional<string> version = default;
+            Optional<DateTimeOffset> lastUpdated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packageType"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new HciPackageVersionInfo(packageType.Value, version.Value, Core.Optional.ToNullable(lastUpdated));
+            return new HciPackageVersionInfo(packageType.Value, version.Value, Optional.ToNullable(lastUpdated));
         }
     }
 }

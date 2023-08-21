@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class RedisEnterpriseSku : Core.IUtf8JsonSerializable
+    public partial class RedisEnterpriseSku : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Core.Optional.IsDefined(Capacity))
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 return null;
             }
             RedisEnterpriseSkuName name = default;
-            Core.Optional<int> capacity = default;
+            Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     continue;
                 }
             }
-            return new RedisEnterpriseSku(name, Core.Optional.ToNullable(capacity));
+            return new RedisEnterpriseSku(name, Optional.ToNullable(capacity));
         }
     }
 }

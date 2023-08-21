@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of MongoDBUserDefinitionData. </summary>
         public MongoDBUserDefinitionData()
         {
-            Roles = new Core.ChangeTrackingList<MongoDBRole>();
+            Roles = new ChangeTrackingList<MongoDBRole>();
         }
 
         /// <summary> Initializes a new instance of MongoDBUserDefinitionData. </summary>

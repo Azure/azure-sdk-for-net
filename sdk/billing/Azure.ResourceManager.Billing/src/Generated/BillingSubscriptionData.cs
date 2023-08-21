@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Initializes a new instance of BillingSubscriptionData. </summary>
         public BillingSubscriptionData()
         {
-            BillingPolicies = new Core.ChangeTrackingDictionary<string, string>();
-            SuspensionReasons = new Core.ChangeTrackingList<string>();
+            BillingPolicies = new ChangeTrackingDictionary<string, string>();
+            SuspensionReasons = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BillingSubscriptionData. </summary>

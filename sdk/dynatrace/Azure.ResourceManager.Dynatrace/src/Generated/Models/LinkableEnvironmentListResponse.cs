@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Initializes a new instance of LinkableEnvironmentListResponse. </summary>
         internal LinkableEnvironmentListResponse()
         {
-            Value = new Core.ChangeTrackingList<LinkableEnvironmentResult>();
+            Value = new ChangeTrackingList<LinkableEnvironmentResult>();
         }
 
         /// <summary> Initializes a new instance of LinkableEnvironmentListResponse. </summary>

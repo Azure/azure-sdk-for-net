@@ -12,17 +12,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DigitalTwinsPrivateEndpointConnectionProperties : Core.IUtf8JsonSerializable
+    public partial class DigitalTwinsPrivateEndpointConnectionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Core.Optional.IsCollectionDefined(GroupIds))
+            if (Optional.IsCollectionDefined(GroupIds))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 return null;
             }
-            Core.Optional<DigitalTwinsPrivateLinkResourceProvisioningState?> provisioningState = default;
-            Core.Optional<SubResource> privateEndpoint = default;
-            Core.Optional<IList<string>> groupIds = default;
-            Core.Optional<DigitalTwinsPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<DigitalTwinsPrivateLinkResourceProvisioningState?> provisioningState = default;
+            Optional<SubResource> privateEndpoint = default;
+            Optional<IList<string>> groupIds = default;
+            Optional<DigitalTwinsPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new DigitalTwinsPrivateEndpointConnectionProperties(Core.Optional.ToNullable(provisioningState), privateEndpoint, Core.Optional.ToList(groupIds), privateLinkServiceConnectionState.Value);
+            return new DigitalTwinsPrivateEndpointConnectionProperties(Optional.ToNullable(provisioningState), privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value);
         }
     }
 }

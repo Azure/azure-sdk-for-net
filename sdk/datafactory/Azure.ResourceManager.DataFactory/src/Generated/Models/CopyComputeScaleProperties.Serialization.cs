@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CopyComputeScaleProperties : Core.IUtf8JsonSerializable
+    public partial class CopyComputeScaleProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DataIntegrationUnit))
+            if (Optional.IsDefined(DataIntegrationUnit))
             {
                 writer.WritePropertyName("dataIntegrationUnit"u8);
                 writer.WriteNumberValue(DataIntegrationUnit.Value);
             }
-            if (Core.Optional.IsDefined(TimeToLive))
+            if (Optional.IsDefined(TimeToLive))
             {
                 writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLive.Value);
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<int> dataIntegrationUnit = default;
-            Core.Optional<int> timeToLive = default;
+            Optional<int> dataIntegrationUnit = default;
+            Optional<int> timeToLive = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CopyComputeScaleProperties(Core.Optional.ToNullable(dataIntegrationUnit), Core.Optional.ToNullable(timeToLive), additionalProperties);
+            return new CopyComputeScaleProperties(Optional.ToNullable(dataIntegrationUnit), Optional.ToNullable(timeToLive), additionalProperties);
         }
     }
 }

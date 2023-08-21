@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<string> id = default;
-            Core.Optional<IPAddress> address = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<IReadOnlyList<string>> nextHopIds = default;
-            Core.Optional<IReadOnlyList<ConnectivityIssue>> issues = default;
+            Optional<string> type = default;
+            Optional<string> id = default;
+            Optional<IPAddress> address = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<IReadOnlyList<string>> nextHopIds = default;
+            Optional<IReadOnlyList<ConnectivityIssue>> issues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ConnectivityHop(type.Value, id.Value, address.Value, resourceId.Value, Core.Optional.ToList(nextHopIds), Core.Optional.ToList(issues));
+            return new ConnectivityHop(type.Value, id.Value, address.Value, resourceId.Value, Optional.ToList(nextHopIds), Optional.ToList(issues));
         }
     }
 }

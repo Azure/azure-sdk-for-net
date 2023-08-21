@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyDictionary<string, string>> failedObjects = default;
-            Core.Optional<ValidationError> validationErrors = default;
+            Optional<IReadOnlyDictionary<string, string>> failedObjects = default;
+            Optional<ValidationError> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failedObjects"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new DataIntegrityValidationResult(Core.Optional.ToDictionary(failedObjects), validationErrors.Value);
+            return new DataIntegrityValidationResult(Optional.ToDictionary(failedObjects), validationErrors.Value);
         }
     }
 }

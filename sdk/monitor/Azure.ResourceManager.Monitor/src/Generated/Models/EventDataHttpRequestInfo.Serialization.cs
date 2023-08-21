@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<string> clientRequestId = default;
-            Core.Optional<IPAddress> clientIPAddress = default;
-            Core.Optional<string> method = default;
-            Core.Optional<Uri> uri = default;
+            Optional<string> clientRequestId = default;
+            Optional<IPAddress> clientIPAddress = default;
+            Optional<string> method = default;
+            Optional<Uri> uri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientRequestId"u8))

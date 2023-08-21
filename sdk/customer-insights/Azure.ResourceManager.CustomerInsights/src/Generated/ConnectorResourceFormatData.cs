@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <summary> Initializes a new instance of ConnectorResourceFormatData. </summary>
         public ConnectorResourceFormatData()
         {
-            ConnectorProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            ConnectorProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ConnectorResourceFormatData. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <summary> Initializes a new instance of ManagedServicesRegistrationListResult. </summary>
         internal ManagedServicesRegistrationListResult()
         {
-            Value = new Core.ChangeTrackingList<ManagedServicesRegistrationData>();
+            Value = new ChangeTrackingList<ManagedServicesRegistrationData>();
         }
 
         /// <summary> Initializes a new instance of ManagedServicesRegistrationListResult. </summary>

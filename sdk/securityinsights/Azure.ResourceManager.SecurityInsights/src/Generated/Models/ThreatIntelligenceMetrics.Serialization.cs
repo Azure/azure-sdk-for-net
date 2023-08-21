@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Core.Optional<ThreatIntelligenceMetric> properties = default;
+            Optional<ThreatIntelligenceMetric> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

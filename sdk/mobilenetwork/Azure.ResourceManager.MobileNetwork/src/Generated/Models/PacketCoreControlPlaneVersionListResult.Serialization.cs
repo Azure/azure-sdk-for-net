@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<PacketCoreControlPlaneVersionData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<PacketCoreControlPlaneVersionData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new PacketCoreControlPlaneVersionListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new PacketCoreControlPlaneVersionListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

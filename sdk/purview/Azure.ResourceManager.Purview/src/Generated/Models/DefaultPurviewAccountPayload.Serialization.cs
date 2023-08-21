@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class DefaultPurviewAccountPayload : Core.IUtf8JsonSerializable
+    public partial class DefaultPurviewAccountPayload : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AccountName))
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Core.Optional.IsDefined(ResourceGroupName))
+            if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Core.Optional.IsDefined(Scope))
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Core.Optional.IsDefined(ScopeTenantId))
+            if (Optional.IsDefined(ScopeTenantId))
             {
                 writer.WritePropertyName("scopeTenantId"u8);
                 writer.WriteStringValue(ScopeTenantId.Value);
             }
-            if (Core.Optional.IsDefined(ScopeType))
+            if (Optional.IsDefined(ScopeType))
             {
                 writer.WritePropertyName("scopeType"u8);
                 writer.WriteStringValue(ScopeType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SubscriptionId))
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Core.Optional<string> accountName = default;
-            Core.Optional<string> resourceGroupName = default;
-            Core.Optional<string> scope = default;
-            Core.Optional<Guid> scopeTenantId = default;
-            Core.Optional<PurviewAccountScopeType> scopeType = default;
-            Core.Optional<string> subscriptionId = default;
+            Optional<string> accountName = default;
+            Optional<string> resourceGroupName = default;
+            Optional<string> scope = default;
+            Optional<Guid> scopeTenantId = default;
+            Optional<PurviewAccountScopeType> scopeType = default;
+            Optional<string> subscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Purview.Models
                     continue;
                 }
             }
-            return new DefaultPurviewAccountPayload(accountName.Value, resourceGroupName.Value, scope.Value, Core.Optional.ToNullable(scopeTenantId), Core.Optional.ToNullable(scopeType), subscriptionId.Value);
+            return new DefaultPurviewAccountPayload(accountName.Value, resourceGroupName.Value, scope.Value, Optional.ToNullable(scopeTenantId), Optional.ToNullable(scopeType), subscriptionId.Value);
         }
     }
 }

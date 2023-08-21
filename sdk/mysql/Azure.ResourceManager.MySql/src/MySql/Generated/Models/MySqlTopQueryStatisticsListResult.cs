@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlTopQueryStatisticsListResult. </summary>
         internal MySqlTopQueryStatisticsListResult()
         {
-            Value = new Core.ChangeTrackingList<MySqlQueryStatisticData>();
+            Value = new ChangeTrackingList<MySqlQueryStatisticData>();
         }
 
         /// <summary> Initializes a new instance of MySqlTopQueryStatisticsListResult. </summary>

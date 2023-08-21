@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningEndpointDeploymentProperties : Core.IUtf8JsonSerializable
+    public partial class MachineLearningEndpointDeploymentProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CodeConfiguration))
+            if (Optional.IsDefined(CodeConfiguration))
             {
                 if (CodeConfiguration != null)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("codeConfiguration");
                 }
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Core.Optional.IsDefined(EnvironmentId))
+            if (Optional.IsDefined(EnvironmentId))
             {
                 if (EnvironmentId != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentId");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(EnvironmentVariables))
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 if (EnvironmentVariables != null)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentVariables");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<MachineLearningCodeConfiguration> codeConfiguration = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> environmentId = default;
-            Core.Optional<IDictionary<string, string>> environmentVariables = default;
-            Core.Optional<IDictionary<string, string>> properties = default;
+            Optional<MachineLearningCodeConfiguration> codeConfiguration = default;
+            Optional<string> description = default;
+            Optional<string> environmentId = default;
+            Optional<IDictionary<string, string>> environmentVariables = default;
+            Optional<IDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("codeConfiguration"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningEndpointDeploymentProperties(codeConfiguration.Value, description.Value, environmentId.Value, Core.Optional.ToDictionary(environmentVariables), Core.Optional.ToDictionary(properties));
+            return new MachineLearningEndpointDeploymentProperties(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties));
         }
     }
 }

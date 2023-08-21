@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            Scripts = new Core.ChangeTrackingList<ScriptActivityScriptBlock>();
+            Scripts = new ChangeTrackingList<ScriptActivityScriptBlock>();
             ActivityType = "Script";
         }
 

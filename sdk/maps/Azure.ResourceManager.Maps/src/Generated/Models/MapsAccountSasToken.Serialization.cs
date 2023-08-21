@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Core.Optional<string> accountSasToken = default;
+            Optional<string> accountSasToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountSasToken"u8))

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkHttpsServerCertificate : Core.IUtf8JsonSerializable
+    public partial class MobileNetworkHttpsServerCertificate : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("certificateUrl"u8);
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             Uri certificateUrl = default;
-            Core.Optional<MobileNetworkCertificateProvisioning> provisioning = default;
+            Optional<MobileNetworkCertificateProvisioning> provisioning = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateUrl"u8))

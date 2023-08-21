@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of EventHubsPrivateEndpointConnectionListResult. </summary>
         internal EventHubsPrivateEndpointConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<EventHubsPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of EventHubsPrivateEndpointConnectionListResult. </summary>

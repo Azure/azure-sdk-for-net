@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of FormulaList. </summary>
         internal FormulaList()
         {
-            Value = new Core.ChangeTrackingList<DevTestLabFormulaData>();
+            Value = new ChangeTrackingList<DevTestLabFormulaData>();
         }
 
         /// <summary> Initializes a new instance of FormulaList. </summary>

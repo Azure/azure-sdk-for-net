@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<string> primaryKey = default;
-            Core.Optional<string> secondaryKey = default;
-            Core.Optional<string> primaryTestEndpoint = default;
-            Core.Optional<string> secondaryTestEndpoint = default;
-            Core.Optional<bool> enabled = default;
+            Optional<string> primaryKey = default;
+            Optional<string> secondaryKey = default;
+            Optional<string> primaryTestEndpoint = default;
+            Optional<string> secondaryTestEndpoint = default;
+            Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryKey"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformServiceTestKeys(primaryKey.Value, secondaryKey.Value, primaryTestEndpoint.Value, secondaryTestEndpoint.Value, Core.Optional.ToNullable(enabled));
+            return new AppPlatformServiceTestKeys(primaryKey.Value, secondaryKey.Value, primaryTestEndpoint.Value, secondaryTestEndpoint.Value, Optional.ToNullable(enabled));
         }
     }
 }

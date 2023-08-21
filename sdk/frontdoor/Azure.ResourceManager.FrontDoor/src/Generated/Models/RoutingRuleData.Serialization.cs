@@ -12,24 +12,24 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class RoutingRuleData : Core.IUtf8JsonSerializable
+    public partial class RoutingRuleData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(FrontendEndpoints))
+            if (Optional.IsCollectionDefined(FrontendEndpoints))
             {
                 writer.WritePropertyName("frontendEndpoints"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(AcceptedProtocols))
+            if (Optional.IsCollectionDefined(AcceptedProtocols))
             {
                 writer.WritePropertyName("acceptedProtocols"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(PatternsToMatch))
+            if (Optional.IsCollectionDefined(PatternsToMatch))
             {
                 writer.WritePropertyName("patternsToMatch"u8);
                 writer.WriteStartArray();
@@ -59,22 +59,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(EnabledState))
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RouteConfiguration))
+            if (Optional.IsDefined(RouteConfiguration))
             {
                 writer.WritePropertyName("routeConfiguration"u8);
                 writer.WriteObjectValue(RouteConfiguration);
             }
-            if (Core.Optional.IsDefined(RulesEngine))
+            if (Optional.IsDefined(RulesEngine))
             {
                 writer.WritePropertyName("rulesEngine"u8);
                 JsonSerializer.Serialize(writer, RulesEngine);
             }
-            if (Core.Optional.IsDefined(WebApplicationFirewallPolicyLink))
+            if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
                 writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
                 JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<IList<WritableSubResource>> frontendEndpoints = default;
-            Core.Optional<IList<FrontDoorProtocol>> acceptedProtocols = default;
-            Core.Optional<IList<string>> patternsToMatch = default;
-            Core.Optional<RoutingRuleEnabledState> enabledState = default;
-            Core.Optional<RouteConfiguration> routeConfiguration = default;
-            Core.Optional<WritableSubResource> rulesEngine = default;
-            Core.Optional<WritableSubResource> webApplicationFirewallPolicyLink = default;
-            Core.Optional<FrontDoorResourceState> resourceState = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<IList<WritableSubResource>> frontendEndpoints = default;
+            Optional<IList<FrontDoorProtocol>> acceptedProtocols = default;
+            Optional<IList<string>> patternsToMatch = default;
+            Optional<RoutingRuleEnabledState> enabledState = default;
+            Optional<RouteConfiguration> routeConfiguration = default;
+            Optional<WritableSubResource> rulesEngine = default;
+            Optional<WritableSubResource> webApplicationFirewallPolicyLink = default;
+            Optional<FrontDoorResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new RoutingRuleData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToList(frontendEndpoints), Core.Optional.ToList(acceptedProtocols), Core.Optional.ToList(patternsToMatch), Core.Optional.ToNullable(enabledState), routeConfiguration.Value, rulesEngine, webApplicationFirewallPolicyLink, Core.Optional.ToNullable(resourceState));
+            return new RoutingRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToList(frontendEndpoints), Optional.ToList(acceptedProtocols), Optional.ToList(patternsToMatch), Optional.ToNullable(enabledState), routeConfiguration.Value, rulesEngine, webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState));
         }
     }
 }

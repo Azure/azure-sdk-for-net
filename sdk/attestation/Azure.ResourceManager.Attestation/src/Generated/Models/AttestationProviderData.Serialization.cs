@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Attestation
 {
-    public partial class AttestationProviderData : Core.IUtf8JsonSerializable
+    public partial class AttestationProviderData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.Attestation
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TrustModel))
+            if (Optional.IsDefined(TrustModel))
             {
                 writer.WritePropertyName("trustModel"u8);
                 writer.WriteStringValue(TrustModel);
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AttestUri))
+            if (Optional.IsDefined(AttestUri))
             {
                 writer.WritePropertyName("attestUri"u8);
                 writer.WriteStringValue(AttestUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.Attestation
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> trustModel = default;
-            Core.Optional<AttestationServiceStatus> status = default;
-            Core.Optional<Uri> attestUri = default;
-            Core.Optional<PublicNetworkAccessType> publicNetworkAccess = default;
-            Core.Optional<IReadOnlyList<AttestationPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> trustModel = default;
+            Optional<AttestationServiceStatus> status = default;
+            Optional<Uri> attestUri = default;
+            Optional<PublicNetworkAccessType> publicNetworkAccess = default;
+            Optional<IReadOnlyList<AttestationPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Attestation
                     continue;
                 }
             }
-            return new AttestationProviderData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, trustModel.Value, Core.Optional.ToNullable(status), attestUri.Value, Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToList(privateEndpointConnections));
+            return new AttestationProviderData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, trustModel.Value, Optional.ToNullable(status), attestUri.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections));
         }
     }
 }

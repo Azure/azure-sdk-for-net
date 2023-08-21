@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LibraryRequirementsConverter))]
-    public partial class LibraryRequirements : Core.IUtf8JsonSerializable
+    public partial class LibraryRequirements : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Content))
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Core.Optional.IsDefined(Filename))
+            if (Optional.IsDefined(Filename))
             {
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
@@ -37,9 +37,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> time = default;
-            Core.Optional<string> content = default;
-            Core.Optional<string> filename = default;
+            Optional<DateTimeOffset> time = default;
+            Optional<string> content = default;
+            Optional<string> filename = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LibraryRequirements(Core.Optional.ToNullable(time), content.Value, filename.Value);
+            return new LibraryRequirements(Optional.ToNullable(time), content.Value, filename.Value);
         }
 
         internal partial class LibraryRequirementsConverter : JsonConverter<LibraryRequirements>

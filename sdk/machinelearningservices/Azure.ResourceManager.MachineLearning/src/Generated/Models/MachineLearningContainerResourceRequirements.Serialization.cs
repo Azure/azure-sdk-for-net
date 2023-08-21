@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningContainerResourceRequirements : Core.IUtf8JsonSerializable
+    public partial class MachineLearningContainerResourceRequirements : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ContainerResourceLimits))
+            if (Optional.IsDefined(ContainerResourceLimits))
             {
                 if (ContainerResourceLimits != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("containerResourceLimits");
                 }
             }
-            if (Core.Optional.IsDefined(ContainerResourceRequests))
+            if (Optional.IsDefined(ContainerResourceRequests))
             {
                 if (ContainerResourceRequests != null)
                 {
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<MachineLearningContainerResourceSettings> containerResourceLimits = default;
-            Core.Optional<MachineLearningContainerResourceSettings> containerResourceRequests = default;
+            Optional<MachineLearningContainerResourceSettings> containerResourceLimits = default;
+            Optional<MachineLearningContainerResourceSettings> containerResourceRequests = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerResourceLimits"u8))

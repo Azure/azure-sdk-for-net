@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class KafkaRestProperties : Core.IUtf8JsonSerializable
+    public partial class KafkaRestProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ClientGroupInfo))
+            if (Optional.IsDefined(ClientGroupInfo))
             {
                 writer.WritePropertyName("clientGroupInfo"u8);
                 writer.WriteObjectValue(ClientGroupInfo);
             }
-            if (Core.Optional.IsCollectionDefined(ConfigurationOverride))
+            if (Optional.IsCollectionDefined(ConfigurationOverride))
             {
                 writer.WritePropertyName("configurationOverride"u8);
                 writer.WriteStartObject();
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<ClientGroupInfo> clientGroupInfo = default;
-            Core.Optional<IDictionary<string, string>> configurationOverride = default;
+            Optional<ClientGroupInfo> clientGroupInfo = default;
+            Optional<IDictionary<string, string>> configurationOverride = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientGroupInfo"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new KafkaRestProperties(clientGroupInfo.Value, Core.Optional.ToDictionary(configurationOverride));
+            return new KafkaRestProperties(clientGroupInfo.Value, Optional.ToDictionary(configurationOverride));
         }
     }
 }

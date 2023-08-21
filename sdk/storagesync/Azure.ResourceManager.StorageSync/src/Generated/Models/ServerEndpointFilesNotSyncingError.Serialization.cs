@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Core.Optional<int> errorCode = default;
-            Core.Optional<long> persistentCount = default;
-            Core.Optional<long> transientCount = default;
+            Optional<int> errorCode = default;
+            Optional<long> persistentCount = default;
+            Optional<long> transientCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new ServerEndpointFilesNotSyncingError(Core.Optional.ToNullable(errorCode), Core.Optional.ToNullable(persistentCount), Core.Optional.ToNullable(transientCount));
+            return new ServerEndpointFilesNotSyncingError(Optional.ToNullable(errorCode), Optional.ToNullable(persistentCount), Optional.ToNullable(transientCount));
         }
     }
 }

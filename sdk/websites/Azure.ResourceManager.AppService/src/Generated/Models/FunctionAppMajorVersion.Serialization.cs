@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> displayText = default;
-            Core.Optional<string> value = default;
-            Core.Optional<IReadOnlyList<FunctionAppMinorVersion>> minorVersions = default;
+            Optional<string> displayText = default;
+            Optional<string> value = default;
+            Optional<IReadOnlyList<FunctionAppMinorVersion>> minorVersions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayText"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new FunctionAppMajorVersion(displayText.Value, value.Value, Core.Optional.ToList(minorVersions));
+            return new FunctionAppMajorVersion(displayText.Value, value.Value, Optional.ToList(minorVersions));
         }
     }
 }

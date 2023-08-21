@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = await _mySqlDatabaseDatabasesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation<MySqlDatabaseResource>(new MySqlDatabaseOperationSource(Client), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, _mySqlDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<MySqlDatabaseResource>(new MySqlDatabaseOperationSource(Client), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, _mySqlDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = _mySqlDatabaseDatabasesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken);
-                var operation = new MySqlArmOperation<MySqlDatabaseResource>(new MySqlDatabaseOperationSource(Client), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, _mySqlDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<MySqlDatabaseResource>(new MySqlDatabaseOperationSource(Client), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, _mySqlDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MySql
         public virtual AsyncPageable<MySqlDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlDatabaseResource(Client, MySqlDatabaseData.DeserializeMySqlDatabaseData(e)), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, "MySqlDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlDatabaseResource(Client, MySqlDatabaseData.DeserializeMySqlDatabaseData(e)), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, "MySqlDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.MySql
         public virtual Pageable<MySqlDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlDatabaseResource(Client, MySqlDatabaseData.DeserializeMySqlDatabaseData(e)), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, "MySqlDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlDatabaseResource(Client, MySqlDatabaseData.DeserializeMySqlDatabaseData(e)), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, "MySqlDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

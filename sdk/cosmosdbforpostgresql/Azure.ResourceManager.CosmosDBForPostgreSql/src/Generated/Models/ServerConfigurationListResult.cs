@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <summary> Initializes a new instance of ServerConfigurationListResult. </summary>
         internal ServerConfigurationListResult()
         {
-            Value = new Core.ChangeTrackingList<ServerConfigurationData>();
+            Value = new ChangeTrackingList<ServerConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of ServerConfigurationListResult. </summary>

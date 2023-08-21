@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<ResourcesProvisioningState> provisioningState = default;
-            Core.Optional<string> correlationId = default;
-            Core.Optional<DateTimeOffset> timestamp = default;
-            Core.Optional<TimeSpan> duration = default;
-            Core.Optional<BinaryData> outputs = default;
-            Core.Optional<IReadOnlyList<ResourceProviderData>> providers = default;
-            Core.Optional<IReadOnlyList<ArmDependency>> dependencies = default;
-            Core.Optional<ArmDeploymentTemplateLink> templateLink = default;
-            Core.Optional<BinaryData> parameters = default;
-            Core.Optional<ArmDeploymentParametersLink> parametersLink = default;
-            Core.Optional<ArmDeploymentMode> mode = default;
-            Core.Optional<DebugSetting> debugSetting = default;
-            Core.Optional<ErrorDeploymentExtended> onErrorDeployment = default;
-            Core.Optional<string> templateHash = default;
-            Core.Optional<IReadOnlyList<SubResource>> outputResources = default;
-            Core.Optional<IReadOnlyList<SubResource>> validatedResources = default;
-            Core.Optional<ResponseError> error = default;
+            Optional<ResourcesProvisioningState> provisioningState = default;
+            Optional<string> correlationId = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<TimeSpan> duration = default;
+            Optional<BinaryData> outputs = default;
+            Optional<IReadOnlyList<ResourceProviderData>> providers = default;
+            Optional<IReadOnlyList<ArmDependency>> dependencies = default;
+            Optional<ArmDeploymentTemplateLink> templateLink = default;
+            Optional<BinaryData> parameters = default;
+            Optional<ArmDeploymentParametersLink> parametersLink = default;
+            Optional<ArmDeploymentMode> mode = default;
+            Optional<DebugSetting> debugSetting = default;
+            Optional<ErrorDeploymentExtended> onErrorDeployment = default;
+            Optional<string> templateHash = default;
+            Optional<IReadOnlyList<SubResource>> outputResources = default;
+            Optional<IReadOnlyList<SubResource>> validatedResources = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmDeploymentPropertiesExtended(Core.Optional.ToNullable(provisioningState), correlationId.Value, Core.Optional.ToNullable(timestamp), Core.Optional.ToNullable(duration), outputs.Value, Core.Optional.ToList(providers), Core.Optional.ToList(dependencies), templateLink.Value, parameters.Value, parametersLink.Value, Core.Optional.ToNullable(mode), debugSetting.Value, onErrorDeployment.Value, templateHash.Value, Core.Optional.ToList(outputResources), Core.Optional.ToList(validatedResources), error.Value);
+            return new ArmDeploymentPropertiesExtended(Optional.ToNullable(provisioningState), correlationId.Value, Optional.ToNullable(timestamp), Optional.ToNullable(duration), outputs.Value, Optional.ToList(providers), Optional.ToList(dependencies), templateLink.Value, parameters.Value, parametersLink.Value, Optional.ToNullable(mode), debugSetting.Value, onErrorDeployment.Value, templateHash.Value, Optional.ToList(outputResources), Optional.ToList(validatedResources), error.Value);
         }
     }
 }

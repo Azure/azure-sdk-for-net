@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
-    public partial class LoadTestingCmkEncryptionProperties : Core.IUtf8JsonSerializable
+    public partial class LoadTestingCmkEncryptionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Core.Optional.IsDefined(KeyUri))
+            if (Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUrl"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Core.Optional<LoadTestingCmkIdentity> identity = default;
-            Core.Optional<Uri> keyUrl = default;
+            Optional<LoadTestingCmkIdentity> identity = default;
+            Optional<Uri> keyUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Core.Optional<string> cloudId = default;
-            Core.Optional<string> ingestionKey = default;
+            Optional<string> cloudId = default;
+            Optional<string> ingestionKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cloudId"u8))

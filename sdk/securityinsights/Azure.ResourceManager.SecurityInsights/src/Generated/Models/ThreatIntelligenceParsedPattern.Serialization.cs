@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ThreatIntelligenceParsedPattern : Core.IUtf8JsonSerializable
+    public partial class ThreatIntelligenceParsedPattern : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PatternTypeKey))
+            if (Optional.IsDefined(PatternTypeKey))
             {
                 writer.WritePropertyName("patternTypeKey"u8);
                 writer.WriteStringValue(PatternTypeKey);
             }
-            if (Core.Optional.IsCollectionDefined(PatternTypeValues))
+            if (Optional.IsCollectionDefined(PatternTypeValues))
             {
                 writer.WritePropertyName("patternTypeValues"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> patternTypeKey = default;
-            Core.Optional<IList<ThreatIntelligenceParsedPatternTypeValue>> patternTypeValues = default;
+            Optional<string> patternTypeKey = default;
+            Optional<IList<ThreatIntelligenceParsedPatternTypeValue>> patternTypeValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patternTypeKey"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new ThreatIntelligenceParsedPattern(patternTypeKey.Value, Core.Optional.ToList(patternTypeValues));
+            return new ThreatIntelligenceParsedPattern(patternTypeKey.Value, Optional.ToList(patternTypeValues));
         }
     }
 }

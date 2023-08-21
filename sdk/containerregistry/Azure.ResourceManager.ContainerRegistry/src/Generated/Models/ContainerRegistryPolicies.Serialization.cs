@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryPolicies : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryPolicies : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(QuarantinePolicy))
+            if (Optional.IsDefined(QuarantinePolicy))
             {
                 writer.WritePropertyName("quarantinePolicy"u8);
                 writer.WriteObjectValue(QuarantinePolicy);
             }
-            if (Core.Optional.IsDefined(TrustPolicy))
+            if (Optional.IsDefined(TrustPolicy))
             {
                 writer.WritePropertyName("trustPolicy"u8);
                 writer.WriteObjectValue(TrustPolicy);
             }
-            if (Core.Optional.IsDefined(RetentionPolicy))
+            if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
-            if (Core.Optional.IsDefined(ExportPolicy))
+            if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
                 writer.WriteObjectValue(ExportPolicy);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<ContainerRegistryQuarantinePolicy> quarantinePolicy = default;
-            Core.Optional<ContainerRegistryTrustPolicy> trustPolicy = default;
-            Core.Optional<ContainerRegistryRetentionPolicy> retentionPolicy = default;
-            Core.Optional<ContainerRegistryExportPolicy> exportPolicy = default;
+            Optional<ContainerRegistryQuarantinePolicy> quarantinePolicy = default;
+            Optional<ContainerRegistryTrustPolicy> trustPolicy = default;
+            Optional<ContainerRegistryRetentionPolicy> retentionPolicy = default;
+            Optional<ContainerRegistryExportPolicy> exportPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("quarantinePolicy"u8))

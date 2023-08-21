@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of FrontDoorEndpointListResult. </summary>
         internal FrontDoorEndpointListResult()
         {
-            Value = new Core.ChangeTrackingList<FrontDoorEndpointData>();
+            Value = new ChangeTrackingList<FrontDoorEndpointData>();
         }
 
         /// <summary> Initializes a new instance of FrontDoorEndpointListResult. </summary>

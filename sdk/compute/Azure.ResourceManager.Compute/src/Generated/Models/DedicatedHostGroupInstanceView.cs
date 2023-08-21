@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DedicatedHostGroupInstanceView. </summary>
         internal DedicatedHostGroupInstanceView()
         {
-            Hosts = new Core.ChangeTrackingList<DedicatedHostInstanceViewWithName>();
+            Hosts = new ChangeTrackingList<DedicatedHostInstanceViewWithName>();
         }
 
         /// <summary> Initializes a new instance of DedicatedHostGroupInstanceView. </summary>

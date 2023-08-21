@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthBot.Models
 {
-    public partial class HealthBotKeyVaultProperties : Core.IUtf8JsonSerializable
+    public partial class HealthBotKeyVaultProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
-            if (Core.Optional.IsDefined(KeyVersion))
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
             writer.WritePropertyName("keyVaultUri"u8);
             writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
-            if (Core.Optional.IsDefined(UserIdentity))
+            if (Optional.IsDefined(UserIdentity))
             {
                 writer.WritePropertyName("userIdentity"u8);
                 writer.WriteStringValue(UserIdentity);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.HealthBot.Models
                 return null;
             }
             string keyName = default;
-            Core.Optional<string> keyVersion = default;
+            Optional<string> keyVersion = default;
             Uri keyVaultUri = default;
-            Core.Optional<string> userIdentity = default;
+            Optional<string> userIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyName"u8))

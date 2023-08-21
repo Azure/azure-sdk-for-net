@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerNetwork : Core.IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerNetwork : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DelegatedSubnetResourceId))
+            if (Optional.IsDefined(DelegatedSubnetResourceId))
             {
                 writer.WritePropertyName("delegatedSubnetResourceId"u8);
                 writer.WriteStringValue(DelegatedSubnetResourceId);
             }
-            if (Core.Optional.IsDefined(PrivateDnsZoneArmResourceId))
+            if (Optional.IsDefined(PrivateDnsZoneArmResourceId))
             {
                 writer.WritePropertyName("privateDnsZoneArmResourceId"u8);
                 writer.WriteStringValue(PrivateDnsZoneArmResourceId);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<PostgreSqlFlexibleServerPublicNetworkAccessState> publicNetworkAccess = default;
-            Core.Optional<ResourceIdentifier> delegatedSubnetResourceId = default;
-            Core.Optional<ResourceIdentifier> privateDnsZoneArmResourceId = default;
+            Optional<PostgreSqlFlexibleServerPublicNetworkAccessState> publicNetworkAccess = default;
+            Optional<ResourceIdentifier> delegatedSubnetResourceId = default;
+            Optional<ResourceIdentifier> privateDnsZoneArmResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicNetworkAccess"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerNetwork(Core.Optional.ToNullable(publicNetworkAccess), delegatedSubnetResourceId.Value, privateDnsZoneArmResourceId.Value);
+            return new PostgreSqlFlexibleServerNetwork(Optional.ToNullable(publicNetworkAccess), delegatedSubnetResourceId.Value, privateDnsZoneArmResourceId.Value);
         }
     }
 }

@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.ContainerRegistry
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
-            DataEndpointHostNames = new Core.ChangeTrackingList<string>();
-            PrivateEndpointConnections = new Core.ChangeTrackingList<ContainerRegistryPrivateEndpointConnectionData>();
+            DataEndpointHostNames = new ChangeTrackingList<string>();
+            PrivateEndpointConnections = new ChangeTrackingList<ContainerRegistryPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryData. </summary>

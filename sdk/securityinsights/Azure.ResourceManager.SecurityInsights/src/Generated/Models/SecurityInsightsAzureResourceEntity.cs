@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsAzureResourceEntity. </summary>
         public SecurityInsightsAzureResourceEntity()
         {
-            AdditionalData = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.AzureResource;
         }
 

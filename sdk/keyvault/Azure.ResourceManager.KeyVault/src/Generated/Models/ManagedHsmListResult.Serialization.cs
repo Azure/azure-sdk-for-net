@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ManagedHsmData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ManagedHsmData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new ManagedHsmListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ManagedHsmListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of MediaTrackSelection. </summary>
         public MediaTrackSelection()
         {
-            TrackSelections = new Core.ChangeTrackingList<TrackPropertyCondition>();
+            TrackSelections = new ChangeTrackingList<TrackPropertyCondition>();
         }
 
         /// <summary> Initializes a new instance of MediaTrackSelection. </summary>

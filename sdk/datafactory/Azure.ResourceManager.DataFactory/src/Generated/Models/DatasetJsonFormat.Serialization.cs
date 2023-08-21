@@ -13,12 +13,12 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DatasetJsonFormat : Core.IUtf8JsonSerializable
+    public partial class DatasetJsonFormat : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FilePattern))
+            if (Optional.IsDefined(FilePattern))
             {
                 writer.WritePropertyName("filePattern"u8);
 #if NET6_0_OR_GREATER
@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(FilePattern.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(NestingSeparator))
+            if (Optional.IsDefined(NestingSeparator))
             {
                 writer.WritePropertyName("nestingSeparator"u8);
                 JsonSerializer.Serialize(writer, NestingSeparator);
             }
-            if (Core.Optional.IsDefined(EncodingName))
+            if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
                 JsonSerializer.Serialize(writer, EncodingName);
             }
-            if (Core.Optional.IsDefined(JsonNodeReference))
+            if (Optional.IsDefined(JsonNodeReference))
             {
                 writer.WritePropertyName("jsonNodeReference"u8);
                 JsonSerializer.Serialize(writer, JsonNodeReference);
             }
-            if (Core.Optional.IsDefined(JsonPathDefinition))
+            if (Optional.IsDefined(JsonPathDefinition))
             {
                 writer.WritePropertyName("jsonPathDefinition"u8);
 #if NET6_0_OR_GREATER
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
-            if (Core.Optional.IsDefined(Serializer))
+            if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer"u8);
                 JsonSerializer.Serialize(writer, Serializer);
             }
-            if (Core.Optional.IsDefined(Deserializer))
+            if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer"u8);
                 JsonSerializer.Serialize(writer, Deserializer);
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<BinaryData> filePattern = default;
-            Core.Optional<DataFactoryElement<string>> nestingSeparator = default;
-            Core.Optional<DataFactoryElement<string>> encodingName = default;
-            Core.Optional<DataFactoryElement<string>> jsonNodeReference = default;
-            Core.Optional<BinaryData> jsonPathDefinition = default;
+            Optional<BinaryData> filePattern = default;
+            Optional<DataFactoryElement<string>> nestingSeparator = default;
+            Optional<DataFactoryElement<string>> encodingName = default;
+            Optional<DataFactoryElement<string>> jsonNodeReference = default;
+            Optional<BinaryData> jsonPathDefinition = default;
             string type = default;
-            Core.Optional<DataFactoryElement<string>> serializer = default;
-            Core.Optional<DataFactoryElement<string>> deserializer = default;
+            Optional<DataFactoryElement<string>> serializer = default;
+            Optional<DataFactoryElement<string>> deserializer = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DiscoveredSecuritySolution>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DiscoveredSecuritySolution>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DiscoveredSecuritySolutionList(Core.Optional.ToList(value), nextLink.Value);
+            return new DiscoveredSecuritySolutionList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

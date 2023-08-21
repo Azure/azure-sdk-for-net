@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> nextLink = default;
-            Core.Optional<IReadOnlyList<SmartGroupData>> value = default;
+            Optional<string> nextLink = default;
+            Optional<IReadOnlyList<SmartGroupData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new SmartGroupsList(nextLink.Value, Core.Optional.ToList(value));
+            return new SmartGroupsList(nextLink.Value, Optional.ToList(value));
         }
     }
 }

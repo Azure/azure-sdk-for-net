@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of GalleryListResult. </summary>
         internal GalleryListResult()
         {
-            Value = new Core.ChangeTrackingList<DevCenterGalleryData>();
+            Value = new ChangeTrackingList<DevCenterGalleryData>();
         }
 
         /// <summary> Initializes a new instance of GalleryListResult. </summary>

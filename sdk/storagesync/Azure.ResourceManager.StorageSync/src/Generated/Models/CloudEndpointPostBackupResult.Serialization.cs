@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Core.Optional<string> cloudEndpointName = default;
+            Optional<string> cloudEndpointName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupMetadata"u8))

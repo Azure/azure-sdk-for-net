@@ -11,52 +11,52 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningEnvironmentVersionProperties : Core.IUtf8JsonSerializable
+    public partial class MachineLearningEnvironmentVersionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AutoRebuild))
+            if (Optional.IsDefined(AutoRebuild))
             {
                 writer.WritePropertyName("autoRebuild"u8);
                 writer.WriteStringValue(AutoRebuild.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Build))
+            if (Optional.IsDefined(Build))
             {
                 writer.WritePropertyName("build"u8);
                 writer.WriteObjectValue(Build);
             }
-            if (Core.Optional.IsDefined(CondaFile))
+            if (Optional.IsDefined(CondaFile))
             {
                 writer.WritePropertyName("condaFile"u8);
                 writer.WriteStringValue(CondaFile);
             }
-            if (Core.Optional.IsDefined(Image))
+            if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (Core.Optional.IsDefined(InferenceConfig))
+            if (Optional.IsDefined(InferenceConfig))
             {
                 writer.WritePropertyName("inferenceConfig"u8);
                 writer.WriteObjectValue(InferenceConfig);
             }
-            if (Core.Optional.IsDefined(OSType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IsAnonymous))
+            if (Optional.IsDefined(IsAnonymous))
             {
                 writer.WritePropertyName("isAnonymous"u8);
                 writer.WriteBooleanValue(IsAnonymous.Value);
             }
-            if (Core.Optional.IsDefined(IsArchived))
+            if (Optional.IsDefined(IsArchived))
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -113,18 +113,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<AutoRebuildSetting> autoRebuild = default;
-            Core.Optional<MachineLearningBuildContext> build = default;
-            Core.Optional<string> condaFile = default;
-            Core.Optional<MachineLearningEnvironmentType> environmentType = default;
-            Core.Optional<string> image = default;
-            Core.Optional<MachineLearningInferenceContainerProperties> inferenceConfig = default;
-            Core.Optional<MachineLearningOperatingSystemType> osType = default;
-            Core.Optional<bool> isAnonymous = default;
-            Core.Optional<bool> isArchived = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IDictionary<string, string>> properties = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<AutoRebuildSetting> autoRebuild = default;
+            Optional<MachineLearningBuildContext> build = default;
+            Optional<string> condaFile = default;
+            Optional<MachineLearningEnvironmentType> environmentType = default;
+            Optional<string> image = default;
+            Optional<MachineLearningInferenceContainerProperties> inferenceConfig = default;
+            Optional<MachineLearningOperatingSystemType> osType = default;
+            Optional<bool> isAnonymous = default;
+            Optional<bool> isArchived = default;
+            Optional<string> description = default;
+            Optional<IDictionary<string, string>> properties = default;
+            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("autoRebuild"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningEnvironmentVersionProperties(description.Value, Core.Optional.ToDictionary(properties), Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(isAnonymous), Core.Optional.ToNullable(isArchived), Core.Optional.ToNullable(autoRebuild), build.Value, condaFile.Value, Core.Optional.ToNullable(environmentType), image.Value, inferenceConfig.Value, Core.Optional.ToNullable(osType));
+            return new MachineLearningEnvironmentVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToNullable(autoRebuild), build.Value, condaFile.Value, Optional.ToNullable(environmentType), image.Value, inferenceConfig.Value, Optional.ToNullable(osType));
         }
     }
 }

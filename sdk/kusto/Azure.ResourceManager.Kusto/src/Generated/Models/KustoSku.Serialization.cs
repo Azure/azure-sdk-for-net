@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoSku : Core.IUtf8JsonSerializable
+    public partial class KustoSku : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Core.Optional.IsDefined(Capacity))
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 return null;
             }
             KustoSkuName name = default;
-            Core.Optional<int> capacity = default;
+            Optional<int> capacity = default;
             KustoSkuTier tier = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new KustoSku(name, Core.Optional.ToNullable(capacity), tier);
+            return new KustoSku(name, Optional.ToNullable(capacity), tier);
         }
     }
 }

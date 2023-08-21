@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _devTestLabDiskDisksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation<DevTestLabDiskResource>(new DevTestLabDiskOperationSource(Client), _devTestLabDiskDisksClientDiagnostics, Pipeline, _devTestLabDiskDisksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation<DevTestLabDiskResource>(new DevTestLabDiskOperationSource(Client), _devTestLabDiskDisksClientDiagnostics, Pipeline, _devTestLabDiskDisksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _devTestLabDiskDisksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data, cancellationToken);
-                var operation = new DevTestLabsArmOperation<DevTestLabDiskResource>(new DevTestLabDiskOperationSource(Client), _devTestLabDiskDisksClientDiagnostics, Pipeline, _devTestLabDiskDisksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation<DevTestLabDiskResource>(new DevTestLabDiskOperationSource(Client), _devTestLabDiskDisksClientDiagnostics, Pipeline, _devTestLabDiskDisksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabDiskDisksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabDiskDisksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabDiskResource(Client, DevTestLabDiskData.DeserializeDevTestLabDiskData(e)), _devTestLabDiskDisksClientDiagnostics, Pipeline, "DevTestLabDiskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabDiskResource(Client, DevTestLabDiskData.DeserializeDevTestLabDiskData(e)), _devTestLabDiskDisksClientDiagnostics, Pipeline, "DevTestLabDiskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabDiskDisksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabDiskDisksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabDiskResource(Client, DevTestLabDiskData.DeserializeDevTestLabDiskData(e)), _devTestLabDiskDisksClientDiagnostics, Pipeline, "DevTestLabDiskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabDiskResource(Client, DevTestLabDiskData.DeserializeDevTestLabDiskData(e)), _devTestLabDiskDisksClientDiagnostics, Pipeline, "DevTestLabDiskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

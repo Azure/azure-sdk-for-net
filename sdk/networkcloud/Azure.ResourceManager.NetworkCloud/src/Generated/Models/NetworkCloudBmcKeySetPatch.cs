@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of NetworkCloudBmcKeySetPatch. </summary>
         public NetworkCloudBmcKeySetPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            UserList = new Core.ChangeTrackingList<KeySetUser>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            UserList = new ChangeTrackingList<KeySetUser>();
         }
 
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>

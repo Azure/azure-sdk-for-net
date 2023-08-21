@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> policyDefinitionId = default;
-            Core.Optional<ResourceIdentifier> policySetDefinitionId = default;
-            Core.Optional<string> policyDefinitionReferenceId = default;
-            Core.Optional<ResourceIdentifier> policyAssignmentId = default;
+            Optional<ResourceIdentifier> policyDefinitionId = default;
+            Optional<ResourceIdentifier> policySetDefinitionId = default;
+            Optional<string> policyDefinitionReferenceId = default;
+            Optional<ResourceIdentifier> policyAssignmentId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyDefinitionId"u8))

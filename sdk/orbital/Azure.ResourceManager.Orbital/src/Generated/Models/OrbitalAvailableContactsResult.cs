@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <summary> Initializes a new instance of OrbitalAvailableContactsResult. </summary>
         internal OrbitalAvailableContactsResult()
         {
-            Values = new Core.ChangeTrackingList<OrbitalAvailableContact>();
+            Values = new ChangeTrackingList<OrbitalAvailableContact>();
         }
 
         /// <summary> Initializes a new instance of OrbitalAvailableContactsResult. </summary>

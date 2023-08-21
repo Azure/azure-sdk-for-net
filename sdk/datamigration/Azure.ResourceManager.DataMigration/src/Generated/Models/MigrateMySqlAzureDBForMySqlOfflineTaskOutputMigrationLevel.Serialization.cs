@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> startedOn = default;
-            Core.Optional<DateTimeOffset> endedOn = default;
-            Core.Optional<long> durationInSeconds = default;
-            Core.Optional<MigrationStatus> status = default;
-            Core.Optional<string> statusMessage = default;
-            Core.Optional<string> message = default;
-            Core.Optional<string> databases = default;
-            Core.Optional<string> databaseSummary = default;
-            Core.Optional<MigrationReportResult> migrationReportResult = default;
-            Core.Optional<string> sourceServerVersion = default;
-            Core.Optional<string> sourceServerBrandVersion = default;
-            Core.Optional<string> targetServerVersion = default;
-            Core.Optional<string> targetServerBrandVersion = default;
-            Core.Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Core.Optional<DateTimeOffset> lastStorageUpdate = default;
-            Core.Optional<string> id = default;
+            Optional<DateTimeOffset> startedOn = default;
+            Optional<DateTimeOffset> endedOn = default;
+            Optional<long> durationInSeconds = default;
+            Optional<MigrationStatus> status = default;
+            Optional<string> statusMessage = default;
+            Optional<string> message = default;
+            Optional<string> databases = default;
+            Optional<string> databaseSummary = default;
+            Optional<MigrationReportResult> migrationReportResult = default;
+            Optional<string> sourceServerVersion = default;
+            Optional<string> sourceServerBrandVersion = default;
+            Optional<string> targetServerVersion = default;
+            Optional<string> targetServerBrandVersion = default;
+            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
+            Optional<DateTimeOffset> lastStorageUpdate = default;
+            Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(id.Value, resultType, Core.Optional.ToNullable(startedOn), Core.Optional.ToNullable(endedOn), Core.Optional.ToNullable(durationInSeconds), Core.Optional.ToNullable(status), statusMessage.Value, message.Value, databases.Value, databaseSummary.Value, migrationReportResult.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Core.Optional.ToList(exceptionsAndWarnings), Core.Optional.ToNullable(lastStorageUpdate));
+            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(id.Value, resultType, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(durationInSeconds), Optional.ToNullable(status), statusMessage.Value, message.Value, databases.Value, databaseSummary.Value, migrationReportResult.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToList(exceptionsAndWarnings), Optional.ToNullable(lastStorageUpdate));
         }
     }
 }

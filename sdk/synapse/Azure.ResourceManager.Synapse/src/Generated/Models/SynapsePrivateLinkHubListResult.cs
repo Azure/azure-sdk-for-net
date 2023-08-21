@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapsePrivateLinkHubListResult. </summary>
         internal SynapsePrivateLinkHubListResult()
         {
-            Value = new Core.ChangeTrackingList<SynapsePrivateLinkHubData>();
+            Value = new ChangeTrackingList<SynapsePrivateLinkHubData>();
         }
 
         /// <summary> Initializes a new instance of SynapsePrivateLinkHubListResult. </summary>

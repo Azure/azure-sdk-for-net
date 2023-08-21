@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of ImageVersionListResult. </summary>
         internal ImageVersionListResult()
         {
-            Value = new Core.ChangeTrackingList<ImageVersionData>();
+            Value = new ChangeTrackingList<ImageVersionData>();
         }
 
         /// <summary> Initializes a new instance of ImageVersionListResult. </summary>

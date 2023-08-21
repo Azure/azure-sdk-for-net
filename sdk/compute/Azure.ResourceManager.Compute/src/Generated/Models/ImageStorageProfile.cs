@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ImageStorageProfile. </summary>
         public ImageStorageProfile()
         {
-            DataDisks = new Core.ChangeTrackingList<ImageDataDisk>();
+            DataDisks = new ChangeTrackingList<ImageDataDisk>();
         }
 
         /// <summary> Initializes a new instance of ImageStorageProfile. </summary>

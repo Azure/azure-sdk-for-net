@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(notebookPath, nameof(notebookPath));
 
             NotebookPath = notebookPath;
-            BaseParameters = new Core.ChangeTrackingDictionary<string, BinaryData>();
-            Libraries = new Core.ChangeTrackingList<IDictionary<string, BinaryData>>();
+            BaseParameters = new ChangeTrackingDictionary<string, BinaryData>();
+            Libraries = new ChangeTrackingList<IDictionary<string, BinaryData>>();
             ActivityType = "DatabricksNotebook";
         }
 

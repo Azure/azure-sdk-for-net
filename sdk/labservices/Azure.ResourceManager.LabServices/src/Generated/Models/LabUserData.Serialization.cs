@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
-    public partial class LabUserData : Core.IUtf8JsonSerializable
+    public partial class LabUserData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AdditionalUsageQuota))
+            if (Optional.IsDefined(AdditionalUsageQuota))
             {
                 writer.WritePropertyName("additionalUsageQuota"u8);
                 writer.WriteStringValue(AdditionalUsageQuota.Value, "P");
@@ -40,15 +40,15 @@ namespace Azure.ResourceManager.LabServices
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<TimeSpan> additionalUsageQuota = default;
-            Core.Optional<LabServicesProvisioningState> provisioningState = default;
-            Core.Optional<string> displayName = default;
+            Optional<SystemData> systemData = default;
+            Optional<TimeSpan> additionalUsageQuota = default;
+            Optional<LabServicesProvisioningState> provisioningState = default;
+            Optional<string> displayName = default;
             string email = default;
-            Core.Optional<LabUserRegistrationState> registrationState = default;
-            Core.Optional<LabUserInvitationState> invitationState = default;
-            Core.Optional<DateTimeOffset> invitationSent = default;
-            Core.Optional<TimeSpan> totalUsage = default;
+            Optional<LabUserRegistrationState> registrationState = default;
+            Optional<LabUserInvitationState> invitationState = default;
+            Optional<DateTimeOffset> invitationSent = default;
+            Optional<TimeSpan> totalUsage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.LabServices
                     continue;
                 }
             }
-            return new LabUserData(id, name, type, systemData.Value, Core.Optional.ToNullable(additionalUsageQuota), Core.Optional.ToNullable(provisioningState), displayName.Value, email, Core.Optional.ToNullable(registrationState), Core.Optional.ToNullable(invitationState), Core.Optional.ToNullable(invitationSent), Core.Optional.ToNullable(totalUsage));
+            return new LabUserData(id, name, type, systemData.Value, Optional.ToNullable(additionalUsageQuota), Optional.ToNullable(provisioningState), displayName.Value, email, Optional.ToNullable(registrationState), Optional.ToNullable(invitationState), Optional.ToNullable(invitationSent), Optional.ToNullable(totalUsage));
         }
     }
 }

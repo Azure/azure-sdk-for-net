@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of EventDataInfo. </summary>
         internal EventDataInfo()
         {
-            Claims = new Core.ChangeTrackingDictionary<string, string>();
-            Properties = new Core.ChangeTrackingDictionary<string, string>();
+            Claims = new ChangeTrackingDictionary<string, string>();
+            Properties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of EventDataInfo. </summary>

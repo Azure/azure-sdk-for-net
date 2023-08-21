@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryDockerBuildStepUpdateContent. </summary>
         public ContainerRegistryDockerBuildStepUpdateContent()
         {
-            ImageNames = new Core.ChangeTrackingList<string>();
-            Arguments = new Core.ChangeTrackingList<ContainerRegistryRunArgument>();
+            ImageNames = new ChangeTrackingList<string>();
+            Arguments = new ChangeTrackingList<ContainerRegistryRunArgument>();
             StepType = ContainerRegistryTaskStepType.Docker;
         }
 

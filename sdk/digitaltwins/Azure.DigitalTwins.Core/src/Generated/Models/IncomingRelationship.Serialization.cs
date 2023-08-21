@@ -18,10 +18,10 @@ namespace Azure.DigitalTwins.Core
             {
                 return null;
             }
-            Azure.Core.Optional<string> relationshipId = default;
-            Azure.Core.Optional<string> sourceId = default;
-            Azure.Core.Optional<string> relationshipName = default;
-            Azure.Core.Optional<string> relationshipLink = default;
+            Optional<string> relationshipId = default;
+            Optional<string> sourceId = default;
+            Optional<string> relationshipName = default;
+            Optional<string> relationshipLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("$relationshipId"u8))

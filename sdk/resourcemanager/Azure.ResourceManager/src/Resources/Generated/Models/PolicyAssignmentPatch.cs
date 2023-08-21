@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of PolicyAssignmentPatch. </summary>
         public PolicyAssignmentPatch()
         {
-            ResourceSelectors = new Core.ChangeTrackingList<ResourceSelector>();
-            Overrides = new Core.ChangeTrackingList<PolicyOverride>();
+            ResourceSelectors = new ChangeTrackingList<ResourceSelector>();
+            Overrides = new ChangeTrackingList<PolicyOverride>();
         }
 
         /// <summary> The location of the policy assignment. Only required when utilizing managed identity. </summary>

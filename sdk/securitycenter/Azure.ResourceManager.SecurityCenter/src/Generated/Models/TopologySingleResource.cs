@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of TopologySingleResource. </summary>
         internal TopologySingleResource()
         {
-            Parents = new Core.ChangeTrackingList<TopologySingleResourceParent>();
-            Children = new Core.ChangeTrackingList<TopologySingleResourceChild>();
+            Parents = new ChangeTrackingList<TopologySingleResourceParent>();
+            Children = new ChangeTrackingList<TopologySingleResourceChild>();
         }
 
         /// <summary> Initializes a new instance of TopologySingleResource. </summary>

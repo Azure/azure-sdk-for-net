@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="location"> The location. </param>
         public DevCenterPoolData(AzureLocation location) : base(location)
         {
-            HealthStatusDetails = new Core.ChangeTrackingList<DevCenterHealthStatusDetail>();
+            HealthStatusDetails = new ChangeTrackingList<DevCenterHealthStatusDetail>();
         }
 
         /// <summary> Initializes a new instance of DevCenterPoolData. </summary>

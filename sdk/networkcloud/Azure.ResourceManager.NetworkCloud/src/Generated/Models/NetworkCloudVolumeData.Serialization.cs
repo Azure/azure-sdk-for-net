@@ -13,14 +13,14 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudVolumeData : Core.IUtf8JsonSerializable
+    public partial class NetworkCloudVolumeData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyList<string>> attachedTo = default;
-            Core.Optional<VolumeDetailedStatus> detailedStatus = default;
-            Core.Optional<string> detailedStatusMessage = default;
-            Core.Optional<VolumeProvisioningState> provisioningState = default;
-            Core.Optional<string> serialNumber = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyList<string>> attachedTo = default;
+            Optional<VolumeDetailedStatus> detailedStatus = default;
+            Optional<string> detailedStatusMessage = default;
+            Optional<VolumeProvisioningState> provisioningState = default;
+            Optional<string> serialNumber = default;
             long sizeMiB = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new NetworkCloudVolumeData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, Core.Optional.ToList(attachedTo), Core.Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Core.Optional.ToNullable(provisioningState), serialNumber.Value, sizeMiB);
+            return new NetworkCloudVolumeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(attachedTo), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(provisioningState), serialNumber.Value, sizeMiB);
         }
     }
 }

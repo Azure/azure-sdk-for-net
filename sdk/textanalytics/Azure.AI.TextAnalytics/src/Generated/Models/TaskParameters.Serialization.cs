@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class TaskParameters : Core.IUtf8JsonSerializable
+    internal partial class TaskParameters : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LoggingOptOut))
+            if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Core.Optional<bool> loggingOptOut = default;
+            Optional<bool> loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loggingOptOut"u8))
@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new TaskParameters(Core.Optional.ToNullable(loggingOptOut));
+            return new TaskParameters(Optional.ToNullable(loggingOptOut));
         }
     }
 }

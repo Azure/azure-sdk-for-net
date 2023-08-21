@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyFairPlayOfflineRentalConfiguration : Core.IUtf8JsonSerializable
+    public partial class ContentKeyPolicyFairPlayOfflineRentalConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("playbackDurationSeconds"u8);

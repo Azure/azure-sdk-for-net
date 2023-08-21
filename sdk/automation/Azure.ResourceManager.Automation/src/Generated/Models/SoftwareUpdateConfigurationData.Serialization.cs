@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class SoftwareUpdateConfigurationData : Core.IUtf8JsonSerializable
+    public partial class SoftwareUpdateConfigurationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Automation
             writer.WriteObjectValue(UpdateConfiguration);
             writer.WritePropertyName("scheduleInfo"u8);
             writer.WriteObjectValue(ScheduleInfo);
-            if (Core.Optional.IsDefined(Error))
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (Core.Optional.IsDefined(Tasks))
+            if (Optional.IsDefined(Tasks))
             {
                 writer.WritePropertyName("tasks"u8);
                 writer.WriteObjectValue(Tasks);
@@ -47,16 +47,16 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             SoftwareUpdateConfigurationSpecificProperties updateConfiguration = default;
             SoftwareUpdateConfigurationScheduleProperties scheduleInfo = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<AutomationResponseError> error = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<string> createdBy = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<string> lastModifiedBy = default;
-            Core.Optional<SoftwareUpdateConfigurationTasks> tasks = default;
+            Optional<string> provisioningState = default;
+            Optional<AutomationResponseError> error = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<string> createdBy = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<string> lastModifiedBy = default;
+            Optional<SoftwareUpdateConfigurationTasks> tasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Automation
                     continue;
                 }
             }
-            return new SoftwareUpdateConfigurationData(id, name, type, systemData.Value, updateConfiguration, scheduleInfo, provisioningState.Value, error.Value, Core.Optional.ToNullable(creationTime), createdBy.Value, Core.Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, tasks.Value);
+            return new SoftwareUpdateConfigurationData(id, name, type, systemData.Value, updateConfiguration, scheduleInfo, provisioningState.Value, error.Value, Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, tasks.Value);
         }
     }
 }

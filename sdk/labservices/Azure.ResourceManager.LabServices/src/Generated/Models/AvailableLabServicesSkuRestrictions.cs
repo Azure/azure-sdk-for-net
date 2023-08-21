@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> Initializes a new instance of AvailableLabServicesSkuRestrictions. </summary>
         internal AvailableLabServicesSkuRestrictions()
         {
-            Values = new Core.ChangeTrackingList<string>();
+            Values = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AvailableLabServicesSkuRestrictions. </summary>

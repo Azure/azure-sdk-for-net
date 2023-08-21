@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ExtensionOptions. </summary>
         public ExtensionOptions()
         {
-            Request = new Core.ChangeTrackingList<ExtensionOptionType>();
-            Response = new Core.ChangeTrackingList<ExtensionOptionType>();
+            Request = new ChangeTrackingList<ExtensionOptionType>();
+            Response = new ChangeTrackingList<ExtensionOptionType>();
         }
 
         /// <summary> Initializes a new instance of ExtensionOptions. </summary>

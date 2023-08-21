@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubFallbackRouteProperties : Core.IUtf8JsonSerializable
+    public partial class IotHubFallbackRouteProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source.ToString());
-            if (Core.Optional.IsDefined(Condition))
+            if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition);
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
+            Optional<string> name = default;
             IotHubRoutingSource source = default;
-            Core.Optional<string> condition = default;
+            Optional<string> condition = default;
             IList<string> endpointNames = default;
             bool isEnabled = default;
             foreach (var property in element.EnumerateObject())

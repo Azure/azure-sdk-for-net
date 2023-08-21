@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> fullyQualifiedResourceType = default;
-            Core.Optional<IReadOnlyList<string>> defaultProperties = default;
-            Core.Optional<bool> allowCustomProperties = default;
+            Optional<string> name = default;
+            Optional<ResourceType> fullyQualifiedResourceType = default;
+            Optional<IReadOnlyList<string>> defaultProperties = default;
+            Optional<bool> allowCustomProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new DataManifestCustomResourceFunctionDefinition(name.Value, Core.Optional.ToNullable(fullyQualifiedResourceType), Core.Optional.ToList(defaultProperties), Core.Optional.ToNullable(allowCustomProperties));
+            return new DataManifestCustomResourceFunctionDefinition(name.Value, Optional.ToNullable(fullyQualifiedResourceType), Optional.ToList(defaultProperties), Optional.ToNullable(allowCustomProperties));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of DataMigrationServiceStatusResponse. </summary>
         internal DataMigrationServiceStatusResponse()
         {
-            SupportedTaskTypes = new Core.ChangeTrackingList<string>();
+            SupportedTaskTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DataMigrationServiceStatusResponse. </summary>

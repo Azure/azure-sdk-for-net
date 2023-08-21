@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of AttachedNetworkConfiguration. </summary>
         public AttachedNetworkConfiguration()
         {
-            L2Networks = new Core.ChangeTrackingList<L2NetworkAttachmentConfiguration>();
-            L3Networks = new Core.ChangeTrackingList<L3NetworkAttachmentConfiguration>();
-            TrunkedNetworks = new Core.ChangeTrackingList<TrunkedNetworkAttachmentConfiguration>();
+            L2Networks = new ChangeTrackingList<L2NetworkAttachmentConfiguration>();
+            L3Networks = new ChangeTrackingList<L3NetworkAttachmentConfiguration>();
+            TrunkedNetworks = new ChangeTrackingList<TrunkedNetworkAttachmentConfiguration>();
         }
 
         /// <summary> Initializes a new instance of AttachedNetworkConfiguration. </summary>

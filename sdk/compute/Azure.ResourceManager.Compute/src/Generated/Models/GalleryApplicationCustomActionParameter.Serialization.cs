@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryApplicationCustomActionParameter : Core.IUtf8JsonSerializable
+    public partial class GalleryApplicationCustomActionParameter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(IsRequired))
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
-            if (Core.Optional.IsDefined(ParameterType))
+            if (Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ParameterType.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(DefaultValue))
+            if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            Core.Optional<bool> required = default;
-            Core.Optional<GalleryApplicationCustomActionParameterType> type = default;
-            Core.Optional<string> defaultValue = default;
-            Core.Optional<string> description = default;
+            Optional<bool> required = default;
+            Optional<GalleryApplicationCustomActionParameterType> type = default;
+            Optional<string> defaultValue = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new GalleryApplicationCustomActionParameter(name, Core.Optional.ToNullable(required), Core.Optional.ToNullable(type), defaultValue.Value, description.Value);
+            return new GalleryApplicationCustomActionParameter(name, Optional.ToNullable(required), Optional.ToNullable(type), defaultValue.Value, description.Value);
         }
     }
 }

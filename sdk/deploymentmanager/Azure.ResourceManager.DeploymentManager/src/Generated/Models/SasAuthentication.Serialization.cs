@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    public partial class SasAuthentication : Core.IUtf8JsonSerializable
+    public partial class SasAuthentication : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(AuthenticationType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SasUri))
+            if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 return null;
             }
             string type = default;
-            Core.Optional<Uri> sasUri = default;
+            Optional<Uri> sasUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

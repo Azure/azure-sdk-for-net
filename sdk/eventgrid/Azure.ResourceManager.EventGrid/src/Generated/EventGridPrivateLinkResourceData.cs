@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Initializes a new instance of EventGridPrivateLinkResourceData. </summary>
         internal EventGridPrivateLinkResourceData()
         {
-            RequiredMembers = new Core.ChangeTrackingList<string>();
-            RequiredZoneNames = new Core.ChangeTrackingList<string>();
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of EventGridPrivateLinkResourceData. </summary>

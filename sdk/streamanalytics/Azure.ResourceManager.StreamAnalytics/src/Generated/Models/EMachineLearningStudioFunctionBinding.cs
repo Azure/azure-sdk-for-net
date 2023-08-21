@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of EMachineLearningStudioFunctionBinding. </summary>
         public EMachineLearningStudioFunctionBinding()
         {
-            Outputs = new Core.ChangeTrackingList<MachineLearningStudioOutputColumn>();
+            Outputs = new ChangeTrackingList<MachineLearningStudioOutputColumn>();
             FunctionBindingType = "Microsoft.MachineLearning/WebService";
         }
 

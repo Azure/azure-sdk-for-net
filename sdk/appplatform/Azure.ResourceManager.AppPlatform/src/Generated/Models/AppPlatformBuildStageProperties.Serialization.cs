@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<KPackBuildStageProvisioningState> status = default;
+            Optional<string> name = default;
+            Optional<KPackBuildStageProvisioningState> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformBuildStageProperties(name.Value, Core.Optional.ToNullable(status));
+            return new AppPlatformBuildStageProperties(name.Value, Optional.ToNullable(status));
         }
     }
 }

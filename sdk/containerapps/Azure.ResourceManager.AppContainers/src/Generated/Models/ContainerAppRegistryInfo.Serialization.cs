@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppRegistryInfo : Core.IUtf8JsonSerializable
+    public partial class ContainerAppRegistryInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RegistryServer))
+            if (Optional.IsDefined(RegistryServer))
             {
                 writer.WritePropertyName("registryUrl"u8);
                 writer.WriteStringValue(RegistryServer);
             }
-            if (Core.Optional.IsDefined(RegistryUserName))
+            if (Optional.IsDefined(RegistryUserName))
             {
                 writer.WritePropertyName("registryUserName"u8);
                 writer.WriteStringValue(RegistryUserName);
             }
-            if (Core.Optional.IsDefined(RegistryPassword))
+            if (Optional.IsDefined(RegistryPassword))
             {
                 writer.WritePropertyName("registryPassword"u8);
                 writer.WriteStringValue(RegistryPassword);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> registryUrl = default;
-            Core.Optional<string> registryUserName = default;
-            Core.Optional<string> registryPassword = default;
+            Optional<string> registryUrl = default;
+            Optional<string> registryUserName = default;
+            Optional<string> registryPassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registryUrl"u8))

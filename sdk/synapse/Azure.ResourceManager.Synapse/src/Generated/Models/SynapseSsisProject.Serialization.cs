@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<long> folderId = default;
-            Core.Optional<long> version = default;
-            Core.Optional<IReadOnlyList<SynapseSsisEnvironmentReference>> environmentRefs = default;
-            Core.Optional<IReadOnlyList<SynapseSsisParameter>> parameters = default;
+            Optional<long> folderId = default;
+            Optional<long> version = default;
+            Optional<IReadOnlyList<SynapseSsisEnvironmentReference>> environmentRefs = default;
+            Optional<IReadOnlyList<SynapseSsisParameter>> parameters = default;
             SynapseSsisObjectMetadataType type = default;
-            Core.Optional<long> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
+            Optional<long> id = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("folderId"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseSsisProject(type, Core.Optional.ToNullable(id), name.Value, description.Value, Core.Optional.ToNullable(folderId), Core.Optional.ToNullable(version), Core.Optional.ToList(environmentRefs), Core.Optional.ToList(parameters));
+            return new SynapseSsisProject(type, Optional.ToNullable(id), name.Value, description.Value, Optional.ToNullable(folderId), Optional.ToNullable(version), Optional.ToList(environmentRefs), Optional.ToList(parameters));
         }
     }
 }

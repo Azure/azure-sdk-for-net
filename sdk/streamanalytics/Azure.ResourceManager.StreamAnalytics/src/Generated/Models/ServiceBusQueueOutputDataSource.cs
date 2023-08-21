@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of ServiceBusQueueOutputDataSource. </summary>
         public ServiceBusQueueOutputDataSource()
         {
-            PropertyColumns = new Core.ChangeTrackingList<string>();
-            SystemPropertyColumns = new Core.ChangeTrackingDictionary<string, string>();
+            PropertyColumns = new ChangeTrackingList<string>();
+            SystemPropertyColumns = new ChangeTrackingDictionary<string, string>();
             OutputDataSourceType = "Microsoft.ServiceBus/Queue";
         }
 

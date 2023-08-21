@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Core.Optional<CloudTieringLowDiskModeState> state = default;
+            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
+            Optional<CloudTieringLowDiskModeState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimestamp"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new CloudTieringLowDiskMode(Core.Optional.ToNullable(lastUpdatedTimestamp), Core.Optional.ToNullable(state));
+            return new CloudTieringLowDiskMode(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(state));
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class HybridComputeServiceStatuses : Core.IUtf8JsonSerializable
+    public partial class HybridComputeServiceStatuses : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExtensionService))
+            if (Optional.IsDefined(ExtensionService))
             {
                 writer.WritePropertyName("extensionService"u8);
                 writer.WriteObjectValue(ExtensionService);
             }
-            if (Core.Optional.IsDefined(GuestConfigurationService))
+            if (Optional.IsDefined(GuestConfigurationService))
             {
                 writer.WritePropertyName("guestConfigurationService"u8);
                 writer.WriteObjectValue(GuestConfigurationService);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Core.Optional<HybridComputeServiceStatus> extensionService = default;
-            Core.Optional<HybridComputeServiceStatus> guestConfigurationService = default;
+            Optional<HybridComputeServiceStatus> extensionService = default;
+            Optional<HybridComputeServiceStatus> guestConfigurationService = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extensionService"u8))

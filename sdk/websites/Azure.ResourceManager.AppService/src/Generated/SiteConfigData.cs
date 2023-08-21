@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of SiteConfigData. </summary>
         public SiteConfigData()
         {
-            DefaultDocuments = new Core.ChangeTrackingList<string>();
-            AppSettings = new Core.ChangeTrackingList<AppServiceNameValuePair>();
-            ConnectionStrings = new Core.ChangeTrackingList<ConnStringInfo>();
-            HandlerMappings = new Core.ChangeTrackingList<HttpRequestHandlerMapping>();
-            VirtualApplications = new Core.ChangeTrackingList<VirtualApplication>();
-            IPSecurityRestrictions = new Core.ChangeTrackingList<AppServiceIPSecurityRestriction>();
-            ScmIPSecurityRestrictions = new Core.ChangeTrackingList<AppServiceIPSecurityRestriction>();
-            AzureStorageAccounts = new Core.ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>();
+            DefaultDocuments = new ChangeTrackingList<string>();
+            AppSettings = new ChangeTrackingList<AppServiceNameValuePair>();
+            ConnectionStrings = new ChangeTrackingList<ConnStringInfo>();
+            HandlerMappings = new ChangeTrackingList<HttpRequestHandlerMapping>();
+            VirtualApplications = new ChangeTrackingList<VirtualApplication>();
+            IPSecurityRestrictions = new ChangeTrackingList<AppServiceIPSecurityRestriction>();
+            ScmIPSecurityRestrictions = new ChangeTrackingList<AppServiceIPSecurityRestriction>();
+            AzureStorageAccounts = new ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>();
         }
 
         /// <summary> Initializes a new instance of SiteConfigData. </summary>

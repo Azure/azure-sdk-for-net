@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of ExperimentExecutionDetailsPropertiesRunInformation. </summary>
         internal ExperimentExecutionDetailsPropertiesRunInformation()
         {
-            Steps = new Core.ChangeTrackingList<StepStatus>();
+            Steps = new ChangeTrackingList<StepStatus>();
         }
 
         /// <summary> Initializes a new instance of ExperimentExecutionDetailsPropertiesRunInformation. </summary>

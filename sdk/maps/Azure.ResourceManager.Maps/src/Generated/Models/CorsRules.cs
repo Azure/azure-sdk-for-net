@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <summary> Initializes a new instance of CorsRules. </summary>
         public CorsRules()
         {
-            CorsRulesValue = new Core.ChangeTrackingList<MapsCorsRule>();
+            CorsRulesValue = new ChangeTrackingList<MapsCorsRule>();
         }
 
         /// <summary> Initializes a new instance of CorsRules. </summary>

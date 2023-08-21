@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class AddParticipantsRequestInternal : Core.IUtf8JsonSerializable
+    internal partial class AddParticipantsRequestInternal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SourceCallerId))
+            if (Optional.IsDefined(SourceCallerId))
             {
                 writer.WritePropertyName("sourceCallerId"u8);
                 writer.WriteObjectValue(SourceCallerId);
@@ -27,12 +27,12 @@ namespace Azure.Communication.CallingServer
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(InvitationTimeoutInSeconds))
+            if (Optional.IsDefined(InvitationTimeoutInSeconds))
             {
                 writer.WritePropertyName("invitationTimeoutInSeconds"u8);
                 writer.WriteNumberValue(InvitationTimeoutInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(OperationContext))
+            if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);

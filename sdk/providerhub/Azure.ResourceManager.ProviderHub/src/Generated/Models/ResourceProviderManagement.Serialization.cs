@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceProviderManagement : Core.IUtf8JsonSerializable
+    public partial class ResourceProviderManagement : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(SchemaOwners))
+            if (Optional.IsCollectionDefined(SchemaOwners))
             {
                 writer.WritePropertyName("schemaOwners"u8);
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ManifestOwners))
+            if (Optional.IsCollectionDefined(ManifestOwners))
             {
                 writer.WritePropertyName("manifestOwners"u8);
                 writer.WriteStartArray();
@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IncidentRoutingService))
+            if (Optional.IsDefined(IncidentRoutingService))
             {
                 writer.WritePropertyName("incidentRoutingService"u8);
                 writer.WriteStringValue(IncidentRoutingService);
             }
-            if (Core.Optional.IsDefined(IncidentRoutingTeam))
+            if (Optional.IsDefined(IncidentRoutingTeam))
             {
                 writer.WritePropertyName("incidentRoutingTeam"u8);
                 writer.WriteStringValue(IncidentRoutingTeam);
             }
-            if (Core.Optional.IsDefined(IncidentContactEmail))
+            if (Optional.IsDefined(IncidentContactEmail))
             {
                 writer.WritePropertyName("incidentContactEmail"u8);
                 writer.WriteStringValue(IncidentContactEmail);
             }
-            if (Core.Optional.IsCollectionDefined(ServiceTreeInfos))
+            if (Optional.IsCollectionDefined(ServiceTreeInfos))
             {
                 writer.WritePropertyName("serviceTreeInfos"u8);
                 writer.WriteStartArray();
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ResourceAccessPolicy))
+            if (Optional.IsDefined(ResourceAccessPolicy))
             {
                 writer.WritePropertyName("resourceAccessPolicy"u8);
                 writer.WriteStringValue(ResourceAccessPolicy.Value.ToSerialString());
             }
-            if (Core.Optional.IsCollectionDefined(ResourceAccessRoles))
+            if (Optional.IsCollectionDefined(ResourceAccessRoles))
             {
                 writer.WritePropertyName("resourceAccessRoles"u8);
                 writer.WriteStartArray();
@@ -95,14 +95,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> schemaOwners = default;
-            Core.Optional<IList<string>> manifestOwners = default;
-            Core.Optional<string> incidentRoutingService = default;
-            Core.Optional<string> incidentRoutingTeam = default;
-            Core.Optional<string> incidentContactEmail = default;
-            Core.Optional<IList<ServiceTreeInfo>> serviceTreeInfos = default;
-            Core.Optional<ResourceAccessPolicy> resourceAccessPolicy = default;
-            Core.Optional<IList<BinaryData>> resourceAccessRoles = default;
+            Optional<IList<string>> schemaOwners = default;
+            Optional<IList<string>> manifestOwners = default;
+            Optional<string> incidentRoutingService = default;
+            Optional<string> incidentRoutingTeam = default;
+            Optional<string> incidentContactEmail = default;
+            Optional<IList<ServiceTreeInfo>> serviceTreeInfos = default;
+            Optional<ResourceAccessPolicy> resourceAccessPolicy = default;
+            Optional<IList<BinaryData>> resourceAccessRoles = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaOwners"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ResourceProviderManagement(Core.Optional.ToList(schemaOwners), Core.Optional.ToList(manifestOwners), incidentRoutingService.Value, incidentRoutingTeam.Value, incidentContactEmail.Value, Core.Optional.ToList(serviceTreeInfos), Core.Optional.ToNullable(resourceAccessPolicy), Core.Optional.ToList(resourceAccessRoles));
+            return new ResourceProviderManagement(Optional.ToList(schemaOwners), Optional.ToList(manifestOwners), incidentRoutingService.Value, incidentRoutingTeam.Value, incidentContactEmail.Value, Optional.ToList(serviceTreeInfos), Optional.ToNullable(resourceAccessPolicy), Optional.ToList(resourceAccessRoles));
         }
     }
 }

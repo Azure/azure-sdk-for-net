@@ -13,14 +13,14 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class BlobInventoryPolicyData : Core.IUtf8JsonSerializable
+    public partial class BlobInventoryPolicyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PolicySchema))
+            if (Optional.IsDefined(PolicySchema))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(PolicySchema);
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<BlobInventoryPolicySchema> policy = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<BlobInventoryPolicySchema> policy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new BlobInventoryPolicyData(id, name, type, systemData.Value, Core.Optional.ToNullable(lastModifiedTime), policy.Value);
+            return new BlobInventoryPolicyData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), policy.Value);
         }
     }
 }

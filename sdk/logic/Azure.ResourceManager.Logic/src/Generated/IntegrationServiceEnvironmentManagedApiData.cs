@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Logic
         /// <param name="location"> The location. </param>
         public IntegrationServiceEnvironmentManagedApiData(AzureLocation location) : base(location)
         {
-            ConnectionParameters = new Core.ChangeTrackingDictionary<string, BinaryData>();
-            RuntimeUris = new Core.ChangeTrackingList<Uri>();
-            Capabilities = new Core.ChangeTrackingList<string>();
+            ConnectionParameters = new ChangeTrackingDictionary<string, BinaryData>();
+            RuntimeUris = new ChangeTrackingList<Uri>();
+            Capabilities = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiData. </summary>

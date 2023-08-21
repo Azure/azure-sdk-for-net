@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DevTestLabData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DevTestLabData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new LabList(Core.Optional.ToList(value), nextLink.Value);
+            return new LabList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

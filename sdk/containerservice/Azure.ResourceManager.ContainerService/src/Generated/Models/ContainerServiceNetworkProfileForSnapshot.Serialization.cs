@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<ContainerServiceNetworkPlugin> networkPlugin = default;
-            Core.Optional<ContainerServiceNetworkPluginMode> networkPluginMode = default;
-            Core.Optional<ContainerServiceNetworkPolicy> networkPolicy = default;
-            Core.Optional<ContainerServiceNetworkMode> networkMode = default;
-            Core.Optional<ContainerServiceLoadBalancerSku> loadBalancerSku = default;
+            Optional<ContainerServiceNetworkPlugin> networkPlugin = default;
+            Optional<ContainerServiceNetworkPluginMode> networkPluginMode = default;
+            Optional<ContainerServiceNetworkPolicy> networkPolicy = default;
+            Optional<ContainerServiceNetworkMode> networkMode = default;
+            Optional<ContainerServiceLoadBalancerSku> loadBalancerSku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkPlugin"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServiceNetworkProfileForSnapshot(Core.Optional.ToNullable(networkPlugin), Core.Optional.ToNullable(networkPluginMode), Core.Optional.ToNullable(networkPolicy), Core.Optional.ToNullable(networkMode), Core.Optional.ToNullable(loadBalancerSku));
+            return new ContainerServiceNetworkProfileForSnapshot(Optional.ToNullable(networkPlugin), Optional.ToNullable(networkPluginMode), Optional.ToNullable(networkPolicy), Optional.ToNullable(networkMode), Optional.ToNullable(loadBalancerSku));
         }
     }
 }

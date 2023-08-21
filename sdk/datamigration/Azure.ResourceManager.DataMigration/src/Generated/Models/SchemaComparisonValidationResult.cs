@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of SchemaComparisonValidationResult. </summary>
         internal SchemaComparisonValidationResult()
         {
-            SourceDatabaseObjectCount = new Core.ChangeTrackingDictionary<string, long>();
-            TargetDatabaseObjectCount = new Core.ChangeTrackingDictionary<string, long>();
+            SourceDatabaseObjectCount = new ChangeTrackingDictionary<string, long>();
+            TargetDatabaseObjectCount = new ChangeTrackingDictionary<string, long>();
         }
 
         /// <summary> Initializes a new instance of SchemaComparisonValidationResult. </summary>

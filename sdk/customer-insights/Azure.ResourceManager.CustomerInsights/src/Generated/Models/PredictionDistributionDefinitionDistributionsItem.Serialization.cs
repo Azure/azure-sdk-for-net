@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Core.Optional<int> scoreThreshold = default;
-            Core.Optional<long> positives = default;
-            Core.Optional<long> negatives = default;
-            Core.Optional<long> positivesAboveThreshold = default;
-            Core.Optional<long> negativesAboveThreshold = default;
+            Optional<int> scoreThreshold = default;
+            Optional<long> positives = default;
+            Optional<long> negatives = default;
+            Optional<long> positivesAboveThreshold = default;
+            Optional<long> negativesAboveThreshold = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scoreThreshold"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new PredictionDistributionDefinitionDistributionsItem(Core.Optional.ToNullable(scoreThreshold), Core.Optional.ToNullable(positives), Core.Optional.ToNullable(negatives), Core.Optional.ToNullable(positivesAboveThreshold), Core.Optional.ToNullable(negativesAboveThreshold));
+            return new PredictionDistributionDefinitionDistributionsItem(Optional.ToNullable(scoreThreshold), Optional.ToNullable(positives), Optional.ToNullable(negatives), Optional.ToNullable(positivesAboveThreshold), Optional.ToNullable(negativesAboveThreshold));
         }
     }
 }

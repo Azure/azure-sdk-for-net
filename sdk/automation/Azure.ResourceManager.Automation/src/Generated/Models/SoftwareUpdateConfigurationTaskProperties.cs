@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTaskProperties. </summary>
         public SoftwareUpdateConfigurationTaskProperties()
         {
-            Parameters = new Core.ChangeTrackingDictionary<string, string>();
+            Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTaskProperties. </summary>

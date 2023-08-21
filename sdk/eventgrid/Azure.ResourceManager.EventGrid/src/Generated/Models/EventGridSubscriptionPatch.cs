@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of EventGridSubscriptionPatch. </summary>
         public EventGridSubscriptionPatch()
         {
-            Labels = new Core.ChangeTrackingList<string>();
+            Labels = new ChangeTrackingList<string>();
         }
 
         /// <summary>

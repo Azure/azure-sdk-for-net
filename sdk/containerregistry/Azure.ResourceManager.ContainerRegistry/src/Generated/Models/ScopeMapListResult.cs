@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ScopeMapListResult. </summary>
         internal ScopeMapListResult()
         {
-            Value = new Core.ChangeTrackingList<ScopeMapData>();
+            Value = new ChangeTrackingList<ScopeMapData>();
         }
 
         /// <summary> Initializes a new instance of ScopeMapListResult. </summary>

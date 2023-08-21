@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<BackupUsagesUnit> unit = default;
-            Core.Optional<string> quotaPeriod = default;
-            Core.Optional<DateTimeOffset> nextResetTime = default;
-            Core.Optional<long> currentValue = default;
-            Core.Optional<long> limit = default;
-            Core.Optional<BackupNameInfo> name = default;
+            Optional<BackupUsagesUnit> unit = default;
+            Optional<string> quotaPeriod = default;
+            Optional<DateTimeOffset> nextResetTime = default;
+            Optional<long> currentValue = default;
+            Optional<long> limit = default;
+            Optional<BackupNameInfo> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new BackupManagementUsage(Core.Optional.ToNullable(unit), quotaPeriod.Value, Core.Optional.ToNullable(nextResetTime), Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit), name.Value);
+            return new BackupManagementUsage(Optional.ToNullable(unit), quotaPeriod.Value, Optional.ToNullable(nextResetTime), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
         }
     }
 }

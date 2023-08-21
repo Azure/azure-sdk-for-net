@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> databaseName = default;
+            Optional<string> name = default;
+            Optional<string> databaseName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

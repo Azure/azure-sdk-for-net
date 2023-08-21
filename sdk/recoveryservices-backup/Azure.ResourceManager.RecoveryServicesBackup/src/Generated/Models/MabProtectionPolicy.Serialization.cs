@@ -11,29 +11,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MabProtectionPolicy : Core.IUtf8JsonSerializable
+    public partial class MabProtectionPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SchedulePolicy))
+            if (Optional.IsDefined(SchedulePolicy))
             {
                 writer.WritePropertyName("schedulePolicy"u8);
                 writer.WriteObjectValue(SchedulePolicy);
             }
-            if (Core.Optional.IsDefined(RetentionPolicy))
+            if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
-            if (Core.Optional.IsDefined(ProtectedItemsCount))
+            if (Optional.IsDefined(ProtectedItemsCount))
             {
                 writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
             writer.WritePropertyName("backupManagementType"u8);
             writer.WriteStringValue(BackupManagementType);
-            if (Core.Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<BackupSchedulePolicy> schedulePolicy = default;
-            Core.Optional<BackupRetentionPolicy> retentionPolicy = default;
-            Core.Optional<int> protectedItemsCount = default;
+            Optional<BackupSchedulePolicy> schedulePolicy = default;
+            Optional<BackupRetentionPolicy> retentionPolicy = default;
+            Optional<int> protectedItemsCount = default;
             string backupManagementType = default;
-            Core.Optional<IList<string>> resourceGuardOperationRequests = default;
+            Optional<IList<string>> resourceGuardOperationRequests = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schedulePolicy"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new MabProtectionPolicy(Core.Optional.ToNullable(protectedItemsCount), backupManagementType, Core.Optional.ToList(resourceGuardOperationRequests), schedulePolicy.Value, retentionPolicy.Value);
+            return new MabProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, Optional.ToList(resourceGuardOperationRequests), schedulePolicy.Value, retentionPolicy.Value);
         }
     }
 }

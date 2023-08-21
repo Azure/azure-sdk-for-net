@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of TagDescriptionListResult. </summary>
         internal TagDescriptionListResult()
         {
-            Value = new Core.ChangeTrackingList<ApiTagDescriptionData>();
+            Value = new ChangeTrackingList<ApiTagDescriptionData>();
         }
 
         /// <summary> Initializes a new instance of TagDescriptionListResult. </summary>

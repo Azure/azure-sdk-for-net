@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementSku. </summary>
         internal ApiManagementSku()
         {
-            Locations = new Core.ChangeTrackingList<AzureLocation>();
-            LocationInfo = new Core.ChangeTrackingList<ApiManagementSkuLocationInfo>();
-            ApiVersions = new Core.ChangeTrackingList<string>();
-            Costs = new Core.ChangeTrackingList<ApiManagementSkuCosts>();
-            Capabilities = new Core.ChangeTrackingList<ApiManagementSkuCapabilities>();
-            Restrictions = new Core.ChangeTrackingList<ApiManagementSkuRestrictions>();
+            Locations = new ChangeTrackingList<AzureLocation>();
+            LocationInfo = new ChangeTrackingList<ApiManagementSkuLocationInfo>();
+            ApiVersions = new ChangeTrackingList<string>();
+            Costs = new ChangeTrackingList<ApiManagementSkuCosts>();
+            Capabilities = new ChangeTrackingList<ApiManagementSkuCapabilities>();
+            Restrictions = new ChangeTrackingList<ApiManagementSkuRestrictions>();
         }
 
         /// <summary> Initializes a new instance of ApiManagementSku. </summary>

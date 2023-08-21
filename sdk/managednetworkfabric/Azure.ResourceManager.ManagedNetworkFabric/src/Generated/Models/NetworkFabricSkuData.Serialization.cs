@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkFabricSkuData : Core.IUtf8JsonSerializable
+    public partial class NetworkFabricSkuData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MaxComputeRacks))
+            if (Optional.IsDefined(MaxComputeRacks))
             {
                 writer.WritePropertyName("maxComputeRacks"u8);
                 writer.WriteNumberValue(MaxComputeRacks.Value);
             }
-            if (Core.Optional.IsDefined(MaximumServerCount))
+            if (Optional.IsDefined(MaximumServerCount))
             {
                 writer.WritePropertyName("maximumServerCount"u8);
                 writer.WriteNumberValue(MaximumServerCount.Value);
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<NetworkFabricSkuType> type0 = default;
-            Core.Optional<int> maxComputeRacks = default;
-            Core.Optional<int> maximumServerCount = default;
-            Core.Optional<IReadOnlyList<string>> supportedVersions = default;
-            Core.Optional<string> details = default;
-            Core.Optional<NetworkFabricProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<NetworkFabricSkuType> type0 = default;
+            Optional<int> maxComputeRacks = default;
+            Optional<int> maximumServerCount = default;
+            Optional<IReadOnlyList<string>> supportedVersions = default;
+            Optional<string> details = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     continue;
                 }
             }
-            return new NetworkFabricSkuData(id, name, type, systemData.Value, Core.Optional.ToNullable(type0), Core.Optional.ToNullable(maxComputeRacks), Core.Optional.ToNullable(maximumServerCount), Core.Optional.ToList(supportedVersions), details.Value, Core.Optional.ToNullable(provisioningState));
+            return new NetworkFabricSkuData(id, name, type, systemData.Value, Optional.ToNullable(type0), Optional.ToNullable(maxComputeRacks), Optional.ToNullable(maximumServerCount), Optional.ToList(supportedVersions), details.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

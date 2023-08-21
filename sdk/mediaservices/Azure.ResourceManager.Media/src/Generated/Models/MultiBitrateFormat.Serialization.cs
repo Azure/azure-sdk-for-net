@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MultiBitrateFormat : Core.IUtf8JsonSerializable
+    public partial class MultiBitrateFormat : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(OutputFiles))
+            if (Optional.IsCollectionDefined(OutputFiles))
             {
                 writer.WritePropertyName("outputFiles"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.TransportStreamFormat": return TransportStreamFormat.DeserializeTransportStreamFormat(element);
                 }
             }
-            Core.Optional<IList<MediaOutputFile>> outputFiles = default;
+            Optional<IList<MediaOutputFile>> outputFiles = default;
             string odataType = "#Microsoft.Media.MultiBitrateFormat";
             string filenamePattern = default;
             foreach (var property in element.EnumerateObject())
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MultiBitrateFormat(odataType, filenamePattern, Core.Optional.ToList(outputFiles));
+            return new MultiBitrateFormat(odataType, filenamePattern, Optional.ToList(outputFiles));
         }
     }
 }

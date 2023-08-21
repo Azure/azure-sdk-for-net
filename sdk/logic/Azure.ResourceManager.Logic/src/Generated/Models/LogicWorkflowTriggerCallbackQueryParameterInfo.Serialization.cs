@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<string> apiVersion = default;
-            Core.Optional<string> sp = default;
-            Core.Optional<string> sv = default;
-            Core.Optional<string> sig = default;
-            Core.Optional<string> se = default;
+            Optional<string> apiVersion = default;
+            Optional<string> sp = default;
+            Optional<string> sv = default;
+            Optional<string> sig = default;
+            Optional<string> se = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("api-version"u8))

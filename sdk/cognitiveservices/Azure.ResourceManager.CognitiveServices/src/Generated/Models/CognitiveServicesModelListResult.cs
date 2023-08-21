@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CognitiveServicesModelListResult. </summary>
         internal CognitiveServicesModelListResult()
         {
-            Value = new Core.ChangeTrackingList<CognitiveServicesModel>();
+            Value = new ChangeTrackingList<CognitiveServicesModel>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesModelListResult. </summary>

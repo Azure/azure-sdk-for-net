@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _workloadNetworkDnsZoneWorkloadNetworksRestClient.CreateDnsZoneAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsZoneId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<WorkloadNetworkDnsZoneResource>(new WorkloadNetworkDnsZoneOperationSource(Client), _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDnsZoneWorkloadNetworksRestClient.CreateCreateDnsZoneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsZoneId, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<WorkloadNetworkDnsZoneResource>(new WorkloadNetworkDnsZoneOperationSource(Client), _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDnsZoneWorkloadNetworksRestClient.CreateCreateDnsZoneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsZoneId, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _workloadNetworkDnsZoneWorkloadNetworksRestClient.CreateDnsZone(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsZoneId, data, cancellationToken);
-                var operation = new AvsArmOperation<WorkloadNetworkDnsZoneResource>(new WorkloadNetworkDnsZoneOperationSource(Client), _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDnsZoneWorkloadNetworksRestClient.CreateCreateDnsZoneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsZoneId, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<WorkloadNetworkDnsZoneResource>(new WorkloadNetworkDnsZoneOperationSource(Client), _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDnsZoneWorkloadNetworksRestClient.CreateCreateDnsZoneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsZoneId, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkDnsZoneWorkloadNetworksRestClient.CreateListDnsZonesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkDnsZoneWorkloadNetworksRestClient.CreateListDnsZonesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkDnsZoneResource(Client, WorkloadNetworkDnsZoneData.DeserializeWorkloadNetworkDnsZoneData(e)), _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkDnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkDnsZoneResource(Client, WorkloadNetworkDnsZoneData.DeserializeWorkloadNetworkDnsZoneData(e)), _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkDnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkDnsZoneWorkloadNetworksRestClient.CreateListDnsZonesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkDnsZoneWorkloadNetworksRestClient.CreateListDnsZonesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkDnsZoneResource(Client, WorkloadNetworkDnsZoneData.DeserializeWorkloadNetworkDnsZoneData(e)), _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkDnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkDnsZoneResource(Client, WorkloadNetworkDnsZoneData.DeserializeWorkloadNetworkDnsZoneData(e)), _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkDnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

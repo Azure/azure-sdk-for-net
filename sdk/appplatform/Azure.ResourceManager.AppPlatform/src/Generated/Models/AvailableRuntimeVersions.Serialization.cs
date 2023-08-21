@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AppPlatformSupportedRuntimeVersion>> value = default;
+            Optional<IReadOnlyList<AppPlatformSupportedRuntimeVersion>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AvailableRuntimeVersions(Core.Optional.ToList(value));
+            return new AvailableRuntimeVersions(Optional.ToList(value));
         }
     }
 }

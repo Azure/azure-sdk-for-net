@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             RunNotebookSnapshot snapshot = default;
-            Core.Optional<RunNotebookError> error = default;
+            Optional<RunNotebookError> error = default;
             string runId = default;
             string runStatus = default;
-            Core.Optional<string> lastCheckedOn = default;
-            Core.Optional<long> sessionId = default;
-            Core.Optional<string> sparkPool = default;
+            Optional<string> lastCheckedOn = default;
+            Optional<long> sessionId = default;
+            Optional<string> sparkPool = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("snapshot"u8))
@@ -74,7 +74,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new RunNotebookSnapshotResult(snapshot, error.Value, runId, runStatus, lastCheckedOn.Value, Core.Optional.ToNullable(sessionId), sparkPool.Value);
+            return new RunNotebookSnapshotResult(snapshot, error.Value, runId, runStatus, lastCheckedOn.Value, Optional.ToNullable(sessionId), sparkPool.Value);
         }
 
         internal partial class RunNotebookSnapshotResultConverter : JsonConverter<RunNotebookSnapshotResult>

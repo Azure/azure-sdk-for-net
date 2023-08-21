@@ -15,14 +15,14 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class FileShareData : Core.IUtf8JsonSerializable
+    public partial class FileShareData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Metadata))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -33,27 +33,27 @@ namespace Azure.ResourceManager.Storage
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(ShareQuota))
+            if (Optional.IsDefined(ShareQuota))
             {
                 writer.WritePropertyName("shareQuota"u8);
                 writer.WriteNumberValue(ShareQuota.Value);
             }
-            if (Core.Optional.IsDefined(EnabledProtocol))
+            if (Optional.IsDefined(EnabledProtocol))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
                 writer.WriteStringValue(EnabledProtocol.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RootSquash))
+            if (Optional.IsDefined(RootSquash))
             {
                 writer.WritePropertyName("rootSquash"u8);
                 writer.WriteStringValue(RootSquash.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AccessTier))
+            if (Optional.IsDefined(AccessTier))
             {
                 writer.WritePropertyName("accessTier"u8);
                 writer.WriteStringValue(AccessTier.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(SignedIdentifiers))
+            if (Optional.IsCollectionDefined(SignedIdentifiers))
             {
                 writer.WritePropertyName("signedIdentifiers"u8);
                 writer.WriteStartArray();
@@ -73,29 +73,29 @@ namespace Azure.ResourceManager.Storage
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<IDictionary<string, string>> metadata = default;
-            Core.Optional<int> shareQuota = default;
-            Core.Optional<FileShareEnabledProtocol> enabledProtocols = default;
-            Core.Optional<RootSquashType> rootSquash = default;
-            Core.Optional<string> version = default;
-            Core.Optional<bool> deleted = default;
-            Core.Optional<DateTimeOffset> deletedTime = default;
-            Core.Optional<int> remainingRetentionDays = default;
-            Core.Optional<FileShareAccessTier> accessTier = default;
-            Core.Optional<DateTimeOffset> accessTierChangeTime = default;
-            Core.Optional<string> accessTierStatus = default;
-            Core.Optional<long> shareUsageBytes = default;
-            Core.Optional<StorageLeaseStatus> leaseStatus = default;
-            Core.Optional<StorageLeaseState> leaseState = default;
-            Core.Optional<StorageLeaseDurationType> leaseDuration = default;
-            Core.Optional<IList<StorageSignedIdentifier>> signedIdentifiers = default;
-            Core.Optional<DateTimeOffset> snapshotTime = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<IDictionary<string, string>> metadata = default;
+            Optional<int> shareQuota = default;
+            Optional<FileShareEnabledProtocol> enabledProtocols = default;
+            Optional<RootSquashType> rootSquash = default;
+            Optional<string> version = default;
+            Optional<bool> deleted = default;
+            Optional<DateTimeOffset> deletedTime = default;
+            Optional<int> remainingRetentionDays = default;
+            Optional<FileShareAccessTier> accessTier = default;
+            Optional<DateTimeOffset> accessTierChangeTime = default;
+            Optional<string> accessTierStatus = default;
+            Optional<long> shareUsageBytes = default;
+            Optional<StorageLeaseStatus> leaseStatus = default;
+            Optional<StorageLeaseState> leaseState = default;
+            Optional<StorageLeaseDurationType> leaseDuration = default;
+            Optional<IList<StorageSignedIdentifier>> signedIdentifiers = default;
+            Optional<DateTimeOffset> snapshotTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new FileShareData(id, name, type, systemData.Value, Core.Optional.ToNullable(lastModifiedTime), Core.Optional.ToDictionary(metadata), Core.Optional.ToNullable(shareQuota), Core.Optional.ToNullable(enabledProtocols), Core.Optional.ToNullable(rootSquash), version.Value, Core.Optional.ToNullable(deleted), Core.Optional.ToNullable(deletedTime), Core.Optional.ToNullable(remainingRetentionDays), Core.Optional.ToNullable(accessTier), Core.Optional.ToNullable(accessTierChangeTime), accessTierStatus.Value, Core.Optional.ToNullable(shareUsageBytes), Core.Optional.ToNullable(leaseStatus), Core.Optional.ToNullable(leaseState), Core.Optional.ToNullable(leaseDuration), Core.Optional.ToList(signedIdentifiers), Core.Optional.ToNullable(snapshotTime), Core.Optional.ToNullable(etag));
+            return new FileShareData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), Optional.ToDictionary(metadata), Optional.ToNullable(shareQuota), Optional.ToNullable(enabledProtocols), Optional.ToNullable(rootSquash), version.Value, Optional.ToNullable(deleted), Optional.ToNullable(deletedTime), Optional.ToNullable(remainingRetentionDays), Optional.ToNullable(accessTier), Optional.ToNullable(accessTierChangeTime), accessTierStatus.Value, Optional.ToNullable(shareUsageBytes), Optional.ToNullable(leaseStatus), Optional.ToNullable(leaseState), Optional.ToNullable(leaseDuration), Optional.ToList(signedIdentifiers), Optional.ToNullable(snapshotTime), Optional.ToNullable(etag));
         }
     }
 }

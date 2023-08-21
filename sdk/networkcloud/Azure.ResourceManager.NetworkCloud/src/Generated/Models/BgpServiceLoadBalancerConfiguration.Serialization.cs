@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class BgpServiceLoadBalancerConfiguration : Core.IUtf8JsonSerializable
+    public partial class BgpServiceLoadBalancerConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(BgpAdvertisements))
+            if (Optional.IsCollectionDefined(BgpAdvertisements))
             {
                 writer.WritePropertyName("bgpAdvertisements"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(BgpPeers))
+            if (Optional.IsCollectionDefined(BgpPeers))
             {
                 writer.WritePropertyName("bgpPeers"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(FabricPeeringEnabled))
+            if (Optional.IsDefined(FabricPeeringEnabled))
             {
                 writer.WritePropertyName("fabricPeeringEnabled"u8);
                 writer.WriteStringValue(FabricPeeringEnabled.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(IPAddressPools))
+            if (Optional.IsCollectionDefined(IPAddressPools))
             {
                 writer.WritePropertyName("ipAddressPools"u8);
                 writer.WriteStartArray();
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Core.Optional<IList<BgpAdvertisement>> bgpAdvertisements = default;
-            Core.Optional<IList<ServiceLoadBalancerBgpPeer>> bgpPeers = default;
-            Core.Optional<FabricPeeringEnabled> fabricPeeringEnabled = default;
-            Core.Optional<IList<IPAddressPool>> ipAddressPools = default;
+            Optional<IList<BgpAdvertisement>> bgpAdvertisements = default;
+            Optional<IList<ServiceLoadBalancerBgpPeer>> bgpPeers = default;
+            Optional<FabricPeeringEnabled> fabricPeeringEnabled = default;
+            Optional<IList<IPAddressPool>> ipAddressPools = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bgpAdvertisements"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new BgpServiceLoadBalancerConfiguration(Core.Optional.ToList(bgpAdvertisements), Core.Optional.ToList(bgpPeers), Core.Optional.ToNullable(fabricPeeringEnabled), Core.Optional.ToList(ipAddressPools));
+            return new BgpServiceLoadBalancerConfiguration(Optional.ToList(bgpAdvertisements), Optional.ToList(bgpPeers), Optional.ToNullable(fabricPeeringEnabled), Optional.ToList(ipAddressPools));
         }
     }
 }

@@ -20,10 +20,10 @@ namespace Azure.Communication.Chat
             {
                 return null;
             }
-            Core.Optional<string> message = default;
-            Core.Optional<string> topic = default;
-            Core.Optional<IReadOnlyList<ChatParticipantInternal>> participants = default;
-            Core.Optional<CommunicationIdentifierModel> initiatorCommunicationIdentifier = default;
+            Optional<string> message = default;
+            Optional<string> topic = default;
+            Optional<IReadOnlyList<ChatParticipantInternal>> participants = default;
+            Optional<CommunicationIdentifierModel> initiatorCommunicationIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -60,7 +60,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatMessageContentInternal(message.Value, topic.Value, Core.Optional.ToList(participants), initiatorCommunicationIdentifier.Value);
+            return new ChatMessageContentInternal(message.Value, topic.Value, Optional.ToList(participants), initiatorCommunicationIdentifier.Value);
         }
     }
 }

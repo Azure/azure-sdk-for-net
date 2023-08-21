@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MabContainer : Core.IUtf8JsonSerializable
+    public partial class MabContainer : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CanReRegister))
+            if (Optional.IsDefined(CanReRegister))
             {
                 writer.WritePropertyName("canReRegister"u8);
                 writer.WriteBooleanValue(CanReRegister.Value);
             }
-            if (Core.Optional.IsDefined(ContainerId))
+            if (Optional.IsDefined(ContainerId))
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteNumberValue(ContainerId.Value);
             }
-            if (Core.Optional.IsDefined(ProtectedItemCount))
+            if (Optional.IsDefined(ProtectedItemCount))
             {
                 writer.WritePropertyName("protectedItemCount"u8);
                 writer.WriteNumberValue(ProtectedItemCount.Value);
             }
-            if (Core.Optional.IsDefined(AgentVersion))
+            if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Core.Optional.IsDefined(ExtendedInfo))
+            if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (Core.Optional.IsCollectionDefined(MabContainerHealthDetails))
+            if (Optional.IsCollectionDefined(MabContainerHealthDetails))
             {
                 writer.WritePropertyName("mabContainerHealthDetails"u8);
                 writer.WriteStartArray();
@@ -51,34 +51,34 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ContainerHealthState))
+            if (Optional.IsDefined(ContainerHealthState))
             {
                 writer.WritePropertyName("containerHealthState"u8);
                 writer.WriteStringValue(ContainerHealthState);
             }
-            if (Core.Optional.IsDefined(FriendlyName))
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Core.Optional.IsDefined(BackupManagementType))
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RegistrationStatus))
+            if (Optional.IsDefined(RegistrationStatus))
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (Core.Optional.IsDefined(HealthStatus))
+            if (Optional.IsDefined(HealthStatus))
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
             writer.WritePropertyName("containerType"u8);
             writer.WriteStringValue(ContainerType.ToSerialString());
-            if (Core.Optional.IsDefined(ProtectableObjectType))
+            if (Optional.IsDefined(ProtectableObjectType))
             {
                 writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);
@@ -92,19 +92,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<bool> canReRegister = default;
-            Core.Optional<long> containerId = default;
-            Core.Optional<long> protectedItemCount = default;
-            Core.Optional<string> agentVersion = default;
-            Core.Optional<MabContainerExtendedInfo> extendedInfo = default;
-            Core.Optional<IList<MabContainerHealthDetails>> mabContainerHealthDetails = default;
-            Core.Optional<string> containerHealthState = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<BackupManagementType> backupManagementType = default;
-            Core.Optional<string> registrationStatus = default;
-            Core.Optional<string> healthStatus = default;
+            Optional<bool> canReRegister = default;
+            Optional<long> containerId = default;
+            Optional<long> protectedItemCount = default;
+            Optional<string> agentVersion = default;
+            Optional<MabContainerExtendedInfo> extendedInfo = default;
+            Optional<IList<MabContainerHealthDetails>> mabContainerHealthDetails = default;
+            Optional<string> containerHealthState = default;
+            Optional<string> friendlyName = default;
+            Optional<BackupManagementType> backupManagementType = default;
+            Optional<string> registrationStatus = default;
+            Optional<string> healthStatus = default;
             ProtectableContainerType containerType = default;
-            Core.Optional<string> protectableObjectType = default;
+            Optional<string> protectableObjectType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("canReRegister"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new MabContainer(friendlyName.Value, Core.Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, Core.Optional.ToNullable(canReRegister), Core.Optional.ToNullable(containerId), Core.Optional.ToNullable(protectedItemCount), agentVersion.Value, extendedInfo.Value, Core.Optional.ToList(mabContainerHealthDetails), containerHealthState.Value);
+            return new MabContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, Optional.ToNullable(canReRegister), Optional.ToNullable(containerId), Optional.ToNullable(protectedItemCount), agentVersion.Value, extendedInfo.Value, Optional.ToList(mabContainerHealthDetails), containerHealthState.Value);
         }
     }
 }

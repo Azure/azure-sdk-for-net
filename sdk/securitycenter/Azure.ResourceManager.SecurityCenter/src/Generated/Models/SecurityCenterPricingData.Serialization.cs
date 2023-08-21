@@ -14,19 +14,19 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityCenterPricingData : Core.IUtf8JsonSerializable
+    public partial class SecurityCenterPricingData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PricingTier))
+            if (Optional.IsDefined(PricingTier))
             {
                 writer.WritePropertyName("pricingTier"u8);
                 writer.WriteStringValue(PricingTier.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SubPlan))
+            if (Optional.IsDefined(SubPlan))
             {
                 writer.WritePropertyName("subPlan"u8);
                 writer.WriteStringValue(SubPlan);
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SecurityCenterPricingTier> pricingTier = default;
-            Core.Optional<string> subPlan = default;
-            Core.Optional<TimeSpan> freeTrialRemainingTime = default;
-            Core.Optional<bool> deprecated = default;
-            Core.Optional<IReadOnlyList<string>> replacedBy = default;
+            Optional<SystemData> systemData = default;
+            Optional<SecurityCenterPricingTier> pricingTier = default;
+            Optional<string> subPlan = default;
+            Optional<TimeSpan> freeTrialRemainingTime = default;
+            Optional<bool> deprecated = default;
+            Optional<IReadOnlyList<string>> replacedBy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new SecurityCenterPricingData(id, name, type, systemData.Value, Core.Optional.ToNullable(pricingTier), subPlan.Value, Core.Optional.ToNullable(freeTrialRemainingTime), Core.Optional.ToNullable(deprecated), Core.Optional.ToList(replacedBy));
+            return new SecurityCenterPricingData(id, name, type, systemData.Value, Optional.ToNullable(pricingTier), subPlan.Value, Optional.ToNullable(freeTrialRemainingTime), Optional.ToNullable(deprecated), Optional.ToList(replacedBy));
         }
     }
 }

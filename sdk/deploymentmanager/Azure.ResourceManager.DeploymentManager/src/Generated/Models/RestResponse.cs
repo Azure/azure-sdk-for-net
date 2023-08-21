@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <summary> Initializes a new instance of RestResponse. </summary>
         public RestResponse()
         {
-            SuccessStatusCodes = new Core.ChangeTrackingList<string>();
+            SuccessStatusCodes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RestResponse. </summary>

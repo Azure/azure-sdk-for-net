@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapLandscapeMonitorSidMapping : Core.IUtf8JsonSerializable
+    public partial class SapLandscapeMonitorSidMapping : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsCollectionDefined(TopSid))
+            if (Optional.IsCollectionDefined(TopSid))
             {
                 writer.WritePropertyName("topSid"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IList<string>> topSid = default;
+            Optional<string> name = default;
+            Optional<IList<string>> topSid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SapLandscapeMonitorSidMapping(name.Value, Core.Optional.ToList(topSid));
+            return new SapLandscapeMonitorSidMapping(name.Value, Optional.ToList(topSid));
         }
     }
 }

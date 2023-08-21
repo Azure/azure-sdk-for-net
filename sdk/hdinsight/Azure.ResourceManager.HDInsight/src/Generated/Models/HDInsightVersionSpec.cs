@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightVersionSpec. </summary>
         internal HDInsightVersionSpec()
         {
-            ComponentVersions = new Core.ChangeTrackingDictionary<string, string>();
+            ComponentVersions = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of HDInsightVersionSpec. </summary>

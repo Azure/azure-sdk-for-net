@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of WebhookHookParameterPatch. </summary>
         public WebhookHookParameterPatch()
         {
-            Headers = new Core.ChangeTrackingDictionary<string, string>();
+            Headers = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> API address, will be called when alert is triggered, only support POST method via SSL. </summary>

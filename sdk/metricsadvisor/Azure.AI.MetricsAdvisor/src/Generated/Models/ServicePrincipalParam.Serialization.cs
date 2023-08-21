@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class ServicePrincipalParam : Core.IUtf8JsonSerializable
+    internal partial class ServicePrincipalParam : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
-            if (Core.Optional.IsDefined(ClientSecret))
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
@@ -34,7 +34,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 return null;
             }
             string clientId = default;
-            Core.Optional<string> clientSecret = default;
+            Optional<string> clientSecret = default;
             string tenantId = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppLoginNonce : Core.IUtf8JsonSerializable
+    public partial class ContainerAppLoginNonce : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ValidateNonce))
+            if (Optional.IsDefined(ValidateNonce))
             {
                 writer.WritePropertyName("validateNonce"u8);
                 writer.WriteBooleanValue(ValidateNonce.Value);
             }
-            if (Core.Optional.IsDefined(NonceExpirationInterval))
+            if (Optional.IsDefined(NonceExpirationInterval))
             {
                 writer.WritePropertyName("nonceExpirationInterval"u8);
                 writer.WriteStringValue(NonceExpirationInterval);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<bool> validateNonce = default;
-            Core.Optional<string> nonceExpirationInterval = default;
+            Optional<bool> validateNonce = default;
+            Optional<string> nonceExpirationInterval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validateNonce"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppLoginNonce(Core.Optional.ToNullable(validateNonce), nonceExpirationInterval.Value);
+            return new ContainerAppLoginNonce(Optional.ToNullable(validateNonce), nonceExpirationInterval.Value);
         }
     }
 }

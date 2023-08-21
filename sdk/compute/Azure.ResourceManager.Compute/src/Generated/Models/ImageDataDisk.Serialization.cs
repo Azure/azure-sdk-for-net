@@ -12,44 +12,44 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ImageDataDisk : Core.IUtf8JsonSerializable
+    public partial class ImageDataDisk : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
-            if (Core.Optional.IsDefined(Snapshot))
+            if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
                 JsonSerializer.Serialize(writer, Snapshot);
             }
-            if (Core.Optional.IsDefined(ManagedDisk))
+            if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
                 JsonSerializer.Serialize(writer, ManagedDisk);
             }
-            if (Core.Optional.IsDefined(BlobUri))
+            if (Optional.IsDefined(BlobUri))
             {
                 writer.WritePropertyName("blobUri"u8);
                 writer.WriteStringValue(BlobUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(Caching))
+            if (Optional.IsDefined(Caching))
             {
                 writer.WritePropertyName("caching"u8);
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(DiskSizeGB))
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Core.Optional.IsDefined(StorageAccountType))
+            if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DiskEncryptionSet))
+            if (Optional.IsDefined(DiskEncryptionSet))
             {
                 writer.WritePropertyName("diskEncryptionSet"u8);
                 JsonSerializer.Serialize(writer, DiskEncryptionSet);
@@ -64,13 +64,13 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             int lun = default;
-            Core.Optional<WritableSubResource> snapshot = default;
-            Core.Optional<WritableSubResource> managedDisk = default;
-            Core.Optional<Uri> blobUri = default;
-            Core.Optional<CachingType> caching = default;
-            Core.Optional<int> diskSizeGB = default;
-            Core.Optional<StorageAccountType> storageAccountType = default;
-            Core.Optional<WritableSubResource> diskEncryptionSet = default;
+            Optional<WritableSubResource> snapshot = default;
+            Optional<WritableSubResource> managedDisk = default;
+            Optional<Uri> blobUri = default;
+            Optional<CachingType> caching = default;
+            Optional<int> diskSizeGB = default;
+            Optional<StorageAccountType> storageAccountType = default;
+            Optional<WritableSubResource> diskEncryptionSet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ImageDataDisk(snapshot, managedDisk, blobUri.Value, Core.Optional.ToNullable(caching), Core.Optional.ToNullable(diskSizeGB), Core.Optional.ToNullable(storageAccountType), diskEncryptionSet, lun);
+            return new ImageDataDisk(snapshot, managedDisk, blobUri.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), Optional.ToNullable(storageAccountType), diskEncryptionSet, lun);
         }
     }
 }

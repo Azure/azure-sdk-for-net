@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <summary> Initializes a new instance of KubernetesClusterExtensionData. </summary>
         public KubernetesClusterExtensionData()
         {
-            ConfigurationSettings = new Core.ChangeTrackingDictionary<string, string>();
-            ConfigurationProtectedSettings = new Core.ChangeTrackingDictionary<string, string>();
-            Statuses = new Core.ChangeTrackingList<KubernetesClusterExtensionStatus>();
-            CustomLocationSettings = new Core.ChangeTrackingDictionary<string, string>();
+            ConfigurationSettings = new ChangeTrackingDictionary<string, string>();
+            ConfigurationProtectedSettings = new ChangeTrackingDictionary<string, string>();
+            Statuses = new ChangeTrackingList<KubernetesClusterExtensionStatus>();
+            CustomLocationSettings = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of KubernetesClusterExtensionData. </summary>

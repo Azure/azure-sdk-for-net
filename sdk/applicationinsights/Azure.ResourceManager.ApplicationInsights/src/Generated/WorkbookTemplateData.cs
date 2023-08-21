@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="location"> The location. </param>
         public WorkbookTemplateData(AzureLocation location) : base(location)
         {
-            Galleries = new Core.ChangeTrackingList<WorkbookTemplateGallery>();
-            LocalizedGalleries = new Core.ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>();
+            Galleries = new ChangeTrackingList<WorkbookTemplateGallery>();
+            LocalizedGalleries = new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>();
         }
 
         /// <summary> Initializes a new instance of WorkbookTemplateData. </summary>

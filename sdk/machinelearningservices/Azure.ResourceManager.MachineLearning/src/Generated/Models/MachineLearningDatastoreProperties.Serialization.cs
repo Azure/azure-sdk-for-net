@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningDatastoreProperties : Core.IUtf8JsonSerializable
+    public partial class MachineLearningDatastoreProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("credentials"u8);
             writer.WriteObjectValue(Credentials);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
-            Core.Optional<bool> isDefault = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IDictionary<string, string>> properties = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<bool> isDefault = default;
+            Optional<string> description = default;
+            Optional<IDictionary<string, string>> properties = default;
+            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("credentials"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningDatastoreProperties(description.Value, Core.Optional.ToDictionary(properties), Core.Optional.ToDictionary(tags), credentials, datastoreType, Core.Optional.ToNullable(isDefault));
+            return new MachineLearningDatastoreProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault));
         }
     }
 }

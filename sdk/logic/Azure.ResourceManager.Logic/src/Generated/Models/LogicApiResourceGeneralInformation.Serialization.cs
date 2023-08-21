@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<Uri> iconUrl = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<Uri> termsOfUseUrl = default;
-            Core.Optional<string> releaseTag = default;
-            Core.Optional<LogicApiTier> tier = default;
+            Optional<Uri> iconUrl = default;
+            Optional<string> displayName = default;
+            Optional<string> description = default;
+            Optional<Uri> termsOfUseUrl = default;
+            Optional<string> releaseTag = default;
+            Optional<LogicApiTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("iconUrl"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicApiResourceGeneralInformation(iconUrl.Value, displayName.Value, description.Value, termsOfUseUrl.Value, releaseTag.Value, Core.Optional.ToNullable(tier));
+            return new LogicApiResourceGeneralInformation(iconUrl.Value, displayName.Value, description.Value, termsOfUseUrl.Value, releaseTag.Value, Optional.ToNullable(tier));
         }
     }
 }

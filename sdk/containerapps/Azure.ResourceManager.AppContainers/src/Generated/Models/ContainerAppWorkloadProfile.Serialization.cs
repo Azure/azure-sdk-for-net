@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppWorkloadProfile : Core.IUtf8JsonSerializable
+    public partial class ContainerAppWorkloadProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("workloadProfileType"u8);
             writer.WriteStringValue(WorkloadProfileType);
-            if (Core.Optional.IsDefined(MinimumNodeCount))
+            if (Optional.IsDefined(MinimumNodeCount))
             {
                 writer.WritePropertyName("minimumCount"u8);
                 writer.WriteNumberValue(MinimumNodeCount.Value);
             }
-            if (Core.Optional.IsDefined(MaximumNodeCount))
+            if (Optional.IsDefined(MaximumNodeCount))
             {
                 writer.WritePropertyName("maximumCount"u8);
                 writer.WriteNumberValue(MaximumNodeCount.Value);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             string name = default;
             string workloadProfileType = default;
-            Core.Optional<int> minimumCount = default;
-            Core.Optional<int> maximumCount = default;
+            Optional<int> minimumCount = default;
+            Optional<int> maximumCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppWorkloadProfile(name, workloadProfileType, Core.Optional.ToNullable(minimumCount), Core.Optional.ToNullable(maximumCount));
+            return new ContainerAppWorkloadProfile(name, workloadProfileType, Optional.ToNullable(minimumCount), Optional.ToNullable(maximumCount));
         }
     }
 }

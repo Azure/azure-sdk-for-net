@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<AssessmentSeverity> severity = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> remediation = default;
-            Core.Optional<IsPass> isPass = default;
-            Core.Optional<string> policyId = default;
-            Core.Optional<IReadOnlyList<AssessmentResource>> resourceList = default;
+            Optional<string> name = default;
+            Optional<AssessmentSeverity> severity = default;
+            Optional<string> description = default;
+            Optional<string> remediation = default;
+            Optional<IsPass> isPass = default;
+            Optional<string> policyId = default;
+            Optional<IReadOnlyList<AssessmentResource>> resourceList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     continue;
                 }
             }
-            return new Assessment(name.Value, Core.Optional.ToNullable(severity), description.Value, remediation.Value, Core.Optional.ToNullable(isPass), policyId.Value, Core.Optional.ToList(resourceList));
+            return new Assessment(name.Value, Optional.ToNullable(severity), description.Value, remediation.Value, Optional.ToNullable(isPass), policyId.Value, Optional.ToList(resourceList));
         }
     }
 }

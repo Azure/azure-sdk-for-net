@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    public partial class ContainerServiceFleetData : Core.IUtf8JsonSerializable
+    public partial class ContainerServiceFleetData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HubProfile))
+            if (Optional.IsDefined(HubProfile))
             {
                 writer.WritePropertyName("hubProfile"u8);
                 writer.WriteObjectValue(HubProfile);
@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.ContainerService
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ContainerServiceFleetHubProfile> hubProfile = default;
-            Core.Optional<ContainerServiceFleetProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<ContainerServiceFleetHubProfile> hubProfile = default;
+            Optional<ContainerServiceFleetProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerService
                     continue;
                 }
             }
-            return new ContainerServiceFleetData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), hubProfile.Value, Core.Optional.ToNullable(provisioningState));
+            return new ContainerServiceFleetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), hubProfile.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

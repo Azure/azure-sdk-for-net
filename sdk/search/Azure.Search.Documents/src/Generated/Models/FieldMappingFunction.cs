@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Parameters = new Core.ChangeTrackingDictionary<string, object>();
+            Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of FieldMappingFunction. </summary>

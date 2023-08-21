@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class IndexingSchedule : Core.IUtf8JsonSerializable
+    public partial class IndexingSchedule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("interval"u8);
             writer.WriteStringValue(Interval, "P");
-            if (Core.Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime.Value, "O");
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             TimeSpan interval = default;
-            Core.Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> startTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("interval"u8))
@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new IndexingSchedule(interval, Core.Optional.ToNullable(startTime));
+            return new IndexingSchedule(interval, Optional.ToNullable(startTime));
         }
     }
 }

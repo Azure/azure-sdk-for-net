@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Argument.AssertNotNull(timeZone, nameof(timeZone));
 
             TimeZone = timeZone;
-            Schedules = new Core.ChangeTrackingList<ScalingSchedule>();
-            HostPoolReferences = new Core.ChangeTrackingList<ScalingHostPoolReference>();
+            Schedules = new ChangeTrackingList<ScalingSchedule>();
+            HostPoolReferences = new ChangeTrackingList<ScalingHostPoolReference>();
         }
 
         /// <summary> Initializes a new instance of ScalingPlanData. </summary>

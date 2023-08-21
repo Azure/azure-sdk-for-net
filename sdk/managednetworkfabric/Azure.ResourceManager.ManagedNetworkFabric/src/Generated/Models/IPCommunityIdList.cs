@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of IPCommunityIdList. </summary>
         public IPCommunityIdList()
         {
-            IPCommunityIds = new Core.ChangeTrackingList<ResourceIdentifier>();
+            IPCommunityIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of IPCommunityIdList. </summary>

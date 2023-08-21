@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Core.Optional<string> subscriptionId = default;
+            Optional<string> subscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionId"u8))

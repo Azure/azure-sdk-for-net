@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFileSystemPropertiesHsm : Core.IUtf8JsonSerializable
+    public partial class AmlFileSystemPropertiesHsm : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Settings))
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<AmlFileSystemHsmSettings> settings = default;
-            Core.Optional<IReadOnlyList<AmlFileSystemArchive>> archiveStatus = default;
+            Optional<AmlFileSystemHsmSettings> settings = default;
+            Optional<IReadOnlyList<AmlFileSystemArchive>> archiveStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("settings"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new AmlFileSystemPropertiesHsm(settings.Value, Core.Optional.ToList(archiveStatus));
+            return new AmlFileSystemPropertiesHsm(settings.Value, Optional.ToList(archiveStatus));
         }
     }
 }

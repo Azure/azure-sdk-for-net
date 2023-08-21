@@ -11,54 +11,54 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DiskCreationData : Core.IUtf8JsonSerializable
+    public partial class DiskCreationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("createOption"u8);
             writer.WriteStringValue(CreateOption.ToString());
-            if (Core.Optional.IsDefined(StorageAccountId))
+            if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (Core.Optional.IsDefined(ImageReference))
+            if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
                 writer.WriteObjectValue(ImageReference);
             }
-            if (Core.Optional.IsDefined(GalleryImageReference))
+            if (Optional.IsDefined(GalleryImageReference))
             {
                 writer.WritePropertyName("galleryImageReference"u8);
                 writer.WriteObjectValue(GalleryImageReference);
             }
-            if (Core.Optional.IsDefined(SourceUri))
+            if (Optional.IsDefined(SourceUri))
             {
                 writer.WritePropertyName("sourceUri"u8);
                 writer.WriteStringValue(SourceUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(SourceResourceId))
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Core.Optional.IsDefined(UploadSizeBytes))
+            if (Optional.IsDefined(UploadSizeBytes))
             {
                 writer.WritePropertyName("uploadSizeBytes"u8);
                 writer.WriteNumberValue(UploadSizeBytes.Value);
             }
-            if (Core.Optional.IsDefined(LogicalSectorSize))
+            if (Optional.IsDefined(LogicalSectorSize))
             {
                 writer.WritePropertyName("logicalSectorSize"u8);
                 writer.WriteNumberValue(LogicalSectorSize.Value);
             }
-            if (Core.Optional.IsDefined(SecurityDataUri))
+            if (Optional.IsDefined(SecurityDataUri))
             {
                 writer.WritePropertyName("securityDataUri"u8);
                 writer.WriteStringValue(SecurityDataUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(IsPerformancePlusEnabled))
+            if (Optional.IsDefined(IsPerformancePlusEnabled))
             {
                 writer.WritePropertyName("performancePlus"u8);
                 writer.WriteBooleanValue(IsPerformancePlusEnabled.Value);
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             DiskCreateOption createOption = default;
-            Core.Optional<ResourceIdentifier> storageAccountId = default;
-            Core.Optional<ImageDiskReference> imageReference = default;
-            Core.Optional<ImageDiskReference> galleryImageReference = default;
-            Core.Optional<Uri> sourceUri = default;
-            Core.Optional<ResourceIdentifier> sourceResourceId = default;
-            Core.Optional<string> sourceUniqueId = default;
-            Core.Optional<long> uploadSizeBytes = default;
-            Core.Optional<int> logicalSectorSize = default;
-            Core.Optional<Uri> securityDataUri = default;
-            Core.Optional<bool> performancePlus = default;
+            Optional<ResourceIdentifier> storageAccountId = default;
+            Optional<ImageDiskReference> imageReference = default;
+            Optional<ImageDiskReference> galleryImageReference = default;
+            Optional<Uri> sourceUri = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<string> sourceUniqueId = default;
+            Optional<long> uploadSizeBytes = default;
+            Optional<int> logicalSectorSize = default;
+            Optional<Uri> securityDataUri = default;
+            Optional<bool> performancePlus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createOption"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new DiskCreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Core.Optional.ToNullable(uploadSizeBytes), Core.Optional.ToNullable(logicalSectorSize), securityDataUri.Value, Core.Optional.ToNullable(performancePlus));
+            return new DiskCreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes), Optional.ToNullable(logicalSectorSize), securityDataUri.Value, Optional.ToNullable(performancePlus));
         }
     }
 }

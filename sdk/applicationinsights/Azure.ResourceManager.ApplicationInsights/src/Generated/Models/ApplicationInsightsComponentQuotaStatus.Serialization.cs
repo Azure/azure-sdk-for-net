@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> appId = default;
-            Core.Optional<bool> shouldBeThrottled = default;
-            Core.Optional<string> expirationTime = default;
+            Optional<string> appId = default;
+            Optional<bool> shouldBeThrottled = default;
+            Optional<string> expirationTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("AppId"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new ApplicationInsightsComponentQuotaStatus(appId.Value, Core.Optional.ToNullable(shouldBeThrottled), expirationTime.Value);
+            return new ApplicationInsightsComponentQuotaStatus(appId.Value, Optional.ToNullable(shouldBeThrottled), expirationTime.Value);
         }
     }
 }

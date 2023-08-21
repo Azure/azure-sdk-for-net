@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineCaptureResult : Core.IUtf8JsonSerializable
+    public partial class VirtualMachineCaptureResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<string> schema = default;
-            Core.Optional<string> contentVersion = default;
-            Core.Optional<BinaryData> parameters = default;
-            Core.Optional<IReadOnlyList<BinaryData>> resources = default;
-            Core.Optional<ResourceIdentifier> id = default;
+            Optional<string> schema = default;
+            Optional<string> contentVersion = default;
+            Optional<BinaryData> parameters = default;
+            Optional<IReadOnlyList<BinaryData>> resources = default;
+            Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("$schema"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineCaptureResult(id.Value, schema.Value, contentVersion.Value, parameters.Value, Core.Optional.ToList(resources));
+            return new VirtualMachineCaptureResult(id.Value, schema.Value, contentVersion.Value, parameters.Value, Optional.ToList(resources));
         }
     }
 }

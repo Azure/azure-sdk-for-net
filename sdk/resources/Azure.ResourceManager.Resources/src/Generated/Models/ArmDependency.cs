@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmDependency. </summary>
         internal ArmDependency()
         {
-            DependsOn = new Core.ChangeTrackingList<BasicArmDependency>();
+            DependsOn = new ChangeTrackingList<BasicArmDependency>();
         }
 
         /// <summary> Initializes a new instance of ArmDependency. </summary>

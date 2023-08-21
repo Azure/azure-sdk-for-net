@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<string> confirmationNumber = default;
-            Core.Optional<DateTimeOffset> readyByTime = default;
+            Optional<string> confirmationNumber = default;
+            Optional<DateTimeOffset> readyByTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("confirmationNumber"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxShipmentPickUpResult(confirmationNumber.Value, Core.Optional.ToNullable(readyByTime));
+            return new DataBoxShipmentPickUpResult(confirmationNumber.Value, Optional.ToNullable(readyByTime));
         }
     }
 }

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> migrationState = default;
-            Core.Optional<IReadOnlyList<string>> sqlDataCopyErrors = default;
-            Core.Optional<IReadOnlyList<CopyProgressDetails>> listOfCopyProgressDetails = default;
+            Optional<string> migrationState = default;
+            Optional<IReadOnlyList<string>> sqlDataCopyErrors = default;
+            Optional<IReadOnlyList<CopyProgressDetails>> listOfCopyProgressDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("migrationState"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new SqlDBMigrationStatusDetails(migrationState.Value, Core.Optional.ToList(sqlDataCopyErrors), Core.Optional.ToList(listOfCopyProgressDetails));
+            return new SqlDBMigrationStatusDetails(migrationState.Value, Optional.ToList(sqlDataCopyErrors), Optional.ToList(listOfCopyProgressDetails));
         }
     }
 }

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<BinaryData> content = default;
-            Core.Optional<string> contentLink = default;
+            Optional<BinaryData> content = default;
+            Optional<string> contentLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"u8))

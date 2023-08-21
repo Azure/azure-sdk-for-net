@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<MySqlPerformanceTier>> value = default;
+            Optional<IReadOnlyList<MySqlPerformanceTier>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlPerformanceTierListResult(Core.Optional.ToList(value));
+            return new MySqlPerformanceTierListResult(Optional.ToList(value));
         }
     }
 }

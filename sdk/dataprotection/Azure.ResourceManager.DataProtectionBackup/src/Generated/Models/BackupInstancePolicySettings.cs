@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of BackupInstancePolicySettings. </summary>
         public BackupInstancePolicySettings()
         {
-            DataStoreParametersList = new Core.ChangeTrackingList<DataStoreSettings>();
-            BackupDataSourceParametersList = new Core.ChangeTrackingList<BackupDataSourceSettings>();
+            DataStoreParametersList = new ChangeTrackingList<DataStoreSettings>();
+            BackupDataSourceParametersList = new ChangeTrackingList<BackupDataSourceSettings>();
         }
 
         /// <summary> Initializes a new instance of BackupInstancePolicySettings. </summary>

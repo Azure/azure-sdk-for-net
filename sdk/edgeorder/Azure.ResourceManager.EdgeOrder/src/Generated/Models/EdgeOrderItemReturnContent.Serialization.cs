@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class EdgeOrderItemReturnContent : Core.IUtf8JsonSerializable
+    public partial class EdgeOrderItemReturnContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ReturnAddress))
+            if (Optional.IsDefined(ReturnAddress))
             {
                 writer.WritePropertyName("returnAddress"u8);
                 writer.WriteObjectValue(ReturnAddress);
             }
             writer.WritePropertyName("returnReason"u8);
             writer.WriteStringValue(ReturnReason);
-            if (Core.Optional.IsDefined(ServiceTag))
+            if (Optional.IsDefined(ServiceTag))
             {
                 writer.WritePropertyName("serviceTag"u8);
                 writer.WriteStringValue(ServiceTag);
             }
-            if (Core.Optional.IsDefined(IsShippingBoxRequired))
+            if (Optional.IsDefined(IsShippingBoxRequired))
             {
                 writer.WritePropertyName("shippingBoxRequired"u8);
                 writer.WriteBooleanValue(IsShippingBoxRequired.Value);

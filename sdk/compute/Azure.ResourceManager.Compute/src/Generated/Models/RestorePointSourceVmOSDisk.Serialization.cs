@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RestorePointSourceVmOSDisk : Core.IUtf8JsonSerializable
+    public partial class RestorePointSourceVmOSDisk : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ManagedDisk))
+            if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
                 writer.WriteObjectValue(ManagedDisk);
             }
-            if (Core.Optional.IsDefined(DiskRestorePoint))
+            if (Optional.IsDefined(DiskRestorePoint))
             {
                 writer.WritePropertyName("diskRestorePoint"u8);
                 writer.WriteObjectValue(DiskRestorePoint);
@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<OperatingSystemType> osType = default;
-            Core.Optional<DiskEncryptionSettings> encryptionSettings = default;
-            Core.Optional<string> name = default;
-            Core.Optional<CachingType> caching = default;
-            Core.Optional<int> diskSizeGB = default;
-            Core.Optional<VirtualMachineManagedDisk> managedDisk = default;
-            Core.Optional<DiskRestorePointAttributes> diskRestorePoint = default;
-            Core.Optional<bool> writeAcceleratorEnabled = default;
+            Optional<OperatingSystemType> osType = default;
+            Optional<DiskEncryptionSettings> encryptionSettings = default;
+            Optional<string> name = default;
+            Optional<CachingType> caching = default;
+            Optional<int> diskSizeGB = default;
+            Optional<VirtualMachineManagedDisk> managedDisk = default;
+            Optional<DiskRestorePointAttributes> diskRestorePoint = default;
+            Optional<bool> writeAcceleratorEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RestorePointSourceVmOSDisk(Core.Optional.ToNullable(osType), encryptionSettings.Value, name.Value, Core.Optional.ToNullable(caching), Core.Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint.Value, Core.Optional.ToNullable(writeAcceleratorEnabled));
+            return new RestorePointSourceVmOSDisk(Optional.ToNullable(osType), encryptionSettings.Value, name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint.Value, Optional.ToNullable(writeAcceleratorEnabled));
         }
     }
 }

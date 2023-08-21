@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of TenantData. </summary>
         internal TenantData()
         {
-            Domains = new Core.ChangeTrackingList<string>();
+            Domains = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of TenantData. </summary>

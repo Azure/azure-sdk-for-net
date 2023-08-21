@@ -18,8 +18,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Core.Optional<OperatingHoursTime> startTime = default;
-            Core.Optional<OperatingHoursTime> endTime = default;
+            Optional<OperatingHoursTime> startTime = default;
+            Optional<OperatingHoursTime> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))

@@ -16,7 +16,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of Repositories. </summary>
         internal Repositories()
         {
-            RepositoriesValue = new Core.ChangeTrackingList<string>();
+            RepositoriesValue = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of Repositories. </summary>

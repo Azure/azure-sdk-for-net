@@ -12,12 +12,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class KeyForDiskEncryptionSet : Core.IUtf8JsonSerializable
+    public partial class KeyForDiskEncryptionSet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SourceVault))
+            if (Optional.IsDefined(SourceVault))
             {
                 writer.WritePropertyName("sourceVault"u8);
                 JsonSerializer.Serialize(writer, SourceVault);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<WritableSubResource> sourceVault = default;
+            Optional<WritableSubResource> sourceVault = default;
             Uri keyUrl = default;
             foreach (var property in element.EnumerateObject())
             {

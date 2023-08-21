@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<long> high = default;
-            Core.Optional<long> medium = default;
-            Core.Optional<long> low = default;
+            Optional<long> high = default;
+            Optional<long> medium = default;
+            Optional<long> low = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("high"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new IotSeverityMetrics(Core.Optional.ToNullable(high), Core.Optional.ToNullable(medium), Core.Optional.ToNullable(low));
+            return new IotSeverityMetrics(Optional.ToNullable(high), Optional.ToNullable(medium), Optional.ToNullable(low));
         }
     }
 }

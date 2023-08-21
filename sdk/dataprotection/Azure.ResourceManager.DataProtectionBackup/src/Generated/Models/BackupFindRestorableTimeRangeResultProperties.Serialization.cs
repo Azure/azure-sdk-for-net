@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupFindRestorableTimeRangeResultProperties : Core.IUtf8JsonSerializable
+    public partial class BackupFindRestorableTimeRangeResultProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(RestorableTimeRanges))
+            if (Optional.IsCollectionDefined(RestorableTimeRanges))
             {
                 writer.WritePropertyName("restorableTimeRanges"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ObjectType))
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<IList<RestorableTimeRange>> restorableTimeRanges = default;
-            Core.Optional<string> objectType = default;
+            Optional<IList<RestorableTimeRange>> restorableTimeRanges = default;
+            Optional<string> objectType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("restorableTimeRanges"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new BackupFindRestorableTimeRangeResultProperties(Core.Optional.ToList(restorableTimeRanges), objectType.Value);
+            return new BackupFindRestorableTimeRangeResultProperties(Optional.ToList(restorableTimeRanges), objectType.Value);
         }
     }
 }

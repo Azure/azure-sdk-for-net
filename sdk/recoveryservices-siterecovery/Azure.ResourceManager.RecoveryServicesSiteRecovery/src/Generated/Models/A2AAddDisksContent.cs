@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of A2AAddDisksContent. </summary>
         public A2AAddDisksContent()
         {
-            VmDisks = new Core.ChangeTrackingList<A2AVmDiskDetails>();
-            VmManagedDisks = new Core.ChangeTrackingList<A2AVmManagedDiskDetails>();
+            VmDisks = new ChangeTrackingList<A2AVmDiskDetails>();
+            VmManagedDisks = new ChangeTrackingList<A2AVmManagedDiskDetails>();
             InstanceType = "A2A";
         }
 

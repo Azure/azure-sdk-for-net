@@ -21,9 +21,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Argument.AssertNotNull(location, nameof(location));
 
-            ConnectivityEndpoints = new Core.ChangeTrackingDictionary<string, string>();
-            PrivateEndpointConnections = new Core.ChangeTrackingList<PrivateEndpointConnection>();
-            ExtraProperties = new Core.ChangeTrackingDictionary<string, object>();
+            ConnectivityEndpoints = new ChangeTrackingDictionary<string, string>();
+            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnection>();
+            ExtraProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of Workspace. </summary>

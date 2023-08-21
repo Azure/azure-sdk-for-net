@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Core.Optional<string> ingestionKey = default;
+            Optional<string> ingestionKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ingestionKey"u8))

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of AlertRuleLeafCondition. </summary>
         public AlertRuleLeafCondition()
         {
-            ContainsAny = new Core.ChangeTrackingList<string>();
+            ContainsAny = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AlertRuleLeafCondition. </summary>

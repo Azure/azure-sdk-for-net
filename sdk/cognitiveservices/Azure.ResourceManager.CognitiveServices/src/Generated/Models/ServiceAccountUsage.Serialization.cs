@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Core.Optional<ServiceAccountUsageUnitType> unit = default;
-            Core.Optional<ServiceAccountUsageMetricName> name = default;
-            Core.Optional<string> quotaPeriod = default;
-            Core.Optional<double> limit = default;
-            Core.Optional<double> currentValue = default;
-            Core.Optional<string> nextResetTime = default;
-            Core.Optional<ServiceAccountQuotaUsageStatus> status = default;
+            Optional<ServiceAccountUsageUnitType> unit = default;
+            Optional<ServiceAccountUsageMetricName> name = default;
+            Optional<string> quotaPeriod = default;
+            Optional<double> limit = default;
+            Optional<double> currentValue = default;
+            Optional<string> nextResetTime = default;
+            Optional<ServiceAccountQuotaUsageStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new ServiceAccountUsage(Core.Optional.ToNullable(unit), name.Value, quotaPeriod.Value, Core.Optional.ToNullable(limit), Core.Optional.ToNullable(currentValue), nextResetTime.Value, Core.Optional.ToNullable(status));
+            return new ServiceAccountUsage(Optional.ToNullable(unit), name.Value, quotaPeriod.Value, Optional.ToNullable(limit), Optional.ToNullable(currentValue), nextResetTime.Value, Optional.ToNullable(status));
         }
     }
 }

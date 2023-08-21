@@ -13,9 +13,9 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(WebClientCertificateAuthenticationConverter))]
-    public partial class WebClientCertificateAuthentication : Core.IUtf8JsonSerializable
+    public partial class WebClientCertificateAuthentication : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("pfx"u8);

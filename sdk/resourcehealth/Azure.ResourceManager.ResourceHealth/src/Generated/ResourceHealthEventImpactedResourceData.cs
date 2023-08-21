@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Initializes a new instance of ResourceHealthEventImpactedResourceData. </summary>
         internal ResourceHealthEventImpactedResourceData()
         {
-            Info = new Core.ChangeTrackingList<ResourceHealthKeyValueItem>();
+            Info = new ChangeTrackingList<ResourceHealthKeyValueItem>();
         }
 
         /// <summary> Initializes a new instance of ResourceHealthEventImpactedResourceData. </summary>

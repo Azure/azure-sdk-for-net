@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class ServicePrincipalCertificateAuthInfo : Core.IUtf8JsonSerializable
+    public partial class ServicePrincipalCertificateAuthInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("clientId"u8);

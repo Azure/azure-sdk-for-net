@@ -13,12 +13,12 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class IotSecuritySolutionData : Core.IUtf8JsonSerializable
+    public partial class IotSecuritySolutionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,22 +33,22 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Workspace))
+            if (Optional.IsDefined(Workspace))
             {
                 writer.WritePropertyName("workspace"u8);
                 writer.WriteStringValue(Workspace);
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Export))
+            if (Optional.IsCollectionDefined(Export))
             {
                 writer.WritePropertyName("export"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DisabledDataSources))
+            if (Optional.IsCollectionDefined(DisabledDataSources))
             {
                 writer.WritePropertyName("disabledDataSources"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(IotHubs))
+            if (Optional.IsCollectionDefined(IotHubs))
             {
                 writer.WritePropertyName("iotHubs"u8);
                 writer.WriteStartArray();
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(UserDefinedResources))
+            if (Optional.IsDefined(UserDefinedResources))
             {
                 writer.WritePropertyName("userDefinedResources"u8);
                 writer.WriteObjectValue(UserDefinedResources);
             }
-            if (Core.Optional.IsCollectionDefined(RecommendationsConfiguration))
+            if (Optional.IsCollectionDefined(RecommendationsConfiguration))
             {
                 writer.WritePropertyName("recommendationsConfiguration"u8);
                 writer.WriteStartArray();
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(UnmaskedIPLoggingStatus))
+            if (Optional.IsDefined(UnmaskedIPLoggingStatus))
             {
                 writer.WritePropertyName("unmaskedIpLoggingStatus"u8);
                 writer.WriteStringValue(UnmaskedIPLoggingStatus.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(AdditionalWorkspaces))
+            if (Optional.IsCollectionDefined(AdditionalWorkspaces))
             {
                 writer.WritePropertyName("additionalWorkspaces"u8);
                 writer.WriteStartArray();
@@ -118,23 +118,23 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> workspace = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<SecuritySolutionStatus> status = default;
-            Core.Optional<IList<IotSecuritySolutionExportOption>> export = default;
-            Core.Optional<IList<IotSecuritySolutionDataSource>> disabledDataSources = default;
-            Core.Optional<IList<string>> iotHubs = default;
-            Core.Optional<UserDefinedResourcesProperties> userDefinedResources = default;
-            Core.Optional<IReadOnlyList<string>> autoDiscoveredResources = default;
-            Core.Optional<IList<RecommendationConfigurationProperties>> recommendationsConfiguration = default;
-            Core.Optional<UnmaskedIPLoggingStatus> unmaskedIPLoggingStatus = default;
-            Core.Optional<IList<AdditionalWorkspacesProperties>> additionalWorkspaces = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> workspace = default;
+            Optional<string> displayName = default;
+            Optional<SecuritySolutionStatus> status = default;
+            Optional<IList<IotSecuritySolutionExportOption>> export = default;
+            Optional<IList<IotSecuritySolutionDataSource>> disabledDataSources = default;
+            Optional<IList<string>> iotHubs = default;
+            Optional<UserDefinedResourcesProperties> userDefinedResources = default;
+            Optional<IReadOnlyList<string>> autoDiscoveredResources = default;
+            Optional<IList<RecommendationConfigurationProperties>> recommendationsConfiguration = default;
+            Optional<UnmaskedIPLoggingStatus> unmaskedIPLoggingStatus = default;
+            Optional<IList<AdditionalWorkspacesProperties>> additionalWorkspaces = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new IotSecuritySolutionData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, workspace.Value, displayName.Value, Core.Optional.ToNullable(status), Core.Optional.ToList(export), Core.Optional.ToList(disabledDataSources), Core.Optional.ToList(iotHubs), userDefinedResources.Value, Core.Optional.ToList(autoDiscoveredResources), Core.Optional.ToList(recommendationsConfiguration), Core.Optional.ToNullable(unmaskedIPLoggingStatus), Core.Optional.ToList(additionalWorkspaces));
+            return new IotSecuritySolutionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, workspace.Value, displayName.Value, Optional.ToNullable(status), Optional.ToList(export), Optional.ToList(disabledDataSources), Optional.ToList(iotHubs), userDefinedResources.Value, Optional.ToList(autoDiscoveredResources), Optional.ToList(recommendationsConfiguration), Optional.ToNullable(unmaskedIPLoggingStatus), Optional.ToList(additionalWorkspaces));
         }
     }
 }

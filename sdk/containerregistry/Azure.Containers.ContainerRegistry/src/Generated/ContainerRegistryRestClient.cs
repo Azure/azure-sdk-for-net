@@ -196,7 +196,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="contentType"> The manifest's Content-Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/> or <paramref name="payload"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<ContainerRegistryCreateManifestHeaders>> CreateManifestAsync(string name, string reference, Stream payload, string contentType = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRegistryCreateManifestHeaders>> CreateManifestAsync(string name, string reference, Stream payload, string contentType = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -217,7 +217,7 @@ namespace Azure.Containers.ContainerRegistry
             switch (message.Response.Status)
             {
                 case 201:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -230,7 +230,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="contentType"> The manifest's Content-Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="reference"/> or <paramref name="payload"/> is null. </exception>
-        public Core.ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> CreateManifest(string name, string reference, Stream payload, string contentType = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> CreateManifest(string name, string reference, Stream payload, string contentType = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -251,7 +251,7 @@ namespace Azure.Containers.ContainerRegistry
             switch (message.Response.Status)
             {
                 case 201:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -355,7 +355,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
         /// <param name="n"> query parameter for max number of items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders>> GetRepositoriesAsync(string last = null, int? n = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders>> GetRepositoriesAsync(string last = null, int? n = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRepositoriesRequest(last, n);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -367,7 +367,7 @@ namespace Azure.Containers.ContainerRegistry
                         Repositories value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = Repositories.DeserializeRepositories(document.RootElement);
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -378,7 +378,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
         /// <param name="n"> query parameter for max number of items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> GetRepositories(string last = null, int? n = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> GetRepositories(string last = null, int? n = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRepositoriesRequest(last, n);
             _pipeline.Send(message, cancellationToken);
@@ -390,7 +390,7 @@ namespace Azure.Containers.ContainerRegistry
                         Repositories value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = Repositories.DeserializeRepositories(document.RootElement);
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -542,7 +542,7 @@ namespace Azure.Containers.ContainerRegistry
             if (value != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Core.Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(value);
                 request.Content = content;
             }
@@ -645,7 +645,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> filter by digest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<TagList, ContainerRegistryGetTagsHeaders>> GetTagsAsync(string name, string last = null, int? n = null, string orderby = null, string digest = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TagList, ContainerRegistryGetTagsHeaders>> GetTagsAsync(string name, string last = null, int? n = null, string orderby = null, string digest = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -662,7 +662,7 @@ namespace Azure.Containers.ContainerRegistry
                         TagList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = TagList.DeserializeTagList(document.RootElement);
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -677,7 +677,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> filter by digest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Core.ResponseWithHeaders<TagList, ContainerRegistryGetTagsHeaders> GetTags(string name, string last = null, int? n = null, string orderby = null, string digest = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TagList, ContainerRegistryGetTagsHeaders> GetTags(string name, string last = null, int? n = null, string orderby = null, string digest = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -694,7 +694,7 @@ namespace Azure.Containers.ContainerRegistry
                         TagList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = TagList.DeserializeTagList(document.RootElement);
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -799,7 +799,7 @@ namespace Azure.Containers.ContainerRegistry
             if (value != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Core.Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(value);
                 request.Content = content;
             }
@@ -980,7 +980,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="orderby"> orderby query parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<AcrManifests, ContainerRegistryGetManifestsHeaders>> GetManifestsAsync(string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AcrManifests, ContainerRegistryGetManifestsHeaders>> GetManifestsAsync(string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -997,7 +997,7 @@ namespace Azure.Containers.ContainerRegistry
                         AcrManifests value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = AcrManifests.DeserializeAcrManifests(document.RootElement);
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1011,7 +1011,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="orderby"> orderby query parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Core.ResponseWithHeaders<AcrManifests, ContainerRegistryGetManifestsHeaders> GetManifests(string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AcrManifests, ContainerRegistryGetManifestsHeaders> GetManifests(string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -1028,7 +1028,7 @@ namespace Azure.Containers.ContainerRegistry
                         AcrManifests value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = AcrManifests.DeserializeAcrManifests(document.RootElement);
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1133,7 +1133,7 @@ namespace Azure.Containers.ContainerRegistry
             if (value != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Core.Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(value);
                 request.Content = content;
             }
@@ -1225,7 +1225,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="n"> query parameter for max number of items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders>> GetRepositoriesNextPageAsync(string nextLink, string last = null, int? n = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders>> GetRepositoriesNextPageAsync(string nextLink, string last = null, int? n = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1242,7 +1242,7 @@ namespace Azure.Containers.ContainerRegistry
                         Repositories value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = Repositories.DeserializeRepositories(document.RootElement);
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1255,7 +1255,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="n"> query parameter for max number of items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Core.ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> GetRepositoriesNextPage(string nextLink, string last = null, int? n = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> GetRepositoriesNextPage(string nextLink, string last = null, int? n = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1272,7 +1272,7 @@ namespace Azure.Containers.ContainerRegistry
                         Repositories value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = Repositories.DeserializeRepositories(document.RootElement);
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1301,7 +1301,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> filter by digest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="name"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<TagList, ContainerRegistryGetTagsHeaders>> GetTagsNextPageAsync(string nextLink, string name, string last = null, int? n = null, string orderby = null, string digest = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TagList, ContainerRegistryGetTagsHeaders>> GetTagsNextPageAsync(string nextLink, string name, string last = null, int? n = null, string orderby = null, string digest = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1322,7 +1322,7 @@ namespace Azure.Containers.ContainerRegistry
                         TagList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = TagList.DeserializeTagList(document.RootElement);
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1338,7 +1338,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> filter by digest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="name"/> is null. </exception>
-        public Core.ResponseWithHeaders<TagList, ContainerRegistryGetTagsHeaders> GetTagsNextPage(string nextLink, string name, string last = null, int? n = null, string orderby = null, string digest = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TagList, ContainerRegistryGetTagsHeaders> GetTagsNextPage(string nextLink, string name, string last = null, int? n = null, string orderby = null, string digest = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1359,7 +1359,7 @@ namespace Azure.Containers.ContainerRegistry
                         TagList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = TagList.DeserializeTagList(document.RootElement);
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1387,7 +1387,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="orderby"> orderby query parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="name"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<AcrManifests, ContainerRegistryGetManifestsHeaders>> GetManifestsNextPageAsync(string nextLink, string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AcrManifests, ContainerRegistryGetManifestsHeaders>> GetManifestsNextPageAsync(string nextLink, string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1408,7 +1408,7 @@ namespace Azure.Containers.ContainerRegistry
                         AcrManifests value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = AcrManifests.DeserializeAcrManifests(document.RootElement);
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1423,7 +1423,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="orderby"> orderby query parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="name"/> is null. </exception>
-        public Core.ResponseWithHeaders<AcrManifests, ContainerRegistryGetManifestsHeaders> GetManifestsNextPage(string nextLink, string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AcrManifests, ContainerRegistryGetManifestsHeaders> GetManifestsNextPage(string nextLink, string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1444,7 +1444,7 @@ namespace Azure.Containers.ContainerRegistry
                         AcrManifests value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = AcrManifests.DeserializeAcrManifests(document.RootElement);
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

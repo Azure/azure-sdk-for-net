@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of GraphApiComputeServiceProperties. </summary>
         public GraphApiComputeServiceProperties()
         {
-            Locations = new Core.ChangeTrackingList<GraphApiComputeRegionalService>();
+            Locations = new ChangeTrackingList<GraphApiComputeRegionalService>();
             ServiceType = CosmosDBServiceType.GraphApiCompute;
         }
 

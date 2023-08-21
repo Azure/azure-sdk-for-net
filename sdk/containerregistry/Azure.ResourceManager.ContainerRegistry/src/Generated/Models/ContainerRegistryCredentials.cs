@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryCredentials. </summary>
         public ContainerRegistryCredentials()
         {
-            CustomRegistries = new Core.ChangeTrackingDictionary<string, CustomRegistryCredentials>();
+            CustomRegistries = new ChangeTrackingDictionary<string, CustomRegistryCredentials>();
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryCredentials. </summary>

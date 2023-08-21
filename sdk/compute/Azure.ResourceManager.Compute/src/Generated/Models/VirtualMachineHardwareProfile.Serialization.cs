@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineHardwareProfile : Core.IUtf8JsonSerializable
+    public partial class VirtualMachineHardwareProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VmSize))
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize.Value.ToString());
             }
-            if (Core.Optional.IsDefined(VmSizeProperties))
+            if (Optional.IsDefined(VmSizeProperties))
             {
                 writer.WritePropertyName("vmSizeProperties"u8);
                 writer.WriteObjectValue(VmSizeProperties);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<VirtualMachineSizeType> vmSize = default;
-            Core.Optional<VirtualMachineSizeProperties> vmSizeProperties = default;
+            Optional<VirtualMachineSizeType> vmSize = default;
+            Optional<VirtualMachineSizeProperties> vmSizeProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSize"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineHardwareProfile(Core.Optional.ToNullable(vmSize), vmSizeProperties.Value);
+            return new VirtualMachineHardwareProfile(Optional.ToNullable(vmSize), vmSizeProperties.Value);
         }
     }
 }

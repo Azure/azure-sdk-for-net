@@ -21,21 +21,21 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<SupportedOperatingSystemType> osType = default;
-            Core.Optional<OperatingSystemStateType> osState = default;
-            Core.Optional<DateTimeOffset> endOfLifeDate = default;
-            Core.Optional<GalleryImageIdentifier> identifier = default;
-            Core.Optional<RecommendedMachineConfiguration> recommended = default;
-            Core.Optional<Disallowed> disallowed = default;
-            Core.Optional<HyperVGeneration> hyperVGeneration = default;
-            Core.Optional<IReadOnlyList<GalleryImageFeature>> features = default;
-            Core.Optional<ImagePurchasePlan> purchasePlan = default;
-            Core.Optional<ArchitectureType> architecture = default;
-            Core.Optional<Uri> privacyStatementUri = default;
-            Core.Optional<string> eula = default;
-            Core.Optional<string> uniqueId = default;
+            Optional<string> name = default;
+            Optional<AzureLocation> location = default;
+            Optional<SupportedOperatingSystemType> osType = default;
+            Optional<OperatingSystemStateType> osState = default;
+            Optional<DateTimeOffset> endOfLifeDate = default;
+            Optional<GalleryImageIdentifier> identifier = default;
+            Optional<RecommendedMachineConfiguration> recommended = default;
+            Optional<Disallowed> disallowed = default;
+            Optional<HyperVGeneration> hyperVGeneration = default;
+            Optional<IReadOnlyList<GalleryImageFeature>> features = default;
+            Optional<ImagePurchasePlan> purchasePlan = default;
+            Optional<ArchitectureType> architecture = default;
+            Optional<Uri> privacyStatementUri = default;
+            Optional<string> eula = default;
+            Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new SharedGalleryImageData(name.Value, Core.Optional.ToNullable(location), uniqueId.Value, Core.Optional.ToNullable(osType), Core.Optional.ToNullable(osState), Core.Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Core.Optional.ToNullable(hyperVGeneration), Core.Optional.ToList(features), purchasePlan.Value, Core.Optional.ToNullable(architecture), privacyStatementUri.Value, eula.Value);
+            return new SharedGalleryImageData(name.Value, Optional.ToNullable(location), uniqueId.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value, Optional.ToNullable(architecture), privacyStatementUri.Value, eula.Value);
         }
     }
 }

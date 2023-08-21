@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class BillingSubscriptionMergeContent : Core.IUtf8JsonSerializable
+    public partial class BillingSubscriptionMergeContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TargetBillingSubscriptionName))
+            if (Optional.IsDefined(TargetBillingSubscriptionName))
             {
                 writer.WritePropertyName("targetBillingSubscriptionName"u8);
                 writer.WriteStringValue(TargetBillingSubscriptionName);
             }
-            if (Core.Optional.IsDefined(Quantity))
+            if (Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);

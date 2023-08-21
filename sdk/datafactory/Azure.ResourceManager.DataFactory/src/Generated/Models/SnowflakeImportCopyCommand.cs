@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SnowflakeImportCopyCommand. </summary>
         public SnowflakeImportCopyCommand()
         {
-            AdditionalCopyOptions = new Core.ChangeTrackingDictionary<string, BinaryData>();
-            AdditionalFormatOptions = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalCopyOptions = new ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalFormatOptions = new ChangeTrackingDictionary<string, BinaryData>();
             ImportSettingsType = "SnowflakeImportCopyCommand";
         }
 

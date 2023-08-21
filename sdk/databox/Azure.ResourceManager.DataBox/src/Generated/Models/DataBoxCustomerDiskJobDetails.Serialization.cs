@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxCustomerDiskJobDetails : Core.IUtf8JsonSerializable
+    public partial class DataBoxCustomerDiskJobDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ImportDiskDetails))
+            if (Optional.IsCollectionDefined(ImportDiskDetails))
             {
                 writer.WritePropertyName("importDiskDetailsCollection"u8);
                 writer.WriteStartObject();
@@ -29,19 +29,19 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("returnToCustomerPackageDetails"u8);
             writer.WriteObjectValue(ReturnToCustomerPackageDetails);
-            if (Core.Optional.IsDefined(EnableManifestBackup))
+            if (Optional.IsDefined(EnableManifestBackup))
             {
                 writer.WritePropertyName("enableManifestBackup"u8);
                 writer.WriteBooleanValue(EnableManifestBackup.Value);
             }
             writer.WritePropertyName("contactDetails"u8);
             writer.WriteObjectValue(ContactDetails);
-            if (Core.Optional.IsDefined(ShippingAddress))
+            if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
-            if (Core.Optional.IsCollectionDefined(DataImportDetails))
+            if (Optional.IsCollectionDefined(DataImportDetails))
             {
                 writer.WritePropertyName("dataImportDetails"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DataExportDetails))
+            if (Optional.IsCollectionDefined(DataExportDetails))
             {
                 writer.WritePropertyName("dataExportDetails"u8);
                 writer.WriteStartArray();
@@ -63,22 +63,22 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("jobDetailsType"u8);
             writer.WriteStringValue(JobDetailsType.ToSerialString());
-            if (Core.Optional.IsDefined(Preferences))
+            if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
             }
-            if (Core.Optional.IsDefined(ReverseShippingDetails))
+            if (Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
                 writer.WriteObjectValue(ReverseShippingDetails);
             }
-            if (Core.Optional.IsDefined(KeyEncryptionKey))
+            if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
-            if (Core.Optional.IsDefined(ExpectedDataSizeInTerabytes))
+            if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
             {
                 writer.WritePropertyName("expectedDataSizeInTeraBytes"u8);
                 writer.WriteNumberValue(ExpectedDataSizeInTerabytes.Value);
@@ -92,32 +92,32 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, ImportDiskDetails>> importDiskDetailsCollection = default;
-            Core.Optional<IReadOnlyDictionary<string, ExportDiskDetails>> exportDiskDetailsCollection = default;
-            Core.Optional<IReadOnlyList<DataBoxCustomerDiskCopyProgress>> copyProgress = default;
-            Core.Optional<PackageCarrierInfo> deliverToDcPackageDetails = default;
+            Optional<IDictionary<string, ImportDiskDetails>> importDiskDetailsCollection = default;
+            Optional<IReadOnlyDictionary<string, ExportDiskDetails>> exportDiskDetailsCollection = default;
+            Optional<IReadOnlyList<DataBoxCustomerDiskCopyProgress>> copyProgress = default;
+            Optional<PackageCarrierInfo> deliverToDcPackageDetails = default;
             PackageCarrierDetails returnToCustomerPackageDetails = default;
-            Core.Optional<bool> enableManifestBackup = default;
-            Core.Optional<IReadOnlyList<DataBoxJobStage>> jobStages = default;
+            Optional<bool> enableManifestBackup = default;
+            Optional<IReadOnlyList<DataBoxJobStage>> jobStages = default;
             DataBoxContactDetails contactDetails = default;
-            Core.Optional<DataBoxShippingAddress> shippingAddress = default;
-            Core.Optional<PackageShippingDetails> deliveryPackage = default;
-            Core.Optional<PackageShippingDetails> returnPackage = default;
-            Core.Optional<IList<DataImportDetails>> dataImportDetails = default;
-            Core.Optional<IList<DataExportDetails>> dataExportDetails = default;
+            Optional<DataBoxShippingAddress> shippingAddress = default;
+            Optional<PackageShippingDetails> deliveryPackage = default;
+            Optional<PackageShippingDetails> returnPackage = default;
+            Optional<IList<DataImportDetails>> dataImportDetails = default;
+            Optional<IList<DataExportDetails>> dataExportDetails = default;
             DataBoxOrderType jobDetailsType = default;
-            Core.Optional<DataBoxOrderPreferences> preferences = default;
-            Core.Optional<ReverseShippingDetails> reverseShippingDetails = default;
-            Core.Optional<IReadOnlyList<CopyLogDetails>> copyLogDetails = default;
-            Core.Optional<string> reverseShipmentLabelSasKey = default;
-            Core.Optional<string> chainOfCustodySasKey = default;
-            Core.Optional<DeviceErasureDetails> deviceErasureDetails = default;
-            Core.Optional<DataBoxKeyEncryptionKey> keyEncryptionKey = default;
-            Core.Optional<int> expectedDataSizeInTerabytes = default;
-            Core.Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
-            Core.Optional<LastMitigationActionOnJob> lastMitigationActionOnJob = default;
-            Core.Optional<DataCenterAddressResult> dataCenterAddress = default;
-            Core.Optional<DataCenterCode> dataCenterCode = default;
+            Optional<DataBoxOrderPreferences> preferences = default;
+            Optional<ReverseShippingDetails> reverseShippingDetails = default;
+            Optional<IReadOnlyList<CopyLogDetails>> copyLogDetails = default;
+            Optional<string> reverseShipmentLabelSasKey = default;
+            Optional<string> chainOfCustodySasKey = default;
+            Optional<DeviceErasureDetails> deviceErasureDetails = default;
+            Optional<DataBoxKeyEncryptionKey> keyEncryptionKey = default;
+            Optional<int> expectedDataSizeInTerabytes = default;
+            Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
+            Optional<LastMitigationActionOnJob> lastMitigationActionOnJob = default;
+            Optional<DataCenterAddressResult> dataCenterAddress = default;
+            Optional<DataCenterCode> dataCenterCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("importDiskDetailsCollection"u8))
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxCustomerDiskJobDetails(Core.Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Core.Optional.ToList(dataImportDetails), Core.Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, reverseShippingDetails.Value, Core.Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Core.Optional.ToNullable(expectedDataSizeInTerabytes), Core.Optional.ToList(actions), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Core.Optional.ToNullable(dataCenterCode), Core.Optional.ToDictionary(importDiskDetailsCollection), Core.Optional.ToDictionary(exportDiskDetailsCollection), Core.Optional.ToList(copyProgress), deliverToDcPackageDetails.Value, returnToCustomerPackageDetails, Core.Optional.ToNullable(enableManifestBackup));
+            return new DataBoxCustomerDiskJobDetails(Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Optional.ToList(dataImportDetails), Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, reverseShippingDetails.Value, Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), Optional.ToList(actions), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode), Optional.ToDictionary(importDiskDetailsCollection), Optional.ToDictionary(exportDiskDetailsCollection), Optional.ToList(copyProgress), deliverToDcPackageDetails.Value, returnToCustomerPackageDetails, Optional.ToNullable(enableManifestBackup));
         }
     }
 }

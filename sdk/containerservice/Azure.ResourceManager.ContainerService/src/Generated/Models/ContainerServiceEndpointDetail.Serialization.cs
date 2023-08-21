@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<IPAddress> ipAddress = default;
-            Core.Optional<int> port = default;
-            Core.Optional<string> protocol = default;
-            Core.Optional<string> description = default;
+            Optional<IPAddress> ipAddress = default;
+            Optional<int> port = default;
+            Optional<string> protocol = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServiceEndpointDetail(ipAddress.Value, Core.Optional.ToNullable(port), protocol.Value, description.Value);
+            return new ContainerServiceEndpointDetail(ipAddress.Value, Optional.ToNullable(port), protocol.Value, description.Value);
         }
     }
 }

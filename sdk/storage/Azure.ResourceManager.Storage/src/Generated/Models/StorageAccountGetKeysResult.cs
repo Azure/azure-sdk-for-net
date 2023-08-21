@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of StorageAccountGetKeysResult. </summary>
         internal StorageAccountGetKeysResult()
         {
-            Keys = new Core.ChangeTrackingList<StorageAccountKey>();
+            Keys = new ChangeTrackingList<StorageAccountKey>();
         }
 
         /// <summary> Initializes a new instance of StorageAccountGetKeysResult. </summary>

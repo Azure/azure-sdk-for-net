@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public MobileNetworkPlatformConfiguration(MobileNetworkPlatformType platformType)
         {
             PlatformType = platformType;
-            AzureStackEdgeDevices = new Core.ChangeTrackingList<WritableSubResource>();
+            AzureStackEdgeDevices = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of MobileNetworkPlatformConfiguration. </summary>

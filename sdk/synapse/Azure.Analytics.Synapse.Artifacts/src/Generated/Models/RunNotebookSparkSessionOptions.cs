@@ -16,12 +16,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of RunNotebookSparkSessionOptions. </summary>
         public RunNotebookSparkSessionOptions()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            Jars = new Core.ChangeTrackingList<string>();
-            PythonFiles = new Core.ChangeTrackingList<string>();
-            Files = new Core.ChangeTrackingList<string>();
-            Archives = new Core.ChangeTrackingList<string>();
-            Configuration = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Jars = new ChangeTrackingList<string>();
+            PythonFiles = new ChangeTrackingList<string>();
+            Files = new ChangeTrackingList<string>();
+            Archives = new ChangeTrackingList<string>();
+            Configuration = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of RunNotebookSparkSessionOptions. </summary>

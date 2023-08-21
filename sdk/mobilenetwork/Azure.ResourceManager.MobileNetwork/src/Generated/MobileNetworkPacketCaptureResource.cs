@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = await _mobileNetworkPacketCapturePacketCapturesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation(_mobileNetworkPacketCapturePacketCapturesClientDiagnostics, Pipeline, _mobileNetworkPacketCapturePacketCapturesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation(_mobileNetworkPacketCapturePacketCapturesClientDiagnostics, Pipeline, _mobileNetworkPacketCapturePacketCapturesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = _mobileNetworkPacketCapturePacketCapturesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MobileNetworkArmOperation(_mobileNetworkPacketCapturePacketCapturesClientDiagnostics, Pipeline, _mobileNetworkPacketCapturePacketCapturesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation(_mobileNetworkPacketCapturePacketCapturesClientDiagnostics, Pipeline, _mobileNetworkPacketCapturePacketCapturesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = await _mobileNetworkPacketCapturePacketCapturesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<MobileNetworkPacketCaptureResource>(new MobileNetworkPacketCaptureOperationSource(Client), _mobileNetworkPacketCapturePacketCapturesClientDiagnostics, Pipeline, _mobileNetworkPacketCapturePacketCapturesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MobileNetworkArmOperation<MobileNetworkPacketCaptureResource>(new MobileNetworkPacketCaptureOperationSource(Client), _mobileNetworkPacketCapturePacketCapturesClientDiagnostics, Pipeline, _mobileNetworkPacketCapturePacketCapturesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = _mobileNetworkPacketCapturePacketCapturesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MobileNetworkArmOperation<MobileNetworkPacketCaptureResource>(new MobileNetworkPacketCaptureOperationSource(Client), _mobileNetworkPacketCapturePacketCapturesClientDiagnostics, Pipeline, _mobileNetworkPacketCapturePacketCapturesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MobileNetworkArmOperation<MobileNetworkPacketCaptureResource>(new MobileNetworkPacketCaptureOperationSource(Client), _mobileNetworkPacketCapturePacketCapturesClientDiagnostics, Pipeline, _mobileNetworkPacketCapturePacketCapturesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = await _mobileNetworkPacketCapturePacketCapturesRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkPacketCapturePacketCapturesClientDiagnostics, Pipeline, _mobileNetworkPacketCapturePacketCapturesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkPacketCapturePacketCapturesClientDiagnostics, Pipeline, _mobileNetworkPacketCapturePacketCapturesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = _mobileNetworkPacketCapturePacketCapturesRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkPacketCapturePacketCapturesClientDiagnostics, Pipeline, _mobileNetworkPacketCapturePacketCapturesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkPacketCapturePacketCapturesClientDiagnostics, Pipeline, _mobileNetworkPacketCapturePacketCapturesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

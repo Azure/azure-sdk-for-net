@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of SitePatchInfo. </summary>
         public SitePatchInfo()
         {
-            HostNames = new Core.ChangeTrackingList<string>();
-            EnabledHostNames = new Core.ChangeTrackingList<string>();
-            HostNameSslStates = new Core.ChangeTrackingList<HostNameSslState>();
-            TrafficManagerHostNames = new Core.ChangeTrackingList<string>();
+            HostNames = new ChangeTrackingList<string>();
+            EnabledHostNames = new ChangeTrackingList<string>();
+            HostNameSslStates = new ChangeTrackingList<HostNameSslState>();
+            TrafficManagerHostNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SitePatchInfo. </summary>

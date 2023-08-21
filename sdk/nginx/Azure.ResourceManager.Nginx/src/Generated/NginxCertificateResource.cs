@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Nginx
             try
             {
                 var response = await _nginxCertificateCertificatesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NginxArmOperation(_nginxCertificateCertificatesClientDiagnostics, Pipeline, _nginxCertificateCertificatesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NginxArmOperation(_nginxCertificateCertificatesClientDiagnostics, Pipeline, _nginxCertificateCertificatesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Nginx
             try
             {
                 var response = _nginxCertificateCertificatesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NginxArmOperation(_nginxCertificateCertificatesClientDiagnostics, Pipeline, _nginxCertificateCertificatesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NginxArmOperation(_nginxCertificateCertificatesClientDiagnostics, Pipeline, _nginxCertificateCertificatesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Nginx
             try
             {
                 var response = await _nginxCertificateCertificatesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NginxArmOperation<NginxCertificateResource>(new NginxCertificateOperationSource(Client), _nginxCertificateCertificatesClientDiagnostics, Pipeline, _nginxCertificateCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NginxArmOperation<NginxCertificateResource>(new NginxCertificateOperationSource(Client), _nginxCertificateCertificatesClientDiagnostics, Pipeline, _nginxCertificateCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Nginx
             try
             {
                 var response = _nginxCertificateCertificatesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new NginxArmOperation<NginxCertificateResource>(new NginxCertificateOperationSource(Client), _nginxCertificateCertificatesClientDiagnostics, Pipeline, _nginxCertificateCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NginxArmOperation<NginxCertificateResource>(new NginxCertificateOperationSource(Client), _nginxCertificateCertificatesClientDiagnostics, Pipeline, _nginxCertificateCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

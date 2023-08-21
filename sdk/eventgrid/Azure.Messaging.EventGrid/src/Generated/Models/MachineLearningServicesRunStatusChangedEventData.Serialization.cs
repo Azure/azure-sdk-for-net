@@ -21,13 +21,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<string> experimentId = default;
-            Core.Optional<string> experimentName = default;
-            Core.Optional<string> runId = default;
-            Core.Optional<string> runType = default;
-            Core.Optional<object> runTags = default;
-            Core.Optional<object> runProperties = default;
-            Core.Optional<string> runStatus = default;
+            Optional<string> experimentId = default;
+            Optional<string> experimentName = default;
+            Optional<string> runId = default;
+            Optional<string> runType = default;
+            Optional<object> runTags = default;
+            Optional<object> runProperties = default;
+            Optional<string> runStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("experimentId"u8))

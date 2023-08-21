@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of PolicySetDefinitionData. </summary>
         public PolicySetDefinitionData()
         {
-            Parameters = new Core.ChangeTrackingDictionary<string, ArmPolicyParameter>();
-            PolicyDefinitions = new Core.ChangeTrackingList<PolicyDefinitionReference>();
-            PolicyDefinitionGroups = new Core.ChangeTrackingList<PolicyDefinitionGroup>();
+            Parameters = new ChangeTrackingDictionary<string, ArmPolicyParameter>();
+            PolicyDefinitions = new ChangeTrackingList<PolicyDefinitionReference>();
+            PolicyDefinitionGroups = new ChangeTrackingList<PolicyDefinitionGroup>();
         }
 
         /// <summary> Initializes a new instance of PolicySetDefinitionData. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of RuleWebhookAction. </summary>
         public RuleWebhookAction()
         {
-            Properties = new Core.ChangeTrackingDictionary<string, string>();
+            Properties = new ChangeTrackingDictionary<string, string>();
             OdataType = "Microsoft.Azure.Management.Insights.Models.RuleWebhookAction";
         }
 

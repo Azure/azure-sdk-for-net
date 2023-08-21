@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerUserAssignedIdentity : Core.IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerUserAssignedIdentity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             PostgreSqlFlexibleServerIdentityType type = default;
-            Core.Optional<Guid> tenantId = default;
+            Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentities"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerUserAssignedIdentity(Core.Optional.ToDictionary(userAssignedIdentities), type, Core.Optional.ToNullable(tenantId));
+            return new PostgreSqlFlexibleServerUserAssignedIdentity(Optional.ToDictionary(userAssignedIdentities), type, Optional.ToNullable(tenantId));
         }
     }
 }

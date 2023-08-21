@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory
             SourceConnectionsInfo = sourceConnectionsInfo.ToList();
             TargetConnectionsInfo = targetConnectionsInfo.ToList();
             Policy = policy;
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DataFactoryChangeDataCaptureData. </summary>

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<string> exceptiontype = default;
-            Core.Optional<string> errordetail = default;
+            Optional<string> exceptiontype = default;
+            Optional<string> errordetail = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exceptiontype"u8))

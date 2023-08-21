@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeMonitoringData. </summary>
         internal IntegrationRuntimeMonitoringData()
         {
-            Nodes = new Core.ChangeTrackingList<IntegrationRuntimeNodeMonitoringData>();
+            Nodes = new ChangeTrackingList<IntegrationRuntimeNodeMonitoringData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeMonitoringData. </summary>

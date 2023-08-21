@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of PolicyTrackedResourcesQueryResults. </summary>
         internal PolicyTrackedResourcesQueryResults()
         {
-            Value = new Core.ChangeTrackingList<PolicyTrackedResourceRecord>();
+            Value = new ChangeTrackingList<PolicyTrackedResourceRecord>();
         }
 
         /// <summary> Initializes a new instance of PolicyTrackedResourcesQueryResults. </summary>

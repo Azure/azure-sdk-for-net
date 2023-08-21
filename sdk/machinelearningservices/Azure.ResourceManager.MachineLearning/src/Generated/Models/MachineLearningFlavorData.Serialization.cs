@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningFlavorData : Core.IUtf8JsonSerializable
+    public partial class MachineLearningFlavorData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Data))
+            if (Optional.IsCollectionDefined(Data))
             {
                 if (Data != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> data = default;
+            Optional<IDictionary<string, string>> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("data"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningFlavorData(Core.Optional.ToDictionary(data));
+            return new MachineLearningFlavorData(Optional.ToDictionary(data));
         }
     }
 }

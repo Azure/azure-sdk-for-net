@@ -14,14 +14,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class PredictionResourceFormatData : Core.IUtf8JsonSerializable
+    public partial class PredictionResourceFormatData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Description))
+            if (Optional.IsCollectionDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(DisplayName))
+            if (Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(InvolvedInteractionTypes))
+            if (Optional.IsCollectionDefined(InvolvedInteractionTypes))
             {
                 writer.WritePropertyName("involvedInteractionTypes"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(InvolvedKpiTypes))
+            if (Optional.IsCollectionDefined(InvolvedKpiTypes))
             {
                 writer.WritePropertyName("involvedKpiTypes"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(InvolvedRelationships))
+            if (Optional.IsCollectionDefined(InvolvedRelationships))
             {
                 writer.WritePropertyName("involvedRelationships"u8);
                 writer.WriteStartArray();
@@ -73,47 +73,47 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(NegativeOutcomeExpression))
+            if (Optional.IsDefined(NegativeOutcomeExpression))
             {
                 writer.WritePropertyName("negativeOutcomeExpression"u8);
                 writer.WriteStringValue(NegativeOutcomeExpression);
             }
-            if (Core.Optional.IsDefined(PositiveOutcomeExpression))
+            if (Optional.IsDefined(PositiveOutcomeExpression))
             {
                 writer.WritePropertyName("positiveOutcomeExpression"u8);
                 writer.WriteStringValue(PositiveOutcomeExpression);
             }
-            if (Core.Optional.IsDefined(PrimaryProfileType))
+            if (Optional.IsDefined(PrimaryProfileType))
             {
                 writer.WritePropertyName("primaryProfileType"u8);
                 writer.WriteStringValue(PrimaryProfileType);
             }
-            if (Core.Optional.IsDefined(PredictionName))
+            if (Optional.IsDefined(PredictionName))
             {
                 writer.WritePropertyName("predictionName"u8);
                 writer.WriteStringValue(PredictionName);
             }
-            if (Core.Optional.IsDefined(ScopeExpression))
+            if (Optional.IsDefined(ScopeExpression))
             {
                 writer.WritePropertyName("scopeExpression"u8);
                 writer.WriteStringValue(ScopeExpression);
             }
-            if (Core.Optional.IsDefined(AutoAnalyze))
+            if (Optional.IsDefined(AutoAnalyze))
             {
                 writer.WritePropertyName("autoAnalyze"u8);
                 writer.WriteBooleanValue(AutoAnalyze.Value);
             }
-            if (Core.Optional.IsDefined(Mappings))
+            if (Optional.IsDefined(Mappings))
             {
                 writer.WritePropertyName("mappings"u8);
                 writer.WriteObjectValue(Mappings);
             }
-            if (Core.Optional.IsDefined(ScoreLabel))
+            if (Optional.IsDefined(ScoreLabel))
             {
                 writer.WritePropertyName("scoreLabel"u8);
                 writer.WriteStringValue(ScoreLabel);
             }
-            if (Core.Optional.IsCollectionDefined(Grades))
+            if (Optional.IsCollectionDefined(Grades))
             {
                 writer.WritePropertyName("grades"u8);
                 writer.WriteStartArray();
@@ -136,24 +136,24 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IDictionary<string, string>> description = default;
-            Core.Optional<IDictionary<string, string>> displayName = default;
-            Core.Optional<IList<string>> involvedInteractionTypes = default;
-            Core.Optional<IList<string>> involvedKpiTypes = default;
-            Core.Optional<IList<string>> involvedRelationships = default;
-            Core.Optional<string> negativeOutcomeExpression = default;
-            Core.Optional<string> positiveOutcomeExpression = default;
-            Core.Optional<string> primaryProfileType = default;
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<string> predictionName = default;
-            Core.Optional<string> scopeExpression = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<bool> autoAnalyze = default;
-            Core.Optional<PredictionMappings> mappings = default;
-            Core.Optional<string> scoreLabel = default;
-            Core.Optional<IList<PredictionGradesItem>> grades = default;
-            Core.Optional<PredictionSystemGeneratedEntities> systemGeneratedEntities = default;
+            Optional<SystemData> systemData = default;
+            Optional<IDictionary<string, string>> description = default;
+            Optional<IDictionary<string, string>> displayName = default;
+            Optional<IList<string>> involvedInteractionTypes = default;
+            Optional<IList<string>> involvedKpiTypes = default;
+            Optional<IList<string>> involvedRelationships = default;
+            Optional<string> negativeOutcomeExpression = default;
+            Optional<string> positiveOutcomeExpression = default;
+            Optional<string> primaryProfileType = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> predictionName = default;
+            Optional<string> scopeExpression = default;
+            Optional<Guid> tenantId = default;
+            Optional<bool> autoAnalyze = default;
+            Optional<PredictionMappings> mappings = default;
+            Optional<string> scoreLabel = default;
+            Optional<IList<PredictionGradesItem>> grades = default;
+            Optional<PredictionSystemGeneratedEntities> systemGeneratedEntities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     continue;
                 }
             }
-            return new PredictionResourceFormatData(id, name, type, systemData.Value, Core.Optional.ToDictionary(description), Core.Optional.ToDictionary(displayName), Core.Optional.ToList(involvedInteractionTypes), Core.Optional.ToList(involvedKpiTypes), Core.Optional.ToList(involvedRelationships), negativeOutcomeExpression.Value, positiveOutcomeExpression.Value, primaryProfileType.Value, Core.Optional.ToNullable(provisioningState), predictionName.Value, scopeExpression.Value, Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(autoAnalyze), mappings.Value, scoreLabel.Value, Core.Optional.ToList(grades), systemGeneratedEntities.Value);
+            return new PredictionResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(description), Optional.ToDictionary(displayName), Optional.ToList(involvedInteractionTypes), Optional.ToList(involvedKpiTypes), Optional.ToList(involvedRelationships), negativeOutcomeExpression.Value, positiveOutcomeExpression.Value, primaryProfileType.Value, Optional.ToNullable(provisioningState), predictionName.Value, scopeExpression.Value, Optional.ToNullable(tenantId), Optional.ToNullable(autoAnalyze), mappings.Value, scoreLabel.Value, Optional.ToList(grades), systemGeneratedEntities.Value);
         }
     }
 }

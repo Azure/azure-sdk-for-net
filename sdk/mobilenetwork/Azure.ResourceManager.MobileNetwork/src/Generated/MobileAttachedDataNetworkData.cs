@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.MobileNetwork
 
             UserPlaneDataInterface = userPlaneDataInterface;
             DnsAddresses = dnsAddresses.ToList();
-            UserEquipmentAddressPoolPrefix = new Core.ChangeTrackingList<string>();
-            UserEquipmentStaticAddressPoolPrefix = new Core.ChangeTrackingList<string>();
+            UserEquipmentAddressPoolPrefix = new ChangeTrackingList<string>();
+            UserEquipmentStaticAddressPoolPrefix = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MobileAttachedDataNetworkData. </summary>

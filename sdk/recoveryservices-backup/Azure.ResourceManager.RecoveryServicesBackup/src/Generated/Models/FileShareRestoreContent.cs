@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of FileShareRestoreContent. </summary>
         public FileShareRestoreContent()
         {
-            RestoreFileSpecs = new Core.ChangeTrackingList<RestoreFileSpecs>();
+            RestoreFileSpecs = new ChangeTrackingList<RestoreFileSpecs>();
             ObjectType = "AzureFileShareRestoreRequest";
         }
 

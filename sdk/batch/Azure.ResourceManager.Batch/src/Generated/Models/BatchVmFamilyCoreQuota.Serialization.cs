@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<int> coreQuota = default;
+            Optional<string> name = default;
+            Optional<int> coreQuota = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchVmFamilyCoreQuota(name.Value, Core.Optional.ToNullable(coreQuota));
+            return new BatchVmFamilyCoreQuota(name.Value, Optional.ToNullable(coreQuota));
         }
     }
 }

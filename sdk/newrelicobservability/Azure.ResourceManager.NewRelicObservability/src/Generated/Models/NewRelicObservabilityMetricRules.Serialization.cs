@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicObservabilityMetricRules : Core.IUtf8JsonSerializable
+    public partial class NewRelicObservabilityMetricRules : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SendMetrics))
+            if (Optional.IsDefined(SendMetrics))
             {
                 writer.WritePropertyName("sendMetrics"u8);
                 writer.WriteStringValue(SendMetrics.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(FilteringTags))
+            if (Optional.IsCollectionDefined(FilteringTags))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(UserEmail))
+            if (Optional.IsDefined(UserEmail))
             {
                 writer.WritePropertyName("userEmail"u8);
                 writer.WriteStringValue(UserEmail);
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Core.Optional<NewRelicObservabilitySendMetricsStatus> sendMetrics = default;
-            Core.Optional<IList<NewRelicObservabilityFilteringTag>> filteringTags = default;
-            Core.Optional<string> userEmail = default;
+            Optional<NewRelicObservabilitySendMetricsStatus> sendMetrics = default;
+            Optional<IList<NewRelicObservabilityFilteringTag>> filteringTags = default;
+            Optional<string> userEmail = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sendMetrics"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new NewRelicObservabilityMetricRules(Core.Optional.ToNullable(sendMetrics), Core.Optional.ToList(filteringTags), userEmail.Value);
+            return new NewRelicObservabilityMetricRules(Optional.ToNullable(sendMetrics), Optional.ToList(filteringTags), userEmail.Value);
         }
     }
 }

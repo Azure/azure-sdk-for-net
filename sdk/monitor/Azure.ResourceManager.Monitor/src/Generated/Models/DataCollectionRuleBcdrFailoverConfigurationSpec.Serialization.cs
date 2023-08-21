@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<string> activeLocation = default;
-            Core.Optional<IReadOnlyList<DataCollectionRuleBcdrLocationSpec>> locations = default;
+            Optional<string> activeLocation = default;
+            Optional<IReadOnlyList<DataCollectionRuleBcdrLocationSpec>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activeLocation"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new DataCollectionRuleBcdrFailoverConfigurationSpec(activeLocation.Value, Core.Optional.ToList(locations));
+            return new DataCollectionRuleBcdrFailoverConfigurationSpec(activeLocation.Value, Optional.ToList(locations));
         }
     }
 }

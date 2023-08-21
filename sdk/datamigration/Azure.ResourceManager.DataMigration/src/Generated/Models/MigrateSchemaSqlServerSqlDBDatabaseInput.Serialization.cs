@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSchemaSqlServerSqlDBDatabaseInput : Core.IUtf8JsonSerializable
+    public partial class MigrateSchemaSqlServerSqlDBDatabaseInput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(TargetDatabaseName))
+            if (Optional.IsDefined(TargetDatabaseName))
             {
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (Core.Optional.IsDefined(SchemaSetting))
+            if (Optional.IsDefined(SchemaSetting))
             {
                 writer.WritePropertyName("schemaSetting"u8);
                 writer.WriteObjectValue(SchemaSetting);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> id = default;
-            Core.Optional<string> targetDatabaseName = default;
-            Core.Optional<SchemaMigrationSetting> schemaSetting = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<string> targetDatabaseName = default;
+            Optional<SchemaMigrationSetting> schemaSetting = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

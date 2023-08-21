@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Initializes a new instance of GroupConnectivityInformation. </summary>
         public GroupConnectivityInformation()
         {
-            CustomerVisibleFqdns = new Core.ChangeTrackingList<string>();
+            CustomerVisibleFqdns = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of GroupConnectivityInformation. </summary>

@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             ScriptPath = scriptPath;
             ScriptLinkedService = scriptLinkedService;
-            Parameters = new Core.ChangeTrackingDictionary<string, object>();
+            Parameters = new ChangeTrackingDictionary<string, object>();
             Type = "DataLakeAnalyticsU-SQL";
         }
 

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Orbital.Models
             {
                 return null;
             }
-            Core.Optional<IPAddress> destinationIP = default;
-            Core.Optional<IReadOnlyList<IPAddress>> sourceIPs = default;
+            Optional<IPAddress> destinationIP = default;
+            Optional<IReadOnlyList<IPAddress>> sourceIPs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("destinationIp"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     continue;
                 }
             }
-            return new OrbitalContactAntennaConfiguration(destinationIP.Value, Core.Optional.ToList(sourceIPs));
+            return new OrbitalContactAntennaConfiguration(destinationIP.Value, Optional.ToList(sourceIPs));
         }
     }
 }

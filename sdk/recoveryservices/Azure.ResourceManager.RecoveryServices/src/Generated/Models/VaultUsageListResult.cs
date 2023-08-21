@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Initializes a new instance of VaultUsageListResult. </summary>
         internal VaultUsageListResult()
         {
-            Value = new Core.ChangeTrackingList<VaultUsage>();
+            Value = new ChangeTrackingList<VaultUsage>();
         }
 
         /// <summary> Initializes a new instance of VaultUsageListResult. </summary>

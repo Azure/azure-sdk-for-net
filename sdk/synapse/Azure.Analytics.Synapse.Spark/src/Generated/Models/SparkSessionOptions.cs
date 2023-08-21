@@ -21,14 +21,14 @@ namespace Azure.Analytics.Synapse.Spark.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
             Name = name;
-            Arguments = new Core.ChangeTrackingList<string>();
-            Jars = new Core.ChangeTrackingList<string>();
-            PythonFiles = new Core.ChangeTrackingList<string>();
-            Files = new Core.ChangeTrackingList<string>();
-            Archives = new Core.ChangeTrackingList<string>();
-            Configuration = new Core.ChangeTrackingDictionary<string, string>();
+            Arguments = new ChangeTrackingList<string>();
+            Jars = new ChangeTrackingList<string>();
+            PythonFiles = new ChangeTrackingList<string>();
+            Files = new ChangeTrackingList<string>();
+            Archives = new ChangeTrackingList<string>();
+            Configuration = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>

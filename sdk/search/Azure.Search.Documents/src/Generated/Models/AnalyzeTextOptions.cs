@@ -22,8 +22,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
-            TokenFilters = new Core.ChangeTrackingList<TokenFilterName>();
-            CharFilters = new Core.ChangeTrackingList<string>();
+            TokenFilters = new ChangeTrackingList<TokenFilterName>();
+            CharFilters = new ChangeTrackingList<string>();
         }
 
         /// <summary> The text to break into tokens. </summary>

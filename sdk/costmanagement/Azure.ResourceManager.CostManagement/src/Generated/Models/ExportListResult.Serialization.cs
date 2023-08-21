@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<CostManagementExportData>> value = default;
+            Optional<IReadOnlyList<CostManagementExportData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new ExportListResult(Core.Optional.ToList(value));
+            return new ExportListResult(Optional.ToList(value));
         }
     }
 }

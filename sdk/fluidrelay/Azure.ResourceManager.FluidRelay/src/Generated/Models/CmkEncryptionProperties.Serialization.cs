@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FluidRelay.Models
 {
-    public partial class CmkEncryptionProperties : Core.IUtf8JsonSerializable
+    public partial class CmkEncryptionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeyEncryptionKeyIdentity))
+            if (Optional.IsDefined(KeyEncryptionKeyIdentity))
             {
                 writer.WritePropertyName("keyEncryptionKeyIdentity"u8);
                 writer.WriteObjectValue(KeyEncryptionKeyIdentity);
             }
-            if (Core.Optional.IsDefined(KeyEncryptionKeyUri))
+            if (Optional.IsDefined(KeyEncryptionKeyUri))
             {
                 writer.WritePropertyName("keyEncryptionKeyUrl"u8);
                 writer.WriteStringValue(KeyEncryptionKeyUri.AbsoluteUri);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.FluidRelay.Models
             {
                 return null;
             }
-            Core.Optional<CmkIdentity> keyEncryptionKeyIdentity = default;
-            Core.Optional<Uri> keyEncryptionKeyUrl = default;
+            Optional<CmkIdentity> keyEncryptionKeyIdentity = default;
+            Optional<Uri> keyEncryptionKeyUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyEncryptionKeyIdentity"u8))

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    internal class OperationalInsightsWorkspaceOperationSource : Core.IOperationSource<OperationalInsightsWorkspaceResource>
+    internal class OperationalInsightsWorkspaceOperationSource : IOperationSource<OperationalInsightsWorkspaceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.OperationalInsights
             _client = client;
         }
 
-        OperationalInsightsWorkspaceResource Core.IOperationSource<OperationalInsightsWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        OperationalInsightsWorkspaceResource IOperationSource<OperationalInsightsWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(document.RootElement);
             return new OperationalInsightsWorkspaceResource(_client, data);
         }
 
-        async ValueTask<OperationalInsightsWorkspaceResource> Core.IOperationSource<OperationalInsightsWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<OperationalInsightsWorkspaceResource> IOperationSource<OperationalInsightsWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(document.RootElement);

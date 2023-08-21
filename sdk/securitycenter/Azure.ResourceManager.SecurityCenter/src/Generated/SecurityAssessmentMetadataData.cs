@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of SecurityAssessmentMetadataData. </summary>
         public SecurityAssessmentMetadataData()
         {
-            Categories = new Core.ChangeTrackingList<SecurityAssessmentResourceCategory>();
-            Threats = new Core.ChangeTrackingList<SecurityThreat>();
-            Tactics = new Core.ChangeTrackingList<SecurityAssessmentTactic>();
-            Techniques = new Core.ChangeTrackingList<SecurityAssessmentTechnique>();
+            Categories = new ChangeTrackingList<SecurityAssessmentResourceCategory>();
+            Threats = new ChangeTrackingList<SecurityThreat>();
+            Tactics = new ChangeTrackingList<SecurityAssessmentTactic>();
+            Techniques = new ChangeTrackingList<SecurityAssessmentTechnique>();
         }
 
         /// <summary> Initializes a new instance of SecurityAssessmentMetadataData. </summary>

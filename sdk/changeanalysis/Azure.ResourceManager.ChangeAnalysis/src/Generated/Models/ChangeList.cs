@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         /// <summary> Initializes a new instance of ChangeList. </summary>
         internal ChangeList()
         {
-            Value = new Core.ChangeTrackingList<DetectedChangeData>();
+            Value = new ChangeTrackingList<DetectedChangeData>();
         }
 
         /// <summary> Initializes a new instance of ChangeList. </summary>

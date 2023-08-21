@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<string> nodeId = default;
-            Core.Optional<SynapseManagedIntegrationRuntimeNodeStatus> status = default;
-            Core.Optional<IReadOnlyList<SynapseManagedIntegrationRuntimeError>> errors = default;
+            Optional<string> nodeId = default;
+            Optional<SynapseManagedIntegrationRuntimeNodeStatus> status = default;
+            Optional<IReadOnlyList<SynapseManagedIntegrationRuntimeError>> errors = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseManagedIntegrationRuntimeNode(nodeId.Value, Core.Optional.ToNullable(status), Core.Optional.ToList(errors), additionalProperties);
+            return new SynapseManagedIntegrationRuntimeNode(nodeId.Value, Optional.ToNullable(status), Optional.ToList(errors), additionalProperties);
         }
     }
 }

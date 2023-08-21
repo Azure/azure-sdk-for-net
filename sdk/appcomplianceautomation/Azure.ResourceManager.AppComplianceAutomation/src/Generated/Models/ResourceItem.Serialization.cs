@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Core.Optional<string> subscriptionId = default;
-            Core.Optional<string> resourceGroup = default;
-            Core.Optional<string> resourceType = default;
-            Core.Optional<string> resourceId = default;
+            Optional<string> subscriptionId = default;
+            Optional<string> resourceGroup = default;
+            Optional<string> resourceType = default;
+            Optional<string> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionId"u8))

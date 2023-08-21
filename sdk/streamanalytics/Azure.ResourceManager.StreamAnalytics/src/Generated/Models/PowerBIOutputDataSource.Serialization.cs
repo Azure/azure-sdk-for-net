@@ -11,51 +11,51 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class PowerBIOutputDataSource : Core.IUtf8JsonSerializable
+    public partial class PowerBIOutputDataSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RefreshToken))
+            if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (Core.Optional.IsDefined(TokenUserPrincipalName))
+            if (Optional.IsDefined(TokenUserPrincipalName))
             {
                 writer.WritePropertyName("tokenUserPrincipalName"u8);
                 writer.WriteStringValue(TokenUserPrincipalName);
             }
-            if (Core.Optional.IsDefined(TokenUserDisplayName))
+            if (Optional.IsDefined(TokenUserDisplayName))
             {
                 writer.WritePropertyName("tokenUserDisplayName"u8);
                 writer.WriteStringValue(TokenUserDisplayName);
             }
-            if (Core.Optional.IsDefined(Dataset))
+            if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteStringValue(Dataset);
             }
-            if (Core.Optional.IsDefined(Table))
+            if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(Table);
             }
-            if (Core.Optional.IsDefined(GroupId))
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId.Value);
             }
-            if (Core.Optional.IsDefined(GroupName))
+            if (Optional.IsDefined(GroupName))
             {
                 writer.WritePropertyName("groupName"u8);
                 writer.WriteStringValue(GroupName);
             }
-            if (Core.Optional.IsDefined(AuthenticationMode))
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Core.Optional<string> refreshToken = default;
-            Core.Optional<string> tokenUserPrincipalName = default;
-            Core.Optional<string> tokenUserDisplayName = default;
-            Core.Optional<string> dataset = default;
-            Core.Optional<string> table = default;
-            Core.Optional<Guid> groupId = default;
-            Core.Optional<string> groupName = default;
-            Core.Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            Optional<string> refreshToken = default;
+            Optional<string> tokenUserPrincipalName = default;
+            Optional<string> tokenUserDisplayName = default;
+            Optional<string> dataset = default;
+            Optional<string> table = default;
+            Optional<Guid> groupId = default;
+            Optional<string> groupName = default;
+            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new PowerBIOutputDataSource(type, refreshToken.Value, tokenUserPrincipalName.Value, tokenUserDisplayName.Value, dataset.Value, table.Value, Core.Optional.ToNullable(groupId), groupName.Value, Core.Optional.ToNullable(authenticationMode));
+            return new PowerBIOutputDataSource(type, refreshToken.Value, tokenUserPrincipalName.Value, tokenUserDisplayName.Value, dataset.Value, table.Value, Optional.ToNullable(groupId), groupName.Value, Optional.ToNullable(authenticationMode));
         }
     }
 }

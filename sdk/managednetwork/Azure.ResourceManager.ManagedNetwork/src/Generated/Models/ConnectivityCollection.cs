@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
         /// <summary> Initializes a new instance of ConnectivityCollection. </summary>
         internal ConnectivityCollection()
         {
-            Groups = new Core.ChangeTrackingList<ManagedNetworkGroupData>();
-            Peerings = new Core.ChangeTrackingList<ManagedNetworkPeeringPolicyData>();
+            Groups = new ChangeTrackingList<ManagedNetworkGroupData>();
+            Peerings = new ChangeTrackingList<ManagedNetworkPeeringPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ConnectivityCollection. </summary>

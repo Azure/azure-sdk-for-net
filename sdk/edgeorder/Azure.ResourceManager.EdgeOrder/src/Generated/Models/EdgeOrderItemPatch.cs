@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of EdgeOrderItemPatch. </summary>
         public EdgeOrderItemPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            NotificationEmailList = new Core.ChangeTrackingList<string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            NotificationEmailList = new ChangeTrackingList<string>();
         }
 
         /// <summary> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </summary>

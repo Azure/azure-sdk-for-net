@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<bool> isDefault = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> componentVersions = default;
+            Optional<string> friendlyName = default;
+            Optional<string> displayName = default;
+            Optional<bool> isDefault = default;
+            Optional<IReadOnlyDictionary<string, string>> componentVersions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightVersionSpec(friendlyName.Value, displayName.Value, Core.Optional.ToNullable(isDefault), Core.Optional.ToDictionary(componentVersions));
+            return new HDInsightVersionSpec(friendlyName.Value, displayName.Value, Optional.ToNullable(isDefault), Optional.ToDictionary(componentVersions));
         }
     }
 }

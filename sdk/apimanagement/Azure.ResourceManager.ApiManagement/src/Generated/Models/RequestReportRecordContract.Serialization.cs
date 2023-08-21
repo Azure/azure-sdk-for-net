@@ -20,24 +20,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> apiId = default;
-            Core.Optional<string> operationId = default;
-            Core.Optional<string> productId = default;
-            Core.Optional<string> userId = default;
-            Core.Optional<RequestMethod> method = default;
-            Core.Optional<Uri> uri = default;
-            Core.Optional<IPAddress> ipAddress = default;
-            Core.Optional<string> backendResponseCode = default;
-            Core.Optional<int> responseCode = default;
-            Core.Optional<int> responseSize = default;
-            Core.Optional<DateTimeOffset> timestamp = default;
-            Core.Optional<string> cache = default;
-            Core.Optional<double> apiTime = default;
-            Core.Optional<double> serviceTime = default;
-            Core.Optional<string> apiRegion = default;
-            Core.Optional<ResourceIdentifier> subscriptionId = default;
-            Core.Optional<string> requestId = default;
-            Core.Optional<int> requestSize = default;
+            Optional<string> apiId = default;
+            Optional<string> operationId = default;
+            Optional<string> productId = default;
+            Optional<string> userId = default;
+            Optional<RequestMethod> method = default;
+            Optional<Uri> uri = default;
+            Optional<IPAddress> ipAddress = default;
+            Optional<string> backendResponseCode = default;
+            Optional<int> responseCode = default;
+            Optional<int> responseSize = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<string> cache = default;
+            Optional<double> apiTime = default;
+            Optional<double> serviceTime = default;
+            Optional<string> apiRegion = default;
+            Optional<ResourceIdentifier> subscriptionId = default;
+            Optional<string> requestId = default;
+            Optional<int> requestSize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiId"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new RequestReportRecordContract(apiId.Value, operationId.Value, productId.Value, userId.Value, Core.Optional.ToNullable(method), uri.Value, ipAddress.Value, backendResponseCode.Value, Core.Optional.ToNullable(responseCode), Core.Optional.ToNullable(responseSize), Core.Optional.ToNullable(timestamp), cache.Value, Core.Optional.ToNullable(apiTime), Core.Optional.ToNullable(serviceTime), apiRegion.Value, subscriptionId.Value, requestId.Value, Core.Optional.ToNullable(requestSize));
+            return new RequestReportRecordContract(apiId.Value, operationId.Value, productId.Value, userId.Value, Optional.ToNullable(method), uri.Value, ipAddress.Value, backendResponseCode.Value, Optional.ToNullable(responseCode), Optional.ToNullable(responseSize), Optional.ToNullable(timestamp), cache.Value, Optional.ToNullable(apiTime), Optional.ToNullable(serviceTime), apiRegion.Value, subscriptionId.Value, requestId.Value, Optional.ToNullable(requestSize));
         }
     }
 }

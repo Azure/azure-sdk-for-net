@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ActivityLogAlertActionGroup : Core.IUtf8JsonSerializable
+    public partial class ActivityLogAlertActionGroup : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("actionGroupId"u8);
             writer.WriteStringValue(ActionGroupId);
-            if (Core.Optional.IsCollectionDefined(WebhookProperties))
+            if (Optional.IsCollectionDefined(WebhookProperties))
             {
                 writer.WritePropertyName("webhookProperties"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             ResourceIdentifier actionGroupId = default;
-            Core.Optional<IDictionary<string, string>> webhookProperties = default;
+            Optional<IDictionary<string, string>> webhookProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionGroupId"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new ActivityLogAlertActionGroup(actionGroupId, Core.Optional.ToDictionary(webhookProperties));
+            return new ActivityLogAlertActionGroup(actionGroupId, Optional.ToDictionary(webhookProperties));
         }
     }
 }

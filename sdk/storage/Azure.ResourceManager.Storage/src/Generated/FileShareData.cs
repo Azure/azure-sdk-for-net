@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of FileShareData. </summary>
         public FileShareData()
         {
-            Metadata = new Core.ChangeTrackingDictionary<string, string>();
-            SignedIdentifiers = new Core.ChangeTrackingList<StorageSignedIdentifier>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
+            SignedIdentifiers = new ChangeTrackingList<StorageSignedIdentifier>();
         }
 
         /// <summary> Initializes a new instance of FileShareData. </summary>

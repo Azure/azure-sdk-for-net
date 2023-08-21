@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<string> code = default;
-            Core.Optional<string> message = default;
-            Core.Optional<string> errorResource = default;
-            Core.Optional<IReadOnlyList<string>> messageArguments = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<string> errorResource = default;
+            Optional<IReadOnlyList<string>> messageArguments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightClusterValidationErrorInfo(code.Value, message.Value, errorResource.Value, Core.Optional.ToList(messageArguments));
+            return new HDInsightClusterValidationErrorInfo(code.Value, message.Value, errorResource.Value, Optional.ToList(messageArguments));
         }
     }
 }

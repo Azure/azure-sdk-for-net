@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class ResourceGuardOperationDetail : Core.IUtf8JsonSerializable
+    public partial class ResourceGuardOperationDetail : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VaultCriticalOperation))
+            if (Optional.IsDefined(VaultCriticalOperation))
             {
                 writer.WritePropertyName("vaultCriticalOperation"u8);
                 writer.WriteStringValue(VaultCriticalOperation);
             }
-            if (Core.Optional.IsDefined(DefaultResourceId))
+            if (Optional.IsDefined(DefaultResourceId))
             {
                 writer.WritePropertyName("defaultResourceRequest"u8);
                 writer.WriteStringValue(DefaultResourceId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<string> vaultCriticalOperation = default;
-            Core.Optional<ResourceIdentifier> defaultResourceRequest = default;
+            Optional<string> vaultCriticalOperation = default;
+            Optional<ResourceIdentifier> defaultResourceRequest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vaultCriticalOperation"u8))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of CloudServicesNetworkList. </summary>
         internal CloudServicesNetworkList()
         {
-            Value = new Core.ChangeTrackingList<NetworkCloudCloudServicesNetworkData>();
+            Value = new ChangeTrackingList<NetworkCloudCloudServicesNetworkData>();
         }
 
         /// <summary> Initializes a new instance of CloudServicesNetworkList. </summary>

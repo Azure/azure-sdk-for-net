@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of SupportedOptimizationTypesListResult. </summary>
         internal SupportedOptimizationTypesListResult()
         {
-            SupportedOptimizationTypes = new Core.ChangeTrackingList<OptimizationType>();
+            SupportedOptimizationTypes = new ChangeTrackingList<OptimizationType>();
         }
 
         /// <summary> Initializes a new instance of SupportedOptimizationTypesListResult. </summary>

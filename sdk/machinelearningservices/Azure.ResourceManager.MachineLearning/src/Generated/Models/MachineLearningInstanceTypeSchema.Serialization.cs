@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningInstanceTypeSchema : Core.IUtf8JsonSerializable
+    public partial class MachineLearningInstanceTypeSchema : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(NodeSelector))
+            if (Optional.IsCollectionDefined(NodeSelector))
             {
                 if (NodeSelector != null)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nodeSelector");
                 }
             }
-            if (Core.Optional.IsDefined(Resources))
+            if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources);
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> nodeSelector = default;
-            Core.Optional<MachineLearningInstanceTypeSchemaResources> resources = default;
+            Optional<IDictionary<string, string>> nodeSelector = default;
+            Optional<MachineLearningInstanceTypeSchemaResources> resources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodeSelector"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningInstanceTypeSchema(Core.Optional.ToDictionary(nodeSelector), resources.Value);
+            return new MachineLearningInstanceTypeSchema(Optional.ToDictionary(nodeSelector), resources.Value);
         }
     }
 }

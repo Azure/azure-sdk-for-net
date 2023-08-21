@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<VirtualApplicationGroupData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<VirtualApplicationGroupData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new ApplicationGroupList(Core.Optional.ToList(value), nextLink.Value);
+            return new ApplicationGroupList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

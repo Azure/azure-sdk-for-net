@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class LogicWorkflowData : Core.IUtf8JsonSerializable
+    public partial class LogicWorkflowData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,32 +39,32 @@ namespace Azure.ResourceManager.Logic
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsDefined(EndpointsConfiguration))
+            if (Optional.IsDefined(EndpointsConfiguration))
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
                 writer.WriteObjectValue(EndpointsConfiguration);
             }
-            if (Core.Optional.IsDefined(AccessControl))
+            if (Optional.IsDefined(AccessControl))
             {
                 writer.WritePropertyName("accessControl"u8);
                 writer.WriteObjectValue(AccessControl);
             }
-            if (Core.Optional.IsDefined(IntegrationAccount))
+            if (Optional.IsDefined(IntegrationAccount))
             {
                 writer.WritePropertyName("integrationAccount"u8);
                 writer.WriteObjectValue(IntegrationAccount);
             }
-            if (Core.Optional.IsDefined(IntegrationServiceEnvironment))
+            if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
                 writer.WriteObjectValue(IntegrationServiceEnvironment);
             }
-            if (Core.Optional.IsDefined(Definition))
+            if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
 #if NET6_0_OR_GREATER
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Logic
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Definition.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -94,26 +94,26 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<LogicWorkflowProvisioningState> provisioningState = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<DateTimeOffset> changedTime = default;
-            Core.Optional<LogicWorkflowState> state = default;
-            Core.Optional<string> version = default;
-            Core.Optional<string> accessEndpoint = default;
-            Core.Optional<FlowEndpointsConfiguration> endpointsConfiguration = default;
-            Core.Optional<FlowAccessControlConfiguration> accessControl = default;
-            Core.Optional<LogicSku> sku = default;
-            Core.Optional<LogicResourceReference> integrationAccount = default;
-            Core.Optional<LogicResourceReference> integrationServiceEnvironment = default;
-            Core.Optional<BinaryData> definition = default;
-            Core.Optional<IDictionary<string, LogicWorkflowParameterInfo>> parameters = default;
+            Optional<SystemData> systemData = default;
+            Optional<LogicWorkflowProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> changedTime = default;
+            Optional<LogicWorkflowState> state = default;
+            Optional<string> version = default;
+            Optional<string> accessEndpoint = default;
+            Optional<FlowEndpointsConfiguration> endpointsConfiguration = default;
+            Optional<FlowAccessControlConfiguration> accessControl = default;
+            Optional<LogicSku> sku = default;
+            Optional<LogicResourceReference> integrationAccount = default;
+            Optional<LogicResourceReference> integrationServiceEnvironment = default;
+            Optional<BinaryData> definition = default;
+            Optional<IDictionary<string, LogicWorkflowParameterInfo>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Logic
                     continue;
                 }
             }
-            return new LogicWorkflowData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(changedTime), Core.Optional.ToNullable(state), version.Value, accessEndpoint.Value, endpointsConfiguration.Value, accessControl.Value, sku.Value, integrationAccount.Value, integrationServiceEnvironment.Value, definition.Value, Core.Optional.ToDictionary(parameters));
+            return new LogicWorkflowData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), Optional.ToNullable(state), version.Value, accessEndpoint.Value, endpointsConfiguration.Value, accessControl.Value, sku.Value, integrationAccount.Value, integrationServiceEnvironment.Value, definition.Value, Optional.ToDictionary(parameters));
         }
     }
 }

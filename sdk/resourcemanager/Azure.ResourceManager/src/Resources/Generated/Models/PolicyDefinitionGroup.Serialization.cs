@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class PolicyDefinitionGroup : Core.IUtf8JsonSerializable
+    public partial class PolicyDefinitionGroup : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Category))
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(AdditionalMetadataId))
+            if (Optional.IsDefined(AdditionalMetadataId))
             {
                 writer.WritePropertyName("additionalMetadataId"u8);
                 writer.WriteStringValue(AdditionalMetadataId);
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string name = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> category = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> additionalMetadataId = default;
+            Optional<string> displayName = default;
+            Optional<string> category = default;
+            Optional<string> description = default;
+            Optional<string> additionalMetadataId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

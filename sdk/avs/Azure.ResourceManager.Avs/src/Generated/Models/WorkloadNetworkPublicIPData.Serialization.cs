@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class WorkloadNetworkPublicIPData : Core.IUtf8JsonSerializable
+    public partial class WorkloadNetworkPublicIPData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(NumberOfPublicIPs))
+            if (Optional.IsDefined(NumberOfPublicIPs))
             {
                 writer.WritePropertyName("numberOfPublicIPs"u8);
                 writer.WriteNumberValue(NumberOfPublicIPs.Value);
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<long> numberOfPublicIPs = default;
-            Core.Optional<string> publicIPBlock = default;
-            Core.Optional<WorkloadNetworkPublicIPProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<long> numberOfPublicIPs = default;
+            Optional<string> publicIPBlock = default;
+            Optional<WorkloadNetworkPublicIPProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new WorkloadNetworkPublicIPData(id, name, type, systemData.Value, displayName.Value, Core.Optional.ToNullable(numberOfPublicIPs), publicIPBlock.Value, Core.Optional.ToNullable(provisioningState));
+            return new WorkloadNetworkPublicIPData(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(numberOfPublicIPs), publicIPBlock.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

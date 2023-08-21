@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <summary> Initializes a new instance of DataLakeStoreAccountBasicData. </summary>
         internal DataLakeStoreAccountBasicData()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreAccountBasicData. </summary>

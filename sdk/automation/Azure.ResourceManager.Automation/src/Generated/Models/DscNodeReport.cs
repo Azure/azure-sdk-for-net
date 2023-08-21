@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of DscNodeReport. </summary>
         internal DscNodeReport()
         {
-            Errors = new Core.ChangeTrackingList<DscReportError>();
-            Resources = new Core.ChangeTrackingList<DscReportResource>();
-            IPV4Addresses = new Core.ChangeTrackingList<string>();
-            IPV6Addresses = new Core.ChangeTrackingList<string>();
+            Errors = new ChangeTrackingList<DscReportError>();
+            Resources = new ChangeTrackingList<DscReportResource>();
+            IPV4Addresses = new ChangeTrackingList<string>();
+            IPV6Addresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DscNodeReport. </summary>

@@ -61,7 +61,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <remarks> Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested. </remarks>
-        public async Task<Core.ResponseWithHeaders<Stream, SchemaGetByIdHeaders>> GetByIdAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, SchemaGetByIdHeaders>> GetByIdAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -76,7 +76,7 @@ namespace Azure.Data.SchemaRegistry
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -88,7 +88,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <remarks> Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested. </remarks>
-        public Core.ResponseWithHeaders<Stream, SchemaGetByIdHeaders> GetById(string id, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, SchemaGetByIdHeaders> GetById(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -103,7 +103,7 @@ namespace Azure.Data.SchemaRegistry
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -222,7 +222,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
         /// <remarks> Gets one specific version of one schema. </remarks>
-        public async Task<Core.ResponseWithHeaders<Stream, SchemaGetSchemaVersionHeaders>> GetSchemaVersionAsync(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, SchemaGetSchemaVersionHeaders>> GetSchemaVersionAsync(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
@@ -241,7 +241,7 @@ namespace Azure.Data.SchemaRegistry
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -255,7 +255,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
         /// <remarks> Gets one specific version of one schema. </remarks>
-        public Core.ResponseWithHeaders<Stream, SchemaGetSchemaVersionHeaders> GetSchemaVersion(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, SchemaGetSchemaVersionHeaders> GetSchemaVersion(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
@@ -274,7 +274,7 @@ namespace Azure.Data.SchemaRegistry
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -310,7 +310,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="schemaContent"/> is null. </exception>
         /// <remarks> Gets the ID referencing an existing schema within the specified schema group, as matched by schema content comparison. </remarks>
-        public async Task<Core.ResponseWithHeaders<SchemaQueryIdByContentHeaders>> QueryIdByContentAsync(string groupName, string schemaName, ContentType contentType, Stream schemaContent, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SchemaQueryIdByContentHeaders>> QueryIdByContentAsync(string groupName, string schemaName, ContentType contentType, Stream schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
@@ -331,7 +331,7 @@ namespace Azure.Data.SchemaRegistry
             switch (message.Response.Status)
             {
                 case 204:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -345,7 +345,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="schemaContent"/> is null. </exception>
         /// <remarks> Gets the ID referencing an existing schema within the specified schema group, as matched by schema content comparison. </remarks>
-        public Core.ResponseWithHeaders<SchemaQueryIdByContentHeaders> QueryIdByContent(string groupName, string schemaName, ContentType contentType, Stream schemaContent, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SchemaQueryIdByContentHeaders> QueryIdByContent(string groupName, string schemaName, ContentType contentType, Stream schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
@@ -366,7 +366,7 @@ namespace Azure.Data.SchemaRegistry
             switch (message.Response.Status)
             {
                 case 204:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -403,7 +403,7 @@ namespace Azure.Data.SchemaRegistry
         /// Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1.
         ///
         /// </remarks>
-        public async Task<Core.ResponseWithHeaders<SchemaRegisterHeaders>> RegisterAsync(string groupName, string schemaName, string contentType, Stream schemaContent, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SchemaRegisterHeaders>> RegisterAsync(string groupName, string schemaName, string contentType, Stream schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
@@ -428,7 +428,7 @@ namespace Azure.Data.SchemaRegistry
             switch (message.Response.Status)
             {
                 case 204:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -445,7 +445,7 @@ namespace Azure.Data.SchemaRegistry
         /// Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1.
         ///
         /// </remarks>
-        public Core.ResponseWithHeaders<SchemaRegisterHeaders> Register(string groupName, string schemaName, string contentType, Stream schemaContent, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SchemaRegisterHeaders> Register(string groupName, string schemaName, string contentType, Stream schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
             {
@@ -470,7 +470,7 @@ namespace Azure.Data.SchemaRegistry
             switch (message.Response.Status)
             {
                 case 204:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

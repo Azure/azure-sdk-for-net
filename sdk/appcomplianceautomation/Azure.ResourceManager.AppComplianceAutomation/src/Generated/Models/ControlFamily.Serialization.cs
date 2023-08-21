@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Core.Optional<string> familyName = default;
-            Core.Optional<ControlFamilyType> familyType = default;
-            Core.Optional<ControlFamilyStatus> familyStatus = default;
-            Core.Optional<IReadOnlyList<Control>> controls = default;
+            Optional<string> familyName = default;
+            Optional<ControlFamilyType> familyType = default;
+            Optional<ControlFamilyStatus> familyStatus = default;
+            Optional<IReadOnlyList<Control>> controls = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("familyName"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     continue;
                 }
             }
-            return new ControlFamily(familyName.Value, Core.Optional.ToNullable(familyType), Core.Optional.ToNullable(familyStatus), Core.Optional.ToList(controls));
+            return new ControlFamily(familyName.Value, Optional.ToNullable(familyType), Optional.ToNullable(familyStatus), Optional.ToList(controls));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of StorageCorsRules. </summary>
         public StorageCorsRules()
         {
-            CorsRules = new Core.ChangeTrackingList<StorageCorsRule>();
+            CorsRules = new ChangeTrackingList<StorageCorsRule>();
         }
 
         /// <summary> Initializes a new instance of StorageCorsRules. </summary>

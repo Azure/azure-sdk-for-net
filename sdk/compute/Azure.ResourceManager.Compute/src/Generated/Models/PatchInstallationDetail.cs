@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of PatchInstallationDetail. </summary>
         internal PatchInstallationDetail()
         {
-            Classifications = new Core.ChangeTrackingList<string>();
+            Classifications = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PatchInstallationDetail. </summary>

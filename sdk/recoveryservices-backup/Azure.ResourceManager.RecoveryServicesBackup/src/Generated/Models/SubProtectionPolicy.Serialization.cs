@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class SubProtectionPolicy : Core.IUtf8JsonSerializable
+    public partial class SubProtectionPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PolicyType))
+            if (Optional.IsDefined(PolicyType))
             {
                 writer.WritePropertyName("policyType"u8);
                 writer.WriteStringValue(PolicyType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SchedulePolicy))
+            if (Optional.IsDefined(SchedulePolicy))
             {
                 writer.WritePropertyName("schedulePolicy"u8);
                 writer.WriteObjectValue(SchedulePolicy);
             }
-            if (Core.Optional.IsDefined(RetentionPolicy))
+            if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
-            if (Core.Optional.IsCollectionDefined(TieringPolicy))
+            if (Optional.IsCollectionDefined(TieringPolicy))
             {
                 writer.WritePropertyName("tieringPolicy"u8);
                 writer.WriteStartObject();
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<SubProtectionPolicyType> policyType = default;
-            Core.Optional<BackupSchedulePolicy> schedulePolicy = default;
-            Core.Optional<BackupRetentionPolicy> retentionPolicy = default;
-            Core.Optional<IDictionary<string, BackupTieringPolicy>> tieringPolicy = default;
+            Optional<SubProtectionPolicyType> policyType = default;
+            Optional<BackupSchedulePolicy> schedulePolicy = default;
+            Optional<BackupRetentionPolicy> retentionPolicy = default;
+            Optional<IDictionary<string, BackupTieringPolicy>> tieringPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyType"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new SubProtectionPolicy(Core.Optional.ToNullable(policyType), schedulePolicy.Value, retentionPolicy.Value, Core.Optional.ToDictionary(tieringPolicy));
+            return new SubProtectionPolicy(Optional.ToNullable(policyType), schedulePolicy.Value, retentionPolicy.Value, Optional.ToDictionary(tieringPolicy));
         }
     }
 }

@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningHDInsightProperties : Core.IUtf8JsonSerializable
+    public partial class MachineLearningHDInsightProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SshPort))
+            if (Optional.IsDefined(SshPort))
             {
                 writer.WritePropertyName("sshPort"u8);
                 writer.WriteNumberValue(SshPort.Value);
             }
-            if (Core.Optional.IsDefined(Address))
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address.ToString());
             }
-            if (Core.Optional.IsDefined(AdministratorAccount))
+            if (Optional.IsDefined(AdministratorAccount))
             {
                 if (AdministratorAccount != null)
                 {
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<int> sshPort = default;
-            Core.Optional<IPAddress> address = default;
-            Core.Optional<MachineLearningVmSshCredentials> administratorAccount = default;
+            Optional<int> sshPort = default;
+            Optional<IPAddress> address = default;
+            Optional<MachineLearningVmSshCredentials> administratorAccount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sshPort"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningHDInsightProperties(Core.Optional.ToNullable(sshPort), address.Value, administratorAccount.Value);
+            return new MachineLearningHDInsightProperties(Optional.ToNullable(sshPort), address.Value, administratorAccount.Value);
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of TargetComputeSizeProperties. </summary>
         internal TargetComputeSizeProperties()
         {
-            Errors = new Core.ChangeTrackingList<SiteRecoveryComputeSizeErrorDetails>();
-            HyperVGenerations = new Core.ChangeTrackingList<string>();
+            Errors = new ChangeTrackingList<SiteRecoveryComputeSizeErrorDetails>();
+            HyperVGenerations = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of TargetComputeSizeProperties. </summary>

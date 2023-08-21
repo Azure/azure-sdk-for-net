@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> Initializes a new instance of AvailabilityGroupListenerData. </summary>
         public AvailabilityGroupListenerData()
         {
-            LoadBalancerConfigurations = new Core.ChangeTrackingList<AvailabilityGroupListenerLoadBalancerConfiguration>();
-            MultiSubnetIPConfigurations = new Core.ChangeTrackingList<MultiSubnetIPConfiguration>();
+            LoadBalancerConfigurations = new ChangeTrackingList<AvailabilityGroupListenerLoadBalancerConfiguration>();
+            MultiSubnetIPConfigurations = new ChangeTrackingList<MultiSubnetIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of AvailabilityGroupListenerData. </summary>

@@ -19,9 +19,9 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<InstanceHit>> hits = default;
-            Core.Optional<int> hitCount = default;
-            Core.Optional<string> continuationToken = default;
+            Optional<IReadOnlyList<InstanceHit>> hits = default;
+            Optional<int> hitCount = default;
+            Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hits"u8))
@@ -53,7 +53,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new SearchInstancesResponse(Core.Optional.ToList(hits), Core.Optional.ToNullable(hitCount), continuationToken.Value);
+            return new SearchInstancesResponse(Optional.ToList(hits), Optional.ToNullable(hitCount), continuationToken.Value);
         }
     }
 }

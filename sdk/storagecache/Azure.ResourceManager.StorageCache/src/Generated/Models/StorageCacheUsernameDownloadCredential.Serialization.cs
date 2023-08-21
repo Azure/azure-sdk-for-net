@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheUsernameDownloadCredential : Core.IUtf8JsonSerializable
+    public partial class StorageCacheUsernameDownloadCredential : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BindDistinguishedName))
+            if (Optional.IsDefined(BindDistinguishedName))
             {
                 writer.WritePropertyName("bindDn"u8);
                 writer.WriteStringValue(BindDistinguishedName);
             }
-            if (Core.Optional.IsDefined(BindPassword))
+            if (Optional.IsDefined(BindPassword))
             {
                 writer.WritePropertyName("bindPassword"u8);
                 writer.WriteStringValue(BindPassword);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<string> bindDn = default;
-            Core.Optional<string> bindPassword = default;
+            Optional<string> bindDn = default;
+            Optional<string> bindPassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bindDn"u8))

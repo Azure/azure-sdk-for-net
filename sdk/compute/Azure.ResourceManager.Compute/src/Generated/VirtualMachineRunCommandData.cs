@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public VirtualMachineRunCommandData(AzureLocation location) : base(location)
         {
-            Parameters = new Core.ChangeTrackingList<RunCommandInputParameter>();
-            ProtectedParameters = new Core.ChangeTrackingList<RunCommandInputParameter>();
+            Parameters = new ChangeTrackingList<RunCommandInputParameter>();
+            ProtectedParameters = new ChangeTrackingList<RunCommandInputParameter>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineRunCommandData. </summary>

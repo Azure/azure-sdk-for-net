@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class ParameterValue : Core.IUtf8JsonSerializable
+    public partial class ParameterValue : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(Reference))
+            if (Optional.IsDefined(Reference))
             {
                 writer.WritePropertyName("reference"u8);
                 writer.WriteObjectValue(Reference);
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Core.Optional<BinaryData> value = default;
-            Core.Optional<SecretValueReference> reference = default;
+            Optional<BinaryData> value = default;
+            Optional<SecretValueReference> reference = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))

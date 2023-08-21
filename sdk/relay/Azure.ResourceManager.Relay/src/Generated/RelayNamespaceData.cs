@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Relay
         /// <param name="location"> The location. </param>
         public RelayNamespaceData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<RelayPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<RelayPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of RelayNamespaceData. </summary>

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    internal partial class AdditionalFeaturesServerConfigurations : Core.IUtf8JsonSerializable
+    internal partial class AdditionalFeaturesServerConfigurations : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsRServicesEnabled))
+            if (Optional.IsDefined(IsRServicesEnabled))
             {
                 writer.WritePropertyName("isRServicesEnabled"u8);
                 writer.WriteBooleanValue(IsRServicesEnabled.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Core.Optional<bool> isRServicesEnabled = default;
+            Optional<bool> isRServicesEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isRServicesEnabled"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new AdditionalFeaturesServerConfigurations(Core.Optional.ToNullable(isRServicesEnabled));
+            return new AdditionalFeaturesServerConfigurations(Optional.ToNullable(isRServicesEnabled));
         }
     }
 }

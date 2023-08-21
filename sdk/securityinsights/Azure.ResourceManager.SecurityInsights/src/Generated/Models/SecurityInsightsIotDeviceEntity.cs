@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsIotDeviceEntity. </summary>
         public SecurityInsightsIotDeviceEntity()
         {
-            AdditionalData = new Core.ChangeTrackingDictionary<string, BinaryData>();
-            ThreatIntelligence = new Core.ChangeTrackingList<SecurityInsightsThreatIntelligence>();
-            Protocols = new Core.ChangeTrackingList<string>();
+            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
+            ThreatIntelligence = new ChangeTrackingList<SecurityInsightsThreatIntelligence>();
+            Protocols = new ChangeTrackingList<string>();
             Kind = SecurityInsightsEntityKind.IotDevice;
         }
 

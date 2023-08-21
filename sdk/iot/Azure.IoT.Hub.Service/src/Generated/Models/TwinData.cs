@@ -17,7 +17,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of TwinData. </summary>
         public TwinData()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, object>();
+            Tags = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of TwinData. </summary>

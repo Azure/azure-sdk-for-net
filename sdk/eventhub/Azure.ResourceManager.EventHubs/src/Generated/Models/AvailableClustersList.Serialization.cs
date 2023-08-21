@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AvailableCluster>> value = default;
+            Optional<IReadOnlyList<AvailableCluster>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new AvailableClustersList(Core.Optional.ToList(value));
+            return new AvailableClustersList(Optional.ToList(value));
         }
     }
 }

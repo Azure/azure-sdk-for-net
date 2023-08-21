@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ContainerServicePrivateEndpointConnectionListResult. </summary>
         internal ContainerServicePrivateEndpointConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<ContainerServicePrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<ContainerServicePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ContainerServicePrivateEndpointConnectionListResult. </summary>

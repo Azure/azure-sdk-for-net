@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapStopContent : Core.IUtf8JsonSerializable
+    public partial class SapStopContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SoftStopTimeoutSeconds))
+            if (Optional.IsDefined(SoftStopTimeoutSeconds))
             {
                 writer.WritePropertyName("softStopTimeoutSeconds"u8);
                 writer.WriteNumberValue(SoftStopTimeoutSeconds.Value);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoverySubnet. </summary>
         internal SiteRecoverySubnet()
         {
-            AddressList = new Core.ChangeTrackingList<string>();
+            AddressList = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoverySubnet. </summary>

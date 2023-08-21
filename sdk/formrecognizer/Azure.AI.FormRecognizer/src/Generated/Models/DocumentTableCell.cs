@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             RowIndex = rowIndex;
             ColumnIndex = columnIndex;
             Content = content;
-            BoundingRegions = new Core.ChangeTrackingList<BoundingRegion>();
+            BoundingRegions = new ChangeTrackingList<BoundingRegion>();
             Spans = spans.ToList();
         }
 

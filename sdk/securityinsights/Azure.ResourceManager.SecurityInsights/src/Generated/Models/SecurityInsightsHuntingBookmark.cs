@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsHuntingBookmark. </summary>
         public SecurityInsightsHuntingBookmark()
         {
-            AdditionalData = new Core.ChangeTrackingDictionary<string, BinaryData>();
-            Labels = new Core.ChangeTrackingList<string>();
+            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
+            Labels = new ChangeTrackingList<string>();
             Kind = SecurityInsightsEntityKind.Bookmark;
         }
 

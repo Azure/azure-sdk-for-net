@@ -19,13 +19,13 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 return null;
             }
-            Core.Optional<string> status = default;
-            Core.Optional<string> statusDetails = default;
-            Core.Optional<KeyVaultServiceError> error = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset?> endTime = default;
-            Core.Optional<string> jobId = default;
-            Core.Optional<string> azureStorageBlobContainerUri = default;
+            Optional<string> status = default;
+            Optional<string> statusDetails = default;
+            Optional<KeyVaultServiceError> error = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset?> endTime = default;
+            Optional<string> jobId = default;
+            Optional<string> azureStorageBlobContainerUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     continue;
                 }
             }
-            return new FullBackupDetailsInternal(status.Value, statusDetails.Value, error.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), jobId.Value, azureStorageBlobContainerUri.Value);
+            return new FullBackupDetailsInternal(status.Value, statusDetails.Value, error.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), jobId.Value, azureStorageBlobContainerUri.Value);
         }
     }
 }

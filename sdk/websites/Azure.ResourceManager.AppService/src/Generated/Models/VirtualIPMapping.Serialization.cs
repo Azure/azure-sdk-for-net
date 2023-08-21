@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class VirtualIPMapping : Core.IUtf8JsonSerializable
+    public partial class VirtualIPMapping : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VirtualIP))
+            if (Optional.IsDefined(VirtualIP))
             {
                 writer.WritePropertyName("virtualIP"u8);
                 writer.WriteStringValue(VirtualIP);
             }
-            if (Core.Optional.IsDefined(InternalHttpPort))
+            if (Optional.IsDefined(InternalHttpPort))
             {
                 writer.WritePropertyName("internalHttpPort"u8);
                 writer.WriteNumberValue(InternalHttpPort.Value);
             }
-            if (Core.Optional.IsDefined(InternalHttpsPort))
+            if (Optional.IsDefined(InternalHttpsPort))
             {
                 writer.WritePropertyName("internalHttpsPort"u8);
                 writer.WriteNumberValue(InternalHttpsPort.Value);
             }
-            if (Core.Optional.IsDefined(IsInUse))
+            if (Optional.IsDefined(IsInUse))
             {
                 writer.WritePropertyName("inUse"u8);
                 writer.WriteBooleanValue(IsInUse.Value);
             }
-            if (Core.Optional.IsDefined(ServiceName))
+            if (Optional.IsDefined(ServiceName))
             {
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> virtualIP = default;
-            Core.Optional<int> internalHttpPort = default;
-            Core.Optional<int> internalHttpsPort = default;
-            Core.Optional<bool> inUse = default;
-            Core.Optional<string> serviceName = default;
+            Optional<string> virtualIP = default;
+            Optional<int> internalHttpPort = default;
+            Optional<int> internalHttpsPort = default;
+            Optional<bool> inUse = default;
+            Optional<string> serviceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualIP"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new VirtualIPMapping(virtualIP.Value, Core.Optional.ToNullable(internalHttpPort), Core.Optional.ToNullable(internalHttpsPort), Core.Optional.ToNullable(inUse), serviceName.Value);
+            return new VirtualIPMapping(virtualIP.Value, Optional.ToNullable(internalHttpPort), Optional.ToNullable(internalHttpsPort), Optional.ToNullable(inUse), serviceName.Value);
         }
     }
 }

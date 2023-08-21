@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeeringLogAnalyticsWorkspaceProperties : Core.IUtf8JsonSerializable
+    public partial class PeeringLogAnalyticsWorkspaceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Core.Optional<string> workspaceId = default;
-            Core.Optional<string> key = default;
-            Core.Optional<IReadOnlyList<string>> connectedAgents = default;
+            Optional<string> workspaceId = default;
+            Optional<string> key = default;
+            Optional<IReadOnlyList<string>> connectedAgents = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspaceID"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new PeeringLogAnalyticsWorkspaceProperties(workspaceId.Value, key.Value, Core.Optional.ToList(connectedAgents));
+            return new PeeringLogAnalyticsWorkspaceProperties(workspaceId.Value, key.Value, Optional.ToList(connectedAgents));
         }
     }
 }

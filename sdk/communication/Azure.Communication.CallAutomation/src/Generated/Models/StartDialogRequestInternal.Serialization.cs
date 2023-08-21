@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class StartDialogRequestInternal : Core.IUtf8JsonSerializable
+    internal partial class StartDialogRequestInternal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dialogOptions"u8);
             writer.WriteObjectValue(DialogOptions);
             writer.WritePropertyName("dialogInputType"u8);
             writer.WriteStringValue(DialogInputType.ToString());
-            if (Core.Optional.IsDefined(OperationContext))
+            if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);

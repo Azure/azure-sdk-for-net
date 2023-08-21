@@ -10,51 +10,51 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetDataDisk : Core.IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetDataDisk : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
-            if (Core.Optional.IsDefined(Caching))
+            if (Optional.IsDefined(Caching))
             {
                 writer.WritePropertyName("caching"u8);
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(WriteAcceleratorEnabled))
+            if (Optional.IsDefined(WriteAcceleratorEnabled))
             {
                 writer.WritePropertyName("writeAcceleratorEnabled"u8);
                 writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
             }
             writer.WritePropertyName("createOption"u8);
             writer.WriteStringValue(CreateOption.ToString());
-            if (Core.Optional.IsDefined(DiskSizeGB))
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Core.Optional.IsDefined(ManagedDisk))
+            if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
                 writer.WriteObjectValue(ManagedDisk);
             }
-            if (Core.Optional.IsDefined(DiskIopsReadWrite))
+            if (Optional.IsDefined(DiskIopsReadWrite))
             {
                 writer.WritePropertyName("diskIOPSReadWrite"u8);
                 writer.WriteNumberValue(DiskIopsReadWrite.Value);
             }
-            if (Core.Optional.IsDefined(DiskMBpsReadWrite))
+            if (Optional.IsDefined(DiskMBpsReadWrite))
             {
                 writer.WritePropertyName("diskMBpsReadWrite"u8);
                 writer.WriteNumberValue(DiskMBpsReadWrite.Value);
             }
-            if (Core.Optional.IsDefined(DeleteOption))
+            if (Optional.IsDefined(DeleteOption))
             {
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
+            Optional<string> name = default;
             int lun = default;
-            Core.Optional<CachingType> caching = default;
-            Core.Optional<bool> writeAcceleratorEnabled = default;
+            Optional<CachingType> caching = default;
+            Optional<bool> writeAcceleratorEnabled = default;
             DiskCreateOptionType createOption = default;
-            Core.Optional<int> diskSizeGB = default;
-            Core.Optional<VirtualMachineScaleSetManagedDisk> managedDisk = default;
-            Core.Optional<long> diskIOPSReadWrite = default;
-            Core.Optional<long> diskMBpsReadWrite = default;
-            Core.Optional<DiskDeleteOptionType> deleteOption = default;
+            Optional<int> diskSizeGB = default;
+            Optional<VirtualMachineScaleSetManagedDisk> managedDisk = default;
+            Optional<long> diskIOPSReadWrite = default;
+            Optional<long> diskMBpsReadWrite = default;
+            Optional<DiskDeleteOptionType> deleteOption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetDataDisk(name.Value, lun, Core.Optional.ToNullable(caching), Core.Optional.ToNullable(writeAcceleratorEnabled), createOption, Core.Optional.ToNullable(diskSizeGB), managedDisk.Value, Core.Optional.ToNullable(diskIOPSReadWrite), Core.Optional.ToNullable(diskMBpsReadWrite), Core.Optional.ToNullable(deleteOption));
+            return new VirtualMachineScaleSetDataDisk(name.Value, lun, Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), createOption, Optional.ToNullable(diskSizeGB), managedDisk.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(deleteOption));
         }
     }
 }

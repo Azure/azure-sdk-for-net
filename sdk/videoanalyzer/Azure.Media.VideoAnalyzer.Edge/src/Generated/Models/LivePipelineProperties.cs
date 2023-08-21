@@ -16,7 +16,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of LivePipelineProperties. </summary>
         public LivePipelineProperties()
         {
-            Parameters = new Core.ChangeTrackingList<ParameterDefinition>();
+            Parameters = new ChangeTrackingList<ParameterDefinition>();
         }
 
         /// <summary> Initializes a new instance of LivePipelineProperties. </summary>

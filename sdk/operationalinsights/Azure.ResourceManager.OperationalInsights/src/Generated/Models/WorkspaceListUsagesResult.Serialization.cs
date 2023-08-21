@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<OperationalInsightsUsageMetric>> value = default;
+            Optional<IReadOnlyList<OperationalInsightsUsageMetric>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new WorkspaceListUsagesResult(Core.Optional.ToList(value));
+            return new WorkspaceListUsagesResult(Optional.ToList(value));
         }
     }
 }

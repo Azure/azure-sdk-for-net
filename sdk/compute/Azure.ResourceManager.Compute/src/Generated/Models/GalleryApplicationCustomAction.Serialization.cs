@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryApplicationCustomAction : Core.IUtf8JsonSerializable
+    public partial class GalleryApplicationCustomAction : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("script"u8);
             writer.WriteStringValue(Script);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string name = default;
             string script = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IList<GalleryApplicationCustomActionParameter>> parameters = default;
+            Optional<string> description = default;
+            Optional<IList<GalleryApplicationCustomActionParameter>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new GalleryApplicationCustomAction(name, script, description.Value, Core.Optional.ToList(parameters));
+            return new GalleryApplicationCustomAction(name, script, description.Value, Optional.ToList(parameters));
         }
     }
 }

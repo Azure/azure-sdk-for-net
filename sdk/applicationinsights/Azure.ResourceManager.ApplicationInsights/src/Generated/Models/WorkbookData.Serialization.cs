@@ -15,27 +15,27 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    public partial class WorkbookData : Core.IUtf8JsonSerializable
+    public partial class WorkbookData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(SerializedData))
+            if (Optional.IsDefined(SerializedData))
             {
                 if (SerializedData != null)
                 {
@@ -67,22 +67,22 @@ namespace Azure.ResourceManager.ApplicationInsights
                     writer.WriteNull("serializedData");
                 }
             }
-            if (Core.Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Core.Optional.IsDefined(Category))
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Core.Optional.IsDefined(SourceId))
+            if (Optional.IsDefined(SourceId))
             {
                 writer.WritePropertyName("sourceId"u8);
                 writer.WriteStringValue(SourceId);
             }
-            if (Core.Optional.IsDefined(StorageUri))
+            if (Optional.IsDefined(StorageUri))
             {
                 if (StorageUri != null)
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     writer.WriteNull("storageUri");
                 }
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -116,25 +116,25 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<WorkbookSharedTypeKind> kind = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<WorkbookSharedTypeKind> kind = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> serializedData = default;
-            Core.Optional<string> version = default;
-            Core.Optional<DateTimeOffset> timeModified = default;
-            Core.Optional<string> category = default;
-            Core.Optional<string> userId = default;
-            Core.Optional<string> sourceId = default;
-            Core.Optional<Uri> storageUri = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> revision = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<string> serializedData = default;
+            Optional<string> version = default;
+            Optional<DateTimeOffset> timeModified = default;
+            Optional<string> category = default;
+            Optional<string> userId = default;
+            Optional<string> sourceId = default;
+            Optional<Uri> storageUri = default;
+            Optional<string> description = default;
+            Optional<string> revision = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     continue;
                 }
             }
-            return new WorkbookData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, displayName.Value, serializedData.Value, version.Value, Core.Optional.ToNullable(timeModified), category.Value, userId.Value, sourceId.Value, storageUri.Value, description.Value, revision.Value, identity, Core.Optional.ToNullable(kind), Core.Optional.ToNullable(etag));
+            return new WorkbookData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, displayName.Value, serializedData.Value, version.Value, Optional.ToNullable(timeModified), category.Value, userId.Value, sourceId.Value, storageUri.Value, description.Value, revision.Value, identity, Optional.ToNullable(kind), Optional.ToNullable(etag));
         }
     }
 }

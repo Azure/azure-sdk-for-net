@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    internal partial class VirtualNetworkProfile : Core.IUtf8JsonSerializable
+    internal partial class VirtualNetworkProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ComputeSubnetId))
+            if (Optional.IsDefined(ComputeSubnetId))
             {
                 writer.WritePropertyName("computeSubnetId"u8);
                 writer.WriteStringValue(ComputeSubnetId);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<string> computeSubnetId = default;
+            Optional<string> computeSubnetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeSubnetId"u8))

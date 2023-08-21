@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<string> domainName = default;
-            Core.Optional<IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>> endpointDetails = default;
+            Optional<string> domainName = default;
+            Optional<IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(domainName.Value, Core.Optional.ToList(endpointDetails));
+            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(domainName.Value, Optional.ToList(endpointDetails));
         }
     }
 }

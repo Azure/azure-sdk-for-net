@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of HardwareInventory. </summary>
         internal HardwareInventory()
         {
-            Interfaces = new Core.ChangeTrackingList<HardwareInventoryNetworkInterface>();
-            Nics = new Core.ChangeTrackingList<NetworkCloudNic>();
+            Interfaces = new ChangeTrackingList<HardwareInventoryNetworkInterface>();
+            Nics = new ChangeTrackingList<NetworkCloudNic>();
         }
 
         /// <summary> Initializes a new instance of HardwareInventory. </summary>

@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> scope = default;
-            Core.Optional<ResourceIdentifier> roleDefinitionId = default;
-            Core.Optional<Guid> principalId = default;
-            Core.Optional<RoleManagementPrincipalType> principalType = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> condition = default;
-            Core.Optional<string> conditionVersion = default;
-            Core.Optional<DateTimeOffset> createdOn = default;
-            Core.Optional<DateTimeOffset> updatedOn = default;
-            Core.Optional<string> createdBy = default;
-            Core.Optional<string> updatedBy = default;
-            Core.Optional<ResourceIdentifier> delegatedManagedIdentityResourceId = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> scope = default;
+            Optional<ResourceIdentifier> roleDefinitionId = default;
+            Optional<Guid> principalId = default;
+            Optional<RoleManagementPrincipalType> principalType = default;
+            Optional<string> description = default;
+            Optional<string> condition = default;
+            Optional<string> conditionVersion = default;
+            Optional<DateTimeOffset> createdOn = default;
+            Optional<DateTimeOffset> updatedOn = default;
+            Optional<string> createdBy = default;
+            Optional<string> updatedBy = default;
+            Optional<ResourceIdentifier> delegatedManagedIdentityResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Authorization
                     continue;
                 }
             }
-            return new RoleAssignmentData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Core.Optional.ToNullable(principalId), Core.Optional.ToNullable(principalType), description.Value, condition.Value, conditionVersion.Value, Core.Optional.ToNullable(createdOn), Core.Optional.ToNullable(updatedOn), createdBy.Value, updatedBy.Value, delegatedManagedIdentityResourceId.Value);
+            return new RoleAssignmentData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), description.Value, condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(updatedOn), createdBy.Value, updatedBy.Value, delegatedManagedIdentityResourceId.Value);
         }
     }
 }

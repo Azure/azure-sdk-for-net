@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class KnowledgeStoreProjection : Core.IUtf8JsonSerializable
+    public partial class KnowledgeStoreProjection : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tables))
+            if (Optional.IsCollectionDefined(Tables))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Objects))
+            if (Optional.IsCollectionDefined(Objects))
             {
                 writer.WritePropertyName("objects"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Files))
+            if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -55,9 +55,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<IList<KnowledgeStoreTableProjectionSelector>> tables = default;
-            Core.Optional<IList<KnowledgeStoreObjectProjectionSelector>> objects = default;
-            Core.Optional<IList<KnowledgeStoreFileProjectionSelector>> files = default;
+            Optional<IList<KnowledgeStoreTableProjectionSelector>> tables = default;
+            Optional<IList<KnowledgeStoreObjectProjectionSelector>> objects = default;
+            Optional<IList<KnowledgeStoreFileProjectionSelector>> files = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tables"u8))
@@ -103,7 +103,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new KnowledgeStoreProjection(Core.Optional.ToList(tables), Core.Optional.ToList(objects), Core.Optional.ToList(files));
+            return new KnowledgeStoreProjection(Optional.ToList(tables), Optional.ToList(objects), Optional.ToList(files));
         }
     }
 }

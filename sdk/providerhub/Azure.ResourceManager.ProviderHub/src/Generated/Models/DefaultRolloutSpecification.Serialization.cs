@@ -12,47 +12,47 @@ using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class DefaultRolloutSpecification : Core.IUtf8JsonSerializable
+    public partial class DefaultRolloutSpecification : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Canary))
+            if (Optional.IsDefined(Canary))
             {
                 writer.WritePropertyName("canary"u8);
                 writer.WriteObjectValue(Canary);
             }
-            if (Core.Optional.IsDefined(LowTraffic))
+            if (Optional.IsDefined(LowTraffic))
             {
                 writer.WritePropertyName("lowTraffic"u8);
                 writer.WriteObjectValue(LowTraffic);
             }
-            if (Core.Optional.IsDefined(MediumTraffic))
+            if (Optional.IsDefined(MediumTraffic))
             {
                 writer.WritePropertyName("mediumTraffic"u8);
                 writer.WriteObjectValue(MediumTraffic);
             }
-            if (Core.Optional.IsDefined(HighTraffic))
+            if (Optional.IsDefined(HighTraffic))
             {
                 writer.WritePropertyName("highTraffic"u8);
                 writer.WriteObjectValue(HighTraffic);
             }
-            if (Core.Optional.IsDefined(RestOfTheWorldGroupOne))
+            if (Optional.IsDefined(RestOfTheWorldGroupOne))
             {
                 writer.WritePropertyName("restOfTheWorldGroupOne"u8);
                 writer.WriteObjectValue(RestOfTheWorldGroupOne);
             }
-            if (Core.Optional.IsDefined(RestOfTheWorldGroupTwo))
+            if (Optional.IsDefined(RestOfTheWorldGroupTwo))
             {
                 writer.WritePropertyName("restOfTheWorldGroupTwo"u8);
                 writer.WriteObjectValue(RestOfTheWorldGroupTwo);
             }
-            if (Core.Optional.IsDefined(ProviderRegistration))
+            if (Optional.IsDefined(ProviderRegistration))
             {
                 writer.WritePropertyName("providerRegistration"u8);
                 writer.WriteObjectValue(ProviderRegistration);
             }
-            if (Core.Optional.IsCollectionDefined(ResourceTypeRegistrations))
+            if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
             {
                 writer.WritePropertyName("resourceTypeRegistrations"u8);
                 writer.WriteStartArray();
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<CanaryTrafficRegionRolloutConfiguration> canary = default;
-            Core.Optional<TrafficRegionRolloutConfiguration> lowTraffic = default;
-            Core.Optional<TrafficRegionRolloutConfiguration> mediumTraffic = default;
-            Core.Optional<TrafficRegionRolloutConfiguration> highTraffic = default;
-            Core.Optional<TrafficRegionRolloutConfiguration> restOfTheWorldGroupOne = default;
-            Core.Optional<TrafficRegionRolloutConfiguration> restOfTheWorldGroupTwo = default;
-            Core.Optional<ProviderRegistrationData> providerRegistration = default;
-            Core.Optional<IList<ResourceTypeRegistrationData>> resourceTypeRegistrations = default;
+            Optional<CanaryTrafficRegionRolloutConfiguration> canary = default;
+            Optional<TrafficRegionRolloutConfiguration> lowTraffic = default;
+            Optional<TrafficRegionRolloutConfiguration> mediumTraffic = default;
+            Optional<TrafficRegionRolloutConfiguration> highTraffic = default;
+            Optional<TrafficRegionRolloutConfiguration> restOfTheWorldGroupOne = default;
+            Optional<TrafficRegionRolloutConfiguration> restOfTheWorldGroupTwo = default;
+            Optional<ProviderRegistrationData> providerRegistration = default;
+            Optional<IList<ResourceTypeRegistrationData>> resourceTypeRegistrations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("canary"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new DefaultRolloutSpecification(canary.Value, lowTraffic.Value, mediumTraffic.Value, highTraffic.Value, restOfTheWorldGroupOne.Value, restOfTheWorldGroupTwo.Value, providerRegistration.Value, Core.Optional.ToList(resourceTypeRegistrations));
+            return new DefaultRolloutSpecification(canary.Value, lowTraffic.Value, mediumTraffic.Value, highTraffic.Value, restOfTheWorldGroupOne.Value, restOfTheWorldGroupTwo.Value, providerRegistration.Value, Optional.ToList(resourceTypeRegistrations));
         }
     }
 }

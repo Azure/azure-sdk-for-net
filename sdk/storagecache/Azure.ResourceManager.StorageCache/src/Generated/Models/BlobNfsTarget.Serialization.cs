@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class BlobNfsTarget : Core.IUtf8JsonSerializable
+    public partial class BlobNfsTarget : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Target))
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Core.Optional.IsDefined(UsageModel))
+            if (Optional.IsDefined(UsageModel))
             {
                 writer.WritePropertyName("usageModel"u8);
                 writer.WriteStringValue(UsageModel);
             }
-            if (Core.Optional.IsDefined(VerificationDelayInSeconds))
+            if (Optional.IsDefined(VerificationDelayInSeconds))
             {
                 writer.WritePropertyName("verificationTimer"u8);
                 writer.WriteNumberValue(VerificationDelayInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(WriteBackDelayInSeconds))
+            if (Optional.IsDefined(WriteBackDelayInSeconds))
             {
                 writer.WritePropertyName("writeBackTimer"u8);
                 writer.WriteNumberValue(WriteBackDelayInSeconds.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> target = default;
-            Core.Optional<string> usageModel = default;
-            Core.Optional<int> verificationTimer = default;
-            Core.Optional<int> writeBackTimer = default;
+            Optional<ResourceIdentifier> target = default;
+            Optional<string> usageModel = default;
+            Optional<int> verificationTimer = default;
+            Optional<int> writeBackTimer = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("target"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new BlobNfsTarget(target.Value, usageModel.Value, Core.Optional.ToNullable(verificationTimer), Core.Optional.ToNullable(writeBackTimer));
+            return new BlobNfsTarget(target.Value, usageModel.Value, Optional.ToNullable(verificationTimer), Optional.ToNullable(writeBackTimer));
         }
     }
 }

@@ -14,12 +14,12 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class IotSecurityAggregatedAlertData : Core.IUtf8JsonSerializable
+    public partial class IotSecurityAggregatedAlertData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> alertType = default;
-            Core.Optional<string> alertDisplayName = default;
-            Core.Optional<DateTimeOffset> aggregatedDateUtc = default;
-            Core.Optional<string> vendorName = default;
-            Core.Optional<ReportedSeverity> reportedSeverity = default;
-            Core.Optional<string> remediationSteps = default;
-            Core.Optional<string> description = default;
-            Core.Optional<long> count = default;
-            Core.Optional<string> effectedResourceType = default;
-            Core.Optional<string> systemSource = default;
-            Core.Optional<string> actionTaken = default;
-            Core.Optional<string> logAnalyticsQuery = default;
-            Core.Optional<IReadOnlyList<IotSecurityAggregatedAlertTopDevice>> topDevicesList = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> alertType = default;
+            Optional<string> alertDisplayName = default;
+            Optional<DateTimeOffset> aggregatedDateUtc = default;
+            Optional<string> vendorName = default;
+            Optional<ReportedSeverity> reportedSeverity = default;
+            Optional<string> remediationSteps = default;
+            Optional<string> description = default;
+            Optional<long> count = default;
+            Optional<string> effectedResourceType = default;
+            Optional<string> systemSource = default;
+            Optional<string> actionTaken = default;
+            Optional<string> logAnalyticsQuery = default;
+            Optional<IReadOnlyList<IotSecurityAggregatedAlertTopDevice>> topDevicesList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new IotSecurityAggregatedAlertData(id, name, type, systemData.Value, alertType.Value, alertDisplayName.Value, Core.Optional.ToNullable(aggregatedDateUtc), vendorName.Value, Core.Optional.ToNullable(reportedSeverity), remediationSteps.Value, description.Value, Core.Optional.ToNullable(count), effectedResourceType.Value, systemSource.Value, actionTaken.Value, logAnalyticsQuery.Value, Core.Optional.ToList(topDevicesList), Core.Optional.ToDictionary(tags));
+            return new IotSecurityAggregatedAlertData(id, name, type, systemData.Value, alertType.Value, alertDisplayName.Value, Optional.ToNullable(aggregatedDateUtc), vendorName.Value, Optional.ToNullable(reportedSeverity), remediationSteps.Value, description.Value, Optional.ToNullable(count), effectedResourceType.Value, systemSource.Value, actionTaken.Value, logAnalyticsQuery.Value, Optional.ToList(topDevicesList), Optional.ToDictionary(tags));
         }
     }
 }

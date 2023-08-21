@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
 
             NetworkFabricId = networkFabricId;
-            NetworkDevices = new Core.ChangeTrackingList<ResourceIdentifier>();
+            NetworkDevices = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of NetworkRackData. </summary>

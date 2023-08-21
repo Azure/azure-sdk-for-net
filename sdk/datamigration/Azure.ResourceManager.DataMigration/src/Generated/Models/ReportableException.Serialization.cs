@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> message = default;
-            Core.Optional<string> actionableMessage = default;
-            Core.Optional<string> filePath = default;
-            Core.Optional<string> lineNumber = default;
-            Core.Optional<int> hResult = default;
-            Core.Optional<string> stackTrace = default;
+            Optional<string> message = default;
+            Optional<string> actionableMessage = default;
+            Optional<string> filePath = default;
+            Optional<string> lineNumber = default;
+            Optional<int> hResult = default;
+            Optional<string> stackTrace = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ReportableException(message.Value, actionableMessage.Value, filePath.Value, lineNumber.Value, Core.Optional.ToNullable(hResult), stackTrace.Value);
+            return new ReportableException(message.Value, actionableMessage.Value, filePath.Value, lineNumber.Value, Optional.ToNullable(hResult), stackTrace.Value);
         }
     }
 }

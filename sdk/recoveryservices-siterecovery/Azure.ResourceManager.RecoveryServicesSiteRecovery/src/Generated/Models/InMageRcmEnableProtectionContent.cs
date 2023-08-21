@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Argument.AssertNotNull(targetResourceGroupId, nameof(targetResourceGroupId));
 
             FabricDiscoveryMachineId = fabricDiscoveryMachineId;
-            DisksToInclude = new Core.ChangeTrackingList<InMageRcmDiskContent>();
+            DisksToInclude = new ChangeTrackingList<InMageRcmDiskContent>();
             TargetResourceGroupId = targetResourceGroupId;
             ProcessServerId = processServerId;
             InstanceType = "InMageRcm";

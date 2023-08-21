@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="location"> The location. </param>
         public DigitalTwinsDescriptionData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<DigitalTwinsPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<DigitalTwinsPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of DigitalTwinsDescriptionData. </summary>

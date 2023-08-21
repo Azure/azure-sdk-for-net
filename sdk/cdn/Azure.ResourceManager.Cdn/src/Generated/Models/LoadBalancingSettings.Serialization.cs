@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class LoadBalancingSettings : Core.IUtf8JsonSerializable
+    public partial class LoadBalancingSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SampleSize))
+            if (Optional.IsDefined(SampleSize))
             {
                 writer.WritePropertyName("sampleSize"u8);
                 writer.WriteNumberValue(SampleSize.Value);
             }
-            if (Core.Optional.IsDefined(SuccessfulSamplesRequired))
+            if (Optional.IsDefined(SuccessfulSamplesRequired))
             {
                 writer.WritePropertyName("successfulSamplesRequired"u8);
                 writer.WriteNumberValue(SuccessfulSamplesRequired.Value);
             }
-            if (Core.Optional.IsDefined(AdditionalLatencyInMilliseconds))
+            if (Optional.IsDefined(AdditionalLatencyInMilliseconds))
             {
                 writer.WritePropertyName("additionalLatencyInMilliseconds"u8);
                 writer.WriteNumberValue(AdditionalLatencyInMilliseconds.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Core.Optional<int> sampleSize = default;
-            Core.Optional<int> successfulSamplesRequired = default;
-            Core.Optional<int> additionalLatencyInMilliseconds = default;
+            Optional<int> sampleSize = default;
+            Optional<int> successfulSamplesRequired = default;
+            Optional<int> additionalLatencyInMilliseconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sampleSize"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new LoadBalancingSettings(Core.Optional.ToNullable(sampleSize), Core.Optional.ToNullable(successfulSamplesRequired), Core.Optional.ToNullable(additionalLatencyInMilliseconds));
+            return new LoadBalancingSettings(Optional.ToNullable(sampleSize), Optional.ToNullable(successfulSamplesRequired), Optional.ToNullable(additionalLatencyInMilliseconds));
         }
     }
 }

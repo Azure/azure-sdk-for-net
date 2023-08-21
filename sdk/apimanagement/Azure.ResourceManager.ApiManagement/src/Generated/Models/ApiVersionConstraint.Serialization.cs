@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class ApiVersionConstraint : Core.IUtf8JsonSerializable
+    internal partial class ApiVersionConstraint : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MinApiVersion))
+            if (Optional.IsDefined(MinApiVersion))
             {
                 writer.WritePropertyName("minApiVersion"u8);
                 writer.WriteStringValue(MinApiVersion);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> minApiVersion = default;
+            Optional<string> minApiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minApiVersion"u8))

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class ConfigurationContent : Core.IUtf8JsonSerializable
+    public partial class ConfigurationContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(DeviceContent))
+            if (Optional.IsCollectionDefined(DeviceContent))
             {
                 writer.WritePropertyName("deviceContent"u8);
                 writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(ModulesContent))
+            if (Optional.IsCollectionDefined(ModulesContent))
             {
                 writer.WritePropertyName("modulesContent"u8);
                 writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(ModuleContent))
+            if (Optional.IsCollectionDefined(ModuleContent))
             {
                 writer.WritePropertyName("moduleContent"u8);
                 writer.WriteStartObject();
@@ -84,9 +84,9 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, object>> deviceContent = default;
-            Core.Optional<IDictionary<string, IDictionary<string, object>>> modulesContent = default;
-            Core.Optional<IDictionary<string, object>> moduleContent = default;
+            Optional<IDictionary<string, object>> deviceContent = default;
+            Optional<IDictionary<string, IDictionary<string, object>>> modulesContent = default;
+            Optional<IDictionary<string, object>> moduleContent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceContent"u8))
@@ -165,7 +165,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new ConfigurationContent(Core.Optional.ToDictionary(deviceContent), Core.Optional.ToDictionary(modulesContent), Core.Optional.ToDictionary(moduleContent));
+            return new ConfigurationContent(Optional.ToDictionary(deviceContent), Optional.ToDictionary(modulesContent), Optional.ToDictionary(moduleContent));
         }
     }
 }

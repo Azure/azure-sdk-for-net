@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<Uri> kid = default;
-            Core.Optional<bool> enabled = default;
-            Core.Optional<DateTimeOffset> created = default;
-            Core.Optional<DateTimeOffset> updated = default;
+            Optional<Uri> kid = default;
+            Optional<bool> enabled = default;
+            Optional<DateTimeOffset> created = default;
+            Optional<DateTimeOffset> updated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kid"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new IntegrationAccountKeyVaultKey(kid.Value, Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(created), Core.Optional.ToNullable(updated));
+            return new IntegrationAccountKeyVaultKey(kid.Value, Optional.ToNullable(enabled), Optional.ToNullable(created), Optional.ToNullable(updated));
         }
     }
 }

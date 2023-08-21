@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ConsumptionCalculatedSavingsProperties>> calculatedSavings = default;
-            Core.Optional<int> lookBackPeriod = default;
-            Core.Optional<float> recommendedQuantity = default;
-            Core.Optional<string> reservationOrderTerm = default;
-            Core.Optional<string> savingsType = default;
-            Core.Optional<string> unitOfMeasure = default;
+            Optional<IReadOnlyList<ConsumptionCalculatedSavingsProperties>> calculatedSavings = default;
+            Optional<int> lookBackPeriod = default;
+            Optional<float> recommendedQuantity = default;
+            Optional<string> reservationOrderTerm = default;
+            Optional<string> savingsType = default;
+            Optional<string> unitOfMeasure = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("calculatedSavings"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionSavingsProperties(Core.Optional.ToList(calculatedSavings), Core.Optional.ToNullable(lookBackPeriod), Core.Optional.ToNullable(recommendedQuantity), reservationOrderTerm.Value, savingsType.Value, unitOfMeasure.Value);
+            return new ConsumptionSavingsProperties(Optional.ToList(calculatedSavings), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(recommendedQuantity), reservationOrderTerm.Value, savingsType.Value, unitOfMeasure.Value);
         }
     }
 }

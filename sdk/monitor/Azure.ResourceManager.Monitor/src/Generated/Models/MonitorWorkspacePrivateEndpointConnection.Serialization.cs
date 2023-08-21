@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Monitor.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyList<string>> groupIds = default;
-            Core.Optional<SubResource> privateEndpoint = default;
-            Core.Optional<MonitorPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Core.Optional<MonitorPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyList<string>> groupIds = default;
+            Optional<SubResource> privateEndpoint = default;
+            Optional<MonitorPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<MonitorPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorWorkspacePrivateEndpointConnection(id, name, type, systemData.Value, Core.Optional.ToList(groupIds), privateEndpoint, privateLinkServiceConnectionState.Value, Core.Optional.ToNullable(provisioningState));
+            return new MonitorWorkspacePrivateEndpointConnection(id, name, type, systemData.Value, Optional.ToList(groupIds), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

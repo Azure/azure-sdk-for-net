@@ -14,51 +14,51 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsMailMessageEntity : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsMailMessageEntity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BodyFingerprintBin1))
+            if (Optional.IsDefined(BodyFingerprintBin1))
             {
                 writer.WritePropertyName("bodyFingerprintBin1"u8);
                 writer.WriteNumberValue(BodyFingerprintBin1.Value);
             }
-            if (Core.Optional.IsDefined(BodyFingerprintBin2))
+            if (Optional.IsDefined(BodyFingerprintBin2))
             {
                 writer.WritePropertyName("bodyFingerprintBin2"u8);
                 writer.WriteNumberValue(BodyFingerprintBin2.Value);
             }
-            if (Core.Optional.IsDefined(BodyFingerprintBin3))
+            if (Optional.IsDefined(BodyFingerprintBin3))
             {
                 writer.WritePropertyName("bodyFingerprintBin3"u8);
                 writer.WriteNumberValue(BodyFingerprintBin3.Value);
             }
-            if (Core.Optional.IsDefined(BodyFingerprintBin4))
+            if (Optional.IsDefined(BodyFingerprintBin4))
             {
                 writer.WritePropertyName("bodyFingerprintBin4"u8);
                 writer.WriteNumberValue(BodyFingerprintBin4.Value);
             }
-            if (Core.Optional.IsDefined(BodyFingerprintBin5))
+            if (Optional.IsDefined(BodyFingerprintBin5))
             {
                 writer.WritePropertyName("bodyFingerprintBin5"u8);
                 writer.WriteNumberValue(BodyFingerprintBin5.Value);
             }
-            if (Core.Optional.IsDefined(AntispamDirection))
+            if (Optional.IsDefined(AntispamDirection))
             {
                 writer.WritePropertyName("antispamDirection"u8);
                 writer.WriteStringValue(AntispamDirection.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DeliveryAction))
+            if (Optional.IsDefined(DeliveryAction))
             {
                 writer.WritePropertyName("deliveryAction"u8);
                 writer.WriteStringValue(DeliveryAction.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(DeliveryLocation))
+            if (Optional.IsDefined(DeliveryLocation))
             {
                 writer.WritePropertyName("deliveryLocation"u8);
                 writer.WriteStringValue(DeliveryLocation.Value.ToSerialString());
@@ -77,34 +77,34 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<IReadOnlyList<string>> fileEntityIds = default;
-            Core.Optional<string> recipient = default;
-            Core.Optional<IReadOnlyList<Uri>> urls = default;
-            Core.Optional<IReadOnlyList<string>> threats = default;
-            Core.Optional<string> p1Sender = default;
-            Core.Optional<string> p1SenderDisplayName = default;
-            Core.Optional<string> p1SenderDomain = default;
-            Core.Optional<IPAddress> senderIP = default;
-            Core.Optional<string> p2Sender = default;
-            Core.Optional<string> p2SenderDisplayName = default;
-            Core.Optional<string> p2SenderDomain = default;
-            Core.Optional<DateTimeOffset> receiveDate = default;
-            Core.Optional<Guid> networkMessageId = default;
-            Core.Optional<string> internetMessageId = default;
-            Core.Optional<string> subject = default;
-            Core.Optional<string> language = default;
-            Core.Optional<IReadOnlyList<string>> threatDetectionMethods = default;
-            Core.Optional<int> bodyFingerprintBin1 = default;
-            Core.Optional<int> bodyFingerprintBin2 = default;
-            Core.Optional<int> bodyFingerprintBin3 = default;
-            Core.Optional<int> bodyFingerprintBin4 = default;
-            Core.Optional<int> bodyFingerprintBin5 = default;
-            Core.Optional<AntispamMailDirection> antispamDirection = default;
-            Core.Optional<SecurityInsightsMailMessageDeliveryAction> deliveryAction = default;
-            Core.Optional<SecurityInsightsMailMessageDeliveryLocation> deliveryLocation = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            Optional<string> friendlyName = default;
+            Optional<IReadOnlyList<string>> fileEntityIds = default;
+            Optional<string> recipient = default;
+            Optional<IReadOnlyList<Uri>> urls = default;
+            Optional<IReadOnlyList<string>> threats = default;
+            Optional<string> p1Sender = default;
+            Optional<string> p1SenderDisplayName = default;
+            Optional<string> p1SenderDomain = default;
+            Optional<IPAddress> senderIP = default;
+            Optional<string> p2Sender = default;
+            Optional<string> p2SenderDisplayName = default;
+            Optional<string> p2SenderDomain = default;
+            Optional<DateTimeOffset> receiveDate = default;
+            Optional<Guid> networkMessageId = default;
+            Optional<string> internetMessageId = default;
+            Optional<string> subject = default;
+            Optional<string> language = default;
+            Optional<IReadOnlyList<string>> threatDetectionMethods = default;
+            Optional<int> bodyFingerprintBin1 = default;
+            Optional<int> bodyFingerprintBin2 = default;
+            Optional<int> bodyFingerprintBin3 = default;
+            Optional<int> bodyFingerprintBin4 = default;
+            Optional<int> bodyFingerprintBin5 = default;
+            Optional<AntispamMailDirection> antispamDirection = default;
+            Optional<SecurityInsightsMailMessageDeliveryAction> deliveryAction = default;
+            Optional<SecurityInsightsMailMessageDeliveryLocation> deliveryLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsMailMessageEntity(id, name, type, systemData.Value, kind, Core.Optional.ToDictionary(additionalData), friendlyName.Value, Core.Optional.ToList(fileEntityIds), recipient.Value, Core.Optional.ToList(urls), Core.Optional.ToList(threats), p1Sender.Value, p1SenderDisplayName.Value, p1SenderDomain.Value, senderIP.Value, p2Sender.Value, p2SenderDisplayName.Value, p2SenderDomain.Value, Core.Optional.ToNullable(receiveDate), Core.Optional.ToNullable(networkMessageId), internetMessageId.Value, subject.Value, language.Value, Core.Optional.ToList(threatDetectionMethods), Core.Optional.ToNullable(bodyFingerprintBin1), Core.Optional.ToNullable(bodyFingerprintBin2), Core.Optional.ToNullable(bodyFingerprintBin3), Core.Optional.ToNullable(bodyFingerprintBin4), Core.Optional.ToNullable(bodyFingerprintBin5), Core.Optional.ToNullable(antispamDirection), Core.Optional.ToNullable(deliveryAction), Core.Optional.ToNullable(deliveryLocation));
+            return new SecurityInsightsMailMessageEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(fileEntityIds), recipient.Value, Optional.ToList(urls), Optional.ToList(threats), p1Sender.Value, p1SenderDisplayName.Value, p1SenderDomain.Value, senderIP.Value, p2Sender.Value, p2SenderDisplayName.Value, p2SenderDomain.Value, Optional.ToNullable(receiveDate), Optional.ToNullable(networkMessageId), internetMessageId.Value, subject.Value, language.Value, Optional.ToList(threatDetectionMethods), Optional.ToNullable(bodyFingerprintBin1), Optional.ToNullable(bodyFingerprintBin2), Optional.ToNullable(bodyFingerprintBin3), Optional.ToNullable(bodyFingerprintBin4), Optional.ToNullable(bodyFingerprintBin5), Optional.ToNullable(antispamDirection), Optional.ToNullable(deliveryAction), Optional.ToNullable(deliveryLocation));
         }
     }
 }

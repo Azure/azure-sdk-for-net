@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppOpenIdConnectRegistration : Core.IUtf8JsonSerializable
+    public partial class ContainerAppOpenIdConnectRegistration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Core.Optional.IsDefined(ClientCredential))
+            if (Optional.IsDefined(ClientCredential))
             {
                 writer.WritePropertyName("clientCredential"u8);
                 writer.WriteObjectValue(ClientCredential);
             }
-            if (Core.Optional.IsDefined(OpenIdConnectConfiguration))
+            if (Optional.IsDefined(OpenIdConnectConfiguration))
             {
                 writer.WritePropertyName("openIdConnectConfiguration"u8);
                 writer.WriteObjectValue(OpenIdConnectConfiguration);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> clientId = default;
-            Core.Optional<ContainerAppOpenIdConnectClientCredential> clientCredential = default;
-            Core.Optional<ContainerAppOpenIdConnectConfig> openIdConnectConfiguration = default;
+            Optional<string> clientId = default;
+            Optional<ContainerAppOpenIdConnectClientCredential> clientCredential = default;
+            Optional<ContainerAppOpenIdConnectConfig> openIdConnectConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))

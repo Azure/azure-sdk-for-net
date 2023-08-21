@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Workloads
 {
-    internal class SapMonitorOperationSource : Core.IOperationSource<SapMonitorResource>
+    internal class SapMonitorOperationSource : IOperationSource<SapMonitorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Workloads
             _client = client;
         }
 
-        SapMonitorResource Core.IOperationSource<SapMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SapMonitorResource IOperationSource<SapMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SapMonitorData.DeserializeSapMonitorData(document.RootElement);
             return new SapMonitorResource(_client, data);
         }
 
-        async ValueTask<SapMonitorResource> Core.IOperationSource<SapMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SapMonitorResource> IOperationSource<SapMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SapMonitorData.DeserializeSapMonitorData(document.RootElement);

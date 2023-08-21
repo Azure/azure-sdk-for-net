@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of AttestationListResult. </summary>
         internal AttestationListResult()
         {
-            Value = new Core.ChangeTrackingList<PolicyAttestationData>();
+            Value = new ChangeTrackingList<PolicyAttestationData>();
         }
 
         /// <summary> Initializes a new instance of AttestationListResult. </summary>

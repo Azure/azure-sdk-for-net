@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Core.Optional<StreamAnalyticsSampleInputResultStatus> status = default;
-            Core.Optional<IReadOnlyList<string>> diagnostics = default;
-            Core.Optional<Uri> eventsDownloadUrl = default;
-            Core.Optional<DateTimeOffset> lastArrivalTime = default;
-            Core.Optional<string> code = default;
-            Core.Optional<string> message = default;
-            Core.Optional<string> target = default;
-            Core.Optional<IReadOnlyList<StreamAnalyticsErrorDetails>> details = default;
+            Optional<StreamAnalyticsSampleInputResultStatus> status = default;
+            Optional<IReadOnlyList<string>> diagnostics = default;
+            Optional<Uri> eventsDownloadUrl = default;
+            Optional<DateTimeOffset> lastArrivalTime = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<string> target = default;
+            Optional<IReadOnlyList<StreamAnalyticsErrorDetails>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamAnalyticsSampleInputResult(code.Value, message.Value, target.Value, Core.Optional.ToList(details), Core.Optional.ToNullable(status), Core.Optional.ToList(diagnostics), eventsDownloadUrl.Value, Core.Optional.ToNullable(lastArrivalTime));
+            return new StreamAnalyticsSampleInputResult(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToNullable(status), Optional.ToList(diagnostics), eventsDownloadUrl.Value, Optional.ToNullable(lastArrivalTime));
         }
     }
 }

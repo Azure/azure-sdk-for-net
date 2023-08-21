@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<int> exitCode = default;
-            Core.Optional<DateTimeOffset> startedAt = default;
-            Core.Optional<DateTimeOffset> finishedAt = default;
-            Core.Optional<string> logs = default;
-            Core.Optional<string> reason = default;
+            Optional<string> id = default;
+            Optional<string> provisioningState = default;
+            Optional<int> exitCode = default;
+            Optional<DateTimeOffset> startedAt = default;
+            Optional<DateTimeOffset> finishedAt = default;
+            Optional<string> logs = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterRunCommandResult(id.Value, provisioningState.Value, Core.Optional.ToNullable(exitCode), Core.Optional.ToNullable(startedAt), Core.Optional.ToNullable(finishedAt), logs.Value, reason.Value);
+            return new ManagedClusterRunCommandResult(id.Value, provisioningState.Value, Optional.ToNullable(exitCode), Optional.ToNullable(startedAt), Optional.ToNullable(finishedAt), logs.Value, reason.Value);
         }
     }
 }

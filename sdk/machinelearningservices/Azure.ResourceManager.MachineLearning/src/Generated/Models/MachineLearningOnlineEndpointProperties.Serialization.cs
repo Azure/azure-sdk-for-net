@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningOnlineEndpointProperties : Core.IUtf8JsonSerializable
+    public partial class MachineLearningOnlineEndpointProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Compute))
+            if (Optional.IsDefined(Compute))
             {
                 if (Compute != null)
                 {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("compute");
                 }
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Traffic))
+            if (Optional.IsCollectionDefined(Traffic))
             {
                 if (Traffic != null)
                 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("authMode"u8);
             writer.WriteStringValue(AuthMode.ToString());
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Core.Optional.IsDefined(Keys))
+            if (Optional.IsDefined(Keys))
             {
                 if (Keys != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("keys");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -105,16 +105,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> compute = default;
-            Core.Optional<MachineLearningEndpointProvisioningState> provisioningState = default;
-            Core.Optional<MachineLearningPublicNetworkAccessType> publicNetworkAccess = default;
-            Core.Optional<IDictionary<string, int>> traffic = default;
+            Optional<string> compute = default;
+            Optional<MachineLearningEndpointProvisioningState> provisioningState = default;
+            Optional<MachineLearningPublicNetworkAccessType> publicNetworkAccess = default;
+            Optional<IDictionary<string, int>> traffic = default;
             MachineLearningEndpointAuthMode authMode = default;
-            Core.Optional<string> description = default;
-            Core.Optional<MachineLearningEndpointAuthKeys> keys = default;
-            Core.Optional<IDictionary<string, string>> properties = default;
-            Core.Optional<Uri> scoringUri = default;
-            Core.Optional<Uri> swaggerUri = default;
+            Optional<string> description = default;
+            Optional<MachineLearningEndpointAuthKeys> keys = default;
+            Optional<IDictionary<string, string>> properties = default;
+            Optional<Uri> scoringUri = default;
+            Optional<Uri> swaggerUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("compute"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningOnlineEndpointProperties(authMode, description.Value, keys.Value, Core.Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value, compute.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToDictionary(traffic));
+            return new MachineLearningOnlineEndpointProperties(authMode, description.Value, keys.Value, Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value, compute.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), Optional.ToDictionary(traffic));
         }
     }
 }

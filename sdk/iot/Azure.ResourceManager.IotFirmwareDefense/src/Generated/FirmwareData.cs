@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <summary> Initializes a new instance of FirmwareData. </summary>
         public FirmwareData()
         {
-            StatusMessages = new Core.ChangeTrackingList<BinaryData>();
+            StatusMessages = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of FirmwareData. </summary>

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppInstanceHttpGetAction : Core.IUtf8JsonSerializable
+    public partial class AppInstanceHttpGetAction : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Core.Optional.IsDefined(Scheme))
+            if (Optional.IsDefined(Scheme))
             {
                 writer.WritePropertyName("scheme"u8);
                 writer.WriteStringValue(Scheme.Value.ToString());
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<string> path = default;
-            Core.Optional<AppInstanceHttpSchemeType> scheme = default;
+            Optional<string> path = default;
+            Optional<AppInstanceHttpSchemeType> scheme = default;
             ProbeActionType type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppInstanceHttpGetAction(type, path.Value, Core.Optional.ToNullable(scheme));
+            return new AppInstanceHttpGetAction(type, path.Value, Optional.ToNullable(scheme));
         }
     }
 }

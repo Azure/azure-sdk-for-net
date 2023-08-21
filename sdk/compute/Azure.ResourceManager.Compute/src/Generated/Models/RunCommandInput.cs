@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Compute.Models
             Argument.AssertNotNull(commandId, nameof(commandId));
 
             CommandId = commandId;
-            Script = new Core.ChangeTrackingList<string>();
-            Parameters = new Core.ChangeTrackingList<RunCommandInputParameter>();
+            Script = new ChangeTrackingList<string>();
+            Parameters = new ChangeTrackingList<RunCommandInputParameter>();
         }
 
         /// <summary> The run command id. </summary>

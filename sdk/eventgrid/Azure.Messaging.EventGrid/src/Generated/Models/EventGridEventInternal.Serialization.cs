@@ -13,14 +13,14 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.Models
 {
     [JsonConverter(typeof(EventGridEventInternalConverter))]
-    internal partial class EventGridEventInternal : Core.IUtf8JsonSerializable
+    internal partial class EventGridEventInternal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Core.Optional.IsDefined(Topic))
+            if (Optional.IsDefined(Topic))
             {
                 writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);
@@ -45,12 +45,12 @@ namespace Azure.Messaging.EventGrid.Models
                 return null;
             }
             string id = default;
-            Core.Optional<string> topic = default;
+            Optional<string> topic = default;
             string subject = default;
             JsonElement data = default;
             string eventType = default;
             DateTimeOffset eventTime = default;
-            Core.Optional<string> metadataVersion = default;
+            Optional<string> metadataVersion = default;
             string dataVersion = default;
             foreach (var property in element.EnumerateObject())
             {

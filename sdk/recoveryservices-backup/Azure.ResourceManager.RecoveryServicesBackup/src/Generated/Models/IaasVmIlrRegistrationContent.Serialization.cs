@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmIlrRegistrationContent : Core.IUtf8JsonSerializable
+    public partial class IaasVmIlrRegistrationContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RecoveryPointId))
+            if (Optional.IsDefined(RecoveryPointId))
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (Core.Optional.IsDefined(VirtualMachineId))
+            if (Optional.IsDefined(VirtualMachineId))
             {
                 writer.WritePropertyName("virtualMachineId"u8);
                 writer.WriteStringValue(VirtualMachineId);
             }
-            if (Core.Optional.IsDefined(InitiatorName))
+            if (Optional.IsDefined(InitiatorName))
             {
                 writer.WritePropertyName("initiatorName"u8);
                 writer.WriteStringValue(InitiatorName);
             }
-            if (Core.Optional.IsDefined(RenewExistingRegistration))
+            if (Optional.IsDefined(RenewExistingRegistration))
             {
                 writer.WritePropertyName("renewExistingRegistration"u8);
                 writer.WriteBooleanValue(RenewExistingRegistration.Value);
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<string> recoveryPointId = default;
-            Core.Optional<ResourceIdentifier> virtualMachineId = default;
-            Core.Optional<string> initiatorName = default;
-            Core.Optional<bool> renewExistingRegistration = default;
+            Optional<string> recoveryPointId = default;
+            Optional<ResourceIdentifier> virtualMachineId = default;
+            Optional<string> initiatorName = default;
+            Optional<bool> renewExistingRegistration = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new IaasVmIlrRegistrationContent(objectType, recoveryPointId.Value, virtualMachineId.Value, initiatorName.Value, Core.Optional.ToNullable(renewExistingRegistration));
+            return new IaasVmIlrRegistrationContent(objectType, recoveryPointId.Value, virtualMachineId.Value, initiatorName.Value, Optional.ToNullable(renewExistingRegistration));
         }
     }
 }

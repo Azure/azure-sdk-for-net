@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationActivity. </summary>
         internal AutomationActivity()
         {
-            ParameterSets = new Core.ChangeTrackingList<AutomationActivityParameterSet>();
-            OutputTypes = new Core.ChangeTrackingList<AutomationActivityOutputType>();
+            ParameterSets = new ChangeTrackingList<AutomationActivityParameterSet>();
+            OutputTypes = new ChangeTrackingList<AutomationActivityOutputType>();
         }
 
         /// <summary> Initializes a new instance of AutomationActivity. </summary>

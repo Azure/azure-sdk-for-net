@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of ConsumptionBalanceResult. </summary>
         internal ConsumptionBalanceResult()
         {
-            NewPurchasesDetails = new Core.ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>();
-            AdjustmentDetails = new Core.ChangeTrackingList<ConsumptionBalanceAdjustmentDetail>();
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            NewPurchasesDetails = new ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>();
+            AdjustmentDetails = new ChangeTrackingList<ConsumptionBalanceAdjustmentDetail>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ConsumptionBalanceResult. </summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of WorkloadRestoreContent. </summary>
         public WorkloadRestoreContent()
         {
-            PropertyBag = new Core.ChangeTrackingDictionary<string, string>();
+            PropertyBag = new ChangeTrackingDictionary<string, string>();
             ObjectType = "AzureWorkloadRestoreRequest";
         }
 

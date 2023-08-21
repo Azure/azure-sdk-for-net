@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of DevTestLabEnvironmentDeployment. </summary>
         public DevTestLabEnvironmentDeployment()
         {
-            Parameters = new Core.ChangeTrackingList<DevTestLabArmTemplateParameter>();
+            Parameters = new ChangeTrackingList<DevTestLabArmTemplateParameter>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabEnvironmentDeployment. </summary>

@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformApiPortalProperties : Core.IUtf8JsonSerializable
+    public partial class AppPlatformApiPortalProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsPublic))
+            if (Optional.IsDefined(IsPublic))
             {
                 writer.WritePropertyName("public"u8);
                 writer.WriteBooleanValue(IsPublic.Value);
             }
-            if (Core.Optional.IsDefined(IsHttpsOnly))
+            if (Optional.IsDefined(IsHttpsOnly))
             {
                 writer.WritePropertyName("httpsOnly"u8);
                 writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
-            if (Core.Optional.IsCollectionDefined(GatewayIds))
+            if (Optional.IsCollectionDefined(GatewayIds))
             {
                 writer.WritePropertyName("gatewayIds"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(SourceUris))
+            if (Optional.IsCollectionDefined(SourceUris))
             {
                 writer.WritePropertyName("sourceUrls"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SsoProperties))
+            if (Optional.IsDefined(SsoProperties))
             {
                 writer.WritePropertyName("ssoProperties"u8);
                 writer.WriteObjectValue(SsoProperties);
@@ -71,15 +71,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<AppPlatformApiPortalProvisioningState> provisioningState = default;
-            Core.Optional<bool> @public = default;
-            Core.Optional<Uri> uri = default;
-            Core.Optional<bool> httpsOnly = default;
-            Core.Optional<IList<ResourceIdentifier>> gatewayIds = default;
-            Core.Optional<IList<Uri>> sourceUris = default;
-            Core.Optional<AppPlatformSsoProperties> ssoProperties = default;
-            Core.Optional<AppPlatformApiPortalResourceRequirements> resourceRequests = default;
-            Core.Optional<IReadOnlyList<AppPlatformApiPortalInstance>> instances = default;
+            Optional<AppPlatformApiPortalProvisioningState> provisioningState = default;
+            Optional<bool> @public = default;
+            Optional<Uri> uri = default;
+            Optional<bool> httpsOnly = default;
+            Optional<IList<ResourceIdentifier>> gatewayIds = default;
+            Optional<IList<Uri>> sourceUris = default;
+            Optional<AppPlatformSsoProperties> ssoProperties = default;
+            Optional<AppPlatformApiPortalResourceRequirements> resourceRequests = default;
+            Optional<IReadOnlyList<AppPlatformApiPortalInstance>> instances = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformApiPortalProperties(Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(@public), uri.Value, Core.Optional.ToNullable(httpsOnly), Core.Optional.ToList(gatewayIds), Core.Optional.ToList(sourceUris), ssoProperties.Value, resourceRequests.Value, Core.Optional.ToList(instances));
+            return new AppPlatformApiPortalProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(@public), uri.Value, Optional.ToNullable(httpsOnly), Optional.ToList(gatewayIds), Optional.ToList(sourceUris), ssoProperties.Value, resourceRequests.Value, Optional.ToList(instances));
         }
     }
 }

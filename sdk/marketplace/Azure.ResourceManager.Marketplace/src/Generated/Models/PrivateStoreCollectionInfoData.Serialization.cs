@@ -13,29 +13,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    public partial class PrivateStoreCollectionInfoData : Core.IUtf8JsonSerializable
+    public partial class PrivateStoreCollectionInfoData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CollectionName))
+            if (Optional.IsDefined(CollectionName))
             {
                 writer.WritePropertyName("collectionName"u8);
                 writer.WriteStringValue(CollectionName);
             }
-            if (Core.Optional.IsDefined(Claim))
+            if (Optional.IsDefined(Claim))
             {
                 writer.WritePropertyName("claim"u8);
                 writer.WriteStringValue(Claim);
             }
-            if (Core.Optional.IsDefined(AreAllSubscriptionsSelected))
+            if (Optional.IsDefined(AreAllSubscriptionsSelected))
             {
                 writer.WritePropertyName("allSubscriptions"u8);
                 writer.WriteBooleanValue(AreAllSubscriptionsSelected.Value);
             }
-            if (Core.Optional.IsCollectionDefined(SubscriptionsList))
+            if (Optional.IsCollectionDefined(SubscriptionsList))
             {
                 writer.WritePropertyName("subscriptionsList"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -63,16 +63,16 @@ namespace Azure.ResourceManager.Marketplace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> collectionId = default;
-            Core.Optional<string> collectionName = default;
-            Core.Optional<string> claim = default;
-            Core.Optional<bool> allSubscriptions = default;
-            Core.Optional<bool> approveAllItems = default;
-            Core.Optional<DateTimeOffset> approveAllItemsModifiedAt = default;
-            Core.Optional<IList<string>> subscriptionsList = default;
-            Core.Optional<bool> enabled = default;
-            Core.Optional<long> numberOfOffers = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> collectionId = default;
+            Optional<string> collectionName = default;
+            Optional<string> claim = default;
+            Optional<bool> allSubscriptions = default;
+            Optional<bool> approveAllItems = default;
+            Optional<DateTimeOffset> approveAllItemsModifiedAt = default;
+            Optional<IList<string>> subscriptionsList = default;
+            Optional<bool> enabled = default;
+            Optional<long> numberOfOffers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Marketplace
                     continue;
                 }
             }
-            return new PrivateStoreCollectionInfoData(id, name, type, systemData.Value, Core.Optional.ToNullable(collectionId), collectionName.Value, claim.Value, Core.Optional.ToNullable(allSubscriptions), Core.Optional.ToNullable(approveAllItems), Core.Optional.ToNullable(approveAllItemsModifiedAt), Core.Optional.ToList(subscriptionsList), Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(numberOfOffers));
+            return new PrivateStoreCollectionInfoData(id, name, type, systemData.Value, Optional.ToNullable(collectionId), collectionName.Value, claim.Value, Optional.ToNullable(allSubscriptions), Optional.ToNullable(approveAllItems), Optional.ToNullable(approveAllItemsModifiedAt), Optional.ToList(subscriptionsList), Optional.ToNullable(enabled), Optional.ToNullable(numberOfOffers));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of MabContainerExtendedInfo. </summary>
         public MabContainerExtendedInfo()
         {
-            BackupItems = new Core.ChangeTrackingList<string>();
+            BackupItems = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MabContainerExtendedInfo. </summary>

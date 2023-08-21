@@ -17,8 +17,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of AcsChatThreadCreatedWithUserEventData. </summary>
         internal AcsChatThreadCreatedWithUserEventData()
         {
-            Properties = new Core.ChangeTrackingDictionary<string, object>();
-            Participants = new Core.ChangeTrackingList<AcsChatThreadParticipantProperties>();
+            Properties = new ChangeTrackingDictionary<string, object>();
+            Participants = new ChangeTrackingList<AcsChatThreadParticipantProperties>();
         }
 
         /// <summary> Initializes a new instance of AcsChatThreadCreatedWithUserEventData. </summary>

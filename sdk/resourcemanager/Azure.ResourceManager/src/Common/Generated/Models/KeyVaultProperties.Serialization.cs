@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(KeyVaultPropertiesConverter))]
-    public partial class KeyVaultProperties : Core.IUtf8JsonSerializable
+    public partial class KeyVaultProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeyIdentifier))
+            if (Optional.IsDefined(KeyIdentifier))
             {
                 writer.WritePropertyName("keyIdentifier"u8);
                 writer.WriteStringValue(KeyIdentifier);
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Models
             {
                 return null;
             }
-            Core.Optional<string> keyIdentifier = default;
-            Core.Optional<string> identity = default;
+            Optional<string> keyIdentifier = default;
+            Optional<string> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyIdentifier"u8))

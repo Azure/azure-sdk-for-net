@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of ExperimentList. </summary>
         internal ExperimentList()
         {
-            Value = new Core.ChangeTrackingList<FrontDoorExperimentData>();
+            Value = new ChangeTrackingList<FrontDoorExperimentData>();
         }
 
         /// <summary> Initializes a new instance of ExperimentList. </summary>

@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<bool> isRequired = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<LogicApiDeploymentParameterVisibility> visibility = default;
+            Optional<string> type = default;
+            Optional<bool> isRequired = default;
+            Optional<string> displayName = default;
+            Optional<string> description = default;
+            Optional<LogicApiDeploymentParameterVisibility> visibility = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicApiDeploymentParameterMetadata(type.Value, Core.Optional.ToNullable(isRequired), displayName.Value, description.Value, Core.Optional.ToNullable(visibility));
+            return new LogicApiDeploymentParameterMetadata(type.Value, Optional.ToNullable(isRequired), displayName.Value, description.Value, Optional.ToNullable(visibility));
         }
     }
 }

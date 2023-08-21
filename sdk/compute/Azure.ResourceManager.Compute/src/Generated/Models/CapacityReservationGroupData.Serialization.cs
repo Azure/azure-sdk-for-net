@@ -14,12 +14,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class CapacityReservationGroupData : Core.IUtf8JsonSerializable
+    public partial class CapacityReservationGroupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Zones))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -54,16 +54,16 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Core.Optional<IList<string>> zones = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<string>> zones = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyList<SubResource>> capacityReservations = default;
-            Core.Optional<IReadOnlyList<SubResource>> virtualMachinesAssociated = default;
-            Core.Optional<CapacityReservationGroupInstanceView> instanceView = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyList<SubResource>> capacityReservations = default;
+            Optional<IReadOnlyList<SubResource>> virtualMachinesAssociated = default;
+            Optional<CapacityReservationGroupInstanceView> instanceView = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new CapacityReservationGroupData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToList(zones), Core.Optional.ToList(capacityReservations), Core.Optional.ToList(virtualMachinesAssociated), instanceView.Value);
+            return new CapacityReservationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToList(capacityReservations), Optional.ToList(virtualMachinesAssociated), instanceView.Value);
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<OrchestrationServiceName> serviceName = default;
-            Core.Optional<OrchestrationServiceState> serviceState = default;
+            Optional<OrchestrationServiceName> serviceName = default;
+            Optional<OrchestrationServiceState> serviceState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceName"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new OrchestrationServiceSummary(Core.Optional.ToNullable(serviceName), Core.Optional.ToNullable(serviceState));
+            return new OrchestrationServiceSummary(Optional.ToNullable(serviceName), Optional.ToNullable(serviceState));
         }
     }
 }

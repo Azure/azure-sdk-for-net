@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Kusto
 {
-    internal class KustoDatabaseOperationSource : Core.IOperationSource<KustoDatabaseResource>
+    internal class KustoDatabaseOperationSource : IOperationSource<KustoDatabaseResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Kusto
             _client = client;
         }
 
-        KustoDatabaseResource Core.IOperationSource<KustoDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        KustoDatabaseResource IOperationSource<KustoDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = KustoDatabaseData.DeserializeKustoDatabaseData(document.RootElement);
             return new KustoDatabaseResource(_client, data);
         }
 
-        async ValueTask<KustoDatabaseResource> Core.IOperationSource<KustoDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<KustoDatabaseResource> IOperationSource<KustoDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = KustoDatabaseData.DeserializeKustoDatabaseData(document.RootElement);

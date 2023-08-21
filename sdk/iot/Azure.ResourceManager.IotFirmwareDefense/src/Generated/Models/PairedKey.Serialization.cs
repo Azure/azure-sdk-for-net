@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> type = default;
-            Core.Optional<BinaryData> additionalProperties = default;
+            Optional<string> id = default;
+            Optional<string> type = default;
+            Optional<BinaryData> additionalProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBPrivateLinkResourceListResult. </summary>
         internal CosmosDBPrivateLinkResourceListResult()
         {
-            Value = new Core.ChangeTrackingList<CosmosDBPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<CosmosDBPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBPrivateLinkResourceListResult. </summary>

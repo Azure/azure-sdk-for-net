@@ -21,14 +21,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<AppServicePlanEventTypeDetail> appServicePlanEventTypeDetail = default;
-            Core.Optional<WebAppServicePlanUpdatedEventDataSku> sku = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> clientRequestId = default;
-            Core.Optional<string> correlationRequestId = default;
-            Core.Optional<string> requestId = default;
-            Core.Optional<string> address = default;
-            Core.Optional<string> verb = default;
+            Optional<AppServicePlanEventTypeDetail> appServicePlanEventTypeDetail = default;
+            Optional<WebAppServicePlanUpdatedEventDataSku> sku = default;
+            Optional<string> name = default;
+            Optional<string> clientRequestId = default;
+            Optional<string> correlationRequestId = default;
+            Optional<string> requestId = default;
+            Optional<string> address = default;
+            Optional<string> verb = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appServicePlanEventTypeDetail"u8))

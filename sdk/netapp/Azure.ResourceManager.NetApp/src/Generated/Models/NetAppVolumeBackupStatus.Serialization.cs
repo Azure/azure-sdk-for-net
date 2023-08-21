@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<bool> healthy = default;
-            Core.Optional<NetAppRelationshipStatus> relationshipStatus = default;
-            Core.Optional<NetAppMirrorState> mirrorState = default;
-            Core.Optional<string> unhealthyReason = default;
-            Core.Optional<string> errorMessage = default;
-            Core.Optional<long> lastTransferSize = default;
-            Core.Optional<string> lastTransferType = default;
-            Core.Optional<long> totalTransferBytes = default;
+            Optional<bool> healthy = default;
+            Optional<NetAppRelationshipStatus> relationshipStatus = default;
+            Optional<NetAppMirrorState> mirrorState = default;
+            Optional<string> unhealthyReason = default;
+            Optional<string> errorMessage = default;
+            Optional<long> lastTransferSize = default;
+            Optional<string> lastTransferType = default;
+            Optional<long> totalTransferBytes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("healthy"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppVolumeBackupStatus(Core.Optional.ToNullable(healthy), Core.Optional.ToNullable(relationshipStatus), Core.Optional.ToNullable(mirrorState), unhealthyReason.Value, errorMessage.Value, Core.Optional.ToNullable(lastTransferSize), lastTransferType.Value, Core.Optional.ToNullable(totalTransferBytes));
+            return new NetAppVolumeBackupStatus(Optional.ToNullable(healthy), Optional.ToNullable(relationshipStatus), Optional.ToNullable(mirrorState), unhealthyReason.Value, errorMessage.Value, Optional.ToNullable(lastTransferSize), lastTransferType.Value, Optional.ToNullable(totalTransferBytes));
         }
     }
 }

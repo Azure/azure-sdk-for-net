@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of VirtualMachineResourceNames. </summary>
         public VirtualMachineResourceNames()
         {
-            NetworkInterfaces = new Core.ChangeTrackingList<NetworkInterfaceResourceNames>();
-            DataDiskNames = new Core.ChangeTrackingDictionary<string, IList<string>>();
+            NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceResourceNames>();
+            DataDiskNames = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineResourceNames. </summary>

@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> Initializes a new instance of SecurityInsightsIncidentData. </summary>
         public SecurityInsightsIncidentData()
         {
-            Labels = new Core.ChangeTrackingList<SecurityInsightsIncidentLabel>();
-            RelatedAnalyticRuleIds = new Core.ChangeTrackingList<ResourceIdentifier>();
+            Labels = new ChangeTrackingList<SecurityInsightsIncidentLabel>();
+            RelatedAnalyticRuleIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of SecurityInsightsIncidentData. </summary>

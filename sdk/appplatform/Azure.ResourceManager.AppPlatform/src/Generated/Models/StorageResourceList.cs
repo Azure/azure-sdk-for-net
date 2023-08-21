@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of StorageResourceList. </summary>
         internal StorageResourceList()
         {
-            Value = new Core.ChangeTrackingList<AppPlatformStorageData>();
+            Value = new ChangeTrackingList<AppPlatformStorageData>();
         }
 
         /// <summary> Initializes a new instance of StorageResourceList. </summary>

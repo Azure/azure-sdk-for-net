@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<CosmosDBSqlClientEncryptionKeyData>> value = default;
+            Optional<IReadOnlyList<CosmosDBSqlClientEncryptionKeyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ClientEncryptionKeysListResult(Core.Optional.ToList(value));
+            return new ClientEncryptionKeysListResult(Optional.ToList(value));
         }
     }
 }

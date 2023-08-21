@@ -21,12 +21,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<string> namespaceName = default;
-            Core.Optional<string> requestUri = default;
-            Core.Optional<string> entityType = default;
-            Core.Optional<string> queueName = default;
-            Core.Optional<string> topicName = default;
-            Core.Optional<string> subscriptionName = default;
+            Optional<string> namespaceName = default;
+            Optional<string> requestUri = default;
+            Optional<string> entityType = default;
+            Optional<string> queueName = default;
+            Optional<string> topicName = default;
+            Optional<string> subscriptionName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("namespaceName"u8))

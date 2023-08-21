@@ -11,41 +11,41 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class ServiceBusQueueOutputDataSource : Core.IUtf8JsonSerializable
+    public partial class ServiceBusQueueOutputDataSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServiceBusNamespace))
+            if (Optional.IsDefined(ServiceBusNamespace))
             {
                 writer.WritePropertyName("serviceBusNamespace"u8);
                 writer.WriteStringValue(ServiceBusNamespace);
             }
-            if (Core.Optional.IsDefined(SharedAccessPolicyName))
+            if (Optional.IsDefined(SharedAccessPolicyName))
             {
                 writer.WritePropertyName("sharedAccessPolicyName"u8);
                 writer.WriteStringValue(SharedAccessPolicyName);
             }
-            if (Core.Optional.IsDefined(SharedAccessPolicyKey))
+            if (Optional.IsDefined(SharedAccessPolicyKey))
             {
                 writer.WritePropertyName("sharedAccessPolicyKey"u8);
                 writer.WriteStringValue(SharedAccessPolicyKey);
             }
-            if (Core.Optional.IsDefined(AuthenticationMode))
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(QueueName))
+            if (Optional.IsDefined(QueueName))
             {
                 writer.WritePropertyName("queueName"u8);
                 writer.WriteStringValue(QueueName);
             }
-            if (Core.Optional.IsCollectionDefined(PropertyColumns))
+            if (Optional.IsCollectionDefined(PropertyColumns))
             {
                 writer.WritePropertyName("propertyColumns"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(SystemPropertyColumns))
+            if (Optional.IsCollectionDefined(SystemPropertyColumns))
             {
                 writer.WritePropertyName("systemPropertyColumns"u8);
                 writer.WriteStartObject();
@@ -77,13 +77,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Core.Optional<string> serviceBusNamespace = default;
-            Core.Optional<string> sharedAccessPolicyName = default;
-            Core.Optional<string> sharedAccessPolicyKey = default;
-            Core.Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
-            Core.Optional<string> queueName = default;
-            Core.Optional<IList<string>> propertyColumns = default;
-            Core.Optional<IDictionary<string, string>> systemPropertyColumns = default;
+            Optional<string> serviceBusNamespace = default;
+            Optional<string> sharedAccessPolicyName = default;
+            Optional<string> sharedAccessPolicyKey = default;
+            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            Optional<string> queueName = default;
+            Optional<IList<string>> propertyColumns = default;
+            Optional<IDictionary<string, string>> systemPropertyColumns = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new ServiceBusQueueOutputDataSource(type, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Core.Optional.ToNullable(authenticationMode), queueName.Value, Core.Optional.ToList(propertyColumns), Core.Optional.ToDictionary(systemPropertyColumns));
+            return new ServiceBusQueueOutputDataSource(type, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Optional.ToNullable(authenticationMode), queueName.Value, Optional.ToList(propertyColumns), Optional.ToDictionary(systemPropertyColumns));
         }
     }
 }

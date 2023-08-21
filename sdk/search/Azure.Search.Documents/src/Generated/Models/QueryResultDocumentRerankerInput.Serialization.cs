@@ -18,9 +18,9 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Core.Optional<string> title = default;
-            Core.Optional<string> content = default;
-            Core.Optional<string> keywords = default;
+            Optional<string> title = default;
+            Optional<string> content = default;
+            Optional<string> keywords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))

@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WebAppLoginInfo : Core.IUtf8JsonSerializable
+    public partial class WebAppLoginInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Routes))
+            if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteObjectValue(Routes);
             }
-            if (Core.Optional.IsDefined(TokenStore))
+            if (Optional.IsDefined(TokenStore))
             {
                 writer.WritePropertyName("tokenStore"u8);
                 writer.WriteObjectValue(TokenStore);
             }
-            if (Core.Optional.IsDefined(PreserveUrlFragmentsForLogins))
+            if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
             {
                 writer.WritePropertyName("preserveUrlFragmentsForLogins"u8);
                 writer.WriteBooleanValue(PreserveUrlFragmentsForLogins.Value);
             }
-            if (Core.Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
+            if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
             {
                 writer.WritePropertyName("allowedExternalRedirectUrls"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(CookieExpiration))
+            if (Optional.IsDefined(CookieExpiration))
             {
                 writer.WritePropertyName("cookieExpiration"u8);
                 writer.WriteObjectValue(CookieExpiration);
             }
-            if (Core.Optional.IsDefined(Nonce))
+            if (Optional.IsDefined(Nonce))
             {
                 writer.WritePropertyName("nonce"u8);
                 writer.WriteObjectValue(Nonce);
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<LoginRoutes> routes = default;
-            Core.Optional<AppServiceTokenStore> tokenStore = default;
-            Core.Optional<bool> preserveUrlFragmentsForLogins = default;
-            Core.Optional<IList<string>> allowedExternalRedirectUrls = default;
-            Core.Optional<WebAppCookieExpiration> cookieExpiration = default;
-            Core.Optional<LoginFlowNonceSettings> nonce = default;
+            Optional<LoginRoutes> routes = default;
+            Optional<AppServiceTokenStore> tokenStore = default;
+            Optional<bool> preserveUrlFragmentsForLogins = default;
+            Optional<IList<string>> allowedExternalRedirectUrls = default;
+            Optional<WebAppCookieExpiration> cookieExpiration = default;
+            Optional<LoginFlowNonceSettings> nonce = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routes"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new WebAppLoginInfo(routes.Value, tokenStore.Value, Core.Optional.ToNullable(preserveUrlFragmentsForLogins), Core.Optional.ToList(allowedExternalRedirectUrls), cookieExpiration.Value, nonce.Value);
+            return new WebAppLoginInfo(routes.Value, tokenStore.Value, Optional.ToNullable(preserveUrlFragmentsForLogins), Optional.ToList(allowedExternalRedirectUrls), cookieExpiration.Value, nonce.Value);
         }
     }
 }

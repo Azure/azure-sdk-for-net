@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of CdnOriginGroupData. </summary>
         public CdnOriginGroupData()
         {
-            Origins = new Core.ChangeTrackingList<WritableSubResource>();
+            Origins = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of CdnOriginGroupData. </summary>

@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> lastReplicatedTime = default;
-            Core.Optional<IReadOnlyList<VmNicDetails>> vmNics = default;
-            Core.Optional<string> vmId = default;
-            Core.Optional<string> vmProtectionState = default;
-            Core.Optional<string> vmProtectionStateDescription = default;
-            Core.Optional<InitialReplicationDetails> initialReplicationDetails = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryDiskDetails>> vmDiskDetails = default;
+            Optional<DateTimeOffset> lastReplicatedTime = default;
+            Optional<IReadOnlyList<VmNicDetails>> vmNics = default;
+            Optional<string> vmId = default;
+            Optional<string> vmProtectionState = default;
+            Optional<string> vmProtectionStateDescription = default;
+            Optional<InitialReplicationDetails> initialReplicationDetails = default;
+            Optional<IReadOnlyList<SiteRecoveryDiskDetails>> vmDiskDetails = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new HyperVReplicaReplicationDetails(instanceType, Core.Optional.ToNullable(lastReplicatedTime), Core.Optional.ToList(vmNics), vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, initialReplicationDetails.Value, Core.Optional.ToList(vmDiskDetails));
+            return new HyperVReplicaReplicationDetails(instanceType, Optional.ToNullable(lastReplicatedTime), Optional.ToList(vmNics), vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, initialReplicationDetails.Value, Optional.ToList(vmDiskDetails));
         }
     }
 }

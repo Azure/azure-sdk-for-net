@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightAutoScaleSchedule. </summary>
         public HDInsightAutoScaleSchedule()
         {
-            Days = new Core.ChangeTrackingList<HDInsightDayOfWeek>();
+            Days = new ChangeTrackingList<HDInsightDayOfWeek>();
         }
 
         /// <summary> Initializes a new instance of HDInsightAutoScaleSchedule. </summary>

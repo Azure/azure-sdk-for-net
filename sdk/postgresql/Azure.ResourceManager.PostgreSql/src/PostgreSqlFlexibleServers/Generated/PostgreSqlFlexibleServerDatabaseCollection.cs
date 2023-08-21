@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = await _postgreSqlFlexibleServerDatabaseDatabasesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerDatabaseResource>(new PostgreSqlFlexibleServerDatabaseOperationSource(Client), _postgreSqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, _postgreSqlFlexibleServerDatabaseDatabasesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerDatabaseResource>(new PostgreSqlFlexibleServerDatabaseOperationSource(Client), _postgreSqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, _postgreSqlFlexibleServerDatabaseDatabasesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = _postgreSqlFlexibleServerDatabaseDatabasesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerDatabaseResource>(new PostgreSqlFlexibleServerDatabaseOperationSource(Client), _postgreSqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, _postgreSqlFlexibleServerDatabaseDatabasesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerDatabaseResource>(new PostgreSqlFlexibleServerDatabaseOperationSource(Client), _postgreSqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, _postgreSqlFlexibleServerDatabaseDatabasesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerDatabaseDatabasesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerDatabaseResource(Client, PostgreSqlFlexibleServerDatabaseData.DeserializePostgreSqlFlexibleServerDatabaseData(e)), _postgreSqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerDatabaseResource(Client, PostgreSqlFlexibleServerDatabaseData.DeserializePostgreSqlFlexibleServerDatabaseData(e)), _postgreSqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerDatabaseDatabasesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerDatabaseResource(Client, PostgreSqlFlexibleServerDatabaseData.DeserializePostgreSqlFlexibleServerDatabaseData(e)), _postgreSqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerDatabaseResource(Client, PostgreSqlFlexibleServerDatabaseData.DeserializePostgreSqlFlexibleServerDatabaseData(e)), _postgreSqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

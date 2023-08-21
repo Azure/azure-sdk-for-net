@@ -23,58 +23,58 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             UsageDetailsKind kind = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<ETag> etag = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> billingAccountId = default;
-            Core.Optional<string> billingAccountName = default;
-            Core.Optional<DateTimeOffset> billingPeriodStartDate = default;
-            Core.Optional<DateTimeOffset> billingPeriodEndDate = default;
-            Core.Optional<string> billingProfileId = default;
-            Core.Optional<string> billingProfileName = default;
-            Core.Optional<string> accountOwnerId = default;
-            Core.Optional<string> accountName = default;
-            Core.Optional<string> subscriptionId = default;
-            Core.Optional<string> subscriptionName = default;
-            Core.Optional<DateTimeOffset> date = default;
-            Core.Optional<string> product = default;
-            Core.Optional<string> partNumber = default;
-            Core.Optional<Guid> meterId = default;
-            Core.Optional<ConsumptionMeterDetailsInfo> meterDetails = default;
-            Core.Optional<decimal> quantity = default;
-            Core.Optional<decimal> effectivePrice = default;
-            Core.Optional<decimal> cost = default;
-            Core.Optional<decimal> unitPrice = default;
-            Core.Optional<string> billingCurrency = default;
-            Core.Optional<string> resourceLocation = default;
-            Core.Optional<string> consumedService = default;
-            Core.Optional<string> resourceId = default;
-            Core.Optional<string> resourceName = default;
-            Core.Optional<string> serviceInfo1 = default;
-            Core.Optional<string> serviceInfo2 = default;
-            Core.Optional<string> additionalInfo = default;
-            Core.Optional<string> invoiceSection = default;
-            Core.Optional<string> costCenter = default;
-            Core.Optional<string> resourceGroup = default;
-            Core.Optional<string> reservationId = default;
-            Core.Optional<string> reservationName = default;
-            Core.Optional<string> productOrderId = default;
-            Core.Optional<string> productOrderName = default;
-            Core.Optional<string> offerId = default;
-            Core.Optional<bool> isAzureCreditEligible = default;
-            Core.Optional<string> term = default;
-            Core.Optional<string> publisherName = default;
-            Core.Optional<string> publisherType = default;
-            Core.Optional<string> planName = default;
-            Core.Optional<string> chargeType = default;
-            Core.Optional<string> frequency = default;
-            Core.Optional<decimal> payGPrice = default;
-            Core.Optional<string> benefitId = default;
-            Core.Optional<string> benefitName = default;
-            Core.Optional<ConsumptionPricingModelType> pricingModel = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> billingAccountId = default;
+            Optional<string> billingAccountName = default;
+            Optional<DateTimeOffset> billingPeriodStartDate = default;
+            Optional<DateTimeOffset> billingPeriodEndDate = default;
+            Optional<string> billingProfileId = default;
+            Optional<string> billingProfileName = default;
+            Optional<string> accountOwnerId = default;
+            Optional<string> accountName = default;
+            Optional<string> subscriptionId = default;
+            Optional<string> subscriptionName = default;
+            Optional<DateTimeOffset> date = default;
+            Optional<string> product = default;
+            Optional<string> partNumber = default;
+            Optional<Guid> meterId = default;
+            Optional<ConsumptionMeterDetailsInfo> meterDetails = default;
+            Optional<decimal> quantity = default;
+            Optional<decimal> effectivePrice = default;
+            Optional<decimal> cost = default;
+            Optional<decimal> unitPrice = default;
+            Optional<string> billingCurrency = default;
+            Optional<string> resourceLocation = default;
+            Optional<string> consumedService = default;
+            Optional<string> resourceId = default;
+            Optional<string> resourceName = default;
+            Optional<string> serviceInfo1 = default;
+            Optional<string> serviceInfo2 = default;
+            Optional<string> additionalInfo = default;
+            Optional<string> invoiceSection = default;
+            Optional<string> costCenter = default;
+            Optional<string> resourceGroup = default;
+            Optional<string> reservationId = default;
+            Optional<string> reservationName = default;
+            Optional<string> productOrderId = default;
+            Optional<string> productOrderName = default;
+            Optional<string> offerId = default;
+            Optional<bool> isAzureCreditEligible = default;
+            Optional<string> term = default;
+            Optional<string> publisherName = default;
+            Optional<string> publisherType = default;
+            Optional<string> planName = default;
+            Optional<string> chargeType = default;
+            Optional<string> frequency = default;
+            Optional<decimal> payGPrice = default;
+            Optional<string> benefitId = default;
+            Optional<string> benefitName = default;
+            Optional<ConsumptionPricingModelType> pricingModel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionLegacyUsageDetail(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(etag), Core.Optional.ToDictionary(tags), billingAccountId.Value, billingAccountName.Value, Core.Optional.ToNullable(billingPeriodStartDate), Core.Optional.ToNullable(billingPeriodEndDate), billingProfileId.Value, billingProfileName.Value, accountOwnerId.Value, accountName.Value, subscriptionId.Value, subscriptionName.Value, Core.Optional.ToNullable(date), product.Value, partNumber.Value, Core.Optional.ToNullable(meterId), meterDetails.Value, Core.Optional.ToNullable(quantity), Core.Optional.ToNullable(effectivePrice), Core.Optional.ToNullable(cost), Core.Optional.ToNullable(unitPrice), billingCurrency.Value, resourceLocation.Value, consumedService.Value, resourceId.Value, resourceName.Value, serviceInfo1.Value, serviceInfo2.Value, additionalInfo.Value, invoiceSection.Value, costCenter.Value, resourceGroup.Value, reservationId.Value, reservationName.Value, productOrderId.Value, productOrderName.Value, offerId.Value, Core.Optional.ToNullable(isAzureCreditEligible), term.Value, publisherName.Value, publisherType.Value, planName.Value, chargeType.Value, frequency.Value, Core.Optional.ToNullable(payGPrice), benefitId.Value, benefitName.Value, Core.Optional.ToNullable(pricingModel));
+            return new ConsumptionLegacyUsageDetail(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), billingAccountId.Value, billingAccountName.Value, Optional.ToNullable(billingPeriodStartDate), Optional.ToNullable(billingPeriodEndDate), billingProfileId.Value, billingProfileName.Value, accountOwnerId.Value, accountName.Value, subscriptionId.Value, subscriptionName.Value, Optional.ToNullable(date), product.Value, partNumber.Value, Optional.ToNullable(meterId), meterDetails.Value, Optional.ToNullable(quantity), Optional.ToNullable(effectivePrice), Optional.ToNullable(cost), Optional.ToNullable(unitPrice), billingCurrency.Value, resourceLocation.Value, consumedService.Value, resourceId.Value, resourceName.Value, serviceInfo1.Value, serviceInfo2.Value, additionalInfo.Value, invoiceSection.Value, costCenter.Value, resourceGroup.Value, reservationId.Value, reservationName.Value, productOrderId.Value, productOrderName.Value, offerId.Value, Optional.ToNullable(isAzureCreditEligible), term.Value, publisherName.Value, publisherType.Value, planName.Value, chargeType.Value, frequency.Value, Optional.ToNullable(payGPrice), benefitId.Value, benefitName.Value, Optional.ToNullable(pricingModel));
         }
     }
 }

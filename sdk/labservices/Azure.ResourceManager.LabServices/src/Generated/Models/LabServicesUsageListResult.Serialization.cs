@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<LabServicesUsage>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<LabServicesUsage>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     continue;
                 }
             }
-            return new LabServicesUsageListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new LabServicesUsageListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> path = default;
-            Core.Optional<string> status = default;
-            Core.Optional<string> message = default;
+            Optional<string> path = default;
+            Optional<string> status = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))

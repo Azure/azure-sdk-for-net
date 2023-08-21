@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The location. </param>
         public StreamingJobData(AzureLocation location) : base(location)
         {
-            Inputs = new Core.ChangeTrackingList<StreamingJobInputData>();
-            Outputs = new Core.ChangeTrackingList<StreamingJobOutputData>();
-            Functions = new Core.ChangeTrackingList<StreamingJobFunctionData>();
+            Inputs = new ChangeTrackingList<StreamingJobInputData>();
+            Outputs = new ChangeTrackingList<StreamingJobOutputData>();
+            Functions = new ChangeTrackingList<StreamingJobFunctionData>();
         }
 
         /// <summary> Initializes a new instance of StreamingJobData. </summary>

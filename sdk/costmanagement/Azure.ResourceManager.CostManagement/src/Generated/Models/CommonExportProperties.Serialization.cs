@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class CommonExportProperties : Core.IUtf8JsonSerializable
+    public partial class CommonExportProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Format))
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToString());
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteObjectValue(DeliveryInfo);
             writer.WritePropertyName("definition"u8);
             writer.WriteObjectValue(Definition);
-            if (Core.Optional.IsDefined(RunHistory))
+            if (Optional.IsDefined(RunHistory))
             {
                 writer.WritePropertyName("runHistory"u8);
                 writer.WriteObjectValue(RunHistory);
             }
-            if (Core.Optional.IsDefined(PartitionData))
+            if (Optional.IsDefined(PartitionData))
             {
                 writer.WritePropertyName("partitionData"u8);
                 writer.WriteBooleanValue(PartitionData.Value);
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<ExportFormatType> format = default;
+            Optional<ExportFormatType> format = default;
             ExportDeliveryInfo deliveryInfo = default;
             ExportDefinition definition = default;
-            Core.Optional<ExportExecutionListResult> runHistory = default;
-            Core.Optional<bool> partitionData = default;
-            Core.Optional<DateTimeOffset> nextRunTimeEstimate = default;
+            Optional<ExportExecutionListResult> runHistory = default;
+            Optional<bool> partitionData = default;
+            Optional<DateTimeOffset> nextRunTimeEstimate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("format"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new CommonExportProperties(Core.Optional.ToNullable(format), deliveryInfo, definition, runHistory.Value, Core.Optional.ToNullable(partitionData), Core.Optional.ToNullable(nextRunTimeEstimate));
+            return new CommonExportProperties(Optional.ToNullable(format), deliveryInfo, definition, runHistory.Value, Optional.ToNullable(partitionData), Optional.ToNullable(nextRunTimeEstimate));
         }
     }
 }

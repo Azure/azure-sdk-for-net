@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningFqdnEndpoint. </summary>
         internal MachineLearningFqdnEndpoint()
         {
-            EndpointDetails = new Core.ChangeTrackingList<MachineLearningFqdnEndpointDetail>();
+            EndpointDetails = new ChangeTrackingList<MachineLearningFqdnEndpointDetail>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningFqdnEndpoint. </summary>

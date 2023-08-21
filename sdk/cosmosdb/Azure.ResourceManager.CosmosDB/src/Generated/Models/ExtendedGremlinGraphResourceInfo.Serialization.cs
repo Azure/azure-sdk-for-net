@@ -11,49 +11,49 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedGremlinGraphResourceInfo : Core.IUtf8JsonSerializable
+    public partial class ExtendedGremlinGraphResourceInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(GraphName);
-            if (Core.Optional.IsDefined(IndexingPolicy))
+            if (Optional.IsDefined(IndexingPolicy))
             {
                 writer.WritePropertyName("indexingPolicy"u8);
                 writer.WriteObjectValue(IndexingPolicy);
             }
-            if (Core.Optional.IsDefined(PartitionKey))
+            if (Optional.IsDefined(PartitionKey))
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteObjectValue(PartitionKey);
             }
-            if (Core.Optional.IsDefined(DefaultTtl))
+            if (Optional.IsDefined(DefaultTtl))
             {
                 writer.WritePropertyName("defaultTtl"u8);
                 writer.WriteNumberValue(DefaultTtl.Value);
             }
-            if (Core.Optional.IsDefined(UniqueKeyPolicy))
+            if (Optional.IsDefined(UniqueKeyPolicy))
             {
                 writer.WritePropertyName("uniqueKeyPolicy"u8);
                 writer.WriteObjectValue(UniqueKeyPolicy);
             }
-            if (Core.Optional.IsDefined(ConflictResolutionPolicy))
+            if (Optional.IsDefined(ConflictResolutionPolicy))
             {
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
                 writer.WriteObjectValue(ConflictResolutionPolicy);
             }
-            if (Core.Optional.IsDefined(AnalyticalStorageTtl))
+            if (Optional.IsDefined(AnalyticalStorageTtl))
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
             }
-            if (Core.Optional.IsDefined(RestoreParameters))
+            if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
-            if (Core.Optional.IsDefined(CreateMode))
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
@@ -67,18 +67,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<string> rid = default;
-            Core.Optional<float> ts = default;
-            Core.Optional<ETag> etag = default;
+            Optional<string> rid = default;
+            Optional<float> ts = default;
+            Optional<ETag> etag = default;
             string id = default;
-            Core.Optional<CosmosDBIndexingPolicy> indexingPolicy = default;
-            Core.Optional<CosmosDBContainerPartitionKey> partitionKey = default;
-            Core.Optional<int> defaultTtl = default;
-            Core.Optional<CosmosDBUniqueKeyPolicy> uniqueKeyPolicy = default;
-            Core.Optional<ConflictResolutionPolicy> conflictResolutionPolicy = default;
-            Core.Optional<long> analyticalStorageTtl = default;
-            Core.Optional<ResourceRestoreParameters> restoreParameters = default;
-            Core.Optional<CosmosDBAccountCreateMode> createMode = default;
+            Optional<CosmosDBIndexingPolicy> indexingPolicy = default;
+            Optional<CosmosDBContainerPartitionKey> partitionKey = default;
+            Optional<int> defaultTtl = default;
+            Optional<CosmosDBUniqueKeyPolicy> uniqueKeyPolicy = default;
+            Optional<ConflictResolutionPolicy> conflictResolutionPolicy = default;
+            Optional<long> analyticalStorageTtl = default;
+            Optional<ResourceRestoreParameters> restoreParameters = default;
+            Optional<CosmosDBAccountCreateMode> createMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ExtendedGremlinGraphResourceInfo(id, indexingPolicy.Value, partitionKey.Value, Core.Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, Core.Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Core.Optional.ToNullable(createMode), rid.Value, Core.Optional.ToNullable(ts), Core.Optional.ToNullable(etag));
+            return new ExtendedGremlinGraphResourceInfo(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Optional.ToNullable(createMode), rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
     }
 }

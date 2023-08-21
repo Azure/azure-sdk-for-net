@@ -14,74 +14,74 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class RecommendationRuleData : Core.IUtf8JsonSerializable
+    public partial class RecommendationRuleData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RecommendationName))
+            if (Optional.IsDefined(RecommendationName))
             {
                 writer.WritePropertyName("recommendationName"u8);
                 writer.WriteStringValue(RecommendationName);
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Message))
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Core.Optional.IsDefined(RecommendationId))
+            if (Optional.IsDefined(RecommendationId))
             {
                 writer.WritePropertyName("recommendationId"u8);
                 writer.WriteStringValue(RecommendationId.Value);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(ActionName))
+            if (Optional.IsDefined(ActionName))
             {
                 writer.WritePropertyName("actionName"u8);
                 writer.WriteStringValue(ActionName);
             }
-            if (Core.Optional.IsDefined(Level))
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(Channels))
+            if (Optional.IsDefined(Channels))
             {
                 writer.WritePropertyName("channels"u8);
                 writer.WriteStringValue(Channels.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(IsDynamic))
+            if (Optional.IsDefined(IsDynamic))
             {
                 writer.WritePropertyName("isDynamic"u8);
                 writer.WriteBooleanValue(IsDynamic.Value);
             }
-            if (Core.Optional.IsDefined(ExtensionName))
+            if (Optional.IsDefined(ExtensionName))
             {
                 writer.WritePropertyName("extensionName"u8);
                 writer.WriteStringValue(ExtensionName);
             }
-            if (Core.Optional.IsDefined(BladeName))
+            if (Optional.IsDefined(BladeName))
             {
                 writer.WritePropertyName("bladeName"u8);
                 writer.WriteStringValue(BladeName);
             }
-            if (Core.Optional.IsDefined(ForwardLink))
+            if (Optional.IsDefined(ForwardLink))
             {
                 writer.WritePropertyName("forwardLink"u8);
                 writer.WriteStringValue(ForwardLink);
@@ -96,24 +96,24 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> recommendationName = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> message = default;
-            Core.Optional<Guid> recommendationId = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> actionName = default;
-            Core.Optional<NotificationLevel> level = default;
-            Core.Optional<RecommendationChannel> channels = default;
-            Core.Optional<IReadOnlyList<string>> categoryTags = default;
-            Core.Optional<bool> isDynamic = default;
-            Core.Optional<string> extensionName = default;
-            Core.Optional<string> bladeName = default;
-            Core.Optional<string> forwardLink = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> recommendationName = default;
+            Optional<string> displayName = default;
+            Optional<string> message = default;
+            Optional<Guid> recommendationId = default;
+            Optional<string> description = default;
+            Optional<string> actionName = default;
+            Optional<NotificationLevel> level = default;
+            Optional<RecommendationChannel> channels = default;
+            Optional<IReadOnlyList<string>> categoryTags = default;
+            Optional<bool> isDynamic = default;
+            Optional<string> extensionName = default;
+            Optional<string> bladeName = default;
+            Optional<string> forwardLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new RecommendationRuleData(id, name, type, systemData.Value, recommendationName.Value, displayName.Value, message.Value, Core.Optional.ToNullable(recommendationId), description.Value, actionName.Value, Core.Optional.ToNullable(level), Core.Optional.ToNullable(channels), Core.Optional.ToList(categoryTags), Core.Optional.ToNullable(isDynamic), extensionName.Value, bladeName.Value, forwardLink.Value, kind.Value);
+            return new RecommendationRuleData(id, name, type, systemData.Value, recommendationName.Value, displayName.Value, message.Value, Optional.ToNullable(recommendationId), description.Value, actionName.Value, Optional.ToNullable(level), Optional.ToNullable(channels), Optional.ToList(categoryTags), Optional.ToNullable(isDynamic), extensionName.Value, bladeName.Value, forwardLink.Value, kind.Value);
         }
     }
 }

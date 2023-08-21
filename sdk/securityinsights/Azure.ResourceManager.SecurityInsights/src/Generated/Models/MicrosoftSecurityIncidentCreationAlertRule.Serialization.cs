@@ -14,21 +14,21 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class MicrosoftSecurityIncidentCreationAlertRule : Core.IUtf8JsonSerializable
+    public partial class MicrosoftSecurityIncidentCreationAlertRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(DisplayNamesFilter))
+            if (Optional.IsCollectionDefined(DisplayNamesFilter))
             {
                 writer.WritePropertyName("displayNamesFilter"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DisplayNamesExcludeFilter))
+            if (Optional.IsCollectionDefined(DisplayNamesExcludeFilter))
             {
                 writer.WritePropertyName("displayNamesExcludeFilter"u8);
                 writer.WriteStartArray();
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ProductFilter))
+            if (Optional.IsDefined(ProductFilter))
             {
                 writer.WritePropertyName("productFilter"u8);
                 writer.WriteStringValue(ProductFilter.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(SeveritiesFilter))
+            if (Optional.IsCollectionDefined(SeveritiesFilter))
             {
                 writer.WritePropertyName("severitiesFilter"u8);
                 writer.WriteStartArray();
@@ -63,22 +63,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(AlertRuleTemplateName))
+            if (Optional.IsDefined(AlertRuleTemplateName))
             {
                 writer.WritePropertyName("alertRuleTemplateName"u8);
                 writer.WriteStringValue(AlertRuleTemplateName);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -94,20 +94,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             AlertRuleKind kind = default;
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IList<string>> displayNamesFilter = default;
-            Core.Optional<IList<string>> displayNamesExcludeFilter = default;
-            Core.Optional<MicrosoftSecurityProductName> productFilter = default;
-            Core.Optional<IList<SecurityInsightsAlertSeverity>> severitiesFilter = default;
-            Core.Optional<string> alertRuleTemplateName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<bool> enabled = default;
-            Core.Optional<DateTimeOffset> lastModifiedUtc = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<string>> displayNamesFilter = default;
+            Optional<IList<string>> displayNamesExcludeFilter = default;
+            Optional<MicrosoftSecurityProductName> productFilter = default;
+            Optional<IList<SecurityInsightsAlertSeverity>> severitiesFilter = default;
+            Optional<string> alertRuleTemplateName = default;
+            Optional<string> description = default;
+            Optional<string> displayName = default;
+            Optional<bool> enabled = default;
+            Optional<DateTimeOffset> lastModifiedUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new MicrosoftSecurityIncidentCreationAlertRule(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(etag), Core.Optional.ToList(displayNamesFilter), Core.Optional.ToList(displayNamesExcludeFilter), Core.Optional.ToNullable(productFilter), Core.Optional.ToList(severitiesFilter), alertRuleTemplateName.Value, description.Value, displayName.Value, Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(lastModifiedUtc));
+            return new MicrosoftSecurityIncidentCreationAlertRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToList(displayNamesFilter), Optional.ToList(displayNamesExcludeFilter), Optional.ToNullable(productFilter), Optional.ToList(severitiesFilter), alertRuleTemplateName.Value, description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc));
         }
     }
 }

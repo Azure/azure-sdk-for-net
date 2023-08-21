@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class ExtractedSummaryDocumentResult : Core.IUtf8JsonSerializable
+    internal partial class ExtractedSummaryDocumentResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sentences"u8);
@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(Statistics))
+            if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics.Value);
@@ -50,7 +50,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<ExtractedSummarySentence> sentences = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
-            Core.Optional<TextDocumentStatistics> statistics = default;
+            Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sentences"u8))
@@ -88,7 +88,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new ExtractedSummaryDocumentResult(id, warnings, Core.Optional.ToNullable(statistics), sentences);
+            return new ExtractedSummaryDocumentResult(id, warnings, Optional.ToNullable(statistics), sentences);
         }
     }
 }

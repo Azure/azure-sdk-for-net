@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of DefaultRolloutSpecification. </summary>
         public DefaultRolloutSpecification()
         {
-            ResourceTypeRegistrations = new Core.ChangeTrackingList<ResourceTypeRegistrationData>();
+            ResourceTypeRegistrations = new ChangeTrackingList<ResourceTypeRegistrationData>();
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutSpecification. </summary>

@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of ResourceAuthorization. </summary>
         internal ResourceAuthorization()
         {
-            Evidence = new Core.ChangeTrackingDictionary<string, string>();
+            Evidence = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ResourceAuthorization. </summary>

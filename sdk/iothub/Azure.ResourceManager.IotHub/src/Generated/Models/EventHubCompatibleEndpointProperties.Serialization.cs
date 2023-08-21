@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class EventHubCompatibleEndpointProperties : Core.IUtf8JsonSerializable
+    public partial class EventHubCompatibleEndpointProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RetentionTimeInDays))
+            if (Optional.IsDefined(RetentionTimeInDays))
             {
                 writer.WritePropertyName("retentionTimeInDays"u8);
                 writer.WriteNumberValue(RetentionTimeInDays.Value);
             }
-            if (Core.Optional.IsDefined(PartitionCount))
+            if (Optional.IsDefined(PartitionCount))
             {
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Core.Optional<long> retentionTimeInDays = default;
-            Core.Optional<int> partitionCount = default;
-            Core.Optional<IReadOnlyList<string>> partitionIds = default;
-            Core.Optional<string> path = default;
-            Core.Optional<string> endpoint = default;
+            Optional<long> retentionTimeInDays = default;
+            Optional<int> partitionCount = default;
+            Optional<IReadOnlyList<string>> partitionIds = default;
+            Optional<string> path = default;
+            Optional<string> endpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("retentionTimeInDays"u8))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new EventHubCompatibleEndpointProperties(Core.Optional.ToNullable(retentionTimeInDays), Core.Optional.ToNullable(partitionCount), Core.Optional.ToList(partitionIds), path.Value, endpoint.Value);
+            return new EventHubCompatibleEndpointProperties(Optional.ToNullable(retentionTimeInDays), Optional.ToNullable(partitionCount), Optional.ToList(partitionIds), path.Value, endpoint.Value);
         }
     }
 }

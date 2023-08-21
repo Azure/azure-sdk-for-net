@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of SignalRNetworkAcls. </summary>
         public SignalRNetworkAcls()
         {
-            PrivateEndpoints = new Core.ChangeTrackingList<SignalRPrivateEndpointAcl>();
+            PrivateEndpoints = new ChangeTrackingList<SignalRPrivateEndpointAcl>();
         }
 
         /// <summary> Initializes a new instance of SignalRNetworkAcls. </summary>

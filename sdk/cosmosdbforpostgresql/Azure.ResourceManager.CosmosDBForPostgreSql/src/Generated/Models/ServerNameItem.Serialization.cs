@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> fullyQualifiedDomainName = default;
+            Optional<string> name = default;
+            Optional<string> fullyQualifiedDomainName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

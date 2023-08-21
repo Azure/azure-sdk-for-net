@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of ThreatIntelligenceExternalReference. </summary>
         public ThreatIntelligenceExternalReference()
         {
-            Hashes = new Core.ChangeTrackingDictionary<string, string>();
+            Hashes = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ThreatIntelligenceExternalReference. </summary>

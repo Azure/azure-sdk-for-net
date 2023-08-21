@@ -59,7 +59,7 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
-            var content = new Core.XmlWriterContent();
+            var content = new XmlWriterContent();
             content.XmlWriter.WriteObjectValue(storageServiceProperties, "StorageServiceProperties");
             request.Content = content;
             return message;
@@ -70,7 +70,7 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(BlobServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(BlobServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (storageServiceProperties == null)
             {
@@ -83,7 +83,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 202:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -94,7 +94,7 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
-        public Core.ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(BlobServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(BlobServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (storageServiceProperties == null)
             {
@@ -107,7 +107,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 202:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -136,7 +136,7 @@ namespace Azure.Storage.Blobs
         /// <summary> gets the properties of a storage account's Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<BlobServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -151,7 +151,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = BlobServiceProperties.DeserializeBlobServiceProperties(storageServicePropertiesElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -161,7 +161,7 @@ namespace Azure.Storage.Blobs
         /// <summary> gets the properties of a storage account's Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<BlobServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout);
             _pipeline.Send(message, cancellationToken);
@@ -176,7 +176,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = BlobServiceProperties.DeserializeBlobServiceProperties(storageServicePropertiesElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -206,7 +206,7 @@ namespace Azure.Storage.Blobs
         /// <summary> Retrieves statistics related to replication for the Blob service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<BlobServiceStatistics, ServiceGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobServiceStatistics, ServiceGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetStatisticsRequest(timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -221,7 +221,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = BlobServiceStatistics.DeserializeBlobServiceStatistics(storageServiceStatsElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -231,7 +231,7 @@ namespace Azure.Storage.Blobs
         /// <summary> Retrieves statistics related to replication for the Blob service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<BlobServiceStatistics, ServiceGetStatisticsHeaders> GetStatistics(int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobServiceStatistics, ServiceGetStatisticsHeaders> GetStatistics(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetStatisticsRequest(timeout);
             _pipeline.Send(message, cancellationToken);
@@ -246,7 +246,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = BlobServiceStatistics.DeserializeBlobServiceStatistics(storageServiceStatsElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -274,7 +274,7 @@ namespace Azure.Storage.Blobs
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null && Core.Optional.IsCollectionDefined(include))
+            if (include != null && Optional.IsCollectionDefined(include))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }
@@ -295,7 +295,7 @@ namespace Azure.Storage.Blobs
         /// <param name="include"> Include this parameter to specify that the container's metadata be returned as part of the response body. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders>> ListContainersSegmentAsync(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders>> ListContainersSegmentAsync(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListContainersSegmentRequest(prefix, marker, maxresults, include, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -310,7 +310,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = ListContainersSegmentResponse.DeserializeListContainersSegmentResponse(enumerationResultsElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -324,7 +324,7 @@ namespace Azure.Storage.Blobs
         /// <param name="include"> Include this parameter to specify that the container's metadata be returned as part of the response body. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders> ListContainersSegment(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders> ListContainersSegment(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListContainersSegmentRequest(prefix, marker, maxresults, include, timeout);
             _pipeline.Send(message, cancellationToken);
@@ -339,7 +339,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = ListContainersSegmentResponse.DeserializeListContainersSegmentResponse(enumerationResultsElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -364,7 +364,7 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
-            var content = new Core.XmlWriterContent();
+            var content = new XmlWriterContent();
             content.XmlWriter.WriteObjectValue(keyInfo, "KeyInfo");
             request.Content = content;
             return message;
@@ -375,7 +375,7 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyInfo"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders>> GetUserDelegationKeyAsync(KeyInfo keyInfo, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders>> GetUserDelegationKeyAsync(KeyInfo keyInfo, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (keyInfo == null)
             {
@@ -395,7 +395,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = UserDelegationKey.DeserializeUserDelegationKey(userDelegationKeyElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -407,7 +407,7 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyInfo"/> is null. </exception>
-        public Core.ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders> GetUserDelegationKey(KeyInfo keyInfo, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders> GetUserDelegationKey(KeyInfo keyInfo, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (keyInfo == null)
             {
@@ -427,7 +427,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = UserDelegationKey.DeserializeUserDelegationKey(userDelegationKeyElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -452,7 +452,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Returns the sku name and account kind. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<ServiceGetAccountInfoHeaders>> GetAccountInfoAsync(CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ServiceGetAccountInfoHeaders>> GetAccountInfoAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAccountInfoRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -460,7 +460,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 200:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -468,7 +468,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Returns the sku name and account kind. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<ServiceGetAccountInfoHeaders> GetAccountInfo(CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ServiceGetAccountInfoHeaders> GetAccountInfo(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAccountInfoRequest();
             _pipeline.Send(message, cancellationToken);
@@ -476,7 +476,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 200:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -511,7 +511,7 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multipartContentType"/> or <paramref name="body"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<Stream, ServiceSubmitBatchHeaders>> SubmitBatchAsync(long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, ServiceSubmitBatchHeaders>> SubmitBatchAsync(long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (multipartContentType == null)
             {
@@ -530,7 +530,7 @@ namespace Azure.Storage.Blobs
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -544,7 +544,7 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multipartContentType"/> or <paramref name="body"/> is null. </exception>
-        public Core.ResponseWithHeaders<Stream, ServiceSubmitBatchHeaders> SubmitBatch(long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, ServiceSubmitBatchHeaders> SubmitBatch(long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (multipartContentType == null)
             {
@@ -563,7 +563,7 @@ namespace Azure.Storage.Blobs
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -595,7 +595,7 @@ namespace Azure.Storage.Blobs
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null && Core.Optional.IsCollectionDefined(include))
+            if (include != null && Optional.IsCollectionDefined(include))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }
@@ -612,7 +612,7 @@ namespace Azure.Storage.Blobs
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<FilterBlobSegment, ServiceFilterBlobsHeaders>> FilterBlobsAsync(int? timeout = null, string @where = null, string marker = null, int? maxresults = null, IEnumerable<FilterBlobsIncludeItem> include = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FilterBlobSegment, ServiceFilterBlobsHeaders>> FilterBlobsAsync(int? timeout = null, string @where = null, string marker = null, int? maxresults = null, IEnumerable<FilterBlobsIncludeItem> include = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateFilterBlobsRequest(timeout, @where, marker, maxresults, include);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -627,7 +627,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = FilterBlobSegment.DeserializeFilterBlobSegment(enumerationResultsElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -641,7 +641,7 @@ namespace Azure.Storage.Blobs
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<FilterBlobSegment, ServiceFilterBlobsHeaders> FilterBlobs(int? timeout = null, string @where = null, string marker = null, int? maxresults = null, IEnumerable<FilterBlobsIncludeItem> include = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FilterBlobSegment, ServiceFilterBlobsHeaders> FilterBlobs(int? timeout = null, string @where = null, string marker = null, int? maxresults = null, IEnumerable<FilterBlobsIncludeItem> include = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateFilterBlobsRequest(timeout, @where, marker, maxresults, include);
             _pipeline.Send(message, cancellationToken);
@@ -656,7 +656,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = FilterBlobSegment.DeserializeFilterBlobSegment(enumerationResultsElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -686,7 +686,7 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders>> ListContainersSegmentNextPageAsync(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders>> ListContainersSegmentNextPageAsync(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -706,7 +706,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = ListContainersSegmentResponse.DeserializeListContainersSegmentResponse(enumerationResultsElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -722,7 +722,7 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Core.ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders> ListContainersSegmentNextPage(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders> ListContainersSegmentNextPage(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -742,7 +742,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = ListContainersSegmentResponse.DeserializeListContainersSegmentResponse(enumerationResultsElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

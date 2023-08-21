@@ -16,10 +16,10 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of InstancesBatchResponse. </summary>
         internal InstancesBatchResponse()
         {
-            Get = new Core.ChangeTrackingList<InstancesOperationResult>();
-            Put = new Core.ChangeTrackingList<InstancesOperationResult>();
-            Update = new Core.ChangeTrackingList<InstancesOperationResult>();
-            Delete = new Core.ChangeTrackingList<TimeSeriesOperationError>();
+            Get = new ChangeTrackingList<InstancesOperationResult>();
+            Put = new ChangeTrackingList<InstancesOperationResult>();
+            Update = new ChangeTrackingList<InstancesOperationResult>();
+            Delete = new ChangeTrackingList<TimeSeriesOperationError>();
         }
 
         /// <summary> Initializes a new instance of InstancesBatchResponse. </summary>

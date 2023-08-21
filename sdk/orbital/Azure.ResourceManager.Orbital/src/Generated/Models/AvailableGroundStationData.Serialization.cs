@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.Orbital
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> city = default;
-            Core.Optional<string> providerName = default;
-            Core.Optional<float> longitudeDegrees = default;
-            Core.Optional<float> latitudeDegrees = default;
-            Core.Optional<float> altitudeMeters = default;
-            Core.Optional<GroundStationReleaseMode> releaseMode = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> city = default;
+            Optional<string> providerName = default;
+            Optional<float> longitudeDegrees = default;
+            Optional<float> latitudeDegrees = default;
+            Optional<float> altitudeMeters = default;
+            Optional<GroundStationReleaseMode> releaseMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Orbital
                     continue;
                 }
             }
-            return new AvailableGroundStationData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), city.Value, providerName.Value, Core.Optional.ToNullable(longitudeDegrees), Core.Optional.ToNullable(latitudeDegrees), Core.Optional.ToNullable(altitudeMeters), Core.Optional.ToNullable(releaseMode));
+            return new AvailableGroundStationData(id, name, type, systemData.Value, Optional.ToNullable(location), city.Value, providerName.Value, Optional.ToNullable(longitudeDegrees), Optional.ToNullable(latitudeDegrees), Optional.ToNullable(altitudeMeters), Optional.ToNullable(releaseMode));
         }
     }
 }

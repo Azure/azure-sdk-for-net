@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MapperTargetConnectionsInfo : Core.IUtf8JsonSerializable
+    public partial class MapperTargetConnectionsInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(TargetEntities))
+            if (Optional.IsCollectionDefined(TargetEntities))
             {
                 writer.WritePropertyName("targetEntities"u8);
                 writer.WriteStartArray();
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Connection))
+            if (Optional.IsDefined(Connection))
             {
                 writer.WritePropertyName("connection"u8);
                 writer.WriteObjectValue(Connection);
             }
-            if (Core.Optional.IsCollectionDefined(DataMapperMappings))
+            if (Optional.IsCollectionDefined(DataMapperMappings))
             {
                 writer.WritePropertyName("dataMapperMappings"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Relationships))
+            if (Optional.IsCollectionDefined(Relationships))
             {
                 writer.WritePropertyName("relationships"u8);
                 writer.WriteStartArray();
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<IList<MapperTable>> targetEntities = default;
-            Core.Optional<MapperConnection> connection = default;
-            Core.Optional<IList<DataMapperMapping>> dataMapperMappings = default;
-            Core.Optional<IList<BinaryData>> relationships = default;
+            Optional<IList<MapperTable>> targetEntities = default;
+            Optional<MapperConnection> connection = default;
+            Optional<IList<DataMapperMapping>> dataMapperMappings = default;
+            Optional<IList<BinaryData>> relationships = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetEntities"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new MapperTargetConnectionsInfo(Core.Optional.ToList(targetEntities), connection.Value, Core.Optional.ToList(dataMapperMappings), Core.Optional.ToList(relationships));
+            return new MapperTargetConnectionsInfo(Optional.ToList(targetEntities), connection.Value, Optional.ToList(dataMapperMappings), Optional.ToList(relationships));
         }
     }
 }

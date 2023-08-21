@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of ChannelsListResult. </summary>
         internal ChannelsListResult()
         {
-            Value = new Core.ChangeTrackingList<PartnerNamespaceChannelData>();
+            Value = new ChangeTrackingList<PartnerNamespaceChannelData>();
         }
 
         /// <summary> Initializes a new instance of ChannelsListResult. </summary>

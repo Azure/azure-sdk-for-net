@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of RegressionTrainingSettings. </summary>
         public RegressionTrainingSettings()
         {
-            AllowedTrainingAlgorithms = new Core.ChangeTrackingList<AutoMLVerticalRegressionModel>();
-            BlockedTrainingAlgorithms = new Core.ChangeTrackingList<AutoMLVerticalRegressionModel>();
+            AllowedTrainingAlgorithms = new ChangeTrackingList<AutoMLVerticalRegressionModel>();
+            BlockedTrainingAlgorithms = new ChangeTrackingList<AutoMLVerticalRegressionModel>();
         }
 
         /// <summary> Initializes a new instance of RegressionTrainingSettings. </summary>

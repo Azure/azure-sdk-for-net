@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SpotRestorePolicy : Core.IUtf8JsonSerializable
+    public partial class SpotRestorePolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Core.Optional.IsDefined(RestoreTimeout))
+            if (Optional.IsDefined(RestoreTimeout))
             {
                 writer.WritePropertyName("restoreTimeout"u8);
                 writer.WriteStringValue(RestoreTimeout);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<string> restoreTimeout = default;
+            Optional<bool> enabled = default;
+            Optional<string> restoreTimeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SpotRestorePolicy(Core.Optional.ToNullable(enabled), restoreTimeout.Value);
+            return new SpotRestorePolicy(Optional.ToNullable(enabled), restoreTimeout.Value);
         }
     }
 }

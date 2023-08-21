@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceStorageAccessInfo : Core.IUtf8JsonSerializable
+    public partial class AppServiceStorageAccessInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StorageType))
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(StorageType.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(AccountName))
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Core.Optional.IsDefined(ShareName))
+            if (Optional.IsDefined(ShareName))
             {
                 writer.WritePropertyName("shareName"u8);
                 writer.WriteStringValue(ShareName);
             }
-            if (Core.Optional.IsDefined(AccessKey))
+            if (Optional.IsDefined(AccessKey))
             {
                 writer.WritePropertyName("accessKey"u8);
                 writer.WriteStringValue(AccessKey);
             }
-            if (Core.Optional.IsDefined(MountPath))
+            if (Optional.IsDefined(MountPath))
             {
                 writer.WritePropertyName("mountPath"u8);
                 writer.WriteStringValue(MountPath);
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<AppServiceStorageType> type = default;
-            Core.Optional<string> accountName = default;
-            Core.Optional<string> shareName = default;
-            Core.Optional<string> accessKey = default;
-            Core.Optional<string> mountPath = default;
-            Core.Optional<AppServiceStorageAccountState> state = default;
+            Optional<AppServiceStorageType> type = default;
+            Optional<string> accountName = default;
+            Optional<string> shareName = default;
+            Optional<string> accessKey = default;
+            Optional<string> mountPath = default;
+            Optional<AppServiceStorageAccountState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceStorageAccessInfo(Core.Optional.ToNullable(type), accountName.Value, shareName.Value, accessKey.Value, mountPath.Value, Core.Optional.ToNullable(state));
+            return new AppServiceStorageAccessInfo(Optional.ToNullable(type), accountName.Value, shareName.Value, accessKey.Value, mountPath.Value, Optional.ToNullable(state));
         }
     }
 }

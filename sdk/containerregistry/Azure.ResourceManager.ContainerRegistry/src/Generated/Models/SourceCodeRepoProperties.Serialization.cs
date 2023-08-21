@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class SourceCodeRepoProperties : Core.IUtf8JsonSerializable
+    public partial class SourceCodeRepoProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceControlType"u8);
             writer.WriteStringValue(SourceControlType.ToString());
             writer.WritePropertyName("repositoryUrl"u8);
             writer.WriteStringValue(RepositoryUri.AbsoluteUri);
-            if (Core.Optional.IsDefined(Branch))
+            if (Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Core.Optional.IsDefined(SourceControlAuthProperties))
+            if (Optional.IsDefined(SourceControlAuthProperties))
             {
                 writer.WritePropertyName("sourceControlAuthProperties"u8);
                 writer.WriteObjectValue(SourceControlAuthProperties);
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             SourceControlType sourceControlType = default;
             Uri repositoryUrl = default;
-            Core.Optional<string> branch = default;
-            Core.Optional<SourceCodeRepoAuthInfo> sourceControlAuthProperties = default;
+            Optional<string> branch = default;
+            Optional<SourceCodeRepoAuthInfo> sourceControlAuthProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceControlType"u8))

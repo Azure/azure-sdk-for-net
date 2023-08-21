@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ProductListResult. </summary>
         internal ProductListResult()
         {
-            Value = new Core.ChangeTrackingList<ApiManagementProductData>();
+            Value = new ChangeTrackingList<ApiManagementProductData>();
         }
 
         /// <summary> Initializes a new instance of ProductListResult. </summary>

@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class StatelessServiceProperties : Core.IUtf8JsonSerializable
+    public partial class StatelessServiceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("instanceCount"u8);
             writer.WriteNumberValue(InstanceCount);
-            if (Core.Optional.IsDefined(MinInstanceCount))
+            if (Optional.IsDefined(MinInstanceCount))
             {
                 writer.WritePropertyName("minInstanceCount"u8);
                 writer.WriteNumberValue(MinInstanceCount.Value);
             }
-            if (Core.Optional.IsDefined(MinInstancePercentage))
+            if (Optional.IsDefined(MinInstancePercentage))
             {
                 writer.WritePropertyName("minInstancePercentage"u8);
                 writer.WriteNumberValue(MinInstancePercentage.Value);
@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStringValue(ServiceTypeName);
             writer.WritePropertyName("partitionDescription"u8);
             writer.WriteObjectValue(PartitionDescription);
-            if (Core.Optional.IsDefined(ServicePackageActivationMode))
+            if (Optional.IsDefined(ServicePackageActivationMode))
             {
                 writer.WritePropertyName("servicePackageActivationMode"u8);
                 writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ServiceDnsName))
+            if (Optional.IsDefined(ServiceDnsName))
             {
                 writer.WritePropertyName("serviceDnsName"u8);
                 writer.WriteStringValue(ServiceDnsName);
             }
-            if (Core.Optional.IsDefined(PlacementConstraints))
+            if (Optional.IsDefined(PlacementConstraints))
             {
                 writer.WritePropertyName("placementConstraints"u8);
                 writer.WriteStringValue(PlacementConstraints);
             }
-            if (Core.Optional.IsCollectionDefined(CorrelationScheme))
+            if (Optional.IsCollectionDefined(CorrelationScheme))
             {
                 writer.WritePropertyName("correlationScheme"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ServiceLoadMetrics))
+            if (Optional.IsCollectionDefined(ServiceLoadMetrics))
             {
                 writer.WritePropertyName("serviceLoadMetrics"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ServicePlacementPolicies))
+            if (Optional.IsCollectionDefined(ServicePlacementPolicies))
             {
                 writer.WritePropertyName("servicePlacementPolicies"u8);
                 writer.WriteStartArray();
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DefaultMoveCost))
+            if (Optional.IsDefined(DefaultMoveCost))
             {
                 writer.WritePropertyName("defaultMoveCost"u8);
                 writer.WriteStringValue(DefaultMoveCost.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(ScalingPolicies))
+            if (Optional.IsCollectionDefined(ScalingPolicies))
             {
                 writer.WritePropertyName("scalingPolicies"u8);
                 writer.WriteStartArray();
@@ -104,20 +104,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             int instanceCount = default;
-            Core.Optional<int> minInstanceCount = default;
-            Core.Optional<int> minInstancePercentage = default;
-            Core.Optional<string> provisioningState = default;
+            Optional<int> minInstanceCount = default;
+            Optional<int> minInstancePercentage = default;
+            Optional<string> provisioningState = default;
             ServiceKind serviceKind = default;
             string serviceTypeName = default;
             ManagedServicePartitionScheme partitionDescription = default;
-            Core.Optional<ManagedServicePackageActivationMode> servicePackageActivationMode = default;
-            Core.Optional<string> serviceDnsName = default;
-            Core.Optional<string> placementConstraints = default;
-            Core.Optional<IList<ManagedServiceCorrelation>> correlationScheme = default;
-            Core.Optional<IList<ManagedServiceLoadMetric>> serviceLoadMetrics = default;
-            Core.Optional<IList<ManagedServicePlacementPolicy>> servicePlacementPolicies = default;
-            Core.Optional<ServiceFabricManagedServiceMoveCost> defaultMoveCost = default;
-            Core.Optional<IList<ManagedServiceScalingPolicy>> scalingPolicies = default;
+            Optional<ManagedServicePackageActivationMode> servicePackageActivationMode = default;
+            Optional<string> serviceDnsName = default;
+            Optional<string> placementConstraints = default;
+            Optional<IList<ManagedServiceCorrelation>> correlationScheme = default;
+            Optional<IList<ManagedServiceLoadMetric>> serviceLoadMetrics = default;
+            Optional<IList<ManagedServicePlacementPolicy>> servicePlacementPolicies = default;
+            Optional<ServiceFabricManagedServiceMoveCost> defaultMoveCost = default;
+            Optional<IList<ManagedServiceScalingPolicy>> scalingPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceCount"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new StatelessServiceProperties(placementConstraints.Value, Core.Optional.ToList(correlationScheme), Core.Optional.ToList(serviceLoadMetrics), Core.Optional.ToList(servicePlacementPolicies), Core.Optional.ToNullable(defaultMoveCost), Core.Optional.ToList(scalingPolicies), provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Core.Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value, instanceCount, Core.Optional.ToNullable(minInstanceCount), Core.Optional.ToNullable(minInstancePercentage));
+            return new StatelessServiceProperties(placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToList(scalingPolicies), provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value, instanceCount, Optional.ToNullable(minInstanceCount), Optional.ToNullable(minInstancePercentage));
         }
     }
 }

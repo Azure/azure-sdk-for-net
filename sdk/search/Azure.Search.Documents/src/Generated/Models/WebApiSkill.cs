@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
-            HttpHeaders = new Core.ChangeTrackingDictionary<string, string>();
+            HttpHeaders = new ChangeTrackingDictionary<string, string>();
             ODataType = "#Microsoft.Skills.Custom.WebApiSkill";
         }
 

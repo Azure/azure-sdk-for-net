@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public ContainerHttpGet(int port)
         {
             Port = port;
-            HttpHeaders = new Core.ChangeTrackingList<ContainerHttpHeader>();
+            HttpHeaders = new ChangeTrackingList<ContainerHttpHeader>();
         }
 
         /// <summary> Initializes a new instance of ContainerHttpGet. </summary>

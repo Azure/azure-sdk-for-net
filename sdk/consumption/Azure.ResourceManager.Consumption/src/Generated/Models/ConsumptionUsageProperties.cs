@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of ConsumptionUsageProperties. </summary>
         internal ConsumptionUsageProperties()
         {
-            UsageData = new Core.ChangeTrackingList<float>();
+            UsageData = new ChangeTrackingList<float>();
         }
 
         /// <summary> Initializes a new instance of ConsumptionUsageProperties. </summary>

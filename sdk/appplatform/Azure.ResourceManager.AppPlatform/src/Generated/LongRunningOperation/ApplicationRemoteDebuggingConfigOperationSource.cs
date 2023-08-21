@@ -14,15 +14,15 @@ using Azure.ResourceManager.AppPlatform.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    internal class ApplicationRemoteDebuggingConfigOperationSource : Core.IOperationSource<ApplicationRemoteDebuggingConfig>
+    internal class ApplicationRemoteDebuggingConfigOperationSource : IOperationSource<ApplicationRemoteDebuggingConfig>
     {
-        ApplicationRemoteDebuggingConfig Core.IOperationSource<ApplicationRemoteDebuggingConfig>.CreateResult(Response response, CancellationToken cancellationToken)
+        ApplicationRemoteDebuggingConfig IOperationSource<ApplicationRemoteDebuggingConfig>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ApplicationRemoteDebuggingConfig.DeserializeApplicationRemoteDebuggingConfig(document.RootElement);
         }
 
-        async ValueTask<ApplicationRemoteDebuggingConfig> Core.IOperationSource<ApplicationRemoteDebuggingConfig>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ApplicationRemoteDebuggingConfig> IOperationSource<ApplicationRemoteDebuggingConfig>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ApplicationRemoteDebuggingConfig.DeserializeApplicationRemoteDebuggingConfig(document.RootElement);

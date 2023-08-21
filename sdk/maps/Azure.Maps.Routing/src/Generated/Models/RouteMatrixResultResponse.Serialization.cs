@@ -18,7 +18,7 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Core.Optional<RouteLegSummary> routeSummary = default;
+            Optional<RouteLegSummary> routeSummary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routeSummary"u8))

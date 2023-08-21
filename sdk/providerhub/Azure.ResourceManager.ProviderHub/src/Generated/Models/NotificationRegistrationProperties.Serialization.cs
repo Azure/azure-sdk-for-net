@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class NotificationRegistrationProperties : Core.IUtf8JsonSerializable
+    public partial class NotificationRegistrationProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NotificationMode))
+            if (Optional.IsDefined(NotificationMode))
             {
                 writer.WritePropertyName("notificationMode"u8);
                 writer.WriteStringValue(NotificationMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(MessageScope))
+            if (Optional.IsDefined(MessageScope))
             {
                 writer.WritePropertyName("messageScope"u8);
                 writer.WriteStringValue(MessageScope.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(IncludedEvents))
+            if (Optional.IsCollectionDefined(IncludedEvents))
             {
                 writer.WritePropertyName("includedEvents"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(NotificationEndpoints))
+            if (Optional.IsCollectionDefined(NotificationEndpoints))
             {
                 writer.WritePropertyName("notificationEndpoints"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<NotificationMode> notificationMode = default;
-            Core.Optional<MessageScope> messageScope = default;
-            Core.Optional<IList<string>> includedEvents = default;
-            Core.Optional<IList<NotificationEndpoint>> notificationEndpoints = default;
-            Core.Optional<ProviderHubProvisioningState> provisioningState = default;
+            Optional<NotificationMode> notificationMode = default;
+            Optional<MessageScope> messageScope = default;
+            Optional<IList<string>> includedEvents = default;
+            Optional<IList<NotificationEndpoint>> notificationEndpoints = default;
+            Optional<ProviderHubProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notificationMode"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new NotificationRegistrationProperties(Core.Optional.ToNullable(notificationMode), Core.Optional.ToNullable(messageScope), Core.Optional.ToList(includedEvents), Core.Optional.ToList(notificationEndpoints), Core.Optional.ToNullable(provisioningState));
+            return new NotificationRegistrationProperties(Optional.ToNullable(notificationMode), Optional.ToNullable(messageScope), Optional.ToList(includedEvents), Optional.ToList(notificationEndpoints), Optional.ToNullable(provisioningState));
         }
     }
 }

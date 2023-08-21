@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of KustoPoolSkuDescription. </summary>
         internal KustoPoolSkuDescription()
         {
-            Locations = new Core.ChangeTrackingList<AzureLocation>();
-            LocationInfo = new Core.ChangeTrackingList<KustoPoolSkuLocationInfoItem>();
-            Restrictions = new Core.ChangeTrackingList<BinaryData>();
+            Locations = new ChangeTrackingList<AzureLocation>();
+            LocationInfo = new ChangeTrackingList<KustoPoolSkuLocationInfoItem>();
+            Restrictions = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of KustoPoolSkuDescription. </summary>

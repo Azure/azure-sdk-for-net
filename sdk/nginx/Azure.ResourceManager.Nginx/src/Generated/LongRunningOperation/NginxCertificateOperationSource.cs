@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Nginx
 {
-    internal class NginxCertificateOperationSource : Core.IOperationSource<NginxCertificateResource>
+    internal class NginxCertificateOperationSource : IOperationSource<NginxCertificateResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Nginx
             _client = client;
         }
 
-        NginxCertificateResource Core.IOperationSource<NginxCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NginxCertificateResource IOperationSource<NginxCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NginxCertificateData.DeserializeNginxCertificateData(document.RootElement);
             return new NginxCertificateResource(_client, data);
         }
 
-        async ValueTask<NginxCertificateResource> Core.IOperationSource<NginxCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NginxCertificateResource> IOperationSource<NginxCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NginxCertificateData.DeserializeNginxCertificateData(document.RootElement);

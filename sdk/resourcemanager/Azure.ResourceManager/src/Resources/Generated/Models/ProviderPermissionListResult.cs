@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ProviderPermissionListResult. </summary>
         internal ProviderPermissionListResult()
         {
-            Value = new Core.ChangeTrackingList<ProviderPermission>();
+            Value = new ChangeTrackingList<ProviderPermission>();
         }
 
         /// <summary> Initializes a new instance of ProviderPermissionListResult. </summary>

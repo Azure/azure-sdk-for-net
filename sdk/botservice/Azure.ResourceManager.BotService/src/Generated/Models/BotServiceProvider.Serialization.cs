@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<BotServiceProviderProperties> properties = default;
+            Optional<BotServiceProviderProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

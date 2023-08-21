@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of AgentPoolList. </summary>
         internal AgentPoolList()
         {
-            Value = new Core.ChangeTrackingList<NetworkCloudAgentPoolData>();
+            Value = new ChangeTrackingList<NetworkCloudAgentPoolData>();
         }
 
         /// <summary> Initializes a new instance of AgentPoolList. </summary>

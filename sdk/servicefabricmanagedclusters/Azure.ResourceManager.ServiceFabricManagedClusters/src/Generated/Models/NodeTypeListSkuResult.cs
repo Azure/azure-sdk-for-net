@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of NodeTypeListSkuResult. </summary>
         internal NodeTypeListSkuResult()
         {
-            Value = new Core.ChangeTrackingList<NodeTypeAvailableSku>();
+            Value = new ChangeTrackingList<NodeTypeAvailableSku>();
         }
 
         /// <summary> Initializes a new instance of NodeTypeListSkuResult. </summary>

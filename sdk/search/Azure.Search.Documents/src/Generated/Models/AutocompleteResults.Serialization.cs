@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Core.Optional<double> searchCoverage = default;
+            Optional<double> searchCoverage = default;
             IReadOnlyList<AutocompleteItem> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new AutocompleteResults(Core.Optional.ToNullable(searchCoverage), value);
+            return new AutocompleteResults(Optional.ToNullable(searchCoverage), value);
         }
     }
 }

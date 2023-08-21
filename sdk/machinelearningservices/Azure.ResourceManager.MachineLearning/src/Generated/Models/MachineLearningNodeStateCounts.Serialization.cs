@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<int> idleNodeCount = default;
-            Core.Optional<int> runningNodeCount = default;
-            Core.Optional<int> preparingNodeCount = default;
-            Core.Optional<int> unusableNodeCount = default;
-            Core.Optional<int> leavingNodeCount = default;
-            Core.Optional<int> preemptedNodeCount = default;
+            Optional<int> idleNodeCount = default;
+            Optional<int> runningNodeCount = default;
+            Optional<int> preparingNodeCount = default;
+            Optional<int> unusableNodeCount = default;
+            Optional<int> leavingNodeCount = default;
+            Optional<int> preemptedNodeCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("idleNodeCount"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningNodeStateCounts(Core.Optional.ToNullable(idleNodeCount), Core.Optional.ToNullable(runningNodeCount), Core.Optional.ToNullable(preparingNodeCount), Core.Optional.ToNullable(unusableNodeCount), Core.Optional.ToNullable(leavingNodeCount), Core.Optional.ToNullable(preemptedNodeCount));
+            return new MachineLearningNodeStateCounts(Optional.ToNullable(idleNodeCount), Optional.ToNullable(runningNodeCount), Optional.ToNullable(preparingNodeCount), Optional.ToNullable(unusableNodeCount), Optional.ToNullable(leavingNodeCount), Optional.ToNullable(preemptedNodeCount));
         }
     }
 }

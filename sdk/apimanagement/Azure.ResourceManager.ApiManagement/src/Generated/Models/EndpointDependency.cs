@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of EndpointDependency. </summary>
         internal EndpointDependency()
         {
-            EndpointDetails = new Core.ChangeTrackingList<EndpointDetail>();
+            EndpointDetails = new ChangeTrackingList<EndpointDetail>();
         }
 
         /// <summary> Initializes a new instance of EndpointDependency. </summary>

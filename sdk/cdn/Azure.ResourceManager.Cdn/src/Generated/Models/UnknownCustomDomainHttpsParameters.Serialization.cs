@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class UnknownCustomDomainHttpsParameters : Core.IUtf8JsonSerializable
+    internal partial class UnknownCustomDomainHttpsParameters : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("certificateSource"u8);
             writer.WriteStringValue(CertificateSource.ToString());
             writer.WritePropertyName("protocolType"u8);
             writer.WriteStringValue(ProtocolType.ToString());
-            if (Core.Optional.IsDefined(MinimumTlsVersion))
+            if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             CertificateSource certificateSource = "Unknown";
             SecureDeliveryProtocolType protocolType = default;
-            Core.Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
+            Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateSource"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new UnknownCustomDomainHttpsParameters(certificateSource, protocolType, Core.Optional.ToNullable(minimumTlsVersion));
+            return new UnknownCustomDomainHttpsParameters(certificateSource, protocolType, Optional.ToNullable(minimumTlsVersion));
         }
     }
 }

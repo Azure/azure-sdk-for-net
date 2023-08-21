@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationContentSource : Core.IUtf8JsonSerializable
+    public partial class AutomationContentSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Hash))
+            if (Optional.IsDefined(Hash))
             {
                 writer.WritePropertyName("hash"u8);
                 writer.WriteObjectValue(Hash);
             }
-            if (Core.Optional.IsDefined(SourceType))
+            if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Core.Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<AutomationContentHash> hash = default;
-            Core.Optional<AutomationContentSourceType> type = default;
-            Core.Optional<string> value = default;
-            Core.Optional<string> version = default;
+            Optional<AutomationContentHash> hash = default;
+            Optional<AutomationContentSourceType> type = default;
+            Optional<string> value = default;
+            Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hash"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationContentSource(hash.Value, Core.Optional.ToNullable(type), value.Value, version.Value);
+            return new AutomationContentSource(hash.Value, Optional.ToNullable(type), value.Value, version.Value);
         }
     }
 }

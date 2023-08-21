@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Initializes a new instance of SelfHelpError. </summary>
         internal SelfHelpError()
         {
-            Details = new Core.ChangeTrackingList<SelfHelpError>();
+            Details = new ChangeTrackingList<SelfHelpError>();
         }
 
         /// <summary> Initializes a new instance of SelfHelpError. </summary>

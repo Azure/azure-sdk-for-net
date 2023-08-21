@@ -11,29 +11,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaVideoBase : Core.IUtf8JsonSerializable
+    public partial class MediaVideoBase : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeyFrameInterval))
+            if (Optional.IsDefined(KeyFrameInterval))
             {
                 writer.WritePropertyName("keyFrameInterval"u8);
                 writer.WriteStringValue(KeyFrameInterval.Value, "P");
             }
-            if (Core.Optional.IsDefined(StretchMode))
+            if (Optional.IsDefined(StretchMode))
             {
                 writer.WritePropertyName("stretchMode"u8);
                 writer.WriteStringValue(StretchMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SyncMode))
+            if (Optional.IsDefined(SyncMode))
             {
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Core.Optional.IsDefined(Label))
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.PngImage": return PngImage.DeserializePngImage(element);
                 }
             }
-            Core.Optional<TimeSpan> keyFrameInterval = default;
-            Core.Optional<InputVideoStretchMode> stretchMode = default;
-            Core.Optional<VideoSyncMode> syncMode = default;
+            Optional<TimeSpan> keyFrameInterval = default;
+            Optional<InputVideoStretchMode> stretchMode = default;
+            Optional<VideoSyncMode> syncMode = default;
             string odataType = "#Microsoft.Media.Video";
-            Core.Optional<string> label = default;
+            Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyFrameInterval"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaVideoBase(odataType, label.Value, Core.Optional.ToNullable(keyFrameInterval), Core.Optional.ToNullable(stretchMode), Core.Optional.ToNullable(syncMode));
+            return new MediaVideoBase(odataType, label.Value, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode));
         }
     }
 }

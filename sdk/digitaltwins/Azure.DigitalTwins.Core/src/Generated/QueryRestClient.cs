@@ -54,7 +54,7 @@ namespace Azure.DigitalTwins.Core
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Azure.Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(querySpecification);
             request.Content = content;
             return message;

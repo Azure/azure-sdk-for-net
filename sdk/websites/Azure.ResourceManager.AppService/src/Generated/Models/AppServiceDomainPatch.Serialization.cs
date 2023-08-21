@@ -13,69 +13,69 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceDomainPatch : Core.IUtf8JsonSerializable
+    public partial class AppServiceDomainPatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ContactAdmin))
+            if (Optional.IsDefined(ContactAdmin))
             {
                 writer.WritePropertyName("contactAdmin"u8);
                 writer.WriteObjectValue(ContactAdmin);
             }
-            if (Core.Optional.IsDefined(ContactBilling))
+            if (Optional.IsDefined(ContactBilling))
             {
                 writer.WritePropertyName("contactBilling"u8);
                 writer.WriteObjectValue(ContactBilling);
             }
-            if (Core.Optional.IsDefined(ContactRegistrant))
+            if (Optional.IsDefined(ContactRegistrant))
             {
                 writer.WritePropertyName("contactRegistrant"u8);
                 writer.WriteObjectValue(ContactRegistrant);
             }
-            if (Core.Optional.IsDefined(ContactTech))
+            if (Optional.IsDefined(ContactTech))
             {
                 writer.WritePropertyName("contactTech"u8);
                 writer.WriteObjectValue(ContactTech);
             }
-            if (Core.Optional.IsDefined(IsDomainPrivacyEnabled))
+            if (Optional.IsDefined(IsDomainPrivacyEnabled))
             {
                 writer.WritePropertyName("privacy"u8);
                 writer.WriteBooleanValue(IsDomainPrivacyEnabled.Value);
             }
-            if (Core.Optional.IsDefined(IsAutoRenew))
+            if (Optional.IsDefined(IsAutoRenew))
             {
                 writer.WritePropertyName("autoRenew"u8);
                 writer.WriteBooleanValue(IsAutoRenew.Value);
             }
-            if (Core.Optional.IsDefined(Consent))
+            if (Optional.IsDefined(Consent))
             {
                 writer.WritePropertyName("consent"u8);
                 writer.WriteObjectValue(Consent);
             }
-            if (Core.Optional.IsDefined(DnsType))
+            if (Optional.IsDefined(DnsType))
             {
                 writer.WritePropertyName("dnsType"u8);
                 writer.WriteStringValue(DnsType.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(DnsZoneId))
+            if (Optional.IsDefined(DnsZoneId))
             {
                 writer.WritePropertyName("dnsZoneId"u8);
                 writer.WriteStringValue(DnsZoneId);
             }
-            if (Core.Optional.IsDefined(TargetDnsType))
+            if (Optional.IsDefined(TargetDnsType))
             {
                 writer.WritePropertyName("targetDnsType"u8);
                 writer.WriteStringValue(TargetDnsType.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(AuthCode))
+            if (Optional.IsDefined(AuthCode))
             {
                 writer.WritePropertyName("authCode"u8);
                 writer.WriteStringValue(AuthCode);
@@ -90,31 +90,31 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<RegistrationContactInfo> contactAdmin = default;
-            Core.Optional<RegistrationContactInfo> contactBilling = default;
-            Core.Optional<RegistrationContactInfo> contactRegistrant = default;
-            Core.Optional<RegistrationContactInfo> contactTech = default;
-            Core.Optional<AppServiceDomainStatus> registrationStatus = default;
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<IReadOnlyList<string>> nameServers = default;
-            Core.Optional<bool> privacy = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<DateTimeOffset> expirationTime = default;
-            Core.Optional<DateTimeOffset> lastRenewedTime = default;
-            Core.Optional<bool> autoRenew = default;
-            Core.Optional<bool> readyForDnsRecordManagement = default;
-            Core.Optional<IReadOnlyList<AppServiceHostName>> managedHostNames = default;
-            Core.Optional<DomainPurchaseConsent> consent = default;
-            Core.Optional<IReadOnlyList<DomainNotRenewableReason>> domainNotRenewableReasons = default;
-            Core.Optional<AppServiceDnsType> dnsType = default;
-            Core.Optional<string> dnsZoneId = default;
-            Core.Optional<AppServiceDnsType> targetDnsType = default;
-            Core.Optional<string> authCode = default;
+            Optional<SystemData> systemData = default;
+            Optional<RegistrationContactInfo> contactAdmin = default;
+            Optional<RegistrationContactInfo> contactBilling = default;
+            Optional<RegistrationContactInfo> contactRegistrant = default;
+            Optional<RegistrationContactInfo> contactTech = default;
+            Optional<AppServiceDomainStatus> registrationStatus = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<IReadOnlyList<string>> nameServers = default;
+            Optional<bool> privacy = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> expirationTime = default;
+            Optional<DateTimeOffset> lastRenewedTime = default;
+            Optional<bool> autoRenew = default;
+            Optional<bool> readyForDnsRecordManagement = default;
+            Optional<IReadOnlyList<AppServiceHostName>> managedHostNames = default;
+            Optional<DomainPurchaseConsent> consent = default;
+            Optional<IReadOnlyList<DomainNotRenewableReason>> domainNotRenewableReasons = default;
+            Optional<AppServiceDnsType> dnsType = default;
+            Optional<string> dnsZoneId = default;
+            Optional<AppServiceDnsType> targetDnsType = default;
+            Optional<string> authCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceDomainPatch(id, name, type, systemData.Value, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Core.Optional.ToNullable(registrationStatus), Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(nameServers), Core.Optional.ToNullable(privacy), Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(expirationTime), Core.Optional.ToNullable(lastRenewedTime), Core.Optional.ToNullable(autoRenew), Core.Optional.ToNullable(readyForDnsRecordManagement), Core.Optional.ToList(managedHostNames), consent.Value, Core.Optional.ToList(domainNotRenewableReasons), Core.Optional.ToNullable(dnsType), dnsZoneId.Value, Core.Optional.ToNullable(targetDnsType), authCode.Value, kind.Value);
+            return new AppServiceDomainPatch(id, name, type, systemData.Value, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(provisioningState), Optional.ToList(nameServers), Optional.ToNullable(privacy), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), Optional.ToNullable(lastRenewedTime), Optional.ToNullable(autoRenew), Optional.ToNullable(readyForDnsRecordManagement), Optional.ToList(managedHostNames), consent.Value, Optional.ToList(domainNotRenewableReasons), Optional.ToNullable(dnsType), dnsZoneId.Value, Optional.ToNullable(targetDnsType), authCode.Value, kind.Value);
         }
     }
 }

@@ -14,9 +14,9 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityComplianceData : Core.IUtf8JsonSerializable
+    public partial class SecurityComplianceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> assessmentTimestampUtcDate = default;
-            Core.Optional<int> resourceCount = default;
-            Core.Optional<IReadOnlyList<ComplianceSegment>> assessmentResult = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> assessmentTimestampUtcDate = default;
+            Optional<int> resourceCount = default;
+            Optional<IReadOnlyList<ComplianceSegment>> assessmentResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new SecurityComplianceData(id, name, type, systemData.Value, Core.Optional.ToNullable(assessmentTimestampUtcDate), Core.Optional.ToNullable(resourceCount), Core.Optional.ToList(assessmentResult));
+            return new SecurityComplianceData(id, name, type, systemData.Value, Optional.ToNullable(assessmentTimestampUtcDate), Optional.ToNullable(resourceCount), Optional.ToList(assessmentResult));
         }
     }
 }

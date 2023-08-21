@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<VirtualMachineScaleSetInstanceViewStatusesSummary> virtualMachine = default;
-            Core.Optional<IReadOnlyList<VirtualMachineScaleSetVmExtensionsSummary>> extensions = default;
-            Core.Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
-            Core.Optional<IReadOnlyList<OrchestrationServiceSummary>> orchestrationServices = default;
+            Optional<VirtualMachineScaleSetInstanceViewStatusesSummary> virtualMachine = default;
+            Optional<IReadOnlyList<VirtualMachineScaleSetVmExtensionsSummary>> extensions = default;
+            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            Optional<IReadOnlyList<OrchestrationServiceSummary>> orchestrationServices = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachine"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetInstanceView(virtualMachine.Value, Core.Optional.ToList(extensions), Core.Optional.ToList(statuses), Core.Optional.ToList(orchestrationServices));
+            return new VirtualMachineScaleSetInstanceView(virtualMachine.Value, Optional.ToList(extensions), Optional.ToList(statuses), Optional.ToList(orchestrationServices));
         }
     }
 }

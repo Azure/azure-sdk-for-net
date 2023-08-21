@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class MediaAssetTrackData : Core.IUtf8JsonSerializable
+    public partial class MediaAssetTrackData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Track))
+            if (Optional.IsDefined(Track))
             {
                 writer.WritePropertyName("track"u8);
                 writer.WriteObjectValue(Track);
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<MediaAssetTrackBase> track = default;
-            Core.Optional<MediaServicesProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<MediaAssetTrackBase> track = default;
+            Optional<MediaServicesProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Media
                     continue;
                 }
             }
-            return new MediaAssetTrackData(id, name, type, systemData.Value, track.Value, Core.Optional.ToNullable(provisioningState));
+            return new MediaAssetTrackData(id, name, type, systemData.Value, track.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppJobExecutionTemplate : Core.IUtf8JsonSerializable
+    public partial class ContainerAppJobExecutionTemplate : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Containers))
+            if (Optional.IsCollectionDefined(Containers))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(InitContainers))
+            if (Optional.IsCollectionDefined(InitContainers))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<IList<JobExecutionContainer>> containers = default;
-            Core.Optional<IList<JobExecutionContainer>> initContainers = default;
+            Optional<IList<JobExecutionContainer>> containers = default;
+            Optional<IList<JobExecutionContainer>> initContainers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containers"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppJobExecutionTemplate(Core.Optional.ToList(containers), Core.Optional.ToList(initContainers));
+            return new ContainerAppJobExecutionTemplate(Optional.ToList(containers), Optional.ToList(initContainers));
         }
     }
 }

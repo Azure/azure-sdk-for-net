@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PowerQuerySinkMapping : Core.IUtf8JsonSerializable
+    public partial class PowerQuerySinkMapping : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(QueryName))
+            if (Optional.IsDefined(QueryName))
             {
                 writer.WritePropertyName("queryName"u8);
                 writer.WriteStringValue(QueryName);
             }
-            if (Core.Optional.IsCollectionDefined(DataflowSinks))
+            if (Optional.IsCollectionDefined(DataflowSinks))
             {
                 writer.WritePropertyName("dataflowSinks"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<string> queryName = default;
-            Core.Optional<IList<PowerQuerySink>> dataflowSinks = default;
+            Optional<string> queryName = default;
+            Optional<IList<PowerQuerySink>> dataflowSinks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryName"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new PowerQuerySinkMapping(queryName.Value, Core.Optional.ToList(dataflowSinks));
+            return new PowerQuerySinkMapping(queryName.Value, Optional.ToList(dataflowSinks));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of PeeringServiceListResult. </summary>
         internal PeeringServiceListResult()
         {
-            Value = new Core.ChangeTrackingList<PeeringServiceData>();
+            Value = new ChangeTrackingList<PeeringServiceData>();
         }
 
         /// <summary> Initializes a new instance of PeeringServiceListResult. </summary>

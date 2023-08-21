@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterUpgradePolicy : Core.IUtf8JsonSerializable
+    public partial class ClusterUpgradePolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ForceRestart))
+            if (Optional.IsDefined(ForceRestart))
             {
                 writer.WritePropertyName("forceRestart"u8);
                 writer.WriteBooleanValue(ForceRestart.Value);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStringValue(UpgradeDomainTimeout, "c");
             writer.WritePropertyName("healthPolicy"u8);
             writer.WriteObjectValue(HealthPolicy);
-            if (Core.Optional.IsDefined(DeltaHealthPolicy))
+            if (Optional.IsDefined(DeltaHealthPolicy))
             {
                 writer.WritePropertyName("deltaHealthPolicy"u8);
                 writer.WriteObjectValue(DeltaHealthPolicy);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Core.Optional<bool> forceRestart = default;
+            Optional<bool> forceRestart = default;
             TimeSpan upgradeReplicaSetCheckTimeout = default;
             TimeSpan healthCheckWaitDuration = default;
             TimeSpan healthCheckStableDuration = default;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             TimeSpan upgradeTimeout = default;
             TimeSpan upgradeDomainTimeout = default;
             ClusterHealthPolicy healthPolicy = default;
-            Core.Optional<ClusterUpgradeDeltaHealthPolicy> deltaHealthPolicy = default;
+            Optional<ClusterUpgradeDeltaHealthPolicy> deltaHealthPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("forceRestart"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ClusterUpgradePolicy(Core.Optional.ToNullable(forceRestart), upgradeReplicaSetCheckTimeout, healthCheckWaitDuration, healthCheckStableDuration, healthCheckRetryTimeout, upgradeTimeout, upgradeDomainTimeout, healthPolicy, deltaHealthPolicy.Value);
+            return new ClusterUpgradePolicy(Optional.ToNullable(forceRestart), upgradeReplicaSetCheckTimeout, healthCheckWaitDuration, healthCheckStableDuration, healthCheckRetryTimeout, upgradeTimeout, upgradeDomainTimeout, healthPolicy, deltaHealthPolicy.Value);
         }
     }
 }

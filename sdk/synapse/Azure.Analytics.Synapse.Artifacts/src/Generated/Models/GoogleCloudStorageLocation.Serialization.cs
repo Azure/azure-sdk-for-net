@@ -14,29 +14,29 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(GoogleCloudStorageLocationConverter))]
-    public partial class GoogleCloudStorageLocation : Core.IUtf8JsonSerializable
+    public partial class GoogleCloudStorageLocation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BucketName))
+            if (Optional.IsDefined(BucketName))
             {
                 writer.WritePropertyName("bucketName"u8);
                 writer.WriteObjectValue(BucketName);
             }
-            if (Core.Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteObjectValue(Version);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Core.Optional.IsDefined(FolderPath))
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteObjectValue(FolderPath);
             }
-            if (Core.Optional.IsDefined(FileName))
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteObjectValue(FileName);
@@ -55,11 +55,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<object> bucketName = default;
-            Core.Optional<object> version = default;
+            Optional<object> bucketName = default;
+            Optional<object> version = default;
             string type = default;
-            Core.Optional<object> folderPath = default;
-            Core.Optional<object> fileName = default;
+            Optional<object> folderPath = default;
+            Optional<object> fileName = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

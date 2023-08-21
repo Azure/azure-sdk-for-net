@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of AnnotationsListResult. </summary>
         internal AnnotationsListResult()
         {
-            Value = new Core.ChangeTrackingList<Annotation>();
+            Value = new ChangeTrackingList<Annotation>();
         }
 
         /// <summary> Initializes a new instance of AnnotationsListResult. </summary>

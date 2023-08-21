@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ConfigServerSettingsErrorRecord. </summary>
         internal ConfigServerSettingsErrorRecord()
         {
-            Messages = new Core.ChangeTrackingList<string>();
+            Messages = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ConfigServerSettingsErrorRecord. </summary>

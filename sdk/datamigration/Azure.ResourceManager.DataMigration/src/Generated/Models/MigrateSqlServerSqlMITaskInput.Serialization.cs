@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlMITaskInput : Core.IUtf8JsonSerializable
+    public partial class MigrateSqlServerSqlMITaskInput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("selectedDatabases"u8);
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(StartedOn))
+            if (Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn);
             }
-            if (Core.Optional.IsCollectionDefined(SelectedLogins))
+            if (Optional.IsCollectionDefined(SelectedLogins))
             {
                 writer.WritePropertyName("selectedLogins"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(SelectedAgentJobs))
+            if (Optional.IsCollectionDefined(SelectedAgentJobs))
             {
                 writer.WritePropertyName("selectedAgentJobs"u8);
                 writer.WriteStartArray();
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(BackupFileShare))
+            if (Optional.IsDefined(BackupFileShare))
             {
                 writer.WritePropertyName("backupFileShare"u8);
                 writer.WriteObjectValue(BackupFileShare);
             }
             writer.WritePropertyName("backupBlobShare"u8);
             writer.WriteObjectValue(BackupBlobShare);
-            if (Core.Optional.IsDefined(BackupMode))
+            if (Optional.IsDefined(BackupMode))
             {
                 writer.WritePropertyName("backupMode"u8);
                 writer.WriteStringValue(BackupMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AadDomainName))
+            if (Optional.IsDefined(AadDomainName))
             {
                 writer.WritePropertyName("aadDomainName"u8);
                 writer.WriteStringValue(AadDomainName);
             }
-            if (Core.Optional.IsDefined(EncryptedKeyForSecureFields))
+            if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
@@ -84,14 +84,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = default;
-            Core.Optional<string> startedOn = default;
-            Core.Optional<IList<string>> selectedLogins = default;
-            Core.Optional<IList<string>> selectedAgentJobs = default;
-            Core.Optional<FileShare> backupFileShare = default;
+            Optional<string> startedOn = default;
+            Optional<IList<string>> selectedLogins = default;
+            Optional<IList<string>> selectedAgentJobs = default;
+            Optional<FileShare> backupFileShare = default;
             BlobShare backupBlobShare = default;
-            Core.Optional<BackupMode> backupMode = default;
-            Core.Optional<string> aadDomainName = default;
-            Core.Optional<string> encryptedKeyForSecureFields = default;
+            Optional<BackupMode> backupMode = default;
+            Optional<string> aadDomainName = default;
+            Optional<string> encryptedKeyForSecureFields = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSqlServerSqlMITaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases, startedOn.Value, Core.Optional.ToList(selectedLogins), Core.Optional.ToList(selectedAgentJobs), backupFileShare.Value, backupBlobShare, Core.Optional.ToNullable(backupMode), aadDomainName.Value, encryptedKeyForSecureFields.Value);
+            return new MigrateSqlServerSqlMITaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases, startedOn.Value, Optional.ToList(selectedLogins), Optional.ToList(selectedAgentJobs), backupFileShare.Value, backupBlobShare, Optional.ToNullable(backupMode), aadDomainName.Value, encryptedKeyForSecureFields.Value);
         }
     }
 }

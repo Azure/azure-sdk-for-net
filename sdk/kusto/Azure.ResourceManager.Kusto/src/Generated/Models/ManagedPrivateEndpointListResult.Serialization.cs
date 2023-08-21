@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<KustoManagedPrivateEndpointData>> value = default;
+            Optional<IReadOnlyList<KustoManagedPrivateEndpointData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new ManagedPrivateEndpointListResult(Core.Optional.ToList(value));
+            return new ManagedPrivateEndpointListResult(Optional.ToList(value));
         }
     }
 }

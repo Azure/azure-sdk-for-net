@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    public partial class StorageAccountAttributes : Core.IUtf8JsonSerializable
+    public partial class StorageAccountAttributes : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
@@ -30,11 +30,11 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<DateTimeOffset> created = default;
-            Core.Optional<DateTimeOffset> updated = default;
-            Core.Optional<int> recoverableDays = default;
-            Core.Optional<DeletionRecoveryLevel> recoveryLevel = default;
+            Optional<bool> enabled = default;
+            Optional<DateTimeOffset> created = default;
+            Optional<DateTimeOffset> updated = default;
+            Optional<int> recoverableDays = default;
+            Optional<DeletionRecoveryLevel> recoveryLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -83,7 +83,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new StorageAccountAttributes(Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(created), Core.Optional.ToNullable(updated), Core.Optional.ToNullable(recoverableDays), Core.Optional.ToNullable(recoveryLevel));
+            return new StorageAccountAttributes(Optional.ToNullable(enabled), Optional.ToNullable(created), Optional.ToNullable(updated), Optional.ToNullable(recoverableDays), Optional.ToNullable(recoveryLevel));
         }
     }
 }

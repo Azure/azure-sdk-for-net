@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of ListBlobInventoryPolicy. </summary>
         internal ListBlobInventoryPolicy()
         {
-            Value = new Core.ChangeTrackingList<BlobInventoryPolicyData>();
+            Value = new ChangeTrackingList<BlobInventoryPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ListBlobInventoryPolicy. </summary>

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SelfHostedIntegrationRuntimeNode. </summary>
         internal SelfHostedIntegrationRuntimeNode()
         {
-            Capabilities = new Core.ChangeTrackingDictionary<string, string>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Capabilities = new ChangeTrackingDictionary<string, string>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of SelfHostedIntegrationRuntimeNode. </summary>

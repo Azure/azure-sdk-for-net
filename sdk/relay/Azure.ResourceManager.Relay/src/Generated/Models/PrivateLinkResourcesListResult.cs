@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <summary> Initializes a new instance of PrivateLinkResourcesListResult. </summary>
         internal PrivateLinkResourcesListResult()
         {
-            Value = new Core.ChangeTrackingList<RelayPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<RelayPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResourcesListResult. </summary>

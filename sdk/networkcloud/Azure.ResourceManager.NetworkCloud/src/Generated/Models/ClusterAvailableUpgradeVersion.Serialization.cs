@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Core.Optional<ControlImpact> controlImpact = default;
-            Core.Optional<string> expectedDuration = default;
-            Core.Optional<string> impactDescription = default;
-            Core.Optional<DateTimeOffset> supportExpiryDate = default;
-            Core.Optional<string> targetClusterVersion = default;
-            Core.Optional<WorkloadImpact> workloadImpact = default;
+            Optional<ControlImpact> controlImpact = default;
+            Optional<string> expectedDuration = default;
+            Optional<string> impactDescription = default;
+            Optional<DateTimeOffset> supportExpiryDate = default;
+            Optional<string> targetClusterVersion = default;
+            Optional<WorkloadImpact> workloadImpact = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("controlImpact"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new ClusterAvailableUpgradeVersion(Core.Optional.ToNullable(controlImpact), expectedDuration.Value, impactDescription.Value, Core.Optional.ToNullable(supportExpiryDate), targetClusterVersion.Value, Core.Optional.ToNullable(workloadImpact));
+            return new ClusterAvailableUpgradeVersion(Optional.ToNullable(controlImpact), expectedDuration.Value, impactDescription.Value, Optional.ToNullable(supportExpiryDate), targetClusterVersion.Value, Optional.ToNullable(workloadImpact));
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<string> locationPlacementId = default;
-            Core.Optional<string> quotaId = default;
-            Core.Optional<SpendingLimit> spendingLimit = default;
+            Optional<string> locationPlacementId = default;
+            Optional<string> quotaId = default;
+            Optional<SpendingLimit> spendingLimit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locationPlacementId"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new SubscriptionPolicies(locationPlacementId.Value, quotaId.Value, Core.Optional.ToNullable(spendingLimit));
+            return new SubscriptionPolicies(locationPlacementId.Value, quotaId.Value, Optional.ToNullable(spendingLimit));
         }
     }
 }

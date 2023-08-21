@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ParameterExampleContract : Core.IUtf8JsonSerializable
+    public partial class ParameterExampleContract : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Summary))
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(ExternalValue))
+            if (Optional.IsDefined(ExternalValue))
             {
                 writer.WritePropertyName("externalValue"u8);
                 writer.WriteStringValue(ExternalValue);
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> summary = default;
-            Core.Optional<string> description = default;
-            Core.Optional<BinaryData> value = default;
-            Core.Optional<string> externalValue = default;
+            Optional<string> summary = default;
+            Optional<string> description = default;
+            Optional<BinaryData> value = default;
+            Optional<string> externalValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))

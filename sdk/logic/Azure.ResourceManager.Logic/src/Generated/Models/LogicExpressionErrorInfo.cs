@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Logic.Models
             Argument.AssertNotNull(message, nameof(message));
 
             Message = message;
-            Details = new Core.ChangeTrackingList<LogicExpressionErrorInfo>();
+            Details = new ChangeTrackingList<LogicExpressionErrorInfo>();
         }
 
         /// <summary> Initializes a new instance of LogicExpressionErrorInfo. </summary>

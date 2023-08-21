@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of BaselineAdjustedResult. </summary>
         public BaselineAdjustedResult()
         {
-            ResultsNotInBaseline = new Core.ChangeTrackingList<IList<string>>();
-            ResultsOnlyInBaseline = new Core.ChangeTrackingList<IList<string>>();
+            ResultsNotInBaseline = new ChangeTrackingList<IList<string>>();
+            ResultsOnlyInBaseline = new ChangeTrackingList<IList<string>>();
         }
 
         /// <summary> Initializes a new instance of BaselineAdjustedResult. </summary>

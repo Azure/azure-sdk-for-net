@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <summary> Initializes a new instance of TrafficManagerProfileListResult. </summary>
         internal TrafficManagerProfileListResult()
         {
-            Value = new Core.ChangeTrackingList<TrafficManagerProfileData>();
+            Value = new ChangeTrackingList<TrafficManagerProfileData>();
         }
 
         /// <summary> Initializes a new instance of TrafficManagerProfileListResult. </summary>

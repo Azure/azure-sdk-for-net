@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of SwaggerExternalDocumentation. </summary>
         public SwaggerExternalDocumentation()
         {
-            Extensions = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Extensions = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of SwaggerExternalDocumentation. </summary>

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class SchemaMigrationSetting : Core.IUtf8JsonSerializable
+    public partial class SchemaMigrationSetting : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SchemaOption))
+            if (Optional.IsDefined(SchemaOption))
             {
                 writer.WritePropertyName("schemaOption"u8);
                 writer.WriteStringValue(SchemaOption.Value.ToString());
             }
-            if (Core.Optional.IsDefined(FileId))
+            if (Optional.IsDefined(FileId))
             {
                 writer.WritePropertyName("fileId"u8);
                 writer.WriteStringValue(FileId);
             }
-            if (Core.Optional.IsDefined(FileName))
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<SchemaMigrationOption> schemaOption = default;
-            Core.Optional<string> fileId = default;
-            Core.Optional<string> fileName = default;
+            Optional<SchemaMigrationOption> schemaOption = default;
+            Optional<string> fileId = default;
+            Optional<string> fileName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaOption"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new SchemaMigrationSetting(Core.Optional.ToNullable(schemaOption), fileId.Value, fileName.Value);
+            return new SchemaMigrationSetting(Optional.ToNullable(schemaOption), fileId.Value, fileName.Value);
         }
     }
 }

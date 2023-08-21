@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal class NetAppBackupPolicyOperationSource : Core.IOperationSource<NetAppBackupPolicyResource>
+    internal class NetAppBackupPolicyOperationSource : IOperationSource<NetAppBackupPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.NetApp
             _client = client;
         }
 
-        NetAppBackupPolicyResource Core.IOperationSource<NetAppBackupPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetAppBackupPolicyResource IOperationSource<NetAppBackupPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(document.RootElement);
             return new NetAppBackupPolicyResource(_client, data);
         }
 
-        async ValueTask<NetAppBackupPolicyResource> Core.IOperationSource<NetAppBackupPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetAppBackupPolicyResource> IOperationSource<NetAppBackupPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(document.RootElement);

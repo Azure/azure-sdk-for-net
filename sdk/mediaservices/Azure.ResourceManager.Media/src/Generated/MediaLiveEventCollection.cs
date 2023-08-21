@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaLiveEventLiveEventsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, liveEventName, data, autoStart, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaLiveEventResource>(new MediaLiveEventOperationSource(Client), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, liveEventName, data, autoStart).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation<MediaLiveEventResource>(new MediaLiveEventOperationSource(Client), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, liveEventName, data, autoStart).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaLiveEventLiveEventsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, liveEventName, data, autoStart, cancellationToken);
-                var operation = new MediaArmOperation<MediaLiveEventResource>(new MediaLiveEventOperationSource(Client), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, liveEventName, data, autoStart).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation<MediaLiveEventResource>(new MediaLiveEventOperationSource(Client), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, liveEventName, data, autoStart).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaLiveEventLiveEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaLiveEventLiveEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaLiveEventResource(Client, MediaLiveEventData.DeserializeMediaLiveEventData(e)), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, "MediaLiveEventCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaLiveEventResource(Client, MediaLiveEventData.DeserializeMediaLiveEventData(e)), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, "MediaLiveEventCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaLiveEventLiveEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaLiveEventLiveEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaLiveEventResource(Client, MediaLiveEventData.DeserializeMediaLiveEventData(e)), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, "MediaLiveEventCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaLiveEventResource(Client, MediaLiveEventData.DeserializeMediaLiveEventData(e)), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, "MediaLiveEventCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

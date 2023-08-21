@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of ThreatIntelligenceMetric. </summary>
         internal ThreatIntelligenceMetric()
         {
-            ThreatTypeMetrics = new Core.ChangeTrackingList<ThreatIntelligenceMetricEntity>();
-            PatternTypeMetrics = new Core.ChangeTrackingList<ThreatIntelligenceMetricEntity>();
-            SourceMetrics = new Core.ChangeTrackingList<ThreatIntelligenceMetricEntity>();
+            ThreatTypeMetrics = new ChangeTrackingList<ThreatIntelligenceMetricEntity>();
+            PatternTypeMetrics = new ChangeTrackingList<ThreatIntelligenceMetricEntity>();
+            SourceMetrics = new ChangeTrackingList<ThreatIntelligenceMetricEntity>();
         }
 
         /// <summary> Initializes a new instance of ThreatIntelligenceMetric. </summary>

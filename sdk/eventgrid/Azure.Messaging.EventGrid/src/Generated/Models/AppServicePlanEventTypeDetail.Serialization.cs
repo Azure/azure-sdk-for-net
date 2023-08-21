@@ -18,9 +18,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<StampKind> stampKind = default;
-            Core.Optional<AppServicePlanAction> action = default;
-            Core.Optional<AsyncStatus> status = default;
+            Optional<StampKind> stampKind = default;
+            Optional<AppServicePlanAction> action = default;
+            Optional<AsyncStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stampKind"u8))
@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AppServicePlanEventTypeDetail(Core.Optional.ToNullable(stampKind), Core.Optional.ToNullable(action), Core.Optional.ToNullable(status));
+            return new AppServicePlanEventTypeDetail(Optional.ToNullable(stampKind), Optional.ToNullable(action), Optional.ToNullable(status));
         }
     }
 }

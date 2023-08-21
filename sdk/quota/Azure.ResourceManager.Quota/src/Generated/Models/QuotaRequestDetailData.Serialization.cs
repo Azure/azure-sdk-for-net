@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.Quota
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<QuotaRequestState> provisioningState = default;
-            Core.Optional<string> message = default;
-            Core.Optional<ServiceErrorDetail> error = default;
-            Core.Optional<DateTimeOffset> requestSubmitTime = default;
-            Core.Optional<IReadOnlyList<QuotaSubRequestDetail>> value = default;
+            Optional<SystemData> systemData = default;
+            Optional<QuotaRequestState> provisioningState = default;
+            Optional<string> message = default;
+            Optional<ServiceErrorDetail> error = default;
+            Optional<DateTimeOffset> requestSubmitTime = default;
+            Optional<IReadOnlyList<QuotaSubRequestDetail>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Quota
                     continue;
                 }
             }
-            return new QuotaRequestDetailData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), message.Value, error.Value, Core.Optional.ToNullable(requestSubmitTime), Core.Optional.ToList(value));
+            return new QuotaRequestDetailData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), message.Value, error.Value, Optional.ToNullable(requestSubmitTime), Optional.ToList(value));
         }
     }
 }

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class RegenAuthKeys : Core.IUtf8JsonSerializable
+    public partial class RegenAuthKeys : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeyName))
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (Core.Optional.IsDefined(AuthKey1))
+            if (Optional.IsDefined(AuthKey1))
             {
                 writer.WritePropertyName("authKey1"u8);
                 writer.WriteStringValue(AuthKey1);
             }
-            if (Core.Optional.IsDefined(AuthKey2))
+            if (Optional.IsDefined(AuthKey2))
             {
                 writer.WritePropertyName("authKey2"u8);
                 writer.WriteStringValue(AuthKey2);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> keyName = default;
-            Core.Optional<string> authKey1 = default;
-            Core.Optional<string> authKey2 = default;
+            Optional<string> keyName = default;
+            Optional<string> authKey1 = default;
+            Optional<string> authKey2 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyName"u8))

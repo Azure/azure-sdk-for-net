@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Core.Optional<OperationalInsightsSkuName> serviceTier = default;
-            Core.Optional<bool> enabled = default;
-            Core.Optional<long> minimumRetention = default;
-            Core.Optional<long> maximumRetention = default;
-            Core.Optional<long> defaultRetention = default;
-            Core.Optional<long> capacityReservationLevel = default;
-            Core.Optional<DateTimeOffset> lastSkuUpdate = default;
+            Optional<OperationalInsightsSkuName> serviceTier = default;
+            Optional<bool> enabled = default;
+            Optional<long> minimumRetention = default;
+            Optional<long> maximumRetention = default;
+            Optional<long> defaultRetention = default;
+            Optional<long> capacityReservationLevel = default;
+            Optional<DateTimeOffset> lastSkuUpdate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceTier"u8))
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new OperationalInsightsAvailableServiceTier(Core.Optional.ToNullable(serviceTier), Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(minimumRetention), Core.Optional.ToNullable(maximumRetention), Core.Optional.ToNullable(defaultRetention), Core.Optional.ToNullable(capacityReservationLevel), Core.Optional.ToNullable(lastSkuUpdate));
+            return new OperationalInsightsAvailableServiceTier(Optional.ToNullable(serviceTier), Optional.ToNullable(enabled), Optional.ToNullable(minimumRetention), Optional.ToNullable(maximumRetention), Optional.ToNullable(defaultRetention), Optional.ToNullable(capacityReservationLevel), Optional.ToNullable(lastSkuUpdate));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of TableData. </summary>
         public TableData()
         {
-            SignedIdentifiers = new Core.ChangeTrackingList<StorageTableSignedIdentifier>();
+            SignedIdentifiers = new ChangeTrackingList<StorageTableSignedIdentifier>();
         }
 
         /// <summary> Initializes a new instance of TableData. </summary>

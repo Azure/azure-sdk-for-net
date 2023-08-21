@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of BackendCredentialsContract. </summary>
         public BackendCredentialsContract()
         {
-            CertificateIds = new Core.ChangeTrackingList<string>();
-            Certificate = new Core.ChangeTrackingList<string>();
-            Query = new Core.ChangeTrackingDictionary<string, IList<string>>();
-            Header = new Core.ChangeTrackingDictionary<string, IList<string>>();
+            CertificateIds = new ChangeTrackingList<string>();
+            Certificate = new ChangeTrackingList<string>();
+            Query = new ChangeTrackingDictionary<string, IList<string>>();
+            Header = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
         /// <summary> Initializes a new instance of BackendCredentialsContract. </summary>

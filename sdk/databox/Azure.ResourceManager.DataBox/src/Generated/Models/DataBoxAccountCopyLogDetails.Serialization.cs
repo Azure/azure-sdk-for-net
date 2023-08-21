@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<string> accountName = default;
-            Core.Optional<string> copyLogLink = default;
-            Core.Optional<string> copyVerboseLogLink = default;
+            Optional<string> accountName = default;
+            Optional<string> copyLogLink = default;
+            Optional<string> copyVerboseLogLink = default;
             DataBoxOrderType copyLogDetailsType = default;
             foreach (var property in element.EnumerateObject())
             {

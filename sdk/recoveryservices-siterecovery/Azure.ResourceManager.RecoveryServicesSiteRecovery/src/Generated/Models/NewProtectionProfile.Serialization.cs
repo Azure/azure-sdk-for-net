@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class NewProtectionProfile : Core.IUtf8JsonSerializable
+    public partial class NewProtectionProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("policyName"u8);
             writer.WriteStringValue(PolicyName);
-            if (Core.Optional.IsDefined(RecoveryPointHistory))
+            if (Optional.IsDefined(RecoveryPointHistory))
             {
                 writer.WritePropertyName("recoveryPointHistory"u8);
                 writer.WriteNumberValue(RecoveryPointHistory.Value);
             }
-            if (Core.Optional.IsDefined(CrashConsistentFrequencyInMinutes))
+            if (Optional.IsDefined(CrashConsistentFrequencyInMinutes))
             {
                 writer.WritePropertyName("crashConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(CrashConsistentFrequencyInMinutes.Value);
             }
-            if (Core.Optional.IsDefined(AppConsistentFrequencyInMinutes))
+            if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
             {
                 writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string policyName = default;
-            Core.Optional<int> recoveryPointHistory = default;
-            Core.Optional<int> crashConsistentFrequencyInMinutes = default;
-            Core.Optional<int> appConsistentFrequencyInMinutes = default;
+            Optional<int> recoveryPointHistory = default;
+            Optional<int> crashConsistentFrequencyInMinutes = default;
+            Optional<int> appConsistentFrequencyInMinutes = default;
             SetMultiVmSyncStatus multiVmSyncStatus = default;
             string resourceType = default;
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new NewProtectionProfile(resourceType, policyName, Core.Optional.ToNullable(recoveryPointHistory), Core.Optional.ToNullable(crashConsistentFrequencyInMinutes), Core.Optional.ToNullable(appConsistentFrequencyInMinutes), multiVmSyncStatus);
+            return new NewProtectionProfile(resourceType, policyName, Optional.ToNullable(recoveryPointHistory), Optional.ToNullable(crashConsistentFrequencyInMinutes), Optional.ToNullable(appConsistentFrequencyInMinutes), multiVmSyncStatus);
         }
     }
 }

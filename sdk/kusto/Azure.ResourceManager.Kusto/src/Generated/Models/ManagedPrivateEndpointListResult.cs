@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of ManagedPrivateEndpointListResult. </summary>
         internal ManagedPrivateEndpointListResult()
         {
-            Value = new Core.ChangeTrackingList<KustoManagedPrivateEndpointData>();
+            Value = new ChangeTrackingList<KustoManagedPrivateEndpointData>();
         }
 
         /// <summary> Initializes a new instance of ManagedPrivateEndpointListResult. </summary>

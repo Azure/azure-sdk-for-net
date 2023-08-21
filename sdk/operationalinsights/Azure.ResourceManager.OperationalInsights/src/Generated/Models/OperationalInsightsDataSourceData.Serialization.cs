@@ -15,9 +15,9 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class OperationalInsightsDataSourceData : Core.IUtf8JsonSerializable
+    public partial class OperationalInsightsDataSourceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.OperationalInsights
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(Properties.ToString()).RootElement);
 #endif
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.OperationalInsights
                 return null;
             }
             BinaryData properties = default;
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             OperationalInsightsDataSourceKind kind = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     continue;
                 }
             }
-            return new OperationalInsightsDataSourceData(id, name, type, systemData.Value, properties, Core.Optional.ToNullable(etag), kind, Core.Optional.ToDictionary(tags));
+            return new OperationalInsightsDataSourceData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag), kind, Optional.ToDictionary(tags));
         }
     }
 }

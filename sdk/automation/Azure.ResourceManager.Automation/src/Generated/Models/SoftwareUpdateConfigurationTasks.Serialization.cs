@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SoftwareUpdateConfigurationTasks : Core.IUtf8JsonSerializable
+    public partial class SoftwareUpdateConfigurationTasks : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PreTask))
+            if (Optional.IsDefined(PreTask))
             {
                 writer.WritePropertyName("preTask"u8);
                 writer.WriteObjectValue(PreTask);
             }
-            if (Core.Optional.IsDefined(PostTask))
+            if (Optional.IsDefined(PostTask))
             {
                 writer.WritePropertyName("postTask"u8);
                 writer.WriteObjectValue(PostTask);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<SoftwareUpdateConfigurationTaskProperties> preTask = default;
-            Core.Optional<SoftwareUpdateConfigurationTaskProperties> postTask = default;
+            Optional<SoftwareUpdateConfigurationTaskProperties> preTask = default;
+            Optional<SoftwareUpdateConfigurationTaskProperties> postTask = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preTask"u8))

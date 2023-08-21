@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Core.Optional<bool> isMoveEligible = default;
-            Core.Optional<BillingSubscriptionValidateMoveEligibilityError> errorDetails = default;
+            Optional<bool> isMoveEligible = default;
+            Optional<BillingSubscriptionValidateMoveEligibilityError> errorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isMoveEligible"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Billing.Models
                     continue;
                 }
             }
-            return new BillingSubscriptionValidateMoveEligibilityResult(Core.Optional.ToNullable(isMoveEligible), errorDetails.Value);
+            return new BillingSubscriptionValidateMoveEligibilityResult(Optional.ToNullable(isMoveEligible), errorDetails.Value);
         }
     }
 }

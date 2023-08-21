@@ -21,24 +21,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             IntegrationRuntimeType type = default;
-            Core.Optional<string> dataFactoryName = default;
-            Core.Optional<IntegrationRuntimeState> state = default;
-            Core.Optional<DateTimeOffset> createTime = default;
-            Core.Optional<Guid> taskQueueId = default;
-            Core.Optional<IntegrationRuntimeInternalChannelEncryptionMode> internalChannelEncryption = default;
-            Core.Optional<string> version = default;
-            Core.Optional<IReadOnlyList<SelfHostedIntegrationRuntimeNode>> nodes = default;
-            Core.Optional<DateTimeOffset> scheduledUpdateDate = default;
-            Core.Optional<TimeSpan> updateDelayOffset = default;
-            Core.Optional<TimeSpan> localTimeZoneOffset = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> capabilities = default;
-            Core.Optional<IReadOnlyList<string>> serviceUrls = default;
-            Core.Optional<IntegrationRuntimeAutoUpdateState> autoUpdate = default;
-            Core.Optional<string> versionStatus = default;
-            Core.Optional<IReadOnlyList<LinkedIntegrationRuntime>> links = default;
-            Core.Optional<string> pushedVersion = default;
-            Core.Optional<string> latestVersion = default;
-            Core.Optional<DateTimeOffset> autoUpdateEta = default;
+            Optional<string> dataFactoryName = default;
+            Optional<IntegrationRuntimeState> state = default;
+            Optional<DateTimeOffset> createTime = default;
+            Optional<Guid> taskQueueId = default;
+            Optional<IntegrationRuntimeInternalChannelEncryptionMode> internalChannelEncryption = default;
+            Optional<string> version = default;
+            Optional<IReadOnlyList<SelfHostedIntegrationRuntimeNode>> nodes = default;
+            Optional<DateTimeOffset> scheduledUpdateDate = default;
+            Optional<TimeSpan> updateDelayOffset = default;
+            Optional<TimeSpan> localTimeZoneOffset = default;
+            Optional<IReadOnlyDictionary<string, string>> capabilities = default;
+            Optional<IReadOnlyList<string>> serviceUrls = default;
+            Optional<IntegrationRuntimeAutoUpdateState> autoUpdate = default;
+            Optional<string> versionStatus = default;
+            Optional<IReadOnlyList<LinkedIntegrationRuntime>> links = default;
+            Optional<string> pushedVersion = default;
+            Optional<string> latestVersion = default;
+            Optional<DateTimeOffset> autoUpdateEta = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Core.Optional.ToNullable(state), additionalProperties, Core.Optional.ToNullable(createTime), Core.Optional.ToNullable(taskQueueId), Core.Optional.ToNullable(internalChannelEncryption), version.Value, Core.Optional.ToList(nodes), Core.Optional.ToNullable(scheduledUpdateDate), Core.Optional.ToNullable(updateDelayOffset), Core.Optional.ToNullable(localTimeZoneOffset), Core.Optional.ToDictionary(capabilities), Core.Optional.ToList(serviceUrls), Core.Optional.ToNullable(autoUpdate), versionStatus.Value, Core.Optional.ToList(links), pushedVersion.Value, latestVersion.Value, Core.Optional.ToNullable(autoUpdateEta));
+            return new SelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToNullable(taskQueueId), Optional.ToNullable(internalChannelEncryption), version.Value, Optional.ToList(nodes), Optional.ToNullable(scheduledUpdateDate), Optional.ToNullable(updateDelayOffset), Optional.ToNullable(localTimeZoneOffset), Optional.ToDictionary(capabilities), Optional.ToList(serviceUrls), Optional.ToNullable(autoUpdate), versionStatus.Value, Optional.ToList(links), pushedVersion.Value, latestVersion.Value, Optional.ToNullable(autoUpdateEta));
         }
     }
 }

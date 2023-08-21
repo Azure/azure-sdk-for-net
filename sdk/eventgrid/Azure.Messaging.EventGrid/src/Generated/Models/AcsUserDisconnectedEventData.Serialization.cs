@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<CommunicationIdentifierModel> userCommunicationIdentifier = default;
+            Optional<CommunicationIdentifierModel> userCommunicationIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userCommunicationIdentifier"u8))

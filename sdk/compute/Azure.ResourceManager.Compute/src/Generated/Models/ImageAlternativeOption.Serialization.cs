@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ImageAlternativeOption : Core.IUtf8JsonSerializable
+    public partial class ImageAlternativeOption : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AlternativeType))
+            if (Optional.IsDefined(AlternativeType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AlternativeType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<ImageAlternativeType> type = default;
-            Core.Optional<string> value = default;
+            Optional<ImageAlternativeType> type = default;
+            Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ImageAlternativeOption(Core.Optional.ToNullable(type), value.Value);
+            return new ImageAlternativeOption(Optional.ToNullable(type), value.Value);
         }
     }
 }

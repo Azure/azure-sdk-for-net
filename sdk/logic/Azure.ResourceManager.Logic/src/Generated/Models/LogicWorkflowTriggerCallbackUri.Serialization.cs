@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<string> value = default;
-            Core.Optional<RequestMethod> method = default;
-            Core.Optional<string> basePath = default;
-            Core.Optional<string> relativePath = default;
-            Core.Optional<IReadOnlyList<string>> relativePathParameters = default;
-            Core.Optional<LogicWorkflowTriggerCallbackQueryParameterInfo> queries = default;
+            Optional<string> value = default;
+            Optional<RequestMethod> method = default;
+            Optional<string> basePath = default;
+            Optional<string> relativePath = default;
+            Optional<IReadOnlyList<string>> relativePathParameters = default;
+            Optional<LogicWorkflowTriggerCallbackQueryParameterInfo> queries = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicWorkflowTriggerCallbackUri(value.Value, Core.Optional.ToNullable(method), basePath.Value, relativePath.Value, Core.Optional.ToList(relativePathParameters), queries.Value);
+            return new LogicWorkflowTriggerCallbackUri(value.Value, Optional.ToNullable(method), basePath.Value, relativePath.Value, Optional.ToList(relativePathParameters), queries.Value);
         }
     }
 }

@@ -14,14 +14,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class RoleAssignmentResourceFormatData : Core.IUtf8JsonSerializable
+    public partial class RoleAssignmentResourceFormatData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(DisplayName))
+            if (Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Description))
+            if (Optional.IsCollectionDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(Role))
+            if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToSerialString());
             }
-            if (Core.Optional.IsCollectionDefined(Principals))
+            if (Optional.IsCollectionDefined(Principals))
             {
                 writer.WritePropertyName("principals"u8);
                 writer.WriteStartArray();
@@ -58,67 +58,67 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Profiles))
+            if (Optional.IsDefined(Profiles))
             {
                 writer.WritePropertyName("profiles"u8);
                 writer.WriteObjectValue(Profiles);
             }
-            if (Core.Optional.IsDefined(Interactions))
+            if (Optional.IsDefined(Interactions))
             {
                 writer.WritePropertyName("interactions"u8);
                 writer.WriteObjectValue(Interactions);
             }
-            if (Core.Optional.IsDefined(Links))
+            if (Optional.IsDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteObjectValue(Links);
             }
-            if (Core.Optional.IsDefined(Kpis))
+            if (Optional.IsDefined(Kpis))
             {
                 writer.WritePropertyName("kpis"u8);
                 writer.WriteObjectValue(Kpis);
             }
-            if (Core.Optional.IsDefined(SasPolicies))
+            if (Optional.IsDefined(SasPolicies))
             {
                 writer.WritePropertyName("sasPolicies"u8);
                 writer.WriteObjectValue(SasPolicies);
             }
-            if (Core.Optional.IsDefined(Connectors))
+            if (Optional.IsDefined(Connectors))
             {
                 writer.WritePropertyName("connectors"u8);
                 writer.WriteObjectValue(Connectors);
             }
-            if (Core.Optional.IsDefined(Views))
+            if (Optional.IsDefined(Views))
             {
                 writer.WritePropertyName("views"u8);
                 writer.WriteObjectValue(Views);
             }
-            if (Core.Optional.IsDefined(RelationshipLinks))
+            if (Optional.IsDefined(RelationshipLinks))
             {
                 writer.WritePropertyName("relationshipLinks"u8);
                 writer.WriteObjectValue(RelationshipLinks);
             }
-            if (Core.Optional.IsDefined(Relationships))
+            if (Optional.IsDefined(Relationships))
             {
                 writer.WritePropertyName("relationships"u8);
                 writer.WriteObjectValue(Relationships);
             }
-            if (Core.Optional.IsDefined(WidgetTypes))
+            if (Optional.IsDefined(WidgetTypes))
             {
                 writer.WritePropertyName("widgetTypes"u8);
                 writer.WriteObjectValue(WidgetTypes);
             }
-            if (Core.Optional.IsDefined(RoleAssignments))
+            if (Optional.IsDefined(RoleAssignments))
             {
                 writer.WritePropertyName("roleAssignments"u8);
                 writer.WriteObjectValue(RoleAssignments);
             }
-            if (Core.Optional.IsDefined(ConflationPolicies))
+            if (Optional.IsDefined(ConflationPolicies))
             {
                 writer.WritePropertyName("conflationPolicies"u8);
                 writer.WriteObjectValue(ConflationPolicies);
             }
-            if (Core.Optional.IsDefined(Segments))
+            if (Optional.IsDefined(Segments))
             {
                 writer.WritePropertyName("segments"u8);
                 writer.WriteObjectValue(Segments);
@@ -136,27 +136,27 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<string> assignmentName = default;
-            Core.Optional<IDictionary<string, string>> displayName = default;
-            Core.Optional<IDictionary<string, string>> description = default;
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<RoleType> role = default;
-            Core.Optional<IList<AssignmentPrincipal>> principals = default;
-            Core.Optional<ResourceSetDescription> profiles = default;
-            Core.Optional<ResourceSetDescription> interactions = default;
-            Core.Optional<ResourceSetDescription> links = default;
-            Core.Optional<ResourceSetDescription> kpis = default;
-            Core.Optional<ResourceSetDescription> sasPolicies = default;
-            Core.Optional<ResourceSetDescription> connectors = default;
-            Core.Optional<ResourceSetDescription> views = default;
-            Core.Optional<ResourceSetDescription> relationshipLinks = default;
-            Core.Optional<ResourceSetDescription> relationships = default;
-            Core.Optional<ResourceSetDescription> widgetTypes = default;
-            Core.Optional<ResourceSetDescription> roleAssignments = default;
-            Core.Optional<ResourceSetDescription> conflationPolicies = default;
-            Core.Optional<ResourceSetDescription> segments = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> tenantId = default;
+            Optional<string> assignmentName = default;
+            Optional<IDictionary<string, string>> displayName = default;
+            Optional<IDictionary<string, string>> description = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<RoleType> role = default;
+            Optional<IList<AssignmentPrincipal>> principals = default;
+            Optional<ResourceSetDescription> profiles = default;
+            Optional<ResourceSetDescription> interactions = default;
+            Optional<ResourceSetDescription> links = default;
+            Optional<ResourceSetDescription> kpis = default;
+            Optional<ResourceSetDescription> sasPolicies = default;
+            Optional<ResourceSetDescription> connectors = default;
+            Optional<ResourceSetDescription> views = default;
+            Optional<ResourceSetDescription> relationshipLinks = default;
+            Optional<ResourceSetDescription> relationships = default;
+            Optional<ResourceSetDescription> widgetTypes = default;
+            Optional<ResourceSetDescription> roleAssignments = default;
+            Optional<ResourceSetDescription> conflationPolicies = default;
+            Optional<ResourceSetDescription> segments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     continue;
                 }
             }
-            return new RoleAssignmentResourceFormatData(id, name, type, systemData.Value, Core.Optional.ToNullable(tenantId), assignmentName.Value, Core.Optional.ToDictionary(displayName), Core.Optional.ToDictionary(description), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(role), Core.Optional.ToList(principals), profiles.Value, interactions.Value, links.Value, kpis.Value, sasPolicies.Value, connectors.Value, views.Value, relationshipLinks.Value, relationships.Value, widgetTypes.Value, roleAssignments.Value, conflationPolicies.Value, segments.Value);
+            return new RoleAssignmentResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), assignmentName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), Optional.ToNullable(provisioningState), Optional.ToNullable(role), Optional.ToList(principals), profiles.Value, interactions.Value, links.Value, kpis.Value, sasPolicies.Value, connectors.Value, views.Value, relationshipLinks.Value, relationships.Value, widgetTypes.Value, roleAssignments.Value, conflationPolicies.Value, segments.Value);
         }
     }
 }

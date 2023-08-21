@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerResourceRequestsContent : Core.IUtf8JsonSerializable
+    public partial class ContainerResourceRequestsContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("memoryInGB"u8);
             writer.WriteNumberValue(MemoryInGB);
             writer.WritePropertyName("cpu"u8);
             writer.WriteNumberValue(Cpu);
-            if (Core.Optional.IsDefined(Gpu))
+            if (Optional.IsDefined(Gpu))
             {
                 writer.WritePropertyName("gpu"u8);
                 writer.WriteObjectValue(Gpu);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             double memoryInGB = default;
             double cpu = default;
-            Core.Optional<ContainerGpuResourceInfo> gpu = default;
+            Optional<ContainerGpuResourceInfo> gpu = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("memoryInGB"u8))

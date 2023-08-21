@@ -16,7 +16,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary> Initializes a new instance of Error. </summary>
         internal Error()
         {
-            Details = new Azure.Core.ChangeTrackingList<Error>();
+            Details = new ChangeTrackingList<Error>();
         }
 
         /// <summary> Initializes a new instance of Error. </summary>

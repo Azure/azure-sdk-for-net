@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <summary> Initializes a new instance of DataLakeAnalyticsAccountData. </summary>
         internal DataLakeAnalyticsAccountData()
         {
-            DataLakeStoreAccounts = new Core.ChangeTrackingList<DataLakeStoreAccountInformationData>();
-            PublicDataLakeStoreAccounts = new Core.ChangeTrackingList<DataLakeStoreAccountInformationData>();
-            StorageAccounts = new Core.ChangeTrackingList<DataLakeAnalyticsStorageAccountInformationData>();
-            ComputePolicies = new Core.ChangeTrackingList<DataLakeAnalyticsComputePolicyData>();
-            HiveMetastores = new Core.ChangeTrackingList<DataLakeAnalyticsHiveMetastore>();
-            VirtualNetworkRules = new Core.ChangeTrackingList<DataLakeAnalyticsVirtualNetworkRule>();
-            FirewallRules = new Core.ChangeTrackingList<DataLakeAnalyticsFirewallRuleData>();
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            DataLakeStoreAccounts = new ChangeTrackingList<DataLakeStoreAccountInformationData>();
+            PublicDataLakeStoreAccounts = new ChangeTrackingList<DataLakeStoreAccountInformationData>();
+            StorageAccounts = new ChangeTrackingList<DataLakeAnalyticsStorageAccountInformationData>();
+            ComputePolicies = new ChangeTrackingList<DataLakeAnalyticsComputePolicyData>();
+            HiveMetastores = new ChangeTrackingList<DataLakeAnalyticsHiveMetastore>();
+            VirtualNetworkRules = new ChangeTrackingList<DataLakeAnalyticsVirtualNetworkRule>();
+            FirewallRules = new ChangeTrackingList<DataLakeAnalyticsFirewallRuleData>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DataLakeAnalyticsAccountData. </summary>

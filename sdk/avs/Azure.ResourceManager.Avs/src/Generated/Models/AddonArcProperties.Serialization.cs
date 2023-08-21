@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class AddonArcProperties : Core.IUtf8JsonSerializable
+    public partial class AddonArcProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VCenter))
+            if (Optional.IsDefined(VCenter))
             {
                 writer.WritePropertyName("vCenter"u8);
                 writer.WriteStringValue(VCenter);
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Core.Optional<string> vCenter = default;
+            Optional<string> vCenter = default;
             AddonType addonType = default;
-            Core.Optional<AddonProvisioningState> provisioningState = default;
+            Optional<AddonProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vCenter"u8))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new AddonArcProperties(addonType, Core.Optional.ToNullable(provisioningState), vCenter.Value);
+            return new AddonArcProperties(addonType, Optional.ToNullable(provisioningState), vCenter.Value);
         }
     }
 }

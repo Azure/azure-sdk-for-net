@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Initializes a new instance of MySqlFlexibleServerConfigurationListForBatchUpdate. </summary>
         public MySqlFlexibleServerConfigurationListForBatchUpdate()
         {
-            Values = new Core.ChangeTrackingList<MySqlFlexibleServerConfigurationForBatchUpdate>();
+            Values = new ChangeTrackingList<MySqlFlexibleServerConfigurationForBatchUpdate>();
         }
 
         /// <summary> The list of server configurations. </summary>

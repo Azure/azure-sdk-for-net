@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class NicIPSettings : Core.IUtf8JsonSerializable
+    public partial class NicIPSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AllocationMethod))
+            if (Optional.IsDefined(AllocationMethod))
             {
                 writer.WritePropertyName("allocationMethod"u8);
                 writer.WriteStringValue(AllocationMethod.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(DnsServers))
+            if (Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Gateway))
+            if (Optional.IsCollectionDefined(Gateway))
             {
                 writer.WritePropertyName("gateway"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IPAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (Core.Optional.IsDefined(SubnetMask))
+            if (Optional.IsDefined(SubnetMask))
             {
                 writer.WritePropertyName("subnetMask"u8);
                 writer.WriteStringValue(SubnetMask);
@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Core.Optional<IPAddressAllocationMethod> allocationMethod = default;
-            Core.Optional<IList<string>> dnsServers = default;
-            Core.Optional<IList<string>> gateway = default;
-            Core.Optional<string> ipAddress = default;
-            Core.Optional<string> subnetMask = default;
-            Core.Optional<string> primaryWinsServer = default;
-            Core.Optional<string> secondaryWinsServer = default;
-            Core.Optional<IReadOnlyList<NicIPAddressSettings>> ipAddressInfo = default;
+            Optional<IPAddressAllocationMethod> allocationMethod = default;
+            Optional<IList<string>> dnsServers = default;
+            Optional<IList<string>> gateway = default;
+            Optional<string> ipAddress = default;
+            Optional<string> subnetMask = default;
+            Optional<string> primaryWinsServer = default;
+            Optional<string> secondaryWinsServer = default;
+            Optional<IReadOnlyList<NicIPAddressSettings>> ipAddressInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allocationMethod"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     continue;
                 }
             }
-            return new NicIPSettings(Core.Optional.ToNullable(allocationMethod), Core.Optional.ToList(dnsServers), Core.Optional.ToList(gateway), ipAddress.Value, subnetMask.Value, primaryWinsServer.Value, secondaryWinsServer.Value, Core.Optional.ToList(ipAddressInfo));
+            return new NicIPSettings(Optional.ToNullable(allocationMethod), Optional.ToList(dnsServers), Optional.ToList(gateway), ipAddress.Value, subnetMask.Value, primaryWinsServer.Value, secondaryWinsServer.Value, Optional.ToList(ipAddressInfo));
         }
     }
 }

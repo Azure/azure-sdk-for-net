@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of WorkloadNetworkVmGroupsList. </summary>
         internal WorkloadNetworkVmGroupsList()
         {
-            Value = new Core.ChangeTrackingList<WorkloadNetworkVmGroupData>();
+            Value = new ChangeTrackingList<WorkloadNetworkVmGroupData>();
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkVmGroupsList. </summary>

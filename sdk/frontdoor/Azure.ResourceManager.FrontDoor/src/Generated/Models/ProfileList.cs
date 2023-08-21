@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of ProfileList. </summary>
         internal ProfileList()
         {
-            Value = new Core.ChangeTrackingList<FrontDoorNetworkExperimentProfileData>();
+            Value = new ChangeTrackingList<FrontDoorNetworkExperimentProfileData>();
         }
 
         /// <summary> Initializes a new instance of ProfileList. </summary>

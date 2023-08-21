@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class FhirServiceResourceVersionPolicyConfiguration : Core.IUtf8JsonSerializable
+    public partial class FhirServiceResourceVersionPolicyConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Default))
+            if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteStringValue(Default.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(ResourceTypeOverrides))
+            if (Optional.IsCollectionDefined(ResourceTypeOverrides))
             {
                 writer.WritePropertyName("resourceTypeOverrides"u8);
                 writer.WriteStartObject();
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Core.Optional<FhirResourceVersionPolicy> @default = default;
-            Core.Optional<IDictionary<string, FhirResourceVersionPolicy>> resourceTypeOverrides = default;
+            Optional<FhirResourceVersionPolicy> @default = default;
+            Optional<IDictionary<string, FhirResourceVersionPolicy>> resourceTypeOverrides = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("default"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new FhirServiceResourceVersionPolicyConfiguration(Core.Optional.ToNullable(@default), Core.Optional.ToDictionary(resourceTypeOverrides));
+            return new FhirServiceResourceVersionPolicyConfiguration(Optional.ToNullable(@default), Optional.ToDictionary(resourceTypeOverrides));
         }
     }
 }

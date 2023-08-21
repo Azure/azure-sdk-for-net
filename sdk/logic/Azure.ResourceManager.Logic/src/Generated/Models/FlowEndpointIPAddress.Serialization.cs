@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class FlowEndpointIPAddress : Core.IUtf8JsonSerializable
+    public partial class FlowEndpointIPAddress : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CidrAddress))
+            if (Optional.IsDefined(CidrAddress))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(CidrAddress);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<string> address = default;
+            Optional<string> address = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))

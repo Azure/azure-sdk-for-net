@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class SubscriptionLifecycleNotificationSpecifications : Core.IUtf8JsonSerializable
+    public partial class SubscriptionLifecycleNotificationSpecifications : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(SubscriptionStateOverrideActions))
+            if (Optional.IsCollectionDefined(SubscriptionStateOverrideActions))
             {
                 writer.WritePropertyName("subscriptionStateOverrideActions"u8);
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SoftDeleteTtl))
+            if (Optional.IsDefined(SoftDeleteTtl))
             {
                 writer.WritePropertyName("softDeleteTTL"u8);
                 writer.WriteStringValue(SoftDeleteTtl.Value, "P");
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<IList<SubscriptionStateOverrideAction>> subscriptionStateOverrideActions = default;
-            Core.Optional<TimeSpan> softDeleteTtl = default;
+            Optional<IList<SubscriptionStateOverrideAction>> subscriptionStateOverrideActions = default;
+            Optional<TimeSpan> softDeleteTtl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionStateOverrideActions"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new SubscriptionLifecycleNotificationSpecifications(Core.Optional.ToList(subscriptionStateOverrideActions), Core.Optional.ToNullable(softDeleteTtl));
+            return new SubscriptionLifecycleNotificationSpecifications(Optional.ToList(subscriptionStateOverrideActions), Optional.ToNullable(softDeleteTtl));
         }
     }
 }

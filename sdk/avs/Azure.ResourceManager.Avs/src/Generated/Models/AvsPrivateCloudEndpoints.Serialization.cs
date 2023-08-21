@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Core.Optional<string> nsxtManager = default;
-            Core.Optional<string> vcsa = default;
-            Core.Optional<string> hcxCloudManager = default;
+            Optional<string> nsxtManager = default;
+            Optional<string> vcsa = default;
+            Optional<string> hcxCloudManager = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nsxtManager"u8))

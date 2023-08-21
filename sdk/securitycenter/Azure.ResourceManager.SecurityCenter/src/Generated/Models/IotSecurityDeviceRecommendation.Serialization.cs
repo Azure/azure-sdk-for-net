@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class IotSecurityDeviceRecommendation : Core.IUtf8JsonSerializable
+    public partial class IotSecurityDeviceRecommendation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<string> recommendationDisplayName = default;
-            Core.Optional<ReportedSeverity> reportedSeverity = default;
-            Core.Optional<long> devicesCount = default;
+            Optional<string> recommendationDisplayName = default;
+            Optional<ReportedSeverity> reportedSeverity = default;
+            Optional<long> devicesCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recommendationDisplayName"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new IotSecurityDeviceRecommendation(recommendationDisplayName.Value, Core.Optional.ToNullable(reportedSeverity), Core.Optional.ToNullable(devicesCount));
+            return new IotSecurityDeviceRecommendation(recommendationDisplayName.Value, Optional.ToNullable(reportedSeverity), Optional.ToNullable(devicesCount));
         }
     }
 }

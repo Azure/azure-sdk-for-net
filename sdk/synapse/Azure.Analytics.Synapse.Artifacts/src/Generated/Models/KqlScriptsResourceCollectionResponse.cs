@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of KqlScriptsResourceCollectionResponse. </summary>
         internal KqlScriptsResourceCollectionResponse()
         {
-            Value = new Core.ChangeTrackingList<KqlScriptResource>();
+            Value = new ChangeTrackingList<KqlScriptResource>();
         }
 
         /// <summary> Initializes a new instance of KqlScriptsResourceCollectionResponse. </summary>

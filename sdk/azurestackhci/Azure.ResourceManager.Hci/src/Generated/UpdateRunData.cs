@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Initializes a new instance of UpdateRunData. </summary>
         public UpdateRunData()
         {
-            Steps = new Core.ChangeTrackingList<HciUpdateStep>();
+            Steps = new ChangeTrackingList<HciUpdateStep>();
         }
 
         /// <summary> Initializes a new instance of UpdateRunData. </summary>

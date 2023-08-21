@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> Initializes a new instance of ScopeMapData. </summary>
         public ScopeMapData()
         {
-            Actions = new Core.ChangeTrackingList<string>();
+            Actions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ScopeMapData. </summary>

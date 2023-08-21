@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.TrafficManager
             uri.AppendPath(profileName, true);
             uri.AppendPath("/heatMaps/", false);
             uri.AppendPath(heatMapType.ToString(), true);
-            if (topLeft != null && Core.Optional.IsCollectionDefined(topLeft))
+            if (topLeft != null && Optional.IsCollectionDefined(topLeft))
             {
                 uri.AppendQueryDelimited("topLeft", topLeft, ",", true);
             }
-            if (botRight != null && Core.Optional.IsCollectionDefined(botRight))
+            if (botRight != null && Optional.IsCollectionDefined(botRight))
             {
                 uri.AppendQueryDelimited("botRight", botRight, ",", true);
             }

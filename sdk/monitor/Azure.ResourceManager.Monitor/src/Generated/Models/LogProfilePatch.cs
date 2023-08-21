@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of LogProfilePatch. </summary>
         public LogProfilePatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            Locations = new Core.ChangeTrackingList<AzureLocation>();
-            Categories = new Core.ChangeTrackingList<string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
+            Categories = new ChangeTrackingList<string>();
         }
 
         /// <summary> Resource tags. </summary>

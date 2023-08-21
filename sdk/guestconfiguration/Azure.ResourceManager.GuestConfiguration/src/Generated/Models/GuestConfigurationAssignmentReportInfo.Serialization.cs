@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class GuestConfigurationAssignmentReportInfo : Core.IUtf8JsonSerializable
+    public partial class GuestConfigurationAssignmentReportInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Assignment))
+            if (Optional.IsDefined(Assignment))
             {
                 writer.WritePropertyName("assignment"u8);
                 writer.WriteObjectValue(Assignment);
             }
-            if (Core.Optional.IsDefined(Vm))
+            if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
                 writer.WriteObjectValue(Vm);
             }
-            if (Core.Optional.IsCollectionDefined(Resources))
+            if (Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<Guid> reportId = default;
-            Core.Optional<GuestConfigurationAssignmentInfo> assignment = default;
-            Core.Optional<GuestConfigurationVmInfo> vm = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
-            Core.Optional<GuestConfigurationAssignmentReportType> operationType = default;
-            Core.Optional<IList<AssignmentReportResourceInfo>> resources = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<Guid> reportId = default;
+            Optional<GuestConfigurationAssignmentInfo> assignment = default;
+            Optional<GuestConfigurationVmInfo> vm = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
+            Optional<GuestConfigurationAssignmentReportType> operationType = default;
+            Optional<IList<AssignmentReportResourceInfo>> resources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     continue;
                 }
             }
-            return new GuestConfigurationAssignmentReportInfo(id.Value, Core.Optional.ToNullable(reportId), assignment.Value, vm.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(complianceStatus), Core.Optional.ToNullable(operationType), Core.Optional.ToList(resources));
+            return new GuestConfigurationAssignmentReportInfo(id.Value, Optional.ToNullable(reportId), assignment.Value, vm.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(complianceStatus), Optional.ToNullable(operationType), Optional.ToList(resources));
         }
     }
 }

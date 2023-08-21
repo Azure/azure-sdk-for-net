@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> resellerId = default;
-            Core.Optional<string> resellerDescription = default;
+            Optional<ResourceIdentifier> resellerId = default;
+            Optional<string> resellerDescription = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resellerId"u8))

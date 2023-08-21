@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of ScheduledQueryRulePatch. </summary>
         public ScheduledQueryRulePatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            Scopes = new Core.ChangeTrackingList<string>();
-            TargetResourceTypes = new Core.ChangeTrackingList<string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Scopes = new ChangeTrackingList<string>();
+            TargetResourceTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Resource tags. </summary>

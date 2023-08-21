@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityDevOps
 {
-    internal class AzureDevOpsConnectorOperationSource : Core.IOperationSource<AzureDevOpsConnectorResource>
+    internal class AzureDevOpsConnectorOperationSource : IOperationSource<AzureDevOpsConnectorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.SecurityDevOps
             _client = client;
         }
 
-        AzureDevOpsConnectorResource Core.IOperationSource<AzureDevOpsConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AzureDevOpsConnectorResource IOperationSource<AzureDevOpsConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AzureDevOpsConnectorData.DeserializeAzureDevOpsConnectorData(document.RootElement);
             return new AzureDevOpsConnectorResource(_client, data);
         }
 
-        async ValueTask<AzureDevOpsConnectorResource> Core.IOperationSource<AzureDevOpsConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AzureDevOpsConnectorResource> IOperationSource<AzureDevOpsConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AzureDevOpsConnectorData.DeserializeAzureDevOpsConnectorData(document.RootElement);

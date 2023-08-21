@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<FrontDoorRulesEngineData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<FrontDoorRulesEngineData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new RulesEngineListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new RulesEngineListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

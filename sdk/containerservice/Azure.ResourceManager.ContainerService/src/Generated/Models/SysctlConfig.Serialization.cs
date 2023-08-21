@@ -10,147 +10,147 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class SysctlConfig : Core.IUtf8JsonSerializable
+    public partial class SysctlConfig : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NetCoreSomaxconn))
+            if (Optional.IsDefined(NetCoreSomaxconn))
             {
                 writer.WritePropertyName("netCoreSomaxconn"u8);
                 writer.WriteNumberValue(NetCoreSomaxconn.Value);
             }
-            if (Core.Optional.IsDefined(NetCoreNetdevMaxBacklog))
+            if (Optional.IsDefined(NetCoreNetdevMaxBacklog))
             {
                 writer.WritePropertyName("netCoreNetdevMaxBacklog"u8);
                 writer.WriteNumberValue(NetCoreNetdevMaxBacklog.Value);
             }
-            if (Core.Optional.IsDefined(NetCoreRmemDefault))
+            if (Optional.IsDefined(NetCoreRmemDefault))
             {
                 writer.WritePropertyName("netCoreRmemDefault"u8);
                 writer.WriteNumberValue(NetCoreRmemDefault.Value);
             }
-            if (Core.Optional.IsDefined(NetCoreRmemMax))
+            if (Optional.IsDefined(NetCoreRmemMax))
             {
                 writer.WritePropertyName("netCoreRmemMax"u8);
                 writer.WriteNumberValue(NetCoreRmemMax.Value);
             }
-            if (Core.Optional.IsDefined(NetCoreWmemDefault))
+            if (Optional.IsDefined(NetCoreWmemDefault))
             {
                 writer.WritePropertyName("netCoreWmemDefault"u8);
                 writer.WriteNumberValue(NetCoreWmemDefault.Value);
             }
-            if (Core.Optional.IsDefined(NetCoreWmemMax))
+            if (Optional.IsDefined(NetCoreWmemMax))
             {
                 writer.WritePropertyName("netCoreWmemMax"u8);
                 writer.WriteNumberValue(NetCoreWmemMax.Value);
             }
-            if (Core.Optional.IsDefined(NetCoreOptmemMax))
+            if (Optional.IsDefined(NetCoreOptmemMax))
             {
                 writer.WritePropertyName("netCoreOptmemMax"u8);
                 writer.WriteNumberValue(NetCoreOptmemMax.Value);
             }
-            if (Core.Optional.IsDefined(NetIPv4TcpMaxSynBacklog))
+            if (Optional.IsDefined(NetIPv4TcpMaxSynBacklog))
             {
                 writer.WritePropertyName("netIpv4TcpMaxSynBacklog"u8);
                 writer.WriteNumberValue(NetIPv4TcpMaxSynBacklog.Value);
             }
-            if (Core.Optional.IsDefined(NetIPv4TcpMaxTwBuckets))
+            if (Optional.IsDefined(NetIPv4TcpMaxTwBuckets))
             {
                 writer.WritePropertyName("netIpv4TcpMaxTwBuckets"u8);
                 writer.WriteNumberValue(NetIPv4TcpMaxTwBuckets.Value);
             }
-            if (Core.Optional.IsDefined(NetIPv4TcpFinTimeout))
+            if (Optional.IsDefined(NetIPv4TcpFinTimeout))
             {
                 writer.WritePropertyName("netIpv4TcpFinTimeout"u8);
                 writer.WriteNumberValue(NetIPv4TcpFinTimeout.Value);
             }
-            if (Core.Optional.IsDefined(NetIPv4TcpKeepaliveTime))
+            if (Optional.IsDefined(NetIPv4TcpKeepaliveTime))
             {
                 writer.WritePropertyName("netIpv4TcpKeepaliveTime"u8);
                 writer.WriteNumberValue(NetIPv4TcpKeepaliveTime.Value);
             }
-            if (Core.Optional.IsDefined(NetIPv4TcpKeepaliveProbes))
+            if (Optional.IsDefined(NetIPv4TcpKeepaliveProbes))
             {
                 writer.WritePropertyName("netIpv4TcpKeepaliveProbes"u8);
                 writer.WriteNumberValue(NetIPv4TcpKeepaliveProbes.Value);
             }
-            if (Core.Optional.IsDefined(NetIPv4TcpKeepaliveIntvl))
+            if (Optional.IsDefined(NetIPv4TcpKeepaliveIntvl))
             {
                 writer.WritePropertyName("netIpv4TcpkeepaliveIntvl"u8);
                 writer.WriteNumberValue(NetIPv4TcpKeepaliveIntvl.Value);
             }
-            if (Core.Optional.IsDefined(NetIPv4TcpTwReuse))
+            if (Optional.IsDefined(NetIPv4TcpTwReuse))
             {
                 writer.WritePropertyName("netIpv4TcpTwReuse"u8);
                 writer.WriteBooleanValue(NetIPv4TcpTwReuse.Value);
             }
-            if (Core.Optional.IsDefined(NetIPv4IPLocalPortRange))
+            if (Optional.IsDefined(NetIPv4IPLocalPortRange))
             {
                 writer.WritePropertyName("netIpv4IpLocalPortRange"u8);
                 writer.WriteStringValue(NetIPv4IPLocalPortRange);
             }
-            if (Core.Optional.IsDefined(NetIPv4NeighDefaultGcThresh1))
+            if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh1))
             {
                 writer.WritePropertyName("netIpv4NeighDefaultGcThresh1"u8);
                 writer.WriteNumberValue(NetIPv4NeighDefaultGcThresh1.Value);
             }
-            if (Core.Optional.IsDefined(NetIPv4NeighDefaultGcThresh2))
+            if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh2))
             {
                 writer.WritePropertyName("netIpv4NeighDefaultGcThresh2"u8);
                 writer.WriteNumberValue(NetIPv4NeighDefaultGcThresh2.Value);
             }
-            if (Core.Optional.IsDefined(NetIPv4NeighDefaultGcThresh3))
+            if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh3))
             {
                 writer.WritePropertyName("netIpv4NeighDefaultGcThresh3"u8);
                 writer.WriteNumberValue(NetIPv4NeighDefaultGcThresh3.Value);
             }
-            if (Core.Optional.IsDefined(NetNetfilterNfConntrackMax))
+            if (Optional.IsDefined(NetNetfilterNfConntrackMax))
             {
                 writer.WritePropertyName("netNetfilterNfConntrackMax"u8);
                 writer.WriteNumberValue(NetNetfilterNfConntrackMax.Value);
             }
-            if (Core.Optional.IsDefined(NetNetfilterNfConntrackBuckets))
+            if (Optional.IsDefined(NetNetfilterNfConntrackBuckets))
             {
                 writer.WritePropertyName("netNetfilterNfConntrackBuckets"u8);
                 writer.WriteNumberValue(NetNetfilterNfConntrackBuckets.Value);
             }
-            if (Core.Optional.IsDefined(FsInotifyMaxUserWatches))
+            if (Optional.IsDefined(FsInotifyMaxUserWatches))
             {
                 writer.WritePropertyName("fsInotifyMaxUserWatches"u8);
                 writer.WriteNumberValue(FsInotifyMaxUserWatches.Value);
             }
-            if (Core.Optional.IsDefined(FsFileMax))
+            if (Optional.IsDefined(FsFileMax))
             {
                 writer.WritePropertyName("fsFileMax"u8);
                 writer.WriteNumberValue(FsFileMax.Value);
             }
-            if (Core.Optional.IsDefined(FsAioMaxNr))
+            if (Optional.IsDefined(FsAioMaxNr))
             {
                 writer.WritePropertyName("fsAioMaxNr"u8);
                 writer.WriteNumberValue(FsAioMaxNr.Value);
             }
-            if (Core.Optional.IsDefined(FsNrOpen))
+            if (Optional.IsDefined(FsNrOpen))
             {
                 writer.WritePropertyName("fsNrOpen"u8);
                 writer.WriteNumberValue(FsNrOpen.Value);
             }
-            if (Core.Optional.IsDefined(KernelThreadsMax))
+            if (Optional.IsDefined(KernelThreadsMax))
             {
                 writer.WritePropertyName("kernelThreadsMax"u8);
                 writer.WriteNumberValue(KernelThreadsMax.Value);
             }
-            if (Core.Optional.IsDefined(VmMaxMapCount))
+            if (Optional.IsDefined(VmMaxMapCount))
             {
                 writer.WritePropertyName("vmMaxMapCount"u8);
                 writer.WriteNumberValue(VmMaxMapCount.Value);
             }
-            if (Core.Optional.IsDefined(VmSwappiness))
+            if (Optional.IsDefined(VmSwappiness))
             {
                 writer.WritePropertyName("vmSwappiness"u8);
                 writer.WriteNumberValue(VmSwappiness.Value);
             }
-            if (Core.Optional.IsDefined(VmVfsCachePressure))
+            if (Optional.IsDefined(VmVfsCachePressure))
             {
                 writer.WritePropertyName("vmVfsCachePressure"u8);
                 writer.WriteNumberValue(VmVfsCachePressure.Value);
@@ -164,34 +164,34 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<int> netCoreSomaxconn = default;
-            Core.Optional<int> netCoreNetdevMaxBacklog = default;
-            Core.Optional<int> netCoreRmemDefault = default;
-            Core.Optional<int> netCoreRmemMax = default;
-            Core.Optional<int> netCoreWmemDefault = default;
-            Core.Optional<int> netCoreWmemMax = default;
-            Core.Optional<int> netCoreOptmemMax = default;
-            Core.Optional<int> netIPv4TcpMaxSynBacklog = default;
-            Core.Optional<int> netIPv4TcpMaxTwBuckets = default;
-            Core.Optional<int> netIPv4TcpFinTimeout = default;
-            Core.Optional<int> netIPv4TcpKeepaliveTime = default;
-            Core.Optional<int> netIPv4TcpKeepaliveProbes = default;
-            Core.Optional<int> netIPv4TcpKeepaliveIntvl = default;
-            Core.Optional<bool> netIPv4TcpTwReuse = default;
-            Core.Optional<string> netIPv4IPLocalPortRange = default;
-            Core.Optional<int> netIPv4NeighDefaultGcThresh1 = default;
-            Core.Optional<int> netIPv4NeighDefaultGcThresh2 = default;
-            Core.Optional<int> netIPv4NeighDefaultGcThresh3 = default;
-            Core.Optional<int> netNetfilterNfConntrackMax = default;
-            Core.Optional<int> netNetfilterNfConntrackBuckets = default;
-            Core.Optional<int> fsInotifyMaxUserWatches = default;
-            Core.Optional<int> fsFileMax = default;
-            Core.Optional<int> fsAioMaxNr = default;
-            Core.Optional<int> fsNrOpen = default;
-            Core.Optional<int> kernelThreadsMax = default;
-            Core.Optional<int> vmMaxMapCount = default;
-            Core.Optional<int> vmSwappiness = default;
-            Core.Optional<int> vmVfsCachePressure = default;
+            Optional<int> netCoreSomaxconn = default;
+            Optional<int> netCoreNetdevMaxBacklog = default;
+            Optional<int> netCoreRmemDefault = default;
+            Optional<int> netCoreRmemMax = default;
+            Optional<int> netCoreWmemDefault = default;
+            Optional<int> netCoreWmemMax = default;
+            Optional<int> netCoreOptmemMax = default;
+            Optional<int> netIPv4TcpMaxSynBacklog = default;
+            Optional<int> netIPv4TcpMaxTwBuckets = default;
+            Optional<int> netIPv4TcpFinTimeout = default;
+            Optional<int> netIPv4TcpKeepaliveTime = default;
+            Optional<int> netIPv4TcpKeepaliveProbes = default;
+            Optional<int> netIPv4TcpKeepaliveIntvl = default;
+            Optional<bool> netIPv4TcpTwReuse = default;
+            Optional<string> netIPv4IPLocalPortRange = default;
+            Optional<int> netIPv4NeighDefaultGcThresh1 = default;
+            Optional<int> netIPv4NeighDefaultGcThresh2 = default;
+            Optional<int> netIPv4NeighDefaultGcThresh3 = default;
+            Optional<int> netNetfilterNfConntrackMax = default;
+            Optional<int> netNetfilterNfConntrackBuckets = default;
+            Optional<int> fsInotifyMaxUserWatches = default;
+            Optional<int> fsFileMax = default;
+            Optional<int> fsAioMaxNr = default;
+            Optional<int> fsNrOpen = default;
+            Optional<int> kernelThreadsMax = default;
+            Optional<int> vmMaxMapCount = default;
+            Optional<int> vmSwappiness = default;
+            Optional<int> vmVfsCachePressure = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("netCoreSomaxconn"u8))
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new SysctlConfig(Core.Optional.ToNullable(netCoreSomaxconn), Core.Optional.ToNullable(netCoreNetdevMaxBacklog), Core.Optional.ToNullable(netCoreRmemDefault), Core.Optional.ToNullable(netCoreRmemMax), Core.Optional.ToNullable(netCoreWmemDefault), Core.Optional.ToNullable(netCoreWmemMax), Core.Optional.ToNullable(netCoreOptmemMax), Core.Optional.ToNullable(netIPv4TcpMaxSynBacklog), Core.Optional.ToNullable(netIPv4TcpMaxTwBuckets), Core.Optional.ToNullable(netIPv4TcpFinTimeout), Core.Optional.ToNullable(netIPv4TcpKeepaliveTime), Core.Optional.ToNullable(netIPv4TcpKeepaliveProbes), Core.Optional.ToNullable(netIPv4TcpKeepaliveIntvl), Core.Optional.ToNullable(netIPv4TcpTwReuse), netIPv4IPLocalPortRange.Value, Core.Optional.ToNullable(netIPv4NeighDefaultGcThresh1), Core.Optional.ToNullable(netIPv4NeighDefaultGcThresh2), Core.Optional.ToNullable(netIPv4NeighDefaultGcThresh3), Core.Optional.ToNullable(netNetfilterNfConntrackMax), Core.Optional.ToNullable(netNetfilterNfConntrackBuckets), Core.Optional.ToNullable(fsInotifyMaxUserWatches), Core.Optional.ToNullable(fsFileMax), Core.Optional.ToNullable(fsAioMaxNr), Core.Optional.ToNullable(fsNrOpen), Core.Optional.ToNullable(kernelThreadsMax), Core.Optional.ToNullable(vmMaxMapCount), Core.Optional.ToNullable(vmSwappiness), Core.Optional.ToNullable(vmVfsCachePressure));
+            return new SysctlConfig(Optional.ToNullable(netCoreSomaxconn), Optional.ToNullable(netCoreNetdevMaxBacklog), Optional.ToNullable(netCoreRmemDefault), Optional.ToNullable(netCoreRmemMax), Optional.ToNullable(netCoreWmemDefault), Optional.ToNullable(netCoreWmemMax), Optional.ToNullable(netCoreOptmemMax), Optional.ToNullable(netIPv4TcpMaxSynBacklog), Optional.ToNullable(netIPv4TcpMaxTwBuckets), Optional.ToNullable(netIPv4TcpFinTimeout), Optional.ToNullable(netIPv4TcpKeepaliveTime), Optional.ToNullable(netIPv4TcpKeepaliveProbes), Optional.ToNullable(netIPv4TcpKeepaliveIntvl), Optional.ToNullable(netIPv4TcpTwReuse), netIPv4IPLocalPortRange.Value, Optional.ToNullable(netIPv4NeighDefaultGcThresh1), Optional.ToNullable(netIPv4NeighDefaultGcThresh2), Optional.ToNullable(netIPv4NeighDefaultGcThresh3), Optional.ToNullable(netNetfilterNfConntrackMax), Optional.ToNullable(netNetfilterNfConntrackBuckets), Optional.ToNullable(fsInotifyMaxUserWatches), Optional.ToNullable(fsFileMax), Optional.ToNullable(fsAioMaxNr), Optional.ToNullable(fsNrOpen), Optional.ToNullable(kernelThreadsMax), Optional.ToNullable(vmMaxMapCount), Optional.ToNullable(vmSwappiness), Optional.ToNullable(vmVfsCachePressure));
         }
     }
 }

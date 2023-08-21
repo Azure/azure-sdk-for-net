@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <summary> Initializes a new instance of IotCentralPrivateLinkResourceListResult. </summary>
         internal IotCentralPrivateLinkResourceListResult()
         {
-            Value = new Core.ChangeTrackingList<IotCentralPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<IotCentralPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of IotCentralPrivateLinkResourceListResult. </summary>

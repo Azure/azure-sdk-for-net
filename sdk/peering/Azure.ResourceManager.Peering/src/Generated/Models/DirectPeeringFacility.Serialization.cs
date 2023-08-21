@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class DirectPeeringFacility : Core.IUtf8JsonSerializable
+    public partial class DirectPeeringFacility : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Address))
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (Core.Optional.IsDefined(DirectPeeringType))
+            if (Optional.IsDefined(DirectPeeringType))
             {
                 writer.WritePropertyName("directPeeringType"u8);
                 writer.WriteStringValue(DirectPeeringType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PeeringDBFacilityId))
+            if (Optional.IsDefined(PeeringDBFacilityId))
             {
                 writer.WritePropertyName("peeringDBFacilityId"u8);
                 writer.WriteNumberValue(PeeringDBFacilityId.Value);
             }
-            if (Core.Optional.IsDefined(PeeringDBFacilityLink))
+            if (Optional.IsDefined(PeeringDBFacilityLink))
             {
                 writer.WritePropertyName("peeringDBFacilityLink"u8);
                 writer.WriteStringValue(PeeringDBFacilityLink);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Core.Optional<string> address = default;
-            Core.Optional<DirectPeeringType> directPeeringType = default;
-            Core.Optional<int> peeringDBFacilityId = default;
-            Core.Optional<string> peeringDBFacilityLink = default;
+            Optional<string> address = default;
+            Optional<DirectPeeringType> directPeeringType = default;
+            Optional<int> peeringDBFacilityId = default;
+            Optional<string> peeringDBFacilityLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new DirectPeeringFacility(address.Value, Core.Optional.ToNullable(directPeeringType), Core.Optional.ToNullable(peeringDBFacilityId), peeringDBFacilityLink.Value);
+            return new DirectPeeringFacility(address.Value, Optional.ToNullable(directPeeringType), Optional.ToNullable(peeringDBFacilityId), peeringDBFacilityLink.Value);
         }
     }
 }

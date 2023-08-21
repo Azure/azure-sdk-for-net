@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
-    public partial class CustomLocationAuthentication : Core.IUtf8JsonSerializable
+    public partial class CustomLocationAuthentication : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CustomLocationPropertiesAuthenticationType))
+            if (Optional.IsDefined(CustomLocationPropertiesAuthenticationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CustomLocationPropertiesAuthenticationType);
             }
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<string> value = default;
+            Optional<string> type = default;
+            Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

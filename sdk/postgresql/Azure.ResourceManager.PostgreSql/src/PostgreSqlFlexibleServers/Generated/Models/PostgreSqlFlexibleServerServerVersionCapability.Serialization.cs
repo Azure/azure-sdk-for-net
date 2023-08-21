@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IReadOnlyList<string>> supportedVersionsToUpgrade = default;
-            Core.Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Core.Optional<string> reason = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<string>> supportedVersionsToUpgrade = default;
+            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerServerVersionCapability(Core.Optional.ToNullable(status), reason.Value, name.Value, Core.Optional.ToList(supportedVersionsToUpgrade));
+            return new PostgreSqlFlexibleServerServerVersionCapability(Optional.ToNullable(status), reason.Value, name.Value, Optional.ToList(supportedVersionsToUpgrade));
         }
     }
 }

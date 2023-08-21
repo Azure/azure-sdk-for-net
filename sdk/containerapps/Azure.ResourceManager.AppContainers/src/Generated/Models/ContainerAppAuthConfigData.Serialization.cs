@@ -12,34 +12,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class ContainerAppAuthConfigData : Core.IUtf8JsonSerializable
+    public partial class ContainerAppAuthConfigData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Platform))
+            if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
                 writer.WriteObjectValue(Platform);
             }
-            if (Core.Optional.IsDefined(GlobalValidation))
+            if (Optional.IsDefined(GlobalValidation))
             {
                 writer.WritePropertyName("globalValidation"u8);
                 writer.WriteObjectValue(GlobalValidation);
             }
-            if (Core.Optional.IsDefined(IdentityProviders))
+            if (Optional.IsDefined(IdentityProviders))
             {
                 writer.WritePropertyName("identityProviders"u8);
                 writer.WriteObjectValue(IdentityProviders);
             }
-            if (Core.Optional.IsDefined(Login))
+            if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
             }
-            if (Core.Optional.IsDefined(HttpSettings))
+            if (Optional.IsDefined(HttpSettings))
             {
                 writer.WritePropertyName("httpSettings"u8);
                 writer.WriteObjectValue(HttpSettings);
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ContainerAppAuthPlatform> platform = default;
-            Core.Optional<ContainerAppGlobalValidation> globalValidation = default;
-            Core.Optional<ContainerAppIdentityProvidersConfiguration> identityProviders = default;
-            Core.Optional<ContainerAppLogin> login = default;
-            Core.Optional<ContainerAppHttpSettings> httpSettings = default;
+            Optional<SystemData> systemData = default;
+            Optional<ContainerAppAuthPlatform> platform = default;
+            Optional<ContainerAppGlobalValidation> globalValidation = default;
+            Optional<ContainerAppIdentityProvidersConfiguration> identityProviders = default;
+            Optional<ContainerAppLogin> login = default;
+            Optional<ContainerAppHttpSettings> httpSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

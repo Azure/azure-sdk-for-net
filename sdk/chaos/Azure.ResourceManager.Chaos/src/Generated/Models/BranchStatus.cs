@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of BranchStatus. </summary>
         internal BranchStatus()
         {
-            Actions = new Core.ChangeTrackingList<ActionStatus>();
+            Actions = new ChangeTrackingList<ActionStatus>();
         }
 
         /// <summary> Initializes a new instance of BranchStatus. </summary>

@@ -14,29 +14,29 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SparkJobPropertiesConverter))]
-    public partial class SparkJobProperties : Core.IUtf8JsonSerializable
+    public partial class SparkJobProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("file"u8);
             writer.WriteStringValue(File);
-            if (Core.Optional.IsDefined(ClassName))
+            if (Optional.IsDefined(ClassName))
             {
                 writer.WritePropertyName("className"u8);
                 writer.WriteStringValue(ClassName);
             }
-            if (Core.Optional.IsDefined(Conf))
+            if (Optional.IsDefined(Conf))
             {
                 writer.WritePropertyName("conf"u8);
                 writer.WriteObjectValue(Conf);
             }
-            if (Core.Optional.IsCollectionDefined(Args))
+            if (Optional.IsCollectionDefined(Args))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Jars))
+            if (Optional.IsCollectionDefined(Jars))
             {
                 writer.WritePropertyName("jars"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Files))
+            if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Archives))
+            if (Optional.IsCollectionDefined(Archives))
             {
                 writer.WritePropertyName("archives"u8);
                 writer.WriteStartArray();
@@ -100,14 +100,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
+            Optional<string> name = default;
             string file = default;
-            Core.Optional<string> className = default;
-            Core.Optional<object> conf = default;
-            Core.Optional<IList<string>> args = default;
-            Core.Optional<IList<string>> jars = default;
-            Core.Optional<IList<string>> files = default;
-            Core.Optional<IList<string>> archives = default;
+            Optional<string> className = default;
+            Optional<object> conf = default;
+            Optional<IList<string>> args = default;
+            Optional<IList<string>> jars = default;
+            Optional<IList<string>> files = default;
+            Optional<IList<string>> archives = default;
             string driverMemory = default;
             int driverCores = default;
             string executorMemory = default;
@@ -225,7 +225,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SparkJobProperties(name.Value, file, className.Value, conf.Value, Core.Optional.ToList(args), Core.Optional.ToList(jars), Core.Optional.ToList(files), Core.Optional.ToList(archives), driverMemory, driverCores, executorMemory, executorCores, numExecutors, additionalProperties);
+            return new SparkJobProperties(name.Value, file, className.Value, conf.Value, Optional.ToList(args), Optional.ToList(jars), Optional.ToList(files), Optional.ToList(archives), driverMemory, driverCores, executorMemory, executorCores, numExecutors, additionalProperties);
         }
 
         internal partial class SparkJobPropertiesConverter : JsonConverter<SparkJobProperties>

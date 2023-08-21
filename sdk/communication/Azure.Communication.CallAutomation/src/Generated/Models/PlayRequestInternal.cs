@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(playSourceInfo, nameof(playSourceInfo));
 
             PlaySourceInfo = playSourceInfo;
-            PlayTo = new Core.ChangeTrackingList<CommunicationIdentifierModel>();
+            PlayTo = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
         /// <summary> The source of the audio to be played. </summary>

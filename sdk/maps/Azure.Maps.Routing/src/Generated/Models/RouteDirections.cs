@@ -16,8 +16,8 @@ namespace Azure.Maps.Routing.Models
         /// <summary> Initializes a new instance of RouteDirections. </summary>
         internal RouteDirections()
         {
-            Routes = new Core.ChangeTrackingList<RouteData>();
-            OptimizedWaypoints = new Core.ChangeTrackingList<RouteOptimizedWaypoint>();
+            Routes = new ChangeTrackingList<RouteData>();
+            OptimizedWaypoints = new ChangeTrackingList<RouteOptimizedWaypoint>();
         }
 
         /// <summary> Initializes a new instance of RouteDirections. </summary>

@@ -21,14 +21,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> time = default;
-            Core.Optional<CommunicationIdentifierModel> removedByCommunicationIdentifier = default;
-            Core.Optional<AcsChatThreadParticipantProperties> participantRemoved = default;
-            Core.Optional<DateTimeOffset> createTime = default;
-            Core.Optional<long> version = default;
-            Core.Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
-            Core.Optional<string> transactionId = default;
-            Core.Optional<string> threadId = default;
+            Optional<DateTimeOffset> time = default;
+            Optional<CommunicationIdentifierModel> removedByCommunicationIdentifier = default;
+            Optional<AcsChatThreadParticipantProperties> participantRemoved = default;
+            Optional<DateTimeOffset> createTime = default;
+            Optional<long> version = default;
+            Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
+            Optional<string> transactionId = default;
+            Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -96,7 +96,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatParticipantRemovedFromThreadWithUserEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Core.Optional.ToNullable(createTime), Core.Optional.ToNullable(version), Core.Optional.ToNullable(time), removedByCommunicationIdentifier.Value, participantRemoved.Value);
+            return new AcsChatParticipantRemovedFromThreadWithUserEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), Optional.ToNullable(time), removedByCommunicationIdentifier.Value, participantRemoved.Value);
         }
 
         internal partial class AcsChatParticipantRemovedFromThreadWithUserEventDataConverter : JsonConverter<AcsChatParticipantRemovedFromThreadWithUserEventData>

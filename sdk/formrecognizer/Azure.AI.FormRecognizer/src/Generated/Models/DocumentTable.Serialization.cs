@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             int rowCount = default;
             int columnCount = default;
             IReadOnlyList<DocumentTableCell> cells = default;
-            Core.Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
+            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,7 +71,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentTable(rowCount, columnCount, cells, Core.Optional.ToList(boundingRegions), spans);
+            return new DocumentTable(rowCount, columnCount, cells, Optional.ToList(boundingRegions), spans);
         }
     }
 }

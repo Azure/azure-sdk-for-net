@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint
 {
-    public partial class AssignmentData : Core.IUtf8JsonSerializable
+    public partial class AssignmentData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("identity"u8);
@@ -24,22 +24,22 @@ namespace Azure.ResourceManager.Blueprint
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(BlueprintId))
+            if (Optional.IsDefined(BlueprintId))
             {
                 writer.WritePropertyName("blueprintId"u8);
                 writer.WriteStringValue(BlueprintId);
             }
-            if (Core.Optional.IsDefined(Scope))
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Blueprint
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Core.Optional.IsDefined(Locks))
+            if (Optional.IsDefined(Locks))
             {
                 writer.WritePropertyName("locks"u8);
                 writer.WriteObjectValue(Locks);
@@ -80,16 +80,16 @@ namespace Azure.ResourceManager.Blueprint
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> blueprintId = default;
-            Core.Optional<string> scope = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<string> description = default;
+            Optional<string> blueprintId = default;
+            Optional<string> scope = default;
             IDictionary<string, ParameterValue> parameters = default;
             IDictionary<string, ResourceGroupValue> resourceGroups = default;
-            Core.Optional<AssignmentStatus> status = default;
-            Core.Optional<AssignmentLockSettings> locks = default;
-            Core.Optional<AssignmentProvisioningState> provisioningState = default;
+            Optional<AssignmentStatus> status = default;
+            Optional<AssignmentLockSettings> locks = default;
+            Optional<AssignmentProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Blueprint
                     continue;
                 }
             }
-            return new AssignmentData(id, name, type, systemData.Value, identity, displayName.Value, description.Value, blueprintId.Value, scope.Value, parameters, resourceGroups, status.Value, locks.Value, Core.Optional.ToNullable(provisioningState), location);
+            return new AssignmentData(id, name, type, systemData.Value, identity, displayName.Value, description.Value, blueprintId.Value, scope.Value, parameters, resourceGroups, status.Value, locks.Value, Optional.ToNullable(provisioningState), location);
         }
     }
 }

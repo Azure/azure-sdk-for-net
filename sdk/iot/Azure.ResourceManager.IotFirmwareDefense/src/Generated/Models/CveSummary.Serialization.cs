@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Core.Optional<long?> critical = default;
-            Core.Optional<long?> high = default;
-            Core.Optional<long?> medium = default;
-            Core.Optional<long?> low = default;
-            Core.Optional<long?> unknown = default;
-            Core.Optional<long?> undefined = default;
+            Optional<long?> critical = default;
+            Optional<long?> high = default;
+            Optional<long?> medium = default;
+            Optional<long?> low = default;
+            Optional<long?> unknown = default;
+            Optional<long?> undefined = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("critical"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new CveSummary(Core.Optional.ToNullable(critical), Core.Optional.ToNullable(high), Core.Optional.ToNullable(medium), Core.Optional.ToNullable(low), Core.Optional.ToNullable(unknown), Core.Optional.ToNullable(undefined));
+            return new CveSummary(Optional.ToNullable(critical), Optional.ToNullable(high), Optional.ToNullable(medium), Optional.ToNullable(low), Optional.ToNullable(unknown), Optional.ToNullable(undefined));
         }
     }
 }

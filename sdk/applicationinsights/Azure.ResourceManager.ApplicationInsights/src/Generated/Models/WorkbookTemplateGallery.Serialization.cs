@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class WorkbookTemplateGallery : Core.IUtf8JsonSerializable
+    public partial class WorkbookTemplateGallery : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Category))
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Core.Optional.IsDefined(WorkbookTemplateGalleryType))
+            if (Optional.IsDefined(WorkbookTemplateGalleryType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WorkbookTemplateGalleryType);
             }
-            if (Core.Optional.IsDefined(Order))
+            if (Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (Core.Optional.IsDefined(ResourceType))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> category = default;
-            Core.Optional<string> type = default;
-            Core.Optional<int> order = default;
-            Core.Optional<string> resourceType = default;
+            Optional<string> name = default;
+            Optional<string> category = default;
+            Optional<string> type = default;
+            Optional<int> order = default;
+            Optional<string> resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new WorkbookTemplateGallery(name.Value, category.Value, type.Value, Core.Optional.ToNullable(order), resourceType.Value);
+            return new WorkbookTemplateGallery(name.Value, category.Value, type.Value, Optional.ToNullable(order), resourceType.Value);
         }
     }
 }

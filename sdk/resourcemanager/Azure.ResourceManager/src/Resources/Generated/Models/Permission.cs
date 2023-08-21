@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of Permission. </summary>
         internal Permission()
         {
-            AllowedActions = new Core.ChangeTrackingList<string>();
-            DeniedActions = new Core.ChangeTrackingList<string>();
-            AllowedDataActions = new Core.ChangeTrackingList<string>();
-            DeniedDataActions = new Core.ChangeTrackingList<string>();
+            AllowedActions = new ChangeTrackingList<string>();
+            DeniedActions = new ChangeTrackingList<string>();
+            AllowedDataActions = new ChangeTrackingList<string>();
+            DeniedDataActions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of Permission. </summary>

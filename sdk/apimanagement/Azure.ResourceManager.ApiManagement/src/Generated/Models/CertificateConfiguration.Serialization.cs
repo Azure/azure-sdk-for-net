@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class CertificateConfiguration : Core.IUtf8JsonSerializable
+    public partial class CertificateConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EncodedCertificate))
+            if (Optional.IsDefined(EncodedCertificate))
             {
                 writer.WritePropertyName("encodedCertificate"u8);
                 writer.WriteStringValue(EncodedCertificate);
             }
-            if (Core.Optional.IsDefined(CertificatePassword))
+            if (Optional.IsDefined(CertificatePassword))
             {
                 writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
             }
             writer.WritePropertyName("storeName"u8);
             writer.WriteStringValue(StoreName.ToString());
-            if (Core.Optional.IsDefined(Certificate))
+            if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteObjectValue(Certificate);
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> encodedCertificate = default;
-            Core.Optional<string> certificatePassword = default;
+            Optional<string> encodedCertificate = default;
+            Optional<string> certificatePassword = default;
             CertificateConfigurationStoreName storeName = default;
-            Core.Optional<CertificateInformation> certificate = default;
+            Optional<CertificateInformation> certificate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encodedCertificate"u8))

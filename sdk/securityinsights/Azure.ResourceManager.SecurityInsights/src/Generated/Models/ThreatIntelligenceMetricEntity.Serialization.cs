@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> metricName = default;
-            Core.Optional<int> metricValue = default;
+            Optional<string> metricName = default;
+            Optional<int> metricValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricName"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new ThreatIntelligenceMetricEntity(metricName.Value, Core.Optional.ToNullable(metricValue));
+            return new ThreatIntelligenceMetricEntity(metricName.Value, Optional.ToNullable(metricValue));
         }
     }
 }

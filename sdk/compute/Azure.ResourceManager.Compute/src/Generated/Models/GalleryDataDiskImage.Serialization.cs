@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryDataDiskImage : Core.IUtf8JsonSerializable
+    public partial class GalleryDataDiskImage : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
-            if (Core.Optional.IsDefined(HostCaching))
+            if (Optional.IsDefined(HostCaching))
             {
                 writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(GallerySource))
+            if (Optional.IsDefined(GallerySource))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(GallerySource);
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             int lun = default;
-            Core.Optional<int> sizeInGB = default;
-            Core.Optional<HostCaching> hostCaching = default;
-            Core.Optional<GalleryDiskImageSource> source = default;
+            Optional<int> sizeInGB = default;
+            Optional<HostCaching> hostCaching = default;
+            Optional<GalleryDiskImageSource> source = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new GalleryDataDiskImage(Core.Optional.ToNullable(sizeInGB), Core.Optional.ToNullable(hostCaching), source.Value, lun);
+            return new GalleryDataDiskImage(Optional.ToNullable(sizeInGB), Optional.ToNullable(hostCaching), source.Value, lun);
         }
     }
 }

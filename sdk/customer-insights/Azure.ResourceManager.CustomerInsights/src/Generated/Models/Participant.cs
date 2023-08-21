@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             ProfileTypeName = profileTypeName;
             ParticipantPropertyReferences = participantPropertyReferences.ToList();
             ParticipantName = participantName;
-            DisplayName = new Core.ChangeTrackingDictionary<string, string>();
-            Description = new Core.ChangeTrackingDictionary<string, string>();
+            DisplayName = new ChangeTrackingDictionary<string, string>();
+            Description = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of Participant. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <summary> Initializes a new instance of OrbitalSpacecraftListResult. </summary>
         internal OrbitalSpacecraftListResult()
         {
-            Value = new Core.ChangeTrackingList<OrbitalSpacecraftData>();
+            Value = new ChangeTrackingList<OrbitalSpacecraftData>();
         }
 
         /// <summary> Initializes a new instance of OrbitalSpacecraftListResult. </summary>

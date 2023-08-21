@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<string> version = default;
-            Core.Optional<DynatraceOneAgentMonitoringType> monitoringType = default;
-            Core.Optional<DynatraceOneAgentAutoUpdateSetting> autoUpdateSetting = default;
-            Core.Optional<DynatraceOneAgentUpdateStatus> updateStatus = default;
-            Core.Optional<DynatraceOneAgentAvailabilityState> availabilityState = default;
-            Core.Optional<DynatraceLogModuleState> logModule = default;
-            Core.Optional<string> hostGroup = default;
-            Core.Optional<string> hostName = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<string> version = default;
+            Optional<DynatraceOneAgentMonitoringType> monitoringType = default;
+            Optional<DynatraceOneAgentAutoUpdateSetting> autoUpdateSetting = default;
+            Optional<DynatraceOneAgentUpdateStatus> updateStatus = default;
+            Optional<DynatraceOneAgentAvailabilityState> availabilityState = default;
+            Optional<DynatraceLogModuleState> logModule = default;
+            Optional<string> hostGroup = default;
+            Optional<string> hostName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new DynatraceOneAgentEnabledAppServiceInfo(resourceId.Value, version.Value, Core.Optional.ToNullable(monitoringType), Core.Optional.ToNullable(autoUpdateSetting), Core.Optional.ToNullable(updateStatus), Core.Optional.ToNullable(availabilityState), Core.Optional.ToNullable(logModule), hostGroup.Value, hostName.Value);
+            return new DynatraceOneAgentEnabledAppServiceInfo(resourceId.Value, version.Value, Optional.ToNullable(monitoringType), Optional.ToNullable(autoUpdateSetting), Optional.ToNullable(updateStatus), Optional.ToNullable(availabilityState), Optional.ToNullable(logModule), hostGroup.Value, hostName.Value);
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Azure.AI.Language.QuestionAnswering
             {
                 return null;
             }
-            Core.Optional<int> displayOrder = default;
-            Core.Optional<int> qnaId = default;
-            Core.Optional<string> displayText = default;
+            Optional<int> displayOrder = default;
+            Optional<int> qnaId = default;
+            Optional<string> displayText = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayOrder"u8))
@@ -47,7 +47,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     continue;
                 }
             }
-            return new KnowledgeBaseAnswerPrompt(Core.Optional.ToNullable(displayOrder), Core.Optional.ToNullable(qnaId), displayText.Value);
+            return new KnowledgeBaseAnswerPrompt(Optional.ToNullable(displayOrder), Optional.ToNullable(qnaId), displayText.Value);
         }
     }
 }

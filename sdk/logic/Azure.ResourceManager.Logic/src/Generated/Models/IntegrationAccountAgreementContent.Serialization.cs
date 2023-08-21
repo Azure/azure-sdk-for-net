@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationAccountAgreementContent : Core.IUtf8JsonSerializable
+    public partial class IntegrationAccountAgreementContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AS2))
+            if (Optional.IsDefined(AS2))
             {
                 writer.WritePropertyName("aS2"u8);
                 writer.WriteObjectValue(AS2);
             }
-            if (Core.Optional.IsDefined(X12))
+            if (Optional.IsDefined(X12))
             {
                 writer.WritePropertyName("x12"u8);
                 writer.WriteObjectValue(X12);
             }
-            if (Core.Optional.IsDefined(Edifact))
+            if (Optional.IsDefined(Edifact))
             {
                 writer.WritePropertyName("edifact"u8);
                 writer.WriteObjectValue(Edifact);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<AS2AgreementContent> aS2 = default;
-            Core.Optional<X12AgreementContent> x12 = default;
-            Core.Optional<EdifactAgreementContent> edifact = default;
+            Optional<AS2AgreementContent> aS2 = default;
+            Optional<X12AgreementContent> x12 = default;
+            Optional<EdifactAgreementContent> edifact = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aS2"u8))

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class IPAddressPool : Core.IUtf8JsonSerializable
+    public partial class IPAddressPool : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("addresses"u8);
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(AutoAssign))
+            if (Optional.IsDefined(AutoAssign))
             {
                 writer.WritePropertyName("autoAssign"u8);
                 writer.WriteStringValue(AutoAssign.Value.ToString());
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(OnlyUseHostIPs))
+            if (Optional.IsDefined(OnlyUseHostIPs))
             {
                 writer.WritePropertyName("onlyUseHostIps"u8);
                 writer.WriteStringValue(OnlyUseHostIPs.Value.ToString());
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             IList<string> addresses = default;
-            Core.Optional<BfdEnabled> autoAssign = default;
+            Optional<BfdEnabled> autoAssign = default;
             string name = default;
-            Core.Optional<BfdEnabled> onlyUseHostIPs = default;
+            Optional<BfdEnabled> onlyUseHostIPs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addresses"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new IPAddressPool(addresses, Core.Optional.ToNullable(autoAssign), name, Core.Optional.ToNullable(onlyUseHostIPs));
+            return new IPAddressPool(addresses, Optional.ToNullable(autoAssign), name, Optional.ToNullable(onlyUseHostIPs));
         }
     }
 }

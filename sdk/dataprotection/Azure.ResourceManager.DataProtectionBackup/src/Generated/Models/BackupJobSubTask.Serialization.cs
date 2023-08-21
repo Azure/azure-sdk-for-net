@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyDictionary<string, string>> additionalDetails = default;
+            Optional<IReadOnlyDictionary<string, string>> additionalDetails = default;
             int taskId = default;
             string taskName = default;
-            Core.Optional<string> taskProgress = default;
+            Optional<string> taskProgress = default;
             string taskStatus = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new BackupJobSubTask(Core.Optional.ToDictionary(additionalDetails), taskId, taskName, taskProgress.Value, taskStatus);
+            return new BackupJobSubTask(Optional.ToDictionary(additionalDetails), taskId, taskName, taskProgress.Value, taskStatus);
         }
     }
 }

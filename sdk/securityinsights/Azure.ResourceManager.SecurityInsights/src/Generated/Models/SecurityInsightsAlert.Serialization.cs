@@ -13,16 +13,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAlert : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsAlert : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Severity))
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
@@ -41,34 +41,34 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<string> alertDisplayName = default;
-            Core.Optional<string> alertType = default;
-            Core.Optional<string> compromisedEntity = default;
-            Core.Optional<SecurityInsightsAlertConfidenceLevel> confidenceLevel = default;
-            Core.Optional<IReadOnlyList<SecurityInsightsAlertConfidenceReason>> confidenceReasons = default;
-            Core.Optional<double> confidenceScore = default;
-            Core.Optional<SecurityInsightsAlertConfidenceScoreStatus> confidenceScoreStatus = default;
-            Core.Optional<string> description = default;
-            Core.Optional<DateTimeOffset> endTimeUtc = default;
-            Core.Optional<SecurityInsightsKillChainIntent> intent = default;
-            Core.Optional<string> providerAlertId = default;
-            Core.Optional<DateTimeOffset> processingEndTime = default;
-            Core.Optional<string> productComponentName = default;
-            Core.Optional<string> productName = default;
-            Core.Optional<string> productVersion = default;
-            Core.Optional<IReadOnlyList<string>> remediationSteps = default;
-            Core.Optional<SecurityInsightsAlertSeverity> severity = default;
-            Core.Optional<DateTimeOffset> startTimeUtc = default;
-            Core.Optional<SecurityInsightsAlertStatus> status = default;
-            Core.Optional<string> systemAlertId = default;
-            Core.Optional<IReadOnlyList<SecurityInsightsAttackTactic>> tactics = default;
-            Core.Optional<DateTimeOffset> timeGenerated = default;
-            Core.Optional<string> vendorName = default;
-            Core.Optional<string> alertLink = default;
-            Core.Optional<IReadOnlyList<BinaryData>> resourceIdentifiers = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            Optional<string> friendlyName = default;
+            Optional<string> alertDisplayName = default;
+            Optional<string> alertType = default;
+            Optional<string> compromisedEntity = default;
+            Optional<SecurityInsightsAlertConfidenceLevel> confidenceLevel = default;
+            Optional<IReadOnlyList<SecurityInsightsAlertConfidenceReason>> confidenceReasons = default;
+            Optional<double> confidenceScore = default;
+            Optional<SecurityInsightsAlertConfidenceScoreStatus> confidenceScoreStatus = default;
+            Optional<string> description = default;
+            Optional<DateTimeOffset> endTimeUtc = default;
+            Optional<SecurityInsightsKillChainIntent> intent = default;
+            Optional<string> providerAlertId = default;
+            Optional<DateTimeOffset> processingEndTime = default;
+            Optional<string> productComponentName = default;
+            Optional<string> productName = default;
+            Optional<string> productVersion = default;
+            Optional<IReadOnlyList<string>> remediationSteps = default;
+            Optional<SecurityInsightsAlertSeverity> severity = default;
+            Optional<DateTimeOffset> startTimeUtc = default;
+            Optional<SecurityInsightsAlertStatus> status = default;
+            Optional<string> systemAlertId = default;
+            Optional<IReadOnlyList<SecurityInsightsAttackTactic>> tactics = default;
+            Optional<DateTimeOffset> timeGenerated = default;
+            Optional<string> vendorName = default;
+            Optional<string> alertLink = default;
+            Optional<IReadOnlyList<BinaryData>> resourceIdentifiers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsAlert(id, name, type, systemData.Value, kind, Core.Optional.ToDictionary(additionalData), friendlyName.Value, alertDisplayName.Value, alertType.Value, compromisedEntity.Value, Core.Optional.ToNullable(confidenceLevel), Core.Optional.ToList(confidenceReasons), Core.Optional.ToNullable(confidenceScore), Core.Optional.ToNullable(confidenceScoreStatus), description.Value, Core.Optional.ToNullable(endTimeUtc), Core.Optional.ToNullable(intent), providerAlertId.Value, Core.Optional.ToNullable(processingEndTime), productComponentName.Value, productName.Value, productVersion.Value, Core.Optional.ToList(remediationSteps), Core.Optional.ToNullable(severity), Core.Optional.ToNullable(startTimeUtc), Core.Optional.ToNullable(status), systemAlertId.Value, Core.Optional.ToList(tactics), Core.Optional.ToNullable(timeGenerated), vendorName.Value, alertLink.Value, Core.Optional.ToList(resourceIdentifiers));
+            return new SecurityInsightsAlert(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, alertDisplayName.Value, alertType.Value, compromisedEntity.Value, Optional.ToNullable(confidenceLevel), Optional.ToList(confidenceReasons), Optional.ToNullable(confidenceScore), Optional.ToNullable(confidenceScoreStatus), description.Value, Optional.ToNullable(endTimeUtc), Optional.ToNullable(intent), providerAlertId.Value, Optional.ToNullable(processingEndTime), productComponentName.Value, productName.Value, productVersion.Value, Optional.ToList(remediationSteps), Optional.ToNullable(severity), Optional.ToNullable(startTimeUtc), Optional.ToNullable(status), systemAlertId.Value, Optional.ToList(tactics), Optional.ToNullable(timeGenerated), vendorName.Value, alertLink.Value, Optional.ToList(resourceIdentifiers));
         }
     }
 }

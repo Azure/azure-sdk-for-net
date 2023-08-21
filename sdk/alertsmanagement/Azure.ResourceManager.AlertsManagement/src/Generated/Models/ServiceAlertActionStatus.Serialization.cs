@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    internal partial class ServiceAlertActionStatus : Core.IUtf8JsonSerializable
+    internal partial class ServiceAlertActionStatus : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsSuppressed))
+            if (Optional.IsDefined(IsSuppressed))
             {
                 writer.WritePropertyName("isSuppressed"u8);
                 writer.WriteBooleanValue(IsSuppressed.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Core.Optional<bool> isSuppressed = default;
+            Optional<bool> isSuppressed = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSuppressed"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new ServiceAlertActionStatus(Core.Optional.ToNullable(isSuppressed));
+            return new ServiceAlertActionStatus(Optional.ToNullable(isSuppressed));
         }
     }
 }

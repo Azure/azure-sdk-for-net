@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    internal partial class StorageCacheSecuritySettings : Core.IUtf8JsonSerializable
+    internal partial class StorageCacheSecuritySettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AccessPolicies))
+            if (Optional.IsCollectionDefined(AccessPolicies))
             {
                 writer.WritePropertyName("accessPolicies"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<IList<NfsAccessPolicy>> accessPolicies = default;
+            Optional<IList<NfsAccessPolicy>> accessPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accessPolicies"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new StorageCacheSecuritySettings(Core.Optional.ToList(accessPolicies));
+            return new StorageCacheSecuritySettings(Optional.ToList(accessPolicies));
         }
     }
 }

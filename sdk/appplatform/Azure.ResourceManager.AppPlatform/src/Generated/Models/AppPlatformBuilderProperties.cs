@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformBuilderProperties. </summary>
         public AppPlatformBuilderProperties()
         {
-            BuildpackGroups = new Core.ChangeTrackingList<BuildpacksGroupProperties>();
+            BuildpackGroups = new ChangeTrackingList<BuildpacksGroupProperties>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformBuilderProperties. </summary>

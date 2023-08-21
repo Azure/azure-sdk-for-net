@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ReplicationProtectionIntentData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ReplicationProtectionIntentData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new ReplicationProtectionIntentListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ReplicationProtectionIntentListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

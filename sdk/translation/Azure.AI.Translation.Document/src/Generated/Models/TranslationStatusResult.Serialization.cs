@@ -24,7 +24,7 @@ namespace Azure.AI.Translation.Document
             DateTimeOffset createdDateTimeUtc = default;
             DateTimeOffset lastActionDateTimeUtc = default;
             DocumentTranslationStatus status = default;
-            Core.Optional<JsonElement> error = default;
+            Optional<JsonElement> error = default;
             StatusSummary summary = default;
             foreach (var property in element.EnumerateObject())
             {

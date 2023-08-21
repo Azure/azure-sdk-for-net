@@ -18,8 +18,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<string> addr = default;
-            Core.Optional<string> instanceID = default;
+            Optional<string> addr = default;
+            Optional<string> instanceID = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addr"u8))

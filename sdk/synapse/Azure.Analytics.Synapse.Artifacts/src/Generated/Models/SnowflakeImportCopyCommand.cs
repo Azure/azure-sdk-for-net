@@ -16,8 +16,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SnowflakeImportCopyCommand. </summary>
         public SnowflakeImportCopyCommand()
         {
-            AdditionalCopyOptions = new Core.ChangeTrackingDictionary<string, object>();
-            AdditionalFormatOptions = new Core.ChangeTrackingDictionary<string, object>();
+            AdditionalCopyOptions = new ChangeTrackingDictionary<string, object>();
+            AdditionalFormatOptions = new ChangeTrackingDictionary<string, object>();
             Type = "SnowflakeImportCopyCommand";
         }
 

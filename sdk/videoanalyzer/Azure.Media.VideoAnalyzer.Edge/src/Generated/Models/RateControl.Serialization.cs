@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class RateControl : Core.IUtf8JsonSerializable
+    public partial class RateControl : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BitRateLimit))
+            if (Optional.IsDefined(BitRateLimit))
             {
                 writer.WritePropertyName("bitRateLimit"u8);
                 writer.WriteNumberValue(BitRateLimit.Value);
             }
-            if (Core.Optional.IsDefined(EncodingInterval))
+            if (Optional.IsDefined(EncodingInterval))
             {
                 writer.WritePropertyName("encodingInterval"u8);
                 writer.WriteNumberValue(EncodingInterval.Value);
             }
-            if (Core.Optional.IsDefined(FrameRateLimit))
+            if (Optional.IsDefined(FrameRateLimit))
             {
                 writer.WritePropertyName("frameRateLimit"u8);
                 writer.WriteNumberValue(FrameRateLimit.Value);
             }
-            if (Core.Optional.IsDefined(GuaranteedFrameRate))
+            if (Optional.IsDefined(GuaranteedFrameRate))
             {
                 writer.WritePropertyName("guaranteedFrameRate"u8);
                 writer.WriteBooleanValue(GuaranteedFrameRate.Value);
@@ -44,10 +44,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<float> bitRateLimit = default;
-            Core.Optional<float> encodingInterval = default;
-            Core.Optional<float> frameRateLimit = default;
-            Core.Optional<bool> guaranteedFrameRate = default;
+            Optional<float> bitRateLimit = default;
+            Optional<float> encodingInterval = default;
+            Optional<float> frameRateLimit = default;
+            Optional<bool> guaranteedFrameRate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bitRateLimit"u8))
@@ -87,7 +87,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new RateControl(Core.Optional.ToNullable(bitRateLimit), Core.Optional.ToNullable(encodingInterval), Core.Optional.ToNullable(frameRateLimit), Core.Optional.ToNullable(guaranteedFrameRate));
+            return new RateControl(Optional.ToNullable(bitRateLimit), Optional.ToNullable(encodingInterval), Optional.ToNullable(frameRateLimit), Optional.ToNullable(guaranteedFrameRate));
         }
     }
 }

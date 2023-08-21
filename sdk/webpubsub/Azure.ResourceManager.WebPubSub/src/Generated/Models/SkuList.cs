@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of SkuList. </summary>
         internal SkuList()
         {
-            Value = new Core.ChangeTrackingList<WebPubSubSku>();
+            Value = new ChangeTrackingList<WebPubSubSku>();
         }
 
         /// <summary> Initializes a new instance of SkuList. </summary>

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <summary> Initializes a new instance of AttestationPrivateLinkResource. </summary>
         public AttestationPrivateLinkResource()
         {
-            RequiredMembers = new Core.ChangeTrackingList<string>();
-            RequiredZoneNames = new Core.ChangeTrackingList<string>();
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AttestationPrivateLinkResource. </summary>

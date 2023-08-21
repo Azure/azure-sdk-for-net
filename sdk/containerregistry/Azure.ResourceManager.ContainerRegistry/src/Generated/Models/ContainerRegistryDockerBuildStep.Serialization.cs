@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryDockerBuildStep : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryDockerBuildStep : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ImageNames))
+            if (Optional.IsCollectionDefined(ImageNames))
             {
                 writer.WritePropertyName("imageNames"u8);
                 writer.WriteStartArray();
@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsPushEnabled))
+            if (Optional.IsDefined(IsPushEnabled))
             {
                 writer.WritePropertyName("isPushEnabled"u8);
                 writer.WriteBooleanValue(IsPushEnabled.Value);
             }
-            if (Core.Optional.IsDefined(NoCache))
+            if (Optional.IsDefined(NoCache))
             {
                 writer.WritePropertyName("noCache"u8);
                 writer.WriteBooleanValue(NoCache.Value);
             }
             writer.WritePropertyName("dockerFilePath"u8);
             writer.WriteStringValue(DockerFilePath);
-            if (Core.Optional.IsDefined(Target))
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Core.Optional.IsCollectionDefined(Arguments))
+            if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ContainerRegistryTaskStepType.ToString());
-            if (Core.Optional.IsDefined(ContextPath))
+            if (Optional.IsDefined(ContextPath))
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (Core.Optional.IsDefined(ContextAccessToken))
+            if (Optional.IsDefined(ContextAccessToken))
             {
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> imageNames = default;
-            Core.Optional<bool> isPushEnabled = default;
-            Core.Optional<bool> noCache = default;
+            Optional<IList<string>> imageNames = default;
+            Optional<bool> isPushEnabled = default;
+            Optional<bool> noCache = default;
             string dockerFilePath = default;
-            Core.Optional<string> target = default;
-            Core.Optional<IList<ContainerRegistryRunArgument>> arguments = default;
+            Optional<string> target = default;
+            Optional<IList<ContainerRegistryRunArgument>> arguments = default;
             ContainerRegistryTaskStepType type = default;
-            Core.Optional<IReadOnlyList<ContainerRegistryBaseImageDependency>> baseImageDependencies = default;
-            Core.Optional<string> contextPath = default;
-            Core.Optional<string> contextAccessToken = default;
+            Optional<IReadOnlyList<ContainerRegistryBaseImageDependency>> baseImageDependencies = default;
+            Optional<string> contextPath = default;
+            Optional<string> contextAccessToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageNames"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryDockerBuildStep(type, Core.Optional.ToList(baseImageDependencies), contextPath.Value, contextAccessToken.Value, Core.Optional.ToList(imageNames), Core.Optional.ToNullable(isPushEnabled), Core.Optional.ToNullable(noCache), dockerFilePath, target.Value, Core.Optional.ToList(arguments));
+            return new ContainerRegistryDockerBuildStep(type, Optional.ToList(baseImageDependencies), contextPath.Value, contextAccessToken.Value, Optional.ToList(imageNames), Optional.ToNullable(isPushEnabled), Optional.ToNullable(noCache), dockerFilePath, target.Value, Optional.ToList(arguments));
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<string> profileVersion = default;
-            Core.Optional<string> apiVersion = default;
+            Optional<string> profileVersion = default;
+            Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profileVersion"u8))

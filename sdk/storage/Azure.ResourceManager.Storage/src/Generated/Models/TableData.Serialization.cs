@@ -13,14 +13,14 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class TableData : Core.IUtf8JsonSerializable
+    public partial class TableData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(SignedIdentifiers))
+            if (Optional.IsCollectionDefined(SignedIdentifiers))
             {
                 writer.WritePropertyName("signedIdentifiers"u8);
                 writer.WriteStartArray();
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> tableName = default;
-            Core.Optional<IList<StorageTableSignedIdentifier>> signedIdentifiers = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> tableName = default;
+            Optional<IList<StorageTableSignedIdentifier>> signedIdentifiers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new TableData(id, name, type, systemData.Value, tableName.Value, Core.Optional.ToList(signedIdentifiers));
+            return new TableData(id, name, type, systemData.Value, tableName.Value, Optional.ToList(signedIdentifiers));
         }
     }
 }

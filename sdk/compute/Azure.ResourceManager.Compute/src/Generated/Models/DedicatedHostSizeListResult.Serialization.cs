@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> value = default;
+            Optional<IReadOnlyList<string>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new DedicatedHostSizeListResult(Core.Optional.ToList(value));
+            return new DedicatedHostSizeListResult(Optional.ToList(value));
         }
     }
 }

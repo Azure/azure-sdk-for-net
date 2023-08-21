@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformSkuZoneDetails. </summary>
         internal AppPlatformSkuZoneDetails()
         {
-            Name = new Core.ChangeTrackingList<string>();
-            Capabilities = new Core.ChangeTrackingList<AppPlatformSkuCapabilities>();
+            Name = new ChangeTrackingList<string>();
+            Capabilities = new ChangeTrackingList<AppPlatformSkuCapabilities>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformSkuZoneDetails. </summary>

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class WindowsEventLogDataSource : Core.IUtf8JsonSerializable
+    public partial class WindowsEventLogDataSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Streams))
+            if (Optional.IsCollectionDefined(Streams))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(XPathQueries))
+            if (Optional.IsCollectionDefined(XPathQueries))
             {
                 writer.WritePropertyName("xPathQueries"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<IList<WindowsEventLogDataSourceStream>> streams = default;
-            Core.Optional<IList<string>> xPathQueries = default;
-            Core.Optional<string> name = default;
+            Optional<IList<WindowsEventLogDataSourceStream>> streams = default;
+            Optional<IList<string>> xPathQueries = default;
+            Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new WindowsEventLogDataSource(Core.Optional.ToList(streams), Core.Optional.ToList(xPathQueries), name.Value);
+            return new WindowsEventLogDataSource(Optional.ToList(streams), Optional.ToList(xPathQueries), name.Value);
         }
     }
 }

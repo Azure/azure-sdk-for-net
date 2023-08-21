@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <summary> Initializes a new instance of PrivateZoneListResult. </summary>
         internal PrivateZoneListResult()
         {
-            Value = new Core.ChangeTrackingList<PrivateDnsZoneData>();
+            Value = new ChangeTrackingList<PrivateDnsZoneData>();
         }
 
         /// <summary> Initializes a new instance of PrivateZoneListResult. </summary>

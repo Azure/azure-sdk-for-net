@@ -19,18 +19,18 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> hostName = default;
-            Core.Optional<bool> isHostnameAlreadyVerified = default;
-            Core.Optional<ContainerAppDnsVerificationTestResult> customDomainVerificationTest = default;
-            Core.Optional<ContainerAppCustomDomainVerificationFailureInfo> customDomainVerificationFailureInfo = default;
-            Core.Optional<bool> hasConflictOnManagedEnvironment = default;
-            Core.Optional<bool> conflictWithEnvironmentCustomDomain = default;
-            Core.Optional<string> conflictingContainerAppResourceId = default;
-            Core.Optional<IReadOnlyList<string>> cNameRecords = default;
-            Core.Optional<IReadOnlyList<string>> txtRecords = default;
-            Core.Optional<IReadOnlyList<string>> aRecords = default;
-            Core.Optional<IReadOnlyList<string>> alternateCNameRecords = default;
-            Core.Optional<IReadOnlyList<string>> alternateTxtRecords = default;
+            Optional<string> hostName = default;
+            Optional<bool> isHostnameAlreadyVerified = default;
+            Optional<ContainerAppDnsVerificationTestResult> customDomainVerificationTest = default;
+            Optional<ContainerAppCustomDomainVerificationFailureInfo> customDomainVerificationFailureInfo = default;
+            Optional<bool> hasConflictOnManagedEnvironment = default;
+            Optional<bool> conflictWithEnvironmentCustomDomain = default;
+            Optional<string> conflictingContainerAppResourceId = default;
+            Optional<IReadOnlyList<string>> cNameRecords = default;
+            Optional<IReadOnlyList<string>> txtRecords = default;
+            Optional<IReadOnlyList<string>> aRecords = default;
+            Optional<IReadOnlyList<string>> alternateCNameRecords = default;
+            Optional<IReadOnlyList<string>> alternateTxtRecords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostName"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppCustomHostnameAnalysisResult(hostName.Value, Core.Optional.ToNullable(isHostnameAlreadyVerified), Core.Optional.ToNullable(customDomainVerificationTest), customDomainVerificationFailureInfo.Value, Core.Optional.ToNullable(hasConflictOnManagedEnvironment), Core.Optional.ToNullable(conflictWithEnvironmentCustomDomain), conflictingContainerAppResourceId.Value, Core.Optional.ToList(cNameRecords), Core.Optional.ToList(txtRecords), Core.Optional.ToList(aRecords), Core.Optional.ToList(alternateCNameRecords), Core.Optional.ToList(alternateTxtRecords));
+            return new ContainerAppCustomHostnameAnalysisResult(hostName.Value, Optional.ToNullable(isHostnameAlreadyVerified), Optional.ToNullable(customDomainVerificationTest), customDomainVerificationFailureInfo.Value, Optional.ToNullable(hasConflictOnManagedEnvironment), Optional.ToNullable(conflictWithEnvironmentCustomDomain), conflictingContainerAppResourceId.Value, Optional.ToList(cNameRecords), Optional.ToList(txtRecords), Optional.ToList(aRecords), Optional.ToList(alternateCNameRecords), Optional.ToList(alternateTxtRecords));
         }
     }
 }

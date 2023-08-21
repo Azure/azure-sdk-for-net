@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Core.Optional<DevCenterResourceRange> memory = default;
-            Core.Optional<DevCenterResourceRange> vCpus = default;
+            Optional<DevCenterResourceRange> memory = default;
+            Optional<DevCenterResourceRange> vCpus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("memory"u8))

@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
-    public partial class LabData : Core.IUtf8JsonSerializable
+    public partial class LabData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,47 +33,47 @@ namespace Azure.ResourceManager.LabServices
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AutoShutdownProfile))
+            if (Optional.IsDefined(AutoShutdownProfile))
             {
                 writer.WritePropertyName("autoShutdownProfile"u8);
                 writer.WriteObjectValue(AutoShutdownProfile);
             }
-            if (Core.Optional.IsDefined(ConnectionProfile))
+            if (Optional.IsDefined(ConnectionProfile))
             {
                 writer.WritePropertyName("connectionProfile"u8);
                 writer.WriteObjectValue(ConnectionProfile);
             }
-            if (Core.Optional.IsDefined(VirtualMachineProfile))
+            if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
                 writer.WriteObjectValue(VirtualMachineProfile);
             }
-            if (Core.Optional.IsDefined(SecurityProfile))
+            if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (Core.Optional.IsDefined(RosterProfile))
+            if (Optional.IsDefined(RosterProfile))
             {
                 writer.WritePropertyName("rosterProfile"u8);
                 writer.WriteObjectValue(RosterProfile);
             }
-            if (Core.Optional.IsDefined(LabPlanId))
+            if (Optional.IsDefined(LabPlanId))
             {
                 writer.WritePropertyName("labPlanId"u8);
                 writer.WriteStringValue(LabPlanId);
             }
-            if (Core.Optional.IsDefined(Title))
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(NetworkProfile))
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
@@ -88,23 +88,23 @@ namespace Azure.ResourceManager.LabServices
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<LabAutoShutdownProfile> autoShutdownProfile = default;
-            Core.Optional<LabConnectionProfile> connectionProfile = default;
-            Core.Optional<LabVirtualMachineProfile> virtualMachineProfile = default;
-            Core.Optional<LabSecurityProfile> securityProfile = default;
-            Core.Optional<LabRosterProfile> rosterProfile = default;
-            Core.Optional<ResourceIdentifier> labPlanId = default;
-            Core.Optional<string> title = default;
-            Core.Optional<string> description = default;
-            Core.Optional<LabServicesProvisioningState> provisioningState = default;
-            Core.Optional<LabNetworkProfile> networkProfile = default;
-            Core.Optional<LabState> state = default;
+            Optional<SystemData> systemData = default;
+            Optional<LabAutoShutdownProfile> autoShutdownProfile = default;
+            Optional<LabConnectionProfile> connectionProfile = default;
+            Optional<LabVirtualMachineProfile> virtualMachineProfile = default;
+            Optional<LabSecurityProfile> securityProfile = default;
+            Optional<LabRosterProfile> rosterProfile = default;
+            Optional<ResourceIdentifier> labPlanId = default;
+            Optional<string> title = default;
+            Optional<string> description = default;
+            Optional<LabServicesProvisioningState> provisioningState = default;
+            Optional<LabNetworkProfile> networkProfile = default;
+            Optional<LabState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.LabServices
                     continue;
                 }
             }
-            return new LabData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, autoShutdownProfile.Value, connectionProfile.Value, virtualMachineProfile.Value, securityProfile.Value, rosterProfile.Value, labPlanId.Value, title.Value, description.Value, Core.Optional.ToNullable(provisioningState), networkProfile.Value, Core.Optional.ToNullable(state));
+            return new LabData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, autoShutdownProfile.Value, connectionProfile.Value, virtualMachineProfile.Value, securityProfile.Value, rosterProfile.Value, labPlanId.Value, title.Value, description.Value, Optional.ToNullable(provisioningState), networkProfile.Value, Optional.ToNullable(state));
         }
     }
 }

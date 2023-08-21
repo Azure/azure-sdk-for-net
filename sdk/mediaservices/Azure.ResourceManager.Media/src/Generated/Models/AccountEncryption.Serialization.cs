@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AccountEncryption : Core.IUtf8JsonSerializable
+    public partial class AccountEncryption : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(KeyType.ToString());
-            if (Core.Optional.IsDefined(KeyVaultProperties))
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             AccountEncryptionKeyType type = default;
-            Core.Optional<KeyVaultProperties> keyVaultProperties = default;
-            Core.Optional<ResourceIdentity> identity = default;
-            Core.Optional<string> status = default;
+            Optional<KeyVaultProperties> keyVaultProperties = default;
+            Optional<ResourceIdentity> identity = default;
+            Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

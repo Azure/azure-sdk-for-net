@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerRegion : Core.IUtf8JsonSerializable
+    public partial class TrafficManagerRegion : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Code))
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsCollectionDefined(Regions))
+            if (Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Core.Optional<string> code = default;
-            Core.Optional<string> name = default;
-            Core.Optional<IList<TrafficManagerRegion>> regions = default;
+            Optional<string> code = default;
+            Optional<string> name = default;
+            Optional<IList<TrafficManagerRegion>> regions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     continue;
                 }
             }
-            return new TrafficManagerRegion(code.Value, name.Value, Core.Optional.ToList(regions));
+            return new TrafficManagerRegion(code.Value, name.Value, Optional.ToList(regions));
         }
     }
 }

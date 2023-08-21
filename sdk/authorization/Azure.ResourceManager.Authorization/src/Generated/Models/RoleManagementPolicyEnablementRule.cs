@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of RoleManagementPolicyEnablementRule. </summary>
         public RoleManagementPolicyEnablementRule()
         {
-            EnablementRules = new Core.ChangeTrackingList<RoleAssignmentEnablementRuleType>();
+            EnablementRules = new ChangeTrackingList<RoleAssignmentEnablementRuleType>();
             RuleType = RoleManagementPolicyRuleType.RoleManagementPolicyEnablementRule;
         }
 

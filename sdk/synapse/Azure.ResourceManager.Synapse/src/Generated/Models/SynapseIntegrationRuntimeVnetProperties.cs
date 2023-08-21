@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeVnetProperties. </summary>
         public SynapseIntegrationRuntimeVnetProperties()
         {
-            PublicIPs = new Core.ChangeTrackingList<string>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            PublicIPs = new ChangeTrackingList<string>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeVnetProperties. </summary>

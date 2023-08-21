@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of NetworkProfile. </summary>
         public NetworkProfile()
         {
-            PodCidrs = new Core.ChangeTrackingList<string>();
-            ServiceCidrs = new Core.ChangeTrackingList<string>();
+            PodCidrs = new ChangeTrackingList<string>();
+            ServiceCidrs = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkProfile. </summary>

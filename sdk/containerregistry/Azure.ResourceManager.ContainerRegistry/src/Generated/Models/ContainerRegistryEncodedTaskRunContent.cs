@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Argument.AssertNotNull(platform, nameof(platform));
 
             EncodedTaskContent = encodedTaskContent;
-            Values = new Core.ChangeTrackingList<ContainerRegistryTaskOverridableValue>();
+            Values = new ChangeTrackingList<ContainerRegistryTaskOverridableValue>();
             Platform = platform;
             RunRequestType = "EncodedTaskRunRequest";
         }

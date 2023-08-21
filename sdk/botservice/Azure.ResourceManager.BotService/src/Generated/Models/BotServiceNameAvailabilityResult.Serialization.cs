@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<bool> valid = default;
-            Core.Optional<string> message = default;
-            Core.Optional<string> absCode = default;
+            Optional<bool> valid = default;
+            Optional<string> message = default;
+            Optional<string> absCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("valid"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new BotServiceNameAvailabilityResult(Core.Optional.ToNullable(valid), message.Value, absCode.Value);
+            return new BotServiceNameAvailabilityResult(Optional.ToNullable(valid), message.Value, absCode.Value);
         }
     }
 }

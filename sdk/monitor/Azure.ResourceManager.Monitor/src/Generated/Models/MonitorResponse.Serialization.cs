@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<int> cost = default;
+            Optional<int> cost = default;
             string timespan = default;
-            Core.Optional<TimeSpan> interval = default;
-            Core.Optional<string> @namespace = default;
-            Core.Optional<string> resourceregion = default;
+            Optional<TimeSpan> interval = default;
+            Optional<string> @namespace = default;
+            Optional<string> resourceregion = default;
             IReadOnlyList<MonitorMetric> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorResponse(Core.Optional.ToNullable(cost), timespan, Core.Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value);
+            return new MonitorResponse(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value);
         }
     }
 }

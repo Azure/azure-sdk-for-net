@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of IntegrationAccountSchemaListResult. </summary>
         internal IntegrationAccountSchemaListResult()
         {
-            Value = new Core.ChangeTrackingList<IntegrationAccountSchemaData>();
+            Value = new ChangeTrackingList<IntegrationAccountSchemaData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountSchemaListResult. </summary>

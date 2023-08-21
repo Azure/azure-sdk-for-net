@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             Argument.AssertNotNull(script, nameof(script));
 
-            Arguments = new Core.ChangeTrackingList<string>();
+            Arguments = new ChangeTrackingList<string>();
             LimitTimeSeconds = limitTimeSeconds;
             Script = script;
         }

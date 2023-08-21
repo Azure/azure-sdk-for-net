@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of EndpointDependency. </summary>
         internal EndpointDependency()
         {
-            EndpointDetails = new Core.ChangeTrackingList<DevCenterEndpointDetail>();
+            EndpointDetails = new ChangeTrackingList<DevCenterEndpointDetail>();
         }
 
         /// <summary> Initializes a new instance of EndpointDependency. </summary>

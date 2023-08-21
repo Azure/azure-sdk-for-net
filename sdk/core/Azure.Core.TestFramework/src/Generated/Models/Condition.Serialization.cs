@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
-    public partial class Condition : Core.IUtf8JsonSerializable
+    public partial class Condition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(UriRegex))
+            if (Optional.IsDefined(UriRegex))
             {
                 writer.WritePropertyName("uriRegex"u8);
                 writer.WriteStringValue(UriRegex);
             }
-            if (Core.Optional.IsDefined(ResponseHeader))
+            if (Optional.IsDefined(ResponseHeader))
             {
                 writer.WritePropertyName("responseHeader"u8);
                 writer.WriteObjectValue(ResponseHeader);

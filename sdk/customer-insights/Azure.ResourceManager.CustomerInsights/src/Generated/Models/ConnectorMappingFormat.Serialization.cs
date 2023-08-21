@@ -10,34 +10,34 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class ConnectorMappingFormat : Core.IUtf8JsonSerializable
+    public partial class ConnectorMappingFormat : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("formatType"u8);
             writer.WriteStringValue(FormatType.ToString());
-            if (Core.Optional.IsDefined(ColumnDelimiter))
+            if (Optional.IsDefined(ColumnDelimiter))
             {
                 writer.WritePropertyName("columnDelimiter"u8);
                 writer.WriteStringValue(ColumnDelimiter);
             }
-            if (Core.Optional.IsDefined(AcceptLanguage))
+            if (Optional.IsDefined(AcceptLanguage))
             {
                 writer.WritePropertyName("acceptLanguage"u8);
                 writer.WriteStringValue(AcceptLanguage);
             }
-            if (Core.Optional.IsDefined(QuoteCharacter))
+            if (Optional.IsDefined(QuoteCharacter))
             {
                 writer.WritePropertyName("quoteCharacter"u8);
                 writer.WriteStringValue(QuoteCharacter);
             }
-            if (Core.Optional.IsDefined(QuoteEscapeCharacter))
+            if (Optional.IsDefined(QuoteEscapeCharacter))
             {
                 writer.WritePropertyName("quoteEscapeCharacter"u8);
                 writer.WriteStringValue(QuoteEscapeCharacter);
             }
-            if (Core.Optional.IsDefined(ArraySeparator))
+            if (Optional.IsDefined(ArraySeparator))
             {
                 writer.WritePropertyName("arraySeparator"u8);
                 writer.WriteStringValue(ArraySeparator);
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 return null;
             }
             FormatType formatType = default;
-            Core.Optional<string> columnDelimiter = default;
-            Core.Optional<string> acceptLanguage = default;
-            Core.Optional<string> quoteCharacter = default;
-            Core.Optional<string> quoteEscapeCharacter = default;
-            Core.Optional<string> arraySeparator = default;
+            Optional<string> columnDelimiter = default;
+            Optional<string> acceptLanguage = default;
+            Optional<string> quoteCharacter = default;
+            Optional<string> quoteEscapeCharacter = default;
+            Optional<string> arraySeparator = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("formatType"u8))

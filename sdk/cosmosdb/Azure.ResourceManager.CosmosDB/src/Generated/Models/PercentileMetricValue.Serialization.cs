@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<double> p10 = default;
-            Core.Optional<double> p25 = default;
-            Core.Optional<double> p50 = default;
-            Core.Optional<double> p75 = default;
-            Core.Optional<double> p90 = default;
-            Core.Optional<double> p95 = default;
-            Core.Optional<double> p99 = default;
-            Core.Optional<int> count = default;
-            Core.Optional<double> average = default;
-            Core.Optional<double> maximum = default;
-            Core.Optional<double> minimum = default;
-            Core.Optional<DateTimeOffset> timestamp = default;
-            Core.Optional<double> total = default;
+            Optional<double> p10 = default;
+            Optional<double> p25 = default;
+            Optional<double> p50 = default;
+            Optional<double> p75 = default;
+            Optional<double> p90 = default;
+            Optional<double> p95 = default;
+            Optional<double> p99 = default;
+            Optional<int> count = default;
+            Optional<double> average = default;
+            Optional<double> maximum = default;
+            Optional<double> minimum = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<double> total = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("P10"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new PercentileMetricValue(Core.Optional.ToNullable(count), Core.Optional.ToNullable(average), Core.Optional.ToNullable(maximum), Core.Optional.ToNullable(minimum), Core.Optional.ToNullable(timestamp), Core.Optional.ToNullable(total), Core.Optional.ToNullable(p10), Core.Optional.ToNullable(p25), Core.Optional.ToNullable(p50), Core.Optional.ToNullable(p75), Core.Optional.ToNullable(p90), Core.Optional.ToNullable(p95), Core.Optional.ToNullable(p99));
+            return new PercentileMetricValue(Optional.ToNullable(count), Optional.ToNullable(average), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(timestamp), Optional.ToNullable(total), Optional.ToNullable(p10), Optional.ToNullable(p25), Optional.ToNullable(p50), Optional.ToNullable(p75), Optional.ToNullable(p90), Optional.ToNullable(p95), Optional.ToNullable(p99));
         }
     }
 }

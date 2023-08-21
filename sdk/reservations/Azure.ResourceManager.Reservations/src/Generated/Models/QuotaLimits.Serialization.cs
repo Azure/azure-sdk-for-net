@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ReservationQuotaData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ReservationQuotaData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new QuotaLimits(Core.Optional.ToList(value), nextLink.Value);
+            return new QuotaLimits(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class PredictionModelStatus : Core.IUtf8JsonSerializable
+    public partial class PredictionModelStatus : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<string> predictionName = default;
-            Core.Optional<string> predictionGuidId = default;
+            Optional<Guid> tenantId = default;
+            Optional<string> predictionName = default;
+            Optional<string> predictionGuidId = default;
             PredictionModelLifeCycle status = default;
-            Core.Optional<string> message = default;
-            Core.Optional<int> trainingSetCount = default;
-            Core.Optional<int> testSetCount = default;
-            Core.Optional<int> validationSetCount = default;
-            Core.Optional<decimal> trainingAccuracy = default;
-            Core.Optional<int> signalsUsed = default;
-            Core.Optional<string> modelVersion = default;
+            Optional<string> message = default;
+            Optional<int> trainingSetCount = default;
+            Optional<int> testSetCount = default;
+            Optional<int> validationSetCount = default;
+            Optional<decimal> trainingAccuracy = default;
+            Optional<int> signalsUsed = default;
+            Optional<string> modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new PredictionModelStatus(Core.Optional.ToNullable(tenantId), predictionName.Value, predictionGuidId.Value, status, message.Value, Core.Optional.ToNullable(trainingSetCount), Core.Optional.ToNullable(testSetCount), Core.Optional.ToNullable(validationSetCount), Core.Optional.ToNullable(trainingAccuracy), Core.Optional.ToNullable(signalsUsed), modelVersion.Value);
+            return new PredictionModelStatus(Optional.ToNullable(tenantId), predictionName.Value, predictionGuidId.Value, status, message.Value, Optional.ToNullable(trainingSetCount), Optional.ToNullable(testSetCount), Optional.ToNullable(validationSetCount), Optional.ToNullable(trainingAccuracy), Optional.ToNullable(signalsUsed), modelVersion.Value);
         }
     }
 }

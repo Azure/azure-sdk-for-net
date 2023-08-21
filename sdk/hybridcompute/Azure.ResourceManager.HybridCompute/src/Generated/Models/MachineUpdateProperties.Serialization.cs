@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineUpdateProperties : Core.IUtf8JsonSerializable
+    public partial class MachineUpdateProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LocationData))
+            if (Optional.IsDefined(LocationData))
             {
                 writer.WritePropertyName("locationData"u8);
                 writer.WriteObjectValue(LocationData);
             }
-            if (Core.Optional.IsDefined(OSProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (Core.Optional.IsDefined(CloudMetadata))
+            if (Optional.IsDefined(CloudMetadata))
             {
                 writer.WritePropertyName("cloudMetadata"u8);
                 writer.WriteObjectValue(CloudMetadata);
             }
-            if (Core.Optional.IsDefined(ParentClusterResourceId))
+            if (Optional.IsDefined(ParentClusterResourceId))
             {
                 writer.WritePropertyName("parentClusterResourceId"u8);
                 writer.WriteStringValue(ParentClusterResourceId);
             }
-            if (Core.Optional.IsDefined(PrivateLinkScopeResourceId))
+            if (Optional.IsDefined(PrivateLinkScopeResourceId))
             {
                 writer.WritePropertyName("privateLinkScopeResourceId"u8);
                 writer.WriteStringValue(PrivateLinkScopeResourceId);

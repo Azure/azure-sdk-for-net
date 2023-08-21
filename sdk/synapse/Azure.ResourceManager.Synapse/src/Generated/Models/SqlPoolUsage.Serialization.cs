@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> resourceName = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<double> currentValue = default;
-            Core.Optional<double> limit = default;
-            Core.Optional<string> unit = default;
-            Core.Optional<DateTimeOffset> nextResetTime = default;
+            Optional<string> name = default;
+            Optional<string> resourceName = default;
+            Optional<string> displayName = default;
+            Optional<double> currentValue = default;
+            Optional<double> limit = default;
+            Optional<string> unit = default;
+            Optional<DateTimeOffset> nextResetTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SqlPoolUsage(name.Value, resourceName.Value, displayName.Value, Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit), unit.Value, Core.Optional.ToNullable(nextResetTime));
+            return new SqlPoolUsage(name.Value, resourceName.Value, displayName.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), unit.Value, Optional.ToNullable(nextResetTime));
         }
     }
 }

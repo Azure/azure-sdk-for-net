@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class OpenIdAuthenticationSettingsContract : Core.IUtf8JsonSerializable
+    public partial class OpenIdAuthenticationSettingsContract : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(OpenIdProviderId))
+            if (Optional.IsDefined(OpenIdProviderId))
             {
                 writer.WritePropertyName("openidProviderId"u8);
                 writer.WriteStringValue(OpenIdProviderId);
             }
-            if (Core.Optional.IsCollectionDefined(BearerTokenSendingMethods))
+            if (Optional.IsCollectionDefined(BearerTokenSendingMethods))
             {
                 writer.WritePropertyName("bearerTokenSendingMethods"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> openidProviderId = default;
-            Core.Optional<IList<BearerTokenSendingMethod>> bearerTokenSendingMethods = default;
+            Optional<string> openidProviderId = default;
+            Optional<IList<BearerTokenSendingMethod>> bearerTokenSendingMethods = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("openidProviderId"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new OpenIdAuthenticationSettingsContract(openidProviderId.Value, Core.Optional.ToList(bearerTokenSendingMethods));
+            return new OpenIdAuthenticationSettingsContract(openidProviderId.Value, Optional.ToList(bearerTokenSendingMethods));
         }
     }
 }

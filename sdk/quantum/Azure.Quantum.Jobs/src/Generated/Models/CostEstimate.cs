@@ -16,7 +16,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <summary> Initializes a new instance of CostEstimate. </summary>
         internal CostEstimate()
         {
-            Events = new Core.ChangeTrackingList<UsageEvent>();
+            Events = new ChangeTrackingList<UsageEvent>();
         }
 
         /// <summary> Initializes a new instance of CostEstimate. </summary>

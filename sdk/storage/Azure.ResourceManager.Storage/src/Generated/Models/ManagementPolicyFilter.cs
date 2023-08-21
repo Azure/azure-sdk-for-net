@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Argument.AssertNotNull(blobTypes, nameof(blobTypes));
 
-            PrefixMatch = new Core.ChangeTrackingList<string>();
+            PrefixMatch = new ChangeTrackingList<string>();
             BlobTypes = blobTypes.ToList();
-            BlobIndexMatch = new Core.ChangeTrackingList<ManagementPolicyTagFilter>();
+            BlobIndexMatch = new ChangeTrackingList<ManagementPolicyTagFilter>();
         }
 
         /// <summary> Initializes a new instance of ManagementPolicyFilter. </summary>

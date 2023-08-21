@@ -12,12 +12,12 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CustomActivityReferenceObject : Core.IUtf8JsonSerializable
+    public partial class CustomActivityReferenceObject : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(LinkedServices))
+            if (Optional.IsCollectionDefined(LinkedServices))
             {
                 writer.WritePropertyName("linkedServices"u8);
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Datasets))
+            if (Optional.IsCollectionDefined(Datasets))
             {
                 writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<IList<DataFactoryLinkedServiceReference>> linkedServices = default;
-            Core.Optional<IList<DatasetReference>> datasets = default;
+            Optional<IList<DataFactoryLinkedServiceReference>> linkedServices = default;
+            Optional<IList<DatasetReference>> datasets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServices"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new CustomActivityReferenceObject(Core.Optional.ToList(linkedServices), Core.Optional.ToList(datasets));
+            return new CustomActivityReferenceObject(Optional.ToList(linkedServices), Optional.ToList(datasets));
         }
     }
 }

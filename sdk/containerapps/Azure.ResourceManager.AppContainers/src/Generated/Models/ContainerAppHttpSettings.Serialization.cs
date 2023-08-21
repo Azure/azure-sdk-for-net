@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppHttpSettings : Core.IUtf8JsonSerializable
+    public partial class ContainerAppHttpSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RequireHttps))
+            if (Optional.IsDefined(RequireHttps))
             {
                 writer.WritePropertyName("requireHttps"u8);
                 writer.WriteBooleanValue(RequireHttps.Value);
             }
-            if (Core.Optional.IsDefined(Routes))
+            if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteObjectValue(Routes);
             }
-            if (Core.Optional.IsDefined(ForwardProxy))
+            if (Optional.IsDefined(ForwardProxy))
             {
                 writer.WritePropertyName("forwardProxy"u8);
                 writer.WriteObjectValue(ForwardProxy);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<bool> requireHttps = default;
-            Core.Optional<HttpSettingsRoutes> routes = default;
-            Core.Optional<ContainerAppForwardProxy> forwardProxy = default;
+            Optional<bool> requireHttps = default;
+            Optional<HttpSettingsRoutes> routes = default;
+            Optional<ContainerAppForwardProxy> forwardProxy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requireHttps"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppHttpSettings(Core.Optional.ToNullable(requireHttps), routes.Value, forwardProxy.Value);
+            return new ContainerAppHttpSettings(Optional.ToNullable(requireHttps), routes.Value, forwardProxy.Value);
         }
     }
 }

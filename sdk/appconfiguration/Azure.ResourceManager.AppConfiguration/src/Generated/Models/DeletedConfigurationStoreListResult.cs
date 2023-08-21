@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of DeletedConfigurationStoreListResult. </summary>
         internal DeletedConfigurationStoreListResult()
         {
-            Value = new Core.ChangeTrackingList<DeletedAppConfigurationStoreData>();
+            Value = new ChangeTrackingList<DeletedAppConfigurationStoreData>();
         }
 
         /// <summary> Initializes a new instance of DeletedConfigurationStoreListResult. </summary>

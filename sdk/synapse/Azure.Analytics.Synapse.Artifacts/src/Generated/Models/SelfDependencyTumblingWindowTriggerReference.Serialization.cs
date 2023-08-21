@@ -13,14 +13,14 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SelfDependencyTumblingWindowTriggerReferenceConverter))]
-    public partial class SelfDependencyTumblingWindowTriggerReference : Core.IUtf8JsonSerializable
+    public partial class SelfDependencyTumblingWindowTriggerReference : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("offset"u8);
             writer.WriteStringValue(Offset);
-            if (Core.Optional.IsDefined(Size))
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string offset = default;
-            Core.Optional<string> size = default;
+            Optional<string> size = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {

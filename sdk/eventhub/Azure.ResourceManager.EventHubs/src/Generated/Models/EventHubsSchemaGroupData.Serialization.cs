@@ -15,14 +15,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubsSchemaGroupData : Core.IUtf8JsonSerializable
+    public partial class EventHubsSchemaGroupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(GroupProperties))
+            if (Optional.IsCollectionDefined(GroupProperties))
             {
                 writer.WritePropertyName("groupProperties"u8);
                 writer.WriteStartObject();
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(SchemaCompatibility))
+            if (Optional.IsDefined(SchemaCompatibility))
             {
                 writer.WritePropertyName("schemaCompatibility"u8);
                 writer.WriteStringValue(SchemaCompatibility.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SchemaType))
+            if (Optional.IsDefined(SchemaType))
             {
                 writer.WritePropertyName("schemaType"u8);
                 writer.WriteStringValue(SchemaType.Value.ToString());
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> updatedAtUtc = default;
-            Core.Optional<DateTimeOffset> createdAtUtc = default;
-            Core.Optional<ETag> eTag = default;
-            Core.Optional<IDictionary<string, string>> groupProperties = default;
-            Core.Optional<EventHubsSchemaCompatibility> schemaCompatibility = default;
-            Core.Optional<EventHubsSchemaType> schemaType = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> updatedAtUtc = default;
+            Optional<DateTimeOffset> createdAtUtc = default;
+            Optional<ETag> eTag = default;
+            Optional<IDictionary<string, string>> groupProperties = default;
+            Optional<EventHubsSchemaCompatibility> schemaCompatibility = default;
+            Optional<EventHubsSchemaType> schemaType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubsSchemaGroupData(id, name, type, systemData.Value, Core.Optional.ToNullable(updatedAtUtc), Core.Optional.ToNullable(createdAtUtc), Core.Optional.ToNullable(eTag), Core.Optional.ToDictionary(groupProperties), Core.Optional.ToNullable(schemaCompatibility), Core.Optional.ToNullable(schemaType), Core.Optional.ToNullable(location));
+            return new EventHubsSchemaGroupData(id, name, type, systemData.Value, Optional.ToNullable(updatedAtUtc), Optional.ToNullable(createdAtUtc), Optional.ToNullable(eTag), Optional.ToDictionary(groupProperties), Optional.ToNullable(schemaCompatibility), Optional.ToNullable(schemaType), Optional.ToNullable(location));
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    internal class CommitmentPlanAccountAssociationOperationSource : Core.IOperationSource<CommitmentPlanAccountAssociationResource>
+    internal class CommitmentPlanAccountAssociationOperationSource : IOperationSource<CommitmentPlanAccountAssociationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CognitiveServices
             _client = client;
         }
 
-        CommitmentPlanAccountAssociationResource Core.IOperationSource<CommitmentPlanAccountAssociationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CommitmentPlanAccountAssociationResource IOperationSource<CommitmentPlanAccountAssociationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(document.RootElement);
             return new CommitmentPlanAccountAssociationResource(_client, data);
         }
 
-        async ValueTask<CommitmentPlanAccountAssociationResource> Core.IOperationSource<CommitmentPlanAccountAssociationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CommitmentPlanAccountAssociationResource> IOperationSource<CommitmentPlanAccountAssociationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(document.RootElement);

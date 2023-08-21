@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Initializes a new instance of PrivateLinkServiceProxy. </summary>
         public PrivateLinkServiceProxy()
         {
-            GroupConnectivityInformation = new Core.ChangeTrackingList<GroupConnectivityInformation>();
+            GroupConnectivityInformation = new ChangeTrackingList<GroupConnectivityInformation>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkServiceProxy. </summary>

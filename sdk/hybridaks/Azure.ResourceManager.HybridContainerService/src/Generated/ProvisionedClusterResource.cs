@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.HybridContainerService
             try
             {
                 var response = await _provisionedClusterRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation<ProvisionedClusterResource>(new ProvisionedClusterOperationSource(Client), _provisionedClusterClientDiagnostics, Pipeline, _provisionedClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HybridContainerServiceArmOperation<ProvisionedClusterResource>(new ProvisionedClusterOperationSource(Client), _provisionedClusterClientDiagnostics, Pipeline, _provisionedClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.HybridContainerService
             try
             {
                 var response = _provisionedClusterRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation<ProvisionedClusterResource>(new ProvisionedClusterOperationSource(Client), _provisionedClusterClientDiagnostics, Pipeline, _provisionedClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HybridContainerServiceArmOperation<ProvisionedClusterResource>(new ProvisionedClusterOperationSource(Client), _provisionedClusterClientDiagnostics, Pipeline, _provisionedClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.HybridContainerService
             try
             {
                 var response = await _provisionedClusterRestClient.UpgradeNodeImageVersionForEntireClusterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation(_provisionedClusterClientDiagnostics, Pipeline, _provisionedClusterRestClient.CreateUpgradeNodeImageVersionForEntireClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new HybridContainerServiceArmOperation(_provisionedClusterClientDiagnostics, Pipeline, _provisionedClusterRestClient.CreateUpgradeNodeImageVersionForEntireClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.HybridContainerService
             try
             {
                 var response = _provisionedClusterRestClient.UpgradeNodeImageVersionForEntireCluster(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation(_provisionedClusterClientDiagnostics, Pipeline, _provisionedClusterRestClient.CreateUpgradeNodeImageVersionForEntireClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new HybridContainerServiceArmOperation(_provisionedClusterClientDiagnostics, Pipeline, _provisionedClusterRestClient.CreateUpgradeNodeImageVersionForEntireClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

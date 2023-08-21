@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class DynamicDeliveryAttributeMapping : Core.IUtf8JsonSerializable
+    public partial class DynamicDeliveryAttributeMapping : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(MappingType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SourceField))
+            if (Optional.IsDefined(SourceField))
             {
                 writer.WritePropertyName("sourceField"u8);
                 writer.WriteStringValue(SourceField);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
+            Optional<string> name = default;
             DeliveryAttributeMappingType type = default;
-            Core.Optional<string> sourceField = default;
+            Optional<string> sourceField = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

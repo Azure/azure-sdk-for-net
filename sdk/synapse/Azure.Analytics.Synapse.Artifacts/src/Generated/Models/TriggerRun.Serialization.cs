@@ -22,14 +22,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> triggerRunId = default;
-            Core.Optional<string> triggerName = default;
-            Core.Optional<string> triggerType = default;
-            Core.Optional<DateTimeOffset> triggerRunTimestamp = default;
-            Core.Optional<TriggerRunStatus> status = default;
-            Core.Optional<string> message = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> properties = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> triggeredPipelines = default;
+            Optional<string> triggerRunId = default;
+            Optional<string> triggerName = default;
+            Optional<string> triggerType = default;
+            Optional<DateTimeOffset> triggerRunTimestamp = default;
+            Optional<TriggerRunStatus> status = default;
+            Optional<string> message = default;
+            Optional<IReadOnlyDictionary<string, string>> properties = default;
+            Optional<IReadOnlyDictionary<string, string>> triggeredPipelines = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TriggerRun(triggerRunId.Value, triggerName.Value, triggerType.Value, Core.Optional.ToNullable(triggerRunTimestamp), Core.Optional.ToNullable(status), message.Value, Core.Optional.ToDictionary(properties), Core.Optional.ToDictionary(triggeredPipelines), additionalProperties);
+            return new TriggerRun(triggerRunId.Value, triggerName.Value, triggerType.Value, Optional.ToNullable(triggerRunTimestamp), Optional.ToNullable(status), message.Value, Optional.ToDictionary(properties), Optional.ToDictionary(triggeredPipelines), additionalProperties);
         }
 
         internal partial class TriggerRunConverter : JsonConverter<TriggerRun>

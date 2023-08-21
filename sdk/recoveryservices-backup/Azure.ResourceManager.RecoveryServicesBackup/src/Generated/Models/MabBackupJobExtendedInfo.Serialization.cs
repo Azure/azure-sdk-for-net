@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MabBackupJobExtendedInfo : Core.IUtf8JsonSerializable
+    public partial class MabBackupJobExtendedInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(TasksList))
+            if (Optional.IsCollectionDefined(TasksList))
             {
                 writer.WritePropertyName("tasksList"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(PropertyBag))
+            if (Optional.IsCollectionDefined(PropertyBag))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(DynamicErrorMessage))
+            if (Optional.IsDefined(DynamicErrorMessage))
             {
                 writer.WritePropertyName("dynamicErrorMessage"u8);
                 writer.WriteStringValue(DynamicErrorMessage);
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<IList<MabBackupJobTaskDetails>> tasksList = default;
-            Core.Optional<IDictionary<string, string>> propertyBag = default;
-            Core.Optional<string> dynamicErrorMessage = default;
+            Optional<IList<MabBackupJobTaskDetails>> tasksList = default;
+            Optional<IDictionary<string, string>> propertyBag = default;
+            Optional<string> dynamicErrorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tasksList"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new MabBackupJobExtendedInfo(Core.Optional.ToList(tasksList), Core.Optional.ToDictionary(propertyBag), dynamicErrorMessage.Value);
+            return new MabBackupJobExtendedInfo(Optional.ToList(tasksList), Optional.ToDictionary(propertyBag), dynamicErrorMessage.Value);
         }
     }
 }

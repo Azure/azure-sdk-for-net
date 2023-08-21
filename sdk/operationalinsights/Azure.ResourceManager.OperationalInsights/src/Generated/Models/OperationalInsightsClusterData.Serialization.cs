@@ -14,22 +14,22 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class OperationalInsightsClusterData : Core.IUtf8JsonSerializable
+    public partial class OperationalInsightsClusterData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,27 +44,27 @@ namespace Azure.ResourceManager.OperationalInsights
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsDoubleEncryptionEnabled))
+            if (Optional.IsDefined(IsDoubleEncryptionEnabled))
             {
                 writer.WritePropertyName("isDoubleEncryptionEnabled"u8);
                 writer.WriteBooleanValue(IsDoubleEncryptionEnabled.Value);
             }
-            if (Core.Optional.IsDefined(IsAvailabilityZonesEnabled))
+            if (Optional.IsDefined(IsAvailabilityZonesEnabled))
             {
                 writer.WritePropertyName("isAvailabilityZonesEnabled"u8);
                 writer.WriteBooleanValue(IsAvailabilityZonesEnabled.Value);
             }
-            if (Core.Optional.IsDefined(BillingType))
+            if (Optional.IsDefined(BillingType))
             {
                 writer.WritePropertyName("billingType"u8);
                 writer.WriteStringValue(BillingType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(KeyVaultProperties))
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Core.Optional.IsCollectionDefined(AssociatedWorkspaces))
+            if (Optional.IsCollectionDefined(AssociatedWorkspaces))
             {
                 writer.WritePropertyName("associatedWorkspaces"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(CapacityReservationProperties))
+            if (Optional.IsDefined(CapacityReservationProperties))
             {
                 writer.WritePropertyName("capacityReservationProperties"u8);
                 writer.WriteObjectValue(CapacityReservationProperties);
@@ -89,24 +89,24 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<OperationalInsightsClusterSku> sku = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<OperationalInsightsClusterSku> sku = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> clusterId = default;
-            Core.Optional<OperationalInsightsClusterEntityStatus> provisioningState = default;
-            Core.Optional<bool> isDoubleEncryptionEnabled = default;
-            Core.Optional<bool> isAvailabilityZonesEnabled = default;
-            Core.Optional<OperationalInsightsBillingType> billingType = default;
-            Core.Optional<OperationalInsightsKeyVaultProperties> keyVaultProperties = default;
-            Core.Optional<DateTimeOffset> lastModifiedDate = default;
-            Core.Optional<DateTimeOffset> createdDate = default;
-            Core.Optional<IList<OperationalInsightsClusterAssociatedWorkspace>> associatedWorkspaces = default;
-            Core.Optional<OperationalInsightsCapacityReservationProperties> capacityReservationProperties = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> clusterId = default;
+            Optional<OperationalInsightsClusterEntityStatus> provisioningState = default;
+            Optional<bool> isDoubleEncryptionEnabled = default;
+            Optional<bool> isAvailabilityZonesEnabled = default;
+            Optional<OperationalInsightsBillingType> billingType = default;
+            Optional<OperationalInsightsKeyVaultProperties> keyVaultProperties = default;
+            Optional<DateTimeOffset> lastModifiedDate = default;
+            Optional<DateTimeOffset> createdDate = default;
+            Optional<IList<OperationalInsightsClusterAssociatedWorkspace>> associatedWorkspaces = default;
+            Optional<OperationalInsightsCapacityReservationProperties> capacityReservationProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     continue;
                 }
             }
-            return new OperationalInsightsClusterData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, sku.Value, Core.Optional.ToNullable(clusterId), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(isDoubleEncryptionEnabled), Core.Optional.ToNullable(isAvailabilityZonesEnabled), Core.Optional.ToNullable(billingType), keyVaultProperties.Value, Core.Optional.ToNullable(lastModifiedDate), Core.Optional.ToNullable(createdDate), Core.Optional.ToList(associatedWorkspaces), capacityReservationProperties.Value);
+            return new OperationalInsightsClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(clusterId), Optional.ToNullable(provisioningState), Optional.ToNullable(isDoubleEncryptionEnabled), Optional.ToNullable(isAvailabilityZonesEnabled), Optional.ToNullable(billingType), keyVaultProperties.Value, Optional.ToNullable(lastModifiedDate), Optional.ToNullable(createdDate), Optional.ToList(associatedWorkspaces), capacityReservationProperties.Value);
         }
     }
 }

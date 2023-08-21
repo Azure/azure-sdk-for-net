@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class VpnConfigurationProperties : Core.IUtf8JsonSerializable
+    public partial class VpnConfigurationProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NetworkToNetworkInterconnectId))
+            if (Optional.IsDefined(NetworkToNetworkInterconnectId))
             {
                 writer.WritePropertyName("networkToNetworkInterconnectId"u8);
                 writer.WriteStringValue(NetworkToNetworkInterconnectId);
             }
             writer.WritePropertyName("peeringOption"u8);
             writer.WriteStringValue(PeeringOption.ToString());
-            if (Core.Optional.IsDefined(OptionBProperties))
+            if (Optional.IsDefined(OptionBProperties))
             {
                 writer.WritePropertyName("optionBProperties"u8);
                 writer.WriteObjectValue(OptionBProperties);
             }
-            if (Core.Optional.IsDefined(OptionAProperties))
+            if (Optional.IsDefined(OptionAProperties))
             {
                 writer.WritePropertyName("optionAProperties"u8);
                 writer.WriteObjectValue(OptionAProperties);
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> networkToNetworkInterconnectId = default;
-            Core.Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            Optional<ResourceIdentifier> networkToNetworkInterconnectId = default;
+            Optional<NetworkFabricAdministrativeState> administrativeState = default;
             PeeringOption peeringOption = default;
-            Core.Optional<OptionBProperties> optionBProperties = default;
-            Core.Optional<VpnConfigurationOptionAProperties> optionAProperties = default;
+            Optional<OptionBProperties> optionBProperties = default;
+            Optional<VpnConfigurationOptionAProperties> optionAProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkToNetworkInterconnectId"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new VpnConfigurationProperties(networkToNetworkInterconnectId.Value, Core.Optional.ToNullable(administrativeState), peeringOption, optionBProperties.Value, optionAProperties.Value);
+            return new VpnConfigurationProperties(networkToNetworkInterconnectId.Value, Optional.ToNullable(administrativeState), peeringOption, optionBProperties.Value, optionAProperties.Value);
         }
     }
 }

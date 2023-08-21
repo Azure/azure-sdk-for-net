@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ManagedClusterLoadBalancingRule : Core.IUtf8JsonSerializable
+    public partial class ManagedClusterLoadBalancingRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("frontendPort"u8);
@@ -21,19 +21,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteNumberValue(BackendPort);
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
-            if (Core.Optional.IsDefined(ProbePort))
+            if (Optional.IsDefined(ProbePort))
             {
                 writer.WritePropertyName("probePort"u8);
                 writer.WriteNumberValue(ProbePort.Value);
             }
             writer.WritePropertyName("probeProtocol"u8);
             writer.WriteStringValue(ProbeProtocol.ToString());
-            if (Core.Optional.IsDefined(ProbeRequestPath))
+            if (Optional.IsDefined(ProbeRequestPath))
             {
                 writer.WritePropertyName("probeRequestPath"u8);
                 writer.WriteStringValue(ProbeRequestPath);
             }
-            if (Core.Optional.IsDefined(LoadDistribution))
+            if (Optional.IsDefined(LoadDistribution))
             {
                 writer.WritePropertyName("loadDistribution"u8);
                 writer.WriteStringValue(LoadDistribution);
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             int frontendPort = default;
             int backendPort = default;
             ManagedClusterLoadBalancingRuleTransportProtocol protocol = default;
-            Core.Optional<int> probePort = default;
+            Optional<int> probePort = default;
             ManagedClusterLoadBalanceProbeProtocol probeProtocol = default;
-            Core.Optional<string> probeRequestPath = default;
-            Core.Optional<string> loadDistribution = default;
+            Optional<string> probeRequestPath = default;
+            Optional<string> loadDistribution = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("frontendPort"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new ManagedClusterLoadBalancingRule(frontendPort, backendPort, protocol, Core.Optional.ToNullable(probePort), probeProtocol, probeRequestPath.Value, loadDistribution.Value);
+            return new ManagedClusterLoadBalancingRule(frontendPort, backendPort, protocol, Optional.ToNullable(probePort), probeProtocol, probeRequestPath.Value, loadDistribution.Value);
         }
     }
 }

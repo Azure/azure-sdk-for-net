@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SubAssessmentStatus : Core.IUtf8JsonSerializable
+    public partial class SubAssessmentStatus : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<SubAssessmentStatusCode> code = default;
-            Core.Optional<string> cause = default;
-            Core.Optional<string> description = default;
-            Core.Optional<SecurityAssessmentSeverity> severity = default;
+            Optional<SubAssessmentStatusCode> code = default;
+            Optional<string> cause = default;
+            Optional<string> description = default;
+            Optional<SecurityAssessmentSeverity> severity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SubAssessmentStatus(Core.Optional.ToNullable(code), cause.Value, description.Value, Core.Optional.ToNullable(severity));
+            return new SubAssessmentStatus(Optional.ToNullable(code), cause.Value, description.Value, Optional.ToNullable(severity));
         }
     }
 }

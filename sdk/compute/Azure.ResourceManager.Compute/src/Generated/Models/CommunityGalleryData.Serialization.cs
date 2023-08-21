@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<string> uniqueId = default;
+            Optional<string> name = default;
+            Optional<AzureLocation> location = default;
+            Optional<ResourceType> type = default;
+            Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new CommunityGalleryData(name.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(type), uniqueId.Value);
+            return new CommunityGalleryData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value);
         }
     }
 }

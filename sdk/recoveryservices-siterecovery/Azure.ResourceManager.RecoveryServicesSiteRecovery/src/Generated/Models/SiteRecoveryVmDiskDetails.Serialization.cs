@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> vhdType = default;
-            Core.Optional<string> vhdId = default;
-            Core.Optional<string> diskId = default;
-            Core.Optional<string> vhdName = default;
-            Core.Optional<string> maxSizeMB = default;
-            Core.Optional<string> targetDiskLocation = default;
-            Core.Optional<string> targetDiskName = default;
-            Core.Optional<string> lunId = default;
-            Core.Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Core.Optional<string> customTargetDiskName = default;
+            Optional<string> vhdType = default;
+            Optional<string> vhdId = default;
+            Optional<string> diskId = default;
+            Optional<string> vhdName = default;
+            Optional<string> maxSizeMB = default;
+            Optional<string> targetDiskLocation = default;
+            Optional<string> targetDiskName = default;
+            Optional<string> lunId = default;
+            Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            Optional<string> customTargetDiskName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vhdType"u8))

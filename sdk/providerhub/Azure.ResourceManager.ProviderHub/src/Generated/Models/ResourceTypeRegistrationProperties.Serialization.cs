@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceTypeRegistrationProperties : Core.IUtf8JsonSerializable
+    public partial class ResourceTypeRegistrationProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RoutingType))
+            if (Optional.IsDefined(RoutingType))
             {
                 writer.WritePropertyName("routingType"u8);
                 writer.WriteStringValue(RoutingType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Regionality))
+            if (Optional.IsDefined(Regionality))
             {
                 writer.WritePropertyName("regionality"u8);
                 writer.WriteStringValue(Regionality.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Endpoints))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ExtensionOptions))
+            if (Optional.IsDefined(ExtensionOptions))
             {
                 writer.WritePropertyName("extensionOptions"u8);
                 writer.WriteObjectValue(ExtensionOptions);
             }
-            if (Core.Optional.IsDefined(MarketplaceType))
+            if (Optional.IsDefined(MarketplaceType))
             {
                 writer.WritePropertyName("marketplaceType"u8);
                 writer.WriteStringValue(MarketplaceType.Value.ToSerialString());
             }
-            if (Core.Optional.IsCollectionDefined(SwaggerSpecifications))
+            if (Optional.IsCollectionDefined(SwaggerSpecifications))
             {
                 writer.WritePropertyName("swaggerSpecifications"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(AllowedUnauthorizedActions))
+            if (Optional.IsCollectionDefined(AllowedUnauthorizedActions))
             {
                 writer.WritePropertyName("allowedUnauthorizedActions"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(AuthorizationActionMappings))
+            if (Optional.IsCollectionDefined(AuthorizationActionMappings))
             {
                 writer.WritePropertyName("authorizationActionMappings"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(LinkedAccessChecks))
+            if (Optional.IsCollectionDefined(LinkedAccessChecks))
             {
                 writer.WritePropertyName("linkedAccessChecks"u8);
                 writer.WriteStartArray();
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DefaultApiVersion))
+            if (Optional.IsDefined(DefaultApiVersion))
             {
                 writer.WritePropertyName("defaultApiVersion"u8);
                 writer.WriteStringValue(DefaultApiVersion);
             }
-            if (Core.Optional.IsCollectionDefined(LoggingRules))
+            if (Optional.IsCollectionDefined(LoggingRules))
             {
                 writer.WritePropertyName("loggingRules"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ThrottlingRules))
+            if (Optional.IsCollectionDefined(ThrottlingRules))
             {
                 writer.WritePropertyName("throttlingRules"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(RequiredFeatures))
+            if (Optional.IsCollectionDefined(RequiredFeatures))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -121,47 +121,47 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(FeaturesRule))
+            if (Optional.IsDefined(FeaturesRule))
             {
                 writer.WritePropertyName("featuresRule"u8);
                 writer.WriteObjectValue(FeaturesRule);
             }
-            if (Core.Optional.IsDefined(IsAsyncOperationEnabled))
+            if (Optional.IsDefined(IsAsyncOperationEnabled))
             {
                 writer.WritePropertyName("enableAsyncOperation"u8);
                 writer.WriteBooleanValue(IsAsyncOperationEnabled.Value);
             }
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IsThirdPartyS2SEnabled))
+            if (Optional.IsDefined(IsThirdPartyS2SEnabled))
             {
                 writer.WritePropertyName("enableThirdPartyS2S"u8);
                 writer.WriteBooleanValue(IsThirdPartyS2SEnabled.Value);
             }
-            if (Core.Optional.IsDefined(SubscriptionLifecycleNotificationSpecifications))
+            if (Optional.IsDefined(SubscriptionLifecycleNotificationSpecifications))
             {
                 writer.WritePropertyName("subscriptionLifecycleNotificationSpecifications"u8);
                 writer.WriteObjectValue(SubscriptionLifecycleNotificationSpecifications);
             }
-            if (Core.Optional.IsDefined(IsPureProxy))
+            if (Optional.IsDefined(IsPureProxy))
             {
                 writer.WritePropertyName("isPureProxy"u8);
                 writer.WriteBooleanValue(IsPureProxy.Value);
             }
-            if (Core.Optional.IsDefined(IdentityManagement))
+            if (Optional.IsDefined(IdentityManagement))
             {
                 writer.WritePropertyName("identityManagement"u8);
                 writer.WriteObjectValue(IdentityManagement);
             }
-            if (Core.Optional.IsDefined(CheckNameAvailabilitySpecifications))
+            if (Optional.IsDefined(CheckNameAvailabilitySpecifications))
             {
                 writer.WritePropertyName("checkNameAvailabilitySpecifications"u8);
                 writer.WriteObjectValue(CheckNameAvailabilitySpecifications);
             }
-            if (Core.Optional.IsCollectionDefined(DisallowedActionVerbs))
+            if (Optional.IsCollectionDefined(DisallowedActionVerbs))
             {
                 writer.WritePropertyName("disallowedActionVerbs"u8);
                 writer.WriteStartArray();
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ServiceTreeInfos))
+            if (Optional.IsCollectionDefined(ServiceTreeInfos))
             {
                 writer.WritePropertyName("serviceTreeInfos"u8);
                 writer.WriteStartArray();
@@ -181,12 +181,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(RequestHeaderOptions))
+            if (Optional.IsDefined(RequestHeaderOptions))
             {
                 writer.WritePropertyName("requestHeaderOptions"u8);
                 writer.WriteObjectValue(RequestHeaderOptions);
             }
-            if (Core.Optional.IsCollectionDefined(SubscriptionStateRules))
+            if (Optional.IsCollectionDefined(SubscriptionStateRules))
             {
                 writer.WritePropertyName("subscriptionStateRules"u8);
                 writer.WriteStartArray();
@@ -196,12 +196,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TemplateDeploymentOptions))
+            if (Optional.IsDefined(TemplateDeploymentOptions))
             {
                 writer.WritePropertyName("templateDeploymentOptions"u8);
                 writer.WriteObjectValue(TemplateDeploymentOptions);
             }
-            if (Core.Optional.IsCollectionDefined(ExtendedLocations))
+            if (Optional.IsCollectionDefined(ExtendedLocations))
             {
                 writer.WritePropertyName("extendedLocations"u8);
                 writer.WriteStartArray();
@@ -211,12 +211,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ResourceMovePolicy))
+            if (Optional.IsDefined(ResourceMovePolicy))
             {
                 writer.WritePropertyName("resourceMovePolicy"u8);
                 writer.WriteObjectValue(ResourceMovePolicy);
             }
-            if (Core.Optional.IsDefined(ResourceDeletionPolicy))
+            if (Optional.IsDefined(ResourceDeletionPolicy))
             {
                 writer.WritePropertyName("resourceDeletionPolicy"u8);
                 writer.WriteStringValue(ResourceDeletionPolicy.Value.ToString());
@@ -230,35 +230,35 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<ResourceRoutingType> routingType = default;
-            Core.Optional<ResourceTypeRegistrationRegionality> regionality = default;
-            Core.Optional<IList<ResourceTypeEndpoint>> endpoints = default;
-            Core.Optional<ResourceTypeExtensionOptions> extensionOptions = default;
-            Core.Optional<MarketplaceType> marketplaceType = default;
-            Core.Optional<IList<SwaggerSpecification>> swaggerSpecifications = default;
-            Core.Optional<IList<string>> allowedUnauthorizedActions = default;
-            Core.Optional<IList<AuthorizationActionMapping>> authorizationActionMappings = default;
-            Core.Optional<IList<LinkedAccessCheck>> linkedAccessChecks = default;
-            Core.Optional<string> defaultApiVersion = default;
-            Core.Optional<IList<LoggingRule>> loggingRules = default;
-            Core.Optional<IList<ThrottlingRule>> throttlingRules = default;
-            Core.Optional<IList<string>> requiredFeatures = default;
-            Core.Optional<FeaturesRule> featuresRule = default;
-            Core.Optional<bool> enableAsyncOperation = default;
-            Core.Optional<ProviderHubProvisioningState> provisioningState = default;
-            Core.Optional<bool> enableThirdPartyS2S = default;
-            Core.Optional<SubscriptionLifecycleNotificationSpecifications> subscriptionLifecycleNotificationSpecifications = default;
-            Core.Optional<bool> isPureProxy = default;
-            Core.Optional<IdentityManagementProperties> identityManagement = default;
-            Core.Optional<CheckNameAvailabilitySpecifications> checkNameAvailabilitySpecifications = default;
-            Core.Optional<IList<string>> disallowedActionVerbs = default;
-            Core.Optional<IList<ServiceTreeInfo>> serviceTreeInfos = default;
-            Core.Optional<RequestHeaderOptions> requestHeaderOptions = default;
-            Core.Optional<IList<ProviderSubscriptionStateRule>> subscriptionStateRules = default;
-            Core.Optional<TemplateDeploymentOptions> templateDeploymentOptions = default;
-            Core.Optional<IList<ProviderHubExtendedLocationOptions>> extendedLocations = default;
-            Core.Optional<ResourceMovePolicy> resourceMovePolicy = default;
-            Core.Optional<ResourceDeletionPolicy> resourceDeletionPolicy = default;
+            Optional<ResourceRoutingType> routingType = default;
+            Optional<ResourceTypeRegistrationRegionality> regionality = default;
+            Optional<IList<ResourceTypeEndpoint>> endpoints = default;
+            Optional<ResourceTypeExtensionOptions> extensionOptions = default;
+            Optional<MarketplaceType> marketplaceType = default;
+            Optional<IList<SwaggerSpecification>> swaggerSpecifications = default;
+            Optional<IList<string>> allowedUnauthorizedActions = default;
+            Optional<IList<AuthorizationActionMapping>> authorizationActionMappings = default;
+            Optional<IList<LinkedAccessCheck>> linkedAccessChecks = default;
+            Optional<string> defaultApiVersion = default;
+            Optional<IList<LoggingRule>> loggingRules = default;
+            Optional<IList<ThrottlingRule>> throttlingRules = default;
+            Optional<IList<string>> requiredFeatures = default;
+            Optional<FeaturesRule> featuresRule = default;
+            Optional<bool> enableAsyncOperation = default;
+            Optional<ProviderHubProvisioningState> provisioningState = default;
+            Optional<bool> enableThirdPartyS2S = default;
+            Optional<SubscriptionLifecycleNotificationSpecifications> subscriptionLifecycleNotificationSpecifications = default;
+            Optional<bool> isPureProxy = default;
+            Optional<IdentityManagementProperties> identityManagement = default;
+            Optional<CheckNameAvailabilitySpecifications> checkNameAvailabilitySpecifications = default;
+            Optional<IList<string>> disallowedActionVerbs = default;
+            Optional<IList<ServiceTreeInfo>> serviceTreeInfos = default;
+            Optional<RequestHeaderOptions> requestHeaderOptions = default;
+            Optional<IList<ProviderSubscriptionStateRule>> subscriptionStateRules = default;
+            Optional<TemplateDeploymentOptions> templateDeploymentOptions = default;
+            Optional<IList<ProviderHubExtendedLocationOptions>> extendedLocations = default;
+            Optional<ResourceMovePolicy> resourceMovePolicy = default;
+            Optional<ResourceDeletionPolicy> resourceDeletionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routingType"u8))
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ResourceTypeRegistrationProperties(Core.Optional.ToNullable(routingType), Core.Optional.ToNullable(regionality), Core.Optional.ToList(endpoints), extensionOptions.Value, Core.Optional.ToNullable(marketplaceType), Core.Optional.ToList(swaggerSpecifications), Core.Optional.ToList(allowedUnauthorizedActions), Core.Optional.ToList(authorizationActionMappings), Core.Optional.ToList(linkedAccessChecks), defaultApiVersion.Value, Core.Optional.ToList(loggingRules), Core.Optional.ToList(throttlingRules), Core.Optional.ToList(requiredFeatures), featuresRule.Value, Core.Optional.ToNullable(enableAsyncOperation), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(enableThirdPartyS2S), subscriptionLifecycleNotificationSpecifications.Value, Core.Optional.ToNullable(isPureProxy), identityManagement.Value, checkNameAvailabilitySpecifications.Value, Core.Optional.ToList(disallowedActionVerbs), Core.Optional.ToList(serviceTreeInfos), requestHeaderOptions.Value, Core.Optional.ToList(subscriptionStateRules), templateDeploymentOptions.Value, Core.Optional.ToList(extendedLocations), resourceMovePolicy.Value, Core.Optional.ToNullable(resourceDeletionPolicy));
+            return new ResourceTypeRegistrationProperties(Optional.ToNullable(routingType), Optional.ToNullable(regionality), Optional.ToList(endpoints), extensionOptions.Value, Optional.ToNullable(marketplaceType), Optional.ToList(swaggerSpecifications), Optional.ToList(allowedUnauthorizedActions), Optional.ToList(authorizationActionMappings), Optional.ToList(linkedAccessChecks), defaultApiVersion.Value, Optional.ToList(loggingRules), Optional.ToList(throttlingRules), Optional.ToList(requiredFeatures), featuresRule.Value, Optional.ToNullable(enableAsyncOperation), Optional.ToNullable(provisioningState), Optional.ToNullable(enableThirdPartyS2S), subscriptionLifecycleNotificationSpecifications.Value, Optional.ToNullable(isPureProxy), identityManagement.Value, checkNameAvailabilitySpecifications.Value, Optional.ToList(disallowedActionVerbs), Optional.ToList(serviceTreeInfos), requestHeaderOptions.Value, Optional.ToList(subscriptionStateRules), templateDeploymentOptions.Value, Optional.ToList(extendedLocations), resourceMovePolicy.Value, Optional.ToNullable(resourceDeletionPolicy));
         }
     }
 }

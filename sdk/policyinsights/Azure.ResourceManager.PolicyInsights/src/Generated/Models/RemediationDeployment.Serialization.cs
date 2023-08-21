@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> remediatedResourceId = default;
-            Core.Optional<ResourceIdentifier> deploymentId = default;
-            Core.Optional<string> status = default;
-            Core.Optional<AzureLocation> resourceLocation = default;
-            Core.Optional<ResponseError> error = default;
-            Core.Optional<DateTimeOffset> createdOn = default;
-            Core.Optional<DateTimeOffset> lastUpdatedOn = default;
+            Optional<ResourceIdentifier> remediatedResourceId = default;
+            Optional<ResourceIdentifier> deploymentId = default;
+            Optional<string> status = default;
+            Optional<AzureLocation> resourceLocation = default;
+            Optional<ResponseError> error = default;
+            Optional<DateTimeOffset> createdOn = default;
+            Optional<DateTimeOffset> lastUpdatedOn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("remediatedResourceId"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new RemediationDeployment(remediatedResourceId.Value, deploymentId.Value, status.Value, Core.Optional.ToNullable(resourceLocation), error.Value, Core.Optional.ToNullable(createdOn), Core.Optional.ToNullable(lastUpdatedOn));
+            return new RemediationDeployment(remediatedResourceId.Value, deploymentId.Value, status.Value, Optional.ToNullable(resourceLocation), error.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn));
         }
     }
 }

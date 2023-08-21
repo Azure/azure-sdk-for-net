@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 return null;
             }
-            Core.Optional<int> version = default;
-            Core.Optional<DateTimeOffset> updatedTime = default;
-            Core.Optional<string> updatedBy = default;
-            Core.Optional<ParentManagementGroupInfo> parent = default;
-            Core.Optional<IReadOnlyList<ManagementGroupPathElement>> path = default;
-            Core.Optional<IReadOnlyList<string>> managementGroupAncestors = default;
-            Core.Optional<IReadOnlyList<ManagementGroupPathElement>> managementGroupAncestorsChain = default;
+            Optional<int> version = default;
+            Optional<DateTimeOffset> updatedTime = default;
+            Optional<string> updatedBy = default;
+            Optional<ParentManagementGroupInfo> parent = default;
+            Optional<IReadOnlyList<ManagementGroupPathElement>> path = default;
+            Optional<IReadOnlyList<string>> managementGroupAncestors = default;
+            Optional<IReadOnlyList<ManagementGroupPathElement>> managementGroupAncestorsChain = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     continue;
                 }
             }
-            return new ManagementGroupInfo(Core.Optional.ToNullable(version), Core.Optional.ToNullable(updatedTime), updatedBy.Value, parent.Value, Core.Optional.ToList(path), Core.Optional.ToList(managementGroupAncestors), Core.Optional.ToList(managementGroupAncestorsChain));
+            return new ManagementGroupInfo(Optional.ToNullable(version), Optional.ToNullable(updatedTime), updatedBy.Value, parent.Value, Optional.ToList(path), Optional.ToList(managementGroupAncestors), Optional.ToList(managementGroupAncestorsChain));
         }
     }
 }

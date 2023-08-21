@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class NfsMountEndpointProperties : Core.IUtf8JsonSerializable
+    public partial class NfsMountEndpointProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
             writer.WriteStringValue(Host);
-            if (Core.Optional.IsDefined(NfsVersion))
+            if (Optional.IsDefined(NfsVersion))
             {
                 writer.WritePropertyName("nfsVersion"u8);
                 writer.WriteStringValue(NfsVersion.Value.ToString());
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteStringValue(Export);
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.StorageMover.Models
                 return null;
             }
             string host = default;
-            Core.Optional<NfsVersion> nfsVersion = default;
+            Optional<NfsVersion> nfsVersion = default;
             string export = default;
             EndpointType endpointType = default;
-            Core.Optional<string> description = default;
-            Core.Optional<StorageMoverProvisioningState> provisioningState = default;
+            Optional<string> description = default;
+            Optional<StorageMoverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("host"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     continue;
                 }
             }
-            return new NfsMountEndpointProperties(endpointType, description.Value, Core.Optional.ToNullable(provisioningState), host, Core.Optional.ToNullable(nfsVersion), export);
+            return new NfsMountEndpointProperties(endpointType, description.Value, Optional.ToNullable(provisioningState), host, Optional.ToNullable(nfsVersion), export);
         }
     }
 }

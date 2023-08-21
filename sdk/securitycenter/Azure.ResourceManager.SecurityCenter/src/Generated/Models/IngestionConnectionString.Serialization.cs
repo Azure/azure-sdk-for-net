@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<string> value = default;
+            Optional<AzureLocation> location = default;
+            Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new IngestionConnectionString(Core.Optional.ToNullable(location), value.Value);
+            return new IngestionConnectionString(Optional.ToNullable(location), value.Value);
         }
     }
 }

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             Argument.AssertNotNull(dockerFilePath, nameof(dockerFilePath));
 
-            ImageNames = new Core.ChangeTrackingList<string>();
+            ImageNames = new ChangeTrackingList<string>();
             DockerFilePath = dockerFilePath;
-            Arguments = new Core.ChangeTrackingList<ContainerRegistryRunArgument>();
+            Arguments = new ChangeTrackingList<ContainerRegistryRunArgument>();
             ContainerRegistryTaskStepType = ContainerRegistryTaskStepType.Docker;
         }
 

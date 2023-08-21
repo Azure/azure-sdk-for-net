@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <summary> Initializes a new instance of DataLakeStoreTrustedIdProviderListResult. </summary>
         internal DataLakeStoreTrustedIdProviderListResult()
         {
-            Value = new Core.ChangeTrackingList<DataLakeStoreTrustedIdProviderData>();
+            Value = new ChangeTrackingList<DataLakeStoreTrustedIdProviderData>();
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreTrustedIdProviderListResult. </summary>

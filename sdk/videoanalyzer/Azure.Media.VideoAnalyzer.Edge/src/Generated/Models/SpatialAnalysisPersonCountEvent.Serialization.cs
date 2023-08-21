@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SpatialAnalysisPersonCountEvent : Core.IUtf8JsonSerializable
+    public partial class SpatialAnalysisPersonCountEvent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Trigger))
+            if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
                 writer.WriteStringValue(Trigger.Value.ToString());
             }
-            if (Core.Optional.IsDefined(OutputFrequency))
+            if (Optional.IsDefined(OutputFrequency))
             {
                 writer.WritePropertyName("outputFrequency"u8);
                 writer.WriteStringValue(OutputFrequency);
             }
-            if (Core.Optional.IsDefined(Threshold))
+            if (Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteStringValue(Threshold);
             }
-            if (Core.Optional.IsDefined(Focus))
+            if (Optional.IsDefined(Focus))
             {
                 writer.WritePropertyName("focus"u8);
                 writer.WriteStringValue(Focus.Value.ToString());
@@ -44,10 +44,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<SpatialAnalysisPersonCountEventTrigger> trigger = default;
-            Core.Optional<string> outputFrequency = default;
-            Core.Optional<string> threshold = default;
-            Core.Optional<SpatialAnalysisOperationFocus> focus = default;
+            Optional<SpatialAnalysisPersonCountEventTrigger> trigger = default;
+            Optional<string> outputFrequency = default;
+            Optional<string> threshold = default;
+            Optional<SpatialAnalysisOperationFocus> focus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trigger"u8))
@@ -79,7 +79,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonCountEvent(threshold.Value, Core.Optional.ToNullable(focus), Core.Optional.ToNullable(trigger), outputFrequency.Value);
+            return new SpatialAnalysisPersonCountEvent(threshold.Value, Optional.ToNullable(focus), Optional.ToNullable(trigger), outputFrequency.Value);
         }
     }
 }

@@ -12,14 +12,14 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    public partial class StorageMoverProjectData : Core.IUtf8JsonSerializable
+    public partial class StorageMoverProjectData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.StorageMover
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<StorageMoverProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<StorageMoverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.StorageMover
                     continue;
                 }
             }
-            return new StorageMoverProjectData(id, name, type, systemData.Value, description.Value, Core.Optional.ToNullable(provisioningState));
+            return new StorageMoverProjectData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

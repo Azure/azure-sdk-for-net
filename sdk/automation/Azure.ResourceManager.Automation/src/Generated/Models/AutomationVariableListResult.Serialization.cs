@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AutomationVariableData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<AutomationVariableData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationVariableListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new AutomationVariableListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

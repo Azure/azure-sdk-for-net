@@ -12,22 +12,22 @@ using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class DeviceProvisioningServiceProperties : Core.IUtf8JsonSerializable
+    public partial class DeviceProvisioningServiceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(IPFilterRules))
+            if (Optional.IsCollectionDefined(IPFilterRules))
             {
                 writer.WritePropertyName("ipFilterRules"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Core.Optional.IsCollectionDefined(IotHubs))
+            if (Optional.IsCollectionDefined(IotHubs))
             {
                 writer.WritePropertyName("iotHubs"u8);
                 writer.WriteStartArray();
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(AllocationPolicy))
+            if (Optional.IsDefined(AllocationPolicy))
             {
                 writer.WritePropertyName("allocationPolicy"u8);
                 writer.WriteStringValue(AllocationPolicy.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(AuthorizationPolicies))
+            if (Optional.IsCollectionDefined(AuthorizationPolicies))
             {
                 writer.WritePropertyName("authorizationPolicies"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsDataResidencyEnabled))
+            if (Optional.IsDefined(IsDataResidencyEnabled))
             {
                 writer.WritePropertyName("enableDataResidency"u8);
                 writer.WriteBooleanValue(IsDataResidencyEnabled.Value);
@@ -91,18 +91,18 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Core.Optional<DeviceProvisioningServicesState> state = default;
-            Core.Optional<DeviceProvisioningServicesPublicNetworkAccess> publicNetworkAccess = default;
-            Core.Optional<IList<DeviceProvisioningServicesIPFilterRule>> ipFilterRules = default;
-            Core.Optional<IList<DeviceProvisioningServicesPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<IList<IotHubDefinitionDescription>> iotHubs = default;
-            Core.Optional<DeviceProvisioningServicesAllocationPolicy> allocationPolicy = default;
-            Core.Optional<string> serviceOperationsHostName = default;
-            Core.Optional<string> deviceProvisioningHostName = default;
-            Core.Optional<string> idScope = default;
-            Core.Optional<IList<DeviceProvisioningServicesSharedAccessKey>> authorizationPolicies = default;
-            Core.Optional<bool> enableDataResidency = default;
+            Optional<DeviceProvisioningServicesState> state = default;
+            Optional<DeviceProvisioningServicesPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<IList<DeviceProvisioningServicesIPFilterRule>> ipFilterRules = default;
+            Optional<IList<DeviceProvisioningServicesPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<string> provisioningState = default;
+            Optional<IList<IotHubDefinitionDescription>> iotHubs = default;
+            Optional<DeviceProvisioningServicesAllocationPolicy> allocationPolicy = default;
+            Optional<string> serviceOperationsHostName = default;
+            Optional<string> deviceProvisioningHostName = default;
+            Optional<string> idScope = default;
+            Optional<IList<DeviceProvisioningServicesSharedAccessKey>> authorizationPolicies = default;
+            Optional<bool> enableDataResidency = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     continue;
                 }
             }
-            return new DeviceProvisioningServiceProperties(Core.Optional.ToNullable(state), Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToList(ipFilterRules), Core.Optional.ToList(privateEndpointConnections), provisioningState.Value, Core.Optional.ToList(iotHubs), Core.Optional.ToNullable(allocationPolicy), serviceOperationsHostName.Value, deviceProvisioningHostName.Value, idScope.Value, Core.Optional.ToList(authorizationPolicies), Core.Optional.ToNullable(enableDataResidency));
+            return new DeviceProvisioningServiceProperties(Optional.ToNullable(state), Optional.ToNullable(publicNetworkAccess), Optional.ToList(ipFilterRules), Optional.ToList(privateEndpointConnections), provisioningState.Value, Optional.ToList(iotHubs), Optional.ToNullable(allocationPolicy), serviceOperationsHostName.Value, deviceProvisioningHostName.Value, idScope.Value, Optional.ToList(authorizationPolicies), Optional.ToNullable(enableDataResidency));
         }
     }
 }

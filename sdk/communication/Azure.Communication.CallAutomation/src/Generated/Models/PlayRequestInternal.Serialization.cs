@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class PlayRequestInternal : Core.IUtf8JsonSerializable
+    internal partial class PlayRequestInternal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("playSourceInfo"u8);
             writer.WriteObjectValue(PlaySourceInfo);
-            if (Core.Optional.IsCollectionDefined(PlayTo))
+            if (Optional.IsCollectionDefined(PlayTo))
             {
                 writer.WritePropertyName("playTo"u8);
                 writer.WriteStartArray();
@@ -27,17 +27,17 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(PlayOptions))
+            if (Optional.IsDefined(PlayOptions))
             {
                 writer.WritePropertyName("playOptions"u8);
                 writer.WriteObjectValue(PlayOptions);
             }
-            if (Core.Optional.IsDefined(OperationContext))
+            if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (Core.Optional.IsDefined(CallbackUri))
+            if (Optional.IsDefined(CallbackUri))
             {
                 writer.WritePropertyName("callbackUri"u8);
                 writer.WriteStringValue(CallbackUri);

@@ -10,34 +10,34 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class RuleMetricDataSource : Core.IUtf8JsonSerializable
+    public partial class RuleMetricDataSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MetricName))
+            if (Optional.IsDefined(MetricName))
             {
                 writer.WritePropertyName("metricName"u8);
                 writer.WriteStringValue(MetricName);
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Core.Optional.IsDefined(LegacyResourceId))
+            if (Optional.IsDefined(LegacyResourceId))
             {
                 writer.WritePropertyName("legacyResourceId"u8);
                 writer.WriteStringValue(LegacyResourceId);
             }
-            if (Core.Optional.IsDefined(ResourceLocation))
+            if (Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation);
             }
-            if (Core.Optional.IsDefined(MetricNamespace))
+            if (Optional.IsDefined(MetricNamespace))
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<string> metricName = default;
+            Optional<string> metricName = default;
             string odataType = default;
-            Core.Optional<ResourceIdentifier> resourceUri = default;
-            Core.Optional<ResourceIdentifier> legacyResourceId = default;
-            Core.Optional<string> resourceLocation = default;
-            Core.Optional<string> metricNamespace = default;
+            Optional<ResourceIdentifier> resourceUri = default;
+            Optional<ResourceIdentifier> legacyResourceId = default;
+            Optional<string> resourceLocation = default;
+            Optional<string> metricNamespace = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricName"u8))

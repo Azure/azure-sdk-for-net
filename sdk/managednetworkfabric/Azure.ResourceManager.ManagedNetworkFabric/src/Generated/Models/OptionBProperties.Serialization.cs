@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class OptionBProperties : Core.IUtf8JsonSerializable
+    public partial class OptionBProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ImportRouteTargets))
+            if (Optional.IsCollectionDefined(ImportRouteTargets))
             {
                 writer.WritePropertyName("importRouteTargets"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ExportRouteTargets))
+            if (Optional.IsCollectionDefined(ExportRouteTargets))
             {
                 writer.WritePropertyName("exportRouteTargets"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(RouteTargets))
+            if (Optional.IsDefined(RouteTargets))
             {
                 writer.WritePropertyName("routeTargets"u8);
                 writer.WriteObjectValue(RouteTargets);
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> importRouteTargets = default;
-            Core.Optional<IList<string>> exportRouteTargets = default;
-            Core.Optional<RouteTargetInformation> routeTargets = default;
+            Optional<IList<string>> importRouteTargets = default;
+            Optional<IList<string>> exportRouteTargets = default;
+            Optional<RouteTargetInformation> routeTargets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("importRouteTargets"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new OptionBProperties(Core.Optional.ToList(importRouteTargets), Core.Optional.ToList(exportRouteTargets), routeTargets.Value);
+            return new OptionBProperties(Optional.ToList(importRouteTargets), Optional.ToList(exportRouteTargets), routeTargets.Value);
         }
     }
 }

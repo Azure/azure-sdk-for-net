@@ -11,9 +11,9 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class LinkedIntegrationRuntimeKeyAuthorization : Core.IUtf8JsonSerializable
+    public partial class LinkedIntegrationRuntimeKeyAuthorization : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);

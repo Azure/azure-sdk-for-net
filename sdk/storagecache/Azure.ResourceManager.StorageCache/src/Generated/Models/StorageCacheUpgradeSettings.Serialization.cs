@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheUpgradeSettings : Core.IUtf8JsonSerializable
+    public partial class StorageCacheUpgradeSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EnableUpgradeSchedule))
+            if (Optional.IsDefined(EnableUpgradeSchedule))
             {
                 writer.WritePropertyName("upgradeScheduleEnabled"u8);
                 writer.WriteBooleanValue(EnableUpgradeSchedule.Value);
             }
-            if (Core.Optional.IsDefined(ScheduledOn))
+            if (Optional.IsDefined(ScheduledOn))
             {
                 writer.WritePropertyName("scheduledTime"u8);
                 writer.WriteStringValue(ScheduledOn.Value, "O");
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<bool> upgradeScheduleEnabled = default;
-            Core.Optional<DateTimeOffset> scheduledTime = default;
+            Optional<bool> upgradeScheduleEnabled = default;
+            Optional<DateTimeOffset> scheduledTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("upgradeScheduleEnabled"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new StorageCacheUpgradeSettings(Core.Optional.ToNullable(upgradeScheduleEnabled), Core.Optional.ToNullable(scheduledTime));
+            return new StorageCacheUpgradeSettings(Optional.ToNullable(upgradeScheduleEnabled), Optional.ToNullable(scheduledTime));
         }
     }
 }

@@ -20,29 +20,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<Uri> diskUri = default;
-            Core.Optional<ResourceIdentifier> recoveryAzureStorageAccountId = default;
-            Core.Optional<ResourceIdentifier> primaryDiskAzureStorageAccountId = default;
-            Core.Optional<Uri> recoveryDiskUri = default;
-            Core.Optional<string> diskName = default;
-            Core.Optional<long> diskCapacityInBytes = default;
-            Core.Optional<ResourceIdentifier> primaryStagingAzureStorageAccountId = default;
-            Core.Optional<string> diskType = default;
-            Core.Optional<bool> resyncRequired = default;
-            Core.Optional<int> monitoringPercentageCompletion = default;
-            Core.Optional<string> monitoringJobType = default;
-            Core.Optional<double> dataPendingInStagingStorageAccountInMB = default;
-            Core.Optional<double> dataPendingAtSourceAgentInMB = default;
-            Core.Optional<string> diskState = default;
-            Core.Optional<IReadOnlyList<string>> allowedDiskLevelOperation = default;
-            Core.Optional<bool> isDiskEncrypted = default;
-            Core.Optional<string> secretIdentifier = default;
-            Core.Optional<ResourceIdentifier> dekKeyVaultArmId = default;
-            Core.Optional<bool> isDiskKeyEncrypted = default;
-            Core.Optional<string> keyIdentifier = default;
-            Core.Optional<ResourceIdentifier> kekKeyVaultArmId = default;
-            Core.Optional<string> failoverDiskName = default;
-            Core.Optional<string> tfoDiskName = default;
+            Optional<Uri> diskUri = default;
+            Optional<ResourceIdentifier> recoveryAzureStorageAccountId = default;
+            Optional<ResourceIdentifier> primaryDiskAzureStorageAccountId = default;
+            Optional<Uri> recoveryDiskUri = default;
+            Optional<string> diskName = default;
+            Optional<long> diskCapacityInBytes = default;
+            Optional<ResourceIdentifier> primaryStagingAzureStorageAccountId = default;
+            Optional<string> diskType = default;
+            Optional<bool> resyncRequired = default;
+            Optional<int> monitoringPercentageCompletion = default;
+            Optional<string> monitoringJobType = default;
+            Optional<double> dataPendingInStagingStorageAccountInMB = default;
+            Optional<double> dataPendingAtSourceAgentInMB = default;
+            Optional<string> diskState = default;
+            Optional<IReadOnlyList<string>> allowedDiskLevelOperation = default;
+            Optional<bool> isDiskEncrypted = default;
+            Optional<string> secretIdentifier = default;
+            Optional<ResourceIdentifier> dekKeyVaultArmId = default;
+            Optional<bool> isDiskKeyEncrypted = default;
+            Optional<string> keyIdentifier = default;
+            Optional<ResourceIdentifier> kekKeyVaultArmId = default;
+            Optional<string> failoverDiskName = default;
+            Optional<string> tfoDiskName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskUri"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new A2AProtectedDiskDetails(diskUri.Value, recoveryAzureStorageAccountId.Value, primaryDiskAzureStorageAccountId.Value, recoveryDiskUri.Value, diskName.Value, Core.Optional.ToNullable(diskCapacityInBytes), primaryStagingAzureStorageAccountId.Value, diskType.Value, Core.Optional.ToNullable(resyncRequired), Core.Optional.ToNullable(monitoringPercentageCompletion), monitoringJobType.Value, Core.Optional.ToNullable(dataPendingInStagingStorageAccountInMB), Core.Optional.ToNullable(dataPendingAtSourceAgentInMB), diskState.Value, Core.Optional.ToList(allowedDiskLevelOperation), Core.Optional.ToNullable(isDiskEncrypted), secretIdentifier.Value, dekKeyVaultArmId.Value, Core.Optional.ToNullable(isDiskKeyEncrypted), keyIdentifier.Value, kekKeyVaultArmId.Value, failoverDiskName.Value, tfoDiskName.Value);
+            return new A2AProtectedDiskDetails(diskUri.Value, recoveryAzureStorageAccountId.Value, primaryDiskAzureStorageAccountId.Value, recoveryDiskUri.Value, diskName.Value, Optional.ToNullable(diskCapacityInBytes), primaryStagingAzureStorageAccountId.Value, diskType.Value, Optional.ToNullable(resyncRequired), Optional.ToNullable(monitoringPercentageCompletion), monitoringJobType.Value, Optional.ToNullable(dataPendingInStagingStorageAccountInMB), Optional.ToNullable(dataPendingAtSourceAgentInMB), diskState.Value, Optional.ToList(allowedDiskLevelOperation), Optional.ToNullable(isDiskEncrypted), secretIdentifier.Value, dekKeyVaultArmId.Value, Optional.ToNullable(isDiskKeyEncrypted), keyIdentifier.Value, kekKeyVaultArmId.Value, failoverDiskName.Value, tfoDiskName.Value);
         }
     }
 }

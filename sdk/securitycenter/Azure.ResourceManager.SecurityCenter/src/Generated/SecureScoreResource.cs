@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _secureScoreControlsRestClient.CreateListBySecureScoreRequest(Id.SubscriptionId, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _secureScoreControlsRestClient.CreateListBySecureScoreNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, expand);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SecureScoreControlDetails.DeserializeSecureScoreControlDetails, _secureScoreControlsClientDiagnostics, Pipeline, "SecureScoreResource.GetSecureScoreControls", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SecureScoreControlDetails.DeserializeSecureScoreControlDetails, _secureScoreControlsClientDiagnostics, Pipeline, "SecureScoreResource.GetSecureScoreControls", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _secureScoreControlsRestClient.CreateListBySecureScoreRequest(Id.SubscriptionId, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _secureScoreControlsRestClient.CreateListBySecureScoreNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, expand);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecureScoreControlDetails.DeserializeSecureScoreControlDetails, _secureScoreControlsClientDiagnostics, Pipeline, "SecureScoreResource.GetSecureScoreControls", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecureScoreControlDetails.DeserializeSecureScoreControlDetails, _secureScoreControlsClientDiagnostics, Pipeline, "SecureScoreResource.GetSecureScoreControls", "value", "nextLink", cancellationToken);
         }
     }
 }

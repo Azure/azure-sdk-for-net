@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class BlobReferenceInputDataSource : Core.IUtf8JsonSerializable
+    public partial class BlobReferenceInputDataSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ReferenceInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(StorageAccounts))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -31,52 +31,52 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Container))
+            if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
-            if (Core.Optional.IsDefined(PathPattern))
+            if (Optional.IsDefined(PathPattern))
             {
                 writer.WritePropertyName("pathPattern"u8);
                 writer.WriteStringValue(PathPattern);
             }
-            if (Core.Optional.IsDefined(DateFormat))
+            if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
                 writer.WriteStringValue(DateFormat);
             }
-            if (Core.Optional.IsDefined(TimeFormat))
+            if (Optional.IsDefined(TimeFormat))
             {
                 writer.WritePropertyName("timeFormat"u8);
                 writer.WriteStringValue(TimeFormat);
             }
-            if (Core.Optional.IsDefined(AuthenticationMode))
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(BlobName))
+            if (Optional.IsDefined(BlobName))
             {
                 writer.WritePropertyName("blobName"u8);
                 writer.WriteStringValue(BlobName);
             }
-            if (Core.Optional.IsDefined(DeltaPathPattern))
+            if (Optional.IsDefined(DeltaPathPattern))
             {
                 writer.WritePropertyName("deltaPathPattern"u8);
                 writer.WriteStringValue(DeltaPathPattern);
             }
-            if (Core.Optional.IsDefined(SourcePartitionCount))
+            if (Optional.IsDefined(SourcePartitionCount))
             {
                 writer.WritePropertyName("sourcePartitionCount"u8);
                 writer.WriteNumberValue(SourcePartitionCount.Value);
             }
-            if (Core.Optional.IsDefined(FullSnapshotRefreshInterval))
+            if (Optional.IsDefined(FullSnapshotRefreshInterval))
             {
                 writer.WritePropertyName("fullSnapshotRefreshRate"u8);
                 writer.WriteStringValue(FullSnapshotRefreshInterval.Value, "T");
             }
-            if (Core.Optional.IsDefined(DeltaSnapshotRefreshInterval))
+            if (Optional.IsDefined(DeltaSnapshotRefreshInterval))
             {
                 writer.WritePropertyName("deltaSnapshotRefreshRate"u8);
                 writer.WriteStringValue(DeltaSnapshotRefreshInterval.Value, "T");
@@ -92,17 +92,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Core.Optional<IList<StreamAnalyticsStorageAccount>> storageAccounts = default;
-            Core.Optional<string> container = default;
-            Core.Optional<string> pathPattern = default;
-            Core.Optional<string> dateFormat = default;
-            Core.Optional<string> timeFormat = default;
-            Core.Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
-            Core.Optional<string> blobName = default;
-            Core.Optional<string> deltaPathPattern = default;
-            Core.Optional<int> sourcePartitionCount = default;
-            Core.Optional<TimeSpan> fullSnapshotRefreshRate = default;
-            Core.Optional<TimeSpan> deltaSnapshotRefreshRate = default;
+            Optional<IList<StreamAnalyticsStorageAccount>> storageAccounts = default;
+            Optional<string> container = default;
+            Optional<string> pathPattern = default;
+            Optional<string> dateFormat = default;
+            Optional<string> timeFormat = default;
+            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            Optional<string> blobName = default;
+            Optional<string> deltaPathPattern = default;
+            Optional<int> sourcePartitionCount = default;
+            Optional<TimeSpan> fullSnapshotRefreshRate = default;
+            Optional<TimeSpan> deltaSnapshotRefreshRate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new BlobReferenceInputDataSource(type, Core.Optional.ToList(storageAccounts), container.Value, pathPattern.Value, dateFormat.Value, timeFormat.Value, Core.Optional.ToNullable(authenticationMode), blobName.Value, deltaPathPattern.Value, Core.Optional.ToNullable(sourcePartitionCount), Core.Optional.ToNullable(fullSnapshotRefreshRate), Core.Optional.ToNullable(deltaSnapshotRefreshRate));
+            return new BlobReferenceInputDataSource(type, Optional.ToList(storageAccounts), container.Value, pathPattern.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode), blobName.Value, deltaPathPattern.Value, Optional.ToNullable(sourcePartitionCount), Optional.ToNullable(fullSnapshotRefreshRate), Optional.ToNullable(deltaSnapshotRefreshRate));
         }
     }
 }

@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of KubernetesClusterNode. </summary>
         internal KubernetesClusterNode()
         {
-            Labels = new Core.ChangeTrackingList<KubernetesLabel>();
-            NetworkAttachments = new Core.ChangeTrackingList<NetworkAttachment>();
-            Taints = new Core.ChangeTrackingList<KubernetesLabel>();
+            Labels = new ChangeTrackingList<KubernetesLabel>();
+            NetworkAttachments = new ChangeTrackingList<NetworkAttachment>();
+            Taints = new ChangeTrackingList<KubernetesLabel>();
         }
 
         /// <summary> Initializes a new instance of KubernetesClusterNode. </summary>

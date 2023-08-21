@@ -11,19 +11,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
-    public partial class LoadTestingQuotaAvailabilityResult : Core.IUtf8JsonSerializable
+    public partial class LoadTestingQuotaAvailabilityResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsAvailable))
+            if (Optional.IsDefined(IsAvailable))
             {
                 writer.WritePropertyName("isAvailable"u8);
                 writer.WriteBooleanValue(IsAvailable.Value);
             }
-            if (Core.Optional.IsDefined(AvailabilityStatus))
+            if (Optional.IsDefined(AvailabilityStatus))
             {
                 writer.WritePropertyName("availabilityStatus"u8);
                 writer.WriteStringValue(AvailabilityStatus);
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.LoadTesting.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<bool> isAvailable = default;
-            Core.Optional<string> availabilityStatus = default;
+            Optional<SystemData> systemData = default;
+            Optional<bool> isAvailable = default;
+            Optional<string> availabilityStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     continue;
                 }
             }
-            return new LoadTestingQuotaAvailabilityResult(id, name, type, systemData.Value, Core.Optional.ToNullable(isAvailable), availabilityStatus.Value);
+            return new LoadTestingQuotaAvailabilityResult(id, name, type, systemData.Value, Optional.ToNullable(isAvailable), availabilityStatus.Value);
         }
     }
 }

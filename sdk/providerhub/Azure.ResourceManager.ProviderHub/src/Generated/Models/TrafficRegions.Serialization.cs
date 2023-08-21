@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class TrafficRegions : Core.IUtf8JsonSerializable
+    public partial class TrafficRegions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Regions))
+            if (Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<IList<AzureLocation>> regions = default;
+            Optional<IList<AzureLocation>> regions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("regions"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new TrafficRegions(Core.Optional.ToList(regions));
+            return new TrafficRegions(Optional.ToList(regions));
         }
     }
 }

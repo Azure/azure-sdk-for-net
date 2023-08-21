@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of HyperVReplicaAzureEnableProtectionContent. </summary>
         public HyperVReplicaAzureEnableProtectionContent()
         {
-            DisksToInclude = new Core.ChangeTrackingList<string>();
-            DisksToIncludeForManagedDisks = new Core.ChangeTrackingList<HyperVReplicaAzureDiskDetails>();
-            TargetVmTags = new Core.ChangeTrackingDictionary<string, string>();
-            SeedManagedDiskTags = new Core.ChangeTrackingDictionary<string, string>();
-            TargetManagedDiskTags = new Core.ChangeTrackingDictionary<string, string>();
-            TargetNicTags = new Core.ChangeTrackingDictionary<string, string>();
+            DisksToInclude = new ChangeTrackingList<string>();
+            DisksToIncludeForManagedDisks = new ChangeTrackingList<HyperVReplicaAzureDiskDetails>();
+            TargetVmTags = new ChangeTrackingDictionary<string, string>();
+            SeedManagedDiskTags = new ChangeTrackingDictionary<string, string>();
+            TargetManagedDiskTags = new ChangeTrackingDictionary<string, string>();
+            TargetNicTags = new ChangeTrackingDictionary<string, string>();
             InstanceType = "HyperVReplicaAzure";
         }
 

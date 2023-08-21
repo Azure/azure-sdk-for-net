@@ -10,34 +10,34 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AacAudio : Core.IUtf8JsonSerializable
+    public partial class AacAudio : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Profile))
+            if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteStringValue(Profile.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Channels))
+            if (Optional.IsDefined(Channels))
             {
                 writer.WritePropertyName("channels"u8);
                 writer.WriteNumberValue(Channels.Value);
             }
-            if (Core.Optional.IsDefined(SamplingRate))
+            if (Optional.IsDefined(SamplingRate))
             {
                 writer.WritePropertyName("samplingRate"u8);
                 writer.WriteNumberValue(SamplingRate.Value);
             }
-            if (Core.Optional.IsDefined(Bitrate))
+            if (Optional.IsDefined(Bitrate))
             {
                 writer.WritePropertyName("bitrate"u8);
                 writer.WriteNumberValue(Bitrate.Value);
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Core.Optional.IsDefined(Label))
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<AacAudioProfile> profile = default;
-            Core.Optional<int> channels = default;
-            Core.Optional<int> samplingRate = default;
-            Core.Optional<int> bitrate = default;
+            Optional<AacAudioProfile> profile = default;
+            Optional<int> channels = default;
+            Optional<int> samplingRate = default;
+            Optional<int> bitrate = default;
             string odataType = default;
-            Core.Optional<string> label = default;
+            Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profile"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new AacAudio(odataType, label.Value, Core.Optional.ToNullable(channels), Core.Optional.ToNullable(samplingRate), Core.Optional.ToNullable(bitrate), Core.Optional.ToNullable(profile));
+            return new AacAudio(odataType, label.Value, Optional.ToNullable(channels), Optional.ToNullable(samplingRate), Optional.ToNullable(bitrate), Optional.ToNullable(profile));
         }
     }
 }

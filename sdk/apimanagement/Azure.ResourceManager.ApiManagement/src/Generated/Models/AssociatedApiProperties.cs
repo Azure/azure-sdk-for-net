@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of AssociatedApiProperties. </summary>
         internal AssociatedApiProperties()
         {
-            Protocols = new Core.ChangeTrackingList<ApiOperationInvokableProtocol>();
+            Protocols = new ChangeTrackingList<ApiOperationInvokableProtocol>();
         }
 
         /// <summary> Initializes a new instance of AssociatedApiProperties. </summary>

@@ -14,34 +14,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class LinkResourceFormatData : Core.IUtf8JsonSerializable
+    public partial class LinkResourceFormatData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SourceEntityType))
+            if (Optional.IsDefined(SourceEntityType))
             {
                 writer.WritePropertyName("sourceEntityType"u8);
                 writer.WriteStringValue(SourceEntityType.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(TargetEntityType))
+            if (Optional.IsDefined(TargetEntityType))
             {
                 writer.WritePropertyName("targetEntityType"u8);
                 writer.WriteStringValue(TargetEntityType.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(SourceEntityTypeName))
+            if (Optional.IsDefined(SourceEntityTypeName))
             {
                 writer.WritePropertyName("sourceEntityTypeName"u8);
                 writer.WriteStringValue(SourceEntityTypeName);
             }
-            if (Core.Optional.IsDefined(TargetEntityTypeName))
+            if (Optional.IsDefined(TargetEntityTypeName))
             {
                 writer.WritePropertyName("targetEntityTypeName"u8);
                 writer.WriteStringValue(TargetEntityTypeName);
             }
-            if (Core.Optional.IsCollectionDefined(DisplayName))
+            if (Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Description))
+            if (Optional.IsCollectionDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Mappings))
+            if (Optional.IsCollectionDefined(Mappings))
             {
                 writer.WritePropertyName("mappings"u8);
                 writer.WriteStartArray();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ParticipantPropertyReferences))
+            if (Optional.IsCollectionDefined(ParticipantPropertyReferences))
             {
                 writer.WritePropertyName("participantPropertyReferences"u8);
                 writer.WriteStartArray();
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ReferenceOnly))
+            if (Optional.IsDefined(ReferenceOnly))
             {
                 writer.WritePropertyName("referenceOnly"u8);
                 writer.WriteBooleanValue(ReferenceOnly.Value);
             }
-            if (Core.Optional.IsDefined(OperationType))
+            if (Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToSerialString());
@@ -106,20 +106,20 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<string> linkName = default;
-            Core.Optional<EntityType> sourceEntityType = default;
-            Core.Optional<EntityType> targetEntityType = default;
-            Core.Optional<string> sourceEntityTypeName = default;
-            Core.Optional<string> targetEntityTypeName = default;
-            Core.Optional<IDictionary<string, string>> displayName = default;
-            Core.Optional<IDictionary<string, string>> description = default;
-            Core.Optional<IList<TypePropertiesMapping>> mappings = default;
-            Core.Optional<IList<ParticipantPropertyReference>> participantPropertyReferences = default;
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<bool> referenceOnly = default;
-            Core.Optional<InstanceOperationType> operationType = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> tenantId = default;
+            Optional<string> linkName = default;
+            Optional<EntityType> sourceEntityType = default;
+            Optional<EntityType> targetEntityType = default;
+            Optional<string> sourceEntityTypeName = default;
+            Optional<string> targetEntityTypeName = default;
+            Optional<IDictionary<string, string>> displayName = default;
+            Optional<IDictionary<string, string>> description = default;
+            Optional<IList<TypePropertiesMapping>> mappings = default;
+            Optional<IList<ParticipantPropertyReference>> participantPropertyReferences = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<bool> referenceOnly = default;
+            Optional<InstanceOperationType> operationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     continue;
                 }
             }
-            return new LinkResourceFormatData(id, name, type, systemData.Value, Core.Optional.ToNullable(tenantId), linkName.Value, Core.Optional.ToNullable(sourceEntityType), Core.Optional.ToNullable(targetEntityType), sourceEntityTypeName.Value, targetEntityTypeName.Value, Core.Optional.ToDictionary(displayName), Core.Optional.ToDictionary(description), Core.Optional.ToList(mappings), Core.Optional.ToList(participantPropertyReferences), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(referenceOnly), Core.Optional.ToNullable(operationType));
+            return new LinkResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), linkName.Value, Optional.ToNullable(sourceEntityType), Optional.ToNullable(targetEntityType), sourceEntityTypeName.Value, targetEntityTypeName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), Optional.ToList(mappings), Optional.ToList(participantPropertyReferences), Optional.ToNullable(provisioningState), Optional.ToNullable(referenceOnly), Optional.ToNullable(operationType));
         }
     }
 }

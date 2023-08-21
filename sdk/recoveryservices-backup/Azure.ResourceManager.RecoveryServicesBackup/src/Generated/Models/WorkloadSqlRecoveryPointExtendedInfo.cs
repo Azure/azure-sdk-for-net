@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of WorkloadSqlRecoveryPointExtendedInfo. </summary>
         public WorkloadSqlRecoveryPointExtendedInfo()
         {
-            DataDirectoryPaths = new Core.ChangeTrackingList<SqlDataDirectory>();
+            DataDirectoryPaths = new ChangeTrackingList<SqlDataDirectory>();
         }
 
         /// <summary> Initializes a new instance of WorkloadSqlRecoveryPointExtendedInfo. </summary>

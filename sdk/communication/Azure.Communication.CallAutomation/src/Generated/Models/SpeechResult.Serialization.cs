@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Core.Optional<string> speech = default;
+            Optional<string> speech = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("speech"u8))

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of RuleEmailAction. </summary>
         public RuleEmailAction()
         {
-            CustomEmails = new Core.ChangeTrackingList<string>();
+            CustomEmails = new ChangeTrackingList<string>();
             OdataType = "Microsoft.Azure.Management.Insights.Models.RuleEmailAction";
         }
 

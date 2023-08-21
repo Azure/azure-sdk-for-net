@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <summary> Initializes a new instance of IotCentralAppPatch. </summary>
         public IotCentralAppPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            PrivateEndpointConnections = new Core.ChangeTrackingList<IotCentralPrivateEndpointConnectionData>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            PrivateEndpointConnections = new ChangeTrackingList<IotCentralPrivateEndpointConnectionData>();
         }
 
         /// <summary> Instance tags. </summary>

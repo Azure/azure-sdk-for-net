@@ -14,24 +14,24 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureDataLakeStoreWriteSettingsConverter))]
-    public partial class AzureDataLakeStoreWriteSettings : Core.IUtf8JsonSerializable
+    public partial class AzureDataLakeStoreWriteSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExpiryDateTime))
+            if (Optional.IsDefined(ExpiryDateTime))
             {
                 writer.WritePropertyName("expiryDateTime"u8);
                 writer.WriteObjectValue(ExpiryDateTime);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Core.Optional.IsDefined(MaxConcurrentConnections))
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
             }
-            if (Core.Optional.IsDefined(CopyBehavior))
+            if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
                 writer.WriteObjectValue(CopyBehavior);
@@ -50,10 +50,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<object> expiryDateTime = default;
+            Optional<object> expiryDateTime = default;
             string type = default;
-            Core.Optional<object> maxConcurrentConnections = default;
-            Core.Optional<object> copyBehavior = default;
+            Optional<object> maxConcurrentConnections = default;
+            Optional<object> copyBehavior = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    internal class KeyVaultOperationSource : Core.IOperationSource<KeyVaultResource>
+    internal class KeyVaultOperationSource : IOperationSource<KeyVaultResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.KeyVault
             _client = client;
         }
 
-        KeyVaultResource Core.IOperationSource<KeyVaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        KeyVaultResource IOperationSource<KeyVaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = KeyVaultData.DeserializeKeyVaultData(document.RootElement);
             return new KeyVaultResource(_client, data);
         }
 
-        async ValueTask<KeyVaultResource> Core.IOperationSource<KeyVaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<KeyVaultResource> IOperationSource<KeyVaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = KeyVaultData.DeserializeKeyVaultData(document.RootElement);

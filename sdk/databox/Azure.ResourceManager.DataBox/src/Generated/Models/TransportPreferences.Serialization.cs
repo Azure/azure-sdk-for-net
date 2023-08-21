@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class TransportPreferences : Core.IUtf8JsonSerializable
+    public partial class TransportPreferences : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("preferredShipmentType"u8);
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             TransportShipmentType preferredShipmentType = default;
-            Core.Optional<bool> isUpdated = default;
+            Optional<bool> isUpdated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preferredShipmentType"u8))
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new TransportPreferences(preferredShipmentType, Core.Optional.ToNullable(isUpdated));
+            return new TransportPreferences(preferredShipmentType, Optional.ToNullable(isUpdated));
         }
     }
 }

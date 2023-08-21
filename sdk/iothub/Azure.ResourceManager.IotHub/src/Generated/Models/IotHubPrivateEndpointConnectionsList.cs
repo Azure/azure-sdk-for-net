@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of IotHubPrivateEndpointConnectionsList. </summary>
         internal IotHubPrivateEndpointConnectionsList()
         {
-            Value = new Core.ChangeTrackingList<IotHubPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<IotHubPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of IotHubPrivateEndpointConnectionsList. </summary>

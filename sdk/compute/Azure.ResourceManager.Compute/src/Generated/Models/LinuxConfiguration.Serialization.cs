@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class LinuxConfiguration : Core.IUtf8JsonSerializable
+    public partial class LinuxConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsPasswordAuthenticationDisabled))
+            if (Optional.IsDefined(IsPasswordAuthenticationDisabled))
             {
                 writer.WritePropertyName("disablePasswordAuthentication"u8);
                 writer.WriteBooleanValue(IsPasswordAuthenticationDisabled.Value);
             }
-            if (Core.Optional.IsDefined(Ssh))
+            if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
                 writer.WriteObjectValue(Ssh);
             }
-            if (Core.Optional.IsDefined(ProvisionVmAgent))
+            if (Optional.IsDefined(ProvisionVmAgent))
             {
                 writer.WritePropertyName("provisionVMAgent"u8);
                 writer.WriteBooleanValue(ProvisionVmAgent.Value);
             }
-            if (Core.Optional.IsDefined(PatchSettings))
+            if (Optional.IsDefined(PatchSettings))
             {
                 writer.WritePropertyName("patchSettings"u8);
                 writer.WriteObjectValue(PatchSettings);
             }
-            if (Core.Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
+            if (Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
             {
                 writer.WritePropertyName("enableVMAgentPlatformUpdates"u8);
                 writer.WriteBooleanValue(IsVmAgentPlatformUpdatesEnabled.Value);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<bool> disablePasswordAuthentication = default;
-            Core.Optional<SshConfiguration> ssh = default;
-            Core.Optional<bool> provisionVmAgent = default;
-            Core.Optional<LinuxPatchSettings> patchSettings = default;
-            Core.Optional<bool> enableVmAgentPlatformUpdates = default;
+            Optional<bool> disablePasswordAuthentication = default;
+            Optional<SshConfiguration> ssh = default;
+            Optional<bool> provisionVmAgent = default;
+            Optional<LinuxPatchSettings> patchSettings = default;
+            Optional<bool> enableVmAgentPlatformUpdates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disablePasswordAuthentication"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new LinuxConfiguration(Core.Optional.ToNullable(disablePasswordAuthentication), ssh.Value, Core.Optional.ToNullable(provisionVmAgent), patchSettings.Value, Core.Optional.ToNullable(enableVmAgentPlatformUpdates));
+            return new LinuxConfiguration(Optional.ToNullable(disablePasswordAuthentication), ssh.Value, Optional.ToNullable(provisionVmAgent), patchSettings.Value, Optional.ToNullable(enableVmAgentPlatformUpdates));
         }
     }
 }

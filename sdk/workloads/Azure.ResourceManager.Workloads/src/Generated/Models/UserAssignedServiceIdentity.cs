@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public UserAssignedServiceIdentity(ManagedServiceIdentityType managedServiceIdentityType)
         {
             ManagedServiceIdentityType = managedServiceIdentityType;
-            UserAssignedIdentities = new Core.ChangeTrackingDictionary<string, UserAssignedIdentity>();
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of UserAssignedServiceIdentity. </summary>

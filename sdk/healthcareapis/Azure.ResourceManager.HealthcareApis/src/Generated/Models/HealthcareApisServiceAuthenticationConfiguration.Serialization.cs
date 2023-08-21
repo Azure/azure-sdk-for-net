@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisServiceAuthenticationConfiguration : Core.IUtf8JsonSerializable
+    public partial class HealthcareApisServiceAuthenticationConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Authority))
+            if (Optional.IsDefined(Authority))
             {
                 writer.WritePropertyName("authority"u8);
                 writer.WriteStringValue(Authority);
             }
-            if (Core.Optional.IsDefined(Audience))
+            if (Optional.IsDefined(Audience))
             {
                 writer.WritePropertyName("audience"u8);
                 writer.WriteStringValue(Audience);
             }
-            if (Core.Optional.IsDefined(IsSmartProxyEnabled))
+            if (Optional.IsDefined(IsSmartProxyEnabled))
             {
                 writer.WritePropertyName("smartProxyEnabled"u8);
                 writer.WriteBooleanValue(IsSmartProxyEnabled.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Core.Optional<string> authority = default;
-            Core.Optional<string> audience = default;
-            Core.Optional<bool> smartProxyEnabled = default;
+            Optional<string> authority = default;
+            Optional<string> audience = default;
+            Optional<bool> smartProxyEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authority"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new HealthcareApisServiceAuthenticationConfiguration(authority.Value, audience.Value, Core.Optional.ToNullable(smartProxyEnabled));
+            return new HealthcareApisServiceAuthenticationConfiguration(authority.Value, audience.Value, Optional.ToNullable(smartProxyEnabled));
         }
     }
 }

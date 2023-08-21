@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Initializes a new instance of SearchPrivateLinkResourceProperties. </summary>
         internal SearchPrivateLinkResourceProperties()
         {
-            RequiredMembers = new Core.ChangeTrackingList<string>();
-            RequiredZoneNames = new Core.ChangeTrackingList<string>();
-            ShareablePrivateLinkResourceTypes = new Core.ChangeTrackingList<ShareableSearchServicePrivateLinkResourceType>();
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
+            ShareablePrivateLinkResourceTypes = new ChangeTrackingList<ShareableSearchServicePrivateLinkResourceType>();
         }
 
         /// <summary> Initializes a new instance of SearchPrivateLinkResourceProperties. </summary>

@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsScheduledAlertRule. </summary>
         public SecurityInsightsScheduledAlertRule()
         {
-            CustomDetails = new Core.ChangeTrackingDictionary<string, string>();
-            EntityMappings = new Core.ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>();
-            Tactics = new Core.ChangeTrackingList<SecurityInsightsAttackTactic>();
-            Techniques = new Core.ChangeTrackingList<string>();
+            CustomDetails = new ChangeTrackingDictionary<string, string>();
+            EntityMappings = new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>();
+            Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
+            Techniques = new ChangeTrackingList<string>();
             Kind = AlertRuleKind.Scheduled;
         }
 

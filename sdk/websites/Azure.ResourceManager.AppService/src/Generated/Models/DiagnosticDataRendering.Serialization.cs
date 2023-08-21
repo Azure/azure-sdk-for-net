@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DiagnosticDataRendering : Core.IUtf8JsonSerializable
+    public partial class DiagnosticDataRendering : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RenderingType))
+            if (Optional.IsDefined(RenderingType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RenderingType.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(Title))
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<DiagnosticDataRenderingType> type = default;
-            Core.Optional<string> title = default;
-            Core.Optional<string> description = default;
+            Optional<DiagnosticDataRenderingType> type = default;
+            Optional<string> title = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DiagnosticDataRendering(Core.Optional.ToNullable(type), title.Value, description.Value);
+            return new DiagnosticDataRendering(Optional.ToNullable(type), title.Value, description.Value);
         }
     }
 }

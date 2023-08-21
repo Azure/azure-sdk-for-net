@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
-    public partial class TargetTypeData : Core.IUtf8JsonSerializable
+    public partial class TargetTypeData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.Chaos
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> propertiesSchema = default;
-            Core.Optional<IReadOnlyList<string>> resourceTypes = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<string> description = default;
+            Optional<string> propertiesSchema = default;
+            Optional<IReadOnlyList<string>> resourceTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Chaos
                     continue;
                 }
             }
-            return new TargetTypeData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), displayName.Value, description.Value, propertiesSchema.Value, Core.Optional.ToList(resourceTypes));
+            return new TargetTypeData(id, name, type, systemData.Value, Optional.ToNullable(location), displayName.Value, description.Value, propertiesSchema.Value, Optional.ToList(resourceTypes));
         }
     }
 }

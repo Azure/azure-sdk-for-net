@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementGlobalSchemaResource>(new ApiManagementGlobalSchemaOperationSource(Client), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementGlobalSchemaResource>(new ApiManagementGlobalSchemaOperationSource(Client), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementGlobalSchemaResource>(new ApiManagementGlobalSchemaOperationSource(Client), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementGlobalSchemaResource>(new ApiManagementGlobalSchemaOperationSource(Client), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

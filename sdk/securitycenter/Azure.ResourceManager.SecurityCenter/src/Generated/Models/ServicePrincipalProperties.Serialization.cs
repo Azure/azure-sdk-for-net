@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class ServicePrincipalProperties : Core.IUtf8JsonSerializable
+    public partial class ServicePrincipalProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ApplicationId))
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId.Value);
             }
-            if (Core.Optional.IsDefined(Secret))
+            if (Optional.IsDefined(Secret))
             {
                 writer.WritePropertyName("secret"u8);
                 writer.WriteStringValue(Secret);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<Guid> applicationId = default;
-            Core.Optional<string> secret = default;
+            Optional<Guid> applicationId = default;
+            Optional<string> secret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new ServicePrincipalProperties(Core.Optional.ToNullable(applicationId), secret.Value);
+            return new ServicePrincipalProperties(Optional.ToNullable(applicationId), secret.Value);
         }
     }
 }

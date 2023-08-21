@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<bool> isGlobal = default;
-            Core.Optional<IReadOnlyDictionary<string, AutomationConnectionFieldDefinition>> fieldDefinitions = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<string> description = default;
+            Optional<SystemData> systemData = default;
+            Optional<bool> isGlobal = default;
+            Optional<IReadOnlyDictionary<string, AutomationConnectionFieldDefinition>> fieldDefinitions = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Automation
                     continue;
                 }
             }
-            return new AutomationConnectionTypeData(id, name, type, systemData.Value, Core.Optional.ToNullable(isGlobal), Core.Optional.ToDictionary(fieldDefinitions), Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime), description.Value);
+            return new AutomationConnectionTypeData(id, name, type, systemData.Value, Optional.ToNullable(isGlobal), Optional.ToDictionary(fieldDefinitions), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value);
         }
     }
 }

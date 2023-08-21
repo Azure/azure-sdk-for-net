@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class StopOnDisconnectConfiguration : Core.IUtf8JsonSerializable
+    public partial class StopOnDisconnectConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(GracePeriodMinutes))
+            if (Optional.IsDefined(GracePeriodMinutes))
             {
                 writer.WritePropertyName("gracePeriodMinutes"u8);
                 writer.WriteNumberValue(GracePeriodMinutes.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Core.Optional<StopOnDisconnectEnableStatus> status = default;
-            Core.Optional<int> gracePeriodMinutes = default;
+            Optional<StopOnDisconnectEnableStatus> status = default;
+            Optional<int> gracePeriodMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     continue;
                 }
             }
-            return new StopOnDisconnectConfiguration(Core.Optional.ToNullable(status), Core.Optional.ToNullable(gracePeriodMinutes));
+            return new StopOnDisconnectConfiguration(Optional.ToNullable(status), Optional.ToNullable(gracePeriodMinutes));
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<SecurityControlType> sourceType = default;
+            Optional<SecurityControlType> sourceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceType"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecureScoreControlDefinitionSource(Core.Optional.ToNullable(sourceType));
+            return new SecureScoreControlDefinitionSource(Optional.ToNullable(sourceType));
         }
     }
 }

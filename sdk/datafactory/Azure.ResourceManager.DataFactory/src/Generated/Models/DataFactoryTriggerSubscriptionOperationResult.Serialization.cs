@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<string> triggerName = default;
-            Core.Optional<EventSubscriptionStatus> status = default;
+            Optional<string> triggerName = default;
+            Optional<EventSubscriptionStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("triggerName"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new DataFactoryTriggerSubscriptionOperationResult(triggerName.Value, Core.Optional.ToNullable(status));
+            return new DataFactoryTriggerSubscriptionOperationResult(triggerName.Value, Optional.ToNullable(status));
         }
     }
 }

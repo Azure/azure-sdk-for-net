@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    public partial class ShortAnswerOptions : Core.IUtf8JsonSerializable
+    public partial class ShortAnswerOptions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enable"u8);
             writer.WriteBooleanValue(Enable);
-            if (Core.Optional.IsDefined(ConfidenceThreshold))
+            if (Optional.IsDefined(ConfidenceThreshold))
             {
                 writer.WritePropertyName("confidenceScoreThreshold"u8);
                 writer.WriteNumberValue(ConfidenceThreshold.Value);
             }
-            if (Core.Optional.IsDefined(Size))
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("topAnswersWithSpan"u8);
                 writer.WriteNumberValue(Size.Value);

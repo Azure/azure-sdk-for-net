@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlServerSecurityAlertPolicyListResult. </summary>
         internal MySqlServerSecurityAlertPolicyListResult()
         {
-            Value = new Core.ChangeTrackingList<MySqlServerSecurityAlertPolicyData>();
+            Value = new ChangeTrackingList<MySqlServerSecurityAlertPolicyData>();
         }
 
         /// <summary> Initializes a new instance of MySqlServerSecurityAlertPolicyListResult. </summary>

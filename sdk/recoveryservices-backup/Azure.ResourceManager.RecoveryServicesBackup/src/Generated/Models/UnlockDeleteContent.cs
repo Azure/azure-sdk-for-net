@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of UnlockDeleteContent. </summary>
         public UnlockDeleteContent()
         {
-            ResourceGuardOperationRequests = new Core.ChangeTrackingList<string>();
+            ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
         /// <summary> Gets the resource guard operation requests. </summary>

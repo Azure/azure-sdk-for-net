@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class MSDeployStatusData : Core.IUtf8JsonSerializable
+    public partial class MSDeployStatusData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> deployer = default;
-            Core.Optional<MSDeployProvisioningState> provisioningState = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<bool> complete = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> deployer = default;
+            Optional<MSDeployProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<bool> complete = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new MSDeployStatusData(id, name, type, systemData.Value, deployer.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(complete), kind.Value);
+            return new MSDeployStatusData(id, name, type, systemData.Value, deployer.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(complete), kind.Value);
         }
     }
 }

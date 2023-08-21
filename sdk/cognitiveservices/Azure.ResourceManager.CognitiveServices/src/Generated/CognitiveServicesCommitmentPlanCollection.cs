@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CognitiveServices
             try
             {
                 var response = await _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateOrUpdatePlanAsync(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(new CognitiveServicesCommitmentPlanOperationSource(Client), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateCreateOrUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(new CognitiveServicesCommitmentPlanOperationSource(Client), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateCreateOrUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CognitiveServices
             try
             {
                 var response = _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateOrUpdatePlan(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, data, cancellationToken);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(new CognitiveServicesCommitmentPlanOperationSource(Client), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateCreateOrUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(new CognitiveServicesCommitmentPlanOperationSource(Client), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateCreateOrUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesCommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, "CognitiveServicesCommitmentPlanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesCommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, "CognitiveServicesCommitmentPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesCommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, "CognitiveServicesCommitmentPlanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesCommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, "CognitiveServicesCommitmentPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

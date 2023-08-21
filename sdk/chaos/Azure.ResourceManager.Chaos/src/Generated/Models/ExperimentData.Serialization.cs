@@ -13,17 +13,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
-    public partial class ExperimentData : Core.IUtf8JsonSerializable
+    public partial class ExperimentData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Chaos
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(StartOnCreation))
+            if (Optional.IsDefined(StartOnCreation))
             {
                 if (StartOnCreation != null)
                 {
@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.Chaos
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             IList<Step> steps = default;
             IList<Selector> selectors = default;
-            Core.Optional<bool?> startOnCreation = default;
+            Optional<bool?> startOnCreation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Chaos
                     continue;
                 }
             }
-            return new ExperimentData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, steps, selectors, Core.Optional.ToNullable(startOnCreation));
+            return new ExperimentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, steps, selectors, Optional.ToNullable(startOnCreation));
         }
     }
 }

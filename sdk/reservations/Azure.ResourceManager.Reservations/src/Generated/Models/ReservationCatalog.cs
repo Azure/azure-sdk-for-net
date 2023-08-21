@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of ReservationCatalog. </summary>
         internal ReservationCatalog()
         {
-            BillingPlans = new Core.ChangeTrackingDictionary<string, IList<ReservationBillingPlan>>();
-            Terms = new Core.ChangeTrackingList<ReservationTerm>();
-            Locations = new Core.ChangeTrackingList<AzureLocation>();
-            SkuProperties = new Core.ChangeTrackingList<SkuProperty>();
-            Restrictions = new Core.ChangeTrackingList<SkuRestriction>();
-            Capabilities = new Core.ChangeTrackingList<SkuCapability>();
+            BillingPlans = new ChangeTrackingDictionary<string, IList<ReservationBillingPlan>>();
+            Terms = new ChangeTrackingList<ReservationTerm>();
+            Locations = new ChangeTrackingList<AzureLocation>();
+            SkuProperties = new ChangeTrackingList<SkuProperty>();
+            Restrictions = new ChangeTrackingList<SkuRestriction>();
+            Capabilities = new ChangeTrackingList<SkuCapability>();
         }
 
         /// <summary> Initializes a new instance of ReservationCatalog. </summary>

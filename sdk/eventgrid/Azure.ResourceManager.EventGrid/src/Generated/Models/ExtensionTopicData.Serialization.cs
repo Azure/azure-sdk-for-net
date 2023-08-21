@@ -11,19 +11,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class ExtensionTopicData : Core.IUtf8JsonSerializable
+    public partial class ExtensionTopicData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(SystemTopic))
+            if (Optional.IsDefined(SystemTopic))
             {
                 writer.WritePropertyName("systemTopic"u8);
                 writer.WriteStringValue(SystemTopic);
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> systemTopic = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<string> systemTopic = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

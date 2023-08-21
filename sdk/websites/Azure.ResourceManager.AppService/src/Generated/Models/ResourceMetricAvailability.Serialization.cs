@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> timeGrain = default;
-            Core.Optional<string> retention = default;
+            Optional<string> timeGrain = default;
+            Optional<string> retention = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeGrain"u8))

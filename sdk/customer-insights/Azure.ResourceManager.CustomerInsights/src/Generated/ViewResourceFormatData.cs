@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <summary> Initializes a new instance of ViewResourceFormatData. </summary>
         public ViewResourceFormatData()
         {
-            DisplayName = new Core.ChangeTrackingDictionary<string, string>();
+            DisplayName = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ViewResourceFormatData. </summary>

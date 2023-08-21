@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class HttpC2DRejectedMessagesNotInAllowedRange : Core.IUtf8JsonSerializable
+    public partial class HttpC2DRejectedMessagesNotInAllowedRange : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("timeWindowSize"u8);
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             TimeSpan timeWindowSize = default;
             int minThreshold = default;
             int maxThreshold = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> description = default;
+            Optional<string> displayName = default;
+            Optional<string> description = default;
             bool isEnabled = default;
             string ruleType = default;
             foreach (var property in element.EnumerateObject())
