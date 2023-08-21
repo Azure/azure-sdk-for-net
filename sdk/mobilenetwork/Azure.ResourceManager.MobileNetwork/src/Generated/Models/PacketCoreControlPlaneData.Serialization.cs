@@ -20,11 +20,10 @@ namespace Azure.ResourceManager.MobileNetwork
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                writer.WriteObjectValue(UserAssignedIdentity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -41,6 +40,11 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(Installation))
+            {
+                writer.WritePropertyName("installation"u8);
+                writer.WriteObjectValue(Installation);
+            }
             writer.WritePropertyName("sites"u8);
             writer.WriteStartArray();
             foreach (var item in Sites)
@@ -71,6 +75,11 @@ namespace Azure.ResourceManager.MobileNetwork
             }
             writer.WritePropertyName("localDiagnosticsAccess"u8);
             writer.WriteObjectValue(LocalDiagnosticsAccess);
+            if (Optional.IsDefined(DiagnosticsUpload))
+            {
+                writer.WritePropertyName("diagnosticsUpload"u8);
+                writer.WriteObjectValue(DiagnosticsUpload);
+            }
             if (Optional.IsDefined(InteropSettings))
             {
                 writer.WritePropertyName("interopSettings"u8);
@@ -90,24 +99,26 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            Optional<MobileNetworkManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<Installation> installation = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Optional<MobileNetworkInstallation> installation = default;
             IList<WritableSubResource> sites = default;
-            PlatformConfiguration platform = default;
-            Optional<CoreNetworkType> coreNetworkTechnology = default;
+            MobileNetworkPlatformConfiguration platform = default;
+            Optional<MobileNetworkCoreNetworkType> coreNetworkTechnology = default;
             Optional<string> version = default;
+            Optional<string> installedVersion = default;
             Optional<string> rollbackVersion = default;
-            InterfaceProperties controlPlaneAccessInterface = default;
-            BillingSku sku = default;
+            MobileNetworkInterfaceProperties controlPlaneAccessInterface = default;
+            MobileNetworkBillingSku sku = default;
             Optional<int> ueMtu = default;
-            LocalDiagnosticsAccessConfiguration localDiagnosticsAccess = default;
+            MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = default;
+            Optional<DiagnosticsUploadConfiguration> diagnosticsUpload = default;
             Optional<BinaryData> interopSettings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -117,8 +128,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = MobileNetworkManagedServiceIdentity.DeserializeMobileNetworkManagedServiceIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -179,7 +189,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new MobileNetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("installation"u8))
@@ -188,7 +198,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            installation = Installation.DeserializeInstallation(property0.Value);
+                            installation = MobileNetworkInstallation.DeserializeMobileNetworkInstallation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sites"u8))
@@ -203,7 +213,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("platform"u8))
                         {
-                            platform = PlatformConfiguration.DeserializePlatformConfiguration(property0.Value);
+                            platform = MobileNetworkPlatformConfiguration.DeserializeMobileNetworkPlatformConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("coreNetworkTechnology"u8))
@@ -212,12 +222,17 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            coreNetworkTechnology = property0.Value.GetString().ToCoreNetworkType();
+                            coreNetworkTechnology = property0.Value.GetString().ToMobileNetworkCoreNetworkType();
                             continue;
                         }
                         if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("installedVersion"u8))
+                        {
+                            installedVersion = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("rollbackVersion"u8))
@@ -227,12 +242,12 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("controlPlaneAccessInterface"u8))
                         {
-                            controlPlaneAccessInterface = InterfaceProperties.DeserializeInterfaceProperties(property0.Value);
+                            controlPlaneAccessInterface = MobileNetworkInterfaceProperties.DeserializeMobileNetworkInterfaceProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
                         {
-                            sku = new BillingSku(property0.Value.GetString());
+                            sku = new MobileNetworkBillingSku(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ueMtu"u8))
@@ -246,7 +261,16 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("localDiagnosticsAccess"u8))
                         {
-                            localDiagnosticsAccess = LocalDiagnosticsAccessConfiguration.DeserializeLocalDiagnosticsAccessConfiguration(property0.Value);
+                            localDiagnosticsAccess = MobileNetworkLocalDiagnosticsAccessConfiguration.DeserializeMobileNetworkLocalDiagnosticsAccessConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("diagnosticsUpload"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            diagnosticsUpload = DiagnosticsUploadConfiguration.DeserializeDiagnosticsUploadConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("interopSettings"u8))
@@ -262,7 +286,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     continue;
                 }
             }
-            return new PacketCoreControlPlaneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), installation.Value, sites, platform, Optional.ToNullable(coreNetworkTechnology), version.Value, rollbackVersion.Value, controlPlaneAccessInterface, sku, Optional.ToNullable(ueMtu), localDiagnosticsAccess, interopSettings.Value);
+            return new PacketCoreControlPlaneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), installation.Value, sites, platform, Optional.ToNullable(coreNetworkTechnology), version.Value, installedVersion.Value, rollbackVersion.Value, controlPlaneAccessInterface, sku, Optional.ToNullable(ueMtu), localDiagnosticsAccess, diagnosticsUpload.Value, interopSettings.Value);
         }
     }
 }
