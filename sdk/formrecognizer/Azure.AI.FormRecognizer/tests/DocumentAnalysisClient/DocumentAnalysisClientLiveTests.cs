@@ -1043,7 +1043,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentTable table = result.Tables.Single();
 
-            Assert.AreEqual(2, table.RowCount);
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
+            {
+                Assert.AreEqual(2, table.RowCount);
+            }
+            else
+            {
+                Assert.AreEqual(3, table.RowCount);
+            }
+
             Assert.AreEqual(5, table.ColumnCount);
 
             var cells = table.Cells.ToList();
@@ -1063,7 +1071,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.GreaterOrEqual(cell.ColumnIndex, 0, $"Cell with content {cell.Content} should have column index greater than or equal to zero.");
                 Assert.Less(cell.ColumnIndex, table.ColumnCount, $"Cell with content {cell.Content} should have column index less than {table.ColumnCount}.");
 
-                Assert.AreEqual(1, cell.RowSpan, $"Cell with content {cell.Content} should have a row span of 1.");
+                if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
+                {
+                    Assert.AreEqual(1, cell.RowSpan, $"Cell with content {cell.Content} should have a row span of 1.");
+                }
+                else
+                {
+                    // Row = 1 has a row span of 2.
+                    var expectedRowSpan = cell.RowIndex == 1 ? 2 : 1;
+
+                    Assert.AreEqual(expectedRowSpan, cell.RowSpan, $"Cell with content {cell.Content} should have a row span of {expectedRowSpan}.");
+                }
+
                 Assert.LessOrEqual(cell.RowIndex, 2, $"Cell with content {cell.Content} should have a row index less than or equal to two.");
                 Assert.AreEqual(expectedContent[cell.RowIndex, cell.ColumnIndex], cell.Content);
             }
@@ -1477,7 +1496,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual("carefully.", words[5].Content);
             Assert.AreEqual("Enjoy.", words[6].Content);
 
-            line = result.Pages[0].Lines[52];
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
+            {
+                line = result.Pages[0].Lines[52];
+            }
+            else
+            {
+                line = result.Pages[0].Lines[46];
+            }
+
             words = line.GetWords();
 
             Assert.AreEqual("Jupiter Book Supply will refund you 50% per book if returned within 60 days of reading and", line.Content);

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Argument.AssertNotNull(internationalMobileSubscriberIdentity, nameof(internationalMobileSubscriberIdentity));
 
             Name = name;
-            SiteProvisioningState = new ChangeTrackingDictionary<string, SiteProvisioningState>();
+            SiteProvisioningState = new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>();
             InternationalMobileSubscriberIdentity = internationalMobileSubscriberIdentity;
             StaticIPConfiguration = new ChangeTrackingList<SimStaticIPProperties>();
         }
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> The name of the SIM. </summary>
         public string Name { get; }
         /// <summary> The provisioning state of the SIM resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The state of the SIM resource. </summary>
-        public SimState? SimState { get; }
+        public MobileNetworkSimState? SimState { get; }
         /// <summary> A dictionary of sites to the provisioning state of this SIM on that site. </summary>
-        public IReadOnlyDictionary<string, SiteProvisioningState> SiteProvisioningState { get; }
+        public IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> SiteProvisioningState { get; }
         /// <summary> The international mobile subscriber identity (IMSI) for the SIM. </summary>
         public string InternationalMobileSubscriberIdentity { get; }
         /// <summary> The integrated circuit card ID (ICCID) for the SIM. </summary>

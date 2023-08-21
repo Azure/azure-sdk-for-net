@@ -16,7 +16,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-#mgmt-debug:
+# mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -210,7 +210,7 @@ rename-mapping:
   SelfHostedIntegrationRuntimeStatus.typeProperties.createTime: CreatedOn
   SelfHostedIntegrationRuntimeNode.expiryTime: ExpireOn
   SelfHostedIntegrationRuntimeStatus.typeProperties.taskQueueId: -|uuid
-  SelfHostedIntegrationRuntimeStatus.typeProperties.serviceUrls: serviceUris
+  SelfHostedIntegrationRuntimeStatus.typeProperties.serviceUrls: ServiceUriStringList
   SubResourceDebugResource: DataFactoryDebugInfo
   SsisObjectMetadataListResponse: SsisObjectMetadataListResult
   SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult

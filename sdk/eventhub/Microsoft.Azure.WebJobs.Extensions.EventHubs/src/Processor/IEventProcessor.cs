@@ -15,6 +15,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
         Task CloseAsync(EventProcessorHostPartition context, ProcessingStoppedReason reason);
         Task OpenAsync(EventProcessorHostPartition context);
         Task ProcessErrorAsync(EventProcessorHostPartition context, Exception error);
-        Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages, CancellationToken cancellationToken);
+        Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages);
     }
 }

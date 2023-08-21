@@ -4,6 +4,8 @@
 
 ### Features Added
 
+-Added `ModelSerializer` which provides a public API to serialize and deserialize models.  The new API works with any classes that implement `IModelSerializeable`.
+
 ### Breaking Changes
 
 ### Bugs Fixed

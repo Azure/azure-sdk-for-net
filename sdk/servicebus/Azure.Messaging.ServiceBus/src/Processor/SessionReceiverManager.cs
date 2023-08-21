@@ -119,6 +119,8 @@ namespace Azure.Messaging.ServiceBus
             await CreateReceiver(processorCancellationToken).ConfigureAwait(false);
             _sessionCancellationSource = new CancellationTokenSource();
             SessionLockLostException = null;
+
+            _sessionLockCancellationTokenSource?.Dispose();
             _sessionLockCancellationTokenSource = new CancellationTokenSource();
             _sessionLockCancellationTokenSource.CancelAfterLockExpired(_receiver);
 
@@ -253,6 +255,7 @@ namespace Azure.Messaging.ServiceBus
                 try
                 {
                     await CancelAsync().ConfigureAwait(false);
+                    _sessionLockCancellationTokenSource?.Dispose();
                 }
                 catch (Exception ex) when (ex is TaskCanceledException)
                 {
@@ -451,9 +454,13 @@ namespace Azure.Messaging.ServiceBus
                 await _sessionLockRenewalTask.ConfigureAwait(false);
             }
 
+            // We do not dispose _sessionLockCancellationSource here because it is exposed to users via the SessionLockLostAsync
+            // event within the ProcessSessionMessageEventArgs. If we dispose it here, there is a race condition where the user
+            // might get an ObjectDisposedException. Instead, we dispose it when shutting down, and when initializing a new instance
+            // for a new session.
+
             _sessionCancellationSource?.Dispose();
             _sessionLockRenewalCancellationSource?.Dispose();
-            _sessionLockCancellationTokenSource?.Dispose();
         }
 
         internal void RefreshSessionLockToken()
