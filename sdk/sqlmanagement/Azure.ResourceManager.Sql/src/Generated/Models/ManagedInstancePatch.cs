@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstancePatch. </summary>
         public ManagedInstancePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            PrivateEndpointConnections = new ChangeTrackingList<ManagedInstancePecProperty>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<ManagedInstancePecProperty>();
         }
 
         /// <summary> Managed instance sku. </summary>

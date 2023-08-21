@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ResourceMover
             try
             {
                 var response = await _moverResourceSetMoveCollectionsRestClient.PrepareAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreatePrepareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreatePrepareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ResourceMover
             try
             {
                 var response = _moverResourceSetMoveCollectionsRestClient.Prepare(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreatePrepareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreatePrepareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ResourceMover
             try
             {
                 var response = await _moverResourceSetMoveCollectionsRestClient.InitiateMoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateInitiateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateInitiateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ResourceMover
             try
             {
                 var response = _moverResourceSetMoveCollectionsRestClient.InitiateMove(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateInitiateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateInitiateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.ResourceMover
             try
             {
                 var response = await _moverResourceSetMoveCollectionsRestClient.CommitAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.ResourceMover
             try
             {
                 var response = _moverResourceSetMoveCollectionsRestClient.Commit(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.ResourceMover
             try
             {
                 var response = await _moverResourceSetMoveCollectionsRestClient.DiscardAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateDiscardRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateDiscardRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.ResourceMover
             try
             {
                 var response = _moverResourceSetMoveCollectionsRestClient.Discard(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateDiscardRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateDiscardRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.ResourceMover
             try
             {
                 var response = await _moverResourceSetMoveCollectionsRestClient.ResolveDependenciesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateResolveDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateResolveDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.ResourceMover
             try
             {
                 var response = _moverResourceSetMoveCollectionsRestClient.ResolveDependencies(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateResolveDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateResolveDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.ResourceMover
             try
             {
                 var response = await _moverResourceSetMoveCollectionsRestClient.BulkRemoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateBulkRemoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateBulkRemoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.ResourceMover
             try
             {
                 var response = _moverResourceSetMoveCollectionsRestClient.BulkRemove(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateBulkRemoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, _moverResourceSetMoveCollectionsRestClient.CreateBulkRemoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _unresolvedDependenciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _unresolvedDependenciesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency, _unresolvedDependenciesClientDiagnostics, Pipeline, "MoverResourceSetResource.GetUnresolvedDependencies", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency, _unresolvedDependenciesClientDiagnostics, Pipeline, "MoverResourceSetResource.GetUnresolvedDependencies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _unresolvedDependenciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _unresolvedDependenciesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency, _unresolvedDependenciesClientDiagnostics, Pipeline, "MoverResourceSetResource.GetUnresolvedDependencies", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency, _unresolvedDependenciesClientDiagnostics, Pipeline, "MoverResourceSetResource.GetUnresolvedDependencies", "value", "nextLink", cancellationToken);
         }
     }
 }

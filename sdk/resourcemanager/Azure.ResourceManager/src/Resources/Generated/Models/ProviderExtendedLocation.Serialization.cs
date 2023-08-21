@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> type = default;
-            Optional<IReadOnlyList<string>> extendedLocations = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<string> type = default;
+            Core.Optional<IReadOnlyList<string>> extendedLocations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ProviderExtendedLocation(Optional.ToNullable(location), type.Value, Optional.ToList(extendedLocations));
+            return new ProviderExtendedLocation(Core.Optional.ToNullable(location), type.Value, Core.Optional.ToList(extendedLocations));
         }
     }
 }

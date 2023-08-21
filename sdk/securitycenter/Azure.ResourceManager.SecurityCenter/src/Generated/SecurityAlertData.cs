@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of SecurityAlertData. </summary>
         public SecurityAlertData()
         {
-            ResourceIdentifiers = new ChangeTrackingList<SecurityAlertResourceIdentifier>();
-            RemediationSteps = new ChangeTrackingList<string>();
-            ExtendedLinks = new ChangeTrackingList<IDictionary<string, string>>();
-            Entities = new ChangeTrackingList<SecurityAlertEntity>();
-            ExtendedProperties = new ChangeTrackingDictionary<string, string>();
-            Techniques = new ChangeTrackingList<string>();
-            SubTechniques = new ChangeTrackingList<string>();
+            ResourceIdentifiers = new Core.ChangeTrackingList<SecurityAlertResourceIdentifier>();
+            RemediationSteps = new Core.ChangeTrackingList<string>();
+            ExtendedLinks = new Core.ChangeTrackingList<IDictionary<string, string>>();
+            Entities = new Core.ChangeTrackingList<SecurityAlertEntity>();
+            ExtendedProperties = new Core.ChangeTrackingDictionary<string, string>();
+            Techniques = new Core.ChangeTrackingList<string>();
+            SubTechniques = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SecurityAlertData. </summary>

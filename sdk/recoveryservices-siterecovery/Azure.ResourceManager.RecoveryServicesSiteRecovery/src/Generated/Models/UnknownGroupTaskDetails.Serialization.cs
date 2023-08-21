@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string instanceType = "Unknown";
-            Optional<IReadOnlyList<AsrTask>> childTasks = default;
+            Core.Optional<IReadOnlyList<AsrTask>> childTasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceType"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new UnknownGroupTaskDetails(instanceType, Optional.ToList(childTasks));
+            return new UnknownGroupTaskDetails(instanceType, Core.Optional.ToList(childTasks));
         }
     }
 }

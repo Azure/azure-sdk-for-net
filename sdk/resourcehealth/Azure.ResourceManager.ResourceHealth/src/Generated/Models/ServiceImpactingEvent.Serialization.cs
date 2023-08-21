@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> eventStartTime = default;
-            Optional<DateTimeOffset> eventStatusLastModifiedTime = default;
-            Optional<string> correlationId = default;
-            Optional<ServiceImpactingEventStatus> status = default;
-            Optional<ServiceImpactingEventIncidentProperties> incidentProperties = default;
+            Core.Optional<DateTimeOffset> eventStartTime = default;
+            Core.Optional<DateTimeOffset> eventStatusLastModifiedTime = default;
+            Core.Optional<string> correlationId = default;
+            Core.Optional<ServiceImpactingEventStatus> status = default;
+            Core.Optional<ServiceImpactingEventIncidentProperties> incidentProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventStartTime"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new ServiceImpactingEvent(Optional.ToNullable(eventStartTime), Optional.ToNullable(eventStatusLastModifiedTime), correlationId.Value, status.Value, incidentProperties.Value);
+            return new ServiceImpactingEvent(Core.Optional.ToNullable(eventStartTime), Core.Optional.ToNullable(eventStatusLastModifiedTime), correlationId.Value, status.Value, incidentProperties.Value);
         }
     }
 }

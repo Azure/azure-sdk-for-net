@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class RedisEnterpriseModule : IUtf8JsonSerializable
+    public partial class RedisEnterpriseModule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Args))
+            if (Core.Optional.IsDefined(Args))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStringValue(Args);
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 return null;
             }
             string name = default;
-            Optional<string> args = default;
-            Optional<string> version = default;
+            Core.Optional<string> args = default;
+            Core.Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

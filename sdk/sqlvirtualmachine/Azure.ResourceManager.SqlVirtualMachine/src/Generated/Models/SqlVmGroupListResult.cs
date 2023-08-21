@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> Initializes a new instance of SqlVmGroupListResult. </summary>
         internal SqlVmGroupListResult()
         {
-            Value = new ChangeTrackingList<SqlVmGroupData>();
+            Value = new Core.ChangeTrackingList<SqlVmGroupData>();
         }
 
         /// <summary> Initializes a new instance of SqlVmGroupListResult. </summary>

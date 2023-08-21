@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of DeviceSecurityGroupData. </summary>
         public DeviceSecurityGroupData()
         {
-            ThresholdRules = new ChangeTrackingList<ThresholdCustomAlertRule>();
-            TimeWindowRules = new ChangeTrackingList<TimeWindowCustomAlertRule>();
-            AllowlistRules = new ChangeTrackingList<AllowlistCustomAlertRule>();
-            DenylistRules = new ChangeTrackingList<DenylistCustomAlertRule>();
+            ThresholdRules = new Core.ChangeTrackingList<ThresholdCustomAlertRule>();
+            TimeWindowRules = new Core.ChangeTrackingList<TimeWindowCustomAlertRule>();
+            AllowlistRules = new Core.ChangeTrackingList<AllowlistCustomAlertRule>();
+            DenylistRules = new Core.ChangeTrackingList<DenylistCustomAlertRule>();
         }
 
         /// <summary> Initializes a new instance of DeviceSecurityGroupData. </summary>

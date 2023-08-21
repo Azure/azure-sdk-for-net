@@ -21,24 +21,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<string> name = default;
-            Optional<string> osType = default;
-            Optional<string> agentVersion = default;
-            Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<string> versionStatus = default;
-            Optional<IReadOnlyList<SiteRecoveryRetentionVolume>> retentionVolumes = default;
-            Optional<IReadOnlyList<SiteRecoveryDataStore>> dataStores = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> validationErrors = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
-            Optional<int> diskCount = default;
-            Optional<string> osVersion = default;
-            Optional<DateTimeOffset> agentExpireOn = default;
-            Optional<string> marsAgentVersion = default;
-            Optional<DateTimeOffset> marsAgentExpireOn = default;
-            Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
-            Optional<SiteRecoveryVersionDetails> marsAgentVersionDetails = default;
+            Core.Optional<string> id = default;
+            Core.Optional<IPAddress> ipAddress = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> osType = default;
+            Core.Optional<string> agentVersion = default;
+            Core.Optional<DateTimeOffset> lastHeartbeat = default;
+            Core.Optional<string> versionStatus = default;
+            Core.Optional<IReadOnlyList<SiteRecoveryRetentionVolume>> retentionVolumes = default;
+            Core.Optional<IReadOnlyList<SiteRecoveryDataStore>> dataStores = default;
+            Core.Optional<IReadOnlyList<SiteRecoveryHealthError>> validationErrors = default;
+            Core.Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            Core.Optional<int> diskCount = default;
+            Core.Optional<string> osVersion = default;
+            Core.Optional<DateTimeOffset> agentExpireOn = default;
+            Core.Optional<string> marsAgentVersion = default;
+            Core.Optional<DateTimeOffset> marsAgentExpireOn = default;
+            Core.Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
+            Core.Optional<SiteRecoveryVersionDetails> marsAgentVersionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new MasterTargetServer(id.Value, ipAddress.Value, name.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(retentionVolumes), Optional.ToList(dataStores), Optional.ToList(validationErrors), Optional.ToList(healthErrors), Optional.ToNullable(diskCount), osVersion.Value, Optional.ToNullable(agentExpireOn), marsAgentVersion.Value, Optional.ToNullable(marsAgentExpireOn), agentVersionDetails.Value, marsAgentVersionDetails.Value);
+            return new MasterTargetServer(id.Value, ipAddress.Value, name.Value, osType.Value, agentVersion.Value, Core.Optional.ToNullable(lastHeartbeat), versionStatus.Value, Core.Optional.ToList(retentionVolumes), Core.Optional.ToList(dataStores), Core.Optional.ToList(validationErrors), Core.Optional.ToList(healthErrors), Core.Optional.ToNullable(diskCount), osVersion.Value, Core.Optional.ToNullable(agentExpireOn), marsAgentVersion.Value, Core.Optional.ToNullable(marsAgentExpireOn), agentVersionDetails.Value, marsAgentVersionDetails.Value);
         }
     }
 }

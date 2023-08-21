@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <summary> Initializes a new instance of QumuloFileSystemResourcePatch. </summary>
         public QumuloFileSystemResourcePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>

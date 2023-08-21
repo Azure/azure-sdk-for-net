@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupResourceVaultConfigProperties : IUtf8JsonSerializable
+    public partial class BackupResourceVaultConfigProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageModelType))
+            if (Core.Optional.IsDefined(StorageModelType))
             {
                 writer.WritePropertyName("storageModelType"u8);
                 writer.WriteStringValue(StorageModelType.Value.ToString());
             }
-            if (Optional.IsDefined(StorageType))
+            if (Core.Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
-            if (Optional.IsDefined(StorageTypeState))
+            if (Core.Optional.IsDefined(StorageTypeState))
             {
                 writer.WritePropertyName("storageTypeState"u8);
                 writer.WriteStringValue(StorageTypeState.Value.ToString());
             }
-            if (Optional.IsDefined(EnhancedSecurityState))
+            if (Core.Optional.IsDefined(EnhancedSecurityState))
             {
                 writer.WritePropertyName("enhancedSecurityState"u8);
                 writer.WriteStringValue(EnhancedSecurityState.Value.ToString());
             }
-            if (Optional.IsDefined(SoftDeleteFeatureState))
+            if (Core.Optional.IsDefined(SoftDeleteFeatureState))
             {
                 writer.WritePropertyName("softDeleteFeatureState"u8);
                 writer.WriteStringValue(SoftDeleteFeatureState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            if (Core.Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsSoftDeleteFeatureStateEditable))
+            if (Core.Optional.IsDefined(IsSoftDeleteFeatureStateEditable))
             {
                 writer.WritePropertyName("isSoftDeleteFeatureStateEditable"u8);
                 writer.WriteBooleanValue(IsSoftDeleteFeatureStateEditable.Value);
@@ -65,13 +65,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupStorageType> storageModelType = default;
-            Optional<BackupStorageType> storageType = default;
-            Optional<BackupStorageTypeState> storageTypeState = default;
-            Optional<EnhancedSecurityState> enhancedSecurityState = default;
-            Optional<SoftDeleteFeatureState> softDeleteFeatureState = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
-            Optional<bool> isSoftDeleteFeatureStateEditable = default;
+            Core.Optional<BackupStorageType> storageModelType = default;
+            Core.Optional<BackupStorageType> storageType = default;
+            Core.Optional<BackupStorageTypeState> storageTypeState = default;
+            Core.Optional<EnhancedSecurityState> enhancedSecurityState = default;
+            Core.Optional<SoftDeleteFeatureState> softDeleteFeatureState = default;
+            Core.Optional<IList<string>> resourceGuardOperationRequests = default;
+            Core.Optional<bool> isSoftDeleteFeatureStateEditable = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageModelType"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new BackupResourceVaultConfigProperties(Optional.ToNullable(storageModelType), Optional.ToNullable(storageType), Optional.ToNullable(storageTypeState), Optional.ToNullable(enhancedSecurityState), Optional.ToNullable(softDeleteFeatureState), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isSoftDeleteFeatureStateEditable));
+            return new BackupResourceVaultConfigProperties(Core.Optional.ToNullable(storageModelType), Core.Optional.ToNullable(storageType), Core.Optional.ToNullable(storageTypeState), Core.Optional.ToNullable(enhancedSecurityState), Core.Optional.ToNullable(softDeleteFeatureState), Core.Optional.ToList(resourceGuardOperationRequests), Core.Optional.ToNullable(isSoftDeleteFeatureStateEditable));
         }
     }
 }

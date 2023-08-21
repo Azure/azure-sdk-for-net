@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class UnplannedFailoverProperties : IUtf8JsonSerializable
+    public partial class UnplannedFailoverProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FailoverDirection))
+            if (Core.Optional.IsDefined(FailoverDirection))
             {
                 writer.WritePropertyName("failoverDirection"u8);
                 writer.WriteStringValue(FailoverDirection);
             }
-            if (Optional.IsDefined(SourceSiteOperations))
+            if (Core.Optional.IsDefined(SourceSiteOperations))
             {
                 writer.WritePropertyName("sourceSiteOperations"u8);
                 writer.WriteStringValue(SourceSiteOperations);
             }
-            if (Optional.IsDefined(ProviderSpecificDetails))
+            if (Core.Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);

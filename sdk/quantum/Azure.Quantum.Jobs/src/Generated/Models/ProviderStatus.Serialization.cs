@@ -19,9 +19,9 @@ namespace Azure.Quantum.Jobs.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<ProviderAvailability> currentAvailability = default;
-            Optional<IReadOnlyList<TargetStatus>> targets = default;
+            Core.Optional<string> id = default;
+            Core.Optional<ProviderAvailability> currentAvailability = default;
+            Core.Optional<IReadOnlyList<TargetStatus>> targets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -53,7 +53,7 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new ProviderStatus(id.Value, Optional.ToNullable(currentAvailability), Optional.ToList(targets));
+            return new ProviderStatus(id.Value, Core.Optional.ToNullable(currentAvailability), Core.Optional.ToList(targets));
         }
     }
 }

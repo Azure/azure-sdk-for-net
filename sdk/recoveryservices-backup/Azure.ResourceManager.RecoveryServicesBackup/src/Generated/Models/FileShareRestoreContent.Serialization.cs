@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class FileShareRestoreContent : IUtf8JsonSerializable
+    public partial class FileShareRestoreContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryType))
+            if (Core.Optional.IsDefined(RecoveryType))
             {
                 writer.WritePropertyName("recoveryType"u8);
                 writer.WriteStringValue(RecoveryType.Value.ToString());
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (Core.Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsDefined(CopyOptions))
+            if (Core.Optional.IsDefined(CopyOptions))
             {
                 writer.WritePropertyName("copyOptions"u8);
                 writer.WriteStringValue(CopyOptions.Value.ToString());
             }
-            if (Optional.IsDefined(RestoreRequestType))
+            if (Core.Optional.IsDefined(RestoreRequestType))
             {
                 writer.WritePropertyName("restoreRequestType"u8);
                 writer.WriteStringValue(RestoreRequestType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(RestoreFileSpecs))
+            if (Core.Optional.IsCollectionDefined(RestoreFileSpecs))
             {
                 writer.WritePropertyName("restoreFileSpecs"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TargetDetails))
+            if (Core.Optional.IsDefined(TargetDetails))
             {
                 writer.WritePropertyName("targetDetails"u8);
                 writer.WriteObjectValue(TargetDetails);
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<FileShareRecoveryType> recoveryType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<FileShareCopyOption> copyOptions = default;
-            Optional<FileShareRestoreType> restoreRequestType = default;
-            Optional<IList<RestoreFileSpecs>> restoreFileSpecs = default;
-            Optional<TargetAfsRestoreInfo> targetDetails = default;
+            Core.Optional<FileShareRecoveryType> recoveryType = default;
+            Core.Optional<ResourceIdentifier> sourceResourceId = default;
+            Core.Optional<FileShareCopyOption> copyOptions = default;
+            Core.Optional<FileShareRestoreType> restoreRequestType = default;
+            Core.Optional<IList<RestoreFileSpecs>> restoreFileSpecs = default;
+            Core.Optional<TargetAfsRestoreInfo> targetDetails = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new FileShareRestoreContent(objectType, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToNullable(copyOptions), Optional.ToNullable(restoreRequestType), Optional.ToList(restoreFileSpecs), targetDetails.Value);
+            return new FileShareRestoreContent(objectType, Core.Optional.ToNullable(recoveryType), sourceResourceId.Value, Core.Optional.ToNullable(copyOptions), Core.Optional.ToNullable(restoreRequestType), Core.Optional.ToList(restoreFileSpecs), targetDetails.Value);
         }
     }
 }

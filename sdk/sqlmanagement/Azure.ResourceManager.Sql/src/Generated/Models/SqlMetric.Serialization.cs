@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> timeGrain = default;
-            Optional<SqlMetricUnitType> unit = default;
-            Optional<SqlMetricName> name = default;
-            Optional<IReadOnlyList<SqlMetricValue>> metricValues = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<string> timeGrain = default;
+            Core.Optional<SqlMetricUnitType> unit = default;
+            Core.Optional<SqlMetricName> name = default;
+            Core.Optional<IReadOnlyList<SqlMetricValue>> metricValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SqlMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, Optional.ToList(metricValues));
+            return new SqlMetric(Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), timeGrain.Value, Core.Optional.ToNullable(unit), name.Value, Core.Optional.ToList(metricValues));
         }
     }
 }

@@ -19,21 +19,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> diskName = default;
-            Optional<string> isOSDisk = default;
-            Optional<long> capacityInBytes = default;
-            Optional<ResourceIdentifier> logStorageAccountId = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Optional<string> seedManagedDiskId = default;
-            Optional<Uri> seedBlobUri = default;
-            Optional<string> targetManagedDiskId = default;
-            Optional<SiteRecoveryDiskAccountType> diskType = default;
-            Optional<double> dataPendingInLogDataStoreInMB = default;
-            Optional<double> dataPendingAtSourceAgentInMB = default;
-            Optional<string> isInitialReplicationComplete = default;
-            Optional<InMageRcmSyncDetails> irDetails = default;
-            Optional<InMageRcmSyncDetails> resyncDetails = default;
+            Core.Optional<string> diskId = default;
+            Core.Optional<string> diskName = default;
+            Core.Optional<string> isOSDisk = default;
+            Core.Optional<long> capacityInBytes = default;
+            Core.Optional<ResourceIdentifier> logStorageAccountId = default;
+            Core.Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            Core.Optional<string> seedManagedDiskId = default;
+            Core.Optional<Uri> seedBlobUri = default;
+            Core.Optional<string> targetManagedDiskId = default;
+            Core.Optional<SiteRecoveryDiskAccountType> diskType = default;
+            Core.Optional<double> dataPendingInLogDataStoreInMB = default;
+            Core.Optional<double> dataPendingAtSourceAgentInMB = default;
+            Core.Optional<string> isInitialReplicationComplete = default;
+            Core.Optional<InMageRcmSyncDetails> irDetails = default;
+            Core.Optional<InMageRcmSyncDetails> resyncDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageRcmProtectedDiskDetails(diskId.Value, diskName.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, Optional.ToNullable(diskType), Optional.ToNullable(dataPendingInLogDataStoreInMB), Optional.ToNullable(dataPendingAtSourceAgentInMB), isInitialReplicationComplete.Value, irDetails.Value, resyncDetails.Value);
+            return new InMageRcmProtectedDiskDetails(diskId.Value, diskName.Value, isOSDisk.Value, Core.Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, Core.Optional.ToNullable(diskType), Core.Optional.ToNullable(dataPendingInLogDataStoreInMB), Core.Optional.ToNullable(dataPendingAtSourceAgentInMB), isInitialReplicationComplete.Value, irDetails.Value, resyncDetails.Value);
         }
     }
 }

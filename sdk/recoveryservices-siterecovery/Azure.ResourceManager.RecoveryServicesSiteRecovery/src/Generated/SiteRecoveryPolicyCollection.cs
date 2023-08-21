@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _siteRecoveryPolicyReplicationPoliciesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryPolicyResource>(new SiteRecoveryPolicyOperationSource(Client), _siteRecoveryPolicyReplicationPoliciesClientDiagnostics, Pipeline, _siteRecoveryPolicyReplicationPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryPolicyResource>(new SiteRecoveryPolicyOperationSource(Client), _siteRecoveryPolicyReplicationPoliciesClientDiagnostics, Pipeline, _siteRecoveryPolicyReplicationPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _siteRecoveryPolicyReplicationPoliciesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryPolicyResource>(new SiteRecoveryPolicyOperationSource(Client), _siteRecoveryPolicyReplicationPoliciesClientDiagnostics, Pipeline, _siteRecoveryPolicyReplicationPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryPolicyResource>(new SiteRecoveryPolicyOperationSource(Client), _siteRecoveryPolicyReplicationPoliciesClientDiagnostics, Pipeline, _siteRecoveryPolicyReplicationPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryPolicyReplicationPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryPolicyReplicationPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryPolicyResource(Client, SiteRecoveryPolicyData.DeserializeSiteRecoveryPolicyData(e)), _siteRecoveryPolicyReplicationPoliciesClientDiagnostics, Pipeline, "SiteRecoveryPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryPolicyResource(Client, SiteRecoveryPolicyData.DeserializeSiteRecoveryPolicyData(e)), _siteRecoveryPolicyReplicationPoliciesClientDiagnostics, Pipeline, "SiteRecoveryPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryPolicyReplicationPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryPolicyReplicationPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryPolicyResource(Client, SiteRecoveryPolicyData.DeserializeSiteRecoveryPolicyData(e)), _siteRecoveryPolicyReplicationPoliciesClientDiagnostics, Pipeline, "SiteRecoveryPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryPolicyResource(Client, SiteRecoveryPolicyData.DeserializeSiteRecoveryPolicyData(e)), _siteRecoveryPolicyReplicationPoliciesClientDiagnostics, Pipeline, "SiteRecoveryPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

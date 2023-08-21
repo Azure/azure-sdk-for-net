@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class AnalyzeTextOptions : IUtf8JsonSerializable
+    public partial class AnalyzeTextOptions : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsDefined(AnalyzerName))
+            if (Core.Optional.IsDefined(AnalyzerName))
             {
                 writer.WritePropertyName("analyzer"u8);
                 writer.WriteStringValue(AnalyzerName.Value.ToString());
             }
-            if (Optional.IsDefined(TokenizerName))
+            if (Core.Optional.IsDefined(TokenizerName))
             {
                 writer.WritePropertyName("tokenizer"u8);
                 writer.WriteStringValue(TokenizerName.Value.ToString());
             }
-            if (Optional.IsDefined(NormalizerName))
+            if (Core.Optional.IsDefined(NormalizerName))
             {
                 writer.WritePropertyName("normalizer"u8);
                 writer.WriteStringValue(NormalizerName.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(TokenFilters))
+            if (Core.Optional.IsCollectionDefined(TokenFilters))
             {
                 writer.WritePropertyName("tokenFilters"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CharFilters))
+            if (Core.Optional.IsCollectionDefined(CharFilters))
             {
                 writer.WritePropertyName("charFilters"u8);
                 writer.WriteStartArray();

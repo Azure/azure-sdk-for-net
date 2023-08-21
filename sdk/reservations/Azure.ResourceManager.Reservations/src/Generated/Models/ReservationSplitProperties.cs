@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of ReservationSplitProperties. </summary>
         internal ReservationSplitProperties()
         {
-            SplitDestinations = new ChangeTrackingList<string>();
+            SplitDestinations = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ReservationSplitProperties. </summary>

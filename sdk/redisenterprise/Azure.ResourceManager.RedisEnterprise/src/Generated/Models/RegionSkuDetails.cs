@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of RegionSkuDetails. </summary>
         internal RegionSkuDetails()
         {
-            Value = new ChangeTrackingList<RedisEnterpriseRegionSkuDetail>();
+            Value = new Core.ChangeTrackingList<RedisEnterpriseRegionSkuDetail>();
         }
 
         /// <summary> Initializes a new instance of RegionSkuDetails. </summary>

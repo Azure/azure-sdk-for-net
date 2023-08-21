@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> fabricArmId = default;
-            Optional<SiteRecoveryProcessServerDetails> processServer = default;
-            Optional<RcmProxyDetails> rcmProxy = default;
-            Optional<PushInstallerDetails> pushInstaller = default;
-            Optional<ReplicationAgentDetails> replicationAgent = default;
-            Optional<ReprotectAgentDetails> reprotectAgent = default;
-            Optional<MarsAgentDetails> marsAgent = default;
-            Optional<SiteRecoveryDraDetails> dra = default;
-            Optional<IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails>> switchProviderBlockingErrorDetails = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceIdentifier> fabricArmId = default;
+            Core.Optional<SiteRecoveryProcessServerDetails> processServer = default;
+            Core.Optional<RcmProxyDetails> rcmProxy = default;
+            Core.Optional<PushInstallerDetails> pushInstaller = default;
+            Core.Optional<ReplicationAgentDetails> replicationAgent = default;
+            Core.Optional<ReprotectAgentDetails> reprotectAgent = default;
+            Core.Optional<MarsAgentDetails> marsAgent = default;
+            Core.Optional<SiteRecoveryDraDetails> dra = default;
+            Core.Optional<IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails>> switchProviderBlockingErrorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageRcmApplianceDetails(id.Value, name.Value, fabricArmId.Value, processServer.Value, rcmProxy.Value, pushInstaller.Value, replicationAgent.Value, reprotectAgent.Value, marsAgent.Value, dra.Value, Optional.ToList(switchProviderBlockingErrorDetails));
+            return new InMageRcmApplianceDetails(id.Value, name.Value, fabricArmId.Value, processServer.Value, rcmProxy.Value, pushInstaller.Value, replicationAgent.Value, reprotectAgent.Value, marsAgent.Value, dra.Value, Core.Optional.ToList(switchProviderBlockingErrorDetails));
         }
     }
 }

@@ -11,42 +11,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsIncidentActionConfiguration : IUtf8JsonSerializable
+    public partial class SecurityInsightsIncidentActionConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Severity))
+            if (Core.Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Classification))
+            if (Core.Optional.IsDefined(Classification))
             {
                 writer.WritePropertyName("classification"u8);
                 writer.WriteStringValue(Classification.Value.ToString());
             }
-            if (Optional.IsDefined(ClassificationReason))
+            if (Core.Optional.IsDefined(ClassificationReason))
             {
                 writer.WritePropertyName("classificationReason"u8);
                 writer.WriteStringValue(ClassificationReason.Value.ToString());
             }
-            if (Optional.IsDefined(ClassificationComment))
+            if (Core.Optional.IsDefined(ClassificationComment))
             {
                 writer.WritePropertyName("classificationComment"u8);
                 writer.WriteStringValue(ClassificationComment);
             }
-            if (Optional.IsDefined(Owner))
+            if (Core.Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteObjectValue(Owner);
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (Core.Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -65,13 +65,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<SecurityInsightsIncidentSeverity> severity = default;
-            Optional<SecurityInsightsIncidentStatus> status = default;
-            Optional<SecurityInsightsIncidentClassification> classification = default;
-            Optional<SecurityInsightsIncidentClassificationReason> classificationReason = default;
-            Optional<string> classificationComment = default;
-            Optional<SecurityInsightsIncidentOwnerInfo> owner = default;
-            Optional<IList<SecurityInsightsIncidentLabel>> labels = default;
+            Core.Optional<SecurityInsightsIncidentSeverity> severity = default;
+            Core.Optional<SecurityInsightsIncidentStatus> status = default;
+            Core.Optional<SecurityInsightsIncidentClassification> classification = default;
+            Core.Optional<SecurityInsightsIncidentClassificationReason> classificationReason = default;
+            Core.Optional<string> classificationComment = default;
+            Core.Optional<SecurityInsightsIncidentOwnerInfo> owner = default;
+            Core.Optional<IList<SecurityInsightsIncidentLabel>> labels = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("severity"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsIncidentActionConfiguration(Optional.ToNullable(severity), Optional.ToNullable(status), Optional.ToNullable(classification), Optional.ToNullable(classificationReason), classificationComment.Value, owner.Value, Optional.ToList(labels));
+            return new SecurityInsightsIncidentActionConfiguration(Core.Optional.ToNullable(severity), Core.Optional.ToNullable(status), Core.Optional.ToNullable(classification), Core.Optional.ToNullable(classificationReason), classificationComment.Value, owner.Value, Core.Optional.ToList(labels));
         }
     }
 }

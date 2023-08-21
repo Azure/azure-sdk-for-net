@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             Count = count;
             ResultTruncated = resultTruncated;
             Data = data;
-            Facets = new ChangeTrackingList<Facet>();
+            Facets = new Core.ChangeTrackingList<Facet>();
         }
 
         /// <summary> Initializes a new instance of ResourceQueryResult. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of VmWorkloadSqlInstanceWorkloadItem. </summary>
         public VmWorkloadSqlInstanceWorkloadItem()
         {
-            DataDirectoryPaths = new ChangeTrackingList<SqlDataDirectory>();
+            DataDirectoryPaths = new Core.ChangeTrackingList<SqlDataDirectory>();
             WorkloadItemType = "SQLInstance";
         }
 

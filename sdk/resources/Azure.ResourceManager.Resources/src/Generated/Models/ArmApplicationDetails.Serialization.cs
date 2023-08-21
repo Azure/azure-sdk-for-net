@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<Guid> oid = default;
-            Optional<string> puid = default;
-            Optional<Guid> applicationId = default;
+            Core.Optional<Guid> oid = default;
+            Core.Optional<string> puid = default;
+            Core.Optional<Guid> applicationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("oid"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmApplicationDetails(Optional.ToNullable(oid), puid.Value, Optional.ToNullable(applicationId));
+            return new ArmApplicationDetails(Core.Optional.ToNullable(oid), puid.Value, Core.Optional.ToNullable(applicationId));
         }
     }
 }

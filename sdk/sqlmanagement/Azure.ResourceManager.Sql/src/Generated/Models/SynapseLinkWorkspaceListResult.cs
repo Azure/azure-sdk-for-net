@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SynapseLinkWorkspaceListResult. </summary>
         internal SynapseLinkWorkspaceListResult()
         {
-            Value = new ChangeTrackingList<SqlSynapseLinkWorkspace>();
+            Value = new Core.ChangeTrackingList<SqlSynapseLinkWorkspace>();
         }
 
         /// <summary> Initializes a new instance of SynapseLinkWorkspaceListResult. </summary>

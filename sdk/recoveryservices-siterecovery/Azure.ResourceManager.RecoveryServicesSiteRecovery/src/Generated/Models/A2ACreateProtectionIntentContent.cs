@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoverySubscriptionId = recoverySubscriptionId;
             RecoveryAvailabilityType = recoveryAvailabilityType;
             RecoveryResourceGroupId = recoveryResourceGroupId;
-            VmDisks = new ChangeTrackingList<A2AProtectionIntentDiskDetails>();
-            VmManagedDisks = new ChangeTrackingList<A2AProtectionIntentManagedDiskDetails>();
+            VmDisks = new Core.ChangeTrackingList<A2AProtectionIntentDiskDetails>();
+            VmManagedDisks = new Core.ChangeTrackingList<A2AProtectionIntentManagedDiskDetails>();
             InstanceType = "A2A";
         }
 

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SqlServicePrincipal : IUtf8JsonSerializable
+    public partial class SqlServicePrincipal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrincipalType))
+            if (Core.Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<Guid> principalId = default;
-            Optional<Guid> clientId = default;
-            Optional<Guid> tenantId = default;
-            Optional<SqlServicePrincipalType> type = default;
+            Core.Optional<Guid> principalId = default;
+            Core.Optional<Guid> clientId = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<SqlServicePrincipalType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SqlServicePrincipal(Optional.ToNullable(principalId), Optional.ToNullable(clientId), Optional.ToNullable(tenantId), Optional.ToNullable(type));
+            return new SqlServicePrincipal(Core.Optional.ToNullable(principalId), Core.Optional.ToNullable(clientId), Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(type));
         }
     }
 }

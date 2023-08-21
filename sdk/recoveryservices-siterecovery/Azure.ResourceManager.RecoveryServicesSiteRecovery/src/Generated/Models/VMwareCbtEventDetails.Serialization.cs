@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> migrationItemName = default;
+            Core.Optional<string> migrationItemName = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> @namespace = default;
-            Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
+            Core.Optional<string> @namespace = default;
+            Core.Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("namespace"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new TenantResourceProvider(@namespace.Value, Optional.ToList(resourceTypes));
+            return new TenantResourceProvider(@namespace.Value, Core.Optional.ToList(resourceTypes));
         }
     }
 }

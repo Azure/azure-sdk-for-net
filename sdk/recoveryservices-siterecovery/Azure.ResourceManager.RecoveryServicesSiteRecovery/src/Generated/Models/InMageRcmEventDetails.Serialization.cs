@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> protectedItemName = default;
-            Optional<string> vmName = default;
-            Optional<string> latestAgentVersion = default;
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<string> fabricName = default;
-            Optional<string> applianceName = default;
-            Optional<string> serverType = default;
-            Optional<string> componentDisplayName = default;
+            Core.Optional<string> protectedItemName = default;
+            Core.Optional<string> vmName = default;
+            Core.Optional<string> latestAgentVersion = default;
+            Core.Optional<ResourceIdentifier> jobId = default;
+            Core.Optional<string> fabricName = default;
+            Core.Optional<string> applianceName = default;
+            Core.Optional<string> serverType = default;
+            Core.Optional<string> componentDisplayName = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<PurchasePrice> p1Y = default;
-            Optional<PurchasePrice> p3Y = default;
-            Optional<PurchasePrice> p5Y = default;
+            Core.Optional<PurchasePrice> p1Y = default;
+            Core.Optional<PurchasePrice> p3Y = default;
+            Core.Optional<PurchasePrice> p5Y = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("p1Y"u8))

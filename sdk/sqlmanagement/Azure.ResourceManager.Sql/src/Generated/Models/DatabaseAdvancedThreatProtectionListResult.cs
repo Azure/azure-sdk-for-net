@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of DatabaseAdvancedThreatProtectionListResult. </summary>
         internal DatabaseAdvancedThreatProtectionListResult()
         {
-            Value = new ChangeTrackingList<DatabaseAdvancedThreatProtectionData>();
+            Value = new Core.ChangeTrackingList<DatabaseAdvancedThreatProtectionData>();
         }
 
         /// <summary> Initializes a new instance of DatabaseAdvancedThreatProtectionListResult. </summary>

@@ -15,44 +15,44 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsIncidentData : IUtf8JsonSerializable
+    public partial class SecurityInsightsIncidentData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Classification))
+            if (Core.Optional.IsDefined(Classification))
             {
                 writer.WritePropertyName("classification"u8);
                 writer.WriteStringValue(Classification.Value.ToString());
             }
-            if (Optional.IsDefined(ClassificationComment))
+            if (Core.Optional.IsDefined(ClassificationComment))
             {
                 writer.WritePropertyName("classificationComment"u8);
                 writer.WriteStringValue(ClassificationComment);
             }
-            if (Optional.IsDefined(ClassificationReason))
+            if (Core.Optional.IsDefined(ClassificationReason))
             {
                 writer.WritePropertyName("classificationReason"u8);
                 writer.WriteStringValue(ClassificationReason.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(FirstActivityOn))
+            if (Core.Optional.IsDefined(FirstActivityOn))
             {
                 writer.WritePropertyName("firstActivityTimeUtc"u8);
                 writer.WriteStringValue(FirstActivityOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (Core.Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -62,27 +62,27 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LastActivityOn))
+            if (Core.Optional.IsDefined(LastActivityOn))
             {
                 writer.WritePropertyName("lastActivityTimeUtc"u8);
                 writer.WriteStringValue(LastActivityOn.Value, "O");
             }
-            if (Optional.IsDefined(Owner))
+            if (Core.Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteObjectValue(Owner);
             }
-            if (Optional.IsDefined(Severity))
+            if (Core.Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Title))
+            if (Core.Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
@@ -97,28 +97,28 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SecurityInsightsIncidentAdditionalInfo> additionalData = default;
-            Optional<SecurityInsightsIncidentClassification> classification = default;
-            Optional<string> classificationComment = default;
-            Optional<SecurityInsightsIncidentClassificationReason> classificationReason = default;
-            Optional<DateTimeOffset> createdTimeUtc = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> firstActivityTimeUtc = default;
-            Optional<Uri> incidentUrl = default;
-            Optional<int> incidentNumber = default;
-            Optional<IList<SecurityInsightsIncidentLabel>> labels = default;
-            Optional<DateTimeOffset> lastActivityTimeUtc = default;
-            Optional<DateTimeOffset> lastModifiedTimeUtc = default;
-            Optional<SecurityInsightsIncidentOwnerInfo> owner = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> relatedAnalyticRuleIds = default;
-            Optional<SecurityInsightsIncidentSeverity> severity = default;
-            Optional<SecurityInsightsIncidentStatus> status = default;
-            Optional<string> title = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<SecurityInsightsIncidentAdditionalInfo> additionalData = default;
+            Core.Optional<SecurityInsightsIncidentClassification> classification = default;
+            Core.Optional<string> classificationComment = default;
+            Core.Optional<SecurityInsightsIncidentClassificationReason> classificationReason = default;
+            Core.Optional<DateTimeOffset> createdTimeUtc = default;
+            Core.Optional<string> description = default;
+            Core.Optional<DateTimeOffset> firstActivityTimeUtc = default;
+            Core.Optional<Uri> incidentUrl = default;
+            Core.Optional<int> incidentNumber = default;
+            Core.Optional<IList<SecurityInsightsIncidentLabel>> labels = default;
+            Core.Optional<DateTimeOffset> lastActivityTimeUtc = default;
+            Core.Optional<DateTimeOffset> lastModifiedTimeUtc = default;
+            Core.Optional<SecurityInsightsIncidentOwnerInfo> owner = default;
+            Core.Optional<IReadOnlyList<ResourceIdentifier>> relatedAnalyticRuleIds = default;
+            Core.Optional<SecurityInsightsIncidentSeverity> severity = default;
+            Core.Optional<SecurityInsightsIncidentStatus> status = default;
+            Core.Optional<string> title = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new SecurityInsightsIncidentData(id, name, type, systemData.Value, additionalData.Value, Optional.ToNullable(classification), classificationComment.Value, Optional.ToNullable(classificationReason), Optional.ToNullable(createdTimeUtc), description.Value, Optional.ToNullable(firstActivityTimeUtc), incidentUrl.Value, Optional.ToNullable(incidentNumber), Optional.ToList(labels), Optional.ToNullable(lastActivityTimeUtc), Optional.ToNullable(lastModifiedTimeUtc), owner.Value, Optional.ToList(relatedAnalyticRuleIds), Optional.ToNullable(severity), Optional.ToNullable(status), title.Value, Optional.ToNullable(etag));
+            return new SecurityInsightsIncidentData(id, name, type, systemData.Value, additionalData.Value, Core.Optional.ToNullable(classification), classificationComment.Value, Core.Optional.ToNullable(classificationReason), Core.Optional.ToNullable(createdTimeUtc), description.Value, Core.Optional.ToNullable(firstActivityTimeUtc), incidentUrl.Value, Core.Optional.ToNullable(incidentNumber), Core.Optional.ToList(labels), Core.Optional.ToNullable(lastActivityTimeUtc), Core.Optional.ToNullable(lastModifiedTimeUtc), owner.Value, Core.Optional.ToList(relatedAnalyticRuleIds), Core.Optional.ToNullable(severity), Core.Optional.ToNullable(status), title.Value, Core.Optional.ToNullable(etag));
         }
     }
 }

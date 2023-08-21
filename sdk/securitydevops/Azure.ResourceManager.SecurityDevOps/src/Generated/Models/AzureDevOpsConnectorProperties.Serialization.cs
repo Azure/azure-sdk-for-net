@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
-    public partial class AzureDevOpsConnectorProperties : IUtf8JsonSerializable
+    public partial class AzureDevOpsConnectorProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Authorization))
+            if (Core.Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
                 writer.WriteObjectValue(Authorization);
             }
-            if (Optional.IsCollectionDefined(Orgs))
+            if (Core.Optional.IsCollectionDefined(Orgs))
             {
                 writer.WritePropertyName("orgs"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<AuthorizationInfo> authorization = default;
-            Optional<IList<AzureDevOpsOrgMetadata>> orgs = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<AuthorizationInfo> authorization = default;
+            Core.Optional<IList<AzureDevOpsOrgMetadata>> orgs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     continue;
                 }
             }
-            return new AzureDevOpsConnectorProperties(Optional.ToNullable(provisioningState), authorization.Value, Optional.ToList(orgs));
+            return new AzureDevOpsConnectorProperties(Core.Optional.ToNullable(provisioningState), authorization.Value, Core.Optional.ToList(orgs));
         }
     }
 }

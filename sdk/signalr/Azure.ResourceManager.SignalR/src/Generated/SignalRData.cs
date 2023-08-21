@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="location"> The location. </param>
         public SignalRData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<SignalRPrivateEndpointConnectionData>();
-            SharedPrivateLinkResources = new ChangeTrackingList<SignalRSharedPrivateLinkResourceData>();
-            Features = new ChangeTrackingList<SignalRFeature>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<SignalRPrivateEndpointConnectionData>();
+            SharedPrivateLinkResources = new Core.ChangeTrackingList<SignalRSharedPrivateLinkResourceData>();
+            Features = new Core.ChangeTrackingList<SignalRFeature>();
         }
 
         /// <summary> Initializes a new instance of SignalRData. </summary>

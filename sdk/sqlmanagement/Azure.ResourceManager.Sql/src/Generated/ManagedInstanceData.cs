@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="location"> The location. </param>
         public ManagedInstanceData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<ManagedInstancePecProperty>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<ManagedInstancePecProperty>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceData. </summary>

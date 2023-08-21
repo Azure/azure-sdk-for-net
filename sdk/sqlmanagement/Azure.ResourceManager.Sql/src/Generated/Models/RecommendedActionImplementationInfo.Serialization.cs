@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ImplementationMethod> method = default;
-            Optional<string> script = default;
+            Core.Optional<ImplementationMethod> method = default;
+            Core.Optional<string> script = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("method"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new RecommendedActionImplementationInfo(Optional.ToNullable(method), script.Value);
+            return new RecommendedActionImplementationInfo(Core.Optional.ToNullable(method), script.Value);
         }
     }
 }

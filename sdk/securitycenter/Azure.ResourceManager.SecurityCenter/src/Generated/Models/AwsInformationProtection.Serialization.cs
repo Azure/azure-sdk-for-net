@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class AwsInformationProtection : IUtf8JsonSerializable
+    internal partial class AwsInformationProtection : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CloudRoleArn))
+            if (Core.Optional.IsDefined(CloudRoleArn))
             {
                 writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> cloudRoleArn = default;
+            Core.Optional<string> cloudRoleArn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cloudRoleArn"u8))

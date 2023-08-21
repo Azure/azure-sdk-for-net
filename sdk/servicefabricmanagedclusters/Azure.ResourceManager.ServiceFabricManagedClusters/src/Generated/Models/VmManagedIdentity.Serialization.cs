@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    internal partial class VmManagedIdentity : IUtf8JsonSerializable
+    internal partial class VmManagedIdentity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (Core.Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<IList<ResourceIdentifier>> userAssignedIdentities = default;
+            Core.Optional<IList<ResourceIdentifier>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentities"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new VmManagedIdentity(Optional.ToList(userAssignedIdentities));
+            return new VmManagedIdentity(Core.Optional.ToList(userAssignedIdentities));
         }
     }
 }

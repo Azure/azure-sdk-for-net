@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class McasDataConnectorDataTypes : IUtf8JsonSerializable
+    public partial class McasDataConnectorDataTypes : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiscoveryLogs))
+            if (Core.Optional.IsDefined(DiscoveryLogs))
             {
                 writer.WritePropertyName("discoveryLogs"u8);
                 writer.WriteObjectValue(DiscoveryLogs);
             }
-            if (Optional.IsDefined(Alerts))
+            if (Core.Optional.IsDefined(Alerts))
             {
                 writer.WritePropertyName("alerts"u8);
                 writer.WriteObjectValue(Alerts);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<DataConnectorDataTypeCommon> discoveryLogs = default;
-            Optional<DataConnectorDataTypeCommon> alerts = default;
+            Core.Optional<DataConnectorDataTypeCommon> discoveryLogs = default;
+            Core.Optional<DataConnectorDataTypeCommon> alerts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("discoveryLogs"u8))

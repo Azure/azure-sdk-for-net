@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of SignalRLiveTraceConfiguration. </summary>
         public SignalRLiveTraceConfiguration()
         {
-            Categories = new ChangeTrackingList<SignalRLiveTraceCategory>();
+            Categories = new Core.ChangeTrackingList<SignalRLiveTraceCategory>();
         }
 
         /// <summary> Initializes a new instance of SignalRLiveTraceConfiguration. </summary>

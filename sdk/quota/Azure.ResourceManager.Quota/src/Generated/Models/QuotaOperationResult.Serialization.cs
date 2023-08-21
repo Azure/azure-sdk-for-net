@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<QuotaOperationDisplay> display = default;
-            Optional<string> origin = default;
+            Core.Optional<string> name = default;
+            Core.Optional<QuotaOperationDisplay> display = default;
+            Core.Optional<string> origin = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

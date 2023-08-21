@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ApplicationDeltaHealthPolicy : IUtf8JsonSerializable
+    public partial class ApplicationDeltaHealthPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultServiceTypeDeltaHealthPolicy))
+            if (Core.Optional.IsDefined(DefaultServiceTypeDeltaHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeDeltaHealthPolicy"u8);
                 writer.WriteObjectValue(DefaultServiceTypeDeltaHealthPolicy);
             }
-            if (Optional.IsCollectionDefined(ServiceTypeDeltaHealthPolicies))
+            if (Core.Optional.IsCollectionDefined(ServiceTypeDeltaHealthPolicies))
             {
                 writer.WritePropertyName("serviceTypeDeltaHealthPolicies"u8);
                 writer.WriteStartObject();
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<ServiceTypeDeltaHealthPolicy> defaultServiceTypeDeltaHealthPolicy = default;
-            Optional<IDictionary<string, ServiceTypeDeltaHealthPolicy>> serviceTypeDeltaHealthPolicies = default;
+            Core.Optional<ServiceTypeDeltaHealthPolicy> defaultServiceTypeDeltaHealthPolicy = default;
+            Core.Optional<IDictionary<string, ServiceTypeDeltaHealthPolicy>> serviceTypeDeltaHealthPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultServiceTypeDeltaHealthPolicy"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ApplicationDeltaHealthPolicy(defaultServiceTypeDeltaHealthPolicy.Value, Optional.ToDictionary(serviceTypeDeltaHealthPolicies));
+            return new ApplicationDeltaHealthPolicy(defaultServiceTypeDeltaHealthPolicy.Value, Core.Optional.ToDictionary(serviceTypeDeltaHealthPolicies));
         }
     }
 }

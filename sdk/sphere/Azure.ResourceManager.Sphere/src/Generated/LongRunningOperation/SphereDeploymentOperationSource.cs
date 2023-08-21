@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sphere
 {
-    internal class SphereDeploymentOperationSource : IOperationSource<SphereDeploymentResource>
+    internal class SphereDeploymentOperationSource : Core.IOperationSource<SphereDeploymentResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sphere
             _client = client;
         }
 
-        SphereDeploymentResource IOperationSource<SphereDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SphereDeploymentResource Core.IOperationSource<SphereDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SphereDeploymentData.DeserializeSphereDeploymentData(document.RootElement);
             return new SphereDeploymentResource(_client, data);
         }
 
-        async ValueTask<SphereDeploymentResource> IOperationSource<SphereDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SphereDeploymentResource> Core.IOperationSource<SphereDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SphereDeploymentData.DeserializeSphereDeploymentData(document.RootElement);

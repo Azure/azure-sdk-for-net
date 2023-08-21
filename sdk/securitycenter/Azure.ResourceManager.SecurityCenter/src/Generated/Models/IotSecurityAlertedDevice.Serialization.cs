@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class IotSecurityAlertedDevice : IUtf8JsonSerializable
+    public partial class IotSecurityAlertedDevice : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> deviceId = default;
-            Optional<long> alertsCount = default;
+            Core.Optional<string> deviceId = default;
+            Core.Optional<long> alertsCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new IotSecurityAlertedDevice(deviceId.Value, Optional.ToNullable(alertsCount));
+            return new IotSecurityAlertedDevice(deviceId.Value, Core.Optional.ToNullable(alertsCount));
         }
     }
 }

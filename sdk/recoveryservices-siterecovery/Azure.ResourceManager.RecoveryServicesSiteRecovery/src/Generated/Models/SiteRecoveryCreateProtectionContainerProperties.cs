@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryCreateProtectionContainerProperties. </summary>
         public SiteRecoveryCreateProtectionContainerProperties()
         {
-            ProviderSpecificContent = new ChangeTrackingList<ReplicationProviderSpecificContainerCreationContent>();
+            ProviderSpecificContent = new Core.ChangeTrackingList<ReplicationProviderSpecificContainerCreationContent>();
         }
 
         /// <summary>

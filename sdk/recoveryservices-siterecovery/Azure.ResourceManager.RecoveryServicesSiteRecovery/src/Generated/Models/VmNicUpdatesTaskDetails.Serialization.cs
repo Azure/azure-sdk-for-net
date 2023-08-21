@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vmId = default;
-            Optional<string> nicId = default;
-            Optional<string> name = default;
+            Core.Optional<string> vmId = default;
+            Core.Optional<string> nicId = default;
+            Core.Optional<string> name = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {

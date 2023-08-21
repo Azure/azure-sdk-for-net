@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of RecoverableDatabaseListResult. </summary>
         internal RecoverableDatabaseListResult()
         {
-            Value = new ChangeTrackingList<RecoverableDatabaseData>();
+            Value = new Core.ChangeTrackingList<RecoverableDatabaseData>();
         }
 
         /// <summary> Initializes a new instance of RecoverableDatabaseListResult. </summary>

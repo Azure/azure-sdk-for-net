@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityCenterAllowedConnection : IUtf8JsonSerializable
+    public partial class SecurityCenterAllowedConnection : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> calculatedDateTime = default;
-            Optional<IReadOnlyList<ConnectableResourceInfo>> connectableResources = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> calculatedDateTime = default;
+            Core.Optional<IReadOnlyList<ConnectableResourceInfo>> connectableResources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecurityCenterAllowedConnection(id, name, type, systemData.Value, Optional.ToNullable(calculatedDateTime), Optional.ToList(connectableResources), Optional.ToNullable(location));
+            return new SecurityCenterAllowedConnection(id, name, type, systemData.Value, Core.Optional.ToNullable(calculatedDateTime), Core.Optional.ToList(connectableResources), Core.Optional.ToNullable(location));
         }
     }
 }

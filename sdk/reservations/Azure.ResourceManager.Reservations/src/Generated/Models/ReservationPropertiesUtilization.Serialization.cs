@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> trend = default;
-            Optional<IReadOnlyList<ReservationUtilizationAggregates>> aggregates = default;
+            Core.Optional<string> trend = default;
+            Core.Optional<IReadOnlyList<ReservationUtilizationAggregates>> aggregates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trend"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ReservationPropertiesUtilization(trend.Value, Optional.ToList(aggregates));
+            return new ReservationPropertiesUtilization(trend.Value, Core.Optional.ToList(aggregates));
         }
     }
 }

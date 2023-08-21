@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstanceKeyListResult. </summary>
         internal ManagedInstanceKeyListResult()
         {
-            Value = new ChangeTrackingList<ManagedInstanceKeyData>();
+            Value = new Core.ChangeTrackingList<ManagedInstanceKeyData>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceKeyListResult. </summary>

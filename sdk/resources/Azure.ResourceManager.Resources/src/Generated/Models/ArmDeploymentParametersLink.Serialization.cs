@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmDeploymentParametersLink : IUtf8JsonSerializable
+    public partial class ArmDeploymentParametersLink : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Optional.IsDefined(ContentVersion))
+            if (Core.Optional.IsDefined(ContentVersion))
             {
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             Uri uri = default;
-            Optional<string> contentVersion = default;
+            Core.Optional<string> contentVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"u8))

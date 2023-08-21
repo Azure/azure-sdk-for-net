@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedInstancePrivateEndpointConnectionOperationSource : IOperationSource<ManagedInstancePrivateEndpointConnectionResource>
+    internal class ManagedInstancePrivateEndpointConnectionOperationSource : Core.IOperationSource<ManagedInstancePrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ManagedInstancePrivateEndpointConnectionResource IOperationSource<ManagedInstancePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedInstancePrivateEndpointConnectionResource Core.IOperationSource<ManagedInstancePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedInstancePrivateEndpointConnectionData.DeserializeManagedInstancePrivateEndpointConnectionData(document.RootElement);
             return new ManagedInstancePrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<ManagedInstancePrivateEndpointConnectionResource> IOperationSource<ManagedInstancePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedInstancePrivateEndpointConnectionResource> Core.IOperationSource<ManagedInstancePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedInstancePrivateEndpointConnectionData.DeserializeManagedInstancePrivateEndpointConnectionData(document.RootElement);

@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> clusterCodeVersion = default;
-            Optional<DateTimeOffset> supportExpiryUtc = default;
-            Optional<ServiceFabricManagedClusterOSType> osType = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> clusterCodeVersion = default;
+            Core.Optional<DateTimeOffset> supportExpiryUtc = default;
+            Core.Optional<ServiceFabricManagedClusterOSType> osType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new ServiceFabricManagedClusterVersion(id, name, type, systemData.Value, clusterCodeVersion.Value, Optional.ToNullable(supportExpiryUtc), Optional.ToNullable(osType));
+            return new ServiceFabricManagedClusterVersion(id, name, type, systemData.Value, clusterCodeVersion.Value, Core.Optional.ToNullable(supportExpiryUtc), Core.Optional.ToNullable(osType));
         }
     }
 }

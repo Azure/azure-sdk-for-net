@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of RecoveryPointResourceList. </summary>
         internal RecoveryPointResourceList()
         {
-            Value = new ChangeTrackingList<BackupRecoveryPointData>();
+            Value = new Core.ChangeTrackingList<BackupRecoveryPointData>();
         }
 
         /// <summary> Initializes a new instance of RecoveryPointResourceList. </summary>

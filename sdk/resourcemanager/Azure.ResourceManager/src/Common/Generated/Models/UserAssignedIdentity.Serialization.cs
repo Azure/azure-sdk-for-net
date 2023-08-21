@@ -13,9 +13,9 @@ using Azure.Core;
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(UserAssignedIdentityConverter))]
-    public partial class UserAssignedIdentity : IUtf8JsonSerializable
+    public partial class UserAssignedIdentity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Models
             {
                 return null;
             }
-            Optional<Guid> principalId = default;
-            Optional<Guid> clientId = default;
+            Core.Optional<Guid> principalId = default;
+            Core.Optional<Guid> clientId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new UserAssignedIdentity(Optional.ToNullable(principalId), Optional.ToNullable(clientId));
+            return new UserAssignedIdentity(Core.Optional.ToNullable(principalId), Core.Optional.ToNullable(clientId));
         }
 
         internal partial class UserAssignedIdentityConverter : JsonConverter<UserAssignedIdentity>

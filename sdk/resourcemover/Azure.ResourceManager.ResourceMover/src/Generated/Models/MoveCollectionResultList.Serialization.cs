@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MoverResourceSetData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<MoverResourceSetData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoveCollectionResultList(Optional.ToList(value), nextLink.Value);
+            return new MoveCollectionResultList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

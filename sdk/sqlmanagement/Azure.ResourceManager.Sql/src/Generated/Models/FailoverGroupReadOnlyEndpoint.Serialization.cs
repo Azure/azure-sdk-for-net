@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal partial class FailoverGroupReadOnlyEndpoint : IUtf8JsonSerializable
+    internal partial class FailoverGroupReadOnlyEndpoint : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FailoverPolicy))
+            if (Core.Optional.IsDefined(FailoverPolicy))
             {
                 writer.WritePropertyName("failoverPolicy"u8);
                 writer.WriteStringValue(FailoverPolicy.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ReadOnlyEndpointFailoverPolicy> failoverPolicy = default;
+            Core.Optional<ReadOnlyEndpointFailoverPolicy> failoverPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failoverPolicy"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new FailoverGroupReadOnlyEndpoint(Optional.ToNullable(failoverPolicy));
+            return new FailoverGroupReadOnlyEndpoint(Core.Optional.ToNullable(failoverPolicy));
         }
     }
 }

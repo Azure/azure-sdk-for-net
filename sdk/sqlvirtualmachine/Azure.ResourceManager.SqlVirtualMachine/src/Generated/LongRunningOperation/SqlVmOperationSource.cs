@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
-    internal class SqlVmOperationSource : IOperationSource<SqlVmResource>
+    internal class SqlVmOperationSource : Core.IOperationSource<SqlVmResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             _client = client;
         }
 
-        SqlVmResource IOperationSource<SqlVmResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SqlVmResource Core.IOperationSource<SqlVmResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlVmData.DeserializeSqlVmData(document.RootElement);
             return new SqlVmResource(_client, data);
         }
 
-        async ValueTask<SqlVmResource> IOperationSource<SqlVmResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SqlVmResource> Core.IOperationSource<SqlVmResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlVmData.DeserializeSqlVmData(document.RootElement);

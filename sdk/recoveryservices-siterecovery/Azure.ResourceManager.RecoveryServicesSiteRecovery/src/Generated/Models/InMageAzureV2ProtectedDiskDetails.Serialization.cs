@@ -19,29 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> diskName = default;
-            Optional<string> protectionStage = default;
-            Optional<string> healthErrorCode = default;
-            Optional<long> rpoInSeconds = default;
-            Optional<string> resyncRequired = default;
-            Optional<int> resyncProgressPercentage = default;
-            Optional<long> resyncDurationInSeconds = default;
-            Optional<long> diskCapacityInBytes = default;
-            Optional<long> fileSystemCapacityInBytes = default;
-            Optional<double> sourceDataInMegaBytes = default;
-            Optional<double> psDataInMegaBytes = default;
-            Optional<double> targetDataInMegaBytes = default;
-            Optional<string> diskResized = default;
-            Optional<DateTimeOffset> lastRpoCalculatedTime = default;
-            Optional<long> resyncProcessedBytes = default;
-            Optional<long> resyncTotalTransferredBytes = default;
-            Optional<long> resyncLast15MinutesTransferredBytes = default;
-            Optional<DateTimeOffset> resyncLastDataTransferTimeUTC = default;
-            Optional<DateTimeOffset> resyncStartTime = default;
-            Optional<string> progressHealth = default;
-            Optional<string> progressStatus = default;
-            Optional<long> secondsToTakeSwitchProvider = default;
+            Core.Optional<string> diskId = default;
+            Core.Optional<string> diskName = default;
+            Core.Optional<string> protectionStage = default;
+            Core.Optional<string> healthErrorCode = default;
+            Core.Optional<long> rpoInSeconds = default;
+            Core.Optional<string> resyncRequired = default;
+            Core.Optional<int> resyncProgressPercentage = default;
+            Core.Optional<long> resyncDurationInSeconds = default;
+            Core.Optional<long> diskCapacityInBytes = default;
+            Core.Optional<long> fileSystemCapacityInBytes = default;
+            Core.Optional<double> sourceDataInMegaBytes = default;
+            Core.Optional<double> psDataInMegaBytes = default;
+            Core.Optional<double> targetDataInMegaBytes = default;
+            Core.Optional<string> diskResized = default;
+            Core.Optional<DateTimeOffset> lastRpoCalculatedTime = default;
+            Core.Optional<long> resyncProcessedBytes = default;
+            Core.Optional<long> resyncTotalTransferredBytes = default;
+            Core.Optional<long> resyncLast15MinutesTransferredBytes = default;
+            Core.Optional<DateTimeOffset> resyncLastDataTransferTimeUTC = default;
+            Core.Optional<DateTimeOffset> resyncStartTime = default;
+            Core.Optional<string> progressHealth = default;
+            Core.Optional<string> progressStatus = default;
+            Core.Optional<long> secondsToTakeSwitchProvider = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageAzureV2ProtectedDiskDetails(diskId.Value, diskName.Value, protectionStage.Value, healthErrorCode.Value, Optional.ToNullable(rpoInSeconds), resyncRequired.Value, Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncDurationInSeconds), Optional.ToNullable(diskCapacityInBytes), Optional.ToNullable(fileSystemCapacityInBytes), Optional.ToNullable(sourceDataInMegaBytes), Optional.ToNullable(psDataInMegaBytes), Optional.ToNullable(targetDataInMegaBytes), diskResized.Value, Optional.ToNullable(lastRpoCalculatedTime), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTotalTransferredBytes), Optional.ToNullable(resyncLast15MinutesTransferredBytes), Optional.ToNullable(resyncLastDataTransferTimeUTC), Optional.ToNullable(resyncStartTime), progressHealth.Value, progressStatus.Value, Optional.ToNullable(secondsToTakeSwitchProvider));
+            return new InMageAzureV2ProtectedDiskDetails(diskId.Value, diskName.Value, protectionStage.Value, healthErrorCode.Value, Core.Optional.ToNullable(rpoInSeconds), resyncRequired.Value, Core.Optional.ToNullable(resyncProgressPercentage), Core.Optional.ToNullable(resyncDurationInSeconds), Core.Optional.ToNullable(diskCapacityInBytes), Core.Optional.ToNullable(fileSystemCapacityInBytes), Core.Optional.ToNullable(sourceDataInMegaBytes), Core.Optional.ToNullable(psDataInMegaBytes), Core.Optional.ToNullable(targetDataInMegaBytes), diskResized.Value, Core.Optional.ToNullable(lastRpoCalculatedTime), Core.Optional.ToNullable(resyncProcessedBytes), Core.Optional.ToNullable(resyncTotalTransferredBytes), Core.Optional.ToNullable(resyncLast15MinutesTransferredBytes), Core.Optional.ToNullable(resyncLastDataTransferTimeUTC), Core.Optional.ToNullable(resyncStartTime), progressHealth.Value, progressStatus.Value, Core.Optional.ToNullable(secondsToTakeSwitchProvider));
         }
     }
 }

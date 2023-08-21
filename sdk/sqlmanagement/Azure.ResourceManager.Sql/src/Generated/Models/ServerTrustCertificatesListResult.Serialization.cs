@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServerTrustCertificateData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ServerTrustCertificateData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ServerTrustCertificatesListResult(Optional.ToList(value), nextLink.Value);
+            return new ServerTrustCertificatesListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

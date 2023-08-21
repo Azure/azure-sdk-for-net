@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstanceEditionCapability. </summary>
         internal ManagedInstanceEditionCapability()
         {
-            SupportedFamilies = new ChangeTrackingList<ManagedInstanceFamilyCapability>();
-            SupportedStorageCapabilities = new ChangeTrackingList<StorageCapability>();
+            SupportedFamilies = new Core.ChangeTrackingList<ManagedInstanceFamilyCapability>();
+            SupportedStorageCapabilities = new Core.ChangeTrackingList<StorageCapability>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceEditionCapability. </summary>

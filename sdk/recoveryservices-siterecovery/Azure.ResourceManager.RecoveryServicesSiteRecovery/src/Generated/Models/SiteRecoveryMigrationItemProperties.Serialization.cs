@@ -20,26 +20,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> machineName = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<string> policyFriendlyName = default;
-            Optional<string> recoveryServicesProviderId = default;
-            Optional<string> replicationStatus = default;
-            Optional<SiteRecoveryMigrationState> migrationState = default;
-            Optional<string> migrationStateDescription = default;
-            Optional<DateTimeOffset> lastTestMigrationTime = default;
-            Optional<string> lastTestMigrationStatus = default;
-            Optional<DateTimeOffset> lastMigrationTime = default;
-            Optional<string> lastMigrationStatus = default;
-            Optional<TestMigrationState> testMigrateState = default;
-            Optional<string> testMigrateStateDescription = default;
-            Optional<SiteRecoveryProtectionHealth> health = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
-            Optional<IReadOnlyList<MigrationItemOperation>> allowedOperations = default;
-            Optional<CurrentJobDetails> currentJob = default;
-            Optional<IReadOnlyList<CriticalJobHistoryDetails>> criticalJobHistory = default;
-            Optional<string> eventCorrelationId = default;
-            Optional<MigrationProviderSpecificSettings> providerSpecificDetails = default;
+            Core.Optional<string> machineName = default;
+            Core.Optional<ResourceIdentifier> policyId = default;
+            Core.Optional<string> policyFriendlyName = default;
+            Core.Optional<string> recoveryServicesProviderId = default;
+            Core.Optional<string> replicationStatus = default;
+            Core.Optional<SiteRecoveryMigrationState> migrationState = default;
+            Core.Optional<string> migrationStateDescription = default;
+            Core.Optional<DateTimeOffset> lastTestMigrationTime = default;
+            Core.Optional<string> lastTestMigrationStatus = default;
+            Core.Optional<DateTimeOffset> lastMigrationTime = default;
+            Core.Optional<string> lastMigrationStatus = default;
+            Core.Optional<TestMigrationState> testMigrateState = default;
+            Core.Optional<string> testMigrateStateDescription = default;
+            Core.Optional<SiteRecoveryProtectionHealth> health = default;
+            Core.Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            Core.Optional<IReadOnlyList<MigrationItemOperation>> allowedOperations = default;
+            Core.Optional<CurrentJobDetails> currentJob = default;
+            Core.Optional<IReadOnlyList<CriticalJobHistoryDetails>> criticalJobHistory = default;
+            Core.Optional<string> eventCorrelationId = default;
+            Core.Optional<MigrationProviderSpecificSettings> providerSpecificDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("machineName"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryMigrationItemProperties(machineName.Value, policyId.Value, policyFriendlyName.Value, recoveryServicesProviderId.Value, replicationStatus.Value, Optional.ToNullable(migrationState), migrationStateDescription.Value, Optional.ToNullable(lastTestMigrationTime), lastTestMigrationStatus.Value, Optional.ToNullable(lastMigrationTime), lastMigrationStatus.Value, Optional.ToNullable(testMigrateState), testMigrateStateDescription.Value, Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToList(allowedOperations), currentJob.Value, Optional.ToList(criticalJobHistory), eventCorrelationId.Value, providerSpecificDetails.Value);
+            return new SiteRecoveryMigrationItemProperties(machineName.Value, policyId.Value, policyFriendlyName.Value, recoveryServicesProviderId.Value, replicationStatus.Value, Core.Optional.ToNullable(migrationState), migrationStateDescription.Value, Core.Optional.ToNullable(lastTestMigrationTime), lastTestMigrationStatus.Value, Core.Optional.ToNullable(lastMigrationTime), lastMigrationStatus.Value, Core.Optional.ToNullable(testMigrateState), testMigrateStateDescription.Value, Core.Optional.ToNullable(health), Core.Optional.ToList(healthErrors), Core.Optional.ToList(allowedOperations), currentJob.Value, Core.Optional.ToList(criticalJobHistory), eventCorrelationId.Value, providerSpecificDetails.Value);
         }
     }
 }

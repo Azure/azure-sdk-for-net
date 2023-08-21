@@ -14,36 +14,36 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AnomalySecurityMLAnalyticsSettings : IUtf8JsonSerializable
+    public partial class AnomalySecurityMLAnalyticsSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(RequiredDataConnectors))
+            if (Core.Optional.IsCollectionDefined(RequiredDataConnectors))
             {
                 writer.WritePropertyName("requiredDataConnectors"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tactics))
+            if (Core.Optional.IsCollectionDefined(Tactics))
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Techniques))
+            if (Core.Optional.IsCollectionDefined(Techniques))
             {
                 writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AnomalyVersion))
+            if (Core.Optional.IsDefined(AnomalyVersion))
             {
                 writer.WritePropertyName("anomalyVersion"u8);
                 writer.WriteStringValue(AnomalyVersion);
             }
-            if (Optional.IsDefined(CustomizableObservations))
+            if (Core.Optional.IsDefined(CustomizableObservations))
             {
                 writer.WritePropertyName("customizableObservations"u8);
 #if NET6_0_OR_GREATER
@@ -87,27 +87,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(CustomizableObservations.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(Frequency))
+            if (Core.Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value, "P");
             }
-            if (Optional.IsDefined(SettingsStatus))
+            if (Core.Optional.IsDefined(SettingsStatus))
             {
                 writer.WritePropertyName("settingsStatus"u8);
                 writer.WriteStringValue(SettingsStatus.Value.ToString());
             }
-            if (Optional.IsDefined(IsDefaultSettings))
+            if (Core.Optional.IsDefined(IsDefaultSettings))
             {
                 writer.WritePropertyName("isDefaultSettings"u8);
                 writer.WriteBooleanValue(IsDefaultSettings.Value);
             }
-            if (Optional.IsDefined(AnomalySettingsVersion))
+            if (Core.Optional.IsDefined(AnomalySettingsVersion))
             {
                 writer.WritePropertyName("anomalySettingsVersion"u8);
                 writer.WriteNumberValue(AnomalySettingsVersion.Value);
             }
-            if (Optional.IsDefined(SettingsDefinitionId))
+            if (Core.Optional.IsDefined(SettingsDefinitionId))
             {
                 writer.WritePropertyName("settingsDefinitionId"u8);
                 writer.WriteStringValue(SettingsDefinitionId.Value);
@@ -123,25 +123,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             SecurityMLAnalyticsSettingsKind kind = default;
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> lastModifiedUtc = default;
-            Optional<IList<SecurityMLAnalyticsSettingsDataSource>> requiredDataConnectors = default;
-            Optional<IList<SecurityInsightsAttackTactic>> tactics = default;
-            Optional<IList<string>> techniques = default;
-            Optional<string> anomalyVersion = default;
-            Optional<BinaryData> customizableObservations = default;
-            Optional<TimeSpan> frequency = default;
-            Optional<AnomalySecurityMLAnalyticsSettingsStatus> settingsStatus = default;
-            Optional<bool> isDefaultSettings = default;
-            Optional<int> anomalySettingsVersion = default;
-            Optional<Guid> settingsDefinitionId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<DateTimeOffset> lastModifiedUtc = default;
+            Core.Optional<IList<SecurityMLAnalyticsSettingsDataSource>> requiredDataConnectors = default;
+            Core.Optional<IList<SecurityInsightsAttackTactic>> tactics = default;
+            Core.Optional<IList<string>> techniques = default;
+            Core.Optional<string> anomalyVersion = default;
+            Core.Optional<BinaryData> customizableObservations = default;
+            Core.Optional<TimeSpan> frequency = default;
+            Core.Optional<AnomalySecurityMLAnalyticsSettingsStatus> settingsStatus = default;
+            Core.Optional<bool> isDefaultSettings = default;
+            Core.Optional<int> anomalySettingsVersion = default;
+            Core.Optional<Guid> settingsDefinitionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new AnomalySecurityMLAnalyticsSettings(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc), Optional.ToList(requiredDataConnectors), Optional.ToList(tactics), Optional.ToList(techniques), anomalyVersion.Value, customizableObservations.Value, Optional.ToNullable(frequency), Optional.ToNullable(settingsStatus), Optional.ToNullable(isDefaultSettings), Optional.ToNullable(anomalySettingsVersion), Optional.ToNullable(settingsDefinitionId));
+            return new AnomalySecurityMLAnalyticsSettings(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(etag), description.Value, displayName.Value, Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(lastModifiedUtc), Core.Optional.ToList(requiredDataConnectors), Core.Optional.ToList(tactics), Core.Optional.ToList(techniques), anomalyVersion.Value, customizableObservations.Value, Core.Optional.ToNullable(frequency), Core.Optional.ToNullable(settingsStatus), Core.Optional.ToNullable(isDefaultSettings), Core.Optional.ToNullable(anomalySettingsVersion), Core.Optional.ToNullable(settingsDefinitionId));
         }
     }
 }

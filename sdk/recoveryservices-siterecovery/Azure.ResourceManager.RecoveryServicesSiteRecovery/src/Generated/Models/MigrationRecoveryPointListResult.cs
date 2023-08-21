@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of MigrationRecoveryPointListResult. </summary>
         internal MigrationRecoveryPointListResult()
         {
-            Value = new ChangeTrackingList<MigrationRecoveryPointData>();
+            Value = new Core.ChangeTrackingList<MigrationRecoveryPointData>();
         }
 
         /// <summary> Initializes a new instance of MigrationRecoveryPointListResult. </summary>

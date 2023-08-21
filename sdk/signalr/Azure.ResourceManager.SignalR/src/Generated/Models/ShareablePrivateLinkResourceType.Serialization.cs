@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    public partial class ShareablePrivateLinkResourceType : IUtf8JsonSerializable
+    public partial class ShareablePrivateLinkResourceType : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ShareablePrivateLinkResourceProperties> properties = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ShareablePrivateLinkResourceProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

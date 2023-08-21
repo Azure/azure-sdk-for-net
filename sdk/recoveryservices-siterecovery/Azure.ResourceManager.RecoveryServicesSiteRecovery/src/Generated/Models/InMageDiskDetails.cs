@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageDiskDetails. </summary>
         internal InMageDiskDetails()
         {
-            VolumeList = new ChangeTrackingList<SiteRecoveryDiskVolumeDetails>();
+            VolumeList = new Core.ChangeTrackingList<SiteRecoveryDiskVolumeDetails>();
         }
 
         /// <summary> Initializes a new instance of InMageDiskDetails. </summary>

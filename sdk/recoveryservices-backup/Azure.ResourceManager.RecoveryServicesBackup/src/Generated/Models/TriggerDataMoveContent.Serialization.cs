@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class TriggerDataMoveContent : IUtf8JsonSerializable
+    public partial class TriggerDataMoveContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceResourceId"u8);
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStringValue(DataMoveLevel.ToString());
             writer.WritePropertyName("correlationId"u8);
             writer.WriteStringValue(CorrelationId);
-            if (Optional.IsCollectionDefined(SourceContainerArmIds))
+            if (Core.Optional.IsCollectionDefined(SourceContainerArmIds))
             {
                 writer.WritePropertyName("sourceContainerArmIds"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DoesPauseGC))
+            if (Core.Optional.IsDefined(DoesPauseGC))
             {
                 writer.WritePropertyName("pauseGC"u8);
                 writer.WriteBooleanValue(DoesPauseGC.Value);

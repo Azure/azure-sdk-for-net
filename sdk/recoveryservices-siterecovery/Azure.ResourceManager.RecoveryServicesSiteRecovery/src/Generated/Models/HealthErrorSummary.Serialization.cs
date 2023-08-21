@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> summaryCode = default;
-            Optional<HealthErrorCategory> category = default;
-            Optional<SiteRecoveryErrorSeverity> severity = default;
-            Optional<string> summaryMessage = default;
-            Optional<string> affectedResourceType = default;
-            Optional<string> affectedResourceSubtype = default;
-            Optional<IReadOnlyList<string>> affectedResourceCorrelationIds = default;
+            Core.Optional<string> summaryCode = default;
+            Core.Optional<HealthErrorCategory> category = default;
+            Core.Optional<SiteRecoveryErrorSeverity> severity = default;
+            Core.Optional<string> summaryMessage = default;
+            Core.Optional<string> affectedResourceType = default;
+            Core.Optional<string> affectedResourceSubtype = default;
+            Core.Optional<IReadOnlyList<string>> affectedResourceCorrelationIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summaryCode"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new HealthErrorSummary(summaryCode.Value, Optional.ToNullable(category), Optional.ToNullable(severity), summaryMessage.Value, affectedResourceType.Value, affectedResourceSubtype.Value, Optional.ToList(affectedResourceCorrelationIds));
+            return new HealthErrorSummary(summaryCode.Value, Core.Optional.ToNullable(category), Core.Optional.ToNullable(severity), summaryMessage.Value, affectedResourceType.Value, affectedResourceSubtype.Value, Core.Optional.ToList(affectedResourceCorrelationIds));
         }
     }
 }

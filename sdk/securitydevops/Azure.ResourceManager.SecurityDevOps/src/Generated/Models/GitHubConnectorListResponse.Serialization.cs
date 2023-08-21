@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GitHubConnectorData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<GitHubConnectorData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     continue;
                 }
             }
-            return new GitHubConnectorListResponse(Optional.ToList(value), nextLink.Value);
+            return new GitHubConnectorListResponse(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

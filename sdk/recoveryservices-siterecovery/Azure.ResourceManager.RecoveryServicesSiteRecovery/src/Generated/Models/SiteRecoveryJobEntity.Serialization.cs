@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<string> jobFriendlyName = default;
-            Optional<string> targetObjectId = default;
-            Optional<string> targetObjectName = default;
-            Optional<string> targetInstanceType = default;
-            Optional<string> jobScenarioName = default;
+            Core.Optional<ResourceIdentifier> jobId = default;
+            Core.Optional<string> jobFriendlyName = default;
+            Core.Optional<string> targetObjectId = default;
+            Core.Optional<string> targetObjectName = default;
+            Core.Optional<string> targetInstanceType = default;
+            Core.Optional<string> jobScenarioName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"u8))

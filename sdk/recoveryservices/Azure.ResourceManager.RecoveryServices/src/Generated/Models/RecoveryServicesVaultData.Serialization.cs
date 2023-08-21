@@ -14,32 +14,32 @@ using Azure.ResourceManager.RecoveryServices.Models;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
-    public partial class RecoveryServicesVaultData : IUtf8JsonSerializable
+    public partial class RecoveryServicesVaultData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,16 +61,16 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<RecoveryServicesVaultProperties> properties = default;
-            Optional<RecoveryServicesSku> sku = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<RecoveryServicesVaultProperties> properties = default;
+            Core.Optional<RecoveryServicesSku> sku = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.RecoveryServices
                     continue;
                 }
             }
-            return new RecoveryServicesVaultData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, properties.Value, sku.Value, Optional.ToNullable(etag));
+            return new RecoveryServicesVaultData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, properties.Value, sku.Value, Core.Optional.ToNullable(etag));
         }
     }
 }

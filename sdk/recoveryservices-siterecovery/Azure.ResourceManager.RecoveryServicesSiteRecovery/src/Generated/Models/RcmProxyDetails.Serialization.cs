@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> biosId = default;
-            Optional<ResourceIdentifier> fabricObjectId = default;
-            Optional<string> fqdn = default;
-            Optional<string> clientAuthenticationType = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> lastHeartbeatUtc = default;
-            Optional<SiteRecoveryProtectionHealth> health = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> biosId = default;
+            Core.Optional<ResourceIdentifier> fabricObjectId = default;
+            Core.Optional<string> fqdn = default;
+            Core.Optional<string> clientAuthenticationType = default;
+            Core.Optional<string> version = default;
+            Core.Optional<DateTimeOffset> lastHeartbeatUtc = default;
+            Core.Optional<SiteRecoveryProtectionHealth> health = default;
+            Core.Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new RcmProxyDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, clientAuthenticationType.Value, version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(health), Optional.ToList(healthErrors));
+            return new RcmProxyDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, clientAuthenticationType.Value, version.Value, Core.Optional.ToNullable(lastHeartbeatUtc), Core.Optional.ToNullable(health), Core.Optional.ToList(healthErrors));
         }
     }
 }

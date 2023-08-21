@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class RedisEnterpriseCustomerManagedKeyEncryption : IUtf8JsonSerializable
+    public partial class RedisEnterpriseCustomerManagedKeyEncryption : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyEncryptionKeyIdentity))
+            if (Core.Optional.IsDefined(KeyEncryptionKeyIdentity))
             {
                 writer.WritePropertyName("keyEncryptionKeyIdentity"u8);
                 writer.WriteObjectValue(KeyEncryptionKeyIdentity);
             }
-            if (Optional.IsDefined(KeyEncryptionKeyUri))
+            if (Core.Optional.IsDefined(KeyEncryptionKeyUri))
             {
                 writer.WritePropertyName("keyEncryptionKeyUrl"u8);
                 writer.WriteStringValue(KeyEncryptionKeyUri.AbsoluteUri);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity> keyEncryptionKeyIdentity = default;
-            Optional<Uri> keyEncryptionKeyUrl = default;
+            Core.Optional<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity> keyEncryptionKeyIdentity = default;
+            Core.Optional<Uri> keyEncryptionKeyUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyEncryptionKeyIdentity"u8))

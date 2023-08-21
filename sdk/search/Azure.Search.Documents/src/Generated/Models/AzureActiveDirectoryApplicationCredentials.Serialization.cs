@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    internal partial class AzureActiveDirectoryApplicationCredentials : IUtf8JsonSerializable
+    internal partial class AzureActiveDirectoryApplicationCredentials : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("applicationId"u8);
             writer.WriteStringValue(ApplicationId);
-            if (Optional.IsDefined(ApplicationSecret))
+            if (Core.Optional.IsDefined(ApplicationSecret))
             {
                 writer.WritePropertyName("applicationSecret"u8);
                 writer.WriteStringValue(ApplicationSecret);
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string applicationId = default;
-            Optional<string> applicationSecret = default;
+            Core.Optional<string> applicationSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"u8))

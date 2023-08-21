@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryProtectableItemProperties. </summary>
         internal SiteRecoveryProtectableItemProperties()
         {
-            ProtectionReadinessErrors = new ChangeTrackingList<string>();
-            SupportedReplicationProviders = new ChangeTrackingList<string>();
+            ProtectionReadinessErrors = new Core.ChangeTrackingList<string>();
+            SupportedReplicationProviders = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryProtectableItemProperties. </summary>

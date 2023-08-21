@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoverResourceSetProperties : IUtf8JsonSerializable
+    public partial class MoverResourceSetProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceRegion"u8);
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             AzureLocation sourceRegion = default;
             AzureLocation targetRegion = default;
-            Optional<MoverProvisioningState> provisioningState = default;
-            Optional<MoveCollectionPropertiesErrors> errors = default;
+            Core.Optional<MoverProvisioningState> provisioningState = default;
+            Core.Optional<MoveCollectionPropertiesErrors> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceRegion"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverResourceSetProperties(sourceRegion, targetRegion, Optional.ToNullable(provisioningState), errors.Value);
+            return new MoverResourceSetProperties(sourceRegion, targetRegion, Core.Optional.ToNullable(provisioningState), errors.Value);
         }
     }
 }

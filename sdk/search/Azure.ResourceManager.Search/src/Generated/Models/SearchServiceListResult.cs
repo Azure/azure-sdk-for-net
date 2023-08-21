@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Initializes a new instance of SearchServiceListResult. </summary>
         internal SearchServiceListResult()
         {
-            Value = new ChangeTrackingList<SearchServiceData>();
+            Value = new Core.ChangeTrackingList<SearchServiceData>();
         }
 
         /// <summary> Initializes a new instance of SearchServiceListResult. </summary>

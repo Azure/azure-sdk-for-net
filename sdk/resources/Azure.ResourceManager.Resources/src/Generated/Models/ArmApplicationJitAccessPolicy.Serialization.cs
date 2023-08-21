@@ -12,19 +12,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmApplicationJitAccessPolicy : IUtf8JsonSerializable
+    public partial class ArmApplicationJitAccessPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("jitAccessEnabled"u8);
             writer.WriteBooleanValue(JitAccessEnabled);
-            if (Optional.IsDefined(JitApprovalMode))
+            if (Core.Optional.IsDefined(JitApprovalMode))
             {
                 writer.WritePropertyName("jitApprovalMode"u8);
                 writer.WriteStringValue(JitApprovalMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(JitApprovers))
+            if (Core.Optional.IsCollectionDefined(JitApprovers))
             {
                 writer.WritePropertyName("jitApprovers"u8);
                 writer.WriteStartArray();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaximumJitAccessDuration))
+            if (Core.Optional.IsDefined(MaximumJitAccessDuration))
             {
                 writer.WritePropertyName("maximumJitAccessDuration"u8);
                 writer.WriteStringValue(MaximumJitAccessDuration.Value, "P");
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             bool jitAccessEnabled = default;
-            Optional<JitApprovalMode> jitApprovalMode = default;
-            Optional<IList<JitApprover>> jitApprovers = default;
-            Optional<TimeSpan> maximumJitAccessDuration = default;
+            Core.Optional<JitApprovalMode> jitApprovalMode = default;
+            Core.Optional<IList<JitApprover>> jitApprovers = default;
+            Core.Optional<TimeSpan> maximumJitAccessDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jitAccessEnabled"u8))
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmApplicationJitAccessPolicy(jitAccessEnabled, Optional.ToNullable(jitApprovalMode), Optional.ToList(jitApprovers), Optional.ToNullable(maximumJitAccessDuration));
+            return new ArmApplicationJitAccessPolicy(jitAccessEnabled, Core.Optional.ToNullable(jitApprovalMode), Core.Optional.ToList(jitApprovers), Core.Optional.ToNullable(maximumJitAccessDuration));
         }
     }
 }

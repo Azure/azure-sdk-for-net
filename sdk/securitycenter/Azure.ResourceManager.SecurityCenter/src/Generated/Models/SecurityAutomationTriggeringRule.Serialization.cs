@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAutomationTriggeringRule : IUtf8JsonSerializable
+    public partial class SecurityAutomationTriggeringRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PropertyJPath))
+            if (Core.Optional.IsDefined(PropertyJPath))
             {
                 writer.WritePropertyName("propertyJPath"u8);
                 writer.WriteStringValue(PropertyJPath);
             }
-            if (Optional.IsDefined(PropertyType))
+            if (Core.Optional.IsDefined(PropertyType))
             {
                 writer.WritePropertyName("propertyType"u8);
                 writer.WriteStringValue(PropertyType.Value.ToString());
             }
-            if (Optional.IsDefined(ExpectedValue))
+            if (Core.Optional.IsDefined(ExpectedValue))
             {
                 writer.WritePropertyName("expectedValue"u8);
                 writer.WriteStringValue(ExpectedValue);
             }
-            if (Optional.IsDefined(Operator))
+            if (Core.Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> propertyJPath = default;
-            Optional<AutomationTriggeringRulePropertyType> propertyType = default;
-            Optional<string> expectedValue = default;
-            Optional<AutomationTriggeringRuleOperator> @operator = default;
+            Core.Optional<string> propertyJPath = default;
+            Core.Optional<AutomationTriggeringRulePropertyType> propertyType = default;
+            Core.Optional<string> expectedValue = default;
+            Core.Optional<AutomationTriggeringRuleOperator> @operator = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("propertyJPath"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecurityAutomationTriggeringRule(propertyJPath.Value, Optional.ToNullable(propertyType), expectedValue.Value, Optional.ToNullable(@operator));
+            return new SecurityAutomationTriggeringRule(propertyJPath.Value, Core.Optional.ToNullable(propertyType), expectedValue.Value, Core.Optional.ToNullable(@operator));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of LocationExpanded. </summary>
         internal LocationExpanded()
         {
-            AvailabilityZoneMappings = new ChangeTrackingList<AvailabilityZoneMappings>();
+            AvailabilityZoneMappings = new Core.ChangeTrackingList<AvailabilityZoneMappings>();
         }
 
         /// <summary> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </summary>

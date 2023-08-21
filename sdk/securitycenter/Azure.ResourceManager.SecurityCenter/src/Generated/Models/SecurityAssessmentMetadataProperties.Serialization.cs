@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAssessmentMetadataProperties : IUtf8JsonSerializable
+    public partial class SecurityAssessmentMetadataProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(RemediationDescription))
+            if (Core.Optional.IsDefined(RemediationDescription))
             {
                 writer.WritePropertyName("remediationDescription"u8);
                 writer.WriteStringValue(RemediationDescription);
             }
-            if (Optional.IsCollectionDefined(Categories))
+            if (Core.Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("severity"u8);
             writer.WriteStringValue(Severity.ToString());
-            if (Optional.IsDefined(UserImpact))
+            if (Core.Optional.IsDefined(UserImpact))
             {
                 writer.WritePropertyName("userImpact"u8);
                 writer.WriteStringValue(UserImpact.Value.ToString());
             }
-            if (Optional.IsDefined(ImplementationEffort))
+            if (Core.Optional.IsDefined(ImplementationEffort))
             {
                 writer.WritePropertyName("implementationEffort"u8);
                 writer.WriteStringValue(ImplementationEffort.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Threats))
+            if (Core.Optional.IsCollectionDefined(Threats))
             {
                 writer.WritePropertyName("threats"u8);
                 writer.WriteStartArray();
@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsPreview))
+            if (Core.Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("preview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
             writer.WritePropertyName("assessmentType"u8);
             writer.WriteStringValue(AssessmentType.ToString());
-            if (Optional.IsDefined(PartnerData))
+            if (Core.Optional.IsDefined(PartnerData))
             {
                 writer.WritePropertyName("partnerData"u8);
                 writer.WriteObjectValue(PartnerData);
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             string displayName = default;
-            Optional<ResourceIdentifier> policyDefinitionId = default;
-            Optional<string> description = default;
-            Optional<string> remediationDescription = default;
-            Optional<IList<SecurityAssessmentResourceCategory>> categories = default;
+            Core.Optional<ResourceIdentifier> policyDefinitionId = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> remediationDescription = default;
+            Core.Optional<IList<SecurityAssessmentResourceCategory>> categories = default;
             SecurityAssessmentSeverity severity = default;
-            Optional<SecurityAssessmentUserImpact> userImpact = default;
-            Optional<ImplementationEffort> implementationEffort = default;
-            Optional<IList<SecurityThreat>> threats = default;
-            Optional<bool> preview = default;
+            Core.Optional<SecurityAssessmentUserImpact> userImpact = default;
+            Core.Optional<ImplementationEffort> implementationEffort = default;
+            Core.Optional<IList<SecurityThreat>> threats = default;
+            Core.Optional<bool> preview = default;
             SecurityAssessmentType assessmentType = default;
-            Optional<SecurityAssessmentMetadataPartner> partnerData = default;
+            Core.Optional<SecurityAssessmentMetadataPartner> partnerData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecurityAssessmentMetadataProperties(displayName, policyDefinitionId.Value, description.Value, remediationDescription.Value, Optional.ToList(categories), severity, Optional.ToNullable(userImpact), Optional.ToNullable(implementationEffort), Optional.ToList(threats), Optional.ToNullable(preview), assessmentType, partnerData.Value);
+            return new SecurityAssessmentMetadataProperties(displayName, policyDefinitionId.Value, description.Value, remediationDescription.Value, Core.Optional.ToList(categories), severity, Core.Optional.ToNullable(userImpact), Core.Optional.ToNullable(implementationEffort), Core.Optional.ToList(threats), Core.Optional.ToNullable(preview), assessmentType, partnerData.Value);
         }
     }
 }

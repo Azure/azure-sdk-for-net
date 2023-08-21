@@ -14,17 +14,17 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class RestorableDroppedDatabaseData : IUtf8JsonSerializable
+    public partial class RestorableDroppedDatabaseData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Keys))
+            if (Core.Optional.IsCollectionDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartObject();
@@ -60,20 +60,20 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<SqlSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<SqlSku> sku = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> databaseName = default;
-            Optional<long> maxSizeBytes = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<DateTimeOffset> deletionDate = default;
-            Optional<DateTimeOffset> earliestRestoreDate = default;
-            Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
-            Optional<IDictionary<string, SqlDatabaseKey>> keys = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> databaseName = default;
+            Core.Optional<long> maxSizeBytes = default;
+            Core.Optional<DateTimeOffset> creationDate = default;
+            Core.Optional<DateTimeOffset> deletionDate = default;
+            Core.Optional<DateTimeOffset> earliestRestoreDate = default;
+            Core.Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
+            Core.Optional<IDictionary<string, SqlDatabaseKey>> keys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new RestorableDroppedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, databaseName.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(backupStorageRedundancy), Optional.ToDictionary(keys));
+            return new RestorableDroppedDatabaseData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, databaseName.Value, Core.Optional.ToNullable(maxSizeBytes), Core.Optional.ToNullable(creationDate), Core.Optional.ToNullable(deletionDate), Core.Optional.ToNullable(earliestRestoreDate), Core.Optional.ToNullable(backupStorageRedundancy), Core.Optional.ToDictionary(keys));
         }
     }
 }

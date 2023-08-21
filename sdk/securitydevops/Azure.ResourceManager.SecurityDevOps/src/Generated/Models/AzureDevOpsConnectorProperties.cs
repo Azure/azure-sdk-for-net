@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <summary> Initializes a new instance of AzureDevOpsConnectorProperties. </summary>
         public AzureDevOpsConnectorProperties()
         {
-            Orgs = new ChangeTrackingList<AzureDevOpsOrgMetadata>();
+            Orgs = new Core.ChangeTrackingList<AzureDevOpsOrgMetadata>();
         }
 
         /// <summary> Initializes a new instance of AzureDevOpsConnectorProperties. </summary>

@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class QueryStatistics : IUtf8JsonSerializable
+    public partial class QueryStatistics : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Intervals))
+            if (Core.Optional.IsCollectionDefined(Intervals))
             {
                 writer.WritePropertyName("intervals"u8);
                 writer.WriteStartArray();
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> databaseName = default;
-            Optional<string> queryId = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
-            Optional<IList<QueryMetricInterval>> intervals = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> databaseName = default;
+            Core.Optional<string> queryId = default;
+            Core.Optional<string> startTime = default;
+            Core.Optional<string> endTime = default;
+            Core.Optional<IList<QueryMetricInterval>> intervals = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new QueryStatistics(id, name, type, systemData.Value, databaseName.Value, queryId.Value, startTime.Value, endTime.Value, Optional.ToList(intervals));
+            return new QueryStatistics(id, name, type, systemData.Value, databaseName.Value, queryId.Value, startTime.Value, endTime.Value, Core.Optional.ToList(intervals));
         }
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecuritySubAssessmentAdditionalInfo : IUtf8JsonSerializable
+    public partial class SecuritySubAssessmentAdditionalInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("assessedResourceType"u8);

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    public partial class SphereDevicePatch : IUtf8JsonSerializable
+    public partial class SphereDevicePatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeviceGroupId))
+            if (Core.Optional.IsDefined(DeviceGroupId))
             {
                 writer.WritePropertyName("deviceGroupId"u8);
                 writer.WriteStringValue(DeviceGroupId);

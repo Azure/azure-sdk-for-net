@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of AsrTask. </summary>
         internal AsrTask()
         {
-            AllowedActions = new ChangeTrackingList<string>();
-            Errors = new ChangeTrackingList<SiteRecoveryJobErrorDetails>();
+            AllowedActions = new Core.ChangeTrackingList<string>();
+            Errors = new Core.ChangeTrackingList<SiteRecoveryJobErrorDetails>();
         }
 
         /// <summary> Initializes a new instance of AsrTask. </summary>

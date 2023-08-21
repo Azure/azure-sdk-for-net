@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Resources.Models
             Argument.AssertNotNull(policyDefinitionId, nameof(policyDefinitionId));
 
             PolicyDefinitionId = policyDefinitionId;
-            Parameters = new ChangeTrackingDictionary<string, ArmPolicyParameterValue>();
-            GroupNames = new ChangeTrackingList<string>();
+            Parameters = new Core.ChangeTrackingDictionary<string, ArmPolicyParameterValue>();
+            GroupNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PolicyDefinitionReference. </summary>

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class UaxUrlEmailTokenizer : IUtf8JsonSerializable
+    public partial class UaxUrlEmailTokenizer : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxTokenLength))
+            if (Core.Optional.IsDefined(MaxTokenLength))
             {
                 writer.WritePropertyName("maxTokenLength"u8);
                 writer.WriteNumberValue(MaxTokenLength.Value);
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<int> maxTokenLength = default;
+            Core.Optional<int> maxTokenLength = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new UaxUrlEmailTokenizer(odataType, name, Optional.ToNullable(maxTokenLength));
+            return new UaxUrlEmailTokenizer(odataType, name, Core.Optional.ToNullable(maxTokenLength));
         }
     }
 }

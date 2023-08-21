@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> eventType = default;
-            Optional<string> category = default;
-            Optional<string> component = default;
-            Optional<string> correctiveAction = default;
-            Optional<string> details = default;
-            Optional<string> summary = default;
-            Optional<string> siteName = default;
+            Core.Optional<string> eventType = default;
+            Core.Optional<string> category = default;
+            Core.Optional<string> component = default;
+            Core.Optional<string> correctiveAction = default;
+            Core.Optional<string> details = default;
+            Core.Optional<string> summary = default;
+            Core.Optional<string> siteName = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class TIDataConnectorDataTypes : IUtf8JsonSerializable
+    internal partial class TIDataConnectorDataTypes : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Indicators))
+            if (Core.Optional.IsDefined(Indicators))
             {
                 writer.WritePropertyName("indicators"u8);
                 writer.WriteObjectValue(Indicators);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<TIDataConnectorDataTypesIndicators> indicators = default;
+            Core.Optional<TIDataConnectorDataTypesIndicators> indicators = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("indicators"u8))

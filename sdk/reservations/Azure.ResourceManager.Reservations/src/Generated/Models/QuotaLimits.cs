@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of QuotaLimits. </summary>
         internal QuotaLimits()
         {
-            Value = new ChangeTrackingList<ReservationQuotaData>();
+            Value = new Core.ChangeTrackingList<ReservationQuotaData>();
         }
 
         /// <summary> Initializes a new instance of QuotaLimits. </summary>

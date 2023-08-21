@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AProtectionIntentDiskDetails : IUtf8JsonSerializable
+    public partial class A2AProtectionIntentDiskDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("diskUri"u8);
             writer.WriteStringValue(DiskUri.AbsoluteUri);
-            if (Optional.IsDefined(RecoveryAzureStorageAccountCustomContent))
+            if (Core.Optional.IsDefined(RecoveryAzureStorageAccountCustomContent))
             {
                 writer.WritePropertyName("recoveryAzureStorageAccountCustomInput"u8);
                 writer.WriteObjectValue(RecoveryAzureStorageAccountCustomContent);
             }
-            if (Optional.IsDefined(PrimaryStagingStorageAccountCustomContent))
+            if (Core.Optional.IsDefined(PrimaryStagingStorageAccountCustomContent))
             {
                 writer.WritePropertyName("primaryStagingStorageAccountCustomInput"u8);
                 writer.WriteObjectValue(PrimaryStagingStorageAccountCustomContent);
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Uri diskUri = default;
-            Optional<StorageAccountCustomDetails> recoveryAzureStorageAccountCustomContent = default;
-            Optional<StorageAccountCustomDetails> primaryStagingStorageAccountCustomContent = default;
+            Core.Optional<StorageAccountCustomDetails> recoveryAzureStorageAccountCustomContent = default;
+            Core.Optional<StorageAccountCustomDetails> primaryStagingStorageAccountCustomContent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskUri"u8))

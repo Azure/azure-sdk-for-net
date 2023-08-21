@@ -13,14 +13,14 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class IotSecuritySolutionAnalyticsModelData : IUtf8JsonSerializable
+    public partial class IotSecuritySolutionAnalyticsModelData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TopAlertedDevices))
+            if (Core.Optional.IsCollectionDefined(TopAlertedDevices))
             {
                 writer.WritePropertyName("topAlertedDevices"u8);
                 writer.WriteStartArray();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MostPrevalentDeviceAlerts))
+            if (Core.Optional.IsCollectionDefined(MostPrevalentDeviceAlerts))
             {
                 writer.WritePropertyName("mostPrevalentDeviceAlerts"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MostPrevalentDeviceRecommendations))
+            if (Core.Optional.IsCollectionDefined(MostPrevalentDeviceRecommendations))
             {
                 writer.WritePropertyName("mostPrevalentDeviceRecommendations"u8);
                 writer.WriteStartArray();
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IotSeverityMetrics> metrics = default;
-            Optional<long> unhealthyDeviceCount = default;
-            Optional<IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics>> devicesMetrics = default;
-            Optional<IList<IotSecurityAlertedDevice>> topAlertedDevices = default;
-            Optional<IList<IotSecurityDeviceAlert>> mostPrevalentDeviceAlerts = default;
-            Optional<IList<IotSecurityDeviceRecommendation>> mostPrevalentDeviceRecommendations = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IotSeverityMetrics> metrics = default;
+            Core.Optional<long> unhealthyDeviceCount = default;
+            Core.Optional<IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics>> devicesMetrics = default;
+            Core.Optional<IList<IotSecurityAlertedDevice>> topAlertedDevices = default;
+            Core.Optional<IList<IotSecurityDeviceAlert>> mostPrevalentDeviceAlerts = default;
+            Core.Optional<IList<IotSecurityDeviceRecommendation>> mostPrevalentDeviceRecommendations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new IotSecuritySolutionAnalyticsModelData(id, name, type, systemData.Value, metrics.Value, Optional.ToNullable(unhealthyDeviceCount), Optional.ToList(devicesMetrics), Optional.ToList(topAlertedDevices), Optional.ToList(mostPrevalentDeviceAlerts), Optional.ToList(mostPrevalentDeviceRecommendations));
+            return new IotSecuritySolutionAnalyticsModelData(id, name, type, systemData.Value, metrics.Value, Core.Optional.ToNullable(unhealthyDeviceCount), Core.Optional.ToList(devicesMetrics), Core.Optional.ToList(topAlertedDevices), Core.Optional.ToList(mostPrevalentDeviceAlerts), Core.Optional.ToList(mostPrevalentDeviceRecommendations));
         }
     }
 }

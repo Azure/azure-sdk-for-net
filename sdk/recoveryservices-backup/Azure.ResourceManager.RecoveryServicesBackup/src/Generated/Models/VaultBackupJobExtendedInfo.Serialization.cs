@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    internal partial class VaultBackupJobExtendedInfo : IUtf8JsonSerializable
+    internal partial class VaultBackupJobExtendedInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PropertyBag))
+            if (Core.Optional.IsCollectionDefined(PropertyBag))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> propertyBag = default;
+            Core.Optional<IDictionary<string, string>> propertyBag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("propertyBag"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new VaultBackupJobExtendedInfo(Optional.ToDictionary(propertyBag));
+            return new VaultBackupJobExtendedInfo(Core.Optional.ToDictionary(propertyBag));
         }
     }
 }

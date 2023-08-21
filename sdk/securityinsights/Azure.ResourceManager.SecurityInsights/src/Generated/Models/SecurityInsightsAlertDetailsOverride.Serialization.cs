@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAlertDetailsOverride : IUtf8JsonSerializable
+    public partial class SecurityInsightsAlertDetailsOverride : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlertDisplayNameFormat))
+            if (Core.Optional.IsDefined(AlertDisplayNameFormat))
             {
                 writer.WritePropertyName("alertDisplayNameFormat"u8);
                 writer.WriteStringValue(AlertDisplayNameFormat);
             }
-            if (Optional.IsDefined(AlertDescriptionFormat))
+            if (Core.Optional.IsDefined(AlertDescriptionFormat))
             {
                 writer.WritePropertyName("alertDescriptionFormat"u8);
                 writer.WriteStringValue(AlertDescriptionFormat);
             }
-            if (Optional.IsDefined(AlertTacticsColumnName))
+            if (Core.Optional.IsDefined(AlertTacticsColumnName))
             {
                 writer.WritePropertyName("alertTacticsColumnName"u8);
                 writer.WriteStringValue(AlertTacticsColumnName);
             }
-            if (Optional.IsDefined(AlertSeverityColumnName))
+            if (Core.Optional.IsDefined(AlertSeverityColumnName))
             {
                 writer.WritePropertyName("alertSeverityColumnName"u8);
                 writer.WriteStringValue(AlertSeverityColumnName);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> alertDisplayNameFormat = default;
-            Optional<string> alertDescriptionFormat = default;
-            Optional<string> alertTacticsColumnName = default;
-            Optional<string> alertSeverityColumnName = default;
+            Core.Optional<string> alertDisplayNameFormat = default;
+            Core.Optional<string> alertDescriptionFormat = default;
+            Core.Optional<string> alertTacticsColumnName = default;
+            Core.Optional<string> alertSeverityColumnName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertDisplayNameFormat"u8))

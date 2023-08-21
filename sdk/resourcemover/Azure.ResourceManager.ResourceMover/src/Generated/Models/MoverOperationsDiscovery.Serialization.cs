@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> isDataAction = default;
-            Optional<MoverDisplayInfo> display = default;
-            Optional<string> origin = default;
-            Optional<BinaryData> properties = default;
+            Core.Optional<string> name = default;
+            Core.Optional<bool> isDataAction = default;
+            Core.Optional<MoverDisplayInfo> display = default;
+            Core.Optional<string> origin = default;
+            Core.Optional<BinaryData> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverOperationsDiscovery(name.Value, Optional.ToNullable(isDataAction), display.Value, origin.Value, properties.Value);
+            return new MoverOperationsDiscovery(name.Value, Core.Optional.ToNullable(isDataAction), display.Value, origin.Value, properties.Value);
         }
     }
 }

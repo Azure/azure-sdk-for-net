@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AutomationRuleRunPlaybookActionProperties : IUtf8JsonSerializable
+    public partial class AutomationRuleRunPlaybookActionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("logicAppResourceId"u8);
             writer.WriteStringValue(LogicAppResourceId);
-            if (Optional.IsDefined(TenantId))
+            if (Core.Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             ResourceIdentifier logicAppResourceId = default;
-            Optional<Guid> tenantId = default;
+            Core.Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logicAppResourceId"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new AutomationRuleRunPlaybookActionProperties(logicAppResourceId, Optional.ToNullable(tenantId));
+            return new AutomationRuleRunPlaybookActionProperties(logicAppResourceId, Core.Optional.ToNullable(tenantId));
         }
     }
 }

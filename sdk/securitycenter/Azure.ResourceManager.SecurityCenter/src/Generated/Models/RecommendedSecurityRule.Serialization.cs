@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class RecommendedSecurityRule : IUtf8JsonSerializable
+    public partial class RecommendedSecurityRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Direction))
+            if (Core.Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (Optional.IsDefined(DestinationPort))
+            if (Core.Optional.IsDefined(DestinationPort))
             {
                 writer.WritePropertyName("destinationPort"u8);
                 writer.WriteNumberValue(DestinationPort.Value);
             }
-            if (Optional.IsCollectionDefined(Protocols))
+            if (Core.Optional.IsCollectionDefined(Protocols))
             {
                 writer.WritePropertyName("protocols"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPAddresses))
+            if (Core.Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<SecurityTrafficDirection> direction = default;
-            Optional<int> destinationPort = default;
-            Optional<IList<SecurityTransportProtocol>> protocols = default;
-            Optional<IList<string>> ipAddresses = default;
+            Core.Optional<string> name = default;
+            Core.Optional<SecurityTrafficDirection> direction = default;
+            Core.Optional<int> destinationPort = default;
+            Core.Optional<IList<SecurityTransportProtocol>> protocols = default;
+            Core.Optional<IList<string>> ipAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new RecommendedSecurityRule(name.Value, Optional.ToNullable(direction), Optional.ToNullable(destinationPort), Optional.ToList(protocols), Optional.ToList(ipAddresses));
+            return new RecommendedSecurityRule(name.Value, Core.Optional.ToNullable(direction), Core.Optional.ToNullable(destinationPort), Core.Optional.ToList(protocols), Core.Optional.ToList(ipAddresses));
         }
     }
 }

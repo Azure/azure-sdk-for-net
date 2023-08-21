@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Initializes a new instance of RedisFirewallRuleListResult. </summary>
         internal RedisFirewallRuleListResult()
         {
-            Value = new ChangeTrackingList<RedisFirewallRuleData>();
+            Value = new Core.ChangeTrackingList<RedisFirewallRuleData>();
         }
 
         /// <summary> Initializes a new instance of RedisFirewallRuleListResult. </summary>

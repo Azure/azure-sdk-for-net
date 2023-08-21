@@ -10,69 +10,69 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmWorkloadSapAseSystemProtectableItem : IUtf8JsonSerializable
+    public partial class VmWorkloadSapAseSystemProtectableItem : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ParentName))
+            if (Core.Optional.IsDefined(ParentName))
             {
                 writer.WritePropertyName("parentName"u8);
                 writer.WriteStringValue(ParentName);
             }
-            if (Optional.IsDefined(ParentUniqueName))
+            if (Core.Optional.IsDefined(ParentUniqueName))
             {
                 writer.WritePropertyName("parentUniqueName"u8);
                 writer.WriteStringValue(ParentUniqueName);
             }
-            if (Optional.IsDefined(ServerName))
+            if (Core.Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (Optional.IsDefined(IsAutoProtectable))
+            if (Core.Optional.IsDefined(IsAutoProtectable))
             {
                 writer.WritePropertyName("isAutoProtectable"u8);
                 writer.WriteBooleanValue(IsAutoProtectable.Value);
             }
-            if (Optional.IsDefined(IsAutoProtected))
+            if (Core.Optional.IsDefined(IsAutoProtected))
             {
                 writer.WritePropertyName("isAutoProtected"u8);
                 writer.WriteBooleanValue(IsAutoProtected.Value);
             }
-            if (Optional.IsDefined(SubInquiredItemCount))
+            if (Core.Optional.IsDefined(SubInquiredItemCount))
             {
                 writer.WritePropertyName("subinquireditemcount"u8);
                 writer.WriteNumberValue(SubInquiredItemCount.Value);
             }
-            if (Optional.IsDefined(SubProtectableItemCount))
+            if (Core.Optional.IsDefined(SubProtectableItemCount))
             {
                 writer.WritePropertyName("subprotectableitemcount"u8);
                 writer.WriteNumberValue(SubProtectableItemCount.Value);
             }
-            if (Optional.IsDefined(PreBackupValidation))
+            if (Core.Optional.IsDefined(PreBackupValidation))
             {
                 writer.WritePropertyName("prebackupvalidation"u8);
                 writer.WriteObjectValue(PreBackupValidation);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (Core.Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
-            if (Optional.IsDefined(WorkloadType))
+            if (Core.Optional.IsDefined(WorkloadType))
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
             writer.WritePropertyName("protectableItemType"u8);
             writer.WriteStringValue(ProtectableItemType);
-            if (Optional.IsDefined(FriendlyName))
+            if (Core.Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ProtectionState))
+            if (Core.Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
@@ -86,19 +86,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> parentName = default;
-            Optional<string> parentUniqueName = default;
-            Optional<string> serverName = default;
-            Optional<bool> isAutoProtectable = default;
-            Optional<bool> isAutoProtected = default;
-            Optional<int> subinquireditemcount = default;
-            Optional<int> subprotectableitemcount = default;
-            Optional<PreBackupValidation> prebackupvalidation = default;
-            Optional<string> backupManagementType = default;
-            Optional<string> workloadType = default;
+            Core.Optional<string> parentName = default;
+            Core.Optional<string> parentUniqueName = default;
+            Core.Optional<string> serverName = default;
+            Core.Optional<bool> isAutoProtectable = default;
+            Core.Optional<bool> isAutoProtected = default;
+            Core.Optional<int> subinquireditemcount = default;
+            Core.Optional<int> subprotectableitemcount = default;
+            Core.Optional<PreBackupValidation> prebackupvalidation = default;
+            Core.Optional<string> backupManagementType = default;
+            Core.Optional<string> workloadType = default;
             string protectableItemType = default;
-            Optional<string> friendlyName = default;
-            Optional<BackupProtectionStatus> protectionState = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<BackupProtectionStatus> protectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parentName"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new VmWorkloadSapAseSystemProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState), parentName.Value, parentUniqueName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(isAutoProtected), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subprotectableitemcount), prebackupvalidation.Value);
+            return new VmWorkloadSapAseSystemProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Core.Optional.ToNullable(protectionState), parentName.Value, parentUniqueName.Value, serverName.Value, Core.Optional.ToNullable(isAutoProtectable), Core.Optional.ToNullable(isAutoProtected), Core.Optional.ToNullable(subinquireditemcount), Core.Optional.ToNullable(subprotectableitemcount), prebackupvalidation.Value);
         }
     }
 }

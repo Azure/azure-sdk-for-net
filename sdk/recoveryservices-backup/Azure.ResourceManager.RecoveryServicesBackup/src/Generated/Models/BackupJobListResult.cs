@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of BackupJobListResult. </summary>
         internal BackupJobListResult()
         {
-            Value = new ChangeTrackingList<BackupJobData>();
+            Value = new Core.ChangeTrackingList<BackupJobData>();
         }
 
         /// <summary> Initializes a new instance of BackupJobListResult. </summary>

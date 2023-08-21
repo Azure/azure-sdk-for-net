@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of ReservationDetailPatch. </summary>
         public ReservationDetailPatch()
         {
-            AppliedScopes = new ChangeTrackingList<string>();
+            AppliedScopes = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Type of the Applied Scope. </summary>

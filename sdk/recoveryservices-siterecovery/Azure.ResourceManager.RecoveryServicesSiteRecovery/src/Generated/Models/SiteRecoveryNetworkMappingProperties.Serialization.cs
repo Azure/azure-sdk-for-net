@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> state = default;
-            Optional<string> primaryNetworkFriendlyName = default;
-            Optional<ResourceIdentifier> primaryNetworkId = default;
-            Optional<string> primaryFabricFriendlyName = default;
-            Optional<string> recoveryNetworkFriendlyName = default;
-            Optional<ResourceIdentifier> recoveryNetworkId = default;
-            Optional<ResourceIdentifier> recoveryFabricArmId = default;
-            Optional<string> recoveryFabricFriendlyName = default;
-            Optional<NetworkMappingFabricSpecificSettings> fabricSpecificSettings = default;
+            Core.Optional<string> state = default;
+            Core.Optional<string> primaryNetworkFriendlyName = default;
+            Core.Optional<ResourceIdentifier> primaryNetworkId = default;
+            Core.Optional<string> primaryFabricFriendlyName = default;
+            Core.Optional<string> recoveryNetworkFriendlyName = default;
+            Core.Optional<ResourceIdentifier> recoveryNetworkId = default;
+            Core.Optional<ResourceIdentifier> recoveryFabricArmId = default;
+            Core.Optional<string> recoveryFabricFriendlyName = default;
+            Core.Optional<NetworkMappingFabricSpecificSettings> fabricSpecificSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))

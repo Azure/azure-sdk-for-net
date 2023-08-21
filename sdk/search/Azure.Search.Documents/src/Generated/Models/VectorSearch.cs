@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of VectorSearch. </summary>
         public VectorSearch()
         {
-            AlgorithmConfigurations = new ChangeTrackingList<VectorSearchAlgorithmConfiguration>();
+            AlgorithmConfigurations = new Core.ChangeTrackingList<VectorSearchAlgorithmConfiguration>();
         }
 
         /// <summary> Initializes a new instance of VectorSearch. </summary>

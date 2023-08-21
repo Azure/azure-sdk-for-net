@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
-    public partial class QumuloUserDetails : IUtf8JsonSerializable
+    public partial class QumuloUserDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Email))
+            if (Core.Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             {
                 return null;
             }
-            Optional<string> email = default;
+            Core.Optional<string> email = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("email"u8))

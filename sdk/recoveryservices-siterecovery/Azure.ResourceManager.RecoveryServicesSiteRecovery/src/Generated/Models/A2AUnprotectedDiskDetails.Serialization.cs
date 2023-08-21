@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> diskLunId = default;
-            Optional<AutoProtectionOfDataDisk> diskAutoProtectionStatus = default;
+            Core.Optional<int> diskLunId = default;
+            Core.Optional<AutoProtectionOfDataDisk> diskAutoProtectionStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskLunId"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new A2AUnprotectedDiskDetails(Optional.ToNullable(diskLunId), Optional.ToNullable(diskAutoProtectionStatus));
+            return new A2AUnprotectedDiskDetails(Core.Optional.ToNullable(diskLunId), Core.Optional.ToNullable(diskAutoProtectionStatus));
         }
     }
 }

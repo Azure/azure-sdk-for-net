@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            TokenChars = new ChangeTrackingList<TokenCharacterKind>();
+            TokenChars = new Core.ChangeTrackingList<TokenCharacterKind>();
             ODataType = "#Microsoft.Azure.Search.EdgeNGramTokenizer";
         }
 

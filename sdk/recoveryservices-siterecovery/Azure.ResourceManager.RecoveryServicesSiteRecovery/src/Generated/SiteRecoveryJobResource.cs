@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _siteRecoveryJobReplicationJobsRestClient.CancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _siteRecoveryJobReplicationJobsRestClient.Cancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _siteRecoveryJobReplicationJobsRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _siteRecoveryJobReplicationJobsRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _siteRecoveryJobReplicationJobsRestClient.ResumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _siteRecoveryJobReplicationJobsRestClient.Resume(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _siteRecoveryJobReplicationJobsRestClient.ExportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _siteRecoveryJobReplicationJobsRestClient.Export(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

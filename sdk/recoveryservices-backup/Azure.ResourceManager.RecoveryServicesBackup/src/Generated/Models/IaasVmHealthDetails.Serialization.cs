@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmHealthDetails : IUtf8JsonSerializable
+    public partial class IaasVmHealthDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> code = default;
-            Optional<string> title = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<string>> recommendations = default;
+            Core.Optional<int> code = default;
+            Core.Optional<string> title = default;
+            Core.Optional<string> message = default;
+            Core.Optional<IReadOnlyList<string>> recommendations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new IaasVmHealthDetails(Optional.ToNullable(code), title.Value, message.Value, Optional.ToList(recommendations));
+            return new IaasVmHealthDetails(Core.Optional.ToNullable(code), title.Value, message.Value, Core.Optional.ToList(recommendations));
         }
     }
 }

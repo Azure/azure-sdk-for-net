@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sphere
             try
             {
                 var response = await _sphereDeviceDevicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SphereArmOperation<SphereDeviceResource>(new SphereDeviceOperationSource(Client), _sphereDeviceDevicesClientDiagnostics, Pipeline, _sphereDeviceDevicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SphereArmOperation<SphereDeviceResource>(new SphereDeviceOperationSource(Client), _sphereDeviceDevicesClientDiagnostics, Pipeline, _sphereDeviceDevicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sphere
             try
             {
                 var response = _sphereDeviceDevicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, data, cancellationToken);
-                var operation = new SphereArmOperation<SphereDeviceResource>(new SphereDeviceOperationSource(Client), _sphereDeviceDevicesClientDiagnostics, Pipeline, _sphereDeviceDevicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SphereArmOperation<SphereDeviceResource>(new SphereDeviceOperationSource(Client), _sphereDeviceDevicesClientDiagnostics, Pipeline, _sphereDeviceDevicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereDeviceDevicesRestClient.CreateListByDeviceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereDeviceDevicesRestClient.CreateListByDeviceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceResource(Client, SphereDeviceData.DeserializeSphereDeviceData(e)), _sphereDeviceDevicesClientDiagnostics, Pipeline, "SphereDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceResource(Client, SphereDeviceData.DeserializeSphereDeviceData(e)), _sphereDeviceDevicesClientDiagnostics, Pipeline, "SphereDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereDeviceDevicesRestClient.CreateListByDeviceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereDeviceDevicesRestClient.CreateListByDeviceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceResource(Client, SphereDeviceData.DeserializeSphereDeviceData(e)), _sphereDeviceDevicesClientDiagnostics, Pipeline, "SphereDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceResource(Client, SphereDeviceData.DeserializeSphereDeviceData(e)), _sphereDeviceDevicesClientDiagnostics, Pipeline, "SphereDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

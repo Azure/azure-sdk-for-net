@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of GcpParentOrganizationalInfo. </summary>
         public GcpParentOrganizationalInfo()
         {
-            ExcludedProjectNumbers = new ChangeTrackingList<string>();
+            ExcludedProjectNumbers = new Core.ChangeTrackingList<string>();
             OrganizationMembershipType = OrganizationMembershipType.Organization;
         }
 

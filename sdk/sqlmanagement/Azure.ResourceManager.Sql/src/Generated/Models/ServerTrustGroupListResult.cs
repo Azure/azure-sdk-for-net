@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerTrustGroupListResult. </summary>
         internal ServerTrustGroupListResult()
         {
-            Value = new ChangeTrackingList<SqlServerTrustGroupData>();
+            Value = new Core.ChangeTrackingList<SqlServerTrustGroupData>();
         }
 
         /// <summary> Initializes a new instance of ServerTrustGroupListResult. </summary>

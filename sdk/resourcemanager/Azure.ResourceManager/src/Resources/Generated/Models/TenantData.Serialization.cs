@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<Guid> tenantId = default;
-            Optional<TenantCategory> tenantCategory = default;
-            Optional<string> country = default;
-            Optional<string> countryCode = default;
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> domains = default;
-            Optional<string> defaultDomain = default;
-            Optional<string> tenantType = default;
-            Optional<Uri> tenantBrandingLogoUrl = default;
+            Core.Optional<string> id = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<TenantCategory> tenantCategory = default;
+            Core.Optional<string> country = default;
+            Core.Optional<string> countryCode = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<IReadOnlyList<string>> domains = default;
+            Core.Optional<string> defaultDomain = default;
+            Core.Optional<string> tenantType = default;
+            Core.Optional<Uri> tenantBrandingLogoUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new TenantData(id.Value, Optional.ToNullable(tenantId), Optional.ToNullable(tenantCategory), country.Value, countryCode.Value, displayName.Value, Optional.ToList(domains), defaultDomain.Value, tenantType.Value, tenantBrandingLogoUrl.Value);
+            return new TenantData(id.Value, Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(tenantCategory), country.Value, countryCode.Value, displayName.Value, Core.Optional.ToList(domains), defaultDomain.Value, tenantType.Value, tenantBrandingLogoUrl.Value);
         }
     }
 }

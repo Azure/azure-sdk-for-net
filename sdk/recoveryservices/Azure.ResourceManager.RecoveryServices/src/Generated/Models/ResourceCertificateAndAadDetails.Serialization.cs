@@ -24,17 +24,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             string servicePrincipalClientId = default;
             string servicePrincipalObjectId = default;
             string azureManagementEndpointAudience = default;
-            Optional<ResourceIdentifier> serviceResourceId = default;
-            Optional<string> aadAudience = default;
+            Core.Optional<ResourceIdentifier> serviceResourceId = default;
+            Core.Optional<string> aadAudience = default;
             string authType = default;
-            Optional<byte[]> certificate = default;
-            Optional<string> friendlyName = default;
-            Optional<string> issuer = default;
-            Optional<long> resourceId = default;
-            Optional<string> subject = default;
-            Optional<BinaryData> thumbprint = default;
-            Optional<DateTimeOffset> validFrom = default;
-            Optional<DateTimeOffset> validTo = default;
+            Core.Optional<byte[]> certificate = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<string> issuer = default;
+            Core.Optional<long> resourceId = default;
+            Core.Optional<string> subject = default;
+            Core.Optional<BinaryData> thumbprint = default;
+            Core.Optional<DateTimeOffset> validFrom = default;
+            Core.Optional<DateTimeOffset> validTo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aadAuthority"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new ResourceCertificateAndAadDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Optional.ToNullable(validFrom), Optional.ToNullable(validTo), aadAuthority, aadTenantId, servicePrincipalClientId, servicePrincipalObjectId, azureManagementEndpointAudience, serviceResourceId.Value, aadAudience.Value);
+            return new ResourceCertificateAndAadDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Core.Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Core.Optional.ToNullable(validFrom), Core.Optional.ToNullable(validTo), aadAuthority, aadTenantId, servicePrincipalClientId, servicePrincipalObjectId, azureManagementEndpointAudience, serviceResourceId.Value, aadAudience.Value);
         }
     }
 }

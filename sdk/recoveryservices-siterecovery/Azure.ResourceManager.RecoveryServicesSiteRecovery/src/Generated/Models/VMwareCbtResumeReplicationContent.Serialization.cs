@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareCbtResumeReplicationContent : IUtf8JsonSerializable
+    public partial class VMwareCbtResumeReplicationContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeleteMigrationResources))
+            if (Core.Optional.IsDefined(DeleteMigrationResources))
             {
                 writer.WritePropertyName("deleteMigrationResources"u8);
                 writer.WriteStringValue(DeleteMigrationResources);

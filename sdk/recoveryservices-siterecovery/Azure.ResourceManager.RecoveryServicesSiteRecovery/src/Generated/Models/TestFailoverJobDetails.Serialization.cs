@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> testFailoverStatus = default;
-            Optional<string> comments = default;
-            Optional<string> networkName = default;
-            Optional<string> networkFriendlyName = default;
-            Optional<string> networkType = default;
-            Optional<IReadOnlyList<FailoverReplicationProtectedItemDetails>> protectedItemDetails = default;
+            Core.Optional<string> testFailoverStatus = default;
+            Core.Optional<string> comments = default;
+            Core.Optional<string> networkName = default;
+            Core.Optional<string> networkFriendlyName = default;
+            Core.Optional<string> networkType = default;
+            Core.Optional<IReadOnlyList<FailoverReplicationProtectedItemDetails>> protectedItemDetails = default;
             string instanceType = default;
-            Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("testFailoverStatus"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new TestFailoverJobDetails(instanceType, Optional.ToDictionary(affectedObjectDetails), testFailoverStatus.Value, comments.Value, networkName.Value, networkFriendlyName.Value, networkType.Value, Optional.ToList(protectedItemDetails));
+            return new TestFailoverJobDetails(instanceType, Core.Optional.ToDictionary(affectedObjectDetails), testFailoverStatus.Value, comments.Value, networkName.Value, networkFriendlyName.Value, networkType.Value, Core.Optional.ToList(protectedItemDetails));
         }
     }
 }

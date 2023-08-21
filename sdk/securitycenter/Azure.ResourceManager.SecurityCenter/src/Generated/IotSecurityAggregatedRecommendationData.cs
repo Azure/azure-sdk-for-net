@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of IotSecurityAggregatedRecommendationData. </summary>
         public IotSecurityAggregatedRecommendationData()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of IotSecurityAggregatedRecommendationData. </summary>

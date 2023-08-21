@@ -10,57 +10,57 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class NetworkSecurityGroupSecurityRule : IUtf8JsonSerializable
+    public partial class NetworkSecurityGroupSecurityRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Access))
+            if (Core.Optional.IsDefined(Access))
             {
                 writer.WritePropertyName("access"u8);
                 writer.WriteStringValue(Access);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DestinationAddressPrefix))
+            if (Core.Optional.IsDefined(DestinationAddressPrefix))
             {
                 writer.WritePropertyName("destinationAddressPrefix"u8);
                 writer.WriteStringValue(DestinationAddressPrefix);
             }
-            if (Optional.IsDefined(DestinationPortRange))
+            if (Core.Optional.IsDefined(DestinationPortRange))
             {
                 writer.WritePropertyName("destinationPortRange"u8);
                 writer.WriteStringValue(DestinationPortRange);
             }
-            if (Optional.IsDefined(Direction))
+            if (Core.Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction);
             }
-            if (Optional.IsDefined(Priority))
+            if (Core.Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Core.Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
             }
-            if (Optional.IsDefined(SourceAddressPrefix))
+            if (Core.Optional.IsDefined(SourceAddressPrefix))
             {
                 writer.WritePropertyName("sourceAddressPrefix"u8);
                 writer.WriteStringValue(SourceAddressPrefix);
             }
-            if (Optional.IsDefined(SourcePortRange))
+            if (Core.Optional.IsDefined(SourcePortRange))
             {
                 writer.WritePropertyName("sourcePortRange"u8);
                 writer.WriteStringValue(SourcePortRange);
@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> access = default;
-            Optional<string> description = default;
-            Optional<string> destinationAddressPrefix = default;
-            Optional<string> destinationPortRange = default;
-            Optional<string> direction = default;
-            Optional<int> priority = default;
-            Optional<string> protocol = default;
-            Optional<string> sourceAddressPrefix = default;
-            Optional<string> sourcePortRange = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> access = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> destinationAddressPrefix = default;
+            Core.Optional<string> destinationPortRange = default;
+            Core.Optional<string> direction = default;
+            Core.Optional<int> priority = default;
+            Core.Optional<string> protocol = default;
+            Core.Optional<string> sourceAddressPrefix = default;
+            Core.Optional<string> sourcePortRange = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new NetworkSecurityGroupSecurityRule(name.Value, access.Value, description.Value, destinationAddressPrefix.Value, destinationPortRange.Value, direction.Value, Optional.ToNullable(priority), protocol.Value, sourceAddressPrefix.Value, sourcePortRange.Value);
+            return new NetworkSecurityGroupSecurityRule(name.Value, access.Value, description.Value, destinationAddressPrefix.Value, destinationPortRange.Value, direction.Value, Core.Optional.ToNullable(priority), protocol.Value, sourceAddressPrefix.Value, sourcePortRange.Value);
         }
     }
 }

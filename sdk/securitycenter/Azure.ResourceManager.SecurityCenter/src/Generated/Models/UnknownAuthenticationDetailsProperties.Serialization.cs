@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class UnknownAuthenticationDetailsProperties : IUtf8JsonSerializable
+    internal partial class UnknownAuthenticationDetailsProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("authenticationType"u8);
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
-            Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
+            Core.Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
+            Core.Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
             AuthenticationType authenticationType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new UnknownAuthenticationDetailsProperties(Optional.ToNullable(authenticationProvisioningState), Optional.ToList(grantedPermissions), authenticationType);
+            return new UnknownAuthenticationDetailsProperties(Core.Optional.ToNullable(authenticationProvisioningState), Core.Optional.ToList(grantedPermissions), authenticationType);
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class ExecuteGovernanceRuleParams : IUtf8JsonSerializable
+    public partial class ExecuteGovernanceRuleParams : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Override))
+            if (Core.Optional.IsDefined(Override))
             {
                 writer.WritePropertyName("override"u8);
                 writer.WriteBooleanValue(Override.Value);

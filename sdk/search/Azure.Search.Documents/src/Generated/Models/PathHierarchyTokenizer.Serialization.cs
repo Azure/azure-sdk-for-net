@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class PathHierarchyTokenizer : IUtf8JsonSerializable
+    public partial class PathHierarchyTokenizer : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Delimiter))
+            if (Core.Optional.IsDefined(Delimiter))
             {
                 writer.WritePropertyName("delimiter"u8);
                 writer.WriteStringValue(Delimiter.Value);
             }
-            if (Optional.IsDefined(Replacement))
+            if (Core.Optional.IsDefined(Replacement))
             {
                 writer.WritePropertyName("replacement"u8);
                 writer.WriteStringValue(Replacement.Value);
             }
-            if (Optional.IsDefined(MaxTokenLength))
+            if (Core.Optional.IsDefined(MaxTokenLength))
             {
                 writer.WritePropertyName("maxTokenLength"u8);
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
-            if (Optional.IsDefined(ReverseTokenOrder))
+            if (Core.Optional.IsDefined(ReverseTokenOrder))
             {
                 writer.WritePropertyName("reverse"u8);
                 writer.WriteBooleanValue(ReverseTokenOrder.Value);
             }
-            if (Optional.IsDefined(NumberOfTokensToSkip))
+            if (Core.Optional.IsDefined(NumberOfTokensToSkip))
             {
                 writer.WritePropertyName("skip"u8);
                 writer.WriteNumberValue(NumberOfTokensToSkip.Value);
@@ -53,11 +53,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<char> delimiter = default;
-            Optional<char> replacement = default;
-            Optional<int> maxTokenLength = default;
-            Optional<bool> reverse = default;
-            Optional<int> skip = default;
+            Core.Optional<char> delimiter = default;
+            Core.Optional<char> replacement = default;
+            Core.Optional<int> maxTokenLength = default;
+            Core.Optional<bool> reverse = default;
+            Core.Optional<int> skip = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PathHierarchyTokenizer(odataType, name, Optional.ToNullable(delimiter), Optional.ToNullable(replacement), Optional.ToNullable(maxTokenLength), Optional.ToNullable(reverse), Optional.ToNullable(skip));
+            return new PathHierarchyTokenizer(odataType, name, Core.Optional.ToNullable(delimiter), Core.Optional.ToNullable(replacement), Core.Optional.ToNullable(maxTokenLength), Core.Optional.ToNullable(reverse), Core.Optional.ToNullable(skip));
         }
     }
 }

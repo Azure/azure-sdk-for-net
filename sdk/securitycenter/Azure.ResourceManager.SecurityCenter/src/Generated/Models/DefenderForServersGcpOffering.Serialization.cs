@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForServersGcpOffering : IUtf8JsonSerializable
+    public partial class DefenderForServersGcpOffering : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefenderForServers))
+            if (Core.Optional.IsDefined(DefenderForServers))
             {
                 writer.WritePropertyName("defenderForServers"u8);
                 writer.WriteObjectValue(DefenderForServers);
             }
-            if (Optional.IsDefined(ArcAutoProvisioning))
+            if (Core.Optional.IsDefined(ArcAutoProvisioning))
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
                 writer.WriteObjectValue(ArcAutoProvisioning);
             }
-            if (Optional.IsDefined(VulnerabilityAssessmentAutoProvisioning))
+            if (Core.Optional.IsDefined(VulnerabilityAssessmentAutoProvisioning))
             {
                 writer.WritePropertyName("vaAutoProvisioning"u8);
                 writer.WriteObjectValue(VulnerabilityAssessmentAutoProvisioning);
             }
-            if (Optional.IsDefined(MdeAutoProvisioning))
+            if (Core.Optional.IsDefined(MdeAutoProvisioning))
             {
                 writer.WritePropertyName("mdeAutoProvisioning"u8);
                 writer.WriteObjectValue(MdeAutoProvisioning);
             }
-            if (Optional.IsDefined(SubPlan))
+            if (Core.Optional.IsDefined(SubPlan))
             {
                 writer.WritePropertyName("subPlan"u8);
                 writer.WriteObjectValue(SubPlan);
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<GcpDefenderForServersInfo> defenderForServers = default;
-            Optional<DefenderForServersGcpOfferingArcAutoProvisioning> arcAutoProvisioning = default;
-            Optional<DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning> vaAutoProvisioning = default;
-            Optional<DefenderForServersGcpOfferingMdeAutoProvisioning> mdeAutoProvisioning = default;
-            Optional<DefenderForServersGcpOfferingSubPlan> subPlan = default;
+            Core.Optional<GcpDefenderForServersInfo> defenderForServers = default;
+            Core.Optional<DefenderForServersGcpOfferingArcAutoProvisioning> arcAutoProvisioning = default;
+            Core.Optional<DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning> vaAutoProvisioning = default;
+            Core.Optional<DefenderForServersGcpOfferingMdeAutoProvisioning> mdeAutoProvisioning = default;
+            Core.Optional<DefenderForServersGcpOfferingSubPlan> subPlan = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defenderForServers"u8))

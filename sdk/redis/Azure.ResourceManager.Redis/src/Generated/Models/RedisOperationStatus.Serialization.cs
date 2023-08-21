@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, BinaryData>> properties = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
+            Core.Optional<IReadOnlyDictionary<string, BinaryData>> properties = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
             string status = default;
-            Optional<float> percentComplete = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<OperationStatusResult>> operations = default;
-            Optional<ResponseError> error = default;
+            Core.Optional<float> percentComplete = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<IReadOnlyList<OperationStatusResult>> operations = default;
+            Core.Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Redis.Models
                     continue;
                 }
             }
-            return new RedisOperationStatus(id.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value, Optional.ToDictionary(properties));
+            return new RedisOperationStatus(id.Value, name.Value, status, Core.Optional.ToNullable(percentComplete), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToList(operations), error.Value, Core.Optional.ToDictionary(properties));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of A2AReprotectContent. </summary>
         public A2AReprotectContent()
         {
-            VmDisks = new ChangeTrackingList<A2AVmDiskDetails>();
+            VmDisks = new Core.ChangeTrackingList<A2AVmDiskDetails>();
             InstanceType = "A2A";
         }
 

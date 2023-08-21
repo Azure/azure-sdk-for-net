@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> syncAgentKey = default;
+            Core.Optional<string> syncAgentKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("syncAgentKey"u8))

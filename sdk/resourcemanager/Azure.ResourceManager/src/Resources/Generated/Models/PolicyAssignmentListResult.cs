@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of PolicyAssignmentListResult. </summary>
         internal PolicyAssignmentListResult()
         {
-            Value = new ChangeTrackingList<PolicyAssignmentData>();
+            Value = new Core.ChangeTrackingList<PolicyAssignmentData>();
         }
 
         /// <summary> Initializes a new instance of PolicyAssignmentListResult. </summary>

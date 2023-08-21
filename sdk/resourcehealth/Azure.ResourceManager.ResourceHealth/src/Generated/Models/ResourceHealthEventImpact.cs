@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of ResourceHealthEventImpact. </summary>
         internal ResourceHealthEventImpact()
         {
-            ImpactedRegions = new ChangeTrackingList<ResourceHealthEventImpactedServiceRegion>();
+            ImpactedRegions = new Core.ChangeTrackingList<ResourceHealthEventImpactedServiceRegion>();
         }
 
         /// <summary> Initializes a new instance of ResourceHealthEventImpact. </summary>

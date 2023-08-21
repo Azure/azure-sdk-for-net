@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageAzureV2ReplicationDetails. </summary>
         internal InMageAzureV2ReplicationDetails()
         {
-            ProtectedDisks = new ChangeTrackingList<InMageAzureV2ProtectedDiskDetails>();
-            AzureVmDiskDetails = new ChangeTrackingList<SiteRecoveryVmDiskDetails>();
-            VmNics = new ChangeTrackingList<VmNicDetails>();
-            Datastores = new ChangeTrackingList<string>();
-            ValidationErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
-            ProtectedManagedDisks = new ChangeTrackingList<InMageAzureV2ManagedDiskDetails>();
-            TargetVmTags = new ChangeTrackingDictionary<string, string>();
-            SeedManagedDiskTags = new ChangeTrackingDictionary<string, string>();
-            TargetManagedDiskTags = new ChangeTrackingDictionary<string, string>();
-            TargetNicTags = new ChangeTrackingDictionary<string, string>();
-            SwitchProviderBlockingErrorDetails = new ChangeTrackingList<InMageAzureV2SwitchProviderBlockingErrorDetails>();
+            ProtectedDisks = new Core.ChangeTrackingList<InMageAzureV2ProtectedDiskDetails>();
+            AzureVmDiskDetails = new Core.ChangeTrackingList<SiteRecoveryVmDiskDetails>();
+            VmNics = new Core.ChangeTrackingList<VmNicDetails>();
+            Datastores = new Core.ChangeTrackingList<string>();
+            ValidationErrors = new Core.ChangeTrackingList<SiteRecoveryHealthError>();
+            ProtectedManagedDisks = new Core.ChangeTrackingList<InMageAzureV2ManagedDiskDetails>();
+            TargetVmTags = new Core.ChangeTrackingDictionary<string, string>();
+            SeedManagedDiskTags = new Core.ChangeTrackingDictionary<string, string>();
+            TargetManagedDiskTags = new Core.ChangeTrackingDictionary<string, string>();
+            TargetNicTags = new Core.ChangeTrackingDictionary<string, string>();
+            SwitchProviderBlockingErrorDetails = new Core.ChangeTrackingList<InMageAzureV2SwitchProviderBlockingErrorDetails>();
             InstanceType = "InMageAzureV2";
         }
 

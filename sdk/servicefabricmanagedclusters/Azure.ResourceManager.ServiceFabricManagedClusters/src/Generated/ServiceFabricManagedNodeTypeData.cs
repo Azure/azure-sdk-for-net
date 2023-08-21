@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <summary> Initializes a new instance of ServiceFabricManagedNodeTypeData. </summary>
         public ServiceFabricManagedNodeTypeData()
         {
-            PlacementProperties = new ChangeTrackingDictionary<string, string>();
-            Capacities = new ChangeTrackingDictionary<string, string>();
-            VmSecrets = new ChangeTrackingList<NodeTypeVaultSecretGroup>();
-            VmExtensions = new ChangeTrackingList<NodeTypeVmssExtension>();
-            FrontendConfigurations = new ChangeTrackingList<NodeTypeFrontendConfiguration>();
-            NetworkSecurityRules = new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>();
-            AdditionalDataDisks = new ChangeTrackingList<NodeTypeVmssDataDisk>();
-            Zones = new ChangeTrackingList<string>();
-            VmSetupActions = new ChangeTrackingList<VmSetupAction>();
-            Tags = new ChangeTrackingDictionary<string, string>();
+            PlacementProperties = new Core.ChangeTrackingDictionary<string, string>();
+            Capacities = new Core.ChangeTrackingDictionary<string, string>();
+            VmSecrets = new Core.ChangeTrackingList<NodeTypeVaultSecretGroup>();
+            VmExtensions = new Core.ChangeTrackingList<NodeTypeVmssExtension>();
+            FrontendConfigurations = new Core.ChangeTrackingList<NodeTypeFrontendConfiguration>();
+            NetworkSecurityRules = new Core.ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>();
+            AdditionalDataDisks = new Core.ChangeTrackingList<NodeTypeVmssDataDisk>();
+            Zones = new Core.ChangeTrackingList<string>();
+            VmSetupActions = new Core.ChangeTrackingList<VmSetupAction>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ServiceFabricManagedNodeTypeData. </summary>

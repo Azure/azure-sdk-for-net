@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerPrivateEndpointConnectionProperties. </summary>
         internal ServerPrivateEndpointConnectionProperties()
         {
-            GroupIds = new ChangeTrackingList<string>();
+            GroupIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ServerPrivateEndpointConnectionProperties. </summary>

@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class AzurePowerShellScript : IUtf8JsonSerializable
+    public partial class AzurePowerShellScript : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,27 +40,27 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContainerSettings))
+            if (Core.Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
                 writer.WriteObjectValue(ContainerSettings);
             }
-            if (Optional.IsDefined(StorageAccountSettings))
+            if (Core.Optional.IsDefined(StorageAccountSettings))
             {
                 writer.WritePropertyName("storageAccountSettings"u8);
                 writer.WriteObjectValue(StorageAccountSettings);
             }
-            if (Optional.IsDefined(CleanupPreference))
+            if (Core.Optional.IsDefined(CleanupPreference))
             {
                 writer.WritePropertyName("cleanupPreference"u8);
                 writer.WriteStringValue(CleanupPreference.Value.ToString());
             }
-            if (Optional.IsDefined(PrimaryScriptUri))
+            if (Core.Optional.IsDefined(PrimaryScriptUri))
             {
                 writer.WritePropertyName("primaryScriptUri"u8);
                 writer.WriteStringValue(PrimaryScriptUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(SupportingScriptUris))
+            if (Core.Optional.IsCollectionDefined(SupportingScriptUris))
             {
                 writer.WritePropertyName("supportingScriptUris"u8);
                 writer.WriteStartArray();
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ScriptContent))
+            if (Core.Optional.IsDefined(ScriptContent))
             {
                 writer.WritePropertyName("scriptContent"u8);
                 writer.WriteStringValue(ScriptContent);
             }
-            if (Optional.IsDefined(Arguments))
+            if (Core.Optional.IsDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStringValue(Arguments);
             }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            if (Core.Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartArray();
@@ -95,14 +95,14 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ForceUpdateTag))
+            if (Core.Optional.IsDefined(ForceUpdateTag))
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
             writer.WritePropertyName("retentionInterval"u8);
             writer.WriteStringValue(RetentionInterval, "P");
-            if (Optional.IsDefined(Timeout))
+            if (Core.Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
@@ -119,28 +119,28 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ArmDeploymentScriptManagedIdentity> identity = default;
+            Core.Optional<ArmDeploymentScriptManagedIdentity> identity = default;
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             ScriptType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerConfiguration> containerSettings = default;
-            Optional<ScriptStorageConfiguration> storageAccountSettings = default;
-            Optional<ScriptCleanupOptions> cleanupPreference = default;
-            Optional<ScriptProvisioningState> provisioningState = default;
-            Optional<ScriptStatus> status = default;
-            Optional<BinaryData> outputs = default;
-            Optional<Uri> primaryScriptUri = default;
-            Optional<IList<Uri>> supportingScriptUris = default;
-            Optional<string> scriptContent = default;
-            Optional<string> arguments = default;
-            Optional<IList<ScriptEnvironmentVariable>> environmentVariables = default;
-            Optional<string> forceUpdateTag = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ContainerConfiguration> containerSettings = default;
+            Core.Optional<ScriptStorageConfiguration> storageAccountSettings = default;
+            Core.Optional<ScriptCleanupOptions> cleanupPreference = default;
+            Core.Optional<ScriptProvisioningState> provisioningState = default;
+            Core.Optional<ScriptStatus> status = default;
+            Core.Optional<BinaryData> outputs = default;
+            Core.Optional<Uri> primaryScriptUri = default;
+            Core.Optional<IList<Uri>> supportingScriptUris = default;
+            Core.Optional<string> scriptContent = default;
+            Core.Optional<string> arguments = default;
+            Core.Optional<IList<ScriptEnvironmentVariable>> environmentVariables = default;
+            Core.Optional<string> forceUpdateTag = default;
             TimeSpan retentionInterval = default;
-            Optional<TimeSpan> timeout = default;
+            Core.Optional<TimeSpan> timeout = default;
             string azPowerShellVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new AzurePowerShellScript(id, name, type, systemData.Value, identity.Value, location, Optional.ToDictionary(tags), kind, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, outputs.Value, primaryScriptUri.Value, Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azPowerShellVersion);
+            return new AzurePowerShellScript(id, name, type, systemData.Value, identity.Value, location, Core.Optional.ToDictionary(tags), kind, containerSettings.Value, storageAccountSettings.Value, Core.Optional.ToNullable(cleanupPreference), Core.Optional.ToNullable(provisioningState), status.Value, outputs.Value, primaryScriptUri.Value, Core.Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Core.Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Core.Optional.ToNullable(timeout), azPowerShellVersion);
         }
     }
 }

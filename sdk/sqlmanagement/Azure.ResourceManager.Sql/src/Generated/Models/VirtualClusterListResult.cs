@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of VirtualClusterListResult. </summary>
         internal VirtualClusterListResult()
         {
-            Value = new ChangeTrackingList<VirtualClusterData>();
+            Value = new Core.ChangeTrackingList<VirtualClusterData>();
         }
 
         /// <summary> Initializes a new instance of VirtualClusterListResult. </summary>

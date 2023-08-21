@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityAlertAlertsRestClient.CreateListSubscriptionLevelByRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSecurityAlertAlertsRestClient.CreateListSubscriptionLevelByRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityAlertResource(Client, SecurityAlertData.DeserializeSecurityAlertData(e)), _subscriptionSecurityAlertAlertsClientDiagnostics, Pipeline, "SubscriptionSecurityAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityAlertResource(Client, SecurityAlertData.DeserializeSecurityAlertData(e)), _subscriptionSecurityAlertAlertsClientDiagnostics, Pipeline, "SubscriptionSecurityAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityAlertAlertsRestClient.CreateListSubscriptionLevelByRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSecurityAlertAlertsRestClient.CreateListSubscriptionLevelByRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityAlertResource(Client, SecurityAlertData.DeserializeSecurityAlertData(e)), _subscriptionSecurityAlertAlertsClientDiagnostics, Pipeline, "SubscriptionSecurityAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityAlertResource(Client, SecurityAlertData.DeserializeSecurityAlertData(e)), _subscriptionSecurityAlertAlertsClientDiagnostics, Pipeline, "SubscriptionSecurityAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _alertsRestClient.SimulateAsync(Id.SubscriptionId, new AzureLocation(Id.Name), content, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, _alertsRestClient.CreateSimulateRequest(Id.SubscriptionId, new AzureLocation(Id.Name), content).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, _alertsRestClient.CreateSimulateRequest(Id.SubscriptionId, new AzureLocation(Id.Name), content).Request, response, Core.OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _alertsRestClient.Simulate(Id.SubscriptionId, new AzureLocation(Id.Name), content, cancellationToken);
-                var operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, _alertsRestClient.CreateSimulateRequest(Id.SubscriptionId, new AzureLocation(Id.Name), content).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, _alertsRestClient.CreateSimulateRequest(Id.SubscriptionId, new AzureLocation(Id.Name), content).Request, response, Core.OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

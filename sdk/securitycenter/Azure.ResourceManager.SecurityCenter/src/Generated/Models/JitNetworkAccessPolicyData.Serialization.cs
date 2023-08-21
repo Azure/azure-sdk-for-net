@@ -13,12 +13,12 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class JitNetworkAccessPolicyData : IUtf8JsonSerializable
+    public partial class JitNetworkAccessPolicyData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Requests))
+            if (Core.Optional.IsCollectionDefined(Requests))
             {
                 writer.WritePropertyName("requests"u8);
                 writer.WriteStartArray();
@@ -52,15 +52,15 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<AzureLocation> location = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             IList<JitNetworkAccessPolicyVirtualMachine> virtualMachines = default;
-            Optional<IList<JitNetworkAccessRequestInfo>> requests = default;
-            Optional<string> provisioningState = default;
+            Core.Optional<IList<JitNetworkAccessRequestInfo>> requests = default;
+            Core.Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new JitNetworkAccessPolicyData(id, name, type, systemData.Value, virtualMachines, Optional.ToList(requests), provisioningState.Value, kind.Value, Optional.ToNullable(location));
+            return new JitNetworkAccessPolicyData(id, name, type, systemData.Value, virtualMachines, Core.Optional.ToList(requests), provisioningState.Value, kind.Value, Core.Optional.ToNullable(location));
         }
     }
 }

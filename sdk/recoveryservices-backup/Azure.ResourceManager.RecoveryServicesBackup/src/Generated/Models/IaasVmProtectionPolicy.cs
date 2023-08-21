@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of IaasVmProtectionPolicy. </summary>
         public IaasVmProtectionPolicy()
         {
-            TieringPolicy = new ChangeTrackingDictionary<string, BackupTieringPolicy>();
+            TieringPolicy = new Core.ChangeTrackingDictionary<string, BackupTieringPolicy>();
             BackupManagementType = "AzureIaasVM";
         }
 

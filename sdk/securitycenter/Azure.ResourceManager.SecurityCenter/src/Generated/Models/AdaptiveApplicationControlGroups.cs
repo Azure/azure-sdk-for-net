@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AdaptiveApplicationControlGroups. </summary>
         internal AdaptiveApplicationControlGroups()
         {
-            Value = new ChangeTrackingList<AdaptiveApplicationControlGroupData>();
+            Value = new Core.ChangeTrackingList<AdaptiveApplicationControlGroupData>();
         }
 
         /// <summary> Initializes a new instance of AdaptiveApplicationControlGroups. </summary>

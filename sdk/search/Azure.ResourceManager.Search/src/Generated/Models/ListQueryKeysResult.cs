@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Initializes a new instance of ListQueryKeysResult. </summary>
         internal ListQueryKeysResult()
         {
-            Value = new ChangeTrackingList<SearchServiceQueryKey>();
+            Value = new Core.ChangeTrackingList<SearchServiceQueryKey>();
         }
 
         /// <summary> Initializes a new instance of ListQueryKeysResult. </summary>

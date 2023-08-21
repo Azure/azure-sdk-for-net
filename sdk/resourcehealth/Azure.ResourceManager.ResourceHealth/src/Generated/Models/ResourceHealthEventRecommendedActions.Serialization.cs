@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<IReadOnlyList<ResourceHealthEventRecommendedActionsItem>> actions = default;
-            Optional<string> localeCode = default;
+            Core.Optional<string> message = default;
+            Core.Optional<IReadOnlyList<ResourceHealthEventRecommendedActionsItem>> actions = default;
+            Core.Optional<string> localeCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new ResourceHealthEventRecommendedActions(message.Value, Optional.ToList(actions), localeCode.Value);
+            return new ResourceHealthEventRecommendedActions(message.Value, Core.Optional.ToList(actions), localeCode.Value);
         }
     }
 }

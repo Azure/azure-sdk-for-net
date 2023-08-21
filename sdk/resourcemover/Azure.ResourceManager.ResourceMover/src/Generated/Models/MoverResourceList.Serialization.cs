@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MoverResourceData>> value = default;
-            Optional<string> nextLink = default;
-            Optional<MoverSummaryList> summaryCollection = default;
-            Optional<long> totalCount = default;
+            Core.Optional<IReadOnlyList<MoverResourceData>> value = default;
+            Core.Optional<string> nextLink = default;
+            Core.Optional<MoverSummaryList> summaryCollection = default;
+            Core.Optional<long> totalCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverResourceList(Optional.ToList(value), nextLink.Value, summaryCollection.Value, Optional.ToNullable(totalCount));
+            return new MoverResourceList(Core.Optional.ToList(value), nextLink.Value, summaryCollection.Value, Core.Optional.ToNullable(totalCount));
         }
     }
 }

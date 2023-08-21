@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class PurviewPrivateLinkServiceConnectionState : IUtf8JsonSerializable
+    public partial class PurviewPrivateLinkServiceConnectionState : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionsRequired))
+            if (Core.Optional.IsDefined(ActionsRequired))
             {
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> actionsRequired = default;
-            Optional<string> description = default;
-            Optional<PurviewPrivateLinkServiceStatus> status = default;
+            Core.Optional<string> actionsRequired = default;
+            Core.Optional<string> description = default;
+            Core.Optional<PurviewPrivateLinkServiceStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionsRequired"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Purview.Models
                     continue;
                 }
             }
-            return new PurviewPrivateLinkServiceConnectionState(actionsRequired.Value, description.Value, Optional.ToNullable(status));
+            return new PurviewPrivateLinkServiceConnectionState(actionsRequired.Value, description.Value, Core.Optional.ToNullable(status));
         }
     }
 }

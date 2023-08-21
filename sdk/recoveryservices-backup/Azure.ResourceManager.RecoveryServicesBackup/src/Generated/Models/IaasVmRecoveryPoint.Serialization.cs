@@ -12,47 +12,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmRecoveryPoint : IUtf8JsonSerializable
+    public partial class IaasVmRecoveryPoint : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointType))
+            if (Core.Optional.IsDefined(RecoveryPointType))
             {
                 writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType);
             }
-            if (Optional.IsDefined(RecoveryPointOn))
+            if (Core.Optional.IsDefined(RecoveryPointOn))
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
             }
-            if (Optional.IsDefined(RecoveryPointAdditionalInfo))
+            if (Core.Optional.IsDefined(RecoveryPointAdditionalInfo))
             {
                 writer.WritePropertyName("recoveryPointAdditionalInfo"u8);
                 writer.WriteStringValue(RecoveryPointAdditionalInfo);
             }
-            if (Optional.IsDefined(SourceVmStorageType))
+            if (Core.Optional.IsDefined(SourceVmStorageType))
             {
                 writer.WritePropertyName("sourceVMStorageType"u8);
                 writer.WriteStringValue(SourceVmStorageType);
             }
-            if (Optional.IsDefined(IsSourceVmEncrypted))
+            if (Core.Optional.IsDefined(IsSourceVmEncrypted))
             {
                 writer.WritePropertyName("isSourceVMEncrypted"u8);
                 writer.WriteBooleanValue(IsSourceVmEncrypted.Value);
             }
-            if (Optional.IsDefined(KeyAndSecret))
+            if (Core.Optional.IsDefined(KeyAndSecret))
             {
                 writer.WritePropertyName("keyAndSecret"u8);
                 writer.WriteObjectValue(KeyAndSecret);
             }
-            if (Optional.IsDefined(IsInstantIlrSessionActive))
+            if (Core.Optional.IsDefined(IsInstantIlrSessionActive))
             {
                 writer.WritePropertyName("isInstantIlrSessionActive"u8);
                 writer.WriteBooleanValue(IsInstantIlrSessionActive.Value);
             }
-            if (Optional.IsCollectionDefined(RecoveryPointTierDetails))
+            if (Core.Optional.IsCollectionDefined(RecoveryPointTierDetails))
             {
                 writer.WritePropertyName("recoveryPointTierDetails"u8);
                 writer.WriteStartArray();
@@ -62,32 +62,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsManagedVirtualMachine))
+            if (Core.Optional.IsDefined(IsManagedVirtualMachine))
             {
                 writer.WritePropertyName("isManagedVirtualMachine"u8);
                 writer.WriteBooleanValue(IsManagedVirtualMachine.Value);
             }
-            if (Optional.IsDefined(VirtualMachineSize))
+            if (Core.Optional.IsDefined(VirtualMachineSize))
             {
                 writer.WritePropertyName("virtualMachineSize"u8);
                 writer.WriteStringValue(VirtualMachineSize);
             }
-            if (Optional.IsDefined(OriginalStorageAccountOption))
+            if (Core.Optional.IsDefined(OriginalStorageAccountOption))
             {
                 writer.WritePropertyName("originalStorageAccountOption"u8);
                 writer.WriteBooleanValue(OriginalStorageAccountOption.Value);
             }
-            if (Optional.IsDefined(OSType))
+            if (Core.Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Optional.IsDefined(RecoveryPointDiskConfiguration))
+            if (Core.Optional.IsDefined(RecoveryPointDiskConfiguration))
             {
                 writer.WritePropertyName("recoveryPointDiskConfiguration"u8);
                 writer.WriteObjectValue(RecoveryPointDiskConfiguration);
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (Core.Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RecoveryPointMoveReadinessInfo))
+            if (Core.Optional.IsCollectionDefined(RecoveryPointMoveReadinessInfo))
             {
                 writer.WritePropertyName("recoveryPointMoveReadinessInfo"u8);
                 writer.WriteStartObject();
@@ -108,17 +108,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(SecurityType))
+            if (Core.Optional.IsDefined(SecurityType))
             {
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType);
             }
-            if (Optional.IsDefined(RecoveryPointProperties))
+            if (Core.Optional.IsDefined(RecoveryPointProperties))
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
                 writer.WriteObjectValue(RecoveryPointProperties);
             }
-            if (Optional.IsDefined(IsPrivateAccessEnabledOnAnyDisk))
+            if (Core.Optional.IsDefined(IsPrivateAccessEnabledOnAnyDisk))
             {
                 writer.WritePropertyName("isPrivateAccessEnabledOnAnyDisk"u8);
                 writer.WriteBooleanValue(IsPrivateAccessEnabledOnAnyDisk.Value);
@@ -134,24 +134,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> recoveryPointType = default;
-            Optional<DateTimeOffset> recoveryPointTime = default;
-            Optional<string> recoveryPointAdditionalInfo = default;
-            Optional<string> sourceVmStorageType = default;
-            Optional<bool> isSourceVmEncrypted = default;
-            Optional<KeyAndSecretDetails> keyAndSecret = default;
-            Optional<bool> isInstantIlrSessionActive = default;
-            Optional<IList<RecoveryPointTierInformationV2>> recoveryPointTierDetails = default;
-            Optional<bool> isManagedVirtualMachine = default;
-            Optional<string> virtualMachineSize = default;
-            Optional<bool> originalStorageAccountOption = default;
-            Optional<string> osType = default;
-            Optional<RecoveryPointDiskConfiguration> recoveryPointDiskConfiguration = default;
-            Optional<IList<string>> zones = default;
-            Optional<IDictionary<string, RecoveryPointMoveReadinessInfo>> recoveryPointMoveReadinessInfo = default;
-            Optional<string> securityType = default;
-            Optional<RecoveryPointProperties> recoveryPointProperties = default;
-            Optional<bool> isPrivateAccessEnabledOnAnyDisk = default;
+            Core.Optional<string> recoveryPointType = default;
+            Core.Optional<DateTimeOffset> recoveryPointTime = default;
+            Core.Optional<string> recoveryPointAdditionalInfo = default;
+            Core.Optional<string> sourceVmStorageType = default;
+            Core.Optional<bool> isSourceVmEncrypted = default;
+            Core.Optional<KeyAndSecretDetails> keyAndSecret = default;
+            Core.Optional<bool> isInstantIlrSessionActive = default;
+            Core.Optional<IList<RecoveryPointTierInformationV2>> recoveryPointTierDetails = default;
+            Core.Optional<bool> isManagedVirtualMachine = default;
+            Core.Optional<string> virtualMachineSize = default;
+            Core.Optional<bool> originalStorageAccountOption = default;
+            Core.Optional<string> osType = default;
+            Core.Optional<RecoveryPointDiskConfiguration> recoveryPointDiskConfiguration = default;
+            Core.Optional<IList<string>> zones = default;
+            Core.Optional<IDictionary<string, RecoveryPointMoveReadinessInfo>> recoveryPointMoveReadinessInfo = default;
+            Core.Optional<string> securityType = default;
+            Core.Optional<RecoveryPointProperties> recoveryPointProperties = default;
+            Core.Optional<bool> isPrivateAccessEnabledOnAnyDisk = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new IaasVmRecoveryPoint(objectType, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), recoveryPointAdditionalInfo.Value, sourceVmStorageType.Value, Optional.ToNullable(isSourceVmEncrypted), keyAndSecret.Value, Optional.ToNullable(isInstantIlrSessionActive), Optional.ToList(recoveryPointTierDetails), Optional.ToNullable(isManagedVirtualMachine), virtualMachineSize.Value, Optional.ToNullable(originalStorageAccountOption), osType.Value, recoveryPointDiskConfiguration.Value, Optional.ToList(zones), Optional.ToDictionary(recoveryPointMoveReadinessInfo), securityType.Value, recoveryPointProperties.Value, Optional.ToNullable(isPrivateAccessEnabledOnAnyDisk));
+            return new IaasVmRecoveryPoint(objectType, recoveryPointType.Value, Core.Optional.ToNullable(recoveryPointTime), recoveryPointAdditionalInfo.Value, sourceVmStorageType.Value, Core.Optional.ToNullable(isSourceVmEncrypted), keyAndSecret.Value, Core.Optional.ToNullable(isInstantIlrSessionActive), Core.Optional.ToList(recoveryPointTierDetails), Core.Optional.ToNullable(isManagedVirtualMachine), virtualMachineSize.Value, Core.Optional.ToNullable(originalStorageAccountOption), osType.Value, recoveryPointDiskConfiguration.Value, Core.Optional.ToList(zones), Core.Optional.ToDictionary(recoveryPointMoveReadinessInfo), securityType.Value, recoveryPointProperties.Value, Core.Optional.ToNullable(isPrivateAccessEnabledOnAnyDisk));
         }
     }
 }

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class UserDefinedResourcesProperties : IUtf8JsonSerializable
+    public partial class UserDefinedResourcesProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Query != null)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WriteNull("query");
             }
-            if (QuerySubscriptions != null && Optional.IsCollectionDefined(QuerySubscriptions))
+            if (QuerySubscriptions != null && Core.Optional.IsCollectionDefined(QuerySubscriptions))
             {
                 writer.WritePropertyName("querySubscriptions"u8);
                 writer.WriteStartArray();

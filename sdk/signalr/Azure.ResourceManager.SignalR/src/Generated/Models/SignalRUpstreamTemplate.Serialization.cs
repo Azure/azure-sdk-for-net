@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    public partial class SignalRUpstreamTemplate : IUtf8JsonSerializable
+    public partial class SignalRUpstreamTemplate : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(HubPattern))
+            if (Core.Optional.IsDefined(HubPattern))
             {
                 writer.WritePropertyName("hubPattern"u8);
                 writer.WriteStringValue(HubPattern);
             }
-            if (Optional.IsDefined(EventPattern))
+            if (Core.Optional.IsDefined(EventPattern))
             {
                 writer.WritePropertyName("eventPattern"u8);
                 writer.WriteStringValue(EventPattern);
             }
-            if (Optional.IsDefined(CategoryPattern))
+            if (Core.Optional.IsDefined(CategoryPattern))
             {
                 writer.WritePropertyName("categoryPattern"u8);
                 writer.WriteStringValue(CategoryPattern);
             }
             writer.WritePropertyName("urlTemplate"u8);
             writer.WriteStringValue(UrlTemplate);
-            if (Optional.IsDefined(Auth))
+            if (Core.Optional.IsDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
                 writer.WriteObjectValue(Auth);
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<string> hubPattern = default;
-            Optional<string> eventPattern = default;
-            Optional<string> categoryPattern = default;
+            Core.Optional<string> hubPattern = default;
+            Core.Optional<string> eventPattern = default;
+            Core.Optional<string> categoryPattern = default;
             string urlTemplate = default;
-            Optional<SignalRUpstreamAuthSettings> auth = default;
+            Core.Optional<SignalRUpstreamAuthSettings> auth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hubPattern"u8))

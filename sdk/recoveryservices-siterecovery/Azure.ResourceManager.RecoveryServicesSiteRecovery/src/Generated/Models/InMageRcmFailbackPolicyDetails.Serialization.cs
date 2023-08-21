@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> appConsistentFrequencyInMinutes = default;
-            Optional<int> crashConsistentFrequencyInMinutes = default;
+            Core.Optional<int> appConsistentFrequencyInMinutes = default;
+            Core.Optional<int> crashConsistentFrequencyInMinutes = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageRcmFailbackPolicyDetails(instanceType, Optional.ToNullable(appConsistentFrequencyInMinutes), Optional.ToNullable(crashConsistentFrequencyInMinutes));
+            return new InMageRcmFailbackPolicyDetails(instanceType, Core.Optional.ToNullable(appConsistentFrequencyInMinutes), Core.Optional.ToNullable(crashConsistentFrequencyInMinutes));
         }
     }
 }

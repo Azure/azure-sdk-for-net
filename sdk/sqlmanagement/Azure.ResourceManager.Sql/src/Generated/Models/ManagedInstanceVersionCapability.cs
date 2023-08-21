@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstanceVersionCapability. </summary>
         internal ManagedInstanceVersionCapability()
         {
-            SupportedEditions = new ChangeTrackingList<ManagedInstanceEditionCapability>();
-            SupportedInstancePoolEditions = new ChangeTrackingList<InstancePoolEditionCapability>();
+            SupportedEditions = new Core.ChangeTrackingList<ManagedInstanceEditionCapability>();
+            SupportedInstancePoolEditions = new Core.ChangeTrackingList<InstancePoolEditionCapability>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceVersionCapability. </summary>

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceDtcTransactionManagerCommunicationSettings : IUtf8JsonSerializable
+    public partial class ManagedInstanceDtcTransactionManagerCommunicationSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowInboundEnabled))
+            if (Core.Optional.IsDefined(AllowInboundEnabled))
             {
                 writer.WritePropertyName("allowInboundEnabled"u8);
                 writer.WriteBooleanValue(AllowInboundEnabled.Value);
             }
-            if (Optional.IsDefined(AllowOutboundEnabled))
+            if (Core.Optional.IsDefined(AllowOutboundEnabled))
             {
                 writer.WritePropertyName("allowOutboundEnabled"u8);
                 writer.WriteBooleanValue(AllowOutboundEnabled.Value);
             }
-            if (Optional.IsDefined(Authentication))
+            if (Core.Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<bool> allowInboundEnabled = default;
-            Optional<bool> allowOutboundEnabled = default;
-            Optional<string> authentication = default;
+            Core.Optional<bool> allowInboundEnabled = default;
+            Core.Optional<bool> allowOutboundEnabled = default;
+            Core.Optional<string> authentication = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowInboundEnabled"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ManagedInstanceDtcTransactionManagerCommunicationSettings(Optional.ToNullable(allowInboundEnabled), Optional.ToNullable(allowOutboundEnabled), authentication.Value);
+            return new ManagedInstanceDtcTransactionManagerCommunicationSettings(Core.Optional.ToNullable(allowInboundEnabled), Core.Optional.ToNullable(allowOutboundEnabled), authentication.Value);
         }
     }
 }

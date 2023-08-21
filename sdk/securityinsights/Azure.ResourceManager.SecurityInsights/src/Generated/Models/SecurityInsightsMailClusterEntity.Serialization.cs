@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsMailClusterEntity : IUtf8JsonSerializable
+    public partial class SecurityInsightsMailClusterEntity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -36,24 +36,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<IReadOnlyList<string>> networkMessageIds = default;
-            Optional<BinaryData> countByDeliveryStatus = default;
-            Optional<BinaryData> countByThreatType = default;
-            Optional<BinaryData> countByProtectionStatus = default;
-            Optional<IReadOnlyList<string>> threats = default;
-            Optional<string> query = default;
-            Optional<DateTimeOffset> queryTime = default;
-            Optional<int> mailCount = default;
-            Optional<bool> isVolumeAnomaly = default;
-            Optional<string> source = default;
-            Optional<string> clusterSourceIdentifier = default;
-            Optional<string> clusterSourceType = default;
-            Optional<DateTimeOffset> clusterQueryStartTime = default;
-            Optional<DateTimeOffset> clusterQueryEndTime = default;
-            Optional<string> clusterGroup = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<IReadOnlyList<string>> networkMessageIds = default;
+            Core.Optional<BinaryData> countByDeliveryStatus = default;
+            Core.Optional<BinaryData> countByThreatType = default;
+            Core.Optional<BinaryData> countByProtectionStatus = default;
+            Core.Optional<IReadOnlyList<string>> threats = default;
+            Core.Optional<string> query = default;
+            Core.Optional<DateTimeOffset> queryTime = default;
+            Core.Optional<int> mailCount = default;
+            Core.Optional<bool> isVolumeAnomaly = default;
+            Core.Optional<string> source = default;
+            Core.Optional<string> clusterSourceIdentifier = default;
+            Core.Optional<string> clusterSourceType = default;
+            Core.Optional<DateTimeOffset> clusterQueryStartTime = default;
+            Core.Optional<DateTimeOffset> clusterQueryEndTime = default;
+            Core.Optional<string> clusterGroup = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsMailClusterEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(networkMessageIds), countByDeliveryStatus.Value, countByThreatType.Value, countByProtectionStatus.Value, Optional.ToList(threats), query.Value, Optional.ToNullable(queryTime), Optional.ToNullable(mailCount), Optional.ToNullable(isVolumeAnomaly), source.Value, clusterSourceIdentifier.Value, clusterSourceType.Value, Optional.ToNullable(clusterQueryStartTime), Optional.ToNullable(clusterQueryEndTime), clusterGroup.Value);
+            return new SecurityInsightsMailClusterEntity(id, name, type, systemData.Value, kind, Core.Optional.ToDictionary(additionalData), friendlyName.Value, Core.Optional.ToList(networkMessageIds), countByDeliveryStatus.Value, countByThreatType.Value, countByProtectionStatus.Value, Core.Optional.ToList(threats), query.Value, Core.Optional.ToNullable(queryTime), Core.Optional.ToNullable(mailCount), Core.Optional.ToNullable(isVolumeAnomaly), source.Value, clusterSourceIdentifier.Value, clusterSourceType.Value, Core.Optional.ToNullable(clusterQueryStartTime), Core.Optional.ToNullable(clusterQueryEndTime), clusterGroup.Value);
         }
     }
 }

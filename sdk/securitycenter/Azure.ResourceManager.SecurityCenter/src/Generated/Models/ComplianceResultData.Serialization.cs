@@ -12,9 +12,9 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class ComplianceResultData : IUtf8JsonSerializable
+    public partial class ComplianceResultData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SecurityAssessmentResourceStatus> resourceStatus = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<SecurityAssessmentResourceStatus> resourceStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new ComplianceResultData(id, name, type, systemData.Value, Optional.ToNullable(resourceStatus));
+            return new ComplianceResultData(id, name, type, systemData.Value, Core.Optional.ToNullable(resourceStatus));
         }
     }
 }

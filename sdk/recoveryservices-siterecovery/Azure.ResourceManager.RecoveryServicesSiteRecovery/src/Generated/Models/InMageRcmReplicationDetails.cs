@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageRcmReplicationDetails. </summary>
         internal InMageRcmReplicationDetails()
         {
-            ProtectedDisks = new ChangeTrackingList<InMageRcmProtectedDiskDetails>();
-            LastAgentUpgradeErrorDetails = new ChangeTrackingList<InMageRcmLastAgentUpgradeErrorDetails>();
-            AgentUpgradeBlockingErrorDetails = new ChangeTrackingList<InMageRcmAgentUpgradeBlockingErrorDetails>();
-            VmNics = new ChangeTrackingList<InMageRcmNicDetails>();
+            ProtectedDisks = new Core.ChangeTrackingList<InMageRcmProtectedDiskDetails>();
+            LastAgentUpgradeErrorDetails = new Core.ChangeTrackingList<InMageRcmLastAgentUpgradeErrorDetails>();
+            AgentUpgradeBlockingErrorDetails = new Core.ChangeTrackingList<InMageRcmAgentUpgradeBlockingErrorDetails>();
+            VmNics = new Core.ChangeTrackingList<InMageRcmNicDetails>();
             InstanceType = "InMageRcm";
         }
 

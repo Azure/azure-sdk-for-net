@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of TemplateSpecVersionsListResult. </summary>
         internal TemplateSpecVersionsListResult()
         {
-            Value = new ChangeTrackingList<TemplateSpecVersionData>();
+            Value = new Core.ChangeTrackingList<TemplateSpecVersionData>();
         }
 
         /// <summary> Initializes a new instance of TemplateSpecVersionsListResult. </summary>

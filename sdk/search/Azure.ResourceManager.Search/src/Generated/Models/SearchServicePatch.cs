@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="location"> The location. </param>
         public SearchServicePatch(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<SearchPrivateEndpointConnectionData>();
-            SharedPrivateLinkResources = new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<SearchPrivateEndpointConnectionData>();
+            SharedPrivateLinkResources = new Core.ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of SearchServicePatch. </summary>

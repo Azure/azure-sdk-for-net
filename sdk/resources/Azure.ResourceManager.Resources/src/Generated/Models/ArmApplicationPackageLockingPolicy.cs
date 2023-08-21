@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmApplicationPackageLockingPolicy. </summary>
         public ArmApplicationPackageLockingPolicy()
         {
-            AllowedActions = new ChangeTrackingList<string>();
-            AllowedDataActions = new ChangeTrackingList<string>();
+            AllowedActions = new Core.ChangeTrackingList<string>();
+            AllowedDataActions = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ArmApplicationPackageLockingPolicy. </summary>

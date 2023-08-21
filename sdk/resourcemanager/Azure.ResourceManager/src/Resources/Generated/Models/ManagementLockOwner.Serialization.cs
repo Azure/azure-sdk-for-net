@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ManagementLockOwner : IUtf8JsonSerializable
+    public partial class ManagementLockOwner : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApplicationId))
+            if (Core.Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> applicationId = default;
+            Core.Optional<string> applicationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"u8))

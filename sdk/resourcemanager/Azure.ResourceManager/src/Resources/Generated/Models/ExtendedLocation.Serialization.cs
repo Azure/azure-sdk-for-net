@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     [JsonConverter(typeof(ExtendedLocationConverter))]
-    public partial class ExtendedLocation : IUtf8JsonSerializable
+    public partial class ExtendedLocation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocationType))
+            if (Core.Optional.IsDefined(ExtendedLocationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExtendedLocationType.Value.ToString());
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ExtendedLocationType> type = default;
-            Optional<string> name = default;
+            Core.Optional<ExtendedLocationType> type = default;
+            Core.Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ExtendedLocation(Optional.ToNullable(type), name.Value);
+            return new ExtendedLocation(Core.Optional.ToNullable(type), name.Value);
         }
 
         internal partial class ExtendedLocationConverter : JsonConverter<ExtendedLocation>

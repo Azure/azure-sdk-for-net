@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class ResourceProtectionIntent : IUtf8JsonSerializable
+    public partial class ResourceProtectionIntent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (Core.Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             writer.WritePropertyName("protectionIntentItemType"u8);
             writer.WriteStringValue(ProtectionIntentItemType.ToString());
-            if (Optional.IsDefined(BackupManagementType))
+            if (Core.Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (Core.Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsDefined(ItemId))
+            if (Core.Optional.IsDefined(ItemId))
             {
                 writer.WritePropertyName("itemId"u8);
                 writer.WriteStringValue(ItemId);
             }
-            if (Optional.IsDefined(PolicyId))
+            if (Core.Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (Optional.IsDefined(ProtectionState))
+            if (Core.Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
+            Core.Optional<string> friendlyName = default;
             ProtectionIntentItemType protectionIntentItemType = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<ResourceIdentifier> itemId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<BackupProtectionStatus> protectionState = default;
+            Core.Optional<BackupManagementType> backupManagementType = default;
+            Core.Optional<ResourceIdentifier> sourceResourceId = default;
+            Core.Optional<ResourceIdentifier> itemId = default;
+            Core.Optional<ResourceIdentifier> policyId = default;
+            Core.Optional<BackupProtectionStatus> protectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new ResourceProtectionIntent(protectionIntentItemType, Optional.ToNullable(backupManagementType), sourceResourceId.Value, itemId.Value, policyId.Value, Optional.ToNullable(protectionState), friendlyName.Value);
+            return new ResourceProtectionIntent(protectionIntentItemType, Core.Optional.ToNullable(backupManagementType), sourceResourceId.Value, itemId.Value, policyId.Value, Core.Optional.ToNullable(protectionState), friendlyName.Value);
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ErrorDeployment : IUtf8JsonSerializable
+    public partial class ErrorDeployment : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeploymentType))
+            if (Core.Optional.IsDefined(DeploymentType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DeploymentType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DeploymentName))
+            if (Core.Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("deploymentName"u8);
                 writer.WriteStringValue(DeploymentName);

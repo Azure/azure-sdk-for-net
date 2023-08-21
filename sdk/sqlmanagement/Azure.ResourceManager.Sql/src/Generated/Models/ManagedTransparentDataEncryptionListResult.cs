@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedTransparentDataEncryptionListResult. </summary>
         internal ManagedTransparentDataEncryptionListResult()
         {
-            Value = new ChangeTrackingList<ManagedTransparentDataEncryptionData>();
+            Value = new Core.ChangeTrackingList<ManagedTransparentDataEncryptionData>();
         }
 
         /// <summary> Initializes a new instance of ManagedTransparentDataEncryptionListResult. </summary>

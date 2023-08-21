@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsFileEntity. </summary>
         public SecurityInsightsFileEntity()
         {
-            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            FileHashEntityIds = new ChangeTrackingList<string>();
+            AdditionalData = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            FileHashEntityIds = new Core.ChangeTrackingList<string>();
             Kind = SecurityInsightsEntityKind.File;
         }
 

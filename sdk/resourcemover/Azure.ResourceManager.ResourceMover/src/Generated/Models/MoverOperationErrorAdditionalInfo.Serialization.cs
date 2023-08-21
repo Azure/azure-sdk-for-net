@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<MoveErrorInfo> info = default;
+            Core.Optional<string> type = default;
+            Core.Optional<MoveErrorInfo> info = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

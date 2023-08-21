@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedInstanceAdvancedThreatProtectionOperationSource : IOperationSource<ManagedInstanceAdvancedThreatProtectionResource>
+    internal class ManagedInstanceAdvancedThreatProtectionOperationSource : Core.IOperationSource<ManagedInstanceAdvancedThreatProtectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ManagedInstanceAdvancedThreatProtectionResource IOperationSource<ManagedInstanceAdvancedThreatProtectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedInstanceAdvancedThreatProtectionResource Core.IOperationSource<ManagedInstanceAdvancedThreatProtectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedInstanceAdvancedThreatProtectionData.DeserializeManagedInstanceAdvancedThreatProtectionData(document.RootElement);
             return new ManagedInstanceAdvancedThreatProtectionResource(_client, data);
         }
 
-        async ValueTask<ManagedInstanceAdvancedThreatProtectionResource> IOperationSource<ManagedInstanceAdvancedThreatProtectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedInstanceAdvancedThreatProtectionResource> Core.IOperationSource<ManagedInstanceAdvancedThreatProtectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedInstanceAdvancedThreatProtectionData.DeserializeManagedInstanceAdvancedThreatProtectionData(document.RootElement);

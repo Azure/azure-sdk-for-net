@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SyncFullSchemaTable. </summary>
         internal SyncFullSchemaTable()
         {
-            Columns = new ChangeTrackingList<SyncFullSchemaTableColumn>();
+            Columns = new Core.ChangeTrackingList<SyncFullSchemaTableColumn>();
         }
 
         /// <summary> Initializes a new instance of SyncFullSchemaTable. </summary>

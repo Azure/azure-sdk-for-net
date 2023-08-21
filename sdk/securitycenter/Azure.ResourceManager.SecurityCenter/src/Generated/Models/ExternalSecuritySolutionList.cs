@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of ExternalSecuritySolutionList. </summary>
         internal ExternalSecuritySolutionList()
         {
-            Value = new ChangeTrackingList<ExternalSecuritySolution>();
+            Value = new Core.ChangeTrackingList<ExternalSecuritySolution>();
         }
 
         /// <summary> Initializes a new instance of ExternalSecuritySolutionList. </summary>

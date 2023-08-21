@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of ServiceFabricManagedApplicationTypeVersionPatch. </summary>
         public ServiceFabricManagedApplicationTypeVersionPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Application type version update parameters. </summary>

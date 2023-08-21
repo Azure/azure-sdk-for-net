@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    internal partial class AzureMonitorAlertSettings : IUtf8JsonSerializable
+    internal partial class AzureMonitorAlertSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlertsForAllJobFailures))
+            if (Core.Optional.IsDefined(AlertsForAllJobFailures))
             {
                 writer.WritePropertyName("alertsForAllJobFailures"u8);
                 writer.WriteStringValue(AlertsForAllJobFailures.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<RecoveryServicesAlertsState> alertsForAllJobFailures = default;
+            Core.Optional<RecoveryServicesAlertsState> alertsForAllJobFailures = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertsForAllJobFailures"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new AzureMonitorAlertSettings(Optional.ToNullable(alertsForAllJobFailures));
+            return new AzureMonitorAlertSettings(Core.Optional.ToNullable(alertsForAllJobFailures));
         }
     }
 }

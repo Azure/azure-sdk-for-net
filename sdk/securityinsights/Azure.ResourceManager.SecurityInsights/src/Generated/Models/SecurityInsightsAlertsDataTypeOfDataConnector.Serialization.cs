@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAlertsDataTypeOfDataConnector : IUtf8JsonSerializable
+    public partial class SecurityInsightsAlertsDataTypeOfDataConnector : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Alerts))
+            if (Core.Optional.IsDefined(Alerts))
             {
                 writer.WritePropertyName("alerts"u8);
                 writer.WriteObjectValue(Alerts);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<DataConnectorDataTypeCommon> alerts = default;
+            Core.Optional<DataConnectorDataTypeCommon> alerts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alerts"u8))

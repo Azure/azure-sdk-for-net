@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ResourceProviderListResult. </summary>
         internal ResourceProviderListResult()
         {
-            Value = new ChangeTrackingList<ResourceProviderData>();
+            Value = new Core.ChangeTrackingList<ResourceProviderData>();
         }
 
         /// <summary> Initializes a new instance of ResourceProviderListResult. </summary>

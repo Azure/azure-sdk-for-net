@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForServersAwsOfferingArcAutoProvisioning : IUtf8JsonSerializable
+    public partial class DefenderForServersAwsOfferingArcAutoProvisioning : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(CloudRoleArn))
+            if (Core.Optional.IsDefined(CloudRoleArn))
             {
                 writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> cloudRoleArn = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<string> cloudRoleArn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DefenderForServersAwsOfferingArcAutoProvisioning(Optional.ToNullable(enabled), cloudRoleArn.Value);
+            return new DefenderForServersAwsOfferingArcAutoProvisioning(Core.Optional.ToNullable(enabled), cloudRoleArn.Value);
         }
     }
 }

@@ -11,27 +11,27 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class SearchServicePrivateEndpointConnectionProperties : IUtf8JsonSerializable
+    public partial class SearchServicePrivateEndpointConnectionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (Core.Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Optional.IsDefined(ConnectionState))
+            if (Core.Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
             }
-            if (Optional.IsDefined(GroupId))
+            if (Core.Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<SearchServicePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<string> groupId = default;
-            Optional<SearchPrivateLinkServiceConnectionProvisioningState> provisioningState = default;
+            Core.Optional<WritableSubResource> privateEndpoint = default;
+            Core.Optional<SearchServicePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Core.Optional<string> groupId = default;
+            Core.Optional<SearchPrivateLinkServiceConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateEndpoint"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Search.Models
                     continue;
                 }
             }
-            return new SearchServicePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState.Value, groupId.Value, Optional.ToNullable(provisioningState));
+            return new SearchServicePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState.Value, groupId.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

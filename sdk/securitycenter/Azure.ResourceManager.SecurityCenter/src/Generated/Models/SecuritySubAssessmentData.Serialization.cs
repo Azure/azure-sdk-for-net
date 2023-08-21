@@ -13,24 +13,24 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecuritySubAssessmentData : IUtf8JsonSerializable
+    public partial class SecuritySubAssessmentData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (Optional.IsDefined(ResourceDetails))
+            if (Core.Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
                 writer.WriteObjectValue(ResourceDetails);
             }
-            if (Optional.IsDefined(AdditionalData))
+            if (Core.Optional.IsDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteObjectValue(AdditionalData);
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
-            Optional<string> displayName = default;
-            Optional<SubAssessmentStatus> status = default;
-            Optional<string> remediation = default;
-            Optional<string> impact = default;
-            Optional<string> category = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> timeGenerated = default;
-            Optional<SecurityCenterResourceDetails> resourceDetails = default;
-            Optional<SecuritySubAssessmentAdditionalInfo> additionalData = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> id0 = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<SubAssessmentStatus> status = default;
+            Core.Optional<string> remediation = default;
+            Core.Optional<string> impact = default;
+            Core.Optional<string> category = default;
+            Core.Optional<string> description = default;
+            Core.Optional<DateTimeOffset> timeGenerated = default;
+            Core.Optional<SecurityCenterResourceDetails> resourceDetails = default;
+            Core.Optional<SecuritySubAssessmentAdditionalInfo> additionalData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new SecuritySubAssessmentData(id, name, type, systemData.Value, id0.Value, displayName.Value, status.Value, remediation.Value, impact.Value, category.Value, description.Value, Optional.ToNullable(timeGenerated), resourceDetails.Value, additionalData.Value);
+            return new SecuritySubAssessmentData(id, name, type, systemData.Value, id0.Value, displayName.Value, status.Value, remediation.Value, impact.Value, category.Value, description.Value, Core.Optional.ToNullable(timeGenerated), resourceDetails.Value, additionalData.Value);
         }
     }
 }

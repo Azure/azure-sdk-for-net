@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of BackupWeeklySchedule. </summary>
         public BackupWeeklySchedule()
         {
-            ScheduleRunDays = new ChangeTrackingList<BackupDayOfWeek>();
-            ScheduleRunTimes = new ChangeTrackingList<DateTimeOffset>();
+            ScheduleRunDays = new Core.ChangeTrackingList<BackupDayOfWeek>();
+            ScheduleRunTimes = new Core.ChangeTrackingList<DateTimeOffset>();
         }
 
         /// <summary> Initializes a new instance of BackupWeeklySchedule. </summary>

@@ -11,87 +11,87 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class IndexingParametersConfiguration : IUtf8JsonSerializable
+    public partial class IndexingParametersConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ParsingMode))
+            if (Core.Optional.IsDefined(ParsingMode))
             {
                 writer.WritePropertyName("parsingMode"u8);
                 writer.WriteStringValue(ParsingMode.Value.ToString());
             }
-            if (Optional.IsDefined(ExcludedFileNameExtensions))
+            if (Core.Optional.IsDefined(ExcludedFileNameExtensions))
             {
                 writer.WritePropertyName("excludedFileNameExtensions"u8);
                 writer.WriteStringValue(ExcludedFileNameExtensions);
             }
-            if (Optional.IsDefined(IndexedFileNameExtensions))
+            if (Core.Optional.IsDefined(IndexedFileNameExtensions))
             {
                 writer.WritePropertyName("indexedFileNameExtensions"u8);
                 writer.WriteStringValue(IndexedFileNameExtensions);
             }
-            if (Optional.IsDefined(FailOnUnsupportedContentType))
+            if (Core.Optional.IsDefined(FailOnUnsupportedContentType))
             {
                 writer.WritePropertyName("failOnUnsupportedContentType"u8);
                 writer.WriteBooleanValue(FailOnUnsupportedContentType.Value);
             }
-            if (Optional.IsDefined(FailOnUnprocessableDocument))
+            if (Core.Optional.IsDefined(FailOnUnprocessableDocument))
             {
                 writer.WritePropertyName("failOnUnprocessableDocument"u8);
                 writer.WriteBooleanValue(FailOnUnprocessableDocument.Value);
             }
-            if (Optional.IsDefined(IndexStorageMetadataOnlyForOversizedDocuments))
+            if (Core.Optional.IsDefined(IndexStorageMetadataOnlyForOversizedDocuments))
             {
                 writer.WritePropertyName("indexStorageMetadataOnlyForOversizedDocuments"u8);
                 writer.WriteBooleanValue(IndexStorageMetadataOnlyForOversizedDocuments.Value);
             }
-            if (Optional.IsDefined(DelimitedTextHeaders))
+            if (Core.Optional.IsDefined(DelimitedTextHeaders))
             {
                 writer.WritePropertyName("delimitedTextHeaders"u8);
                 writer.WriteStringValue(DelimitedTextHeaders);
             }
-            if (Optional.IsDefined(DelimitedTextDelimiter))
+            if (Core.Optional.IsDefined(DelimitedTextDelimiter))
             {
                 writer.WritePropertyName("delimitedTextDelimiter"u8);
                 writer.WriteStringValue(DelimitedTextDelimiter);
             }
-            if (Optional.IsDefined(FirstLineContainsHeaders))
+            if (Core.Optional.IsDefined(FirstLineContainsHeaders))
             {
                 writer.WritePropertyName("firstLineContainsHeaders"u8);
                 writer.WriteBooleanValue(FirstLineContainsHeaders.Value);
             }
-            if (Optional.IsDefined(DocumentRoot))
+            if (Core.Optional.IsDefined(DocumentRoot))
             {
                 writer.WritePropertyName("documentRoot"u8);
                 writer.WriteStringValue(DocumentRoot);
             }
-            if (Optional.IsDefined(DataToExtract))
+            if (Core.Optional.IsDefined(DataToExtract))
             {
                 writer.WritePropertyName("dataToExtract"u8);
                 writer.WriteStringValue(DataToExtract.Value.ToString());
             }
-            if (Optional.IsDefined(ImageAction))
+            if (Core.Optional.IsDefined(ImageAction))
             {
                 writer.WritePropertyName("imageAction"u8);
                 writer.WriteStringValue(ImageAction.Value.ToString());
             }
-            if (Optional.IsDefined(AllowSkillsetToReadFileData))
+            if (Core.Optional.IsDefined(AllowSkillsetToReadFileData))
             {
                 writer.WritePropertyName("allowSkillsetToReadFileData"u8);
                 writer.WriteBooleanValue(AllowSkillsetToReadFileData.Value);
             }
-            if (Optional.IsDefined(PdfTextRotationAlgorithm))
+            if (Core.Optional.IsDefined(PdfTextRotationAlgorithm))
             {
                 writer.WritePropertyName("pdfTextRotationAlgorithm"u8);
                 writer.WriteStringValue(PdfTextRotationAlgorithm.Value.ToString());
             }
-            if (Optional.IsDefined(ExecutionEnvironment))
+            if (Core.Optional.IsDefined(ExecutionEnvironment))
             {
                 writer.WritePropertyName("executionEnvironment"u8);
                 writer.WriteStringValue(ExecutionEnvironment.Value.ToString());
             }
-            if (Optional.IsDefined(_queryTimeout))
+            if (Core.Optional.IsDefined(_queryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 writer.WriteStringValue(_queryTimeout);
@@ -110,22 +110,22 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<BlobIndexerParsingMode> parsingMode = default;
-            Optional<string> excludedFileNameExtensions = default;
-            Optional<string> indexedFileNameExtensions = default;
-            Optional<bool> failOnUnsupportedContentType = default;
-            Optional<bool> failOnUnprocessableDocument = default;
-            Optional<bool> indexStorageMetadataOnlyForOversizedDocuments = default;
-            Optional<string> delimitedTextHeaders = default;
-            Optional<string> delimitedTextDelimiter = default;
-            Optional<bool> firstLineContainsHeaders = default;
-            Optional<string> documentRoot = default;
-            Optional<BlobIndexerDataToExtract> dataToExtract = default;
-            Optional<BlobIndexerImageAction> imageAction = default;
-            Optional<bool> allowSkillsetToReadFileData = default;
-            Optional<BlobIndexerPdfTextRotationAlgorithm> pdfTextRotationAlgorithm = default;
-            Optional<IndexerExecutionEnvironment> executionEnvironment = default;
-            Optional<string> queryTimeout = default;
+            Core.Optional<BlobIndexerParsingMode> parsingMode = default;
+            Core.Optional<string> excludedFileNameExtensions = default;
+            Core.Optional<string> indexedFileNameExtensions = default;
+            Core.Optional<bool> failOnUnsupportedContentType = default;
+            Core.Optional<bool> failOnUnprocessableDocument = default;
+            Core.Optional<bool> indexStorageMetadataOnlyForOversizedDocuments = default;
+            Core.Optional<string> delimitedTextHeaders = default;
+            Core.Optional<string> delimitedTextDelimiter = default;
+            Core.Optional<bool> firstLineContainsHeaders = default;
+            Core.Optional<string> documentRoot = default;
+            Core.Optional<BlobIndexerDataToExtract> dataToExtract = default;
+            Core.Optional<BlobIndexerImageAction> imageAction = default;
+            Core.Optional<bool> allowSkillsetToReadFileData = default;
+            Core.Optional<BlobIndexerPdfTextRotationAlgorithm> pdfTextRotationAlgorithm = default;
+            Core.Optional<IndexerExecutionEnvironment> executionEnvironment = default;
+            Core.Optional<string> queryTimeout = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -253,7 +253,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IndexingParametersConfiguration(Optional.ToNullable(parsingMode), excludedFileNameExtensions.Value, indexedFileNameExtensions.Value, Optional.ToNullable(failOnUnsupportedContentType), Optional.ToNullable(failOnUnprocessableDocument), Optional.ToNullable(indexStorageMetadataOnlyForOversizedDocuments), delimitedTextHeaders.Value, delimitedTextDelimiter.Value, Optional.ToNullable(firstLineContainsHeaders), documentRoot.Value, Optional.ToNullable(dataToExtract), Optional.ToNullable(imageAction), Optional.ToNullable(allowSkillsetToReadFileData), Optional.ToNullable(pdfTextRotationAlgorithm), Optional.ToNullable(executionEnvironment), queryTimeout.Value, additionalProperties);
+            return new IndexingParametersConfiguration(Core.Optional.ToNullable(parsingMode), excludedFileNameExtensions.Value, indexedFileNameExtensions.Value, Core.Optional.ToNullable(failOnUnsupportedContentType), Core.Optional.ToNullable(failOnUnprocessableDocument), Core.Optional.ToNullable(indexStorageMetadataOnlyForOversizedDocuments), delimitedTextHeaders.Value, delimitedTextDelimiter.Value, Core.Optional.ToNullable(firstLineContainsHeaders), documentRoot.Value, Core.Optional.ToNullable(dataToExtract), Core.Optional.ToNullable(imageAction), Core.Optional.ToNullable(allowSkillsetToReadFileData), Core.Optional.ToNullable(pdfTextRotationAlgorithm), Core.Optional.ToNullable(executionEnvironment), queryTimeout.Value, additionalProperties);
         }
     }
 }

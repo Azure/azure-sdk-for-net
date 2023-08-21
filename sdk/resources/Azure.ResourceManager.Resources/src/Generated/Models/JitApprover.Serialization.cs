@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class JitApprover : IUtf8JsonSerializable
+    public partial class JitApprover : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(ApproverType))
+            if (Core.Optional.IsDefined(ApproverType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ApproverType.Value.ToString());
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string id = default;
-            Optional<JitApproverType> type = default;
-            Optional<string> displayName = default;
+            Core.Optional<JitApproverType> type = default;
+            Core.Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new JitApprover(id, Optional.ToNullable(type), displayName.Value);
+            return new JitApprover(id, Core.Optional.ToNullable(type), displayName.Value);
         }
     }
 }

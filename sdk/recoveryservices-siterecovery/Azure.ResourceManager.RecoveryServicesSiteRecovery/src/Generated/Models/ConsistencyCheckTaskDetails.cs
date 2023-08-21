@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ConsistencyCheckTaskDetails. </summary>
         internal ConsistencyCheckTaskDetails()
         {
-            VmDetails = new ChangeTrackingList<InconsistentVmDetails>();
+            VmDetails = new Core.ChangeTrackingList<InconsistentVmDetails>();
             InstanceType = "ConsistencyCheckTaskDetails";
         }
 

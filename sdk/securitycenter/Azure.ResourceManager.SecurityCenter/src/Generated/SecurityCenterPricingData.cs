@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of SecurityCenterPricingData. </summary>
         public SecurityCenterPricingData()
         {
-            ReplacedBy = new ChangeTrackingList<string>();
+            ReplacedBy = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SecurityCenterPricingData. </summary>

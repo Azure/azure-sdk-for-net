@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of SignalRCorsSettings. </summary>
         public SignalRCorsSettings()
         {
-            AllowedOrigins = new ChangeTrackingList<string>();
+            AllowedOrigins = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SignalRCorsSettings. </summary>

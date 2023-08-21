@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SubscriptionUsageListResult. </summary>
         internal SubscriptionUsageListResult()
         {
-            Value = new ChangeTrackingList<SubscriptionUsageData>();
+            Value = new Core.ChangeTrackingList<SubscriptionUsageData>();
         }
 
         /// <summary> Initializes a new instance of SubscriptionUsageListResult. </summary>

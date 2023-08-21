@@ -13,24 +13,24 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedInstanceEncryptionProtectorData : IUtf8JsonSerializable
+    public partial class ManagedInstanceEncryptionProtectorData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerKeyName))
+            if (Core.Optional.IsDefined(ServerKeyName))
             {
                 writer.WritePropertyName("serverKeyName"u8);
                 writer.WriteStringValue(ServerKeyName);
             }
-            if (Optional.IsDefined(ServerKeyType))
+            if (Core.Optional.IsDefined(ServerKeyType))
             {
                 writer.WritePropertyName("serverKeyType"u8);
                 writer.WriteStringValue(ServerKeyType.Value.ToString());
             }
-            if (Optional.IsDefined(IsAutoRotationEnabled))
+            if (Core.Optional.IsDefined(IsAutoRotationEnabled))
             {
                 writer.WritePropertyName("autoRotationEnabled"u8);
                 writer.WriteBooleanValue(IsAutoRotationEnabled.Value);
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> serverKeyName = default;
-            Optional<SqlServerKeyType> serverKeyType = default;
-            Optional<Uri> uri = default;
-            Optional<string> thumbprint = default;
-            Optional<bool> autoRotationEnabled = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> serverKeyName = default;
+            Core.Optional<SqlServerKeyType> serverKeyType = default;
+            Core.Optional<Uri> uri = default;
+            Core.Optional<string> thumbprint = default;
+            Core.Optional<bool> autoRotationEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedInstanceEncryptionProtectorData(id, name, type, systemData.Value, kind.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(autoRotationEnabled));
+            return new ManagedInstanceEncryptionProtectorData(id, name, type, systemData.Value, kind.Value, serverKeyName.Value, Core.Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Core.Optional.ToNullable(autoRotationEnabled));
         }
     }
 }

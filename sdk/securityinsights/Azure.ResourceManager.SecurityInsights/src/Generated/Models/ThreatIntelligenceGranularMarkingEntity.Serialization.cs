@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ThreatIntelligenceGranularMarkingEntity : IUtf8JsonSerializable
+    public partial class ThreatIntelligenceGranularMarkingEntity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Language))
+            if (Core.Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsDefined(MarkingRef))
+            if (Core.Optional.IsDefined(MarkingRef))
             {
                 writer.WritePropertyName("markingRef"u8);
                 writer.WriteNumberValue(MarkingRef.Value);
             }
-            if (Optional.IsCollectionDefined(Selectors))
+            if (Core.Optional.IsCollectionDefined(Selectors))
             {
                 writer.WritePropertyName("selectors"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> language = default;
-            Optional<int> markingRef = default;
-            Optional<IList<string>> selectors = default;
+            Core.Optional<string> language = default;
+            Core.Optional<int> markingRef = default;
+            Core.Optional<IList<string>> selectors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("language"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new ThreatIntelligenceGranularMarkingEntity(language.Value, Optional.ToNullable(markingRef), Optional.ToList(selectors));
+            return new ThreatIntelligenceGranularMarkingEntity(language.Value, Core.Optional.ToNullable(markingRef), Core.Optional.ToList(selectors));
         }
     }
 }

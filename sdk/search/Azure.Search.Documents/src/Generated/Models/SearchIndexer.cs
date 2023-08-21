@@ -28,8 +28,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Name = name;
             DataSourceName = dataSourceName;
             TargetIndexName = targetIndexName;
-            FieldMappings = new ChangeTrackingList<FieldMapping>();
-            OutputFieldMappings = new ChangeTrackingList<FieldMapping>();
+            FieldMappings = new Core.ChangeTrackingList<FieldMapping>();
+            OutputFieldMappings = new Core.ChangeTrackingList<FieldMapping>();
         }
 
         /// <summary> Initializes a new instance of SearchIndexer. </summary>

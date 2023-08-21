@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class IndexAction : IUtf8JsonSerializable
+    internal partial class IndexAction : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionType))
+            if (Core.Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("@search.action"u8);
                 writer.WriteStringValue(ActionType.Value.ToSerialString());

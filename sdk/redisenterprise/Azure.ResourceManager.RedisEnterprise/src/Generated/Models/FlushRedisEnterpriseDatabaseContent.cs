@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of FlushRedisEnterpriseDatabaseContent. </summary>
         public FlushRedisEnterpriseDatabaseContent()
         {
-            Ids = new ChangeTrackingList<string>();
+            Ids = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> The resource identifiers of all the other database resources in the georeplication group to be flushed. </summary>

@@ -13,17 +13,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmDeploymentScriptManagedIdentity : IUtf8JsonSerializable
+    public partial class ArmDeploymentScriptManagedIdentity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IdentityType))
+            if (Core.Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (Core.Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ArmDeploymentScriptManagedIdentityType> type = default;
-            Optional<Guid> tenantId = default;
-            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            Core.Optional<ArmDeploymentScriptManagedIdentityType> type = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmDeploymentScriptManagedIdentity(Optional.ToNullable(type), Optional.ToNullable(tenantId), Optional.ToDictionary(userAssignedIdentities));
+            return new ArmDeploymentScriptManagedIdentity(Core.Optional.ToNullable(type), Core.Optional.ToNullable(tenantId), Core.Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

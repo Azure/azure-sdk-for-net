@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class RecoveryPointRehydrationInfo : IUtf8JsonSerializable
+    public partial class RecoveryPointRehydrationInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RehydrationRetentionDuration))
+            if (Core.Optional.IsDefined(RehydrationRetentionDuration))
             {
                 writer.WritePropertyName("rehydrationRetentionDuration"u8);
                 writer.WriteStringValue(RehydrationRetentionDuration.Value, "P");
             }
-            if (Optional.IsDefined(RehydrationPriority))
+            if (Core.Optional.IsDefined(RehydrationPriority))
             {
                 writer.WritePropertyName("rehydrationPriority"u8);
                 writer.WriteStringValue(RehydrationPriority.Value.ToString());
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<TimeSpan> rehydrationRetentionDuration = default;
-            Optional<RehydrationPriority> rehydrationPriority = default;
+            Core.Optional<TimeSpan> rehydrationRetentionDuration = default;
+            Core.Optional<RehydrationPriority> rehydrationPriority = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rehydrationRetentionDuration"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new RecoveryPointRehydrationInfo(Optional.ToNullable(rehydrationRetentionDuration), Optional.ToNullable(rehydrationPriority));
+            return new RecoveryPointRehydrationInfo(Core.Optional.ToNullable(rehydrationRetentionDuration), Core.Optional.ToNullable(rehydrationPriority));
         }
     }
 }

@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MabContainerHealthDetails : IUtf8JsonSerializable
+    public partial class MabContainerHealthDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Core.Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteNumberValue(Code.Value);
             }
-            if (Optional.IsDefined(Title))
+            if (Core.Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Message))
+            if (Core.Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsCollectionDefined(Recommendations))
+            if (Core.Optional.IsCollectionDefined(Recommendations))
             {
                 writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> code = default;
-            Optional<string> title = default;
-            Optional<string> message = default;
-            Optional<IList<string>> recommendations = default;
+            Core.Optional<int> code = default;
+            Core.Optional<string> title = default;
+            Core.Optional<string> message = default;
+            Core.Optional<IList<string>> recommendations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new MabContainerHealthDetails(Optional.ToNullable(code), title.Value, message.Value, Optional.ToList(recommendations));
+            return new MabContainerHealthDetails(Core.Optional.ToNullable(code), title.Value, message.Value, Core.Optional.ToList(recommendations));
         }
     }
 }

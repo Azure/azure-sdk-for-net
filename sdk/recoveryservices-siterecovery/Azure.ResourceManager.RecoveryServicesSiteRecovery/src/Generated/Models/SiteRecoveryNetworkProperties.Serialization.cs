@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> fabricType = default;
-            Optional<IReadOnlyList<SiteRecoverySubnet>> subnets = default;
-            Optional<string> friendlyName = default;
-            Optional<string> networkType = default;
+            Core.Optional<string> fabricType = default;
+            Core.Optional<IReadOnlyList<SiteRecoverySubnet>> subnets = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<string> networkType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fabricType"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryNetworkProperties(fabricType.Value, Optional.ToList(subnets), friendlyName.Value, networkType.Value);
+            return new SiteRecoveryNetworkProperties(fabricType.Value, Core.Optional.ToList(subnets), friendlyName.Value, networkType.Value);
         }
     }
 }

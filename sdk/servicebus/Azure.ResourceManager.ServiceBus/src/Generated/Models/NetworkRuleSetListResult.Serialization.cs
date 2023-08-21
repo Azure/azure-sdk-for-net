@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceBusNetworkRuleSetData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ServiceBusNetworkRuleSetData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new NetworkRuleSetListResult(Optional.ToList(value), nextLink.Value);
+            return new NetworkRuleSetListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

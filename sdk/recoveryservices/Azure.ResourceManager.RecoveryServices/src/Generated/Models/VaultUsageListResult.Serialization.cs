@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VaultUsage>> value = default;
+            Core.Optional<IReadOnlyList<VaultUsage>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new VaultUsageListResult(Optional.ToList(value));
+            return new VaultUsageListResult(Core.Optional.ToList(value));
         }
     }
 }

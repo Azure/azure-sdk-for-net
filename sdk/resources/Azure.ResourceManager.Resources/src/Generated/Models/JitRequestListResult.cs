@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of JitRequestListResult. </summary>
         internal JitRequestListResult()
         {
-            Value = new ChangeTrackingList<JitRequestData>();
+            Value = new Core.ChangeTrackingList<JitRequestData>();
         }
 
         /// <summary> Initializes a new instance of JitRequestListResult. </summary>

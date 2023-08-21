@@ -16,7 +16,7 @@ namespace Azure.Data.SchemaRegistry.Models
         /// <summary> Initializes a new instance of SchemaVersions. </summary>
         internal SchemaVersions()
         {
-            Versions = new ChangeTrackingList<int>();
+            Versions = new Core.ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of SchemaVersions. </summary>

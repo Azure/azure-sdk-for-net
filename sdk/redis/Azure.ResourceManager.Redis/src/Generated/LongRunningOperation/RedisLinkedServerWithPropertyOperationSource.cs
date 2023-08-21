@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Redis
 {
-    internal class RedisLinkedServerWithPropertyOperationSource : IOperationSource<RedisLinkedServerWithPropertyResource>
+    internal class RedisLinkedServerWithPropertyOperationSource : Core.IOperationSource<RedisLinkedServerWithPropertyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Redis
             _client = client;
         }
 
-        RedisLinkedServerWithPropertyResource IOperationSource<RedisLinkedServerWithPropertyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        RedisLinkedServerWithPropertyResource Core.IOperationSource<RedisLinkedServerWithPropertyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(document.RootElement);
             return new RedisLinkedServerWithPropertyResource(_client, data);
         }
 
-        async ValueTask<RedisLinkedServerWithPropertyResource> IOperationSource<RedisLinkedServerWithPropertyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RedisLinkedServerWithPropertyResource> Core.IOperationSource<RedisLinkedServerWithPropertyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(document.RootElement);

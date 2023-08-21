@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of RedisEnterpriseDatabaseGeoReplication. </summary>
         public RedisEnterpriseDatabaseGeoReplication()
         {
-            LinkedDatabases = new ChangeTrackingList<RedisEnterpriseLinkedDatabase>();
+            LinkedDatabases = new Core.ChangeTrackingList<RedisEnterpriseLinkedDatabase>();
         }
 
         /// <summary> Initializes a new instance of RedisEnterpriseDatabaseGeoReplication. </summary>

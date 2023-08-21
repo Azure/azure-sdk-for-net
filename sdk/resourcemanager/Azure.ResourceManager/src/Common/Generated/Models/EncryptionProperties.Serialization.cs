@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(EncryptionPropertiesConverter))]
-    public partial class EncryptionProperties : IUtf8JsonSerializable
+    public partial class EncryptionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (Core.Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Models
             {
                 return null;
             }
-            Optional<EncryptionStatus> status = default;
-            Optional<KeyVaultProperties> keyVaultProperties = default;
+            Core.Optional<EncryptionStatus> status = default;
+            Core.Optional<KeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new EncryptionProperties(Optional.ToNullable(status), keyVaultProperties.Value);
+            return new EncryptionProperties(Core.Optional.ToNullable(status), keyVaultProperties.Value);
         }
 
         internal partial class EncryptionPropertiesConverter : JsonConverter<EncryptionProperties>

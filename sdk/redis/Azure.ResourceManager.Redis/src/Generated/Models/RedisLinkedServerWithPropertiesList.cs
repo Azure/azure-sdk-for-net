@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Initializes a new instance of RedisLinkedServerWithPropertiesList. </summary>
         internal RedisLinkedServerWithPropertiesList()
         {
-            Value = new ChangeTrackingList<RedisLinkedServerWithPropertyData>();
+            Value = new Core.ChangeTrackingList<RedisLinkedServerWithPropertyData>();
         }
 
         /// <summary> Initializes a new instance of RedisLinkedServerWithPropertiesList. </summary>

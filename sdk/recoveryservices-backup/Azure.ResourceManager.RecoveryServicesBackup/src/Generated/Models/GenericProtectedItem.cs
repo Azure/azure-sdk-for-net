@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of GenericProtectedItem. </summary>
         public GenericProtectedItem()
         {
-            SourceAssociations = new ChangeTrackingDictionary<string, string>();
+            SourceAssociations = new Core.ChangeTrackingDictionary<string, string>();
             ProtectedItemType = "GenericProtectedItem";
         }
 

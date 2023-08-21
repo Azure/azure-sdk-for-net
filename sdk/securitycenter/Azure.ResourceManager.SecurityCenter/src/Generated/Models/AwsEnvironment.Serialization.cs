@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AwsEnvironment : IUtf8JsonSerializable
+    public partial class AwsEnvironment : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OrganizationalData))
+            if (Core.Optional.IsDefined(OrganizationalData))
             {
                 writer.WritePropertyName("organizationalData"u8);
                 writer.WriteObjectValue(OrganizationalData);
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AwsOrganizationalInfo> organizationalData = default;
+            Core.Optional<AwsOrganizationalInfo> organizationalData = default;
             EnvironmentType environmentType = default;
             foreach (var property in element.EnumerateObject())
             {

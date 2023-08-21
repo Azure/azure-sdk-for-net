@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<int> limit = default;
-            Optional<LogSizeUnit> unit = default;
+            Core.Optional<int> limit = default;
+            Core.Optional<LogSizeUnit> unit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("limit"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new LogSizeCapability(Optional.ToNullable(limit), Optional.ToNullable(unit));
+            return new LogSizeCapability(Core.Optional.ToNullable(limit), Core.Optional.ToNullable(unit));
         }
     }
 }

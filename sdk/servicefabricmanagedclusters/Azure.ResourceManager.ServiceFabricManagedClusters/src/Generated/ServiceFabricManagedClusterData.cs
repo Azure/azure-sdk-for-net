@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
-            ClusterCertificateThumbprints = new ChangeTrackingList<BinaryData>();
-            LoadBalancingRules = new ChangeTrackingList<ManagedClusterLoadBalancingRule>();
-            NetworkSecurityRules = new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>();
-            Clients = new ChangeTrackingList<ManagedClusterClientCertificate>();
-            FabricSettings = new ChangeTrackingList<ClusterFabricSettingsSection>();
-            AddOnFeatures = new ChangeTrackingList<ManagedClusterAddOnFeature>();
-            IPTags = new ChangeTrackingList<ManagedClusterIPTag>();
-            AuxiliarySubnets = new ChangeTrackingList<ManagedClusterSubnet>();
-            ServiceEndpoints = new ChangeTrackingList<ManagedClusterServiceEndpoint>();
+            ClusterCertificateThumbprints = new Core.ChangeTrackingList<BinaryData>();
+            LoadBalancingRules = new Core.ChangeTrackingList<ManagedClusterLoadBalancingRule>();
+            NetworkSecurityRules = new Core.ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>();
+            Clients = new Core.ChangeTrackingList<ManagedClusterClientCertificate>();
+            FabricSettings = new Core.ChangeTrackingList<ClusterFabricSettingsSection>();
+            AddOnFeatures = new Core.ChangeTrackingList<ManagedClusterAddOnFeature>();
+            IPTags = new Core.ChangeTrackingList<ManagedClusterIPTag>();
+            AuxiliarySubnets = new Core.ChangeTrackingList<ManagedClusterSubnet>();
+            ServiceEndpoints = new Core.ChangeTrackingList<ManagedClusterServiceEndpoint>();
         }
 
         /// <summary> Initializes a new instance of ServiceFabricManagedClusterData. </summary>

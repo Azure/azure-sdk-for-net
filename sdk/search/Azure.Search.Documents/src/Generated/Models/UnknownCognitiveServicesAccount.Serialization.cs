@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class UnknownCognitiveServicesAccount : IUtf8JsonSerializable
+    internal partial class UnknownCognitiveServicesAccount : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             string odataType = "Unknown";
-            Optional<string> description = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"u8))

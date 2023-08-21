@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(outputs, nameof(outputs));
 
-            InlineEntitiesDefinition = new ChangeTrackingList<CustomEntity>();
+            InlineEntitiesDefinition = new Core.ChangeTrackingList<CustomEntity>();
             ODataType = "#Microsoft.Skills.Text.CustomEntityLookupSkill";
         }
 

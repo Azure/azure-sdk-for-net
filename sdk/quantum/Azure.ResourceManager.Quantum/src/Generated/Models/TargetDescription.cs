@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <summary> Initializes a new instance of TargetDescription. </summary>
         internal TargetDescription()
         {
-            AcceptedDataFormats = new ChangeTrackingList<string>();
-            AcceptedContentEncodings = new ChangeTrackingList<string>();
+            AcceptedDataFormats = new Core.ChangeTrackingList<string>();
+            AcceptedContentEncodings = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of TargetDescription. </summary>

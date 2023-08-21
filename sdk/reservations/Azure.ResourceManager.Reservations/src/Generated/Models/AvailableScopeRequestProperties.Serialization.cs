@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    internal partial class AvailableScopeRequestProperties : IUtf8JsonSerializable
+    internal partial class AvailableScopeRequestProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Scopes))
+            if (Core.Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();

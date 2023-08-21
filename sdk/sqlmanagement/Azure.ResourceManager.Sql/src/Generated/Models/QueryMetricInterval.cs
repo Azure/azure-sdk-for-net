@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of QueryMetricInterval. </summary>
         public QueryMetricInterval()
         {
-            Metrics = new ChangeTrackingList<QueryMetricProperties>();
+            Metrics = new Core.ChangeTrackingList<QueryMetricProperties>();
         }
 
         /// <summary> Initializes a new instance of QueryMetricInterval. </summary>

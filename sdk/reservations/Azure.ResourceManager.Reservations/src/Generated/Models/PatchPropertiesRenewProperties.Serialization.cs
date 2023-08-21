@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    internal partial class PatchPropertiesRenewProperties : IUtf8JsonSerializable
+    internal partial class PatchPropertiesRenewProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PurchaseProperties))
+            if (Core.Optional.IsDefined(PurchaseProperties))
             {
                 writer.WritePropertyName("purchaseProperties"u8);
                 writer.WriteObjectValue(PurchaseProperties);

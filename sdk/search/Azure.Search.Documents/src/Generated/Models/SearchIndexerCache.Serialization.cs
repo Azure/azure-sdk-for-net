@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndexerCache : IUtf8JsonSerializable
+    public partial class SearchIndexerCache : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageConnectionString))
+            if (Core.Optional.IsDefined(StorageConnectionString))
             {
                 writer.WritePropertyName("storageConnectionString"u8);
                 writer.WriteStringValue(StorageConnectionString);
             }
-            if (Optional.IsDefined(EnableReprocessing))
+            if (Core.Optional.IsDefined(EnableReprocessing))
             {
                 if (EnableReprocessing != null)
                 {
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("enableReprocessing");
                 }
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
@@ -53,9 +53,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> storageConnectionString = default;
-            Optional<bool?> enableReprocessing = default;
-            Optional<SearchIndexerDataIdentity> identity = default;
+            Core.Optional<string> storageConnectionString = default;
+            Core.Optional<bool?> enableReprocessing = default;
+            Core.Optional<SearchIndexerDataIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageConnectionString"u8))
@@ -84,7 +84,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerCache(storageConnectionString.Value, Optional.ToNullable(enableReprocessing), identity.Value);
+            return new SearchIndexerCache(storageConnectionString.Value, Core.Optional.ToNullable(enableReprocessing), identity.Value);
         }
     }
 }

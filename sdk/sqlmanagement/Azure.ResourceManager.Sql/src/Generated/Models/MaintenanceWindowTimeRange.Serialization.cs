@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class MaintenanceWindowTimeRange : IUtf8JsonSerializable
+    public partial class MaintenanceWindowTimeRange : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DayOfWeek))
+            if (Core.Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToString());
             }
-            if (Optional.IsDefined(StartTime))
+            if (Core.Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
-            if (Optional.IsDefined(Duration))
+            if (Core.Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlDayOfWeek> dayOfWeek = default;
-            Optional<string> startTime = default;
-            Optional<TimeSpan> duration = default;
+            Core.Optional<SqlDayOfWeek> dayOfWeek = default;
+            Core.Optional<string> startTime = default;
+            Core.Optional<TimeSpan> duration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dayOfWeek"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new MaintenanceWindowTimeRange(Optional.ToNullable(dayOfWeek), startTime.Value, Optional.ToNullable(duration));
+            return new MaintenanceWindowTimeRange(Core.Optional.ToNullable(dayOfWeek), startTime.Value, Core.Optional.ToNullable(duration));
         }
     }
 }

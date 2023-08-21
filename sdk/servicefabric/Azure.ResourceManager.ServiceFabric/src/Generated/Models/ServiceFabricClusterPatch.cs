@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of ServiceFabricClusterPatch. </summary>
         public ServiceFabricClusterPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            AddOnFeatures = new ChangeTrackingList<ClusterAddOnFeature>();
-            ClientCertificateCommonNames = new ChangeTrackingList<ClusterClientCertificateCommonName>();
-            ClientCertificateThumbprints = new ChangeTrackingList<ClusterClientCertificateThumbprint>();
-            FabricSettings = new ChangeTrackingList<SettingsSectionDescription>();
-            NodeTypes = new ChangeTrackingList<ClusterNodeTypeDescription>();
-            Notifications = new ChangeTrackingList<ClusterNotification>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            AddOnFeatures = new Core.ChangeTrackingList<ClusterAddOnFeature>();
+            ClientCertificateCommonNames = new Core.ChangeTrackingList<ClusterClientCertificateCommonName>();
+            ClientCertificateThumbprints = new Core.ChangeTrackingList<ClusterClientCertificateThumbprint>();
+            FabricSettings = new Core.ChangeTrackingList<SettingsSectionDescription>();
+            NodeTypes = new Core.ChangeTrackingList<ClusterNodeTypeDescription>();
+            Notifications = new Core.ChangeTrackingList<ClusterNotification>();
         }
 
         /// <summary> Cluster update parameters. </summary>

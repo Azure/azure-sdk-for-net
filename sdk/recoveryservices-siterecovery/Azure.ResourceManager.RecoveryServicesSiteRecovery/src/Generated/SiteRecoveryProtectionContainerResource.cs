@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource>(new SiteRecoveryProtectionContainerOperationSource(Client), _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource>(new SiteRecoveryProtectionContainerOperationSource(Client), _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource>(new SiteRecoveryProtectionContainerOperationSource(Client), _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource>(new SiteRecoveryProtectionContainerOperationSource(Client), _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.DiscoverProtectableItemAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource>(new SiteRecoveryProtectionContainerOperationSource(Client), _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateDiscoverProtectableItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource>(new SiteRecoveryProtectionContainerOperationSource(Client), _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateDiscoverProtectableItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.DiscoverProtectableItem(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource>(new SiteRecoveryProtectionContainerOperationSource(Client), _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateDiscoverProtectableItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource>(new SiteRecoveryProtectionContainerOperationSource(Client), _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateDiscoverProtectableItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.SwitchProtectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource>(new SiteRecoveryProtectionContainerOperationSource(Client), _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateSwitchProtectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource>(new SiteRecoveryProtectionContainerOperationSource(Client), _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateSwitchProtectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.SwitchProtection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource>(new SiteRecoveryProtectionContainerOperationSource(Client), _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateSwitchProtectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource>(new SiteRecoveryProtectionContainerOperationSource(Client), _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateSwitchProtectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ExtendedDatabaseBlobAuditingPolicyData. </summary>
         public ExtendedDatabaseBlobAuditingPolicyData()
         {
-            AuditActionsAndGroups = new ChangeTrackingList<string>();
+            AuditActionsAndGroups = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ExtendedDatabaseBlobAuditingPolicyData. </summary>

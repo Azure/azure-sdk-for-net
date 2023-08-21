@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _siteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, networkMappingName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryNetworkMappingResource>(new SiteRecoveryNetworkMappingOperationSource(Client), _siteRecoveryNetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, _siteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, networkMappingName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryNetworkMappingResource>(new SiteRecoveryNetworkMappingOperationSource(Client), _siteRecoveryNetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, _siteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, networkMappingName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _siteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, networkMappingName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryNetworkMappingResource>(new SiteRecoveryNetworkMappingOperationSource(Client), _siteRecoveryNetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, _siteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, networkMappingName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryNetworkMappingResource>(new SiteRecoveryNetworkMappingOperationSource(Client), _siteRecoveryNetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, _siteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, networkMappingName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.CreateListByReplicationNetworksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.CreateListByReplicationNetworksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryNetworkMappingResource(Client, SiteRecoveryNetworkMappingData.DeserializeSiteRecoveryNetworkMappingData(e)), _siteRecoveryNetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "SiteRecoveryNetworkMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryNetworkMappingResource(Client, SiteRecoveryNetworkMappingData.DeserializeSiteRecoveryNetworkMappingData(e)), _siteRecoveryNetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "SiteRecoveryNetworkMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.CreateListByReplicationNetworksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.CreateListByReplicationNetworksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryNetworkMappingResource(Client, SiteRecoveryNetworkMappingData.DeserializeSiteRecoveryNetworkMappingData(e)), _siteRecoveryNetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "SiteRecoveryNetworkMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryNetworkMappingResource(Client, SiteRecoveryNetworkMappingData.DeserializeSiteRecoveryNetworkMappingData(e)), _siteRecoveryNetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "SiteRecoveryNetworkMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

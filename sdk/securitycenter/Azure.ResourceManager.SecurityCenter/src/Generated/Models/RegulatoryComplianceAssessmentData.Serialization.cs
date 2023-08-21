@@ -12,14 +12,14 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class RegulatoryComplianceAssessmentData : IUtf8JsonSerializable
+    public partial class RegulatoryComplianceAssessmentData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> assessmentType = default;
-            Optional<string> assessmentDetailsLink = default;
-            Optional<RegulatoryComplianceState> state = default;
-            Optional<int> passedResources = default;
-            Optional<int> failedResources = default;
-            Optional<int> skippedResources = default;
-            Optional<int> unsupportedResources = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> assessmentType = default;
+            Core.Optional<string> assessmentDetailsLink = default;
+            Core.Optional<RegulatoryComplianceState> state = default;
+            Core.Optional<int> passedResources = default;
+            Core.Optional<int> failedResources = default;
+            Core.Optional<int> skippedResources = default;
+            Core.Optional<int> unsupportedResources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new RegulatoryComplianceAssessmentData(id, name, type, systemData.Value, description.Value, assessmentType.Value, assessmentDetailsLink.Value, Optional.ToNullable(state), Optional.ToNullable(passedResources), Optional.ToNullable(failedResources), Optional.ToNullable(skippedResources), Optional.ToNullable(unsupportedResources));
+            return new RegulatoryComplianceAssessmentData(id, name, type, systemData.Value, description.Value, assessmentType.Value, assessmentDetailsLink.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(passedResources), Core.Optional.ToNullable(failedResources), Core.Optional.ToNullable(skippedResources), Core.Optional.ToNullable(unsupportedResources));
         }
     }
 }

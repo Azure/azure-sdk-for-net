@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="location"> The location. </param>
         public SqlDatabaseData(AzureLocation location) : base(location)
         {
-            Keys = new ChangeTrackingDictionary<string, SqlDatabaseKey>();
+            Keys = new Core.ChangeTrackingDictionary<string, SqlDatabaseKey>();
         }
 
         /// <summary> Initializes a new instance of SqlDatabaseData. </summary>

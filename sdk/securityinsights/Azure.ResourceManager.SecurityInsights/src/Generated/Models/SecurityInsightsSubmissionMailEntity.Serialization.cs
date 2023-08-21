@@ -14,9 +14,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsSubmissionMailEntity : IUtf8JsonSerializable
+    public partial class SecurityInsightsSubmissionMailEntity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -37,19 +37,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<Guid> networkMessageId = default;
-            Optional<Guid> submissionId = default;
-            Optional<string> submitter = default;
-            Optional<DateTimeOffset> submissionDate = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> recipient = default;
-            Optional<string> sender = default;
-            Optional<IPAddress> senderIP = default;
-            Optional<string> subject = default;
-            Optional<string> reportType = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<Guid> networkMessageId = default;
+            Core.Optional<Guid> submissionId = default;
+            Core.Optional<string> submitter = default;
+            Core.Optional<DateTimeOffset> submissionDate = default;
+            Core.Optional<DateTimeOffset> timestamp = default;
+            Core.Optional<string> recipient = default;
+            Core.Optional<string> sender = default;
+            Core.Optional<IPAddress> senderIP = default;
+            Core.Optional<string> subject = default;
+            Core.Optional<string> reportType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsSubmissionMailEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToNullable(networkMessageId), Optional.ToNullable(submissionId), submitter.Value, Optional.ToNullable(submissionDate), Optional.ToNullable(timestamp), recipient.Value, sender.Value, senderIP.Value, subject.Value, reportType.Value);
+            return new SecurityInsightsSubmissionMailEntity(id, name, type, systemData.Value, kind, Core.Optional.ToDictionary(additionalData), friendlyName.Value, Core.Optional.ToNullable(networkMessageId), Core.Optional.ToNullable(submissionId), submitter.Value, Core.Optional.ToNullable(submissionDate), Core.Optional.ToNullable(timestamp), recipient.Value, sender.Value, senderIP.Value, subject.Value, reportType.Value);
         }
     }
 }

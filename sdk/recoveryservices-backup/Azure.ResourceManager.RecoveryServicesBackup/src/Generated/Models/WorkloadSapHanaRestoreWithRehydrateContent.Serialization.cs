@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadSapHanaRestoreWithRehydrateContent : IUtf8JsonSerializable
+    public partial class WorkloadSapHanaRestoreWithRehydrateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointRehydrationInfo))
+            if (Core.Optional.IsDefined(RecoveryPointRehydrationInfo))
             {
                 writer.WritePropertyName("recoveryPointRehydrationInfo"u8);
                 writer.WriteObjectValue(RecoveryPointRehydrationInfo);
             }
-            if (Optional.IsDefined(RecoveryType))
+            if (Core.Optional.IsDefined(RecoveryType))
             {
                 writer.WritePropertyName("recoveryType"u8);
                 writer.WriteStringValue(RecoveryType.Value.ToString());
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (Core.Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsCollectionDefined(PropertyBag))
+            if (Core.Optional.IsCollectionDefined(PropertyBag))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();
@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(TargetInfo))
+            if (Core.Optional.IsDefined(TargetInfo))
             {
                 writer.WritePropertyName("targetInfo"u8);
                 writer.WriteObjectValue(TargetInfo);
             }
-            if (Optional.IsDefined(RecoveryMode))
+            if (Core.Optional.IsDefined(RecoveryMode))
             {
                 writer.WritePropertyName("recoveryMode"u8);
                 writer.WriteStringValue(RecoveryMode.Value.ToString());
             }
-            if (Optional.IsDefined(TargetVirtualMachineId))
+            if (Core.Optional.IsDefined(TargetVirtualMachineId))
             {
                 writer.WritePropertyName("targetVirtualMachineId"u8);
                 writer.WriteStringValue(TargetVirtualMachineId);
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<RecoveryPointRehydrationInfo> recoveryPointRehydrationInfo = default;
-            Optional<FileShareRecoveryType> recoveryType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<IDictionary<string, string>> propertyBag = default;
-            Optional<TargetRestoreInfo> targetInfo = default;
-            Optional<RecoveryMode> recoveryMode = default;
-            Optional<ResourceIdentifier> targetVirtualMachineId = default;
+            Core.Optional<RecoveryPointRehydrationInfo> recoveryPointRehydrationInfo = default;
+            Core.Optional<FileShareRecoveryType> recoveryType = default;
+            Core.Optional<ResourceIdentifier> sourceResourceId = default;
+            Core.Optional<IDictionary<string, string>> propertyBag = default;
+            Core.Optional<TargetRestoreInfo> targetInfo = default;
+            Core.Optional<RecoveryMode> recoveryMode = default;
+            Core.Optional<ResourceIdentifier> targetVirtualMachineId = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new WorkloadSapHanaRestoreWithRehydrateContent(objectType, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetVirtualMachineId.Value, recoveryPointRehydrationInfo.Value);
+            return new WorkloadSapHanaRestoreWithRehydrateContent(objectType, Core.Optional.ToNullable(recoveryType), sourceResourceId.Value, Core.Optional.ToDictionary(propertyBag), targetInfo.Value, Core.Optional.ToNullable(recoveryMode), targetVirtualMachineId.Value, recoveryPointRehydrationInfo.Value);
         }
     }
 }

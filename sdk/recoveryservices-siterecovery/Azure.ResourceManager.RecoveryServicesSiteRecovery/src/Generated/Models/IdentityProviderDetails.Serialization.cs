@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> applicationId = default;
-            Optional<string> objectId = default;
-            Optional<string> audience = default;
-            Optional<string> aadAuthority = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<string> applicationId = default;
+            Core.Optional<string> objectId = default;
+            Core.Optional<string> audience = default;
+            Core.Optional<string> aadAuthority = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new IdentityProviderDetails(Optional.ToNullable(tenantId), applicationId.Value, objectId.Value, audience.Value, aadAuthority.Value);
+            return new IdentityProviderDetails(Core.Optional.ToNullable(tenantId), applicationId.Value, objectId.Value, audience.Value, aadAuthority.Value);
         }
     }
 }

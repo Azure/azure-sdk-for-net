@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SynonymMap : IUtf8JsonSerializable
+    public partial class SynonymMap : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Format);
             writer.WritePropertyName("synonyms"u8);
             writer.WriteStringValue(Synonyms);
-            if (Optional.IsDefined(EncryptionKey))
+            if (Core.Optional.IsDefined(EncryptionKey))
             {
                 if (EncryptionKey != null)
                 {
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("encryptionKey");
                 }
             }
-            if (Optional.IsDefined(_etag))
+            if (Core.Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
@@ -50,8 +50,8 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string format = default;
             string synonyms = default;
-            Optional<SearchResourceEncryptionKey> encryptionKey = default;
-            Optional<string> odataEtag = default;
+            Core.Optional<SearchResourceEncryptionKey> encryptionKey = default;
+            Core.Optional<string> odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

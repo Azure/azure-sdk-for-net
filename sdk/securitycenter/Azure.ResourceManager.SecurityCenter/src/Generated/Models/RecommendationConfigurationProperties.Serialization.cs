@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class RecommendationConfigurationProperties : IUtf8JsonSerializable
+    public partial class RecommendationConfigurationProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("recommendationType"u8);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IotSecurityRecommendationType recommendationType = default;
-            Optional<string> name = default;
+            Core.Optional<string> name = default;
             RecommendationConfigStatus status = default;
             foreach (var property in element.EnumerateObject())
             {

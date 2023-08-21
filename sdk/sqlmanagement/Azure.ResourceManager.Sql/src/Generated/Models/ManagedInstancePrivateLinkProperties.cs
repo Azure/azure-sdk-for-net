@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstancePrivateLinkProperties. </summary>
         internal ManagedInstancePrivateLinkProperties()
         {
-            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredMembers = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstancePrivateLinkProperties. </summary>

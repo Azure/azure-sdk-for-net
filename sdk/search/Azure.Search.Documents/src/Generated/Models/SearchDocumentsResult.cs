@@ -23,8 +23,8 @@ namespace Azure.Search.Documents.Models
         {
             Argument.AssertNotNull(results, nameof(results));
 
-            Facets = new ChangeTrackingDictionary<string, IList<FacetResult>>();
-            Answers = new ChangeTrackingList<AnswerResult>();
+            Facets = new Core.ChangeTrackingDictionary<string, IList<FacetResult>>();
+            Answers = new Core.ChangeTrackingList<AnswerResult>();
             Results = results.ToList();
         }
 

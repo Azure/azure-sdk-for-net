@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> dataSize = default;
-            Optional<string> dataType = default;
-            Optional<string> errorId = default;
-            Optional<bool> hasError = default;
-            Optional<bool> isPrimaryKey = default;
-            Optional<string> name = default;
-            Optional<string> quotedName = default;
+            Core.Optional<string> dataSize = default;
+            Core.Optional<string> dataType = default;
+            Core.Optional<string> errorId = default;
+            Core.Optional<bool> hasError = default;
+            Core.Optional<bool> isPrimaryKey = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> quotedName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSize"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SyncFullSchemaTableColumn(dataSize.Value, dataType.Value, errorId.Value, Optional.ToNullable(hasError), Optional.ToNullable(isPrimaryKey), name.Value, quotedName.Value);
+            return new SyncFullSchemaTableColumn(dataSize.Value, dataType.Value, errorId.Value, Core.Optional.ToNullable(hasError), Core.Optional.ToNullable(isPrimaryKey), name.Value, quotedName.Value);
         }
     }
 }

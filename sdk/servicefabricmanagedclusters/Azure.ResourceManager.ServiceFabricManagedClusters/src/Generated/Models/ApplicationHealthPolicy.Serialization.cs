@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ApplicationHealthPolicy : IUtf8JsonSerializable
+    public partial class ApplicationHealthPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("considerWarningAsError"u8);
             writer.WriteBooleanValue(ConsiderWarningAsError);
             writer.WritePropertyName("maxPercentUnhealthyDeployedApplications"u8);
             writer.WriteNumberValue(MaxPercentUnhealthyDeployedApplications);
-            if (Optional.IsDefined(DefaultServiceTypeHealthPolicy))
+            if (Core.Optional.IsDefined(DefaultServiceTypeHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeHealthPolicy"u8);
                 writer.WriteObjectValue(DefaultServiceTypeHealthPolicy);
             }
-            if (Optional.IsCollectionDefined(ServiceTypeHealthPolicyMap))
+            if (Core.Optional.IsCollectionDefined(ServiceTypeHealthPolicyMap))
             {
                 writer.WritePropertyName("serviceTypeHealthPolicyMap"u8);
                 writer.WriteStartObject();
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             bool considerWarningAsError = default;
             int maxPercentUnhealthyDeployedApplications = default;
-            Optional<ServiceTypeHealthPolicy> defaultServiceTypeHealthPolicy = default;
-            Optional<IDictionary<string, ServiceTypeHealthPolicy>> serviceTypeHealthPolicyMap = default;
+            Core.Optional<ServiceTypeHealthPolicy> defaultServiceTypeHealthPolicy = default;
+            Core.Optional<IDictionary<string, ServiceTypeHealthPolicy>> serviceTypeHealthPolicyMap = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("considerWarningAsError"u8))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new ApplicationHealthPolicy(considerWarningAsError, maxPercentUnhealthyDeployedApplications, defaultServiceTypeHealthPolicy.Value, Optional.ToDictionary(serviceTypeHealthPolicyMap));
+            return new ApplicationHealthPolicy(considerWarningAsError, maxPercentUnhealthyDeployedApplications, defaultServiceTypeHealthPolicy.Value, Core.Optional.ToDictionary(serviceTypeHealthPolicyMap));
         }
     }
 }

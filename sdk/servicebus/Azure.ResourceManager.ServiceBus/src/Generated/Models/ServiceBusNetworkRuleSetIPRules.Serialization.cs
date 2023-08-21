@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class ServiceBusNetworkRuleSetIPRules : IUtf8JsonSerializable
+    public partial class ServiceBusNetworkRuleSetIPRules : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPMask))
+            if (Core.Optional.IsDefined(IPMask))
             {
                 writer.WritePropertyName("ipMask"u8);
                 writer.WriteStringValue(IPMask);
             }
-            if (Optional.IsDefined(Action))
+            if (Core.Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<string> ipMask = default;
-            Optional<ServiceBusNetworkRuleIPAction> action = default;
+            Core.Optional<string> ipMask = default;
+            Core.Optional<ServiceBusNetworkRuleIPAction> action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipMask"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new ServiceBusNetworkRuleSetIPRules(ipMask.Value, Optional.ToNullable(action));
+            return new ServiceBusNetworkRuleSetIPRules(ipMask.Value, Core.Optional.ToNullable(action));
         }
     }
 }

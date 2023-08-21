@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <summary> Initializes a new instance of RelayPrivateEndpointConnectionListResult. </summary>
         internal RelayPrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<RelayPrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<RelayPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of RelayPrivateEndpointConnectionListResult. </summary>

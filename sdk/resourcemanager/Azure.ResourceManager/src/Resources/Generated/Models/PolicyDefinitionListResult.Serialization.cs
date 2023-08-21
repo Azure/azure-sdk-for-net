@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PolicyDefinitionData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<PolicyDefinitionData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new PolicyDefinitionListResult(Optional.ToList(value), nextLink.Value);
+            return new PolicyDefinitionListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

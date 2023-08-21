@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> friendlyName = default;
-            Optional<IReadOnlyList<string>> addressList = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<IReadOnlyList<string>> addressList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoverySubnet(name.Value, friendlyName.Value, Optional.ToList(addressList));
+            return new SiteRecoverySubnet(name.Value, friendlyName.Value, Core.Optional.ToList(addressList));
         }
     }
 }

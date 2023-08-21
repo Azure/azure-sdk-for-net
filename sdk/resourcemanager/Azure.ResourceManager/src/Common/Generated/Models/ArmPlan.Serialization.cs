@@ -13,9 +13,9 @@ using Azure.Core;
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(ArmPlanConverter))]
-    public partial class ArmPlan : IUtf8JsonSerializable
+    public partial class ArmPlan : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Models
             writer.WriteStringValue(Publisher);
             writer.WritePropertyName("product"u8);
             writer.WriteStringValue(Product);
-            if (Optional.IsDefined(PromotionCode))
+            if (Core.Optional.IsDefined(PromotionCode))
             {
                 writer.WritePropertyName("promotionCode"u8);
                 writer.WriteStringValue(PromotionCode);
             }
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Models
             string name = default;
             string publisher = default;
             string product = default;
-            Optional<string> promotionCode = default;
-            Optional<string> version = default;
+            Core.Optional<string> promotionCode = default;
+            Core.Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

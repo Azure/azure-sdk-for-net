@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             FailoverDirection = failoverDirection;
             SourceSiteOperation = sourceSiteOperation;
-            ProviderSpecificDetails = new ChangeTrackingList<RecoveryPlanProviderSpecificFailoverContent>();
+            ProviderSpecificDetails = new Core.ChangeTrackingList<RecoveryPlanProviderSpecificFailoverContent>();
         }
 
         /// <summary> The failover direction. </summary>

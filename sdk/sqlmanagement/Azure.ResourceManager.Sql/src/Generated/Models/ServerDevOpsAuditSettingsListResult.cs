@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerDevOpsAuditSettingsListResult. </summary>
         internal ServerDevOpsAuditSettingsListResult()
         {
-            Value = new ChangeTrackingList<SqlServerDevOpsAuditingSettingData>();
+            Value = new Core.ChangeTrackingList<SqlServerDevOpsAuditingSettingData>();
         }
 
         /// <summary> Initializes a new instance of ServerDevOpsAuditSettingsListResult. </summary>

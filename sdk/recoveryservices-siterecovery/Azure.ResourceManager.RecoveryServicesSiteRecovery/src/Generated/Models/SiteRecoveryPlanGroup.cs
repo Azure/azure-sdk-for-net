@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public SiteRecoveryPlanGroup(RecoveryPlanGroupType groupType)
         {
             GroupType = groupType;
-            ReplicationProtectedItems = new ChangeTrackingList<RecoveryPlanProtectedItem>();
-            StartGroupActions = new ChangeTrackingList<RecoveryPlanAction>();
-            EndGroupActions = new ChangeTrackingList<RecoveryPlanAction>();
+            ReplicationProtectedItems = new Core.ChangeTrackingList<RecoveryPlanProtectedItem>();
+            StartGroupActions = new Core.ChangeTrackingList<RecoveryPlanAction>();
+            EndGroupActions = new Core.ChangeTrackingList<RecoveryPlanAction>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryPlanGroup. </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Qumulo
 {
-    internal class QumuloFileSystemResourceOperationSource : IOperationSource<QumuloFileSystemResource>
+    internal class QumuloFileSystemResourceOperationSource : Core.IOperationSource<QumuloFileSystemResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Qumulo
             _client = client;
         }
 
-        QumuloFileSystemResource IOperationSource<QumuloFileSystemResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        QumuloFileSystemResource Core.IOperationSource<QumuloFileSystemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(document.RootElement);
             return new QumuloFileSystemResource(_client, data);
         }
 
-        async ValueTask<QumuloFileSystemResource> IOperationSource<QumuloFileSystemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<QumuloFileSystemResource> Core.IOperationSource<QumuloFileSystemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(document.RootElement);

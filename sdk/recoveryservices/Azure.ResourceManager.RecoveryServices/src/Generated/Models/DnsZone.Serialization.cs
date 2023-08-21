@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class DnsZone : IUtf8JsonSerializable
+    public partial class DnsZone : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SubResource))
+            if (Core.Optional.IsDefined(SubResource))
             {
                 writer.WritePropertyName("subResource"u8);
                 writer.WriteStringValue(SubResource.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<VaultSubResourceType> subResource = default;
+            Core.Optional<VaultSubResourceType> subResource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subResource"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new DnsZone(Optional.ToNullable(subResource));
+            return new DnsZone(Core.Optional.ToNullable(subResource));
         }
     }
 }

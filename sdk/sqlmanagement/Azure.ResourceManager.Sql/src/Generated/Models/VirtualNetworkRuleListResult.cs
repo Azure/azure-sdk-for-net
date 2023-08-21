@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of VirtualNetworkRuleListResult. </summary>
         internal VirtualNetworkRuleListResult()
         {
-            Value = new ChangeTrackingList<SqlServerVirtualNetworkRuleData>();
+            Value = new Core.ChangeTrackingList<SqlServerVirtualNetworkRuleData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkRuleListResult. </summary>

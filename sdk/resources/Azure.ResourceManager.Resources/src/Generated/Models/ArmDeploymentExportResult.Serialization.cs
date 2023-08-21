@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<BinaryData> template = default;
+            Core.Optional<BinaryData> template = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("template"u8))

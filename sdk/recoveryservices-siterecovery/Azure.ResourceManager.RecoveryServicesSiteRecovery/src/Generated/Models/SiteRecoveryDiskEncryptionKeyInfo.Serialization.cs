@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryDiskEncryptionKeyInfo : IUtf8JsonSerializable
+    public partial class SiteRecoveryDiskEncryptionKeyInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecretIdentifier))
+            if (Core.Optional.IsDefined(SecretIdentifier))
             {
                 writer.WritePropertyName("secretIdentifier"u8);
                 writer.WriteStringValue(SecretIdentifier);
             }
-            if (Optional.IsDefined(KeyVaultResourceArmId))
+            if (Core.Optional.IsDefined(KeyVaultResourceArmId))
             {
                 writer.WritePropertyName("keyVaultResourceArmId"u8);
                 writer.WriteStringValue(KeyVaultResourceArmId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> secretIdentifier = default;
-            Optional<ResourceIdentifier> keyVaultResourceArmId = default;
+            Core.Optional<string> secretIdentifier = default;
+            Core.Optional<ResourceIdentifier> keyVaultResourceArmId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretIdentifier"u8))

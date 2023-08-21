@@ -10,57 +10,57 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForContainersAwsOffering : IUtf8JsonSerializable
+    public partial class DefenderForContainersAwsOffering : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KubernetesService))
+            if (Core.Optional.IsDefined(KubernetesService))
             {
                 writer.WritePropertyName("kubernetesService"u8);
                 writer.WriteObjectValue(KubernetesService);
             }
-            if (Optional.IsDefined(KubernetesScubaReader))
+            if (Core.Optional.IsDefined(KubernetesScubaReader))
             {
                 writer.WritePropertyName("kubernetesScubaReader"u8);
                 writer.WriteObjectValue(KubernetesScubaReader);
             }
-            if (Optional.IsDefined(CloudWatchToKinesis))
+            if (Core.Optional.IsDefined(CloudWatchToKinesis))
             {
                 writer.WritePropertyName("cloudWatchToKinesis"u8);
                 writer.WriteObjectValue(CloudWatchToKinesis);
             }
-            if (Optional.IsDefined(KinesisToS3))
+            if (Core.Optional.IsDefined(KinesisToS3))
             {
                 writer.WritePropertyName("kinesisToS3"u8);
                 writer.WriteObjectValue(KinesisToS3);
             }
-            if (Optional.IsDefined(ContainerVulnerabilityAssessment))
+            if (Core.Optional.IsDefined(ContainerVulnerabilityAssessment))
             {
                 writer.WritePropertyName("containerVulnerabilityAssessment"u8);
                 writer.WriteObjectValue(ContainerVulnerabilityAssessment);
             }
-            if (Optional.IsDefined(ContainerVulnerabilityAssessmentTask))
+            if (Core.Optional.IsDefined(ContainerVulnerabilityAssessmentTask))
             {
                 writer.WritePropertyName("containerVulnerabilityAssessmentTask"u8);
                 writer.WriteObjectValue(ContainerVulnerabilityAssessmentTask);
             }
-            if (Optional.IsDefined(IsContainerVulnerabilityAssessmentEnabled))
+            if (Core.Optional.IsDefined(IsContainerVulnerabilityAssessmentEnabled))
             {
                 writer.WritePropertyName("enableContainerVulnerabilityAssessment"u8);
                 writer.WriteBooleanValue(IsContainerVulnerabilityAssessmentEnabled.Value);
             }
-            if (Optional.IsDefined(IsAutoProvisioningEnabled))
+            if (Core.Optional.IsDefined(IsAutoProvisioningEnabled))
             {
                 writer.WritePropertyName("autoProvisioning"u8);
                 writer.WriteBooleanValue(IsAutoProvisioningEnabled.Value);
             }
-            if (Optional.IsDefined(KubeAuditRetentionTime))
+            if (Core.Optional.IsDefined(KubeAuditRetentionTime))
             {
                 writer.WritePropertyName("kubeAuditRetentionTime"u8);
                 writer.WriteNumberValue(KubeAuditRetentionTime.Value);
             }
-            if (Optional.IsDefined(ScubaExternalId))
+            if (Core.Optional.IsDefined(ScubaExternalId))
             {
                 writer.WritePropertyName("scubaExternalId"u8);
                 writer.WriteStringValue(ScubaExternalId);
@@ -76,18 +76,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<DefenderForContainersAwsOfferingKubernetesService> kubernetesService = default;
-            Optional<DefenderForContainersAwsOfferingKubernetesScubaReader> kubernetesScubaReader = default;
-            Optional<DefenderForContainersAwsOfferingCloudWatchToKinesis> cloudWatchToKinesis = default;
-            Optional<DefenderForContainersAwsOfferingKinesisToS3> kinesisToS3 = default;
-            Optional<DefenderForContainersAwsOfferingContainerVulnerabilityAssessment> containerVulnerabilityAssessment = default;
-            Optional<DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask> containerVulnerabilityAssessmentTask = default;
-            Optional<bool> enableContainerVulnerabilityAssessment = default;
-            Optional<bool> autoProvisioning = default;
-            Optional<long> kubeAuditRetentionTime = default;
-            Optional<string> scubaExternalId = default;
+            Core.Optional<DefenderForContainersAwsOfferingKubernetesService> kubernetesService = default;
+            Core.Optional<DefenderForContainersAwsOfferingKubernetesScubaReader> kubernetesScubaReader = default;
+            Core.Optional<DefenderForContainersAwsOfferingCloudWatchToKinesis> cloudWatchToKinesis = default;
+            Core.Optional<DefenderForContainersAwsOfferingKinesisToS3> kinesisToS3 = default;
+            Core.Optional<DefenderForContainersAwsOfferingContainerVulnerabilityAssessment> containerVulnerabilityAssessment = default;
+            Core.Optional<DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask> containerVulnerabilityAssessmentTask = default;
+            Core.Optional<bool> enableContainerVulnerabilityAssessment = default;
+            Core.Optional<bool> autoProvisioning = default;
+            Core.Optional<long> kubeAuditRetentionTime = default;
+            Core.Optional<string> scubaExternalId = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubernetesService"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DefenderForContainersAwsOffering(offeringType, description.Value, kubernetesService.Value, kubernetesScubaReader.Value, cloudWatchToKinesis.Value, kinesisToS3.Value, containerVulnerabilityAssessment.Value, containerVulnerabilityAssessmentTask.Value, Optional.ToNullable(enableContainerVulnerabilityAssessment), Optional.ToNullable(autoProvisioning), Optional.ToNullable(kubeAuditRetentionTime), scubaExternalId.Value);
+            return new DefenderForContainersAwsOffering(offeringType, description.Value, kubernetesService.Value, kubernetesScubaReader.Value, cloudWatchToKinesis.Value, kinesisToS3.Value, containerVulnerabilityAssessment.Value, containerVulnerabilityAssessmentTask.Value, Core.Optional.ToNullable(enableContainerVulnerabilityAssessment), Core.Optional.ToNullable(autoProvisioning), Core.Optional.ToNullable(kubeAuditRetentionTime), scubaExternalId.Value);
         }
     }
 }

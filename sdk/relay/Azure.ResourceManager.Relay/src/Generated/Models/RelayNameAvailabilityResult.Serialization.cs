@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Relay.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<bool> nameAvailable = default;
-            Optional<RelayNameUnavailableReason> reason = default;
+            Core.Optional<string> message = default;
+            Core.Optional<bool> nameAvailable = default;
+            Core.Optional<RelayNameUnavailableReason> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Relay.Models
                     continue;
                 }
             }
-            return new RelayNameAvailabilityResult(message.Value, Optional.ToNullable(nameAvailable), Optional.ToNullable(reason));
+            return new RelayNameAvailabilityResult(message.Value, Core.Optional.ToNullable(nameAvailable), Core.Optional.ToNullable(reason));
         }
     }
 }

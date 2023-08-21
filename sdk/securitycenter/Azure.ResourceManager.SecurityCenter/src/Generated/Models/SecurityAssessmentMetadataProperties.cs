@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Argument.AssertNotNull(displayName, nameof(displayName));
 
             DisplayName = displayName;
-            Categories = new ChangeTrackingList<SecurityAssessmentResourceCategory>();
+            Categories = new Core.ChangeTrackingList<SecurityAssessmentResourceCategory>();
             Severity = severity;
-            Threats = new ChangeTrackingList<SecurityThreat>();
+            Threats = new Core.ChangeTrackingList<SecurityThreat>();
             AssessmentType = assessmentType;
         }
 

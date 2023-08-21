@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <summary> Initializes a new instance of GitHubOwnerListResponse. </summary>
         internal GitHubOwnerListResponse()
         {
-            Value = new ChangeTrackingList<GitHubOwnerData>();
+            Value = new Core.ChangeTrackingList<GitHubOwnerData>();
         }
 
         /// <summary> Initializes a new instance of GitHubOwnerListResponse. </summary>

@@ -12,19 +12,19 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityCloudConnectorData : IUtf8JsonSerializable
+    public partial class SecurityCloudConnectorData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HybridComputeSettings))
+            if (Core.Optional.IsDefined(HybridComputeSettings))
             {
                 writer.WritePropertyName("hybridComputeSettings"u8);
                 writer.WriteObjectValue(HybridComputeSettings);
             }
-            if (Optional.IsDefined(AuthenticationDetails))
+            if (Core.Optional.IsDefined(AuthenticationDetails))
             {
                 writer.WritePropertyName("authenticationDetails"u8);
                 writer.WriteObjectValue(AuthenticationDetails);
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HybridComputeSettingsProperties> hybridComputeSettings = default;
-            Optional<AuthenticationDetailsProperties> authenticationDetails = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<HybridComputeSettingsProperties> hybridComputeSettings = default;
+            Core.Optional<AuthenticationDetailsProperties> authenticationDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

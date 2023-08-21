@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of ReservationOrderBillingPlanInformation. </summary>
         internal ReservationOrderBillingPlanInformation()
         {
-            Transactions = new ChangeTrackingList<PaymentDetail>();
+            Transactions = new Core.ChangeTrackingList<PaymentDetail>();
         }
 
         /// <summary> Initializes a new instance of ReservationOrderBillingPlanInformation. </summary>

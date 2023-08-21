@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class KeywordTokenizer : IUtf8JsonSerializable
+    public partial class KeywordTokenizer : Core.IUtf8JsonSerializable
     {
     }
 }

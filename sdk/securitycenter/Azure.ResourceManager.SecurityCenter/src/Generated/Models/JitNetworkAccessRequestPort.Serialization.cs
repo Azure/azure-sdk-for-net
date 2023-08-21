@@ -12,19 +12,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class JitNetworkAccessRequestPort : IUtf8JsonSerializable
+    public partial class JitNetworkAccessRequestPort : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("number"u8);
             writer.WriteNumberValue(Number);
-            if (Optional.IsDefined(AllowedSourceAddressPrefix))
+            if (Core.Optional.IsDefined(AllowedSourceAddressPrefix))
             {
                 writer.WritePropertyName("allowedSourceAddressPrefix"u8);
                 writer.WriteStringValue(AllowedSourceAddressPrefix);
             }
-            if (Optional.IsCollectionDefined(AllowedSourceAddressPrefixes))
+            if (Core.Optional.IsCollectionDefined(AllowedSourceAddressPrefixes))
             {
                 writer.WritePropertyName("allowedSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("statusReason"u8);
             writer.WriteStringValue(StatusReason.ToString());
-            if (Optional.IsDefined(MappedPort))
+            if (Core.Optional.IsDefined(MappedPort))
             {
                 writer.WritePropertyName("mappedPort"u8);
                 writer.WriteNumberValue(MappedPort.Value);
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             int number = default;
-            Optional<string> allowedSourceAddressPrefix = default;
-            Optional<IList<string>> allowedSourceAddressPrefixes = default;
+            Core.Optional<string> allowedSourceAddressPrefix = default;
+            Core.Optional<IList<string>> allowedSourceAddressPrefixes = default;
             DateTimeOffset endTimeUtc = default;
             JitNetworkAccessPortStatus status = default;
             JitNetworkAccessPortStatusReason statusReason = default;
-            Optional<int> mappedPort = default;
+            Core.Optional<int> mappedPort = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("number"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new JitNetworkAccessRequestPort(number, allowedSourceAddressPrefix.Value, Optional.ToList(allowedSourceAddressPrefixes), endTimeUtc, status, statusReason, Optional.ToNullable(mappedPort));
+            return new JitNetworkAccessRequestPort(number, allowedSourceAddressPrefix.Value, Core.Optional.ToList(allowedSourceAddressPrefixes), endTimeUtc, status, statusReason, Core.Optional.ToNullable(mappedPort));
         }
     }
 }

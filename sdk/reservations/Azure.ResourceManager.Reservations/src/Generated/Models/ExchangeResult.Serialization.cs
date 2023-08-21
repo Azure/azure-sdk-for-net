@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ExchangeOperationResultStatus> status = default;
-            Optional<ExchangeResultProperties> properties = default;
-            Optional<OperationResultError> error = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ExchangeOperationResultStatus> status = default;
+            Core.Optional<ExchangeResultProperties> properties = default;
+            Core.Optional<OperationResultError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ExchangeResult(id.Value, name.Value, Optional.ToNullable(status), properties.Value, error.Value);
+            return new ExchangeResult(id.Value, name.Value, Core.Optional.ToNullable(status), properties.Value, error.Value);
         }
     }
 }

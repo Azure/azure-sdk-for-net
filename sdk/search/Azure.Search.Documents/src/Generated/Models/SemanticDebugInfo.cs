@@ -16,8 +16,8 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of SemanticDebugInfo. </summary>
         internal SemanticDebugInfo()
         {
-            ContentFields = new ChangeTrackingList<QueryResultDocumentSemanticField>();
-            KeywordFields = new ChangeTrackingList<QueryResultDocumentSemanticField>();
+            ContentFields = new Core.ChangeTrackingList<QueryResultDocumentSemanticField>();
+            KeywordFields = new Core.ChangeTrackingList<QueryResultDocumentSemanticField>();
         }
 
         /// <summary> Initializes a new instance of SemanticDebugInfo. </summary>

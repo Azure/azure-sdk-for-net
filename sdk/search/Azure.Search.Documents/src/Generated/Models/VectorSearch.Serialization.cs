@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class VectorSearch : IUtf8JsonSerializable
+    public partial class VectorSearch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AlgorithmConfigurations))
+            if (Core.Optional.IsCollectionDefined(AlgorithmConfigurations))
             {
                 writer.WritePropertyName("algorithmConfigurations"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<VectorSearchAlgorithmConfiguration>> algorithmConfigurations = default;
+            Core.Optional<IList<VectorSearchAlgorithmConfiguration>> algorithmConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("algorithmConfigurations"u8))
@@ -53,7 +53,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new VectorSearch(Optional.ToList(algorithmConfigurations));
+            return new VectorSearch(Core.Optional.ToList(algorithmConfigurations));
         }
     }
 }

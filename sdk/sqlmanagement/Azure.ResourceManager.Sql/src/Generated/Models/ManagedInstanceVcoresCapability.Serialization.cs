@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> value = default;
-            Optional<MaxSizeCapability> includedMaxSize = default;
-            Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedStorageSizes = default;
-            Optional<bool> instancePoolSupported = default;
-            Optional<bool> standaloneSupported = default;
-            Optional<IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability>> supportedMaintenanceConfigurations = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            Core.Optional<string> name = default;
+            Core.Optional<int> value = default;
+            Core.Optional<MaxSizeCapability> includedMaxSize = default;
+            Core.Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedStorageSizes = default;
+            Core.Optional<bool> instancePoolSupported = default;
+            Core.Optional<bool> standaloneSupported = default;
+            Core.Optional<IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability>> supportedMaintenanceConfigurations = default;
+            Core.Optional<SqlCapabilityStatus> status = default;
+            Core.Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ManagedInstanceVcoresCapability(name.Value, Optional.ToNullable(value), includedMaxSize.Value, Optional.ToList(supportedStorageSizes), Optional.ToNullable(instancePoolSupported), Optional.ToNullable(standaloneSupported), Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value);
+            return new ManagedInstanceVcoresCapability(name.Value, Core.Optional.ToNullable(value), includedMaxSize.Value, Core.Optional.ToList(supportedStorageSizes), Core.Optional.ToNullable(instancePoolSupported), Core.Optional.ToNullable(standaloneSupported), Core.Optional.ToList(supportedMaintenanceConfigurations), Core.Optional.ToNullable(status), reason.Value);
         }
     }
 }

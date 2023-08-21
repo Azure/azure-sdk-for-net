@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlServerDatabaseReplicationLinkData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SqlServerDatabaseReplicationLinkData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ReplicationLinkListResult(Optional.ToList(value), nextLink.Value);
+            return new ReplicationLinkListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

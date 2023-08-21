@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsIPEntity. </summary>
         public SecurityInsightsIPEntity()
         {
-            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            ThreatIntelligence = new ChangeTrackingList<SecurityInsightsThreatIntelligence>();
+            AdditionalData = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            ThreatIntelligence = new Core.ChangeTrackingList<SecurityInsightsThreatIntelligence>();
             Kind = SecurityInsightsEntityKind.IP;
         }
 

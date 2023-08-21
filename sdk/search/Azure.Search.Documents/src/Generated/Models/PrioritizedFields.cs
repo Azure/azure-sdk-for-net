@@ -16,8 +16,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of PrioritizedFields. </summary>
         public PrioritizedFields()
         {
-            ContentFields = new ChangeTrackingList<SemanticField>();
-            KeywordFields = new ChangeTrackingList<SemanticField>();
+            ContentFields = new Core.ChangeTrackingList<SemanticField>();
+            KeywordFields = new Core.ChangeTrackingList<SemanticField>();
         }
 
         /// <summary> Initializes a new instance of PrioritizedFields. </summary>

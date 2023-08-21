@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Redis.Models
         {
             Argument.AssertNotNull(status, nameof(status));
 
-            Properties = new ChangeTrackingDictionary<string, BinaryData>();
+            Properties = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of RedisOperationStatus. </summary>

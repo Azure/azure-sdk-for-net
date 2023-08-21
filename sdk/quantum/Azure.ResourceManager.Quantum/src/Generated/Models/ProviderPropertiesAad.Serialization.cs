@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<string> applicationId = default;
-            Optional<Guid> tenantId = default;
+            Core.Optional<string> applicationId = default;
+            Core.Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     continue;
                 }
             }
-            return new ProviderPropertiesAad(applicationId.Value, Optional.ToNullable(tenantId));
+            return new ProviderPropertiesAad(applicationId.Value, Core.Optional.ToNullable(tenantId));
         }
     }
 }

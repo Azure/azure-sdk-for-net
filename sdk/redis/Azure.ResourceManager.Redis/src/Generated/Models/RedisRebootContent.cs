@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Initializes a new instance of RedisRebootContent. </summary>
         public RedisRebootContent()
         {
-            Ports = new ChangeTrackingList<int>();
+            Ports = new Core.ChangeTrackingList<int>();
         }
 
         /// <summary> Which Redis node(s) to reboot. Depending on this value data loss is possible. </summary>

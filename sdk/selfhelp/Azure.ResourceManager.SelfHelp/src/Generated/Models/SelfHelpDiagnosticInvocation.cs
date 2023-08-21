@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Initializes a new instance of SelfHelpDiagnosticInvocation. </summary>
         public SelfHelpDiagnosticInvocation()
         {
-            AdditionalParameters = new ChangeTrackingDictionary<string, string>();
+            AdditionalParameters = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of SelfHelpDiagnosticInvocation. </summary>

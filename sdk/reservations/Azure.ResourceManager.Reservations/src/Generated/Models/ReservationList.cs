@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of ReservationList. </summary>
         internal ReservationList()
         {
-            Value = new ChangeTrackingList<ReservationDetailData>();
+            Value = new Core.ChangeTrackingList<ReservationDetailData>();
         }
 
         /// <summary> Initializes a new instance of ReservationList. </summary>

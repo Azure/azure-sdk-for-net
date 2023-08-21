@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "VirtualMachineTaskDetails": return SiteRecoveryVmTaskDetails.DeserializeSiteRecoveryVmTaskDetails(element);
                 }
             }
-            Optional<SiteRecoveryJobEntity> jobTask = default;
+            Core.Optional<SiteRecoveryJobEntity> jobTask = default;
             string instanceType = "JobTaskDetails";
             foreach (var property in element.EnumerateObject())
             {

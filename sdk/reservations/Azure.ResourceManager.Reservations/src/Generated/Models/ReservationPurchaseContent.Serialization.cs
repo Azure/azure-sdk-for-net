@@ -12,59 +12,59 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationPurchaseContent : IUtf8JsonSerializable
+    public partial class ReservationPurchaseContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReservedResourceType))
+            if (Core.Optional.IsDefined(ReservedResourceType))
             {
                 writer.WritePropertyName("reservedResourceType"u8);
                 writer.WriteStringValue(ReservedResourceType.Value.ToString());
             }
-            if (Optional.IsDefined(BillingScopeId))
+            if (Core.Optional.IsDefined(BillingScopeId))
             {
                 writer.WritePropertyName("billingScopeId"u8);
                 writer.WriteStringValue(BillingScopeId);
             }
-            if (Optional.IsDefined(Term))
+            if (Core.Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term.Value.ToString());
             }
-            if (Optional.IsDefined(BillingPlan))
+            if (Core.Optional.IsDefined(BillingPlan))
             {
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
-            if (Optional.IsDefined(Quantity))
+            if (Core.Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(AppliedScopeType))
+            if (Core.Optional.IsDefined(AppliedScopeType))
             {
                 writer.WritePropertyName("appliedScopeType"u8);
                 writer.WriteStringValue(AppliedScopeType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AppliedScopes))
+            if (Core.Optional.IsCollectionDefined(AppliedScopes))
             {
                 if (AppliedScopes != null)
                 {
@@ -81,22 +81,22 @@ namespace Azure.ResourceManager.Reservations.Models
                     writer.WriteNull("appliedScopes");
                 }
             }
-            if (Optional.IsDefined(AppliedScopeProperties))
+            if (Core.Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
                 writer.WriteObjectValue(AppliedScopeProperties);
             }
-            if (Optional.IsDefined(IsRenewEnabled))
+            if (Core.Optional.IsDefined(IsRenewEnabled))
             {
                 writer.WritePropertyName("renew"u8);
                 writer.WriteBooleanValue(IsRenewEnabled.Value);
             }
-            if (Optional.IsDefined(ReservedResourceProperties))
+            if (Core.Optional.IsDefined(ReservedResourceProperties))
             {
                 writer.WritePropertyName("reservedResourceProperties"u8);
                 writer.WriteObjectValue(ReservedResourceProperties);
             }
-            if (Optional.IsDefined(ReviewOn))
+            if (Core.Optional.IsDefined(ReviewOn))
             {
                 writer.WritePropertyName("reviewDateTime"u8);
                 writer.WriteStringValue(ReviewOn.Value, "O");
@@ -111,20 +111,20 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationsSkuName> sku = default;
-            Optional<AzureLocation> location = default;
-            Optional<ReservedResourceType> reservedResourceType = default;
-            Optional<ResourceIdentifier> billingScopeId = default;
-            Optional<ReservationTerm> term = default;
-            Optional<ReservationBillingPlan> billingPlan = default;
-            Optional<int> quantity = default;
-            Optional<string> displayName = default;
-            Optional<AppliedScopeType> appliedScopeType = default;
-            Optional<IList<string>> appliedScopes = default;
-            Optional<AppliedScopeProperties> appliedScopeProperties = default;
-            Optional<bool> renew = default;
-            Optional<PurchaseRequestPropertiesReservedResourceProperties> reservedResourceProperties = default;
-            Optional<DateTimeOffset> reviewDateTime = default;
+            Core.Optional<ReservationsSkuName> sku = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<ReservedResourceType> reservedResourceType = default;
+            Core.Optional<ResourceIdentifier> billingScopeId = default;
+            Core.Optional<ReservationTerm> term = default;
+            Core.Optional<ReservationBillingPlan> billingPlan = default;
+            Core.Optional<int> quantity = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<AppliedScopeType> appliedScopeType = default;
+            Core.Optional<IList<string>> appliedScopes = default;
+            Core.Optional<AppliedScopeProperties> appliedScopeProperties = default;
+            Core.Optional<bool> renew = default;
+            Core.Optional<PurchaseRequestPropertiesReservedResourceProperties> reservedResourceProperties = default;
+            Core.Optional<DateTimeOffset> reviewDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ReservationPurchaseContent(sku.Value, Optional.ToNullable(location), Optional.ToNullable(reservedResourceType), billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(quantity), displayName.Value, Optional.ToNullable(appliedScopeType), Optional.ToList(appliedScopes), appliedScopeProperties.Value, Optional.ToNullable(renew), reservedResourceProperties.Value, Optional.ToNullable(reviewDateTime));
+            return new ReservationPurchaseContent(sku.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(reservedResourceType), billingScopeId.Value, Core.Optional.ToNullable(term), Core.Optional.ToNullable(billingPlan), Core.Optional.ToNullable(quantity), displayName.Value, Core.Optional.ToNullable(appliedScopeType), Core.Optional.ToList(appliedScopes), appliedScopeProperties.Value, Core.Optional.ToNullable(renew), reservedResourceProperties.Value, Core.Optional.ToNullable(reviewDateTime));
         }
     }
 }

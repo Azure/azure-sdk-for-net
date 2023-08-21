@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryNetworkProperties. </summary>
         internal SiteRecoveryNetworkProperties()
         {
-            Subnets = new ChangeTrackingList<SiteRecoverySubnet>();
+            Subnets = new Core.ChangeTrackingList<SiteRecoverySubnet>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryNetworkProperties. </summary>

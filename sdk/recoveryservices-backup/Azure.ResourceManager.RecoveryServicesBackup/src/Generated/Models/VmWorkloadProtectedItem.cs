@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of VmWorkloadProtectedItem. </summary>
         public VmWorkloadProtectedItem()
         {
-            KpisHealths = new ChangeTrackingDictionary<string, KpiResourceHealthDetails>();
+            KpisHealths = new Core.ChangeTrackingDictionary<string, KpiResourceHealthDetails>();
             ProtectedItemType = "AzureVmWorkloadProtectedItem";
         }
 

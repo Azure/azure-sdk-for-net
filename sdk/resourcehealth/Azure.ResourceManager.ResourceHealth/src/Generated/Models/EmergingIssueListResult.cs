@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of EmergingIssueListResult. </summary>
         internal EmergingIssueListResult()
         {
-            Value = new ChangeTrackingList<ServiceEmergingIssueData>();
+            Value = new Core.ChangeTrackingList<ServiceEmergingIssueData>();
         }
 
         /// <summary> Initializes a new instance of EmergingIssueListResult. </summary>

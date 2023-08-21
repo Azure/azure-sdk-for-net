@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    internal partial class LinkerSecretStore : IUtf8JsonSerializable
+    internal partial class LinkerSecretStore : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyVaultId))
+            if (Core.Optional.IsDefined(KeyVaultId))
             {
                 if (KeyVaultId != null)
                 {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> keyVaultId = default;
+            Core.Optional<ResourceIdentifier> keyVaultId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultId"u8))

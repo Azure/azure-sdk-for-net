@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> resourceCount = default;
-            Optional<IReadOnlyList<HealthErrorSummary>> issues = default;
-            Optional<IReadOnlyDictionary<string, int>> categorizedResourceCounts = default;
+            Core.Optional<int> resourceCount = default;
+            Core.Optional<IReadOnlyList<HealthErrorSummary>> issues = default;
+            Core.Optional<IReadOnlyDictionary<string, int>> categorizedResourceCounts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceCount"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new ResourceHealthSummary(Optional.ToNullable(resourceCount), Optional.ToList(issues), Optional.ToDictionary(categorizedResourceCounts));
+            return new ResourceHealthSummary(Core.Optional.ToNullable(resourceCount), Core.Optional.ToList(issues), Core.Optional.ToDictionary(categorizedResourceCounts));
         }
     }
 }

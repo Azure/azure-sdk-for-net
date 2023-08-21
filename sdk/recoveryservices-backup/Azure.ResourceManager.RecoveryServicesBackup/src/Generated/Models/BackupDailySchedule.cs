@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of BackupDailySchedule. </summary>
         public BackupDailySchedule()
         {
-            ScheduleRunTimes = new ChangeTrackingList<DateTimeOffset>();
+            ScheduleRunTimes = new Core.ChangeTrackingList<DateTimeOffset>();
         }
 
         /// <summary> Initializes a new instance of BackupDailySchedule. </summary>

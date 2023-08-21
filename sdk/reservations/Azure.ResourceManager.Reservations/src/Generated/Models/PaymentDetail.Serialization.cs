@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dueDate = default;
-            Optional<DateTimeOffset> paymentDate = default;
-            Optional<PurchasePrice> pricingCurrencyTotal = default;
-            Optional<PurchasePrice> billingCurrencyTotal = default;
-            Optional<string> billingAccount = default;
-            Optional<PaymentStatus> status = default;
-            Optional<ExtendedStatusInfo> extendedStatusInfo = default;
+            Core.Optional<DateTimeOffset> dueDate = default;
+            Core.Optional<DateTimeOffset> paymentDate = default;
+            Core.Optional<PurchasePrice> pricingCurrencyTotal = default;
+            Core.Optional<PurchasePrice> billingCurrencyTotal = default;
+            Core.Optional<string> billingAccount = default;
+            Core.Optional<PaymentStatus> status = default;
+            Core.Optional<ExtendedStatusInfo> extendedStatusInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dueDate"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new PaymentDetail(Optional.ToNullable(dueDate), Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, billingAccount.Value, Optional.ToNullable(status), extendedStatusInfo.Value);
+            return new PaymentDetail(Core.Optional.ToNullable(dueDate), Core.Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, billingAccount.Value, Core.Optional.ToNullable(status), extendedStatusInfo.Value);
         }
     }
 }

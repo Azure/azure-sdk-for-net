@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadSqlRecoveryPointExtendedInfo : IUtf8JsonSerializable
+    public partial class WorkloadSqlRecoveryPointExtendedInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataDirectoryInfoCapturedOn))
+            if (Core.Optional.IsDefined(DataDirectoryInfoCapturedOn))
             {
                 writer.WritePropertyName("dataDirectoryTimeInUTC"u8);
                 writer.WriteStringValue(DataDirectoryInfoCapturedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(DataDirectoryPaths))
+            if (Core.Optional.IsCollectionDefined(DataDirectoryPaths))
             {
                 writer.WritePropertyName("dataDirectoryPaths"u8);
                 writer.WriteStartArray();
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dataDirectoryTimeInUTC = default;
-            Optional<IList<SqlDataDirectory>> dataDirectoryPaths = default;
+            Core.Optional<DateTimeOffset> dataDirectoryTimeInUTC = default;
+            Core.Optional<IList<SqlDataDirectory>> dataDirectoryPaths = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataDirectoryTimeInUTC"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new WorkloadSqlRecoveryPointExtendedInfo(Optional.ToNullable(dataDirectoryTimeInUTC), Optional.ToList(dataDirectoryPaths));
+            return new WorkloadSqlRecoveryPointExtendedInfo(Core.Optional.ToNullable(dataDirectoryTimeInUTC), Core.Optional.ToList(dataDirectoryPaths));
         }
     }
 }

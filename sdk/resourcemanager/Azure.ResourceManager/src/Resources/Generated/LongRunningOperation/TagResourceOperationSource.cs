@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class TagResourceOperationSource : IOperationSource<TagResource>
+    internal class TagResourceOperationSource : Core.IOperationSource<TagResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Resources
             _client = client;
         }
 
-        TagResource IOperationSource<TagResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        TagResource Core.IOperationSource<TagResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = TagResourceData.DeserializeTagResourceData(document.RootElement);
             return new TagResource(_client, data);
         }
 
-        async ValueTask<TagResource> IOperationSource<TagResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<TagResource> Core.IOperationSource<TagResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = TagResourceData.DeserializeTagResourceData(document.RootElement);

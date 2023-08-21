@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    public partial class SignalRPrivateEndpointAcl : IUtf8JsonSerializable
+    public partial class SignalRPrivateEndpointAcl : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsCollectionDefined(Allow))
+            if (Core.Optional.IsCollectionDefined(Allow))
             {
                 writer.WritePropertyName("allow"u8);
                 writer.WriteStartArray();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Deny))
+            if (Core.Optional.IsCollectionDefined(Deny))
             {
                 writer.WritePropertyName("deny"u8);
                 writer.WriteStartArray();
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.SignalR.Models
                 return null;
             }
             string name = default;
-            Optional<IList<SignalRRequestType>> allow = default;
-            Optional<IList<SignalRRequestType>> deny = default;
+            Core.Optional<IList<SignalRRequestType>> allow = default;
+            Core.Optional<IList<SignalRRequestType>> deny = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     continue;
                 }
             }
-            return new SignalRPrivateEndpointAcl(Optional.ToList(allow), Optional.ToList(deny), name);
+            return new SignalRPrivateEndpointAcl(Core.Optional.ToList(allow), Core.Optional.ToList(deny), name);
         }
     }
 }

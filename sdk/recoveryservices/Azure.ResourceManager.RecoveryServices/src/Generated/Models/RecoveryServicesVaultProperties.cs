@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Initializes a new instance of RecoveryServicesVaultProperties. </summary>
         public RecoveryServicesVaultProperties()
         {
-            PrivateEndpointConnections = new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>();
         }
 
         /// <summary> Initializes a new instance of RecoveryServicesVaultProperties. </summary>

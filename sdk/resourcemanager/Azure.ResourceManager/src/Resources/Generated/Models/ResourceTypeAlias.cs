@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ResourceTypeAlias. </summary>
         internal ResourceTypeAlias()
         {
-            Paths = new ChangeTrackingList<ResourceTypeAliasPath>();
+            Paths = new Core.ChangeTrackingList<ResourceTypeAliasPath>();
         }
 
         /// <summary> Initializes a new instance of ResourceTypeAlias. </summary>

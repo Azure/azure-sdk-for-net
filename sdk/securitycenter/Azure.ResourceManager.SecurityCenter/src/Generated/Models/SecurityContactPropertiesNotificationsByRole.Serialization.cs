@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityContactPropertiesNotificationsByRole : IUtf8JsonSerializable
+    public partial class SecurityContactPropertiesNotificationsByRole : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Roles))
+            if (Core.Optional.IsCollectionDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<SecurityAlertNotificationByRoleState> state = default;
-            Optional<IList<SecurityAlertReceivingRole>> roles = default;
+            Core.Optional<SecurityAlertNotificationByRoleState> state = default;
+            Core.Optional<IList<SecurityAlertReceivingRole>> roles = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecurityContactPropertiesNotificationsByRole(Optional.ToNullable(state), Optional.ToList(roles));
+            return new SecurityContactPropertiesNotificationsByRole(Core.Optional.ToNullable(state), Core.Optional.ToList(roles));
         }
     }
 }

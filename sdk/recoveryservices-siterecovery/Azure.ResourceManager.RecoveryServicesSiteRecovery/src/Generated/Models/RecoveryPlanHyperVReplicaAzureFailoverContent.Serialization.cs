@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanHyperVReplicaAzureFailoverContent : IUtf8JsonSerializable
+    public partial class RecoveryPlanHyperVReplicaAzureFailoverContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryKekCertificatePfx))
+            if (Core.Optional.IsDefined(PrimaryKekCertificatePfx))
             {
                 writer.WritePropertyName("primaryKekCertificatePfx"u8);
                 writer.WriteStringValue(PrimaryKekCertificatePfx);
             }
-            if (Optional.IsDefined(SecondaryKekCertificatePfx))
+            if (Core.Optional.IsDefined(SecondaryKekCertificatePfx))
             {
                 writer.WritePropertyName("secondaryKekCertificatePfx"u8);
                 writer.WriteStringValue(SecondaryKekCertificatePfx);
             }
-            if (Optional.IsDefined(RecoveryPointType))
+            if (Core.Optional.IsDefined(RecoveryPointType))
             {
                 writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType.Value.ToString());

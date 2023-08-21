@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<string> jobFriendlyName = default;
-            Optional<string> jobStatus = default;
-            Optional<string> affectedObjectType = default;
+            Core.Optional<ResourceIdentifier> jobId = default;
+            Core.Optional<string> jobFriendlyName = default;
+            Core.Optional<string> jobStatus = default;
+            Core.Optional<string> affectedObjectType = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {

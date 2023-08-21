@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerTrustCertificatesListResult. </summary>
         internal ServerTrustCertificatesListResult()
         {
-            Value = new ChangeTrackingList<ServerTrustCertificateData>();
+            Value = new Core.ChangeTrackingList<ServerTrustCertificateData>();
         }
 
         /// <summary> Initializes a new instance of ServerTrustCertificatesListResult. </summary>

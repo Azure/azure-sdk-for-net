@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Relay
         /// <summary> Initializes a new instance of RelayAuthorizationRuleData. </summary>
         public RelayAuthorizationRuleData()
         {
-            Rights = new ChangeTrackingList<RelayAccessRight>();
+            Rights = new Core.ChangeTrackingList<RelayAccessRight>();
         }
 
         /// <summary> Initializes a new instance of RelayAuthorizationRuleData. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of ServiceBusCorrelationFilter. </summary>
         public ServiceBusCorrelationFilter()
         {
-            ApplicationProperties = new ChangeTrackingDictionary<string, object>();
+            ApplicationProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of ServiceBusCorrelationFilter. </summary>

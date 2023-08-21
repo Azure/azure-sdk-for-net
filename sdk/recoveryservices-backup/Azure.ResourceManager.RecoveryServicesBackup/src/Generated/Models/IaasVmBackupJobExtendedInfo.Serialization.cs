@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmBackupJobExtendedInfo : IUtf8JsonSerializable
+    public partial class IaasVmBackupJobExtendedInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TasksList))
+            if (Core.Optional.IsCollectionDefined(TasksList))
             {
                 writer.WritePropertyName("tasksList"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PropertyBag))
+            if (Core.Optional.IsCollectionDefined(PropertyBag))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(InternalPropertyBag))
+            if (Core.Optional.IsCollectionDefined(InternalPropertyBag))
             {
                 writer.WritePropertyName("internalPropertyBag"u8);
                 writer.WriteStartObject();
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ProgressPercentage))
+            if (Core.Optional.IsDefined(ProgressPercentage))
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
-            if (Optional.IsDefined(EstimatedRemainingDurationValue))
+            if (Core.Optional.IsDefined(EstimatedRemainingDurationValue))
             {
                 writer.WritePropertyName("estimatedRemainingDuration"u8);
                 writer.WriteStringValue(EstimatedRemainingDurationValue);
             }
-            if (Optional.IsDefined(DynamicErrorMessage))
+            if (Core.Optional.IsDefined(DynamicErrorMessage))
             {
                 writer.WritePropertyName("dynamicErrorMessage"u8);
                 writer.WriteStringValue(DynamicErrorMessage);
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<IaasVmBackupJobTaskDetails>> tasksList = default;
-            Optional<IDictionary<string, string>> propertyBag = default;
-            Optional<IDictionary<string, string>> internalPropertyBag = default;
-            Optional<double> progressPercentage = default;
-            Optional<string> estimatedRemainingDuration = default;
-            Optional<string> dynamicErrorMessage = default;
+            Core.Optional<IList<IaasVmBackupJobTaskDetails>> tasksList = default;
+            Core.Optional<IDictionary<string, string>> propertyBag = default;
+            Core.Optional<IDictionary<string, string>> internalPropertyBag = default;
+            Core.Optional<double> progressPercentage = default;
+            Core.Optional<string> estimatedRemainingDuration = default;
+            Core.Optional<string> dynamicErrorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tasksList"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new IaasVmBackupJobExtendedInfo(Optional.ToList(tasksList), Optional.ToDictionary(propertyBag), Optional.ToDictionary(internalPropertyBag), Optional.ToNullable(progressPercentage), estimatedRemainingDuration.Value, dynamicErrorMessage.Value);
+            return new IaasVmBackupJobExtendedInfo(Core.Optional.ToList(tasksList), Core.Optional.ToDictionary(propertyBag), Core.Optional.ToDictionary(internalPropertyBag), Core.Optional.ToNullable(progressPercentage), estimatedRemainingDuration.Value, dynamicErrorMessage.Value);
         }
     }
 }

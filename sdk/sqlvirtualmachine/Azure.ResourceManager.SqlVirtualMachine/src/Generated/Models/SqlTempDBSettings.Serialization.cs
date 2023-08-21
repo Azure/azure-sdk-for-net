@@ -11,47 +11,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlTempDBSettings : IUtf8JsonSerializable
+    public partial class SqlTempDBSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataFileSize))
+            if (Core.Optional.IsDefined(DataFileSize))
             {
                 writer.WritePropertyName("dataFileSize"u8);
                 writer.WriteNumberValue(DataFileSize.Value);
             }
-            if (Optional.IsDefined(DataGrowth))
+            if (Core.Optional.IsDefined(DataGrowth))
             {
                 writer.WritePropertyName("dataGrowth"u8);
                 writer.WriteNumberValue(DataGrowth.Value);
             }
-            if (Optional.IsDefined(LogFileSize))
+            if (Core.Optional.IsDefined(LogFileSize))
             {
                 writer.WritePropertyName("logFileSize"u8);
                 writer.WriteNumberValue(LogFileSize.Value);
             }
-            if (Optional.IsDefined(LogGrowth))
+            if (Core.Optional.IsDefined(LogGrowth))
             {
                 writer.WritePropertyName("logGrowth"u8);
                 writer.WriteNumberValue(LogGrowth.Value);
             }
-            if (Optional.IsDefined(DataFileCount))
+            if (Core.Optional.IsDefined(DataFileCount))
             {
                 writer.WritePropertyName("dataFileCount"u8);
                 writer.WriteNumberValue(DataFileCount.Value);
             }
-            if (Optional.IsDefined(PersistFolder))
+            if (Core.Optional.IsDefined(PersistFolder))
             {
                 writer.WritePropertyName("persistFolder"u8);
                 writer.WriteBooleanValue(PersistFolder.Value);
             }
-            if (Optional.IsDefined(PersistFolderPath))
+            if (Core.Optional.IsDefined(PersistFolderPath))
             {
                 writer.WritePropertyName("persistFolderPath"u8);
                 writer.WriteStringValue(PersistFolderPath);
             }
-            if (Optional.IsCollectionDefined(LogicalUnitNumbers))
+            if (Core.Optional.IsCollectionDefined(LogicalUnitNumbers))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultFilePath))
+            if (Core.Optional.IsDefined(DefaultFilePath))
             {
                 writer.WritePropertyName("defaultFilePath"u8);
                 writer.WriteStringValue(DefaultFilePath);
@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<int> dataFileSize = default;
-            Optional<int> dataGrowth = default;
-            Optional<int> logFileSize = default;
-            Optional<int> logGrowth = default;
-            Optional<int> dataFileCount = default;
-            Optional<bool> persistFolder = default;
-            Optional<string> persistFolderPath = default;
-            Optional<IList<int>> luns = default;
-            Optional<string> defaultFilePath = default;
+            Core.Optional<int> dataFileSize = default;
+            Core.Optional<int> dataGrowth = default;
+            Core.Optional<int> logFileSize = default;
+            Core.Optional<int> logGrowth = default;
+            Core.Optional<int> dataFileCount = default;
+            Core.Optional<bool> persistFolder = default;
+            Core.Optional<string> persistFolderPath = default;
+            Core.Optional<IList<int>> luns = default;
+            Core.Optional<string> defaultFilePath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataFileSize"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new SqlTempDBSettings(Optional.ToNullable(dataFileSize), Optional.ToNullable(dataGrowth), Optional.ToNullable(logFileSize), Optional.ToNullable(logGrowth), Optional.ToNullable(dataFileCount), Optional.ToNullable(persistFolder), persistFolderPath.Value, Optional.ToList(luns), defaultFilePath.Value);
+            return new SqlTempDBSettings(Core.Optional.ToNullable(dataFileSize), Core.Optional.ToNullable(dataGrowth), Core.Optional.ToNullable(logFileSize), Core.Optional.ToNullable(logGrowth), Core.Optional.ToNullable(dataFileCount), Core.Optional.ToNullable(persistFolder), persistFolderPath.Value, Core.Optional.ToList(luns), defaultFilePath.Value);
         }
     }
 }

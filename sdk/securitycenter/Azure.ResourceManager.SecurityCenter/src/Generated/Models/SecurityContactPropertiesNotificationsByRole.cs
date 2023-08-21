@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecurityContactPropertiesNotificationsByRole. </summary>
         public SecurityContactPropertiesNotificationsByRole()
         {
-            Roles = new ChangeTrackingList<SecurityAlertReceivingRole>();
+            Roles = new Core.ChangeTrackingList<SecurityAlertReceivingRole>();
         }
 
         /// <summary> Initializes a new instance of SecurityContactPropertiesNotificationsByRole. </summary>

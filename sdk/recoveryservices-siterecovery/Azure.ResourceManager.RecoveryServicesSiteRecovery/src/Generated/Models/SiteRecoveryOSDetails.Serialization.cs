@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> osType = default;
-            Optional<string> productType = default;
-            Optional<string> osEdition = default;
-            Optional<string> osVersion = default;
-            Optional<string> osMajorVersion = default;
-            Optional<string> osMinorVersion = default;
+            Core.Optional<string> osType = default;
+            Core.Optional<string> productType = default;
+            Core.Optional<string> osEdition = default;
+            Core.Optional<string> osVersion = default;
+            Core.Optional<string> osMajorVersion = default;
+            Core.Optional<string> osMinorVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"u8))

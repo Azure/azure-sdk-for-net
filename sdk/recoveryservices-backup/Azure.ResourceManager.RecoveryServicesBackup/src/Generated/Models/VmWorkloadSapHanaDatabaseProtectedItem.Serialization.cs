@@ -12,62 +12,62 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmWorkloadSapHanaDatabaseProtectedItem : IUtf8JsonSerializable
+    public partial class VmWorkloadSapHanaDatabaseProtectedItem : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerName))
+            if (Core.Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (Optional.IsDefined(ParentName))
+            if (Core.Optional.IsDefined(ParentName))
             {
                 writer.WritePropertyName("parentName"u8);
                 writer.WriteStringValue(ParentName);
             }
-            if (Optional.IsDefined(ParentType))
+            if (Core.Optional.IsDefined(ParentType))
             {
                 writer.WritePropertyName("parentType"u8);
                 writer.WriteStringValue(ParentType);
             }
-            if (Optional.IsDefined(ProtectionState))
+            if (Core.Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
-            if (Optional.IsDefined(LastBackupStatus))
+            if (Core.Optional.IsDefined(LastBackupStatus))
             {
                 writer.WritePropertyName("lastBackupStatus"u8);
                 writer.WriteStringValue(LastBackupStatus.Value.ToString());
             }
-            if (Optional.IsDefined(LastBackupOn))
+            if (Core.Optional.IsDefined(LastBackupOn))
             {
                 writer.WritePropertyName("lastBackupTime"u8);
                 writer.WriteStringValue(LastBackupOn.Value, "O");
             }
-            if (Optional.IsDefined(LastBackupErrorDetail))
+            if (Core.Optional.IsDefined(LastBackupErrorDetail))
             {
                 writer.WritePropertyName("lastBackupErrorDetail"u8);
                 writer.WriteObjectValue(LastBackupErrorDetail);
             }
-            if (Optional.IsDefined(ProtectedItemDataSourceId))
+            if (Core.Optional.IsDefined(ProtectedItemDataSourceId))
             {
                 writer.WritePropertyName("protectedItemDataSourceId"u8);
                 writer.WriteStringValue(ProtectedItemDataSourceId);
             }
-            if (Optional.IsDefined(ProtectedItemHealthStatus))
+            if (Core.Optional.IsDefined(ProtectedItemHealthStatus))
             {
                 writer.WritePropertyName("protectedItemHealthStatus"u8);
                 writer.WriteStringValue(ProtectedItemHealthStatus.Value.ToString());
             }
-            if (Optional.IsDefined(ExtendedInfo))
+            if (Core.Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (Optional.IsCollectionDefined(KpisHealths))
+            if (Core.Optional.IsCollectionDefined(KpisHealths))
             {
                 writer.WritePropertyName("kpisHealths"u8);
                 writer.WriteStartObject();
@@ -80,62 +80,62 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("protectedItemType"u8);
             writer.WriteStringValue(ProtectedItemType);
-            if (Optional.IsDefined(ContainerName))
+            if (Core.Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (Core.Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsDefined(PolicyId))
+            if (Core.Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (Optional.IsDefined(LastRecoverOn))
+            if (Core.Optional.IsDefined(LastRecoverOn))
             {
                 writer.WritePropertyName("lastRecoveryPoint"u8);
                 writer.WriteStringValue(LastRecoverOn.Value, "O");
             }
-            if (Optional.IsDefined(BackupSetName))
+            if (Core.Optional.IsDefined(BackupSetName))
             {
                 writer.WritePropertyName("backupSetName"u8);
                 writer.WriteStringValue(BackupSetName);
             }
-            if (Optional.IsDefined(CreateMode))
+            if (Core.Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Optional.IsDefined(DeferredDeletedOn))
+            if (Core.Optional.IsDefined(DeferredDeletedOn))
             {
                 writer.WritePropertyName("deferredDeleteTimeInUTC"u8);
                 writer.WriteStringValue(DeferredDeletedOn.Value, "O");
             }
-            if (Optional.IsDefined(IsScheduledForDeferredDelete))
+            if (Core.Optional.IsDefined(IsScheduledForDeferredDelete))
             {
                 writer.WritePropertyName("isScheduledForDeferredDelete"u8);
                 writer.WriteBooleanValue(IsScheduledForDeferredDelete.Value);
             }
-            if (Optional.IsDefined(DeferredDeleteTimeRemaining))
+            if (Core.Optional.IsDefined(DeferredDeleteTimeRemaining))
             {
                 writer.WritePropertyName("deferredDeleteTimeRemaining"u8);
                 writer.WriteStringValue(DeferredDeleteTimeRemaining);
             }
-            if (Optional.IsDefined(IsDeferredDeleteScheduleUpcoming))
+            if (Core.Optional.IsDefined(IsDeferredDeleteScheduleUpcoming))
             {
                 writer.WritePropertyName("isDeferredDeleteScheduleUpcoming"u8);
                 writer.WriteBooleanValue(IsDeferredDeleteScheduleUpcoming.Value);
             }
-            if (Optional.IsDefined(IsRehydrate))
+            if (Core.Optional.IsDefined(IsRehydrate))
             {
                 writer.WritePropertyName("isRehydrate"u8);
                 writer.WriteBooleanValue(IsRehydrate.Value);
             }
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            if (Core.Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -145,17 +145,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsArchiveEnabled))
+            if (Core.Optional.IsDefined(IsArchiveEnabled))
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
-            if (Optional.IsDefined(PolicyName))
+            if (Core.Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (Optional.IsDefined(SoftDeleteRetentionPeriod))
+            if (Core.Optional.IsDefined(SoftDeleteRetentionPeriod))
             {
                 writer.WritePropertyName("softDeleteRetentionPeriod"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionPeriod.Value);
@@ -169,37 +169,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<string> serverName = default;
-            Optional<string> parentName = default;
-            Optional<string> parentType = default;
-            Optional<string> protectionStatus = default;
-            Optional<BackupProtectionState> protectionState = default;
-            Optional<LastBackupStatus> lastBackupStatus = default;
-            Optional<DateTimeOffset> lastBackupTime = default;
-            Optional<BackupErrorDetail> lastBackupErrorDetail = default;
-            Optional<string> protectedItemDataSourceId = default;
-            Optional<VmWorkloadProtectedItemHealthStatus> protectedItemHealthStatus = default;
-            Optional<VmWorkloadProtectedItemExtendedInfo> extendedInfo = default;
-            Optional<IDictionary<string, KpiResourceHealthDetails>> kpisHealths = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<string> serverName = default;
+            Core.Optional<string> parentName = default;
+            Core.Optional<string> parentType = default;
+            Core.Optional<string> protectionStatus = default;
+            Core.Optional<BackupProtectionState> protectionState = default;
+            Core.Optional<LastBackupStatus> lastBackupStatus = default;
+            Core.Optional<DateTimeOffset> lastBackupTime = default;
+            Core.Optional<BackupErrorDetail> lastBackupErrorDetail = default;
+            Core.Optional<string> protectedItemDataSourceId = default;
+            Core.Optional<VmWorkloadProtectedItemHealthStatus> protectedItemHealthStatus = default;
+            Core.Optional<VmWorkloadProtectedItemExtendedInfo> extendedInfo = default;
+            Core.Optional<IDictionary<string, KpiResourceHealthDetails>> kpisHealths = default;
             string protectedItemType = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<BackupDataSourceType> workloadType = default;
-            Optional<string> containerName = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<DateTimeOffset> lastRecoveryPoint = default;
-            Optional<string> backupSetName = default;
-            Optional<BackupCreateMode> createMode = default;
-            Optional<DateTimeOffset> deferredDeleteTimeInUTC = default;
-            Optional<bool> isScheduledForDeferredDelete = default;
-            Optional<string> deferredDeleteTimeRemaining = default;
-            Optional<bool> isDeferredDeleteScheduleUpcoming = default;
-            Optional<bool> isRehydrate = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> policyName = default;
-            Optional<int> softDeleteRetentionPeriod = default;
+            Core.Optional<BackupManagementType> backupManagementType = default;
+            Core.Optional<BackupDataSourceType> workloadType = default;
+            Core.Optional<string> containerName = default;
+            Core.Optional<ResourceIdentifier> sourceResourceId = default;
+            Core.Optional<ResourceIdentifier> policyId = default;
+            Core.Optional<DateTimeOffset> lastRecoveryPoint = default;
+            Core.Optional<string> backupSetName = default;
+            Core.Optional<BackupCreateMode> createMode = default;
+            Core.Optional<DateTimeOffset> deferredDeleteTimeInUTC = default;
+            Core.Optional<bool> isScheduledForDeferredDelete = default;
+            Core.Optional<string> deferredDeleteTimeRemaining = default;
+            Core.Optional<bool> isDeferredDeleteScheduleUpcoming = default;
+            Core.Optional<bool> isRehydrate = default;
+            Core.Optional<IList<string>> resourceGuardOperationRequests = default;
+            Core.Optional<bool> isArchiveEnabled = default;
+            Core.Optional<string> policyName = default;
+            Core.Optional<int> softDeleteRetentionPeriod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new VmWorkloadSapHanaDatabaseProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriod), friendlyName.Value, serverName.Value, parentName.Value, parentType.Value, protectionStatus.Value, Optional.ToNullable(protectionState), Optional.ToNullable(lastBackupStatus), Optional.ToNullable(lastBackupTime), lastBackupErrorDetail.Value, protectedItemDataSourceId.Value, Optional.ToNullable(protectedItemHealthStatus), extendedInfo.Value, Optional.ToDictionary(kpisHealths));
+            return new VmWorkloadSapHanaDatabaseProtectedItem(protectedItemType, Core.Optional.ToNullable(backupManagementType), Core.Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Core.Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Core.Optional.ToNullable(createMode), Core.Optional.ToNullable(deferredDeleteTimeInUTC), Core.Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Core.Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Core.Optional.ToNullable(isRehydrate), Core.Optional.ToList(resourceGuardOperationRequests), Core.Optional.ToNullable(isArchiveEnabled), policyName.Value, Core.Optional.ToNullable(softDeleteRetentionPeriod), friendlyName.Value, serverName.Value, parentName.Value, parentType.Value, protectionStatus.Value, Core.Optional.ToNullable(protectionState), Core.Optional.ToNullable(lastBackupStatus), Core.Optional.ToNullable(lastBackupTime), lastBackupErrorDetail.Value, protectedItemDataSourceId.Value, Core.Optional.ToNullable(protectedItemHealthStatus), extendedInfo.Value, Core.Optional.ToDictionary(kpisHealths));
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsMailClusterEntity. </summary>
         public SecurityInsightsMailClusterEntity()
         {
-            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            NetworkMessageIds = new ChangeTrackingList<string>();
-            Threats = new ChangeTrackingList<string>();
+            AdditionalData = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            NetworkMessageIds = new Core.ChangeTrackingList<string>();
+            Threats = new Core.ChangeTrackingList<string>();
             Kind = SecurityInsightsEntityKind.MailCluster;
         }
 

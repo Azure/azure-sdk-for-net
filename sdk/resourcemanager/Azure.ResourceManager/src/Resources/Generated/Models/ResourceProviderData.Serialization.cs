@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> @namespace = default;
-            Optional<string> registrationState = default;
-            Optional<string> registrationPolicy = default;
-            Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
-            Optional<ProviderAuthorizationConsentState> providerAuthorizationConsentState = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> @namespace = default;
+            Core.Optional<string> registrationState = default;
+            Core.Optional<string> registrationPolicy = default;
+            Core.Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
+            Core.Optional<ProviderAuthorizationConsentState> providerAuthorizationConsentState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ResourceProviderData(id.Value, @namespace.Value, registrationState.Value, registrationPolicy.Value, Optional.ToList(resourceTypes), Optional.ToNullable(providerAuthorizationConsentState));
+            return new ResourceProviderData(id.Value, @namespace.Value, registrationState.Value, registrationPolicy.Value, Core.Optional.ToList(resourceTypes), Core.Optional.ToNullable(providerAuthorizationConsentState));
         }
     }
 }

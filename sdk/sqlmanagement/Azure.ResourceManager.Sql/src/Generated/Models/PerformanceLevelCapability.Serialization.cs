@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<double> value = default;
-            Optional<PerformanceLevelUnit> unit = default;
+            Core.Optional<double> value = default;
+            Core.Optional<PerformanceLevelUnit> unit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new PerformanceLevelCapability(Optional.ToNullable(value), Optional.ToNullable(unit));
+            return new PerformanceLevelCapability(Core.Optional.ToNullable(value), Core.Optional.ToNullable(unit));
         }
     }
 }

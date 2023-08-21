@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 return null;
             }
             IReadOnlyList<ResourceHealthAvailabilityStatus> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))

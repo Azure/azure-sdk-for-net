@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> version = default;
-            Optional<string> rebootStatus = default;
-            Optional<string> osType = default;
+            Core.Optional<string> version = default;
+            Core.Optional<string> rebootStatus = default;
+            Core.Optional<string> osType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))

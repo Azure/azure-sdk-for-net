@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class SearchEncryptionWithCmk : IUtf8JsonSerializable
+    public partial class SearchEncryptionWithCmk : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enforcement))
+            if (Core.Optional.IsDefined(Enforcement))
             {
                 writer.WritePropertyName("enforcement"u8);
                 writer.WriteStringValue(Enforcement.Value.ToSerialString());
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<SearchEncryptionWithCmkEnforcement> enforcement = default;
-            Optional<SearchEncryptionComplianceStatus> encryptionComplianceStatus = default;
+            Core.Optional<SearchEncryptionWithCmkEnforcement> enforcement = default;
+            Core.Optional<SearchEncryptionComplianceStatus> encryptionComplianceStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enforcement"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Search.Models
                     continue;
                 }
             }
-            return new SearchEncryptionWithCmk(Optional.ToNullable(enforcement), Optional.ToNullable(encryptionComplianceStatus));
+            return new SearchEncryptionWithCmk(Core.Optional.ToNullable(enforcement), Core.Optional.ToNullable(encryptionComplianceStatus));
         }
     }
 }

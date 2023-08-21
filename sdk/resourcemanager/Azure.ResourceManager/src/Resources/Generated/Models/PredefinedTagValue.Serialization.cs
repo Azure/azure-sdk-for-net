@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> tagValue = default;
-            Optional<PredefinedTagCount> count = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> tagValue = default;
+            Core.Optional<PredefinedTagCount> count = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

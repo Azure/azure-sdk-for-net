@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class CalculateExchangeContentProperties : IUtf8JsonSerializable
+    public partial class CalculateExchangeContentProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ReservationsToPurchase))
+            if (Core.Optional.IsCollectionDefined(ReservationsToPurchase))
             {
                 writer.WritePropertyName("reservationsToPurchase"u8);
                 writer.WriteStartArray();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SavingsPlansToPurchase))
+            if (Core.Optional.IsCollectionDefined(SavingsPlansToPurchase))
             {
                 writer.WritePropertyName("savingsPlansToPurchase"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReservationsToExchange))
+            if (Core.Optional.IsCollectionDefined(ReservationsToExchange))
             {
                 writer.WritePropertyName("reservationsToExchange"u8);
                 writer.WriteStartArray();

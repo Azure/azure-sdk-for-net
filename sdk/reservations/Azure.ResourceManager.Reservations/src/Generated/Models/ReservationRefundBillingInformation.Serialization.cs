@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationBillingPlan> billingPlan = default;
-            Optional<int> completedTransactions = default;
-            Optional<int> totalTransactions = default;
-            Optional<PurchasePrice> billingCurrencyTotalPaidAmount = default;
-            Optional<PurchasePrice> billingCurrencyProratedAmount = default;
-            Optional<PurchasePrice> billingCurrencyRemainingCommitmentAmount = default;
+            Core.Optional<ReservationBillingPlan> billingPlan = default;
+            Core.Optional<int> completedTransactions = default;
+            Core.Optional<int> totalTransactions = default;
+            Core.Optional<PurchasePrice> billingCurrencyTotalPaidAmount = default;
+            Core.Optional<PurchasePrice> billingCurrencyProratedAmount = default;
+            Core.Optional<PurchasePrice> billingCurrencyRemainingCommitmentAmount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingPlan"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ReservationRefundBillingInformation(Optional.ToNullable(billingPlan), Optional.ToNullable(completedTransactions), Optional.ToNullable(totalTransactions), billingCurrencyTotalPaidAmount.Value, billingCurrencyProratedAmount.Value, billingCurrencyRemainingCommitmentAmount.Value);
+            return new ReservationRefundBillingInformation(Core.Optional.ToNullable(billingPlan), Core.Optional.ToNullable(completedTransactions), Core.Optional.ToNullable(totalTransactions), billingCurrencyTotalPaidAmount.Value, billingCurrencyProratedAmount.Value, billingCurrencyRemainingCommitmentAmount.Value);
         }
     }
 }

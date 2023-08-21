@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SearchPrivateLinkResource>> value = default;
+            Core.Optional<IReadOnlyList<SearchPrivateLinkResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Search.Models
                     continue;
                 }
             }
-            return new PrivateLinkResourcesResult(Optional.ToList(value));
+            return new PrivateLinkResourcesResult(Core.Optional.ToList(value));
         }
     }
 }

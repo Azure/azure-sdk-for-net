@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class RetentionDuration : IUtf8JsonSerializable
+    public partial class RetentionDuration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Count))
+            if (Core.Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(DurationType))
+            if (Core.Optional.IsDefined(DurationType))
             {
                 writer.WritePropertyName("durationType"u8);
                 writer.WriteStringValue(DurationType.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<RetentionDurationType> durationType = default;
+            Core.Optional<int> count = default;
+            Core.Optional<RetentionDurationType> durationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new RetentionDuration(Optional.ToNullable(count), Optional.ToNullable(durationType));
+            return new RetentionDuration(Core.Optional.ToNullable(count), Core.Optional.ToNullable(durationType));
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<SemanticDebugInfo> semantic = default;
+            Core.Optional<SemanticDebugInfo> semantic = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("semantic"u8))

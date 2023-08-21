@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedInstanceServerConfigurationOptionOperationSource : IOperationSource<ManagedInstanceServerConfigurationOptionResource>
+    internal class ManagedInstanceServerConfigurationOptionOperationSource : Core.IOperationSource<ManagedInstanceServerConfigurationOptionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ManagedInstanceServerConfigurationOptionResource IOperationSource<ManagedInstanceServerConfigurationOptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedInstanceServerConfigurationOptionResource Core.IOperationSource<ManagedInstanceServerConfigurationOptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedInstanceServerConfigurationOptionData.DeserializeManagedInstanceServerConfigurationOptionData(document.RootElement);
             return new ManagedInstanceServerConfigurationOptionResource(_client, data);
         }
 
-        async ValueTask<ManagedInstanceServerConfigurationOptionResource> IOperationSource<ManagedInstanceServerConfigurationOptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedInstanceServerConfigurationOptionResource> Core.IOperationSource<ManagedInstanceServerConfigurationOptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedInstanceServerConfigurationOptionData.DeserializeManagedInstanceServerConfigurationOptionData(document.RootElement);

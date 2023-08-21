@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.Reservations
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<int> etag = default;
-            Optional<ReservationsSkuName> sku = default;
-            Optional<ReservationProperties> properties = default;
-            Optional<ReservationKind> kind = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<int> etag = default;
+            Core.Optional<ReservationsSkuName> sku = default;
+            Core.Optional<ReservationProperties> properties = default;
+            Core.Optional<ReservationKind> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Reservations
                     continue;
                 }
             }
-            return new ReservationDetailData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(etag), sku.Value, properties.Value, Optional.ToNullable(kind));
+            return new ReservationDetailData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(etag), sku.Value, properties.Value, Core.Optional.ToNullable(kind));
         }
     }
 }

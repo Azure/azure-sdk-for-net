@@ -14,15 +14,15 @@ using Azure.ResourceManager.Reservations.Models;
 
 namespace Azure.ResourceManager.Reservations
 {
-    internal class AvailableScopesPropertiesOperationSource : IOperationSource<AvailableScopesProperties>
+    internal class AvailableScopesPropertiesOperationSource : Core.IOperationSource<AvailableScopesProperties>
     {
-        AvailableScopesProperties IOperationSource<AvailableScopesProperties>.CreateResult(Response response, CancellationToken cancellationToken)
+        AvailableScopesProperties Core.IOperationSource<AvailableScopesProperties>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return AvailableScopesProperties.DeserializeAvailableScopesProperties(document.RootElement);
         }
 
-        async ValueTask<AvailableScopesProperties> IOperationSource<AvailableScopesProperties>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AvailableScopesProperties> Core.IOperationSource<AvailableScopesProperties>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return AvailableScopesProperties.DeserializeAvailableScopesProperties(document.RootElement);

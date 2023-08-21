@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterNodeTypeDescription : IUtf8JsonSerializable
+    public partial class ClusterNodeTypeDescription : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsCollectionDefined(PlacementProperties))
+            if (Core.Optional.IsCollectionDefined(PlacementProperties))
             {
                 writer.WritePropertyName("placementProperties"u8);
                 writer.WriteStartObject();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Capacities))
+            if (Core.Optional.IsCollectionDefined(Capacities))
             {
                 writer.WritePropertyName("capacities"u8);
                 writer.WriteStartObject();
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteNumberValue(ClientConnectionEndpointPort);
             writer.WritePropertyName("httpGatewayEndpointPort"u8);
             writer.WriteNumberValue(HttpGatewayEndpointPort);
-            if (Optional.IsDefined(DurabilityLevel))
+            if (Core.Optional.IsDefined(DurabilityLevel))
             {
                 writer.WritePropertyName("durabilityLevel"u8);
                 writer.WriteStringValue(DurabilityLevel.Value.ToString());
             }
-            if (Optional.IsDefined(ApplicationPorts))
+            if (Core.Optional.IsDefined(ApplicationPorts))
             {
                 writer.WritePropertyName("applicationPorts"u8);
                 writer.WriteObjectValue(ApplicationPorts);
             }
-            if (Optional.IsDefined(EphemeralPorts))
+            if (Core.Optional.IsDefined(EphemeralPorts))
             {
                 writer.WritePropertyName("ephemeralPorts"u8);
                 writer.WriteObjectValue(EphemeralPorts);
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteBooleanValue(IsPrimary);
             writer.WritePropertyName("vmInstanceCount"u8);
             writer.WriteNumberValue(VmInstanceCount);
-            if (Optional.IsDefined(ReverseProxyEndpointPort))
+            if (Core.Optional.IsDefined(ReverseProxyEndpointPort))
             {
                 writer.WritePropertyName("reverseProxyEndpointPort"u8);
                 writer.WriteNumberValue(ReverseProxyEndpointPort.Value);
             }
-            if (Optional.IsDefined(IsStateless))
+            if (Core.Optional.IsDefined(IsStateless))
             {
                 writer.WritePropertyName("isStateless"u8);
                 writer.WriteBooleanValue(IsStateless.Value);
             }
-            if (Optional.IsDefined(IsMultipleAvailabilityZonesSupported))
+            if (Core.Optional.IsDefined(IsMultipleAvailabilityZonesSupported))
             {
                 writer.WritePropertyName("multipleAvailabilityZones"u8);
                 writer.WriteBooleanValue(IsMultipleAvailabilityZonesSupported.Value);
@@ -88,18 +88,18 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             string name = default;
-            Optional<IDictionary<string, string>> placementProperties = default;
-            Optional<IDictionary<string, string>> capacities = default;
+            Core.Optional<IDictionary<string, string>> placementProperties = default;
+            Core.Optional<IDictionary<string, string>> capacities = default;
             int clientConnectionEndpointPort = default;
             int httpGatewayEndpointPort = default;
-            Optional<ClusterDurabilityLevel> durabilityLevel = default;
-            Optional<ClusterEndpointRangeDescription> applicationPorts = default;
-            Optional<ClusterEndpointRangeDescription> ephemeralPorts = default;
+            Core.Optional<ClusterDurabilityLevel> durabilityLevel = default;
+            Core.Optional<ClusterEndpointRangeDescription> applicationPorts = default;
+            Core.Optional<ClusterEndpointRangeDescription> ephemeralPorts = default;
             bool isPrimary = default;
             int vmInstanceCount = default;
-            Optional<int> reverseProxyEndpointPort = default;
-            Optional<bool> isStateless = default;
-            Optional<bool> multipleAvailabilityZones = default;
+            Core.Optional<int> reverseProxyEndpointPort = default;
+            Core.Optional<bool> isStateless = default;
+            Core.Optional<bool> multipleAvailabilityZones = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ClusterNodeTypeDescription(name, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), clientConnectionEndpointPort, httpGatewayEndpointPort, Optional.ToNullable(durabilityLevel), applicationPorts.Value, ephemeralPorts.Value, isPrimary, vmInstanceCount, Optional.ToNullable(reverseProxyEndpointPort), Optional.ToNullable(isStateless), Optional.ToNullable(multipleAvailabilityZones));
+            return new ClusterNodeTypeDescription(name, Core.Optional.ToDictionary(placementProperties), Core.Optional.ToDictionary(capacities), clientConnectionEndpointPort, httpGatewayEndpointPort, Core.Optional.ToNullable(durabilityLevel), applicationPorts.Value, ephemeralPorts.Value, isPrimary, vmInstanceCount, Core.Optional.ToNullable(reverseProxyEndpointPort), Core.Optional.ToNullable(isStateless), Core.Optional.ToNullable(multipleAvailabilityZones));
         }
     }
 }

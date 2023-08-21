@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<ServerPrivateEndpointConnectionProperties> properties = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<ServerPrivateEndpointConnectionProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

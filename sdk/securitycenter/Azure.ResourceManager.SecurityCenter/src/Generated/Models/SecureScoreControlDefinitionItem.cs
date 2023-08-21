@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecureScoreControlDefinitionItem. </summary>
         public SecureScoreControlDefinitionItem()
         {
-            AssessmentDefinitions = new ChangeTrackingList<SubResource>();
+            AssessmentDefinitions = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of SecureScoreControlDefinitionItem. </summary>

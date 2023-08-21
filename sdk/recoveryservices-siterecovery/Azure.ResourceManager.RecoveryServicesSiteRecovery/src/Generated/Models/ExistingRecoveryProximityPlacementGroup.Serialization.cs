@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ExistingRecoveryProximityPlacementGroup : IUtf8JsonSerializable
+    public partial class ExistingRecoveryProximityPlacementGroup : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryProximityPlacementGroupId))
+            if (Core.Optional.IsDefined(RecoveryProximityPlacementGroupId))
             {
                 writer.WritePropertyName("recoveryProximityPlacementGroupId"u8);
                 writer.WriteStringValue(RecoveryProximityPlacementGroupId);
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> recoveryProximityPlacementGroupId = default;
+            Core.Optional<ResourceIdentifier> recoveryProximityPlacementGroupId = default;
             string resourceType = default;
             foreach (var property in element.EnumerateObject())
             {

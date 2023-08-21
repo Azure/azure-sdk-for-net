@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of SqlServerTrustGroupData. </summary>
         public SqlServerTrustGroupData()
         {
-            GroupMembers = new ChangeTrackingList<ServerTrustGroupServerInfo>();
-            TrustScopes = new ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem>();
+            GroupMembers = new Core.ChangeTrackingList<ServerTrustGroupServerInfo>();
+            TrustScopes = new Core.ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem>();
         }
 
         /// <summary> Initializes a new instance of SqlServerTrustGroupData. </summary>

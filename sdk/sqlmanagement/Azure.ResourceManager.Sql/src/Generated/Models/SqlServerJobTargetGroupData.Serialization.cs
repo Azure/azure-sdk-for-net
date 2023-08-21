@@ -13,14 +13,14 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlServerJobTargetGroupData : IUtf8JsonSerializable
+    public partial class SqlServerJobTargetGroupData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Members))
+            if (Core.Optional.IsCollectionDefined(Members))
             {
                 writer.WritePropertyName("members"u8);
                 writer.WriteStartArray();
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<JobTarget>> members = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IList<JobTarget>> members = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlServerJobTargetGroupData(id, name, type, systemData.Value, Optional.ToList(members));
+            return new SqlServerJobTargetGroupData(id, name, type, systemData.Value, Core.Optional.ToList(members));
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<string> item = default;
+            Core.Optional<int> count = default;
+            Core.Optional<string> item = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverSummaryItemInfo(Optional.ToNullable(count), item.Value);
+            return new MoverSummaryItemInfo(Core.Optional.ToNullable(count), item.Value);
         }
     }
 }

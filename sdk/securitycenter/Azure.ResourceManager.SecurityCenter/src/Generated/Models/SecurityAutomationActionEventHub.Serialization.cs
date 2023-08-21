@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAutomationActionEventHub : IUtf8JsonSerializable
+    public partial class SecurityAutomationActionEventHub : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventHubResourceId))
+            if (Core.Optional.IsDefined(EventHubResourceId))
             {
                 writer.WritePropertyName("eventHubResourceId"u8);
                 writer.WriteStringValue(EventHubResourceId);
             }
-            if (Optional.IsDefined(ConnectionString))
+            if (Core.Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> eventHubResourceId = default;
-            Optional<string> sasPolicyName = default;
-            Optional<string> connectionString = default;
+            Core.Optional<ResourceIdentifier> eventHubResourceId = default;
+            Core.Optional<string> sasPolicyName = default;
+            Core.Optional<string> connectionString = default;
             ActionType actionType = default;
             foreach (var property in element.EnumerateObject())
             {

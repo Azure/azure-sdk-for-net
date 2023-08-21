@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AutomationRuleRunPlaybookAction : IUtf8JsonSerializable
+    public partial class AutomationRuleRunPlaybookAction : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionConfiguration))
+            if (Core.Optional.IsDefined(ActionConfiguration))
             {
                 writer.WritePropertyName("actionConfiguration"u8);
                 writer.WriteObjectValue(ActionConfiguration);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<AutomationRuleRunPlaybookActionProperties> actionConfiguration = default;
+            Core.Optional<AutomationRuleRunPlaybookActionProperties> actionConfiguration = default;
             int order = default;
             ActionType actionType = default;
             foreach (var property in element.EnumerateObject())

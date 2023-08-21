@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Optional<QuotaUsagesObject> usages = default;
-            Optional<string> unit = default;
-            Optional<QuotaRequestResourceName> name = default;
-            Optional<string> resourceType = default;
-            Optional<TimeSpan> quotaPeriod = default;
-            Optional<bool> isQuotaApplicable = default;
-            Optional<BinaryData> properties = default;
+            Core.Optional<QuotaUsagesObject> usages = default;
+            Core.Optional<string> unit = default;
+            Core.Optional<QuotaRequestResourceName> name = default;
+            Core.Optional<string> resourceType = default;
+            Core.Optional<TimeSpan> quotaPeriod = default;
+            Core.Optional<bool> isQuotaApplicable = default;
+            Core.Optional<BinaryData> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usages"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Quota.Models
                     continue;
                 }
             }
-            return new QuotaUsagesProperties(usages.Value, unit.Value, name.Value, resourceType.Value, Optional.ToNullable(quotaPeriod), Optional.ToNullable(isQuotaApplicable), properties.Value);
+            return new QuotaUsagesProperties(usages.Value, unit.Value, name.Value, resourceType.Value, Core.Optional.ToNullable(quotaPeriod), Core.Optional.ToNullable(isQuotaApplicable), properties.Value);
         }
     }
 }

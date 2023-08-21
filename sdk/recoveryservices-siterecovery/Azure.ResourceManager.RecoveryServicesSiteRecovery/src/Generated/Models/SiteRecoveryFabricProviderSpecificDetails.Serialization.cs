@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> containerIds = default;
-            Optional<IReadOnlyList<A2AZoneDetails>> zones = default;
-            Optional<IReadOnlyList<A2AExtendedLocationDetails>> extendedLocations = default;
-            Optional<IReadOnlyList<A2AFabricSpecificLocationDetails>> locationDetails = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IReadOnlyList<ResourceIdentifier>> containerIds = default;
+            Core.Optional<IReadOnlyList<A2AZoneDetails>> zones = default;
+            Core.Optional<IReadOnlyList<A2AExtendedLocationDetails>> extendedLocations = default;
+            Core.Optional<IReadOnlyList<A2AFabricSpecificLocationDetails>> locationDetails = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryFabricProviderSpecificDetails(instanceType, Optional.ToNullable(location), Optional.ToList(containerIds), Optional.ToList(zones), Optional.ToList(extendedLocations), Optional.ToList(locationDetails));
+            return new SiteRecoveryFabricProviderSpecificDetails(instanceType, Core.Optional.ToNullable(location), Core.Optional.ToList(containerIds), Core.Optional.ToList(zones), Core.Optional.ToList(extendedLocations), Core.Optional.ToList(locationDetails));
         }
     }
 }

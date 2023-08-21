@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> tagName = default;
-            Optional<PredefinedTagCount> count = default;
-            Optional<IReadOnlyList<PredefinedTagValue>> values = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> tagName = default;
+            Core.Optional<PredefinedTagCount> count = default;
+            Core.Optional<IReadOnlyList<PredefinedTagValue>> values = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new PredefinedTag(id.Value, tagName.Value, count.Value, Optional.ToList(values));
+            return new PredefinedTag(id.Value, tagName.Value, count.Value, Core.Optional.ToList(values));
         }
     }
 }

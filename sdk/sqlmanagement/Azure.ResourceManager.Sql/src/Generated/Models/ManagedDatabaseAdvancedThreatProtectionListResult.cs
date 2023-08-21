@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedDatabaseAdvancedThreatProtectionListResult. </summary>
         internal ManagedDatabaseAdvancedThreatProtectionListResult()
         {
-            Value = new ChangeTrackingList<ManagedDatabaseAdvancedThreatProtectionData>();
+            Value = new Core.ChangeTrackingList<ManagedDatabaseAdvancedThreatProtectionData>();
         }
 
         /// <summary> Initializes a new instance of ManagedDatabaseAdvancedThreatProtectionListResult. </summary>

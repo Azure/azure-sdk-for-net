@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of VmNicContentDetails. </summary>
         public VmNicContentDetails()
         {
-            IPConfigs = new ChangeTrackingList<HyperVFailoverIPConfigDetails>();
+            IPConfigs = new Core.ChangeTrackingList<HyperVFailoverIPConfigDetails>();
         }
 
         /// <summary> The nic Id. </summary>

@@ -14,22 +14,22 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    public partial class ServiceBusNamespaceData : IUtf8JsonSerializable
+    public partial class ServiceBusNamespaceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.ServiceBus
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinimumTlsVersion))
+            if (Core.Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
             }
-            if (Optional.IsDefined(IsZoneRedundant))
+            if (Core.Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Core.Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (Core.Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -69,22 +69,22 @@ namespace Azure.ResourceManager.ServiceBus
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (Core.Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (Optional.IsDefined(AlternateName))
+            if (Core.Optional.IsDefined(AlternateName))
             {
                 writer.WritePropertyName("alternateName"u8);
                 writer.WriteStringValue(AlternateName);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(PremiumMessagingPartitions))
+            if (Core.Optional.IsDefined(PremiumMessagingPartitions))
             {
                 writer.WritePropertyName("premiumMessagingPartitions"u8);
                 writer.WriteNumberValue(PremiumMessagingPartitions.Value);
@@ -99,28 +99,28 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            Optional<ServiceBusSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ServiceBusSku> sku = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ServiceBusMinimumTlsVersion> minimumTlsVersion = default;
-            Optional<string> provisioningState = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<string> serviceBusEndpoint = default;
-            Optional<string> metricId = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<ServiceBusEncryption> encryption = default;
-            Optional<IList<ServiceBusPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<string> alternateName = default;
-            Optional<ServiceBusPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<int> premiumMessagingPartitions = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ServiceBusMinimumTlsVersion> minimumTlsVersion = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<string> status = default;
+            Core.Optional<DateTimeOffset> createdAt = default;
+            Core.Optional<DateTimeOffset> updatedAt = default;
+            Core.Optional<string> serviceBusEndpoint = default;
+            Core.Optional<string> metricId = default;
+            Core.Optional<bool> zoneRedundant = default;
+            Core.Optional<ServiceBusEncryption> encryption = default;
+            Core.Optional<IList<ServiceBusPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Core.Optional<bool> disableLocalAuth = default;
+            Core.Optional<string> alternateName = default;
+            Core.Optional<ServiceBusPublicNetworkAccess> publicNetworkAccess = default;
+            Core.Optional<int> premiumMessagingPartitions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new ServiceBusNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(minimumTlsVersion), provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(premiumMessagingPartitions));
+            return new ServiceBusNamespaceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, identity, Core.Optional.ToNullable(minimumTlsVersion), provisioningState.Value, status.Value, Core.Optional.ToNullable(createdAt), Core.Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, Core.Optional.ToNullable(zoneRedundant), encryption.Value, Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(disableLocalAuth), alternateName.Value, Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToNullable(premiumMessagingPartitions));
         }
     }
 }

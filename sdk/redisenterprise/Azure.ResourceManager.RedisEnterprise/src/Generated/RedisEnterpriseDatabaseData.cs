@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Initializes a new instance of RedisEnterpriseDatabaseData. </summary>
         public RedisEnterpriseDatabaseData()
         {
-            Modules = new ChangeTrackingList<RedisEnterpriseModule>();
+            Modules = new Core.ChangeTrackingList<RedisEnterpriseModule>();
         }
 
         /// <summary> Initializes a new instance of RedisEnterpriseDatabaseData. </summary>

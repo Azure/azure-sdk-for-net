@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IsEnabled = isEnabled;
             TriggersOn = triggersOn;
             TriggersWhen = triggersWhen;
-            Conditions = new ChangeTrackingList<SecurityInsightsAutomationRuleCondition>();
+            Conditions = new Core.ChangeTrackingList<SecurityInsightsAutomationRuleCondition>();
         }
 
         /// <summary> Initializes a new instance of SecurityInsightsAutomationRuleTriggeringLogic. </summary>

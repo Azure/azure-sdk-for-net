@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary> Initializes a new instance of ManagementGroupData. </summary>
         internal ManagementGroupData()
         {
-            Children = new ChangeTrackingList<ManagementGroupChildInfo>();
+            Children = new Core.ChangeTrackingList<ManagementGroupChildInfo>();
         }
 
         /// <summary> Initializes a new instance of ManagementGroupData. </summary>

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndexerDataSourceConnection : IUtf8JsonSerializable
+    public partial class SearchIndexerDataSourceConnection : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteObjectValue(CredentialsInternal);
             writer.WritePropertyName("container"u8);
             writer.WriteObjectValue(Container);
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("identity");
                 }
             }
-            if (Optional.IsDefined(DataChangeDetectionPolicy))
+            if (Core.Optional.IsDefined(DataChangeDetectionPolicy))
             {
                 if (DataChangeDetectionPolicy != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("dataChangeDetectionPolicy");
                 }
             }
-            if (Optional.IsDefined(DataDeletionDetectionPolicy))
+            if (Core.Optional.IsDefined(DataDeletionDetectionPolicy))
             {
                 if (DataDeletionDetectionPolicy != null)
                 {
@@ -64,12 +64,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("dataDeletionDetectionPolicy");
                 }
             }
-            if (Optional.IsDefined(_etag))
+            if (Core.Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
             }
-            if (Optional.IsDefined(EncryptionKey))
+            if (Core.Optional.IsDefined(EncryptionKey))
             {
                 if (EncryptionKey != null)
                 {
@@ -91,15 +91,15 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            Core.Optional<string> description = default;
             SearchIndexerDataSourceType type = default;
             DataSourceCredentials credentials = default;
             SearchIndexerDataContainer container = default;
-            Optional<SearchIndexerDataIdentity> identity = default;
-            Optional<DataChangeDetectionPolicy> dataChangeDetectionPolicy = default;
-            Optional<DataDeletionDetectionPolicy> dataDeletionDetectionPolicy = default;
-            Optional<string> odataEtag = default;
-            Optional<SearchResourceEncryptionKey> encryptionKey = default;
+            Core.Optional<SearchIndexerDataIdentity> identity = default;
+            Core.Optional<DataChangeDetectionPolicy> dataChangeDetectionPolicy = default;
+            Core.Optional<DataDeletionDetectionPolicy> dataDeletionDetectionPolicy = default;
+            Core.Optional<string> odataEtag = default;
+            Core.Optional<SearchResourceEncryptionKey> encryptionKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

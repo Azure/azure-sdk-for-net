@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             TargetResourceId = targetResourceId;
             TargetRegion = targetRegion;
             DataMoveLevel = dataMoveLevel;
-            SourceContainerArmIds = new ChangeTrackingList<ResourceIdentifier>();
+            SourceContainerArmIds = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> ARM Id of target vault. </summary>

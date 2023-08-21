@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of ServiceFabricApplicationTypeList. </summary>
         internal ServiceFabricApplicationTypeList()
         {
-            Value = new ChangeTrackingList<ServiceFabricApplicationTypeData>();
+            Value = new Core.ChangeTrackingList<ServiceFabricApplicationTypeData>();
         }
 
         /// <summary> Initializes a new instance of ServiceFabricApplicationTypeList. </summary>

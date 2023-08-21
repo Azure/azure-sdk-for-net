@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> containerInstanceId = default;
-            Optional<string> storageAccountId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<DateTimeOffset> expirationTime = default;
-            Optional<ResponseError> error = default;
+            Core.Optional<string> containerInstanceId = default;
+            Core.Optional<string> storageAccountId = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<DateTimeOffset> expirationTime = default;
+            Core.Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerInstanceId"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ScriptStatus(containerInstanceId.Value, storageAccountId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(expirationTime), error.Value);
+            return new ScriptStatus(containerInstanceId.Value, storageAccountId.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(expirationTime), error.Value);
         }
     }
 }

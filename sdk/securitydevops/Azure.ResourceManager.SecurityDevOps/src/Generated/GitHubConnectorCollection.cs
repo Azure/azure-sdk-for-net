@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             try
             {
                 var response = await _gitHubConnectorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, gitHubConnectorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityDevOpsArmOperation<GitHubConnectorResource>(new GitHubConnectorOperationSource(Client), _gitHubConnectorClientDiagnostics, Pipeline, _gitHubConnectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gitHubConnectorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SecurityDevOpsArmOperation<GitHubConnectorResource>(new GitHubConnectorOperationSource(Client), _gitHubConnectorClientDiagnostics, Pipeline, _gitHubConnectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gitHubConnectorName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             try
             {
                 var response = _gitHubConnectorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, gitHubConnectorName, data, cancellationToken);
-                var operation = new SecurityDevOpsArmOperation<GitHubConnectorResource>(new GitHubConnectorOperationSource(Client), _gitHubConnectorClientDiagnostics, Pipeline, _gitHubConnectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gitHubConnectorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SecurityDevOpsArmOperation<GitHubConnectorResource>(new GitHubConnectorOperationSource(Client), _gitHubConnectorClientDiagnostics, Pipeline, _gitHubConnectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gitHubConnectorName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubConnectorRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gitHubConnectorRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GitHubConnectorResource(Client, GitHubConnectorData.DeserializeGitHubConnectorData(e)), _gitHubConnectorClientDiagnostics, Pipeline, "GitHubConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GitHubConnectorResource(Client, GitHubConnectorData.DeserializeGitHubConnectorData(e)), _gitHubConnectorClientDiagnostics, Pipeline, "GitHubConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubConnectorRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gitHubConnectorRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GitHubConnectorResource(Client, GitHubConnectorData.DeserializeGitHubConnectorData(e)), _gitHubConnectorClientDiagnostics, Pipeline, "GitHubConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GitHubConnectorResource(Client, GitHubConnectorData.DeserializeGitHubConnectorData(e)), _gitHubConnectorClientDiagnostics, Pipeline, "GitHubConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of SkuRestriction. </summary>
         internal SkuRestriction()
         {
-            Values = new ChangeTrackingList<string>();
+            Values = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SkuRestriction. </summary>

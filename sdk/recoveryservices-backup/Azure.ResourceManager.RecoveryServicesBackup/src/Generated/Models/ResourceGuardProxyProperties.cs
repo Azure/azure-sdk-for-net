@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of ResourceGuardProxyProperties. </summary>
         public ResourceGuardProxyProperties()
         {
-            ResourceGuardOperationDetails = new ChangeTrackingList<ResourceGuardOperationDetail>();
+            ResourceGuardOperationDetails = new Core.ChangeTrackingList<ResourceGuardOperationDetail>();
         }
 
         /// <summary> Initializes a new instance of ResourceGuardProxyProperties. </summary>

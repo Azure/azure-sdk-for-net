@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExchangePolicyError>> policyErrors = default;
+            Core.Optional<IReadOnlyList<ExchangePolicyError>> policyErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyErrors"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ExchangePolicyErrors(Optional.ToList(policyErrors));
+            return new ExchangePolicyErrors(Core.Optional.ToList(policyErrors));
         }
     }
 }

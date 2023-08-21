@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsCloudApplicationEntity : IUtf8JsonSerializable
+    public partial class SecurityInsightsCloudApplicationEntity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<int> appId = default;
-            Optional<string> appName = default;
-            Optional<string> instanceName = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<int> appId = default;
+            Core.Optional<string> appName = default;
+            Core.Optional<string> instanceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsCloudApplicationEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToNullable(appId), appName.Value, instanceName.Value);
+            return new SecurityInsightsCloudApplicationEntity(id, name, type, systemData.Value, kind, Core.Optional.ToDictionary(additionalData), friendlyName.Value, Core.Optional.ToNullable(appId), appName.Value, instanceName.Value);
         }
     }
 }

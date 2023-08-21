@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AutomationRulePropertyValuesChangedCondition : IUtf8JsonSerializable
+    public partial class AutomationRulePropertyValuesChangedCondition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PropertyName))
+            if (Core.Optional.IsDefined(PropertyName))
             {
                 writer.WritePropertyName("propertyName"u8);
                 writer.WriteStringValue(PropertyName.Value.ToString());
             }
-            if (Optional.IsDefined(ChangeType))
+            if (Core.Optional.IsDefined(ChangeType))
             {
                 writer.WritePropertyName("changeType"u8);
                 writer.WriteStringValue(ChangeType.Value.ToString());
             }
-            if (Optional.IsDefined(Operator))
+            if (Core.Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(PropertyValues))
+            if (Core.Optional.IsCollectionDefined(PropertyValues))
             {
                 writer.WritePropertyName("propertyValues"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<AutomationRulePropertyChangedConditionSupportedPropertyType> propertyName = default;
-            Optional<AutomationRulePropertyChangedConditionSupportedChangedType> changeType = default;
-            Optional<AutomationRulePropertyConditionSupportedOperator> @operator = default;
-            Optional<IList<string>> propertyValues = default;
+            Core.Optional<AutomationRulePropertyChangedConditionSupportedPropertyType> propertyName = default;
+            Core.Optional<AutomationRulePropertyChangedConditionSupportedChangedType> changeType = default;
+            Core.Optional<AutomationRulePropertyConditionSupportedOperator> @operator = default;
+            Core.Optional<IList<string>> propertyValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("propertyName"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new AutomationRulePropertyValuesChangedCondition(Optional.ToNullable(propertyName), Optional.ToNullable(changeType), Optional.ToNullable(@operator), Optional.ToList(propertyValues));
+            return new AutomationRulePropertyValuesChangedCondition(Core.Optional.ToNullable(propertyName), Core.Optional.ToNullable(changeType), Core.Optional.ToNullable(@operator), Core.Optional.ToList(propertyValues));
         }
     }
 }

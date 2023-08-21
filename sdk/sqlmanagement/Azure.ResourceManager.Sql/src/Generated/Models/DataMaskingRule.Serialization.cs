@@ -11,64 +11,64 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class DataMaskingRule : IUtf8JsonSerializable
+    public partial class DataMaskingRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AliasName))
+            if (Core.Optional.IsDefined(AliasName))
             {
                 writer.WritePropertyName("aliasName"u8);
                 writer.WriteStringValue(AliasName);
             }
-            if (Optional.IsDefined(RuleState))
+            if (Core.Optional.IsDefined(RuleState))
             {
                 writer.WritePropertyName("ruleState"u8);
                 writer.WriteStringValue(RuleState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SchemaName))
+            if (Core.Optional.IsDefined(SchemaName))
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
-            if (Optional.IsDefined(TableName))
+            if (Core.Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (Optional.IsDefined(ColumnName))
+            if (Core.Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("columnName"u8);
                 writer.WriteStringValue(ColumnName);
             }
-            if (Optional.IsDefined(MaskingFunction))
+            if (Core.Optional.IsDefined(MaskingFunction))
             {
                 writer.WritePropertyName("maskingFunction"u8);
                 writer.WriteStringValue(MaskingFunction.Value.ToSerialString());
             }
-            if (Optional.IsDefined(NumberFrom))
+            if (Core.Optional.IsDefined(NumberFrom))
             {
                 writer.WritePropertyName("numberFrom"u8);
                 writer.WriteStringValue(NumberFrom);
             }
-            if (Optional.IsDefined(NumberTo))
+            if (Core.Optional.IsDefined(NumberTo))
             {
                 writer.WritePropertyName("numberTo"u8);
                 writer.WriteStringValue(NumberTo);
             }
-            if (Optional.IsDefined(PrefixSize))
+            if (Core.Optional.IsDefined(PrefixSize))
             {
                 writer.WritePropertyName("prefixSize"u8);
                 writer.WriteStringValue(PrefixSize);
             }
-            if (Optional.IsDefined(SuffixSize))
+            if (Core.Optional.IsDefined(SuffixSize))
             {
                 writer.WritePropertyName("suffixSize"u8);
                 writer.WriteStringValue(SuffixSize);
             }
-            if (Optional.IsDefined(ReplacementString))
+            if (Core.Optional.IsDefined(ReplacementString))
             {
                 writer.WritePropertyName("replacementString"u8);
                 writer.WriteStringValue(ReplacementString);
@@ -83,23 +83,23 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> kind = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> aliasName = default;
-            Optional<DataMaskingRuleState> ruleState = default;
-            Optional<string> schemaName = default;
-            Optional<string> tableName = default;
-            Optional<string> columnName = default;
-            Optional<DataMaskingFunction> maskingFunction = default;
-            Optional<string> numberFrom = default;
-            Optional<string> numberTo = default;
-            Optional<string> prefixSize = default;
-            Optional<string> suffixSize = default;
-            Optional<string> replacementString = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> aliasName = default;
+            Core.Optional<DataMaskingRuleState> ruleState = default;
+            Core.Optional<string> schemaName = default;
+            Core.Optional<string> tableName = default;
+            Core.Optional<string> columnName = default;
+            Core.Optional<DataMaskingFunction> maskingFunction = default;
+            Core.Optional<string> numberFrom = default;
+            Core.Optional<string> numberTo = default;
+            Core.Optional<string> prefixSize = default;
+            Core.Optional<string> suffixSize = default;
+            Core.Optional<string> replacementString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new DataMaskingRule(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, aliasName.Value, Optional.ToNullable(ruleState), schemaName.Value, tableName.Value, columnName.Value, Optional.ToNullable(maskingFunction), numberFrom.Value, numberTo.Value, prefixSize.Value, suffixSize.Value, replacementString.Value);
+            return new DataMaskingRule(id, name, type, systemData.Value, Core.Optional.ToNullable(location), kind.Value, aliasName.Value, Core.Optional.ToNullable(ruleState), schemaName.Value, tableName.Value, columnName.Value, Core.Optional.ToNullable(maskingFunction), numberFrom.Value, numberTo.Value, prefixSize.Value, suffixSize.Value, replacementString.Value);
         }
     }
 }

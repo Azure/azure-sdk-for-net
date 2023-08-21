@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> resourceName = default;
-            Optional<ResourceType> resourceType = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> resourceName = default;
+            Core.Optional<ResourceType> resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new TargetResource(id.Value, resourceName.Value, Optional.ToNullable(resourceType));
+            return new TargetResource(id.Value, resourceName.Value, Core.Optional.ToNullable(resourceType));
         }
     }
 }

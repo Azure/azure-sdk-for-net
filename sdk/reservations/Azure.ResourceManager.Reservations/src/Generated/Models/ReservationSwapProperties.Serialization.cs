@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> swapSource = default;
-            Optional<string> swapDestination = default;
+            Core.Optional<string> swapSource = default;
+            Core.Optional<string> swapDestination = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("swapSource"u8))

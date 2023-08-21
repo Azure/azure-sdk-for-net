@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of MicrosoftSecurityIncidentCreationAlertRule. </summary>
         public MicrosoftSecurityIncidentCreationAlertRule()
         {
-            DisplayNamesFilter = new ChangeTrackingList<string>();
-            DisplayNamesExcludeFilter = new ChangeTrackingList<string>();
-            SeveritiesFilter = new ChangeTrackingList<SecurityInsightsAlertSeverity>();
+            DisplayNamesFilter = new Core.ChangeTrackingList<string>();
+            DisplayNamesExcludeFilter = new Core.ChangeTrackingList<string>();
+            SeveritiesFilter = new Core.ChangeTrackingList<SecurityInsightsAlertSeverity>();
             Kind = AlertRuleKind.MicrosoftSecurityIncidentCreation;
         }
 

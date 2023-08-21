@@ -12,14 +12,14 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedTransparentDataEncryptionData : IUtf8JsonSerializable
+    public partial class ManagedTransparentDataEncryptionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<TransparentDataEncryptionState> state = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<TransparentDataEncryptionState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedTransparentDataEncryptionData(id, name, type, systemData.Value, Optional.ToNullable(state));
+            return new ManagedTransparentDataEncryptionData(id, name, type, systemData.Value, Core.Optional.ToNullable(state));
         }
     }
 }

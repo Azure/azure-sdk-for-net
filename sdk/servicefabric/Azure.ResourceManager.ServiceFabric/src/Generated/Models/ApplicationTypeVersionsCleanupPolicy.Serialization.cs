@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    internal partial class ApplicationTypeVersionsCleanupPolicy : IUtf8JsonSerializable
+    internal partial class ApplicationTypeVersionsCleanupPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("maxUnusedVersionsToKeep"u8);

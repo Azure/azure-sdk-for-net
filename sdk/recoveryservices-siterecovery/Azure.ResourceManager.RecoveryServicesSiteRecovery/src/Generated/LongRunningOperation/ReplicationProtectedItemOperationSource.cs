@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal class ReplicationProtectedItemOperationSource : IOperationSource<ReplicationProtectedItemResource>
+    internal class ReplicationProtectedItemOperationSource : Core.IOperationSource<ReplicationProtectedItemResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _client = client;
         }
 
-        ReplicationProtectedItemResource IOperationSource<ReplicationProtectedItemResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ReplicationProtectedItemResource Core.IOperationSource<ReplicationProtectedItemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(document.RootElement);
             return new ReplicationProtectedItemResource(_client, data);
         }
 
-        async ValueTask<ReplicationProtectedItemResource> IOperationSource<ReplicationProtectedItemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ReplicationProtectedItemResource> Core.IOperationSource<ReplicationProtectedItemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(document.RootElement);

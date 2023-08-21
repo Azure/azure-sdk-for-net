@@ -13,29 +13,29 @@ using Azure.ResourceManager.Relay.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    public partial class WcfRelayData : IUtf8JsonSerializable
+    public partial class WcfRelayData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RelayType))
+            if (Core.Optional.IsDefined(RelayType))
             {
                 writer.WritePropertyName("relayType"u8);
                 writer.WriteStringValue(RelayType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(IsClientAuthorizationRequired))
+            if (Core.Optional.IsDefined(IsClientAuthorizationRequired))
             {
                 writer.WritePropertyName("requiresClientAuthorization"u8);
                 writer.WriteBooleanValue(IsClientAuthorizationRequired.Value);
             }
-            if (Optional.IsDefined(IsTransportSecurityRequired))
+            if (Core.Optional.IsDefined(IsTransportSecurityRequired))
             {
                 writer.WritePropertyName("requiresTransportSecurity"u8);
                 writer.WriteBooleanValue(IsTransportSecurityRequired.Value);
             }
-            if (Optional.IsDefined(UserMetadata))
+            if (Core.Optional.IsDefined(UserMetadata))
             {
                 writer.WritePropertyName("userMetadata"u8);
                 writer.WriteStringValue(UserMetadata);
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.Relay
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isDynamic = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<int> listenerCount = default;
-            Optional<RelayType> relayType = default;
-            Optional<bool> requiresClientAuthorization = default;
-            Optional<bool> requiresTransportSecurity = default;
-            Optional<string> userMetadata = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<bool> isDynamic = default;
+            Core.Optional<DateTimeOffset> createdAt = default;
+            Core.Optional<DateTimeOffset> updatedAt = default;
+            Core.Optional<int> listenerCount = default;
+            Core.Optional<RelayType> relayType = default;
+            Core.Optional<bool> requiresClientAuthorization = default;
+            Core.Optional<bool> requiresTransportSecurity = default;
+            Core.Optional<string> userMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Relay
                     continue;
                 }
             }
-            return new WcfRelayData(id, name, type, systemData.Value, Optional.ToNullable(isDynamic), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(listenerCount), Optional.ToNullable(relayType), Optional.ToNullable(requiresClientAuthorization), Optional.ToNullable(requiresTransportSecurity), userMetadata.Value, Optional.ToNullable(location));
+            return new WcfRelayData(id, name, type, systemData.Value, Core.Optional.ToNullable(isDynamic), Core.Optional.ToNullable(createdAt), Core.Optional.ToNullable(updatedAt), Core.Optional.ToNullable(listenerCount), Core.Optional.ToNullable(relayType), Core.Optional.ToNullable(requiresClientAuthorization), Core.Optional.ToNullable(requiresTransportSecurity), userMetadata.Value, Core.Optional.ToNullable(location));
         }
     }
 }

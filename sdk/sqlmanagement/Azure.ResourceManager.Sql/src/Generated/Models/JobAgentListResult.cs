@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of JobAgentListResult. </summary>
         internal JobAgentListResult()
         {
-            Value = new ChangeTrackingList<SqlServerJobAgentData>();
+            Value = new Core.ChangeTrackingList<SqlServerJobAgentData>();
         }
 
         /// <summary> Initializes a new instance of JobAgentListResult. </summary>

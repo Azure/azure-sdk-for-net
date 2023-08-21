@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of JobStepListResult. </summary>
         internal JobStepListResult()
         {
-            Value = new ChangeTrackingList<SqlServerJobStepData>();
+            Value = new Core.ChangeTrackingList<SqlServerJobStepData>();
         }
 
         /// <summary> Initializes a new instance of JobStepListResult. </summary>

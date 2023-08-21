@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Purview
 {
-    internal class PurviewPrivateEndpointConnectionOperationSource : IOperationSource<PurviewPrivateEndpointConnectionResource>
+    internal class PurviewPrivateEndpointConnectionOperationSource : Core.IOperationSource<PurviewPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Purview
             _client = client;
         }
 
-        PurviewPrivateEndpointConnectionResource IOperationSource<PurviewPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PurviewPrivateEndpointConnectionResource Core.IOperationSource<PurviewPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PurviewPrivateEndpointConnectionData.DeserializePurviewPrivateEndpointConnectionData(document.RootElement);
             return new PurviewPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<PurviewPrivateEndpointConnectionResource> IOperationSource<PurviewPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PurviewPrivateEndpointConnectionResource> Core.IOperationSource<PurviewPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PurviewPrivateEndpointConnectionData.DeserializePurviewPrivateEndpointConnectionData(document.RootElement);

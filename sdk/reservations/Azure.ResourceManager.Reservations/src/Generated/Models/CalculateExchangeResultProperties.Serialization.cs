@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<Guid> sessionId = default;
-            Optional<PurchasePrice> netPayable = default;
-            Optional<PurchasePrice> refundsTotal = default;
-            Optional<PurchasePrice> purchasesTotal = default;
-            Optional<IReadOnlyList<ReservationToPurchaseCalculateExchange>> reservationsToPurchase = default;
-            Optional<IReadOnlyList<SavingsPlanToPurchaseCalculateExchange>> savingsPlansToPurchase = default;
-            Optional<IReadOnlyList<ReservationToExchange>> reservationsToExchange = default;
-            Optional<ExchangePolicyErrors> policyResult = default;
+            Core.Optional<Guid> sessionId = default;
+            Core.Optional<PurchasePrice> netPayable = default;
+            Core.Optional<PurchasePrice> refundsTotal = default;
+            Core.Optional<PurchasePrice> purchasesTotal = default;
+            Core.Optional<IReadOnlyList<ReservationToPurchaseCalculateExchange>> reservationsToPurchase = default;
+            Core.Optional<IReadOnlyList<SavingsPlanToPurchaseCalculateExchange>> savingsPlansToPurchase = default;
+            Core.Optional<IReadOnlyList<ReservationToExchange>> reservationsToExchange = default;
+            Core.Optional<ExchangePolicyErrors> policyResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionId"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new CalculateExchangeResultProperties(Optional.ToNullable(sessionId), netPayable.Value, refundsTotal.Value, purchasesTotal.Value, Optional.ToList(reservationsToPurchase), Optional.ToList(savingsPlansToPurchase), Optional.ToList(reservationsToExchange), policyResult.Value);
+            return new CalculateExchangeResultProperties(Core.Optional.ToNullable(sessionId), netPayable.Value, refundsTotal.Value, purchasesTotal.Value, Core.Optional.ToList(reservationsToPurchase), Core.Optional.ToList(savingsPlansToPurchase), Core.Optional.ToList(reservationsToExchange), policyResult.Value);
         }
     }
 }

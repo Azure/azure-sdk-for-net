@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class UnknownCustomAlertRule : IUtf8JsonSerializable
+    internal partial class UnknownCustomAlertRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("isEnabled"u8);
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
             bool isEnabled = default;
             string ruleType = "Unknown";
             foreach (var property in element.EnumerateObject())

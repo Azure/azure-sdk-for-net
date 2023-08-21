@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HyperVHostDetails>> hyperVHosts = default;
+            Core.Optional<IReadOnlyList<HyperVHostDetails>> hyperVHosts = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new HyperVSiteDetails(instanceType, Optional.ToList(hyperVHosts));
+            return new HyperVSiteDetails(instanceType, Core.Optional.ToList(hyperVHosts));
         }
     }
 }

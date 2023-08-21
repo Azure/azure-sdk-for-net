@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SignalR
 {
-    internal class SignalRSharedPrivateLinkResourceOperationSource : IOperationSource<SignalRSharedPrivateLinkResource>
+    internal class SignalRSharedPrivateLinkResourceOperationSource : Core.IOperationSource<SignalRSharedPrivateLinkResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.SignalR
             _client = client;
         }
 
-        SignalRSharedPrivateLinkResource IOperationSource<SignalRSharedPrivateLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SignalRSharedPrivateLinkResource Core.IOperationSource<SignalRSharedPrivateLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SignalRSharedPrivateLinkResourceData.DeserializeSignalRSharedPrivateLinkResourceData(document.RootElement);
             return new SignalRSharedPrivateLinkResource(_client, data);
         }
 
-        async ValueTask<SignalRSharedPrivateLinkResource> IOperationSource<SignalRSharedPrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SignalRSharedPrivateLinkResource> Core.IOperationSource<SignalRSharedPrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SignalRSharedPrivateLinkResourceData.DeserializeSignalRSharedPrivateLinkResourceData(document.RootElement);

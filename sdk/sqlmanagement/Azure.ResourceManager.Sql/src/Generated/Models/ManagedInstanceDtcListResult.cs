@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstanceDtcListResult. </summary>
         internal ManagedInstanceDtcListResult()
         {
-            Value = new ChangeTrackingList<ManagedInstanceDtcData>();
+            Value = new Core.ChangeTrackingList<ManagedInstanceDtcData>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceDtcListResult. </summary>

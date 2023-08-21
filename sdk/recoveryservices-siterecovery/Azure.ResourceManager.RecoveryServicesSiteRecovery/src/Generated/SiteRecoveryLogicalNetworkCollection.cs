@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryLogicalNetworkReplicationLogicalNetworksRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryLogicalNetworkReplicationLogicalNetworksRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryLogicalNetworkResource(Client, SiteRecoveryLogicalNetworkData.DeserializeSiteRecoveryLogicalNetworkData(e)), _siteRecoveryLogicalNetworkReplicationLogicalNetworksClientDiagnostics, Pipeline, "SiteRecoveryLogicalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryLogicalNetworkResource(Client, SiteRecoveryLogicalNetworkData.DeserializeSiteRecoveryLogicalNetworkData(e)), _siteRecoveryLogicalNetworkReplicationLogicalNetworksClientDiagnostics, Pipeline, "SiteRecoveryLogicalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryLogicalNetworkReplicationLogicalNetworksRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryLogicalNetworkReplicationLogicalNetworksRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryLogicalNetworkResource(Client, SiteRecoveryLogicalNetworkData.DeserializeSiteRecoveryLogicalNetworkData(e)), _siteRecoveryLogicalNetworkReplicationLogicalNetworksClientDiagnostics, Pipeline, "SiteRecoveryLogicalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryLogicalNetworkResource(Client, SiteRecoveryLogicalNetworkData.DeserializeSiteRecoveryLogicalNetworkData(e)), _siteRecoveryLogicalNetworkReplicationLogicalNetworksClientDiagnostics, Pipeline, "SiteRecoveryLogicalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

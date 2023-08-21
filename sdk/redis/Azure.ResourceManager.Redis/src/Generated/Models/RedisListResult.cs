@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Initializes a new instance of RedisListResult. </summary>
         internal RedisListResult()
         {
-            Value = new ChangeTrackingList<RedisData>();
+            Value = new Core.ChangeTrackingList<RedisData>();
         }
 
         /// <summary> Initializes a new instance of RedisListResult. </summary>

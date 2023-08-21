@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of SignalRPrivateLinkResource. </summary>
         public SignalRPrivateLinkResource()
         {
-            RequiredMembers = new ChangeTrackingList<string>();
-            RequiredZoneNames = new ChangeTrackingList<string>();
-            ShareablePrivateLinkResourceTypes = new ChangeTrackingList<ShareablePrivateLinkResourceType>();
+            RequiredMembers = new Core.ChangeTrackingList<string>();
+            RequiredZoneNames = new Core.ChangeTrackingList<string>();
+            ShareablePrivateLinkResourceTypes = new Core.ChangeTrackingList<ShareablePrivateLinkResourceType>();
         }
 
         /// <summary> Initializes a new instance of SignalRPrivateLinkResource. </summary>

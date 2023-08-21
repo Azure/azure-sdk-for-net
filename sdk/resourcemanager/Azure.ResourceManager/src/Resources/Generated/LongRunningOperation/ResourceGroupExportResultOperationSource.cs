@@ -14,15 +14,15 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class ResourceGroupExportResultOperationSource : IOperationSource<ResourceGroupExportResult>
+    internal class ResourceGroupExportResultOperationSource : Core.IOperationSource<ResourceGroupExportResult>
     {
-        ResourceGroupExportResult IOperationSource<ResourceGroupExportResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        ResourceGroupExportResult Core.IOperationSource<ResourceGroupExportResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ResourceGroupExportResult.DeserializeResourceGroupExportResult(document.RootElement);
         }
 
-        async ValueTask<ResourceGroupExportResult> IOperationSource<ResourceGroupExportResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ResourceGroupExportResult> Core.IOperationSource<ResourceGroupExportResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ResourceGroupExportResult.DeserializeResourceGroupExportResult(document.RootElement);

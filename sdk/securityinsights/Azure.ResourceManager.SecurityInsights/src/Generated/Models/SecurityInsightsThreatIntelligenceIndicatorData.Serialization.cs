@@ -14,21 +14,21 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsThreatIntelligenceIndicatorData : IUtf8JsonSerializable
+    public partial class SecurityInsightsThreatIntelligenceIndicatorData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ThreatIntelligenceTags))
+            if (Core.Optional.IsCollectionDefined(ThreatIntelligenceTags))
             {
                 writer.WritePropertyName("threatIntelligenceTags"u8);
                 writer.WriteStartArray();
@@ -38,27 +38,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LastUpdatedOn))
+            if (Core.Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(Source))
+            if (Core.Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(IndicatorTypes))
+            if (Core.Optional.IsCollectionDefined(IndicatorTypes))
             {
                 writer.WritePropertyName("indicatorTypes"u8);
                 writer.WriteStartArray();
@@ -68,22 +68,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Pattern))
+            if (Core.Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (Optional.IsDefined(PatternType))
+            if (Core.Optional.IsDefined(PatternType))
             {
                 writer.WritePropertyName("patternType"u8);
                 writer.WriteStringValue(PatternType);
             }
-            if (Optional.IsDefined(PatternVersion))
+            if (Core.Optional.IsDefined(PatternVersion))
             {
                 writer.WritePropertyName("patternVersion"u8);
                 writer.WriteStringValue(PatternVersion);
             }
-            if (Optional.IsCollectionDefined(KillChainPhases))
+            if (Core.Optional.IsCollectionDefined(KillChainPhases))
             {
                 writer.WritePropertyName("killChainPhases"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ParsedPattern))
+            if (Core.Optional.IsCollectionDefined(ParsedPattern))
             {
                 writer.WritePropertyName("parsedPattern"u8);
                 writer.WriteStartArray();
@@ -103,27 +103,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExternalId))
+            if (Core.Optional.IsDefined(ExternalId))
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
             }
-            if (Optional.IsDefined(CreatedByRef))
+            if (Core.Optional.IsDefined(CreatedByRef))
             {
                 writer.WritePropertyName("createdByRef"u8);
                 writer.WriteStringValue(CreatedByRef);
             }
-            if (Optional.IsDefined(IsDefanged))
+            if (Core.Optional.IsDefined(IsDefanged))
             {
                 writer.WritePropertyName("defanged"u8);
                 writer.WriteBooleanValue(IsDefanged.Value);
             }
-            if (Optional.IsDefined(ExternalLastUpdatedOn))
+            if (Core.Optional.IsDefined(ExternalLastUpdatedOn))
             {
                 writer.WritePropertyName("externalLastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(ExternalLastUpdatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(ExternalReferences))
+            if (Core.Optional.IsCollectionDefined(ExternalReferences))
             {
                 writer.WritePropertyName("externalReferences"u8);
                 writer.WriteStartArray();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(GranularMarkings))
+            if (Core.Optional.IsCollectionDefined(GranularMarkings))
             {
                 writer.WritePropertyName("granularMarkings"u8);
                 writer.WriteStartArray();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (Core.Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -153,17 +153,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsRevoked))
+            if (Core.Optional.IsDefined(IsRevoked))
             {
                 writer.WritePropertyName("revoked"u8);
                 writer.WriteBooleanValue(IsRevoked.Value);
             }
-            if (Optional.IsDefined(Confidence))
+            if (Core.Optional.IsDefined(Confidence))
             {
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteNumberValue(Confidence.Value);
             }
-            if (Optional.IsCollectionDefined(ObjectMarkingRefs))
+            if (Core.Optional.IsCollectionDefined(ObjectMarkingRefs))
             {
                 writer.WritePropertyName("objectMarkingRefs"u8);
                 writer.WriteStartArray();
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Language))
+            if (Core.Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsCollectionDefined(ThreatTypes))
+            if (Core.Optional.IsCollectionDefined(ThreatTypes))
             {
                 writer.WritePropertyName("threatTypes"u8);
                 writer.WriteStartArray();
@@ -188,27 +188,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ValidFrom))
+            if (Core.Optional.IsDefined(ValidFrom))
             {
                 writer.WritePropertyName("validFrom"u8);
                 writer.WriteStringValue(ValidFrom.Value, "O");
             }
-            if (Optional.IsDefined(ValidUntil))
+            if (Core.Optional.IsDefined(ValidUntil))
             {
                 writer.WritePropertyName("validUntil"u8);
                 writer.WriteStringValue(ValidUntil.Value, "O");
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Core.Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(Modified))
+            if (Core.Optional.IsDefined(Modified))
             {
                 writer.WritePropertyName("modified"u8);
                 writer.WriteStringValue(Modified);
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (Core.Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartObject();
@@ -239,41 +239,41 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             ThreatIntelligenceResourceInnerKind kind = default;
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<IList<string>> threatIntelligenceTags = default;
-            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Optional<string> source = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<IList<string>> indicatorTypes = default;
-            Optional<string> pattern = default;
-            Optional<string> patternType = default;
-            Optional<string> patternVersion = default;
-            Optional<IList<ThreatIntelligenceKillChainPhase>> killChainPhases = default;
-            Optional<IList<ThreatIntelligenceParsedPattern>> parsedPattern = default;
-            Optional<string> externalId = default;
-            Optional<string> createdByRef = default;
-            Optional<bool> defanged = default;
-            Optional<DateTimeOffset> externalLastUpdatedTimeUtc = default;
-            Optional<IList<ThreatIntelligenceExternalReference>> externalReferences = default;
-            Optional<IList<ThreatIntelligenceGranularMarkingEntity>> granularMarkings = default;
-            Optional<IList<string>> labels = default;
-            Optional<bool> revoked = default;
-            Optional<int> confidence = default;
-            Optional<IList<string>> objectMarkingRefs = default;
-            Optional<string> language = default;
-            Optional<IList<string>> threatTypes = default;
-            Optional<DateTimeOffset> validFrom = default;
-            Optional<DateTimeOffset> validUntil = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<string> modified = default;
-            Optional<IDictionary<string, BinaryData>> extensions = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<IList<string>> threatIntelligenceTags = default;
+            Core.Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
+            Core.Optional<string> source = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IList<string>> indicatorTypes = default;
+            Core.Optional<string> pattern = default;
+            Core.Optional<string> patternType = default;
+            Core.Optional<string> patternVersion = default;
+            Core.Optional<IList<ThreatIntelligenceKillChainPhase>> killChainPhases = default;
+            Core.Optional<IList<ThreatIntelligenceParsedPattern>> parsedPattern = default;
+            Core.Optional<string> externalId = default;
+            Core.Optional<string> createdByRef = default;
+            Core.Optional<bool> defanged = default;
+            Core.Optional<DateTimeOffset> externalLastUpdatedTimeUtc = default;
+            Core.Optional<IList<ThreatIntelligenceExternalReference>> externalReferences = default;
+            Core.Optional<IList<ThreatIntelligenceGranularMarkingEntity>> granularMarkings = default;
+            Core.Optional<IList<string>> labels = default;
+            Core.Optional<bool> revoked = default;
+            Core.Optional<int> confidence = default;
+            Core.Optional<IList<string>> objectMarkingRefs = default;
+            Core.Optional<string> language = default;
+            Core.Optional<IList<string>> threatTypes = default;
+            Core.Optional<DateTimeOffset> validFrom = default;
+            Core.Optional<DateTimeOffset> validUntil = default;
+            Core.Optional<DateTimeOffset> created = default;
+            Core.Optional<string> modified = default;
+            Core.Optional<IDictionary<string, BinaryData>> extensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsThreatIntelligenceIndicatorData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(threatIntelligenceTags), Optional.ToNullable(lastUpdatedTimeUtc), source.Value, displayName.Value, description.Value, Optional.ToList(indicatorTypes), pattern.Value, patternType.Value, patternVersion.Value, Optional.ToList(killChainPhases), Optional.ToList(parsedPattern), externalId.Value, createdByRef.Value, Optional.ToNullable(defanged), Optional.ToNullable(externalLastUpdatedTimeUtc), Optional.ToList(externalReferences), Optional.ToList(granularMarkings), Optional.ToList(labels), Optional.ToNullable(revoked), Optional.ToNullable(confidence), Optional.ToList(objectMarkingRefs), language.Value, Optional.ToList(threatTypes), Optional.ToNullable(validFrom), Optional.ToNullable(validUntil), Optional.ToNullable(created), modified.Value, Optional.ToDictionary(extensions));
+            return new SecurityInsightsThreatIntelligenceIndicatorData(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(etag), Core.Optional.ToDictionary(additionalData), friendlyName.Value, Core.Optional.ToList(threatIntelligenceTags), Core.Optional.ToNullable(lastUpdatedTimeUtc), source.Value, displayName.Value, description.Value, Core.Optional.ToList(indicatorTypes), pattern.Value, patternType.Value, patternVersion.Value, Core.Optional.ToList(killChainPhases), Core.Optional.ToList(parsedPattern), externalId.Value, createdByRef.Value, Core.Optional.ToNullable(defanged), Core.Optional.ToNullable(externalLastUpdatedTimeUtc), Core.Optional.ToList(externalReferences), Core.Optional.ToList(granularMarkings), Core.Optional.ToList(labels), Core.Optional.ToNullable(revoked), Core.Optional.ToNullable(confidence), Core.Optional.ToList(objectMarkingRefs), language.Value, Core.Optional.ToList(threatTypes), Core.Optional.ToNullable(validFrom), Core.Optional.ToNullable(validUntil), Core.Optional.ToNullable(created), modified.Value, Core.Optional.ToDictionary(extensions));
         }
     }
 }

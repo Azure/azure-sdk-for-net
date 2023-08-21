@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quantum
 {
-    internal class QuantumWorkspaceOperationSource : IOperationSource<QuantumWorkspaceResource>
+    internal class QuantumWorkspaceOperationSource : Core.IOperationSource<QuantumWorkspaceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Quantum
             _client = client;
         }
 
-        QuantumWorkspaceResource IOperationSource<QuantumWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        QuantumWorkspaceResource Core.IOperationSource<QuantumWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = QuantumWorkspaceData.DeserializeQuantumWorkspaceData(document.RootElement);
             return new QuantumWorkspaceResource(_client, data);
         }
 
-        async ValueTask<QuantumWorkspaceResource> IOperationSource<QuantumWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<QuantumWorkspaceResource> Core.IOperationSource<QuantumWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = QuantumWorkspaceData.DeserializeQuantumWorkspaceData(document.RootElement);

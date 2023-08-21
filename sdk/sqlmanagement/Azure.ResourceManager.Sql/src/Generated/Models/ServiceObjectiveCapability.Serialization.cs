@@ -20,20 +20,20 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> name = default;
-            Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedMaxSizes = default;
-            Optional<PerformanceLevelCapability> performanceLevel = default;
-            Optional<SqlSku> sku = default;
-            Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
-            Optional<MaxSizeCapability> includedMaxSize = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<AutoPauseDelayTimeRange> supportedAutoPauseDelay = default;
-            Optional<IReadOnlyList<MinCapacityCapability>> supportedMinCapacities = default;
-            Optional<string> computeModel = default;
-            Optional<IReadOnlyList<MaintenanceConfigurationCapability>> supportedMaintenanceConfigurations = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            Core.Optional<Guid> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedMaxSizes = default;
+            Core.Optional<PerformanceLevelCapability> performanceLevel = default;
+            Core.Optional<SqlSku> sku = default;
+            Core.Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
+            Core.Optional<MaxSizeCapability> includedMaxSize = default;
+            Core.Optional<bool> zoneRedundant = default;
+            Core.Optional<AutoPauseDelayTimeRange> supportedAutoPauseDelay = default;
+            Core.Optional<IReadOnlyList<MinCapacityCapability>> supportedMinCapacities = default;
+            Core.Optional<string> computeModel = default;
+            Core.Optional<IReadOnlyList<MaintenanceConfigurationCapability>> supportedMaintenanceConfigurations = default;
+            Core.Optional<SqlCapabilityStatus> status = default;
+            Core.Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ServiceObjectiveCapability(Optional.ToNullable(id), name.Value, Optional.ToList(supportedMaxSizes), performanceLevel.Value, sku.Value, Optional.ToList(supportedLicenseTypes), includedMaxSize.Value, Optional.ToNullable(zoneRedundant), supportedAutoPauseDelay.Value, Optional.ToList(supportedMinCapacities), computeModel.Value, Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value);
+            return new ServiceObjectiveCapability(Core.Optional.ToNullable(id), name.Value, Core.Optional.ToList(supportedMaxSizes), performanceLevel.Value, sku.Value, Core.Optional.ToList(supportedLicenseTypes), includedMaxSize.Value, Core.Optional.ToNullable(zoneRedundant), supportedAutoPauseDelay.Value, Core.Optional.ToList(supportedMinCapacities), computeModel.Value, Core.Optional.ToList(supportedMaintenanceConfigurations), Core.Optional.ToNullable(status), reason.Value);
         }
     }
 }

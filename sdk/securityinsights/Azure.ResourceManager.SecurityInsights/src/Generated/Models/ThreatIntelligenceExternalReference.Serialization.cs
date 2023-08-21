@@ -12,32 +12,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ThreatIntelligenceExternalReference : IUtf8JsonSerializable
+    public partial class ThreatIntelligenceExternalReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ExternalId))
+            if (Core.Optional.IsDefined(ExternalId))
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
             }
-            if (Optional.IsDefined(SourceName))
+            if (Core.Optional.IsDefined(SourceName))
             {
                 writer.WritePropertyName("sourceName"u8);
                 writer.WriteStringValue(SourceName);
             }
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Hashes))
+            if (Core.Optional.IsCollectionDefined(Hashes))
             {
                 writer.WritePropertyName("hashes"u8);
                 writer.WriteStartObject();
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> externalId = default;
-            Optional<string> sourceName = default;
-            Optional<Uri> url = default;
-            Optional<IDictionary<string, string>> hashes = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> externalId = default;
+            Core.Optional<string> sourceName = default;
+            Core.Optional<Uri> url = default;
+            Core.Optional<IDictionary<string, string>> hashes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new ThreatIntelligenceExternalReference(description.Value, externalId.Value, sourceName.Value, url.Value, Optional.ToDictionary(hashes));
+            return new ThreatIntelligenceExternalReference(description.Value, externalId.Value, sourceName.Value, url.Value, Core.Optional.ToDictionary(hashes));
         }
     }
 }

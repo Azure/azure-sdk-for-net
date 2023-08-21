@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.ManagementGroups
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> displayName = default;
-            Optional<ManagementGroupInfo> details = default;
-            Optional<IReadOnlyList<ManagementGroupChildInfo>> children = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<ManagementGroupInfo> details = default;
+            Core.Optional<IReadOnlyList<ManagementGroupChildInfo>> children = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ManagementGroups
                     continue;
                 }
             }
-            return new ManagementGroupData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, details.Value, Optional.ToList(children));
+            return new ManagementGroupData(id, name, type, systemData.Value, Core.Optional.ToNullable(tenantId), displayName.Value, details.Value, Core.Optional.ToList(children));
         }
     }
 }

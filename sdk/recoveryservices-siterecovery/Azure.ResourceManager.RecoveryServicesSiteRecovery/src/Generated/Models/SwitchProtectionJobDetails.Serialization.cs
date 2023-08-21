@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> newReplicationProtectedItemId = default;
+            Core.Optional<ResourceIdentifier> newReplicationProtectedItemId = default;
             string instanceType = default;
-            Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("newReplicationProtectedItemId"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SwitchProtectionJobDetails(instanceType, Optional.ToDictionary(affectedObjectDetails), newReplicationProtectedItemId.Value);
+            return new SwitchProtectionJobDetails(instanceType, Core.Optional.ToDictionary(affectedObjectDetails), newReplicationProtectedItemId.Value);
         }
     }
 }

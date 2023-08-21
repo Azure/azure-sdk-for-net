@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class VaultPropertiesEncryption : IUtf8JsonSerializable
+    public partial class VaultPropertiesEncryption : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (Core.Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Optional.IsDefined(KekIdentity))
+            if (Core.Optional.IsDefined(KekIdentity))
             {
                 writer.WritePropertyName("kekIdentity"u8);
                 writer.WriteObjectValue(KekIdentity);
             }
-            if (Optional.IsDefined(InfrastructureEncryption))
+            if (Core.Optional.IsDefined(InfrastructureEncryption))
             {
                 writer.WritePropertyName("infrastructureEncryption"u8);
                 writer.WriteStringValue(InfrastructureEncryption.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<CmkKeyVaultProperties> keyVaultProperties = default;
-            Optional<CmkKekIdentity> kekIdentity = default;
-            Optional<InfrastructureEncryptionState> infrastructureEncryption = default;
+            Core.Optional<CmkKeyVaultProperties> keyVaultProperties = default;
+            Core.Optional<CmkKekIdentity> kekIdentity = default;
+            Core.Optional<InfrastructureEncryptionState> infrastructureEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultProperties"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new VaultPropertiesEncryption(keyVaultProperties.Value, kekIdentity.Value, Optional.ToNullable(infrastructureEncryption));
+            return new VaultPropertiesEncryption(keyVaultProperties.Value, kekIdentity.Value, Core.Optional.ToNullable(infrastructureEncryption));
         }
     }
 }

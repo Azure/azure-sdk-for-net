@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupWeeklySchedule : IUtf8JsonSerializable
+    public partial class BackupWeeklySchedule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ScheduleRunDays))
+            if (Core.Optional.IsCollectionDefined(ScheduleRunDays))
             {
                 writer.WritePropertyName("scheduleRunDays"u8);
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ScheduleRunTimes))
+            if (Core.Optional.IsCollectionDefined(ScheduleRunTimes))
             {
                 writer.WritePropertyName("scheduleRunTimes"u8);
                 writer.WriteStartArray();
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<BackupDayOfWeek>> scheduleRunDays = default;
-            Optional<IList<DateTimeOffset>> scheduleRunTimes = default;
+            Core.Optional<IList<BackupDayOfWeek>> scheduleRunDays = default;
+            Core.Optional<IList<DateTimeOffset>> scheduleRunTimes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleRunDays"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new BackupWeeklySchedule(Optional.ToList(scheduleRunDays), Optional.ToList(scheduleRunTimes));
+            return new BackupWeeklySchedule(Core.Optional.ToList(scheduleRunDays), Core.Optional.ToList(scheduleRunTimes));
         }
     }
 }

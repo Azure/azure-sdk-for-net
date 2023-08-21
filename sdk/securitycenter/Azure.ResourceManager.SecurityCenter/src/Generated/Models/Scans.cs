@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of Scans. </summary>
         internal Scans()
         {
-            Value = new ChangeTrackingList<SqlVulnerabilityAssessmentScanData>();
+            Value = new Core.ChangeTrackingList<SqlVulnerabilityAssessmentScanData>();
         }
 
         /// <summary> Initializes a new instance of Scans. </summary>

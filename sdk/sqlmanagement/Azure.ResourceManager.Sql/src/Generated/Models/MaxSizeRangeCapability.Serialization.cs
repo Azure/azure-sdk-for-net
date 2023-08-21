@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<MaxSizeCapability> minValue = default;
-            Optional<MaxSizeCapability> maxValue = default;
-            Optional<MaxSizeCapability> scaleSize = default;
-            Optional<LogSizeCapability> logSize = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            Core.Optional<MaxSizeCapability> minValue = default;
+            Core.Optional<MaxSizeCapability> maxValue = default;
+            Core.Optional<MaxSizeCapability> scaleSize = default;
+            Core.Optional<LogSizeCapability> logSize = default;
+            Core.Optional<SqlCapabilityStatus> status = default;
+            Core.Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minValue"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new MaxSizeRangeCapability(minValue.Value, maxValue.Value, scaleSize.Value, logSize.Value, Optional.ToNullable(status), reason.Value);
+            return new MaxSizeRangeCapability(minValue.Value, maxValue.Value, scaleSize.Value, logSize.Value, Core.Optional.ToNullable(status), reason.Value);
         }
     }
 }

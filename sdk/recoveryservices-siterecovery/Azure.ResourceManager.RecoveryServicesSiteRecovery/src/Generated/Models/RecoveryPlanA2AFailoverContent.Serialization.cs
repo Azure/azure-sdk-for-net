@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanA2AFailoverContent : IUtf8JsonSerializable
+    public partial class RecoveryPlanA2AFailoverContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryPointType"u8);
             writer.WriteStringValue(RecoveryPointType.ToString());
-            if (Optional.IsDefined(CloudServiceCreationOption))
+            if (Core.Optional.IsDefined(CloudServiceCreationOption))
             {
                 writer.WritePropertyName("cloudServiceCreationOption"u8);
                 writer.WriteStringValue(CloudServiceCreationOption);
             }
-            if (Optional.IsDefined(MultiVmSyncPointOption))
+            if (Core.Optional.IsDefined(MultiVmSyncPointOption))
             {
                 writer.WritePropertyName("multiVmSyncPointOption"u8);
                 writer.WriteStringValue(MultiVmSyncPointOption.Value.ToString());

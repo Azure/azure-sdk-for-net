@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Argument.AssertNotNull(fabricObjectId, nameof(fabricObjectId));
 
             FabricObjectId = fabricObjectId;
-            VmDisks = new ChangeTrackingList<A2AVmDiskDetails>();
-            VmManagedDisks = new ChangeTrackingList<A2AVmManagedDiskDetails>();
+            VmDisks = new Core.ChangeTrackingList<A2AVmDiskDetails>();
+            VmManagedDisks = new Core.ChangeTrackingList<A2AVmManagedDiskDetails>();
             InstanceType = "A2A";
         }
 

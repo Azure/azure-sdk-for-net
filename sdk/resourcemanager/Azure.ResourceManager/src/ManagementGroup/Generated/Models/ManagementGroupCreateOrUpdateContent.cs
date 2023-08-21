@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// <summary> Initializes a new instance of ManagementGroupCreateOrUpdateContent. </summary>
         public ManagementGroupCreateOrUpdateContent()
         {
-            Children = new ChangeTrackingList<ManagementGroupChildOptions>();
+            Children = new Core.ChangeTrackingList<ManagementGroupChildOptions>();
         }
 
         /// <summary> The fully qualified ID for the management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>

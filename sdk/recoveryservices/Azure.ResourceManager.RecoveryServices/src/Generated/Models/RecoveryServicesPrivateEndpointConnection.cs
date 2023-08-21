@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Initializes a new instance of RecoveryServicesPrivateEndpointConnection. </summary>
         internal RecoveryServicesPrivateEndpointConnection()
         {
-            GroupIds = new ChangeTrackingList<VaultSubResourceType>();
+            GroupIds = new Core.ChangeTrackingList<VaultSubResourceType>();
         }
 
         /// <summary> Initializes a new instance of RecoveryServicesPrivateEndpointConnection. </summary>

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Argument.AssertNotNull(service, nameof(service));
 
             Service = service;
-            Locations = new ChangeTrackingList<AzureLocation>();
+            Locations = new Core.ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterServiceEndpoint. </summary>

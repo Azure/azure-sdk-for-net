@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Quota
             {
                 return null;
             }
-            Optional<QuotaUsagesProperties> properties = default;
+            Core.Optional<QuotaUsagesProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryAgentAutoUpdateStatus> agentAutoUpdateStatus = default;
-            Optional<ResourceIdentifier> automationAccountArmId = default;
-            Optional<AutomationAccountAuthenticationType> automationAccountAuthenticationType = default;
-            Optional<string> scheduleName = default;
-            Optional<string> jobScheduleName = default;
+            Core.Optional<SiteRecoveryAgentAutoUpdateStatus> agentAutoUpdateStatus = default;
+            Core.Optional<ResourceIdentifier> automationAccountArmId = default;
+            Core.Optional<AutomationAccountAuthenticationType> automationAccountAuthenticationType = default;
+            Core.Optional<string> scheduleName = default;
+            Core.Optional<string> jobScheduleName = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new A2AProtectionContainerMappingDetails(instanceType, Optional.ToNullable(agentAutoUpdateStatus), automationAccountArmId.Value, Optional.ToNullable(automationAccountAuthenticationType), scheduleName.Value, jobScheduleName.Value);
+            return new A2AProtectionContainerMappingDetails(instanceType, Core.Optional.ToNullable(agentAutoUpdateStatus), automationAccountArmId.Value, Core.Optional.ToNullable(automationAccountAuthenticationType), scheduleName.Value, jobScheduleName.Value);
         }
     }
 }

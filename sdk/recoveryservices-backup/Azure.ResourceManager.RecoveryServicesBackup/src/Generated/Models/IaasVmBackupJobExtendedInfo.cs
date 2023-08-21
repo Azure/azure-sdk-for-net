@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of IaasVmBackupJobExtendedInfo. </summary>
         public IaasVmBackupJobExtendedInfo()
         {
-            TasksList = new ChangeTrackingList<IaasVmBackupJobTaskDetails>();
-            PropertyBag = new ChangeTrackingDictionary<string, string>();
-            InternalPropertyBag = new ChangeTrackingDictionary<string, string>();
+            TasksList = new Core.ChangeTrackingList<IaasVmBackupJobTaskDetails>();
+            PropertyBag = new Core.ChangeTrackingDictionary<string, string>();
+            InternalPropertyBag = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of IaasVmBackupJobExtendedInfo. </summary>

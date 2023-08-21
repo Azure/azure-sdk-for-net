@@ -18,12 +18,12 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> key = default;
+            Core.Optional<string> key = default;
             string errorMessage = default;
             int statusCode = default;
-            Optional<string> name = default;
-            Optional<string> details = default;
-            Optional<string> documentationLink = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> details = default;
+            Core.Optional<string> documentationLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))

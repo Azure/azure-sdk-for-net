@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityCenterPublisherInfo : IUtf8JsonSerializable
+    public partial class SecurityCenterPublisherInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublisherName))
+            if (Core.Optional.IsDefined(PublisherName))
             {
                 writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
             }
-            if (Optional.IsDefined(ProductName))
+            if (Core.Optional.IsDefined(ProductName))
             {
                 writer.WritePropertyName("productName"u8);
                 writer.WriteStringValue(ProductName);
             }
-            if (Optional.IsDefined(BinaryName))
+            if (Core.Optional.IsDefined(BinaryName))
             {
                 writer.WritePropertyName("binaryName"u8);
                 writer.WriteStringValue(BinaryName);
             }
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> publisherName = default;
-            Optional<string> productName = default;
-            Optional<string> binaryName = default;
-            Optional<string> version = default;
+            Core.Optional<string> publisherName = default;
+            Core.Optional<string> productName = default;
+            Core.Optional<string> binaryName = default;
+            Core.Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisherName"u8))

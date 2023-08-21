@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> action = default;
-            Optional<Uri> actionUri = default;
-            Optional<string> actionUriComment = default;
-            Optional<string> actionUriText = default;
+            Core.Optional<string> action = default;
+            Core.Optional<Uri> actionUri = default;
+            Core.Optional<string> actionUriComment = default;
+            Core.Optional<string> actionUriText = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))

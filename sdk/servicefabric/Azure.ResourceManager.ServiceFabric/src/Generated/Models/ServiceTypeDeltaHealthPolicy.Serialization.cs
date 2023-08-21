@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ServiceTypeDeltaHealthPolicy : IUtf8JsonSerializable
+    public partial class ServiceTypeDeltaHealthPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxPercentDeltaUnhealthyServices))
+            if (Core.Optional.IsDefined(MaxPercentDeltaUnhealthyServices))
             {
                 writer.WritePropertyName("maxPercentDeltaUnhealthyServices"u8);
                 writer.WriteNumberValue(MaxPercentDeltaUnhealthyServices.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<int> maxPercentDeltaUnhealthyServices = default;
+            Core.Optional<int> maxPercentDeltaUnhealthyServices = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxPercentDeltaUnhealthyServices"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ServiceTypeDeltaHealthPolicy(Optional.ToNullable(maxPercentDeltaUnhealthyServices));
+            return new ServiceTypeDeltaHealthPolicy(Core.Optional.ToNullable(maxPercentDeltaUnhealthyServices));
         }
     }
 }

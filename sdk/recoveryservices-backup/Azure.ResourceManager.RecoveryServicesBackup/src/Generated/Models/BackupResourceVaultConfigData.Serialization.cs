@@ -14,22 +14,22 @@ using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    public partial class BackupResourceVaultConfigData : IUtf8JsonSerializable
+    public partial class BackupResourceVaultConfigData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 return null;
             }
-            Optional<BackupResourceVaultConfigProperties> properties = default;
-            Optional<ETag> eTag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<BackupResourceVaultConfigProperties> properties = default;
+            Core.Optional<ETag> eTag = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     continue;
                 }
             }
-            return new BackupResourceVaultConfigData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, Optional.ToNullable(eTag));
+            return new BackupResourceVaultConfigData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, properties.Value, Core.Optional.ToNullable(eTag));
         }
     }
 }

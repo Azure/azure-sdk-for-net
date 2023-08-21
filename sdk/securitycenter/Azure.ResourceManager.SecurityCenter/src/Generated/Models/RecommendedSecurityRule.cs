@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of RecommendedSecurityRule. </summary>
         public RecommendedSecurityRule()
         {
-            Protocols = new ChangeTrackingList<SecurityTransportProtocol>();
-            IPAddresses = new ChangeTrackingList<string>();
+            Protocols = new Core.ChangeTrackingList<SecurityTransportProtocol>();
+            IPAddresses = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RecommendedSecurityRule. </summary>

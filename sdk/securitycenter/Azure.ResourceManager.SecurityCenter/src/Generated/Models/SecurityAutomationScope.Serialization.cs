@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAutomationScope : IUtf8JsonSerializable
+    public partial class SecurityAutomationScope : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ScopePath))
+            if (Core.Optional.IsDefined(ScopePath))
             {
                 writer.WritePropertyName("scopePath"u8);
                 writer.WriteStringValue(ScopePath);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> scopePath = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> scopePath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of StorageClassificationListResult. </summary>
         internal StorageClassificationListResult()
         {
-            Value = new ChangeTrackingList<StorageClassificationData>();
+            Value = new Core.ChangeTrackingList<StorageClassificationData>();
         }
 
         /// <summary> Initializes a new instance of StorageClassificationListResult. </summary>

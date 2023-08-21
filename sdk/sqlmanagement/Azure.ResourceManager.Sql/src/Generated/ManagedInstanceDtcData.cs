@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ManagedInstanceDtcData. </summary>
         public ManagedInstanceDtcData()
         {
-            ExternalDnsSuffixSearchList = new ChangeTrackingList<string>();
+            ExternalDnsSuffixSearchList = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceDtcData. </summary>

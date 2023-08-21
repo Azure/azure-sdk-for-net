@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SqlDatabaseKey : IUtf8JsonSerializable
+    public partial class SqlDatabaseKey : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlDatabaseKeyType> type = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<string> subregion = default;
+            Core.Optional<SqlDatabaseKeyType> type = default;
+            Core.Optional<string> thumbprint = default;
+            Core.Optional<DateTimeOffset> creationDate = default;
+            Core.Optional<string> subregion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SqlDatabaseKey(Optional.ToNullable(type), thumbprint.Value, Optional.ToNullable(creationDate), subregion.Value);
+            return new SqlDatabaseKey(Core.Optional.ToNullable(type), thumbprint.Value, Core.Optional.ToNullable(creationDate), subregion.Value);
         }
     }
 }

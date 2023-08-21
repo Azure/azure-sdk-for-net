@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<SubscriptionScopeProperties> properties = default;
+            Core.Optional<SubscriptionScopeProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

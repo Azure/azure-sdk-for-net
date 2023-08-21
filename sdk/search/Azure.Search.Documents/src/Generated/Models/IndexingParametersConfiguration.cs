@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of IndexingParametersConfiguration. </summary>
         public IndexingParametersConfiguration()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of IndexingParametersConfiguration. </summary>

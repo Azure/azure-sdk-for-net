@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ShareableSearchServicePrivateLinkResourceProperties> properties = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ShareableSearchServicePrivateLinkResourceProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

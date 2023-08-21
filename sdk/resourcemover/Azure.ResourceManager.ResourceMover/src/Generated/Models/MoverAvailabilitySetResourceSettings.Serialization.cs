@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoverAvailabilitySetResourceSettings : IUtf8JsonSerializable
+    public partial class MoverAvailabilitySetResourceSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(FaultDomain))
+            if (Core.Optional.IsDefined(FaultDomain))
             {
                 if (FaultDomain != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("faultDomain");
                 }
             }
-            if (Optional.IsDefined(UpdateDomain))
+            if (Core.Optional.IsDefined(UpdateDomain))
             {
                 if (UpdateDomain != null)
                 {
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<int?> faultDomain = default;
-            Optional<int?> updateDomain = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<int?> faultDomain = default;
+            Core.Optional<int?> updateDomain = default;
             string resourceType = default;
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverAvailabilitySetResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), Optional.ToNullable(faultDomain), Optional.ToNullable(updateDomain));
+            return new MoverAvailabilitySetResourceSettings(resourceType, targetResourceName, Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(faultDomain), Core.Optional.ToNullable(updateDomain));
         }
     }
 }

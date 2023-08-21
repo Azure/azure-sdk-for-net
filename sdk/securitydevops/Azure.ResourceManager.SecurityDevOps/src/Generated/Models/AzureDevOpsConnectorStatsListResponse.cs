@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <summary> Initializes a new instance of AzureDevOpsConnectorStatsListResponse. </summary>
         internal AzureDevOpsConnectorStatsListResponse()
         {
-            Value = new ChangeTrackingList<AzureDevOpsConnectorStats>();
+            Value = new Core.ChangeTrackingList<AzureDevOpsConnectorStats>();
         }
 
         /// <summary> Initializes a new instance of AzureDevOpsConnectorStatsListResponse. </summary>

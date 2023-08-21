@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class CustomNormalizer : IUtf8JsonSerializable
+    public partial class CustomNormalizer : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TokenFilters))
+            if (Core.Optional.IsCollectionDefined(TokenFilters))
             {
                 writer.WritePropertyName("tokenFilters"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CharFilters))
+            if (Core.Optional.IsCollectionDefined(CharFilters))
             {
                 writer.WritePropertyName("charFilters"u8);
                 writer.WriteStartArray();
@@ -49,8 +49,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<TokenFilterName>> tokenFilters = default;
-            Optional<IList<CharFilterName>> charFilters = default;
+            Core.Optional<IList<TokenFilterName>> tokenFilters = default;
+            Core.Optional<IList<CharFilterName>> charFilters = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomNormalizer(odataType, name, Optional.ToList(tokenFilters), Optional.ToList(charFilters));
+            return new CustomNormalizer(odataType, name, Core.Optional.ToList(tokenFilters), Core.Optional.ToList(charFilters));
         }
     }
 }

@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Reservations
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<QuotaRequestState> provisioningState = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> requestSubmitTime = default;
-            Optional<IReadOnlyList<SubContent>> value = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<QuotaRequestState> provisioningState = default;
+            Core.Optional<string> message = default;
+            Core.Optional<DateTimeOffset> requestSubmitTime = default;
+            Core.Optional<IReadOnlyList<SubContent>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Reservations
                     continue;
                 }
             }
-            return new QuotaRequestDetailData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), message.Value, Optional.ToNullable(requestSubmitTime), Optional.ToList(value));
+            return new QuotaRequestDetailData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), message.Value, Core.Optional.ToNullable(requestSubmitTime), Core.Optional.ToList(value));
         }
     }
 }

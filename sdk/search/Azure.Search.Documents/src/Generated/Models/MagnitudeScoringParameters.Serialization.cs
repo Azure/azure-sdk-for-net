@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class MagnitudeScoringParameters : IUtf8JsonSerializable
+    public partial class MagnitudeScoringParameters : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("boostingRangeStart"u8);
             writer.WriteNumberValue(BoostingRangeStart);
             writer.WritePropertyName("boostingRangeEnd"u8);
             writer.WriteNumberValue(BoostingRangeEnd);
-            if (Optional.IsDefined(ShouldBoostBeyondRangeByConstant))
+            if (Core.Optional.IsDefined(ShouldBoostBeyondRangeByConstant))
             {
                 writer.WritePropertyName("constantBoostBeyondRange"u8);
                 writer.WriteBooleanValue(ShouldBoostBeyondRangeByConstant.Value);
@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             double boostingRangeStart = default;
             double boostingRangeEnd = default;
-            Optional<bool> constantBoostBeyondRange = default;
+            Core.Optional<bool> constantBoostBeyondRange = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("boostingRangeStart"u8))
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new MagnitudeScoringParameters(boostingRangeStart, boostingRangeEnd, Optional.ToNullable(constantBoostBeyondRange));
+            return new MagnitudeScoringParameters(boostingRangeStart, boostingRangeEnd, Core.Optional.ToNullable(constantBoostBeyondRange));
         }
     }
 }

@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<string> errorId = default;
-            Optional<string> possibleCauses = default;
-            Optional<string> recommendedAction = default;
+            Core.Optional<int> errorCode = default;
+            Core.Optional<string> errorMessage = default;
+            Core.Optional<string> errorId = default;
+            Core.Optional<string> possibleCauses = default;
+            Core.Optional<string> recommendedAction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryJobProviderError(Optional.ToNullable(errorCode), errorMessage.Value, errorId.Value, possibleCauses.Value, recommendedAction.Value);
+            return new SiteRecoveryJobProviderError(Core.Optional.ToNullable(errorCode), errorMessage.Value, errorId.Value, possibleCauses.Value, recommendedAction.Value);
         }
     }
 }

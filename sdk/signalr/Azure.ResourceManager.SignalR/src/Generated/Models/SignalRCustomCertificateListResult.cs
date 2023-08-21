@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of SignalRCustomCertificateListResult. </summary>
         internal SignalRCustomCertificateListResult()
         {
-            Value = new ChangeTrackingList<SignalRCustomCertificateData>();
+            Value = new Core.ChangeTrackingList<SignalRCustomCertificateData>();
         }
 
         /// <summary> Initializes a new instance of SignalRCustomCertificateListResult. </summary>

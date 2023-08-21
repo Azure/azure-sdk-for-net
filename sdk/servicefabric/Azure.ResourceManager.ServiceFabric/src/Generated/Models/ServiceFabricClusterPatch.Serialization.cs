@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ServiceFabricClusterPatch : IUtf8JsonSerializable
+    public partial class ServiceFabricClusterPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AddOnFeatures))
+            if (Core.Optional.IsCollectionDefined(AddOnFeatures))
             {
                 writer.WritePropertyName("addOnFeatures"u8);
                 writer.WriteStartArray();
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Certificate))
+            if (Core.Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteObjectValue(Certificate);
             }
-            if (Optional.IsDefined(CertificateCommonNames))
+            if (Core.Optional.IsDefined(CertificateCommonNames))
             {
                 writer.WritePropertyName("certificateCommonNames"u8);
                 writer.WriteObjectValue(CertificateCommonNames);
             }
-            if (Optional.IsCollectionDefined(ClientCertificateCommonNames))
+            if (Core.Optional.IsCollectionDefined(ClientCertificateCommonNames))
             {
                 writer.WritePropertyName("clientCertificateCommonNames"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClientCertificateThumbprints))
+            if (Core.Optional.IsCollectionDefined(ClientCertificateThumbprints))
             {
                 writer.WritePropertyName("clientCertificateThumbprints"u8);
                 writer.WriteStartArray();
@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ClusterCodeVersion))
+            if (Core.Optional.IsDefined(ClusterCodeVersion))
             {
                 writer.WritePropertyName("clusterCodeVersion"u8);
                 writer.WriteStringValue(ClusterCodeVersion);
             }
-            if (Optional.IsDefined(IsEventStoreServiceEnabled))
+            if (Core.Optional.IsDefined(IsEventStoreServiceEnabled))
             {
                 writer.WritePropertyName("eventStoreServiceEnabled"u8);
                 writer.WriteBooleanValue(IsEventStoreServiceEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(FabricSettings))
+            if (Core.Optional.IsCollectionDefined(FabricSettings))
             {
                 writer.WritePropertyName("fabricSettings"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NodeTypes))
+            if (Core.Optional.IsCollectionDefined(NodeTypes))
             {
                 writer.WritePropertyName("nodeTypes"u8);
                 writer.WriteStartArray();
@@ -98,67 +98,67 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ReliabilityLevel))
+            if (Core.Optional.IsDefined(ReliabilityLevel))
             {
                 writer.WritePropertyName("reliabilityLevel"u8);
                 writer.WriteStringValue(ReliabilityLevel.Value.ToString());
             }
-            if (Optional.IsDefined(ReverseProxyCertificate))
+            if (Core.Optional.IsDefined(ReverseProxyCertificate))
             {
                 writer.WritePropertyName("reverseProxyCertificate"u8);
                 writer.WriteObjectValue(ReverseProxyCertificate);
             }
-            if (Optional.IsDefined(UpgradeDescription))
+            if (Core.Optional.IsDefined(UpgradeDescription))
             {
                 writer.WritePropertyName("upgradeDescription"u8);
                 writer.WriteObjectValue(UpgradeDescription);
             }
-            if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
+            if (Core.Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
             {
                 writer.WritePropertyName("applicationTypeVersionsCleanupPolicy"u8);
                 writer.WriteObjectValue(ApplicationTypeVersionsCleanupPolicy);
             }
-            if (Optional.IsDefined(UpgradeMode))
+            if (Core.Optional.IsDefined(UpgradeMode))
             {
                 writer.WritePropertyName("upgradeMode"u8);
                 writer.WriteStringValue(UpgradeMode.Value.ToString());
             }
-            if (Optional.IsDefined(SfZonalUpgradeMode))
+            if (Core.Optional.IsDefined(SfZonalUpgradeMode))
             {
                 writer.WritePropertyName("sfZonalUpgradeMode"u8);
                 writer.WriteStringValue(SfZonalUpgradeMode.Value.ToString());
             }
-            if (Optional.IsDefined(VmssZonalUpgradeMode))
+            if (Core.Optional.IsDefined(VmssZonalUpgradeMode))
             {
                 writer.WritePropertyName("vmssZonalUpgradeMode"u8);
                 writer.WriteStringValue(VmssZonalUpgradeMode.Value.ToString());
             }
-            if (Optional.IsDefined(IsInfrastructureServiceManagerEnabled))
+            if (Core.Optional.IsDefined(IsInfrastructureServiceManagerEnabled))
             {
                 writer.WritePropertyName("infrastructureServiceManager"u8);
                 writer.WriteBooleanValue(IsInfrastructureServiceManagerEnabled.Value);
             }
-            if (Optional.IsDefined(UpgradeWave))
+            if (Core.Optional.IsDefined(UpgradeWave))
             {
                 writer.WritePropertyName("upgradeWave"u8);
                 writer.WriteStringValue(UpgradeWave.Value.ToString());
             }
-            if (Optional.IsDefined(UpgradePauseStartOn))
+            if (Core.Optional.IsDefined(UpgradePauseStartOn))
             {
                 writer.WritePropertyName("upgradePauseStartTimestampUtc"u8);
                 writer.WriteStringValue(UpgradePauseStartOn.Value, "O");
             }
-            if (Optional.IsDefined(UpgradePauseEndOn))
+            if (Core.Optional.IsDefined(UpgradePauseEndOn))
             {
                 writer.WritePropertyName("upgradePauseEndTimestampUtc"u8);
                 writer.WriteStringValue(UpgradePauseEndOn.Value, "O");
             }
-            if (Optional.IsDefined(IsWaveUpgradePaused))
+            if (Core.Optional.IsDefined(IsWaveUpgradePaused))
             {
                 writer.WritePropertyName("waveUpgradePaused"u8);
                 writer.WriteBooleanValue(IsWaveUpgradePaused.Value);
             }
-            if (Optional.IsCollectionDefined(Notifications))
+            if (Core.Optional.IsCollectionDefined(Notifications))
             {
                 writer.WritePropertyName("notifications"u8);
                 writer.WriteStartArray();

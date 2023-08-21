@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.RedisEnterprise
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
-            Zones = new ChangeTrackingList<string>();
-            PrivateEndpointConnections = new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>();
+            Zones = new Core.ChangeTrackingList<string>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of RedisEnterpriseClusterData. </summary>

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             try
             {
                 var response = await _redisEnterpriseDatabaseDatabasesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisEnterpriseArmOperation<RedisEnterpriseDatabaseResource>(new RedisEnterpriseDatabaseOperationSource(Client), _redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new RedisEnterpriseArmOperation<RedisEnterpriseDatabaseResource>(new RedisEnterpriseDatabaseOperationSource(Client), _redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, Core.OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             try
             {
                 var response = _redisEnterpriseDatabaseDatabasesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken);
-                var operation = new RedisEnterpriseArmOperation<RedisEnterpriseDatabaseResource>(new RedisEnterpriseDatabaseOperationSource(Client), _redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new RedisEnterpriseArmOperation<RedisEnterpriseDatabaseResource>(new RedisEnterpriseDatabaseOperationSource(Client), _redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, _redisEnterpriseDatabaseDatabasesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, Core.OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterpriseDatabaseDatabasesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisEnterpriseDatabaseDatabasesRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisEnterpriseDatabaseResource(Client, RedisEnterpriseDatabaseData.DeserializeRedisEnterpriseDatabaseData(e)), _redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, "RedisEnterpriseDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisEnterpriseDatabaseResource(Client, RedisEnterpriseDatabaseData.DeserializeRedisEnterpriseDatabaseData(e)), _redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, "RedisEnterpriseDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterpriseDatabaseDatabasesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisEnterpriseDatabaseDatabasesRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisEnterpriseDatabaseResource(Client, RedisEnterpriseDatabaseData.DeserializeRedisEnterpriseDatabaseData(e)), _redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, "RedisEnterpriseDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisEnterpriseDatabaseResource(Client, RedisEnterpriseDatabaseData.DeserializeRedisEnterpriseDatabaseData(e)), _redisEnterpriseDatabaseDatabasesClientDiagnostics, Pipeline, "RedisEnterpriseDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

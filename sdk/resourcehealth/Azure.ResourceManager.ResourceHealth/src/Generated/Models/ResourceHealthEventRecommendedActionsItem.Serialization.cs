@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<int> groupId = default;
-            Optional<string> actionText = default;
+            Core.Optional<int> groupId = default;
+            Core.Optional<string> actionText = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new ResourceHealthEventRecommendedActionsItem(Optional.ToNullable(groupId), actionText.Value);
+            return new ResourceHealthEventRecommendedActionsItem(Core.Optional.ToNullable(groupId), actionText.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of ThreatIntelligenceParsedPattern. </summary>
         public ThreatIntelligenceParsedPattern()
         {
-            PatternTypeValues = new ChangeTrackingList<ThreatIntelligenceParsedPatternTypeValue>();
+            PatternTypeValues = new Core.ChangeTrackingList<ThreatIntelligenceParsedPatternTypeValue>();
         }
 
         /// <summary> Initializes a new instance of ThreatIntelligenceParsedPattern. </summary>

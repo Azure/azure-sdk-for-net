@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class SqlDataDirectoryMapping : IUtf8JsonSerializable
+    public partial class SqlDataDirectoryMapping : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MappingType))
+            if (Core.Optional.IsDefined(MappingType))
             {
                 writer.WritePropertyName("mappingType"u8);
                 writer.WriteStringValue(MappingType.Value.ToString());
             }
-            if (Optional.IsDefined(SourceLogicalName))
+            if (Core.Optional.IsDefined(SourceLogicalName))
             {
                 writer.WritePropertyName("sourceLogicalName"u8);
                 writer.WriteStringValue(SourceLogicalName);
             }
-            if (Optional.IsDefined(SourcePath))
+            if (Core.Optional.IsDefined(SourcePath))
             {
                 writer.WritePropertyName("sourcePath"u8);
                 writer.WriteStringValue(SourcePath);
             }
-            if (Optional.IsDefined(TargetPath))
+            if (Core.Optional.IsDefined(TargetPath))
             {
                 writer.WritePropertyName("targetPath"u8);
                 writer.WriteStringValue(TargetPath);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<SqlDataDirectoryType> mappingType = default;
-            Optional<string> sourceLogicalName = default;
-            Optional<string> sourcePath = default;
-            Optional<string> targetPath = default;
+            Core.Optional<SqlDataDirectoryType> mappingType = default;
+            Core.Optional<string> sourceLogicalName = default;
+            Core.Optional<string> sourcePath = default;
+            Core.Optional<string> targetPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mappingType"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new SqlDataDirectoryMapping(Optional.ToNullable(mappingType), sourceLogicalName.Value, sourcePath.Value, targetPath.Value);
+            return new SqlDataDirectoryMapping(Core.Optional.ToNullable(mappingType), sourceLogicalName.Value, sourcePath.Value, targetPath.Value);
         }
     }
 }

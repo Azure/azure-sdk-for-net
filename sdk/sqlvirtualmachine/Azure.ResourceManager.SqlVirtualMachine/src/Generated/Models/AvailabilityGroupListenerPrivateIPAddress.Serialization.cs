@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class AvailabilityGroupListenerPrivateIPAddress : IUtf8JsonSerializable
+    public partial class AvailabilityGroupListenerPrivateIPAddress : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPAddress))
+            if (Core.Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (Optional.IsDefined(SubnetResourceId))
+            if (Core.Optional.IsDefined(SubnetResourceId))
             {
                 writer.WritePropertyName("subnetResourceId"u8);
                 writer.WriteStringValue(SubnetResourceId);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipAddress = default;
-            Optional<ResourceIdentifier> subnetResourceId = default;
+            Core.Optional<IPAddress> ipAddress = default;
+            Core.Optional<ResourceIdentifier> subnetResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"u8))

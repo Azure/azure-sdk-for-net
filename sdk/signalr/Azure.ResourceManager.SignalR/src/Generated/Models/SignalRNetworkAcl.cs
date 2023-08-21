@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of SignalRNetworkAcl. </summary>
         public SignalRNetworkAcl()
         {
-            Allow = new ChangeTrackingList<SignalRRequestType>();
-            Deny = new ChangeTrackingList<SignalRRequestType>();
+            Allow = new Core.ChangeTrackingList<SignalRRequestType>();
+            Deny = new Core.ChangeTrackingList<SignalRRequestType>();
         }
 
         /// <summary> Initializes a new instance of SignalRNetworkAcl. </summary>

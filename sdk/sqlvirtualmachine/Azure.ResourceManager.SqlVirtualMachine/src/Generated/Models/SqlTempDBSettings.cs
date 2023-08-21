@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> Initializes a new instance of SqlTempDBSettings. </summary>
         public SqlTempDBSettings()
         {
-            LogicalUnitNumbers = new ChangeTrackingList<int>();
+            LogicalUnitNumbers = new Core.ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of SqlTempDBSettings. </summary>

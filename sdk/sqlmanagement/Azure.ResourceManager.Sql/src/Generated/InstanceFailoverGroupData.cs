@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of InstanceFailoverGroupData. </summary>
         public InstanceFailoverGroupData()
         {
-            PartnerRegions = new ChangeTrackingList<PartnerRegionInfo>();
-            ManagedInstancePairs = new ChangeTrackingList<ManagedInstancePairInfo>();
+            PartnerRegions = new Core.ChangeTrackingList<PartnerRegionInfo>();
+            ManagedInstancePairs = new Core.ChangeTrackingList<ManagedInstancePairInfo>();
         }
 
         /// <summary> Initializes a new instance of InstanceFailoverGroupData. </summary>

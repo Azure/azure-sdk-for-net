@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> agentId = default;
-            Optional<string> machineId = default;
-            Optional<string> biosId = default;
-            Optional<string> fqdn = default;
-            Optional<IReadOnlyList<SiteRecoveryAgentDiskDetails>> disks = default;
+            Core.Optional<string> agentId = default;
+            Core.Optional<string> machineId = default;
+            Core.Optional<string> biosId = default;
+            Core.Optional<string> fqdn = default;
+            Core.Optional<IReadOnlyList<SiteRecoveryAgentDiskDetails>> disks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("agentId"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryAgentDetails(agentId.Value, machineId.Value, biosId.Value, fqdn.Value, Optional.ToList(disks));
+            return new SiteRecoveryAgentDetails(agentId.Value, machineId.Value, biosId.Value, fqdn.Value, Core.Optional.ToList(disks));
         }
     }
 }

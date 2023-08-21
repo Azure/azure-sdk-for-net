@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <summary> Initializes a new instance of ResourcesHistoryContent. </summary>
         public ResourcesHistoryContent()
         {
-            Subscriptions = new ChangeTrackingList<string>();
-            ManagementGroups = new ChangeTrackingList<string>();
+            Subscriptions = new Core.ChangeTrackingList<string>();
+            ManagementGroups = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Azure subscriptions against which to execute the query. </summary>

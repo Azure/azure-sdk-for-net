@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<ServiceObjectiveCapability>> supportedServiceLevelObjectives = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<ReadScaleCapability> readScale = default;
-            Optional<IReadOnlyList<StorageCapability>> supportedStorageCapabilities = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            Core.Optional<string> name = default;
+            Core.Optional<IReadOnlyList<ServiceObjectiveCapability>> supportedServiceLevelObjectives = default;
+            Core.Optional<bool> zoneRedundant = default;
+            Core.Optional<ReadScaleCapability> readScale = default;
+            Core.Optional<IReadOnlyList<StorageCapability>> supportedStorageCapabilities = default;
+            Core.Optional<SqlCapabilityStatus> status = default;
+            Core.Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new EditionCapability(name.Value, Optional.ToList(supportedServiceLevelObjectives), Optional.ToNullable(zoneRedundant), readScale.Value, Optional.ToList(supportedStorageCapabilities), Optional.ToNullable(status), reason.Value);
+            return new EditionCapability(name.Value, Core.Optional.ToList(supportedServiceLevelObjectives), Core.Optional.ToNullable(zoneRedundant), readScale.Value, Core.Optional.ToList(supportedStorageCapabilities), Core.Optional.ToNullable(status), reason.Value);
         }
     }
 }

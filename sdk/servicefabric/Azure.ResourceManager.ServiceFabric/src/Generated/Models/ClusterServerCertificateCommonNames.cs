@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of ClusterServerCertificateCommonNames. </summary>
         public ClusterServerCertificateCommonNames()
         {
-            CommonNames = new ChangeTrackingList<ClusterServerCertificateCommonName>();
+            CommonNames = new Core.ChangeTrackingList<ClusterServerCertificateCommonName>();
         }
 
         /// <summary> Initializes a new instance of ClusterServerCertificateCommonNames. </summary>

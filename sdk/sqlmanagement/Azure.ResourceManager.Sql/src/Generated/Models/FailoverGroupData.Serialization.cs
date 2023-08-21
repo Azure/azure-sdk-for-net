@@ -13,12 +13,12 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class FailoverGroupData : IUtf8JsonSerializable
+    public partial class FailoverGroupData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Sql
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReadWriteEndpoint))
+            if (Core.Optional.IsDefined(ReadWriteEndpoint))
             {
                 writer.WritePropertyName("readWriteEndpoint"u8);
                 writer.WriteObjectValue(ReadWriteEndpoint);
             }
-            if (Optional.IsDefined(ReadOnlyEndpoint))
+            if (Core.Optional.IsDefined(ReadOnlyEndpoint))
             {
                 writer.WritePropertyName("readOnlyEndpoint"u8);
                 writer.WriteObjectValue(ReadOnlyEndpoint);
             }
-            if (Optional.IsCollectionDefined(PartnerServers))
+            if (Core.Optional.IsCollectionDefined(PartnerServers))
             {
                 writer.WritePropertyName("partnerServers"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FailoverDatabases))
+            if (Core.Optional.IsCollectionDefined(FailoverDatabases))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
@@ -76,18 +76,18 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<FailoverGroupReadWriteEndpoint> readWriteEndpoint = default;
-            Optional<FailoverGroupReadOnlyEndpoint> readOnlyEndpoint = default;
-            Optional<FailoverGroupReplicationRole> replicationRole = default;
-            Optional<string> replicationState = default;
-            Optional<IList<PartnerServerInfo>> partnerServers = default;
-            Optional<IList<ResourceIdentifier>> databases = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<FailoverGroupReadWriteEndpoint> readWriteEndpoint = default;
+            Core.Optional<FailoverGroupReadOnlyEndpoint> readOnlyEndpoint = default;
+            Core.Optional<FailoverGroupReplicationRole> replicationRole = default;
+            Core.Optional<string> replicationState = default;
+            Core.Optional<IList<PartnerServerInfo>> partnerServers = default;
+            Core.Optional<IList<ResourceIdentifier>> databases = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new FailoverGroupData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), readWriteEndpoint.Value, readOnlyEndpoint.Value, Optional.ToNullable(replicationRole), replicationState.Value, Optional.ToList(partnerServers), Optional.ToList(databases));
+            return new FailoverGroupData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), readWriteEndpoint.Value, readOnlyEndpoint.Value, Core.Optional.ToNullable(replicationRole), replicationState.Value, Core.Optional.ToList(partnerServers), Core.Optional.ToList(databases));
         }
     }
 }

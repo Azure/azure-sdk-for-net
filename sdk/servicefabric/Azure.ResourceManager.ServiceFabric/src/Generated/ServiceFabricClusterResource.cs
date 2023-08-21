@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.ServiceFabric
             try
             {
                 var response = await _serviceFabricClusterClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceFabricArmOperation<ServiceFabricClusterResource>(new ServiceFabricClusterOperationSource(Client), _serviceFabricClusterClustersClientDiagnostics, Pipeline, _serviceFabricClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ServiceFabricArmOperation<ServiceFabricClusterResource>(new ServiceFabricClusterOperationSource(Client), _serviceFabricClusterClustersClientDiagnostics, Pipeline, _serviceFabricClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.ServiceFabric
             try
             {
                 var response = _serviceFabricClusterClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new ServiceFabricArmOperation<ServiceFabricClusterResource>(new ServiceFabricClusterOperationSource(Client), _serviceFabricClusterClustersClientDiagnostics, Pipeline, _serviceFabricClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ServiceFabricArmOperation<ServiceFabricClusterResource>(new ServiceFabricClusterOperationSource(Client), _serviceFabricClusterClustersClientDiagnostics, Pipeline, _serviceFabricClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

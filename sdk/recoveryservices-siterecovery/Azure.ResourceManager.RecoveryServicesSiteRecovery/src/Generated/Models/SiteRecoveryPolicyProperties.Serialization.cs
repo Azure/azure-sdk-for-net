@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<PolicyProviderSpecificDetails> providerSpecificDetails = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<PolicyProviderSpecificDetails> providerSpecificDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))

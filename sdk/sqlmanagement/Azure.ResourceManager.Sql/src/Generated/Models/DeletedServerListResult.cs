@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of DeletedServerListResult. </summary>
         internal DeletedServerListResult()
         {
-            Value = new ChangeTrackingList<DeletedServerData>();
+            Value = new Core.ChangeTrackingList<DeletedServerData>();
         }
 
         /// <summary> Initializes a new instance of DeletedServerListResult. </summary>

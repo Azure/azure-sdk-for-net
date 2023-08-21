@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of EncryptionProtectorListResult. </summary>
         internal EncryptionProtectorListResult()
         {
-            Value = new ChangeTrackingList<EncryptionProtectorData>();
+            Value = new Core.ChangeTrackingList<EncryptionProtectorData>();
         }
 
         /// <summary> Initializes a new instance of EncryptionProtectorListResult. </summary>

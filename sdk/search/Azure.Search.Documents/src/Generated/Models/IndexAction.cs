@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of IndexAction. </summary>
         public IndexAction()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> The operation to perform on a document in an indexing batch. </summary>

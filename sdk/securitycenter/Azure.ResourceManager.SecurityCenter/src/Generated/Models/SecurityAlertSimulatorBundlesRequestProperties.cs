@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecurityAlertSimulatorBundlesRequestProperties. </summary>
         public SecurityAlertSimulatorBundlesRequestProperties()
         {
-            Bundles = new ChangeTrackingList<SecurityAlertSimulatorBundleType>();
+            Bundles = new Core.ChangeTrackingList<SecurityAlertSimulatorBundleType>();
             Kind = SecurityCenterKind.Bundles;
         }
 

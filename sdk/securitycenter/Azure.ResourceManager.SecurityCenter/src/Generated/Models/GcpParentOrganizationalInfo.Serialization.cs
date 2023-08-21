@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GcpParentOrganizationalInfo : IUtf8JsonSerializable
+    public partial class GcpParentOrganizationalInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ExcludedProjectNumbers))
+            if (Core.Optional.IsCollectionDefined(ExcludedProjectNumbers))
             {
                 writer.WritePropertyName("excludedProjectNumbers"u8);
                 writer.WriteStartArray();
@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ServiceAccountEmailAddress))
+            if (Core.Optional.IsDefined(ServiceAccountEmailAddress))
             {
                 writer.WritePropertyName("serviceAccountEmailAddress"u8);
                 writer.WriteStringValue(ServiceAccountEmailAddress);
             }
-            if (Optional.IsDefined(WorkloadIdentityProviderId))
+            if (Core.Optional.IsDefined(WorkloadIdentityProviderId))
             {
                 writer.WritePropertyName("workloadIdentityProviderId"u8);
                 writer.WriteStringValue(WorkloadIdentityProviderId);
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IList<string>> excludedProjectNumbers = default;
-            Optional<string> serviceAccountEmailAddress = default;
-            Optional<string> workloadIdentityProviderId = default;
+            Core.Optional<IList<string>> excludedProjectNumbers = default;
+            Core.Optional<string> serviceAccountEmailAddress = default;
+            Core.Optional<string> workloadIdentityProviderId = default;
             OrganizationMembershipType organizationMembershipType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new GcpParentOrganizationalInfo(organizationMembershipType, Optional.ToList(excludedProjectNumbers), serviceAccountEmailAddress.Value, workloadIdentityProviderId.Value);
+            return new GcpParentOrganizationalInfo(organizationMembershipType, Core.Optional.ToList(excludedProjectNumbers), serviceAccountEmailAddress.Value, workloadIdentityProviderId.Value);
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of StorageBackupJobExtendedInfo. </summary>
         public StorageBackupJobExtendedInfo()
         {
-            TasksList = new ChangeTrackingList<StorageBackupJobTaskDetails>();
-            PropertyBag = new ChangeTrackingDictionary<string, string>();
+            TasksList = new Core.ChangeTrackingList<StorageBackupJobTaskDetails>();
+            PropertyBag = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of StorageBackupJobExtendedInfo. </summary>

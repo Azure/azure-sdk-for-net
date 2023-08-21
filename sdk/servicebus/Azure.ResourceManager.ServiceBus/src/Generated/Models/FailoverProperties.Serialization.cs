@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class FailoverProperties : IUtf8JsonSerializable
+    public partial class FailoverProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsSafeFailover))
+            if (Core.Optional.IsDefined(IsSafeFailover))
             {
                 writer.WritePropertyName("IsSafeFailover"u8);
                 writer.WriteBooleanValue(IsSafeFailover.Value);

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class SearchQueryVector : IUtf8JsonSerializable
+    public partial class SearchQueryVector : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (Core.Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -26,12 +26,12 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(KNearestNeighborsCount))
+            if (Core.Optional.IsDefined(KNearestNeighborsCount))
             {
                 writer.WritePropertyName("k"u8);
                 writer.WriteNumberValue(KNearestNeighborsCount.Value);
             }
-            if (Optional.IsDefined(FieldsRaw))
+            if (Core.Optional.IsDefined(FieldsRaw))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStringValue(FieldsRaw);
@@ -45,9 +45,9 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<float>> value = default;
-            Optional<int> k = default;
-            Optional<string> fields = default;
+            Core.Optional<IReadOnlyList<float>> value = default;
+            Core.Optional<int> k = default;
+            Core.Optional<string> fields = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -79,7 +79,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new SearchQueryVector(Optional.ToList(value), Optional.ToNullable(k), fields.Value);
+            return new SearchQueryVector(Core.Optional.ToList(value), Core.Optional.ToNullable(k), fields.Value);
         }
     }
 }

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class CustomEntityStoreAssignmentCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class CustomEntityStoreAssignmentCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Principal))
+            if (Core.Optional.IsDefined(Principal))
             {
                 writer.WritePropertyName("principal"u8);
                 writer.WriteStringValue(Principal);

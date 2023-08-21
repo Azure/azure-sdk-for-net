@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class SearchPrivateLinkResource : IUtf8JsonSerializable
+    public partial class SearchPrivateLinkResource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<SearchPrivateLinkResourceProperties> properties = default;
+            Core.Optional<SearchPrivateLinkResourceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

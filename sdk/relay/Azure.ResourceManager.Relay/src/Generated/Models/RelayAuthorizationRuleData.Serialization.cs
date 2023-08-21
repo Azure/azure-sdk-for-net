@@ -13,14 +13,14 @@ using Azure.ResourceManager.Relay.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    public partial class RelayAuthorizationRuleData : IUtf8JsonSerializable
+    public partial class RelayAuthorizationRuleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rights))
+            if (Core.Optional.IsCollectionDefined(Rights))
             {
                 writer.WritePropertyName("rights"u8);
                 writer.WriteStartArray();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Relay
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<RelayAccessRight>> rights = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IList<RelayAccessRight>> rights = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Relay
                     continue;
                 }
             }
-            return new RelayAuthorizationRuleData(id, name, type, systemData.Value, Optional.ToList(rights), Optional.ToNullable(location));
+            return new RelayAuthorizationRuleData(id, name, type, systemData.Value, Core.Optional.ToList(rights), Core.Optional.ToNullable(location));
         }
     }
 }

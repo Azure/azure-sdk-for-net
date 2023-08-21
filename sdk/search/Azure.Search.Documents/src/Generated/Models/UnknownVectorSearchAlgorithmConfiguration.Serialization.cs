@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class UnknownVectorSearchAlgorithmConfiguration : IUtf8JsonSerializable
+    internal partial class UnknownVectorSearchAlgorithmConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);

@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> severity = default;
-            Optional<bool> recommendationsExist = default;
-            Optional<string> networkZones = default;
-            Optional<int> topologyScore = default;
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<TopologySingleResourceParent>> parents = default;
-            Optional<IReadOnlyList<TopologySingleResourceChild>> children = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<string> severity = default;
+            Core.Optional<bool> recommendationsExist = default;
+            Core.Optional<string> networkZones = default;
+            Core.Optional<int> topologyScore = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IReadOnlyList<TopologySingleResourceParent>> parents = default;
+            Core.Optional<IReadOnlyList<TopologySingleResourceChild>> children = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new TopologySingleResource(resourceId.Value, severity.Value, Optional.ToNullable(recommendationsExist), networkZones.Value, Optional.ToNullable(topologyScore), Optional.ToNullable(location), Optional.ToList(parents), Optional.ToList(children));
+            return new TopologySingleResource(resourceId.Value, severity.Value, Core.Optional.ToNullable(recommendationsExist), networkZones.Value, Core.Optional.ToNullable(topologyScore), Core.Optional.ToNullable(location), Core.Optional.ToList(parents), Core.Optional.ToList(children));
         }
     }
 }

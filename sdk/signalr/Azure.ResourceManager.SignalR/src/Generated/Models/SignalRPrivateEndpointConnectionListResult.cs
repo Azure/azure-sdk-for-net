@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of SignalRPrivateEndpointConnectionListResult. </summary>
         internal SignalRPrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<SignalRPrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<SignalRPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of SignalRPrivateEndpointConnectionListResult. </summary>

@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ElasticPoolDatabaseActivity : IUtf8JsonSerializable
+    public partial class ElasticPoolDatabaseActivity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -34,26 +34,26 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> databaseName = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<int> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<int> errorSeverity = default;
-            Optional<string> operation = default;
-            Optional<Guid> operationId = default;
-            Optional<int> percentComplete = default;
-            Optional<string> requestedElasticPoolName = default;
-            Optional<string> currentElasticPoolName = default;
-            Optional<string> currentServiceObjective = default;
-            Optional<string> requestedServiceObjective = default;
-            Optional<string> serverName = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> state = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> databaseName = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<int> errorCode = default;
+            Core.Optional<string> errorMessage = default;
+            Core.Optional<int> errorSeverity = default;
+            Core.Optional<string> operation = default;
+            Core.Optional<Guid> operationId = default;
+            Core.Optional<int> percentComplete = default;
+            Core.Optional<string> requestedElasticPoolName = default;
+            Core.Optional<string> currentElasticPoolName = default;
+            Core.Optional<string> currentServiceObjective = default;
+            Core.Optional<string> requestedServiceObjective = default;
+            Core.Optional<string> serverName = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<string> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ElasticPoolDatabaseActivity(id, name, type, systemData.Value, Optional.ToNullable(location), databaseName.Value, Optional.ToNullable(endTime), Optional.ToNullable(errorCode), errorMessage.Value, Optional.ToNullable(errorSeverity), operation.Value, Optional.ToNullable(operationId), Optional.ToNullable(percentComplete), requestedElasticPoolName.Value, currentElasticPoolName.Value, currentServiceObjective.Value, requestedServiceObjective.Value, serverName.Value, Optional.ToNullable(startTime), state.Value);
+            return new ElasticPoolDatabaseActivity(id, name, type, systemData.Value, Core.Optional.ToNullable(location), databaseName.Value, Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(errorCode), errorMessage.Value, Core.Optional.ToNullable(errorSeverity), operation.Value, Core.Optional.ToNullable(operationId), Core.Optional.ToNullable(percentComplete), requestedElasticPoolName.Value, currentElasticPoolName.Value, currentServiceObjective.Value, requestedServiceObjective.Value, serverName.Value, Core.Optional.ToNullable(startTime), state.Value);
         }
     }
 }

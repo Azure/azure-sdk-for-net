@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of MoveErrorInfo. </summary>
         internal MoveErrorInfo()
         {
-            InfoMoverResources = new ChangeTrackingList<AffectedMoverResourceInfo>();
+            InfoMoverResources = new Core.ChangeTrackingList<AffectedMoverResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of MoveErrorInfo. </summary>

@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Resources
         public ArmApplicationDefinitionData(AzureLocation location, ArmApplicationLockLevel lockLevel) : base(location)
         {
             LockLevel = lockLevel;
-            Authorizations = new ChangeTrackingList<ArmApplicationAuthorization>();
-            Artifacts = new ChangeTrackingList<ArmApplicationDefinitionArtifact>();
-            Policies = new ChangeTrackingList<ArmApplicationPolicy>();
+            Authorizations = new Core.ChangeTrackingList<ArmApplicationAuthorization>();
+            Artifacts = new Core.ChangeTrackingList<ArmApplicationDefinitionArtifact>();
+            Policies = new Core.ChangeTrackingList<ArmApplicationPolicy>();
         }
 
         /// <summary> Initializes a new instance of ArmApplicationDefinitionData. </summary>

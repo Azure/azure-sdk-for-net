@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> biosId = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> lastHeartbeatUtc = default;
-            Optional<SiteRecoveryProtectionHealth> health = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
-            Optional<int> forwardProtectedItemCount = default;
-            Optional<int> reverseProtectedItemCount = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> biosId = default;
+            Core.Optional<string> version = default;
+            Core.Optional<DateTimeOffset> lastHeartbeatUtc = default;
+            Core.Optional<SiteRecoveryProtectionHealth> health = default;
+            Core.Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            Core.Optional<int> forwardProtectedItemCount = default;
+            Core.Optional<int> reverseProtectedItemCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryDraDetails(id.Value, name.Value, biosId.Value, version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(forwardProtectedItemCount), Optional.ToNullable(reverseProtectedItemCount));
+            return new SiteRecoveryDraDetails(id.Value, name.Value, biosId.Value, version.Value, Core.Optional.ToNullable(lastHeartbeatUtc), Core.Optional.ToNullable(health), Core.Optional.ToList(healthErrors), Core.Optional.ToNullable(forwardProtectedItemCount), Core.Optional.ToNullable(reverseProtectedItemCount));
         }
     }
 }

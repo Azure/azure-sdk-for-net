@@ -12,14 +12,14 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedLedgerDigestUploadData : IUtf8JsonSerializable
+    public partial class ManagedLedgerDigestUploadData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DigestStorageEndpoint))
+            if (Core.Optional.IsDefined(DigestStorageEndpoint))
             {
                 writer.WritePropertyName("digestStorageEndpoint"u8);
                 writer.WriteStringValue(DigestStorageEndpoint);
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> digestStorageEndpoint = default;
-            Optional<ManagedLedgerDigestUploadsState> state = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> digestStorageEndpoint = default;
+            Core.Optional<ManagedLedgerDigestUploadsState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedLedgerDigestUploadData(id, name, type, systemData.Value, digestStorageEndpoint.Value, Optional.ToNullable(state));
+            return new ManagedLedgerDigestUploadData(id, name, type, systemData.Value, digestStorageEndpoint.Value, Core.Optional.ToNullable(state));
         }
     }
 }

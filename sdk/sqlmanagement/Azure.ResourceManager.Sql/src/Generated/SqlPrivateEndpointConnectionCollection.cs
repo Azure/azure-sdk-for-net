@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlPrivateEndpointConnectionResource>(new SqlPrivateEndpointConnectionOperationSource(Client), _sqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _sqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlPrivateEndpointConnectionResource>(new SqlPrivateEndpointConnectionOperationSource(Client), _sqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _sqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlPrivateEndpointConnectionResource>(new SqlPrivateEndpointConnectionOperationSource(Client), _sqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _sqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlPrivateEndpointConnectionResource>(new SqlPrivateEndpointConnectionOperationSource(Client), _sqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _sqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlPrivateEndpointConnectionResource(Client, SqlPrivateEndpointConnectionData.DeserializeSqlPrivateEndpointConnectionData(e)), _sqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "SqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlPrivateEndpointConnectionResource(Client, SqlPrivateEndpointConnectionData.DeserializeSqlPrivateEndpointConnectionData(e)), _sqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "SqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlPrivateEndpointConnectionResource(Client, SqlPrivateEndpointConnectionData.DeserializeSqlPrivateEndpointConnectionData(e)), _sqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "SqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlPrivateEndpointConnectionResource(Client, SqlPrivateEndpointConnectionData.DeserializeSqlPrivateEndpointConnectionData(e)), _sqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "SqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<IReadOnlyList<ManagedInstanceEndpointDependency>> endpoints = default;
+            Core.Optional<string> category = default;
+            Core.Optional<IReadOnlyList<ManagedInstanceEndpointDependency>> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SqlOutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints));
+            return new SqlOutboundEnvironmentEndpoint(category.Value, Core.Optional.ToList(endpoints));
         }
     }
 }

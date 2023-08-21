@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DescendantData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DescendantData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     continue;
                 }
             }
-            return new DescendantListResult(Optional.ToList(value), nextLink.Value);
+            return new DescendantListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

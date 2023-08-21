@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of RecommendedActionData. </summary>
         public RecommendedActionData()
         {
-            EstimatedImpact = new ChangeTrackingList<RecommendedActionImpactRecord>();
-            ObservedImpact = new ChangeTrackingList<RecommendedActionImpactRecord>();
-            TimeSeries = new ChangeTrackingList<RecommendedActionMetricInfo>();
-            LinkedObjects = new ChangeTrackingList<string>();
-            Details = new ChangeTrackingDictionary<string, BinaryData>();
+            EstimatedImpact = new Core.ChangeTrackingList<RecommendedActionImpactRecord>();
+            ObservedImpact = new Core.ChangeTrackingList<RecommendedActionImpactRecord>();
+            TimeSeries = new Core.ChangeTrackingList<RecommendedActionMetricInfo>();
+            LinkedObjects = new Core.ChangeTrackingList<string>();
+            Details = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of RecommendedActionData. </summary>

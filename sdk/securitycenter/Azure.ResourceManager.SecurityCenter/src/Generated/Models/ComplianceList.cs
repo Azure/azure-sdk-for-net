@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of ComplianceList. </summary>
         internal ComplianceList()
         {
-            Value = new ChangeTrackingList<SecurityComplianceData>();
+            Value = new Core.ChangeTrackingList<SecurityComplianceData>();
         }
 
         /// <summary> Initializes a new instance of ComplianceList. </summary>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<MoverResourceMoveState> moveState = default;
-            Optional<MoverResourceJobStatus> jobStatus = default;
-            Optional<MoveResourceError> errors = default;
+            Core.Optional<MoverResourceMoveState> moveState = default;
+            Core.Optional<MoverResourceJobStatus> jobStatus = default;
+            Core.Optional<MoveResourceError> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("moveState"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverResourceStatus(Optional.ToNullable(moveState), jobStatus.Value, errors.Value);
+            return new MoverResourceStatus(Core.Optional.ToNullable(moveState), jobStatus.Value, errors.Value);
         }
     }
 }

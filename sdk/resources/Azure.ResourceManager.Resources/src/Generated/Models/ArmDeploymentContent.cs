@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The location to store the deployment data. </summary>

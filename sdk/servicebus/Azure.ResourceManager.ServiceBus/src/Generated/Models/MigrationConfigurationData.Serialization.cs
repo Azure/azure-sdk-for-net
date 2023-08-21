@@ -11,19 +11,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    public partial class MigrationConfigurationData : IUtf8JsonSerializable
+    public partial class MigrationConfigurationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetServiceBusNamespace))
+            if (Core.Optional.IsDefined(TargetServiceBusNamespace))
             {
                 writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetServiceBusNamespace);
             }
-            if (Optional.IsDefined(PostMigrationName))
+            if (Core.Optional.IsDefined(PostMigrationName))
             {
                 writer.WritePropertyName("postMigrationName"u8);
                 writer.WriteStringValue(PostMigrationName);
@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<long> pendingReplicationOperationsCount = default;
-            Optional<ResourceIdentifier> targetNamespace = default;
-            Optional<string> postMigrationName = default;
-            Optional<string> migrationState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<long> pendingReplicationOperationsCount = default;
+            Core.Optional<ResourceIdentifier> targetNamespace = default;
+            Core.Optional<string> postMigrationName = default;
+            Core.Optional<string> migrationState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new MigrationConfigurationData(id, name, type, systemData.Value, provisioningState.Value, Optional.ToNullable(pendingReplicationOperationsCount), targetNamespace.Value, postMigrationName.Value, migrationState.Value, Optional.ToNullable(location));
+            return new MigrationConfigurationData(id, name, type, systemData.Value, provisioningState.Value, Core.Optional.ToNullable(pendingReplicationOperationsCount), targetNamespace.Value, postMigrationName.Value, migrationState.Value, Core.Optional.ToNullable(location));
         }
     }
 }

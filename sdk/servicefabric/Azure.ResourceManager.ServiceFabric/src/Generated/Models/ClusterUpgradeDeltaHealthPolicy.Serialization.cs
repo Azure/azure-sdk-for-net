@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterUpgradeDeltaHealthPolicy : IUtf8JsonSerializable
+    public partial class ClusterUpgradeDeltaHealthPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("maxPercentDeltaUnhealthyNodes"u8);
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteNumberValue(MaxPercentUpgradeDomainDeltaUnhealthyNodes);
             writer.WritePropertyName("maxPercentDeltaUnhealthyApplications"u8);
             writer.WriteNumberValue(MaxPercentDeltaUnhealthyApplications);
-            if (Optional.IsCollectionDefined(ApplicationDeltaHealthPolicies))
+            if (Core.Optional.IsCollectionDefined(ApplicationDeltaHealthPolicies))
             {
                 writer.WritePropertyName("applicationDeltaHealthPolicies"u8);
                 writer.WriteStartObject();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             int maxPercentDeltaUnhealthyNodes = default;
             int maxPercentUpgradeDomainDeltaUnhealthyNodes = default;
             int maxPercentDeltaUnhealthyApplications = default;
-            Optional<IDictionary<string, ApplicationDeltaHealthPolicy>> applicationDeltaHealthPolicies = default;
+            Core.Optional<IDictionary<string, ApplicationDeltaHealthPolicy>> applicationDeltaHealthPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxPercentDeltaUnhealthyNodes"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ClusterUpgradeDeltaHealthPolicy(maxPercentDeltaUnhealthyNodes, maxPercentUpgradeDomainDeltaUnhealthyNodes, maxPercentDeltaUnhealthyApplications, Optional.ToDictionary(applicationDeltaHealthPolicies));
+            return new ClusterUpgradeDeltaHealthPolicy(maxPercentDeltaUnhealthyNodes, maxPercentUpgradeDomainDeltaUnhealthyNodes, maxPercentDeltaUnhealthyApplications, Core.Optional.ToDictionary(applicationDeltaHealthPolicies));
         }
     }
 }

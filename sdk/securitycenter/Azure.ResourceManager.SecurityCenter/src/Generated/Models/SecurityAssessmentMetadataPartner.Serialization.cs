@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAssessmentMetadataPartner : IUtf8JsonSerializable
+    public partial class SecurityAssessmentMetadataPartner : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("partnerName"u8);
             writer.WriteStringValue(PartnerName);
-            if (Optional.IsDefined(ProductName))
+            if (Core.Optional.IsDefined(ProductName))
             {
                 writer.WritePropertyName("productName"u8);
                 writer.WriteStringValue(ProductName);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             string partnerName = default;
-            Optional<string> productName = default;
+            Core.Optional<string> productName = default;
             string secret = default;
             foreach (var property in element.EnumerateObject())
             {

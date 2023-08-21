@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<string> queryId = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
-            Optional<IReadOnlyList<QueryMetricInterval>> intervals = default;
+            Core.Optional<string> databaseName = default;
+            Core.Optional<string> queryId = default;
+            Core.Optional<string> startTime = default;
+            Core.Optional<string> endTime = default;
+            Core.Optional<IReadOnlyList<QueryMetricInterval>> intervals = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new QueryStatisticsProperties(databaseName.Value, queryId.Value, startTime.Value, endTime.Value, Optional.ToList(intervals));
+            return new QueryStatisticsProperties(databaseName.Value, queryId.Value, startTime.Value, endTime.Value, Core.Optional.ToList(intervals));
         }
     }
 }

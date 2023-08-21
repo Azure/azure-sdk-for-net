@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class RedisEnterpriseDatabaseGeoReplication : IUtf8JsonSerializable
+    public partial class RedisEnterpriseDatabaseGeoReplication : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupNickname))
+            if (Core.Optional.IsDefined(GroupNickname))
             {
                 writer.WritePropertyName("groupNickname"u8);
                 writer.WriteStringValue(GroupNickname);
             }
-            if (Optional.IsCollectionDefined(LinkedDatabases))
+            if (Core.Optional.IsCollectionDefined(LinkedDatabases))
             {
                 writer.WritePropertyName("linkedDatabases"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<string> groupNickname = default;
-            Optional<IList<RedisEnterpriseLinkedDatabase>> linkedDatabases = default;
+            Core.Optional<string> groupNickname = default;
+            Core.Optional<IList<RedisEnterpriseLinkedDatabase>> linkedDatabases = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupNickname"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     continue;
                 }
             }
-            return new RedisEnterpriseDatabaseGeoReplication(groupNickname.Value, Optional.ToList(linkedDatabases));
+            return new RedisEnterpriseDatabaseGeoReplication(groupNickname.Value, Core.Optional.ToList(linkedDatabases));
         }
     }
 }

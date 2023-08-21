@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadSqlPointInTimeRestoreContent : IUtf8JsonSerializable
+    public partial class WorkloadSqlPointInTimeRestoreContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PointInTime))
+            if (Core.Optional.IsDefined(PointInTime))
             {
                 writer.WritePropertyName("pointInTime"u8);
                 writer.WriteStringValue(PointInTime.Value, "O");
             }
-            if (Optional.IsDefined(ShouldUseAlternateTargetLocation))
+            if (Core.Optional.IsDefined(ShouldUseAlternateTargetLocation))
             {
                 writer.WritePropertyName("shouldUseAlternateTargetLocation"u8);
                 writer.WriteBooleanValue(ShouldUseAlternateTargetLocation.Value);
             }
-            if (Optional.IsDefined(IsNonRecoverable))
+            if (Core.Optional.IsDefined(IsNonRecoverable))
             {
                 writer.WritePropertyName("isNonRecoverable"u8);
                 writer.WriteBooleanValue(IsNonRecoverable.Value);
             }
-            if (Optional.IsCollectionDefined(AlternateDirectoryPaths))
+            if (Core.Optional.IsCollectionDefined(AlternateDirectoryPaths))
             {
                 writer.WritePropertyName("alternateDirectoryPaths"u8);
                 writer.WriteStartArray();
@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RecoveryType))
+            if (Core.Optional.IsDefined(RecoveryType))
             {
                 writer.WritePropertyName("recoveryType"u8);
                 writer.WriteStringValue(RecoveryType.Value.ToString());
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (Core.Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsCollectionDefined(PropertyBag))
+            if (Core.Optional.IsCollectionDefined(PropertyBag))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(TargetInfo))
+            if (Core.Optional.IsDefined(TargetInfo))
             {
                 writer.WritePropertyName("targetInfo"u8);
                 writer.WriteObjectValue(TargetInfo);
             }
-            if (Optional.IsDefined(RecoveryMode))
+            if (Core.Optional.IsDefined(RecoveryMode))
             {
                 writer.WritePropertyName("recoveryMode"u8);
                 writer.WriteStringValue(RecoveryMode.Value.ToString());
             }
-            if (Optional.IsDefined(TargetVirtualMachineId))
+            if (Core.Optional.IsDefined(TargetVirtualMachineId))
             {
                 writer.WritePropertyName("targetVirtualMachineId"u8);
                 writer.WriteStringValue(TargetVirtualMachineId);
@@ -96,16 +96,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest": return WorkloadSqlPointInTimeRestoreWithRehydrateContent.DeserializeWorkloadSqlPointInTimeRestoreWithRehydrateContent(element);
                 }
             }
-            Optional<DateTimeOffset> pointInTime = default;
-            Optional<bool> shouldUseAlternateTargetLocation = default;
-            Optional<bool> isNonRecoverable = default;
-            Optional<IList<SqlDataDirectoryMapping>> alternateDirectoryPaths = default;
-            Optional<FileShareRecoveryType> recoveryType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<IDictionary<string, string>> propertyBag = default;
-            Optional<TargetRestoreInfo> targetInfo = default;
-            Optional<RecoveryMode> recoveryMode = default;
-            Optional<ResourceIdentifier> targetVirtualMachineId = default;
+            Core.Optional<DateTimeOffset> pointInTime = default;
+            Core.Optional<bool> shouldUseAlternateTargetLocation = default;
+            Core.Optional<bool> isNonRecoverable = default;
+            Core.Optional<IList<SqlDataDirectoryMapping>> alternateDirectoryPaths = default;
+            Core.Optional<FileShareRecoveryType> recoveryType = default;
+            Core.Optional<ResourceIdentifier> sourceResourceId = default;
+            Core.Optional<IDictionary<string, string>> propertyBag = default;
+            Core.Optional<TargetRestoreInfo> targetInfo = default;
+            Core.Optional<RecoveryMode> recoveryMode = default;
+            Core.Optional<ResourceIdentifier> targetVirtualMachineId = default;
             string objectType = "AzureWorkloadSQLPointInTimeRestoreRequest";
             foreach (var property in element.EnumerateObject())
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new WorkloadSqlPointInTimeRestoreContent(objectType, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetVirtualMachineId.Value, Optional.ToNullable(shouldUseAlternateTargetLocation), Optional.ToNullable(isNonRecoverable), Optional.ToList(alternateDirectoryPaths), Optional.ToNullable(pointInTime));
+            return new WorkloadSqlPointInTimeRestoreContent(objectType, Core.Optional.ToNullable(recoveryType), sourceResourceId.Value, Core.Optional.ToDictionary(propertyBag), targetInfo.Value, Core.Optional.ToNullable(recoveryMode), targetVirtualMachineId.Value, Core.Optional.ToNullable(shouldUseAlternateTargetLocation), Core.Optional.ToNullable(isNonRecoverable), Core.Optional.ToList(alternateDirectoryPaths), Core.Optional.ToNullable(pointInTime));
         }
     }
 }

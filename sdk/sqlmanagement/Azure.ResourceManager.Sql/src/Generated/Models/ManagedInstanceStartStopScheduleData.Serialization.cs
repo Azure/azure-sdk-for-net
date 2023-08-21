@@ -13,24 +13,24 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedInstanceStartStopScheduleData : IUtf8JsonSerializable
+    public partial class ManagedInstanceStartStopScheduleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(TimeZoneId))
+            if (Core.Optional.IsDefined(TimeZoneId))
             {
                 writer.WritePropertyName("timeZoneId"u8);
                 writer.WriteStringValue(TimeZoneId);
             }
-            if (Optional.IsCollectionDefined(ScheduleList))
+            if (Core.Optional.IsCollectionDefined(ScheduleList))
             {
                 writer.WritePropertyName("scheduleList"u8);
                 writer.WriteStartArray();
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> timeZoneId = default;
-            Optional<IList<SqlScheduleItem>> scheduleList = default;
-            Optional<string> nextRunAction = default;
-            Optional<string> nextExecutionTime = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> timeZoneId = default;
+            Core.Optional<IList<SqlScheduleItem>> scheduleList = default;
+            Core.Optional<string> nextRunAction = default;
+            Core.Optional<string> nextExecutionTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedInstanceStartStopScheduleData(id, name, type, systemData.Value, description.Value, timeZoneId.Value, Optional.ToList(scheduleList), nextRunAction.Value, nextExecutionTime.Value);
+            return new ManagedInstanceStartStopScheduleData(id, name, type, systemData.Value, description.Value, timeZoneId.Value, Core.Optional.ToList(scheduleList), nextRunAction.Value, nextExecutionTime.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of BackupManagementUsageList. </summary>
         internal BackupManagementUsageList()
         {
-            Value = new ChangeTrackingList<BackupManagementUsage>();
+            Value = new Core.ChangeTrackingList<BackupManagementUsage>();
         }
 
         /// <summary> Initializes a new instance of BackupManagementUsageList. </summary>

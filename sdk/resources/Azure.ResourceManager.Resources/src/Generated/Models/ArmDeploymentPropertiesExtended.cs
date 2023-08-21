@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmDeploymentPropertiesExtended. </summary>
         internal ArmDeploymentPropertiesExtended()
         {
-            Providers = new ChangeTrackingList<ResourceProviderData>();
-            Dependencies = new ChangeTrackingList<ArmDependency>();
-            OutputResources = new ChangeTrackingList<SubResource>();
-            ValidatedResources = new ChangeTrackingList<SubResource>();
+            Providers = new Core.ChangeTrackingList<ResourceProviderData>();
+            Dependencies = new Core.ChangeTrackingList<ArmDependency>();
+            OutputResources = new Core.ChangeTrackingList<SubResource>();
+            ValidatedResources = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of ArmDeploymentPropertiesExtended. </summary>

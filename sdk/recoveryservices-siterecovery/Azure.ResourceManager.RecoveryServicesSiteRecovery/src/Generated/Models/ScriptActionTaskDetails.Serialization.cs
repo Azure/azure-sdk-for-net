@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> path = default;
-            Optional<string> output = default;
-            Optional<bool> isPrimarySideScript = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> path = default;
+            Core.Optional<string> output = default;
+            Core.Optional<bool> isPrimarySideScript = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new ScriptActionTaskDetails(instanceType, name.Value, path.Value, output.Value, Optional.ToNullable(isPrimarySideScript));
+            return new ScriptActionTaskDetails(instanceType, name.Value, path.Value, output.Value, Core.Optional.ToNullable(isPrimarySideScript));
         }
     }
 }

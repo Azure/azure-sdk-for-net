@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlServerCommunicationLinkData>> value = default;
+            Core.Optional<IReadOnlyList<SqlServerCommunicationLinkData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ServerCommunicationLinkListResult(Optional.ToList(value));
+            return new ServerCommunicationLinkListResult(Core.Optional.ToList(value));
         }
     }
 }

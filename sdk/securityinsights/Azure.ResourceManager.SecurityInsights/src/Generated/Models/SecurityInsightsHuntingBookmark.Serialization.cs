@@ -13,36 +13,36 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsHuntingBookmark : IUtf8JsonSerializable
+    public partial class SecurityInsightsHuntingBookmark : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreatedOn))
+            if (Core.Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(CreatedBy))
+            if (Core.Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(EventOn))
+            if (Core.Optional.IsDefined(EventOn))
             {
                 writer.WritePropertyName("eventTime"u8);
                 writer.WriteStringValue(EventOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (Core.Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -52,32 +52,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Notes))
+            if (Core.Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Optional.IsDefined(Query))
+            if (Core.Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (Optional.IsDefined(QueryResult))
+            if (Core.Optional.IsDefined(QueryResult))
             {
                 writer.WritePropertyName("queryResult"u8);
                 writer.WriteStringValue(QueryResult);
             }
-            if (Optional.IsDefined(UpdatedOn))
+            if (Core.Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(UpdatedBy))
+            if (Core.Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteObjectValue(UpdatedBy);
             }
-            if (Optional.IsDefined(IncidentInfo))
+            if (Core.Optional.IsDefined(IncidentInfo))
             {
                 writer.WritePropertyName("incidentInfo"u8);
                 writer.WriteObjectValue(IncidentInfo);
@@ -96,20 +96,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<SecurityInsightsUserInfo> createdBy = default;
-            Optional<string> displayName = default;
-            Optional<DateTimeOffset> eventTime = default;
-            Optional<IList<string>> labels = default;
-            Optional<string> notes = default;
-            Optional<string> query = default;
-            Optional<string> queryResult = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<SecurityInsightsUserInfo> updatedBy = default;
-            Optional<SecurityInsightsBookmarkIncidentInfo> incidentInfo = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<DateTimeOffset> created = default;
+            Core.Optional<SecurityInsightsUserInfo> createdBy = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<DateTimeOffset> eventTime = default;
+            Core.Optional<IList<string>> labels = default;
+            Core.Optional<string> notes = default;
+            Core.Optional<string> query = default;
+            Core.Optional<string> queryResult = default;
+            Core.Optional<DateTimeOffset> updated = default;
+            Core.Optional<SecurityInsightsUserInfo> updatedBy = default;
+            Core.Optional<SecurityInsightsBookmarkIncidentInfo> incidentInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsHuntingBookmark(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToNullable(created), createdBy.Value, displayName.Value, Optional.ToNullable(eventTime), Optional.ToList(labels), notes.Value, query.Value, queryResult.Value, Optional.ToNullable(updated), updatedBy.Value, incidentInfo.Value);
+            return new SecurityInsightsHuntingBookmark(id, name, type, systemData.Value, kind, Core.Optional.ToDictionary(additionalData), friendlyName.Value, Core.Optional.ToNullable(created), createdBy.Value, displayName.Value, Core.Optional.ToNullable(eventTime), Core.Optional.ToList(labels), notes.Value, query.Value, queryResult.Value, Core.Optional.ToNullable(updated), updatedBy.Value, incidentInfo.Value);
         }
     }
 }

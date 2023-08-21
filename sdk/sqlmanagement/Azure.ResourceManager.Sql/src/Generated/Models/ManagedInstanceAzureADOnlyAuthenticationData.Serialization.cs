@@ -11,14 +11,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedInstanceAzureADOnlyAuthenticationData : IUtf8JsonSerializable
+    public partial class ManagedInstanceAzureADOnlyAuthenticationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsAzureADOnlyAuthenticationEnabled))
+            if (Core.Optional.IsDefined(IsAzureADOnlyAuthenticationEnabled))
             {
                 writer.WritePropertyName("azureADOnlyAuthentication"u8);
                 writer.WriteBooleanValue(IsAzureADOnlyAuthenticationEnabled.Value);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> azureADOnlyAuthentication = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<bool> azureADOnlyAuthentication = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedInstanceAzureADOnlyAuthenticationData(id, name, type, systemData.Value, Optional.ToNullable(azureADOnlyAuthentication));
+            return new ManagedInstanceAzureADOnlyAuthenticationData(id, name, type, systemData.Value, Core.Optional.ToNullable(azureADOnlyAuthentication));
         }
     }
 }

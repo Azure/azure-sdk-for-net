@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> contactName = default;
+            Core.Optional<string> contactName = default;
             string email = default;
             string phone = default;
             foreach (var property in element.EnumerateObject())

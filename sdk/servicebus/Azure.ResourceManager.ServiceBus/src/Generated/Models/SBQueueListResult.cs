@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of SBQueueListResult. </summary>
         internal SBQueueListResult()
         {
-            Value = new ChangeTrackingList<ServiceBusQueueData>();
+            Value = new Core.ChangeTrackingList<ServiceBusQueueData>();
         }
 
         /// <summary> Initializes a new instance of SBQueueListResult. </summary>

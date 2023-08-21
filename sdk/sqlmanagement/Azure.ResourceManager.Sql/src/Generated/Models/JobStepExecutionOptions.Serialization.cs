@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class JobStepExecutionOptions : IUtf8JsonSerializable
+    public partial class JobStepExecutionOptions : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TimeoutSeconds))
+            if (Core.Optional.IsDefined(TimeoutSeconds))
             {
                 writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutSeconds.Value);
             }
-            if (Optional.IsDefined(RetryAttempts))
+            if (Core.Optional.IsDefined(RetryAttempts))
             {
                 writer.WritePropertyName("retryAttempts"u8);
                 writer.WriteNumberValue(RetryAttempts.Value);
             }
-            if (Optional.IsDefined(InitialRetryIntervalSeconds))
+            if (Core.Optional.IsDefined(InitialRetryIntervalSeconds))
             {
                 writer.WritePropertyName("initialRetryIntervalSeconds"u8);
                 writer.WriteNumberValue(InitialRetryIntervalSeconds.Value);
             }
-            if (Optional.IsDefined(MaximumRetryIntervalSeconds))
+            if (Core.Optional.IsDefined(MaximumRetryIntervalSeconds))
             {
                 writer.WritePropertyName("maximumRetryIntervalSeconds"u8);
                 writer.WriteNumberValue(MaximumRetryIntervalSeconds.Value);
             }
-            if (Optional.IsDefined(RetryIntervalBackoffMultiplier))
+            if (Core.Optional.IsDefined(RetryIntervalBackoffMultiplier))
             {
                 writer.WritePropertyName("retryIntervalBackoffMultiplier"u8);
                 writer.WriteNumberValue(RetryIntervalBackoffMultiplier.Value);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<int> timeoutSeconds = default;
-            Optional<int> retryAttempts = default;
-            Optional<int> initialRetryIntervalSeconds = default;
-            Optional<int> maximumRetryIntervalSeconds = default;
-            Optional<float> retryIntervalBackoffMultiplier = default;
+            Core.Optional<int> timeoutSeconds = default;
+            Core.Optional<int> retryAttempts = default;
+            Core.Optional<int> initialRetryIntervalSeconds = default;
+            Core.Optional<int> maximumRetryIntervalSeconds = default;
+            Core.Optional<float> retryIntervalBackoffMultiplier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeoutSeconds"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new JobStepExecutionOptions(Optional.ToNullable(timeoutSeconds), Optional.ToNullable(retryAttempts), Optional.ToNullable(initialRetryIntervalSeconds), Optional.ToNullable(maximumRetryIntervalSeconds), Optional.ToNullable(retryIntervalBackoffMultiplier));
+            return new JobStepExecutionOptions(Core.Optional.ToNullable(timeoutSeconds), Core.Optional.ToNullable(retryAttempts), Core.Optional.ToNullable(initialRetryIntervalSeconds), Core.Optional.ToNullable(maximumRetryIntervalSeconds), Core.Optional.ToNullable(retryIntervalBackoffMultiplier));
         }
     }
 }

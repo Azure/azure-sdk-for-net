@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class RecommendedActionStateInfo : IUtf8JsonSerializable
+    public partial class RecommendedActionStateInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("currentValue"u8);
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             RecommendedActionCurrentState currentValue = default;
-            Optional<RecommendedActionInitiatedBy> actionInitiatedBy = default;
-            Optional<DateTimeOffset> lastModified = default;
+            Core.Optional<RecommendedActionInitiatedBy> actionInitiatedBy = default;
+            Core.Optional<DateTimeOffset> lastModified = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentValue"u8))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new RecommendedActionStateInfo(currentValue, Optional.ToNullable(actionInitiatedBy), Optional.ToNullable(lastModified));
+            return new RecommendedActionStateInfo(currentValue, Core.Optional.ToNullable(actionInitiatedBy), Core.Optional.ToNullable(lastModified));
         }
     }
 }

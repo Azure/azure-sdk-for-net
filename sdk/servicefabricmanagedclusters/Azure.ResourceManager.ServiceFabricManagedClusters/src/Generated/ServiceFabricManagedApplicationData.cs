@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="location"> The location. </param>
         public ServiceFabricManagedApplicationData(AzureLocation location) : base(location)
         {
-            Parameters = new ChangeTrackingDictionary<string, string>();
-            ManagedIdentities = new ChangeTrackingList<ApplicationUserAssignedIdentityInfo>();
+            Parameters = new Core.ChangeTrackingDictionary<string, string>();
+            ManagedIdentities = new Core.ChangeTrackingList<ApplicationUserAssignedIdentityInfo>();
         }
 
         /// <summary> Initializes a new instance of ServiceFabricManagedApplicationData. </summary>

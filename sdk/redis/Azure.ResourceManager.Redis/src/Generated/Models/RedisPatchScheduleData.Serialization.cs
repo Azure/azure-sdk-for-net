@@ -13,9 +13,9 @@ using Azure.ResourceManager.Redis.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    public partial class RedisPatchScheduleData : IUtf8JsonSerializable
+    public partial class RedisPatchScheduleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Redis
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             IList<RedisPatchScheduleSetting> scheduleEntries = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Redis
                     continue;
                 }
             }
-            return new RedisPatchScheduleData(id, name, type, systemData.Value, Optional.ToNullable(location), scheduleEntries);
+            return new RedisPatchScheduleData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), scheduleEntries);
         }
     }
 }

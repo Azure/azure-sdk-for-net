@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    public partial class FacetRequestOptions : IUtf8JsonSerializable
+    public partial class FacetRequestOptions : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SortBy))
+            if (Core.Optional.IsDefined(SortBy))
             {
                 writer.WritePropertyName("sortBy"u8);
                 writer.WriteStringValue(SortBy);
             }
-            if (Optional.IsDefined(SortOrder))
+            if (Core.Optional.IsDefined(SortOrder))
             {
                 writer.WritePropertyName("sortOrder"u8);
                 writer.WriteStringValue(SortOrder.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Filter))
+            if (Core.Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (Optional.IsDefined(Top))
+            if (Core.Optional.IsDefined(Top))
             {
                 writer.WritePropertyName("$top"u8);
                 writer.WriteNumberValue(Top.Value);

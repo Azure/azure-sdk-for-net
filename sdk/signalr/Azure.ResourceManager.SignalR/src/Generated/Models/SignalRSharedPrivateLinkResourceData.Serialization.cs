@@ -12,24 +12,24 @@ using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
 {
-    public partial class SignalRSharedPrivateLinkResourceData : IUtf8JsonSerializable
+    public partial class SignalRSharedPrivateLinkResourceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupId))
+            if (Core.Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsDefined(PrivateLinkResourceId))
+            if (Core.Optional.IsDefined(PrivateLinkResourceId))
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (Optional.IsDefined(RequestMessage))
+            if (Core.Optional.IsDefined(RequestMessage))
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.SignalR
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<SignalRProvisioningState> provisioningState = default;
-            Optional<string> requestMessage = default;
-            Optional<SignalRSharedPrivateLinkResourceStatus> status = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> groupId = default;
+            Core.Optional<ResourceIdentifier> privateLinkResourceId = default;
+            Core.Optional<SignalRProvisioningState> provisioningState = default;
+            Core.Optional<string> requestMessage = default;
+            Core.Optional<SignalRSharedPrivateLinkResourceStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SignalR
                     continue;
                 }
             }
-            return new SignalRSharedPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, privateLinkResourceId.Value, Optional.ToNullable(provisioningState), requestMessage.Value, Optional.ToNullable(status));
+            return new SignalRSharedPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, privateLinkResourceId.Value, Core.Optional.ToNullable(provisioningState), requestMessage.Value, Core.Optional.ToNullable(status));
         }
     }
 }

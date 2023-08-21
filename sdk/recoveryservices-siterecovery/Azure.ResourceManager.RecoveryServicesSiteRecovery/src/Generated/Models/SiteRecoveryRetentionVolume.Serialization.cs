@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> volumeName = default;
-            Optional<long> capacityInBytes = default;
-            Optional<long> freeSpaceInBytes = default;
-            Optional<int> thresholdPercentage = default;
+            Core.Optional<string> volumeName = default;
+            Core.Optional<long> capacityInBytes = default;
+            Core.Optional<long> freeSpaceInBytes = default;
+            Core.Optional<int> thresholdPercentage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("volumeName"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryRetentionVolume(volumeName.Value, Optional.ToNullable(capacityInBytes), Optional.ToNullable(freeSpaceInBytes), Optional.ToNullable(thresholdPercentage));
+            return new SiteRecoveryRetentionVolume(volumeName.Value, Core.Optional.ToNullable(capacityInBytes), Core.Optional.ToNullable(freeSpaceInBytes), Core.Optional.ToNullable(thresholdPercentage));
         }
     }
 }

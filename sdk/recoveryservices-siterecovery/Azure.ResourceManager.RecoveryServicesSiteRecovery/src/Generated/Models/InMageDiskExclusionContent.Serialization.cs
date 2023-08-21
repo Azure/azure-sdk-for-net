@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageDiskExclusionContent : IUtf8JsonSerializable
+    public partial class InMageDiskExclusionContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VolumeOptions))
+            if (Core.Optional.IsCollectionDefined(VolumeOptions))
             {
                 writer.WritePropertyName("volumeOptions"u8);
                 writer.WriteStartArray();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DiskSignatureOptions))
+            if (Core.Optional.IsCollectionDefined(DiskSignatureOptions))
             {
                 writer.WritePropertyName("diskSignatureOptions"u8);
                 writer.WriteStartArray();

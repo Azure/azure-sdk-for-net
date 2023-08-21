@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of A2AProtectedDiskDetails. </summary>
         internal A2AProtectedDiskDetails()
         {
-            AllowedDiskLevelOperation = new ChangeTrackingList<string>();
+            AllowedDiskLevelOperation = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of A2AProtectedDiskDetails. </summary>

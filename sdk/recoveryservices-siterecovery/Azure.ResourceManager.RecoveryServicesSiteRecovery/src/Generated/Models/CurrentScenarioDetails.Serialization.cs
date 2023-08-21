@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> scenarioName = default;
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<DateTimeOffset> startTime = default;
+            Core.Optional<string> scenarioName = default;
+            Core.Optional<ResourceIdentifier> jobId = default;
+            Core.Optional<DateTimeOffset> startTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scenarioName"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new CurrentScenarioDetails(scenarioName.Value, jobId.Value, Optional.ToNullable(startTime));
+            return new CurrentScenarioDetails(scenarioName.Value, jobId.Value, Core.Optional.ToNullable(startTime));
         }
     }
 }

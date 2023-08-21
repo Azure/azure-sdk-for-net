@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SharedSearchServicePrivateLinkResourceData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SharedSearchServicePrivateLinkResourceData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Search.Models
                     continue;
                 }
             }
-            return new SharedPrivateLinkResourceListResult(Optional.ToList(value), nextLink.Value);
+            return new SharedPrivateLinkResourceListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

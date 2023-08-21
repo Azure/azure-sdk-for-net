@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<string>> namespaces = default;
-            Optional<string> policyMode = default;
-            Optional<bool> isBuiltInOnly = default;
-            Optional<IReadOnlyList<ResourceTypeAliases>> resourceTypeAliases = default;
-            Optional<IReadOnlyList<DataPolicyManifestEffect>> effects = default;
-            Optional<IReadOnlyList<string>> fieldValues = default;
-            Optional<IReadOnlyList<string>> standard = default;
-            Optional<IReadOnlyList<DataManifestCustomResourceFunctionDefinition>> custom = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyList<string>> namespaces = default;
+            Core.Optional<string> policyMode = default;
+            Core.Optional<bool> isBuiltInOnly = default;
+            Core.Optional<IReadOnlyList<ResourceTypeAliases>> resourceTypeAliases = default;
+            Core.Optional<IReadOnlyList<DataPolicyManifestEffect>> effects = default;
+            Core.Optional<IReadOnlyList<string>> fieldValues = default;
+            Core.Optional<IReadOnlyList<string>> standard = default;
+            Core.Optional<IReadOnlyList<DataManifestCustomResourceFunctionDefinition>> custom = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new DataPolicyManifestData(id, name, type, systemData.Value, Optional.ToList(namespaces), policyMode.Value, Optional.ToNullable(isBuiltInOnly), Optional.ToList(resourceTypeAliases), Optional.ToList(effects), Optional.ToList(fieldValues), Optional.ToList(standard), Optional.ToList(custom));
+            return new DataPolicyManifestData(id, name, type, systemData.Value, Core.Optional.ToList(namespaces), policyMode.Value, Core.Optional.ToNullable(isBuiltInOnly), Core.Optional.ToList(resourceTypeAliases), Core.Optional.ToList(effects), Core.Optional.ToList(fieldValues), Core.Optional.ToList(standard), Core.Optional.ToList(custom));
         }
     }
 }

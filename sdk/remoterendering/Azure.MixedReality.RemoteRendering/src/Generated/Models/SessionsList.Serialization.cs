@@ -20,7 +20,7 @@ namespace Azure.MixedReality.RemoteRendering
                 return null;
             }
             IReadOnlyList<RenderingSession> sessions = default;
-            Optional<string> nextLink = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessions"u8))

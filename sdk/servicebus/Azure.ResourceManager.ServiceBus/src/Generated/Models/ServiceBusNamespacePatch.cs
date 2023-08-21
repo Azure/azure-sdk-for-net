@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="location"> The location. </param>
         public ServiceBusNamespacePatch(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ServiceBusNamespacePatch. </summary>

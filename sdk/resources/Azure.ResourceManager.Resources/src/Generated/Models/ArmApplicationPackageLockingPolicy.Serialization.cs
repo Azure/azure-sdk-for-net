@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmApplicationPackageLockingPolicy : IUtf8JsonSerializable
+    public partial class ArmApplicationPackageLockingPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedActions))
+            if (Core.Optional.IsCollectionDefined(AllowedActions))
             {
                 writer.WritePropertyName("allowedActions"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowedDataActions))
+            if (Core.Optional.IsCollectionDefined(AllowedDataActions))
             {
                 writer.WritePropertyName("allowedDataActions"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IList<string>> allowedActions = default;
-            Optional<IList<string>> allowedDataActions = default;
+            Core.Optional<IList<string>> allowedActions = default;
+            Core.Optional<IList<string>> allowedDataActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedActions"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmApplicationPackageLockingPolicy(Optional.ToList(allowedActions), Optional.ToList(allowedDataActions));
+            return new ArmApplicationPackageLockingPolicy(Core.Optional.ToList(allowedActions), Core.Optional.ToList(allowedDataActions));
         }
     }
 }

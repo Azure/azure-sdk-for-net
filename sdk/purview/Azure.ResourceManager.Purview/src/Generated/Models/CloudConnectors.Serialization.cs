@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    internal partial class CloudConnectors : IUtf8JsonSerializable
+    internal partial class CloudConnectors : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> awsExternalId = default;
+            Core.Optional<string> awsExternalId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("awsExternalId"u8))

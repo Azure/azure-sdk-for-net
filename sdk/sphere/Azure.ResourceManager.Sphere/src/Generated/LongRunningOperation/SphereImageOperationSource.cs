@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sphere
 {
-    internal class SphereImageOperationSource : IOperationSource<SphereImageResource>
+    internal class SphereImageOperationSource : Core.IOperationSource<SphereImageResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sphere
             _client = client;
         }
 
-        SphereImageResource IOperationSource<SphereImageResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SphereImageResource Core.IOperationSource<SphereImageResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SphereImageData.DeserializeSphereImageData(document.RootElement);
             return new SphereImageResource(_client, data);
         }
 
-        async ValueTask<SphereImageResource> IOperationSource<SphereImageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SphereImageResource> Core.IOperationSource<SphereImageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SphereImageData.DeserializeSphereImageData(document.RootElement);

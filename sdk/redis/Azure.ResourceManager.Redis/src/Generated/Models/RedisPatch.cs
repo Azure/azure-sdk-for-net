@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Initializes a new instance of RedisPatch. </summary>
         public RedisPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            TenantSettings = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            TenantSettings = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Resource tags. </summary>

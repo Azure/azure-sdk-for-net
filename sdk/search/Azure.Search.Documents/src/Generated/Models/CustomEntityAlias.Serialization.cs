@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class CustomEntityAlias : IUtf8JsonSerializable
+    public partial class CustomEntityAlias : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsDefined(CaseSensitive))
+            if (Core.Optional.IsDefined(CaseSensitive))
             {
                 if (CaseSensitive != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("caseSensitive");
                 }
             }
-            if (Optional.IsDefined(AccentSensitive))
+            if (Core.Optional.IsDefined(AccentSensitive))
             {
                 if (AccentSensitive != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("accentSensitive");
                 }
             }
-            if (Optional.IsDefined(FuzzyEditDistance))
+            if (Core.Optional.IsDefined(FuzzyEditDistance))
             {
                 if (FuzzyEditDistance != null)
                 {
@@ -63,9 +63,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string text = default;
-            Optional<bool?> caseSensitive = default;
-            Optional<bool?> accentSensitive = default;
-            Optional<int?> fuzzyEditDistance = default;
+            Core.Optional<bool?> caseSensitive = default;
+            Core.Optional<bool?> accentSensitive = default;
+            Core.Optional<int?> fuzzyEditDistance = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -104,7 +104,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomEntityAlias(text, Optional.ToNullable(caseSensitive), Optional.ToNullable(accentSensitive), Optional.ToNullable(fuzzyEditDistance));
+            return new CustomEntityAlias(text, Core.Optional.ToNullable(caseSensitive), Core.Optional.ToNullable(accentSensitive), Core.Optional.ToNullable(fuzzyEditDistance));
         }
     }
 }

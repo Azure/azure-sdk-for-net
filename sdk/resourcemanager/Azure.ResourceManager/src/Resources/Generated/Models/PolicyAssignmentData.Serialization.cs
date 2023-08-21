@@ -14,34 +14,34 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class PolicyAssignmentData : IUtf8JsonSerializable
+    public partial class PolicyAssignmentData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(ManagedIdentity))
+            if (Core.Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, ManagedIdentity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(PolicyDefinitionId))
+            if (Core.Optional.IsDefined(PolicyDefinitionId))
             {
                 writer.WritePropertyName("policyDefinitionId"u8);
                 writer.WriteStringValue(PolicyDefinitionId);
             }
-            if (Optional.IsCollectionDefined(ExcludedScopes))
+            if (Core.Optional.IsCollectionDefined(ExcludedScopes))
             {
                 writer.WritePropertyName("notScopes"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Core.Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Resources
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(EnforcementMode))
+            if (Core.Optional.IsDefined(EnforcementMode))
             {
                 writer.WritePropertyName("enforcementMode"u8);
                 writer.WriteStringValue(EnforcementMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(NonComplianceMessages))
+            if (Core.Optional.IsCollectionDefined(NonComplianceMessages))
             {
                 writer.WritePropertyName("nonComplianceMessages"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ResourceSelectors))
+            if (Core.Optional.IsCollectionDefined(ResourceSelectors))
             {
                 writer.WritePropertyName("resourceSelectors"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Overrides))
+            if (Core.Optional.IsCollectionDefined(Overrides))
             {
                 writer.WritePropertyName("overrides"u8);
                 writer.WriteStartArray();
@@ -121,23 +121,23 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> policyDefinitionId = default;
-            Optional<string> scope = default;
-            Optional<IList<string>> notScopes = default;
-            Optional<IDictionary<string, ArmPolicyParameterValue>> parameters = default;
-            Optional<string> description = default;
-            Optional<BinaryData> metadata = default;
-            Optional<EnforcementMode> enforcementMode = default;
-            Optional<IList<NonComplianceMessage>> nonComplianceMessages = default;
-            Optional<IList<ResourceSelector>> resourceSelectors = default;
-            Optional<IList<PolicyOverride>> overrides = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> policyDefinitionId = default;
+            Core.Optional<string> scope = default;
+            Core.Optional<IList<string>> notScopes = default;
+            Core.Optional<IDictionary<string, ArmPolicyParameterValue>> parameters = default;
+            Core.Optional<string> description = default;
+            Core.Optional<BinaryData> metadata = default;
+            Core.Optional<EnforcementMode> enforcementMode = default;
+            Core.Optional<IList<NonComplianceMessage>> nonComplianceMessages = default;
+            Core.Optional<IList<ResourceSelector>> resourceSelectors = default;
+            Core.Optional<IList<PolicyOverride>> overrides = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new PolicyAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), identity, displayName.Value, policyDefinitionId.Value, scope.Value, Optional.ToList(notScopes), Optional.ToDictionary(parameters), description.Value, metadata.Value, Optional.ToNullable(enforcementMode), Optional.ToList(nonComplianceMessages), Optional.ToList(resourceSelectors), Optional.ToList(overrides));
+            return new PolicyAssignmentData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), identity, displayName.Value, policyDefinitionId.Value, scope.Value, Core.Optional.ToList(notScopes), Core.Optional.ToDictionary(parameters), description.Value, metadata.Value, Core.Optional.ToNullable(enforcementMode), Core.Optional.ToList(nonComplianceMessages), Core.Optional.ToList(resourceSelectors), Core.Optional.ToList(overrides));
         }
     }
 }

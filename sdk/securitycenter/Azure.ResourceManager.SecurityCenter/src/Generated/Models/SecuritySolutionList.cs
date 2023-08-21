@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecuritySolutionList. </summary>
         internal SecuritySolutionList()
         {
-            Value = new ChangeTrackingList<SecuritySolution>();
+            Value = new Core.ChangeTrackingList<SecuritySolution>();
         }
 
         /// <summary> Initializes a new instance of SecuritySolutionList. </summary>

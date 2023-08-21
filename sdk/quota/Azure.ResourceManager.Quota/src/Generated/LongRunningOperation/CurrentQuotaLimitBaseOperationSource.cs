@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quota
 {
-    internal class CurrentQuotaLimitBaseOperationSource : IOperationSource<CurrentQuotaLimitBaseResource>
+    internal class CurrentQuotaLimitBaseOperationSource : Core.IOperationSource<CurrentQuotaLimitBaseResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Quota
             _client = client;
         }
 
-        CurrentQuotaLimitBaseResource IOperationSource<CurrentQuotaLimitBaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CurrentQuotaLimitBaseResource Core.IOperationSource<CurrentQuotaLimitBaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(document.RootElement);
             return new CurrentQuotaLimitBaseResource(_client, data);
         }
 
-        async ValueTask<CurrentQuotaLimitBaseResource> IOperationSource<CurrentQuotaLimitBaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CurrentQuotaLimitBaseResource> Core.IOperationSource<CurrentQuotaLimitBaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(document.RootElement);

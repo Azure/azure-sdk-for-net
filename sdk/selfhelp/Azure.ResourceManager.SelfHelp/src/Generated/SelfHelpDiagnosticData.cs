@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Initializes a new instance of SelfHelpDiagnosticData. </summary>
         public SelfHelpDiagnosticData()
         {
-            GlobalParameters = new ChangeTrackingDictionary<string, string>();
-            Insights = new ChangeTrackingList<SelfHelpDiagnosticInvocation>();
-            Diagnostics = new ChangeTrackingList<SelfHelpDiagnosticInfo>();
+            GlobalParameters = new Core.ChangeTrackingDictionary<string, string>();
+            Insights = new Core.ChangeTrackingList<SelfHelpDiagnosticInvocation>();
+            Diagnostics = new Core.ChangeTrackingList<SelfHelpDiagnosticInfo>();
         }
 
         /// <summary> Initializes a new instance of SelfHelpDiagnosticData. </summary>

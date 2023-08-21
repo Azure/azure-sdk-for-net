@@ -12,19 +12,19 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    public partial class ServiceBusDisasterRecoveryData : IUtf8JsonSerializable
+    public partial class ServiceBusDisasterRecoveryData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PartnerNamespace))
+            if (Core.Optional.IsDefined(PartnerNamespace))
             {
                 writer.WritePropertyName("partnerNamespace"u8);
                 writer.WriteStringValue(PartnerNamespace);
             }
-            if (Optional.IsDefined(AlternateName))
+            if (Core.Optional.IsDefined(AlternateName))
             {
                 writer.WritePropertyName("alternateName"u8);
                 writer.WriteStringValue(AlternateName);
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ServiceBusDisasterRecoveryProvisioningState> provisioningState = default;
-            Optional<long> pendingReplicationOperationsCount = default;
-            Optional<string> partnerNamespace = default;
-            Optional<string> alternateName = default;
-            Optional<ServiceBusDisasterRecoveryRole> role = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ServiceBusDisasterRecoveryProvisioningState> provisioningState = default;
+            Core.Optional<long> pendingReplicationOperationsCount = default;
+            Core.Optional<string> partnerNamespace = default;
+            Core.Optional<string> alternateName = default;
+            Core.Optional<ServiceBusDisasterRecoveryRole> role = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new ServiceBusDisasterRecoveryData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(pendingReplicationOperationsCount), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(location));
+            return new ServiceBusDisasterRecoveryData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(pendingReplicationOperationsCount), partnerNamespace.Value, alternateName.Value, Core.Optional.ToNullable(role), Core.Optional.ToNullable(location));
         }
     }
 }

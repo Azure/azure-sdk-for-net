@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of SubscriptionData. </summary>
         internal SubscriptionData()
         {
-            ManagedByTenants = new ChangeTrackingList<ManagedByTenant>();
-            Tags = new ChangeTrackingDictionary<string, string>();
+            ManagedByTenants = new Core.ChangeTrackingList<ManagedByTenant>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of SubscriptionData. </summary>

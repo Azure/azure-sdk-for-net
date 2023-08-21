@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class JobTarget : IUtf8JsonSerializable
+    public partial class JobTarget : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MembershipType))
+            if (Core.Optional.IsDefined(MembershipType))
             {
                 writer.WritePropertyName("membershipType"u8);
                 writer.WriteStringValue(MembershipType.Value.ToSerialString());
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TargetType.ToString());
-            if (Optional.IsDefined(ServerName))
+            if (Core.Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (Optional.IsDefined(DatabaseName))
+            if (Core.Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsDefined(ElasticPoolName))
+            if (Core.Optional.IsDefined(ElasticPoolName))
             {
                 writer.WritePropertyName("elasticPoolName"u8);
                 writer.WriteStringValue(ElasticPoolName);
             }
-            if (Optional.IsDefined(ShardMapName))
+            if (Core.Optional.IsDefined(ShardMapName))
             {
                 writer.WritePropertyName("shardMapName"u8);
                 writer.WriteStringValue(ShardMapName);
             }
-            if (Optional.IsDefined(RefreshCredential))
+            if (Core.Optional.IsDefined(RefreshCredential))
             {
                 writer.WritePropertyName("refreshCredential"u8);
                 writer.WriteStringValue(RefreshCredential);
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<JobTargetGroupMembershipType> membershipType = default;
+            Core.Optional<JobTargetGroupMembershipType> membershipType = default;
             JobTargetType type = default;
-            Optional<string> serverName = default;
-            Optional<string> databaseName = default;
-            Optional<string> elasticPoolName = default;
-            Optional<string> shardMapName = default;
-            Optional<string> refreshCredential = default;
+            Core.Optional<string> serverName = default;
+            Core.Optional<string> databaseName = default;
+            Core.Optional<string> elasticPoolName = default;
+            Core.Optional<string> shardMapName = default;
+            Core.Optional<string> refreshCredential = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("membershipType"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new JobTarget(Optional.ToNullable(membershipType), type, serverName.Value, databaseName.Value, elasticPoolName.Value, shardMapName.Value, refreshCredential.Value);
+            return new JobTarget(Core.Optional.ToNullable(membershipType), type, serverName.Value, databaseName.Value, elasticPoolName.Value, shardMapName.Value, refreshCredential.Value);
         }
     }
 }

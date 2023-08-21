@@ -13,9 +13,9 @@ using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
 {
-    public partial class SignalRCustomDomainData : IUtf8JsonSerializable
+    public partial class SignalRCustomDomainData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.SignalR
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SignalRProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<SignalRProvisioningState> provisioningState = default;
             string domainName = default;
             WritableSubResource customCertificate = default;
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SignalR
                     continue;
                 }
             }
-            return new SignalRCustomDomainData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), domainName, customCertificate);
+            return new SignalRCustomDomainData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), domainName, customCertificate);
         }
     }
 }

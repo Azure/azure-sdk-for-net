@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstanceEndpointDependency. </summary>
         internal ManagedInstanceEndpointDependency()
         {
-            EndpointDetails = new ChangeTrackingList<ManagedInstanceEndpointDetail>();
+            EndpointDetails = new Core.ChangeTrackingList<ManagedInstanceEndpointDetail>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceEndpointDependency. </summary>

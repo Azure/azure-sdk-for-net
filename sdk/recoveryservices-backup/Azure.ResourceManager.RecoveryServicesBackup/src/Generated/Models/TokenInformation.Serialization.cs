@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> token = default;
-            Optional<long> expiryTimeInUtcTicks = default;
-            Optional<string> securityPin = default;
+            Core.Optional<string> token = default;
+            Core.Optional<long> expiryTimeInUtcTicks = default;
+            Core.Optional<string> securityPin = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("token"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new TokenInformation(token.Value, Optional.ToNullable(expiryTimeInUtcTicks), securityPin.Value);
+            return new TokenInformation(token.Value, Core.Optional.ToNullable(expiryTimeInUtcTicks), securityPin.Value);
         }
     }
 }

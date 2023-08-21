@@ -13,29 +13,29 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityAssessmentMetadataData : IUtf8JsonSerializable
+    public partial class SecurityAssessmentMetadataData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(RemediationDescription))
+            if (Core.Optional.IsDefined(RemediationDescription))
             {
                 writer.WritePropertyName("remediationDescription"u8);
                 writer.WriteStringValue(RemediationDescription);
             }
-            if (Optional.IsCollectionDefined(Categories))
+            if (Core.Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -45,22 +45,22 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Severity))
+            if (Core.Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(UserImpact))
+            if (Core.Optional.IsDefined(UserImpact))
             {
                 writer.WritePropertyName("userImpact"u8);
                 writer.WriteStringValue(UserImpact.Value.ToString());
             }
-            if (Optional.IsDefined(ImplementationEffort))
+            if (Core.Optional.IsDefined(ImplementationEffort))
             {
                 writer.WritePropertyName("implementationEffort"u8);
                 writer.WriteStringValue(ImplementationEffort.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Threats))
+            if (Core.Optional.IsCollectionDefined(Threats))
             {
                 writer.WritePropertyName("threats"u8);
                 writer.WriteStartArray();
@@ -70,32 +70,32 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsPreview))
+            if (Core.Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("preview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            if (Optional.IsDefined(AssessmentType))
+            if (Core.Optional.IsDefined(AssessmentType))
             {
                 writer.WritePropertyName("assessmentType"u8);
                 writer.WriteStringValue(AssessmentType.Value.ToString());
             }
-            if (Optional.IsDefined(PartnerData))
+            if (Core.Optional.IsDefined(PartnerData))
             {
                 writer.WritePropertyName("partnerData"u8);
                 writer.WriteObjectValue(PartnerData);
             }
-            if (Optional.IsDefined(PublishDates))
+            if (Core.Optional.IsDefined(PublishDates))
             {
                 writer.WritePropertyName("publishDates"u8);
                 writer.WriteObjectValue(PublishDates);
             }
-            if (Optional.IsDefined(PlannedDeprecationDate))
+            if (Core.Optional.IsDefined(PlannedDeprecationDate))
             {
                 writer.WritePropertyName("plannedDeprecationDate"u8);
                 writer.WriteStringValue(PlannedDeprecationDate);
             }
-            if (Optional.IsCollectionDefined(Tactics))
+            if (Core.Optional.IsCollectionDefined(Tactics))
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Techniques))
+            if (Core.Optional.IsCollectionDefined(Techniques))
             {
                 writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();

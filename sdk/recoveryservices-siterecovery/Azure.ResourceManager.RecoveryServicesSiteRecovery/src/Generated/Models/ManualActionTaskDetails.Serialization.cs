@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> instructions = default;
-            Optional<string> observation = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> instructions = default;
+            Core.Optional<string> observation = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<SyncGroupLogType> type = default;
-            Optional<string> source = default;
-            Optional<string> details = default;
-            Optional<Guid> tracingId = default;
-            Optional<string> operationStatus = default;
+            Core.Optional<DateTimeOffset> timestamp = default;
+            Core.Optional<SyncGroupLogType> type = default;
+            Core.Optional<string> source = default;
+            Core.Optional<string> details = default;
+            Core.Optional<Guid> tracingId = default;
+            Core.Optional<string> operationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SyncGroupLogProperties(Optional.ToNullable(timestamp), Optional.ToNullable(type), source.Value, details.Value, Optional.ToNullable(tracingId), operationStatus.Value);
+            return new SyncGroupLogProperties(Core.Optional.ToNullable(timestamp), Core.Optional.ToNullable(type), source.Value, details.Value, Core.Optional.ToNullable(tracingId), operationStatus.Value);
         }
     }
 }

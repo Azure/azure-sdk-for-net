@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SignalRSku>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SignalRSku>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     continue;
                 }
             }
-            return new SignalRSkuListResult(Optional.ToList(value), nextLink.Value);
+            return new SignalRSkuListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

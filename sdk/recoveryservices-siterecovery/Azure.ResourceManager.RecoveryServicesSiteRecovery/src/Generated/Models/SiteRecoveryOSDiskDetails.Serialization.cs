@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> osVhdId = default;
-            Optional<string> osType = default;
-            Optional<string> vhdName = default;
+            Core.Optional<string> osVhdId = default;
+            Core.Optional<string> osType = default;
+            Core.Optional<string> vhdName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osVhdId"u8))

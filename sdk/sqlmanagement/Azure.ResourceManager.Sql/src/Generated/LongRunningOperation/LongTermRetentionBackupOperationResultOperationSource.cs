@@ -14,15 +14,15 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class LongTermRetentionBackupOperationResultOperationSource : IOperationSource<LongTermRetentionBackupOperationResult>
+    internal class LongTermRetentionBackupOperationResultOperationSource : Core.IOperationSource<LongTermRetentionBackupOperationResult>
     {
-        LongTermRetentionBackupOperationResult IOperationSource<LongTermRetentionBackupOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        LongTermRetentionBackupOperationResult Core.IOperationSource<LongTermRetentionBackupOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return LongTermRetentionBackupOperationResult.DeserializeLongTermRetentionBackupOperationResult(document.RootElement);
         }
 
-        async ValueTask<LongTermRetentionBackupOperationResult> IOperationSource<LongTermRetentionBackupOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<LongTermRetentionBackupOperationResult> Core.IOperationSource<LongTermRetentionBackupOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return LongTermRetentionBackupOperationResult.DeserializeLongTermRetentionBackupOperationResult(document.RootElement);

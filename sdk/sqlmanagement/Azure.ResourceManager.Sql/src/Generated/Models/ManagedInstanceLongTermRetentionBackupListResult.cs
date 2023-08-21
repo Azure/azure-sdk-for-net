@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionBackupListResult. </summary>
         internal ManagedInstanceLongTermRetentionBackupListResult()
         {
-            Value = new ChangeTrackingList<ManagedInstanceLongTermRetentionBackupData>();
+            Value = new Core.ChangeTrackingList<ManagedInstanceLongTermRetentionBackupData>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionBackupListResult. </summary>

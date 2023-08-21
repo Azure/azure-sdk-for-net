@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AffectedMoverResourceInfo>> moveResources = default;
+            Core.Optional<IReadOnlyList<AffectedMoverResourceInfo>> moveResources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("moveResources"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoveErrorInfo(Optional.ToList(moveResources));
+            return new MoveErrorInfo(Core.Optional.ToList(moveResources));
         }
     }
 }

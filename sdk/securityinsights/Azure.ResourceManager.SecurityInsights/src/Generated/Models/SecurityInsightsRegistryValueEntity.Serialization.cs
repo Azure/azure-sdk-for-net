@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsRegistryValueEntity : IUtf8JsonSerializable
+    public partial class SecurityInsightsRegistryValueEntity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<string> keyEntityId = default;
-            Optional<string> valueData = default;
-            Optional<string> valueName = default;
-            Optional<SecurityInsightsRegistryValueKind> valueType = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<string> keyEntityId = default;
+            Core.Optional<string> valueData = default;
+            Core.Optional<string> valueName = default;
+            Core.Optional<SecurityInsightsRegistryValueKind> valueType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsRegistryValueEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, keyEntityId.Value, valueData.Value, valueName.Value, Optional.ToNullable(valueType));
+            return new SecurityInsightsRegistryValueEntity(id, name, type, systemData.Value, kind, Core.Optional.ToDictionary(additionalData), friendlyName.Value, keyEntityId.Value, valueData.Value, valueName.Value, Core.Optional.ToNullable(valueType));
         }
     }
 }

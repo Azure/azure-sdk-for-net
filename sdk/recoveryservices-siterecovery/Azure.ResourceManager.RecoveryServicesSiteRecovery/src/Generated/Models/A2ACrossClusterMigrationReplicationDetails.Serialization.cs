@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> fabricObjectId = default;
-            Optional<AzureLocation> primaryFabricLocation = default;
-            Optional<string> osType = default;
-            Optional<string> vmProtectionState = default;
-            Optional<string> vmProtectionStateDescription = default;
-            Optional<string> lifecycleId = default;
+            Core.Optional<ResourceIdentifier> fabricObjectId = default;
+            Core.Optional<AzureLocation> primaryFabricLocation = default;
+            Core.Optional<string> osType = default;
+            Core.Optional<string> vmProtectionState = default;
+            Core.Optional<string> vmProtectionStateDescription = default;
+            Core.Optional<string> lifecycleId = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new A2ACrossClusterMigrationReplicationDetails(instanceType, fabricObjectId.Value, Optional.ToNullable(primaryFabricLocation), osType.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, lifecycleId.Value);
+            return new A2ACrossClusterMigrationReplicationDetails(instanceType, fabricObjectId.Value, Core.Optional.ToNullable(primaryFabricLocation), osType.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, lifecycleId.Value);
         }
     }
 }

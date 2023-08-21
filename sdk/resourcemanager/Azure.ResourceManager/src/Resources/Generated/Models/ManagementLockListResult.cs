@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ManagementLockListResult. </summary>
         internal ManagementLockListResult()
         {
-            Value = new ChangeTrackingList<ManagementLockData>();
+            Value = new Core.ChangeTrackingList<ManagementLockData>();
         }
 
         /// <summary> Initializes a new instance of ManagementLockListResult. </summary>

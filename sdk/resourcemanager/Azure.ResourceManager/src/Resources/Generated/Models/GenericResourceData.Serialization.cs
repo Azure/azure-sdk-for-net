@@ -14,17 +14,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class GenericResourceData : IUtf8JsonSerializable
+    public partial class GenericResourceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Plan))
+            if (Core.Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
             }
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
@@ -33,32 +33,32 @@ namespace Azure.ResourceManager.Resources
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Properties.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(ManagedBy))
+            if (Core.Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(ExtendedLocation))
+            if (Core.Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -80,22 +80,22 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<ArmPlan> plan = default;
-            Optional<BinaryData> properties = default;
-            Optional<string> kind = default;
-            Optional<string> managedBy = default;
-            Optional<ResourcesSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> changedTime = default;
-            Optional<string> provisioningState = default;
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ArmPlan> plan = default;
+            Core.Optional<BinaryData> properties = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<string> managedBy = default;
+            Core.Optional<ResourcesSku> sku = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<DateTimeOffset> createdTime = default;
+            Core.Optional<DateTimeOffset> changedTime = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<ExtendedLocation> extendedLocation = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("plan"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new GenericResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, plan, properties.Value, kind.Value, managedBy.Value, sku.Value, identity, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), provisioningState.Value);
+            return new GenericResourceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, plan, properties.Value, kind.Value, managedBy.Value, sku.Value, identity, Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(changedTime), provisioningState.Value);
         }
     }
 }

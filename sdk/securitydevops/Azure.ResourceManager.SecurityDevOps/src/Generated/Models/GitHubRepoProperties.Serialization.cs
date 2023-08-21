@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
-    public partial class GitHubRepoProperties : IUtf8JsonSerializable
+    public partial class GitHubRepoProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(AccountId))
+            if (Core.Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteNumberValue(AccountId.Value);
             }
-            if (Optional.IsDefined(RepoUri))
+            if (Core.Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(OwnerName))
+            if (Core.Optional.IsDefined(OwnerName))
             {
                 writer.WritePropertyName("ownerName"u8);
                 writer.WriteStringValue(OwnerName);
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<long> accountId = default;
-            Optional<Uri> repoUrl = default;
-            Optional<string> ownerName = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<long> accountId = default;
+            Core.Optional<Uri> repoUrl = default;
+            Core.Optional<string> ownerName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     continue;
                 }
             }
-            return new GitHubRepoProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(accountId), repoUrl.Value, ownerName.Value);
+            return new GitHubRepoProperties(Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(accountId), repoUrl.Value, ownerName.Value);
         }
     }
 }

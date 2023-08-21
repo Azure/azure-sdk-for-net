@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class MdeOnboarding : IUtf8JsonSerializable
+    public partial class MdeOnboarding : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OnboardingPackageWindows))
+            if (Core.Optional.IsDefined(OnboardingPackageWindows))
             {
                 writer.WritePropertyName("onboardingPackageWindows"u8);
                 writer.WriteBase64StringValue(OnboardingPackageWindows, "D");
             }
-            if (Optional.IsDefined(OnboardingPackageLinux))
+            if (Core.Optional.IsDefined(OnboardingPackageLinux))
             {
                 writer.WritePropertyName("onboardingPackageLinux"u8);
                 writer.WriteBase64StringValue(OnboardingPackageLinux, "D");
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<byte[]> onboardingPackageWindows = default;
-            Optional<byte[]> onboardingPackageLinux = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<byte[]> onboardingPackageWindows = default;
+            Core.Optional<byte[]> onboardingPackageLinux = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

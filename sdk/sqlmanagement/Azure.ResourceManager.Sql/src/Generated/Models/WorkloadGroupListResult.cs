@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of WorkloadGroupListResult. </summary>
         internal WorkloadGroupListResult()
         {
-            Value = new ChangeTrackingList<WorkloadGroupData>();
+            Value = new Core.ChangeTrackingList<WorkloadGroupData>();
         }
 
         /// <summary> Initializes a new instance of WorkloadGroupListResult. </summary>

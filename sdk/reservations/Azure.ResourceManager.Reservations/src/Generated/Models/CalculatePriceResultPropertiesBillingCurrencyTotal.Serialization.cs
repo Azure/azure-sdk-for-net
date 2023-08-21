@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> currencyCode = default;
-            Optional<double> amount = default;
+            Core.Optional<string> currencyCode = default;
+            Core.Optional<double> amount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currencyCode"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new CalculatePriceResultPropertiesBillingCurrencyTotal(currencyCode.Value, Optional.ToNullable(amount));
+            return new CalculatePriceResultPropertiesBillingCurrencyTotal(currencyCode.Value, Core.Optional.ToNullable(amount));
         }
     }
 }

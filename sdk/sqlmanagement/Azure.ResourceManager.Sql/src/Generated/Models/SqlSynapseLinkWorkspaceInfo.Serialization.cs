@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SqlSynapseLinkWorkspaceInfo : IUtf8JsonSerializable
+    public partial class SqlSynapseLinkWorkspaceInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WorkspaceId))
+            if (Core.Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
-            if (Optional.IsDefined(LinkConnectionName))
+            if (Core.Optional.IsDefined(LinkConnectionName))
             {
                 writer.WritePropertyName("linkConnectionName"u8);
                 writer.WriteStringValue(LinkConnectionName);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> workspaceId = default;
-            Optional<string> linkConnectionName = default;
+            Core.Optional<ResourceIdentifier> workspaceId = default;
+            Core.Optional<string> linkConnectionName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspaceId"u8))

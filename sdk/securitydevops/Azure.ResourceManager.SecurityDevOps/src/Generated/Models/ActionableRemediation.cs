@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <summary> Initializes a new instance of ActionableRemediation. </summary>
         public ActionableRemediation()
         {
-            SeverityLevels = new ChangeTrackingList<string>();
-            Categories = new ChangeTrackingList<ActionableRemediationRuleCategory>();
+            SeverityLevels = new Core.ChangeTrackingList<string>();
+            Categories = new Core.ChangeTrackingList<ActionableRemediationRuleCategory>();
         }
 
         /// <summary> Initializes a new instance of ActionableRemediation. </summary>

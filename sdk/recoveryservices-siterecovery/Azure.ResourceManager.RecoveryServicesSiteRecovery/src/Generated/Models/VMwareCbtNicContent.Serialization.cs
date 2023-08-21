@@ -10,41 +10,41 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareCbtNicContent : IUtf8JsonSerializable
+    public partial class VMwareCbtNicContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("nicId"u8);
             writer.WriteStringValue(NicId);
             writer.WritePropertyName("isPrimaryNic"u8);
             writer.WriteStringValue(IsPrimaryNic);
-            if (Optional.IsDefined(TargetSubnetName))
+            if (Core.Optional.IsDefined(TargetSubnetName))
             {
                 writer.WritePropertyName("targetSubnetName"u8);
                 writer.WriteStringValue(TargetSubnetName);
             }
-            if (Optional.IsDefined(TargetStaticIPAddress))
+            if (Core.Optional.IsDefined(TargetStaticIPAddress))
             {
                 writer.WritePropertyName("targetStaticIPAddress"u8);
                 writer.WriteStringValue(TargetStaticIPAddress.ToString());
             }
-            if (Optional.IsDefined(IsSelectedForMigration))
+            if (Core.Optional.IsDefined(IsSelectedForMigration))
             {
                 writer.WritePropertyName("isSelectedForMigration"u8);
                 writer.WriteStringValue(IsSelectedForMigration);
             }
-            if (Optional.IsDefined(TargetNicName))
+            if (Core.Optional.IsDefined(TargetNicName))
             {
                 writer.WritePropertyName("targetNicName"u8);
                 writer.WriteStringValue(TargetNicName);
             }
-            if (Optional.IsDefined(TestSubnetName))
+            if (Core.Optional.IsDefined(TestSubnetName))
             {
                 writer.WritePropertyName("testSubnetName"u8);
                 writer.WriteStringValue(TestSubnetName);
             }
-            if (Optional.IsDefined(TestStaticIPAddress))
+            if (Core.Optional.IsDefined(TestStaticIPAddress))
             {
                 writer.WritePropertyName("testStaticIPAddress"u8);
                 writer.WriteStringValue(TestStaticIPAddress.ToString());

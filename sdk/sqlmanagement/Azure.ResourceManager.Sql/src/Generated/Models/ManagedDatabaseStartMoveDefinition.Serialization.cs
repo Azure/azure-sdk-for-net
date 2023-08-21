@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedDatabaseStartMoveDefinition : IUtf8JsonSerializable
+    public partial class ManagedDatabaseStartMoveDefinition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("destinationManagedDatabaseId"u8);
             writer.WriteStringValue(DestinationManagedDatabaseId);
-            if (Optional.IsDefined(OperationMode))
+            if (Core.Optional.IsDefined(OperationMode))
             {
                 writer.WritePropertyName("operationMode"u8);
                 writer.WriteStringValue(OperationMode.Value.ToString());

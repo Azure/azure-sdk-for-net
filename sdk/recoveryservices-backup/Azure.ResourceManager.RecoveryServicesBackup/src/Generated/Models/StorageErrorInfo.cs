@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of StorageErrorInfo. </summary>
         public StorageErrorInfo()
         {
-            Recommendations = new ChangeTrackingList<string>();
+            Recommendations = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StorageErrorInfo. </summary>

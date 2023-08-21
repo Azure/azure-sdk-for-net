@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sphere
         /// <summary> Initializes a new instance of SphereDeploymentData. </summary>
         public SphereDeploymentData()
         {
-            DeployedImages = new ChangeTrackingList<SphereImageData>();
+            DeployedImages = new Core.ChangeTrackingList<SphereImageData>();
         }
 
         /// <summary> Initializes a new instance of SphereDeploymentData. </summary>

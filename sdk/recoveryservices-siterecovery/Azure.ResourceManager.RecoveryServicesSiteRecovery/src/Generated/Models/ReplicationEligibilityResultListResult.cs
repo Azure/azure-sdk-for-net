@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ReplicationEligibilityResultListResult. </summary>
         internal ReplicationEligibilityResultListResult()
         {
-            Value = new ChangeTrackingList<ReplicationEligibilityResultData>();
+            Value = new Core.ChangeTrackingList<ReplicationEligibilityResultData>();
         }
 
         /// <summary> Initializes a new instance of ReplicationEligibilityResultListResult. </summary>

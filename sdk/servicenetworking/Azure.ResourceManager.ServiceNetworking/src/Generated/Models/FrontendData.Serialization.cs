@@ -13,12 +13,12 @@ using Azure.ResourceManager.ServiceNetworking.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    public partial class FrontendData : IUtf8JsonSerializable
+    public partial class FrontendData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> fqdn = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> fqdn = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                     continue;
                 }
             }
-            return new FrontendData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, fqdn.Value, Optional.ToNullable(provisioningState));
+            return new FrontendData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, fqdn.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

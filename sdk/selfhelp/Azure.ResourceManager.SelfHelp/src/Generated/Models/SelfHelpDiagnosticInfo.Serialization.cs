@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> solutionId = default;
-            Optional<SelfHelpDiagnosticStatus> status = default;
-            Optional<IReadOnlyList<SelfHelpDiagnosticInsight>> insights = default;
-            Optional<SelfHelpError> error = default;
+            Core.Optional<string> solutionId = default;
+            Core.Optional<SelfHelpDiagnosticStatus> status = default;
+            Core.Optional<IReadOnlyList<SelfHelpDiagnosticInsight>> insights = default;
+            Core.Optional<SelfHelpError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("solutionId"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new SelfHelpDiagnosticInfo(solutionId.Value, Optional.ToNullable(status), Optional.ToList(insights), error.Value);
+            return new SelfHelpDiagnosticInfo(solutionId.Value, Core.Optional.ToNullable(status), Core.Optional.ToList(insights), error.Value);
         }
     }
 }

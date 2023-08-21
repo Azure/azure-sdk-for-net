@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> protectedItemName = default;
-            Optional<ResourceIdentifier> fabricObjectId = default;
-            Optional<string> fabricName = default;
-            Optional<AzureLocation> fabricLocation = default;
-            Optional<string> remoteFabricName = default;
-            Optional<AzureLocation> remoteFabricLocation = default;
+            Core.Optional<string> protectedItemName = default;
+            Core.Optional<ResourceIdentifier> fabricObjectId = default;
+            Core.Optional<string> fabricName = default;
+            Core.Optional<AzureLocation> fabricLocation = default;
+            Core.Optional<string> remoteFabricName = default;
+            Core.Optional<AzureLocation> remoteFabricLocation = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new A2AEventDetails(instanceType, protectedItemName.Value, fabricObjectId.Value, fabricName.Value, Optional.ToNullable(fabricLocation), remoteFabricName.Value, Optional.ToNullable(remoteFabricLocation));
+            return new A2AEventDetails(instanceType, protectedItemName.Value, fabricObjectId.Value, fabricName.Value, Core.Optional.ToNullable(fabricLocation), remoteFabricName.Value, Core.Optional.ToNullable(remoteFabricLocation));
         }
     }
 }

@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vmName = default;
-            Optional<string> cloudName = default;
-            Optional<IReadOnlyList<string>> details = default;
-            Optional<IReadOnlyList<string>> errorIds = default;
+            Core.Optional<string> vmName = default;
+            Core.Optional<string> cloudName = default;
+            Core.Optional<IReadOnlyList<string>> details = default;
+            Core.Optional<IReadOnlyList<string>> errorIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmName"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InconsistentVmDetails(vmName.Value, cloudName.Value, Optional.ToList(details), Optional.ToList(errorIds));
+            return new InconsistentVmDetails(vmName.Value, cloudName.Value, Core.Optional.ToList(details), Core.Optional.ToList(errorIds));
         }
     }
 }

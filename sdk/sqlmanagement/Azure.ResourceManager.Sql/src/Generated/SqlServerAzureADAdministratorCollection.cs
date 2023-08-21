@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerAzureADAdministratorResource>(new SqlServerAzureADAdministratorOperationSource(Client), _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics, Pipeline, _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerAzureADAdministratorResource>(new SqlServerAzureADAdministratorOperationSource(Client), _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics, Pipeline, _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerAzureADAdministratorResource>(new SqlServerAzureADAdministratorOperationSource(Client), _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics, Pipeline, _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerAzureADAdministratorResource>(new SqlServerAzureADAdministratorOperationSource(Client), _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics, Pipeline, _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerAzureADAdministratorResource(Client, SqlServerAzureADAdministratorData.DeserializeSqlServerAzureADAdministratorData(e)), _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics, Pipeline, "SqlServerAzureADAdministratorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerAzureADAdministratorResource(Client, SqlServerAzureADAdministratorData.DeserializeSqlServerAzureADAdministratorData(e)), _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics, Pipeline, "SqlServerAzureADAdministratorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerAzureADAdministratorResource(Client, SqlServerAzureADAdministratorData.DeserializeSqlServerAzureADAdministratorData(e)), _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics, Pipeline, "SqlServerAzureADAdministratorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerAzureADAdministratorResource(Client, SqlServerAzureADAdministratorData.DeserializeSqlServerAzureADAdministratorData(e)), _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics, Pipeline, "SqlServerAzureADAdministratorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

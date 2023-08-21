@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class CollectionAdminUpdateContent : IUtf8JsonSerializable
+    public partial class CollectionAdminUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdminObjectId))
+            if (Core.Optional.IsDefined(AdminObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(AdminObjectId);

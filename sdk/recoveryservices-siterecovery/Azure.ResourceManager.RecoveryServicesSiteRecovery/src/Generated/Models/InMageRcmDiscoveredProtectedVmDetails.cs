@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageRcmDiscoveredProtectedVmDetails. </summary>
         internal InMageRcmDiscoveredProtectedVmDetails()
         {
-            Datastores = new ChangeTrackingList<string>();
-            IPAddresses = new ChangeTrackingList<IPAddress>();
+            Datastores = new Core.ChangeTrackingList<string>();
+            IPAddresses = new Core.ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of InMageRcmDiscoveredProtectedVmDetails. </summary>

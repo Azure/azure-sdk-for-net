@@ -11,42 +11,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class RecoveryServicesVaultProperties : IUtf8JsonSerializable
+    public partial class RecoveryServicesVaultProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UpgradeDetails))
+            if (Core.Optional.IsDefined(UpgradeDetails))
             {
                 writer.WritePropertyName("upgradeDetails"u8);
                 writer.WriteObjectValue(UpgradeDetails);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Core.Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(MoveDetails))
+            if (Core.Optional.IsDefined(MoveDetails))
             {
                 writer.WritePropertyName("moveDetails"u8);
                 writer.WriteObjectValue(MoveDetails);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(MonitoringSettings))
+            if (Core.Optional.IsDefined(MonitoringSettings))
             {
                 writer.WritePropertyName("monitoringSettings"u8);
                 writer.WriteObjectValue(MonitoringSettings);
             }
-            if (Optional.IsDefined(RedundancySettings))
+            if (Core.Optional.IsDefined(RedundancySettings))
             {
                 writer.WritePropertyName("redundancySettings"u8);
                 writer.WriteObjectValue(RedundancySettings);
             }
-            if (Optional.IsDefined(SecuritySettings))
+            if (Core.Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings);
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<string> provisioningState = default;
-            Optional<VaultUpgradeDetails> upgradeDetails = default;
-            Optional<IReadOnlyList<RecoveryServicesPrivateEndpointConnectionVaultProperties>> privateEndpointConnections = default;
-            Optional<VaultPrivateEndpointState> privateEndpointStateForBackup = default;
-            Optional<VaultPrivateEndpointState> privateEndpointStateForSiteRecovery = default;
-            Optional<VaultPropertiesEncryption> encryption = default;
-            Optional<VaultPropertiesMoveDetails> moveDetails = default;
-            Optional<ResourceMoveState> moveState = default;
-            Optional<BackupStorageVersion> backupStorageVersion = default;
-            Optional<VaultPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<VaultMonitoringSettings> monitoringSettings = default;
-            Optional<VaultPropertiesRedundancySettings> redundancySettings = default;
-            Optional<SecuritySettings> securitySettings = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<VaultUpgradeDetails> upgradeDetails = default;
+            Core.Optional<IReadOnlyList<RecoveryServicesPrivateEndpointConnectionVaultProperties>> privateEndpointConnections = default;
+            Core.Optional<VaultPrivateEndpointState> privateEndpointStateForBackup = default;
+            Core.Optional<VaultPrivateEndpointState> privateEndpointStateForSiteRecovery = default;
+            Core.Optional<VaultPropertiesEncryption> encryption = default;
+            Core.Optional<VaultPropertiesMoveDetails> moveDetails = default;
+            Core.Optional<ResourceMoveState> moveState = default;
+            Core.Optional<BackupStorageVersion> backupStorageVersion = default;
+            Core.Optional<VaultPublicNetworkAccess> publicNetworkAccess = default;
+            Core.Optional<VaultMonitoringSettings> monitoringSettings = default;
+            Core.Optional<VaultPropertiesRedundancySettings> redundancySettings = default;
+            Core.Optional<SecuritySettings> securitySettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new RecoveryServicesVaultProperties(provisioningState.Value, upgradeDetails.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(privateEndpointStateForBackup), Optional.ToNullable(privateEndpointStateForSiteRecovery), encryption.Value, moveDetails.Value, Optional.ToNullable(moveState), Optional.ToNullable(backupStorageVersion), Optional.ToNullable(publicNetworkAccess), monitoringSettings.Value, redundancySettings.Value, securitySettings.Value);
+            return new RecoveryServicesVaultProperties(provisioningState.Value, upgradeDetails.Value, Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(privateEndpointStateForBackup), Core.Optional.ToNullable(privateEndpointStateForSiteRecovery), encryption.Value, moveDetails.Value, Core.Optional.ToNullable(moveState), Core.Optional.ToNullable(backupStorageVersion), Core.Optional.ToNullable(publicNetworkAccess), monitoringSettings.Value, redundancySettings.Value, securitySettings.Value);
         }
     }
 }

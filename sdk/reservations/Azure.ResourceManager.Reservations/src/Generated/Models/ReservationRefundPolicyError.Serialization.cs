@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationErrorResponseCode> code = default;
-            Optional<string> message = default;
+            Core.Optional<ReservationErrorResponseCode> code = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ReservationRefundPolicyError(Optional.ToNullable(code), message.Value);
+            return new ReservationRefundPolicyError(Core.Optional.ToNullable(code), message.Value);
         }
     }
 }

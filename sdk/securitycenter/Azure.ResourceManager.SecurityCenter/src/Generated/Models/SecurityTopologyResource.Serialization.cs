@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityTopologyResource : IUtf8JsonSerializable
+    public partial class SecurityTopologyResource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> calculatedDateTime = default;
-            Optional<IReadOnlyList<TopologySingleResource>> topologyResources = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> calculatedDateTime = default;
+            Core.Optional<IReadOnlyList<TopologySingleResource>> topologyResources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecurityTopologyResource(id, name, type, systemData.Value, Optional.ToNullable(calculatedDateTime), Optional.ToList(topologyResources), Optional.ToNullable(location));
+            return new SecurityTopologyResource(id, name, type, systemData.Value, Core.Optional.ToNullable(calculatedDateTime), Core.Optional.ToList(topologyResources), Core.Optional.ToNullable(location));
         }
     }
 }

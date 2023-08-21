@@ -20,26 +20,26 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<ResourceHealthAvailabilityStateValue> availabilityState = default;
-            Optional<string> title = default;
-            Optional<string> summary = default;
-            Optional<string> detailedStatus = default;
-            Optional<string> reasonType = default;
-            Optional<string> context = default;
-            Optional<string> category = default;
-            Optional<string> articleId = default;
-            Optional<DateTimeOffset> rootCauseAttributionTime = default;
-            Optional<string> healthEventType = default;
-            Optional<string> healthEventCause = default;
-            Optional<string> healthEventCategory = default;
-            Optional<string> healthEventId = default;
-            Optional<DateTimeOffset> resolutionETA = default;
-            Optional<DateTimeOffset> occuredTime = default;
-            Optional<ReasonChronicityType> reasonChronicity = default;
-            Optional<DateTimeOffset> reportedTime = default;
-            Optional<ResourceHealthAvailabilityStateRecentlyResolved> recentlyResolved = default;
-            Optional<IReadOnlyList<ResourceHealthRecommendedAction>> recommendedActions = default;
-            Optional<IReadOnlyList<ServiceImpactingEvent>> serviceImpactingEvents = default;
+            Core.Optional<ResourceHealthAvailabilityStateValue> availabilityState = default;
+            Core.Optional<string> title = default;
+            Core.Optional<string> summary = default;
+            Core.Optional<string> detailedStatus = default;
+            Core.Optional<string> reasonType = default;
+            Core.Optional<string> context = default;
+            Core.Optional<string> category = default;
+            Core.Optional<string> articleId = default;
+            Core.Optional<DateTimeOffset> rootCauseAttributionTime = default;
+            Core.Optional<string> healthEventType = default;
+            Core.Optional<string> healthEventCause = default;
+            Core.Optional<string> healthEventCategory = default;
+            Core.Optional<string> healthEventId = default;
+            Core.Optional<DateTimeOffset> resolutionETA = default;
+            Core.Optional<DateTimeOffset> occuredTime = default;
+            Core.Optional<ReasonChronicityType> reasonChronicity = default;
+            Core.Optional<DateTimeOffset> reportedTime = default;
+            Core.Optional<ResourceHealthAvailabilityStateRecentlyResolved> recentlyResolved = default;
+            Core.Optional<IReadOnlyList<ResourceHealthRecommendedAction>> recommendedActions = default;
+            Core.Optional<IReadOnlyList<ServiceImpactingEvent>> serviceImpactingEvents = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availabilityState"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new ResourceHealthAvailabilityStatusProperties(Optional.ToNullable(availabilityState), title.Value, summary.Value, detailedStatus.Value, reasonType.Value, context.Value, category.Value, articleId.Value, Optional.ToNullable(rootCauseAttributionTime), healthEventType.Value, healthEventCause.Value, healthEventCategory.Value, healthEventId.Value, Optional.ToNullable(resolutionETA), Optional.ToNullable(occuredTime), Optional.ToNullable(reasonChronicity), Optional.ToNullable(reportedTime), recentlyResolved.Value, Optional.ToList(recommendedActions), Optional.ToList(serviceImpactingEvents));
+            return new ResourceHealthAvailabilityStatusProperties(Core.Optional.ToNullable(availabilityState), title.Value, summary.Value, detailedStatus.Value, reasonType.Value, context.Value, category.Value, articleId.Value, Core.Optional.ToNullable(rootCauseAttributionTime), healthEventType.Value, healthEventCause.Value, healthEventCategory.Value, healthEventId.Value, Core.Optional.ToNullable(resolutionETA), Core.Optional.ToNullable(occuredTime), Core.Optional.ToNullable(reasonChronicity), Core.Optional.ToNullable(reportedTime), recentlyResolved.Value, Core.Optional.ToList(recommendedActions), Core.Optional.ToList(serviceImpactingEvents));
         }
     }
 }

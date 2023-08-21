@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class InformationProtectionAwsOffering : IUtf8JsonSerializable
+    public partial class InformationProtectionAwsOffering : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(InformationProtection))
+            if (Core.Optional.IsDefined(InformationProtection))
             {
                 writer.WritePropertyName("informationProtection"u8);
                 writer.WriteObjectValue(InformationProtection);
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AwsInformationProtection> informationProtection = default;
+            Core.Optional<AwsInformationProtection> informationProtection = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("informationProtection"u8))

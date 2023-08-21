@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class EntityRecognitionSkill : IUtf8JsonSerializable
+    public partial class EntityRecognitionSkill : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Categories))
+            if (Core.Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultLanguageCode))
+            if (Core.Optional.IsDefined(DefaultLanguageCode))
             {
                 if (DefaultLanguageCode != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultLanguageCode");
                 }
             }
-            if (Optional.IsDefined(IncludeTypelessEntities))
+            if (Core.Optional.IsDefined(IncludeTypelessEntities))
             {
                 if (IncludeTypelessEntities != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("includeTypelessEntities");
                 }
             }
-            if (Optional.IsDefined(MinimumPrecision))
+            if (Core.Optional.IsDefined(MinimumPrecision))
             {
                 if (MinimumPrecision != null)
                 {
@@ -64,17 +64,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Context))
+            if (Core.Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -102,14 +102,14 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<EntityCategory>> categories = default;
-            Optional<EntityRecognitionSkillLanguage?> defaultLanguageCode = default;
-            Optional<bool?> includeTypelessEntities = default;
-            Optional<double?> minimumPrecision = default;
+            Core.Optional<IList<EntityCategory>> categories = default;
+            Core.Optional<EntityRecognitionSkillLanguage?> defaultLanguageCode = default;
+            Core.Optional<bool?> includeTypelessEntities = default;
+            Core.Optional<double?> minimumPrecision = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new EntityRecognitionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToList(categories), Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(includeTypelessEntities), Optional.ToNullable(minimumPrecision));
+            return new EntityRecognitionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Core.Optional.ToList(categories), Core.Optional.ToNullable(defaultLanguageCode), Core.Optional.ToNullable(includeTypelessEntities), Core.Optional.ToNullable(minimumPrecision));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ResourceListResult. </summary>
         internal ResourceListResult()
         {
-            Value = new ChangeTrackingList<GenericResourceData>();
+            Value = new Core.ChangeTrackingList<GenericResourceData>();
         }
 
         /// <summary> Initializes a new instance of ResourceListResult. </summary>

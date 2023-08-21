@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationDetailReservationRestClient.CreateListAllRequest(options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationDetailReservationRestClient.CreateListAllNextPageRequest(nextLink, options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), ReservationDetailReservationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationDetails", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), ReservationDetailReservationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationDetailReservationRestClient.CreateListAllRequest(options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationDetailReservationRestClient.CreateListAllNextPageRequest(nextLink, options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), ReservationDetailReservationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationDetails", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), ReservationDetailReservationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = await CalculateExchangeRestClient.PostAsync(content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<CalculateExchangeResult>(new CalculateExchangeResultOperationSource(), CalculateExchangeClientDiagnostics, Pipeline, CalculateExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ReservationsArmOperation<CalculateExchangeResult>(new CalculateExchangeResultOperationSource(), CalculateExchangeClientDiagnostics, Pipeline, CalculateExchangeRestClient.CreatePostRequest(content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = CalculateExchangeRestClient.Post(content, cancellationToken);
-                var operation = new ReservationsArmOperation<CalculateExchangeResult>(new CalculateExchangeResultOperationSource(), CalculateExchangeClientDiagnostics, Pipeline, CalculateExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ReservationsArmOperation<CalculateExchangeResult>(new CalculateExchangeResultOperationSource(), CalculateExchangeClientDiagnostics, Pipeline, CalculateExchangeRestClient.CreatePostRequest(content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = await ExchangeRestClient.PostAsync(content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<ExchangeResult>(new ExchangeResultOperationSource(), ExchangeClientDiagnostics, Pipeline, ExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ReservationsArmOperation<ExchangeResult>(new ExchangeResultOperationSource(), ExchangeClientDiagnostics, Pipeline, ExchangeRestClient.CreatePostRequest(content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = ExchangeRestClient.Post(content, cancellationToken);
-                var operation = new ReservationsArmOperation<ExchangeResult>(new ExchangeResultOperationSource(), ExchangeClientDiagnostics, Pipeline, ExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ReservationsArmOperation<ExchangeResult>(new ExchangeResultOperationSource(), ExchangeClientDiagnostics, Pipeline, ExchangeRestClient.CreatePostRequest(content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -10,69 +10,69 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupGenericEngine : IUtf8JsonSerializable
+    public partial class BackupGenericEngine : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (Core.Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (Core.Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Optional.IsDefined(RegistrationStatus))
+            if (Core.Optional.IsDefined(RegistrationStatus))
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (Optional.IsDefined(BackupEngineState))
+            if (Core.Optional.IsDefined(BackupEngineState))
             {
                 writer.WritePropertyName("backupEngineState"u8);
                 writer.WriteStringValue(BackupEngineState);
             }
-            if (Optional.IsDefined(HealthStatus))
+            if (Core.Optional.IsDefined(HealthStatus))
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
             writer.WritePropertyName("backupEngineType"u8);
             writer.WriteStringValue(BackupEngineType.ToString());
-            if (Optional.IsDefined(CanReRegister))
+            if (Core.Optional.IsDefined(CanReRegister))
             {
                 writer.WritePropertyName("canReRegister"u8);
                 writer.WriteBooleanValue(CanReRegister.Value);
             }
-            if (Optional.IsDefined(BackupEngineId))
+            if (Core.Optional.IsDefined(BackupEngineId))
             {
                 writer.WritePropertyName("backupEngineId"u8);
                 writer.WriteStringValue(BackupEngineId);
             }
-            if (Optional.IsDefined(DpmVersion))
+            if (Core.Optional.IsDefined(DpmVersion))
             {
                 writer.WritePropertyName("dpmVersion"u8);
                 writer.WriteStringValue(DpmVersion);
             }
-            if (Optional.IsDefined(AzureBackupAgentVersion))
+            if (Core.Optional.IsDefined(AzureBackupAgentVersion))
             {
                 writer.WritePropertyName("azureBackupAgentVersion"u8);
                 writer.WriteStringValue(AzureBackupAgentVersion);
             }
-            if (Optional.IsDefined(IsAzureBackupAgentUpgradeAvailable))
+            if (Core.Optional.IsDefined(IsAzureBackupAgentUpgradeAvailable))
             {
                 writer.WritePropertyName("isAzureBackupAgentUpgradeAvailable"u8);
                 writer.WriteBooleanValue(IsAzureBackupAgentUpgradeAvailable.Value);
             }
-            if (Optional.IsDefined(IsDpmUpgradeAvailable))
+            if (Core.Optional.IsDefined(IsDpmUpgradeAvailable))
             {
                 writer.WritePropertyName("isDpmUpgradeAvailable"u8);
                 writer.WriteBooleanValue(IsDpmUpgradeAvailable.Value);
             }
-            if (Optional.IsDefined(ExtendedInfo))
+            if (Core.Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);

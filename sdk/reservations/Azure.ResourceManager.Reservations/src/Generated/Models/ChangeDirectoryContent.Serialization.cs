@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ChangeDirectoryContent : IUtf8JsonSerializable
+    public partial class ChangeDirectoryContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DestinationTenantId))
+            if (Core.Optional.IsDefined(DestinationTenantId))
             {
                 writer.WritePropertyName("destinationTenantId"u8);
                 writer.WriteStringValue(DestinationTenantId.Value);

@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<SqlServerVersionCapability>> supportedServerVersions = default;
-            Optional<IReadOnlyList<ManagedInstanceVersionCapability>> supportedManagedInstanceVersions = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            Core.Optional<string> name = default;
+            Core.Optional<IReadOnlyList<SqlServerVersionCapability>> supportedServerVersions = default;
+            Core.Optional<IReadOnlyList<ManagedInstanceVersionCapability>> supportedManagedInstanceVersions = default;
+            Core.Optional<SqlCapabilityStatus> status = default;
+            Core.Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SqlLocationCapabilities(name.Value, Optional.ToList(supportedServerVersions), Optional.ToList(supportedManagedInstanceVersions), Optional.ToNullable(status), reason.Value);
+            return new SqlLocationCapabilities(name.Value, Core.Optional.ToList(supportedServerVersions), Core.Optional.ToList(supportedManagedInstanceVersions), Core.Optional.ToNullable(status), reason.Value);
         }
     }
 }

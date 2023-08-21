@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsDnsEntity. </summary>
         public SecurityInsightsDnsEntity()
         {
-            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            IPAddressEntityIds = new ChangeTrackingList<string>();
+            AdditionalData = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            IPAddressEntityIds = new Core.ChangeTrackingList<string>();
             Kind = SecurityInsightsEntityKind.DnsResolution;
         }
 

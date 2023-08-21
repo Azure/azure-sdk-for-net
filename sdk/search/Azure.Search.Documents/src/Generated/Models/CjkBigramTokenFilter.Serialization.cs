@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class CjkBigramTokenFilter : IUtf8JsonSerializable
+    public partial class CjkBigramTokenFilter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IgnoreScripts))
+            if (Core.Optional.IsCollectionDefined(IgnoreScripts))
             {
                 writer.WritePropertyName("ignoreScripts"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OutputUnigrams))
+            if (Core.Optional.IsDefined(OutputUnigrams))
             {
                 writer.WritePropertyName("outputUnigrams"u8);
                 writer.WriteBooleanValue(OutputUnigrams.Value);
@@ -44,8 +44,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<CjkBigramTokenFilterScripts>> ignoreScripts = default;
-            Optional<bool> outputUnigrams = default;
+            Core.Optional<IList<CjkBigramTokenFilterScripts>> ignoreScripts = default;
+            Core.Optional<bool> outputUnigrams = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -84,7 +84,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CjkBigramTokenFilter(odataType, name, Optional.ToList(ignoreScripts), Optional.ToNullable(outputUnigrams));
+            return new CjkBigramTokenFilter(odataType, name, Core.Optional.ToList(ignoreScripts), Core.Optional.ToNullable(outputUnigrams));
         }
     }
 }

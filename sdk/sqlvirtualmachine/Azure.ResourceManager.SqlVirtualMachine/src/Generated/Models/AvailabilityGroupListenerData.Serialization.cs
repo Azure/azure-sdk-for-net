@@ -13,19 +13,19 @@ using Azure.ResourceManager.SqlVirtualMachine.Models;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
-    public partial class AvailabilityGroupListenerData : IUtf8JsonSerializable
+    public partial class AvailabilityGroupListenerData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AvailabilityGroupName))
+            if (Core.Optional.IsDefined(AvailabilityGroupName))
             {
                 writer.WritePropertyName("availabilityGroupName"u8);
                 writer.WriteStringValue(AvailabilityGroupName);
             }
-            if (Optional.IsCollectionDefined(LoadBalancerConfigurations))
+            if (Core.Optional.IsCollectionDefined(LoadBalancerConfigurations))
             {
                 writer.WritePropertyName("loadBalancerConfigurations"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MultiSubnetIPConfigurations))
+            if (Core.Optional.IsCollectionDefined(MultiSubnetIPConfigurations))
             {
                 writer.WritePropertyName("multiSubnetIpConfigurations"u8);
                 writer.WriteStartArray();
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CreateDefaultAvailabilityGroupIfNotExist))
+            if (Core.Optional.IsDefined(CreateDefaultAvailabilityGroupIfNotExist))
             {
                 writer.WritePropertyName("createDefaultAvailabilityGroupIfNotExist"u8);
                 writer.WriteBooleanValue(CreateDefaultAvailabilityGroupIfNotExist.Value);
             }
-            if (Optional.IsDefined(Port))
+            if (Core.Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(AvailabilityGroupConfiguration))
+            if (Core.Optional.IsDefined(AvailabilityGroupConfiguration))
             {
                 writer.WritePropertyName("availabilityGroupConfiguration"u8);
                 writer.WriteObjectValue(AvailabilityGroupConfiguration);
@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> availabilityGroupName = default;
-            Optional<IList<AvailabilityGroupListenerLoadBalancerConfiguration>> loadBalancerConfigurations = default;
-            Optional<IList<MultiSubnetIPConfiguration>> multiSubnetIPConfigurations = default;
-            Optional<bool> createDefaultAvailabilityGroupIfNotExist = default;
-            Optional<int> port = default;
-            Optional<AvailabilityGroupConfiguration> availabilityGroupConfiguration = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<string> availabilityGroupName = default;
+            Core.Optional<IList<AvailabilityGroupListenerLoadBalancerConfiguration>> loadBalancerConfigurations = default;
+            Core.Optional<IList<MultiSubnetIPConfiguration>> multiSubnetIPConfigurations = default;
+            Core.Optional<bool> createDefaultAvailabilityGroupIfNotExist = default;
+            Core.Optional<int> port = default;
+            Core.Optional<AvailabilityGroupConfiguration> availabilityGroupConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     continue;
                 }
             }
-            return new AvailabilityGroupListenerData(id, name, type, systemData.Value, provisioningState.Value, availabilityGroupName.Value, Optional.ToList(loadBalancerConfigurations), Optional.ToList(multiSubnetIPConfigurations), Optional.ToNullable(createDefaultAvailabilityGroupIfNotExist), Optional.ToNullable(port), availabilityGroupConfiguration.Value);
+            return new AvailabilityGroupListenerData(id, name, type, systemData.Value, provisioningState.Value, availabilityGroupName.Value, Core.Optional.ToList(loadBalancerConfigurations), Core.Optional.ToList(multiSubnetIPConfigurations), Core.Optional.ToNullable(createDefaultAvailabilityGroupIfNotExist), Core.Optional.ToNullable(port), availabilityGroupConfiguration.Value);
         }
     }
 }

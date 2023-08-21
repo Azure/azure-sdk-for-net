@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> fabricFriendlyName = default;
-            Optional<string> friendlyName = default;
-            Optional<string> fabricType = default;
-            Optional<int> protectedItemCount = default;
-            Optional<string> pairingStatus = default;
-            Optional<string> role = default;
-            Optional<ProtectionContainerFabricSpecificDetails> fabricSpecificDetails = default;
+            Core.Optional<string> fabricFriendlyName = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<string> fabricType = default;
+            Core.Optional<int> protectedItemCount = default;
+            Core.Optional<string> pairingStatus = default;
+            Core.Optional<string> role = default;
+            Core.Optional<ProtectionContainerFabricSpecificDetails> fabricSpecificDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fabricFriendlyName"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryProtectionContainerProperties(fabricFriendlyName.Value, friendlyName.Value, fabricType.Value, Optional.ToNullable(protectedItemCount), pairingStatus.Value, role.Value, fabricSpecificDetails.Value);
+            return new SiteRecoveryProtectionContainerProperties(fabricFriendlyName.Value, friendlyName.Value, fabricType.Value, Core.Optional.ToNullable(protectedItemCount), pairingStatus.Value, role.Value, fabricSpecificDetails.Value);
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedServerDnsAliasCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class ManagedServerDnsAliasCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreateDnsRecord))
+            if (Core.Optional.IsDefined(CreateDnsRecord))
             {
                 writer.WritePropertyName("createDnsRecord"u8);
                 writer.WriteBooleanValue(CreateDnsRecord.Value);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of UpdateReplicationProtectedItemProperties. </summary>
         public UpdateReplicationProtectedItemProperties()
         {
-            VmNics = new ChangeTrackingList<VmNicContentDetails>();
+            VmNics = new Core.ChangeTrackingList<VmNicContentDetails>();
         }
 
         /// <summary> Target Azure VM name given by the user. </summary>

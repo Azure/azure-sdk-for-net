@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of SourceConfigurationResult. </summary>
         internal SourceConfigurationResult()
         {
-            Configurations = new ChangeTrackingList<SourceConfiguration>();
+            Configurations = new Core.ChangeTrackingList<SourceConfiguration>();
         }
 
         /// <summary> Initializes a new instance of SourceConfigurationResult. </summary>

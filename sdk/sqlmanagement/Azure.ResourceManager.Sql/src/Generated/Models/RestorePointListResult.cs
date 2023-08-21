@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of RestorePointListResult. </summary>
         internal RestorePointListResult()
         {
-            Value = new ChangeTrackingList<SqlServerDatabaseRestorePointData>();
+            Value = new Core.ChangeTrackingList<SqlServerDatabaseRestorePointData>();
         }
 
         /// <summary> Initializes a new instance of RestorePointListResult. </summary>

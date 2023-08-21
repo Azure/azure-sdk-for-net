@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<string> jobState = default;
-            Optional<bool> isActive = default;
-            Optional<string> creationTimeUTC = default;
-            Optional<ReplicationProtectionIntentProviderSpecificSettings> providerSpecificDetails = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<ResourceIdentifier> jobId = default;
+            Core.Optional<string> jobState = default;
+            Core.Optional<bool> isActive = default;
+            Core.Optional<string> creationTimeUTC = default;
+            Core.Optional<ReplicationProtectionIntentProviderSpecificSettings> providerSpecificDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new ReplicationProtectionIntentProperties(friendlyName.Value, jobId.Value, jobState.Value, Optional.ToNullable(isActive), creationTimeUTC.Value, providerSpecificDetails.Value);
+            return new ReplicationProtectionIntentProperties(friendlyName.Value, jobId.Value, jobState.Value, Core.Optional.ToNullable(isActive), creationTimeUTC.Value, providerSpecificDetails.Value);
         }
     }
 }

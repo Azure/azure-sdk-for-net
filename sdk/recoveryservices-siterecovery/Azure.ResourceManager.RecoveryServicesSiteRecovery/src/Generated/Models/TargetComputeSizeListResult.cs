@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of TargetComputeSizeListResult. </summary>
         internal TargetComputeSizeListResult()
         {
-            Value = new ChangeTrackingList<TargetComputeSize>();
+            Value = new Core.ChangeTrackingList<TargetComputeSize>();
         }
 
         /// <summary> Initializes a new instance of TargetComputeSizeListResult. </summary>

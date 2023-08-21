@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>
         internal QuotaRequestDetailData()
         {
-            QuotaRequestValue = new ChangeTrackingList<SubContent>();
+            QuotaRequestValue = new Core.ChangeTrackingList<SubContent>();
         }
 
         /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>

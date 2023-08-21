@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SettingsList. </summary>
         internal SettingsList()
         {
-            Value = new ChangeTrackingList<SecuritySettingData>();
+            Value = new Core.ChangeTrackingList<SecuritySettingData>();
         }
 
         /// <summary> Initializes a new instance of SettingsList. </summary>
