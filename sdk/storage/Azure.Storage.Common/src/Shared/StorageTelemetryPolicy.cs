@@ -47,7 +47,7 @@ namespace Azure.Storage
         private static void ApplyAzFeatures(HttpMessage message, AzFeatures azFeatures)
         {
             string azFeatureString = Serialize(azFeatures);
-            if (message.Request.Headers.TryGetValue(HttpHeader.Names.UserAgent, out string userAgent))
+            if (message.Request.Headers.TryGetValue(HttpHeader.Names.UserAgent, out string userAgent) && !userAgent.Contains(azFeatureString))
             {
                 message.Request.Headers.SetValue(HttpHeader.Names.UserAgent, TransformUserAgent(userAgent, azFeatureString));
             }
