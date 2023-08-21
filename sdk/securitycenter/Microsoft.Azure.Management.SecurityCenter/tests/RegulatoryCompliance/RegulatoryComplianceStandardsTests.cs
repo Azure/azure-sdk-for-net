@@ -7,6 +7,7 @@ using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using SecurityCenter.Tests.Helpers;
 using System.Net;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace SecurityCenter.Tests
@@ -14,7 +15,7 @@ namespace SecurityCenter.Tests
     public class RegulatoryComplianceStandardsTests: TestBase
     {
         #region Test setup
-        private static readonly string regulatoryComplianceStandardName = "PCI-DSS-3.2.1";
+        private static readonly string regulatoryComplianceStandardName = "Microsoft-cloud-security-benchmark";
         private static readonly string AscLocation = "centralus";
         private static TestEnvironment TestEnvironment { get; set; }
         #endregion
@@ -39,23 +40,23 @@ namespace SecurityCenter.Tests
 
         #region Tests
         [Fact]
-        public void RegulatoryComplianceStandards_Get()
+        public async Task RegulatoryComplianceStandards_Get()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var ret = securityCenterClient.RegulatoryComplianceStandards.Get(regulatoryComplianceStandardName);
+                var ret = await securityCenterClient.RegulatoryComplianceStandards.GetAsync(regulatoryComplianceStandardName);
                 Assert.NotNull(ret);
             }
         }
 
         [Fact]
-        public void RegulatoryComplianceStandards_List()
+        public async Task RegulatoryComplianceStandards_List()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var ret = securityCenterClient.RegulatoryComplianceStandards.List();
+                var ret = await securityCenterClient.RegulatoryComplianceStandards.ListAsync();
                 Assert.True(ret.IsAny(), "Got empty list");
                 foreach (var item in ret)
                 {

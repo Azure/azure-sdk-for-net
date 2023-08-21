@@ -10,6 +10,8 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using SecurityCenter.Tests.Helpers;
 using System.Net;
 using Xunit;
+using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace SecurityCenter.Tests
 {
@@ -19,10 +21,10 @@ namespace SecurityCenter.Tests
         private static readonly string SubscriptionId = "487bb485-b5b0-471e-9c0d-10717612f869";
         private static readonly string ResourceGroupName = "subAssessments_sdk_tests";
         private static readonly string ContainerRegistryName = "sdkRef";
-        // Vulnerabilities in Azure Container Registry images should be remediated (powered by Qualys)
-        private static readonly string AssessmentName = "dbd0cb49-b563-45e7-9724-889e799fa648";
-        // auto-generated
-        private static readonly string SubAssessmentName = "d1164a35-41e9-43aa-bbc7-bfb3ae093cea";
+        // Container registry images should have vulnerability findings resolved (powered by Microsoft Defender Vulnerability Management)
+        private static readonly string AssessmentName = "c0b7cfc6-3172-465a-b378-53c7ff2cc0d5";
+        // auto-generated sub-assessment name (should be present in the assessment above)
+        private static readonly string SubAssessmentName = "b509201b-8c35-4211-ff2e-e5bd4a0d4677";
         private static readonly string AscLocation = "centralus";
         private static TestEnvironment TestEnvironment { get; set; }
         #endregion
@@ -47,54 +49,54 @@ namespace SecurityCenter.Tests
 
         #region Tests
         [Fact]
-        public void SubAssessments_ListAll()
+        public async Task SubAssessments_ListAll()
         {
             string scope = $"subscriptions/{SubscriptionId}";
 
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var ret = securityCenterClient.SubAssessments.ListAll(scope);
+                var ret = await securityCenterClient.SubAssessments.ListAllAsync(scope);
                 Validate(ret);
             }
         }
 
         [Fact]
-        public void SubAssessments_List()
+        public async Task SubAssessments_List()
         {
             string scope = $"subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{ContainerRegistryName}";
 
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var ret = securityCenterClient.SubAssessments.List(scope, AssessmentName);
+                var ret = await securityCenterClient.SubAssessments.ListAsync(scope, AssessmentName);
                 Validate(ret);
             }
         }
 
 
         [Fact]
-        public void SubAssessments_List_ResourceDetails()
+        public async Task SubAssessments_List_ResourceDetails()
         {
             string scope = $"subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{ContainerRegistryName}";
 
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var ret = securityCenterClient.SubAssessments.List(scope, AssessmentName);
+                var ret = await securityCenterClient.SubAssessments.ListAsync(scope, AssessmentName);
                 ValidateResourceDetails(ret);
             }
         }
 
         [Fact]
-        public void SubAssessments_Get()
+        public async Task SubAssessments_Get()
         {
             string scope = $"subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{ContainerRegistryName}";
 
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var ret = securityCenterClient.SubAssessments.Get(scope, AssessmentName, SubAssessmentName);
+                var ret = await securityCenterClient.SubAssessments.GetAsync(scope, AssessmentName, SubAssessmentName);
                 Assert.NotNull(ret);
             }
         }

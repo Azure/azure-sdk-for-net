@@ -4,9 +4,11 @@
 using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using SecurityCenter.Tests.Helpers;
 using System.Net;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace SecurityCenter.Tests
@@ -14,8 +16,8 @@ namespace SecurityCenter.Tests
     public class RegulatoryComplianceControlsTests : TestBase
     {
         #region Test setup
-        private static readonly string regulatoryComplianceStandardName = "PCI-DSS-3.2.1";
-        private static readonly string regulatoryComplianceControlName = "1.2.1";
+        private static readonly string regulatoryComplianceStandardName = "PCI DSS 4";
+        private static readonly string regulatoryComplianceControlName = "1.1.1";
         private static readonly string AscLocation = "centralus";
         private static TestEnvironment TestEnvironment { get; set; }
         #endregion
@@ -39,31 +41,58 @@ namespace SecurityCenter.Tests
         }
 
         #region Tests
+
         [Fact]
-        public void RegulatoryComplianceControls_Get()
+        public async Task RegulatoryComplianceControls_ListWithODataFilter()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var ret = securityCenterClient.RegulatoryComplianceControls.Get(regulatoryComplianceStandardName, regulatoryComplianceControlName);
-                Assert.NotNull(ret);
+                var regulatoryComplianceControls = await securityCenterClient.RegulatoryComplianceControls.ListAsync(regulatoryComplianceStandardName, $"state ne 'Passed'");
+                ValidateRegulatoryComplianceControls(regulatoryComplianceControls);
             }
         }
 
         [Fact]
-        public void RegulatoryComplianceControls_List()
+        public async Task RegulatoryComplianceControls_List()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var ret = securityCenterClient.RegulatoryComplianceControls.List(regulatoryComplianceStandardName);
-                Assert.True(ret.IsAny(), "Got empty list");
-                foreach (var item in ret)
-                {
-                    Assert.NotNull(item);
-                }
+                var regulatoryComplianceControls = await securityCenterClient.RegulatoryComplianceControls.ListAsync(regulatoryComplianceStandardName);
+                ValidateRegulatoryComplianceControls(regulatoryComplianceControls);
             }
         }
+
+
+        [Fact]
+        public async Task RegulatoryComplianceControls_Get()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var securityCenterClient = GetSecurityCenterClient(context);
+                var regulatoryComplianceControl = await securityCenterClient.RegulatoryComplianceControls.GetAsync(regulatoryComplianceStandardName, regulatoryComplianceControlName);
+                ValidateRegulatoryComplianceControl(regulatoryComplianceControl);
+            }
+        }
+
+        #endregion
+
+
+        #region Validations
+
+        private void ValidateRegulatoryComplianceControls(IPage<RegulatoryComplianceControl> regulatoryComplianceControls)
+        {
+            Assert.True(regulatoryComplianceControls.IsAny(), "regulatoryComplianceControls should not be empty");
+
+            regulatoryComplianceControls.ForEach(ValidateRegulatoryComplianceControl);
+        }
+
+        private void ValidateRegulatoryComplianceControl(RegulatoryComplianceControl regulatoryComplianceControl)
+        {
+            Assert.NotNull(regulatoryComplianceControl);
+        }
+
         #endregion
     }
 }

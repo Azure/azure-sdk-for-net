@@ -13,11 +13,13 @@ using Xunit;
 
 namespace SecurityCenter.Tests
 {
-    public class CompliancesTests : TestBase
+    public class SecurityConnectorsTests : TestBase
     {
         #region Test setup
 
-        private static string SubscriptionId = "487bb485-b5b0-471e-9c0d-10717612f869";
+        private static readonly string SubscriptionId = "487bb485-b5b0-471e-9c0d-10717612f869";
+        private static readonly string ResourceGroupName = "SecurityConnectorsTests";
+        private static readonly string SecurityConnectorName = "SdkTestSecurityConnector";
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
@@ -35,34 +37,35 @@ namespace SecurityCenter.Tests
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
 
             securityCenterClient.AscLocation = "centralus";
+            securityCenterClient.SubscriptionId = SubscriptionId;
 
             return securityCenterClient;
         }
 
         #endregion
 
-        #region Compliances Tests
+        #region Security Connectors Tests
 
         [Fact]
-        public async Task Compliances_List()
+        public async Task SecurityConnectors_List()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
 
-                var compliances = await securityCenterClient.Compliances.ListAsync($"/subscriptions/{SubscriptionId}");
-                ValidateCompliances(compliances);
+                var securityConnectors = await securityCenterClient.SecurityConnectors.ListAsync();
+                ValidateSecurityConnectors(securityConnectors);
             }
         }
 
         [Fact]
-        public async Task Compliances_Get()
+        public async Task SecurityConnectors_Get()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var compliance = await securityCenterClient.Compliances.GetAsync($"/subscriptions/{SubscriptionId}", "2023-08-09Z");
-                ValidateCompliance(compliance);
+                var securityConnector = await securityCenterClient.SecurityConnectors.GetAsync(ResourceGroupName, SecurityConnectorName);
+                ValidateSecurityConnector(securityConnector);
             }
         }
 
@@ -70,16 +73,16 @@ namespace SecurityCenter.Tests
 
         #region Validations
 
-        private void ValidateCompliances(IPage<Compliance> compliances)
+        private void ValidateSecurityConnectors(IPage<SecurityConnector> securityConnectors)
         {
-            Assert.True(compliances.IsAny());
+            Assert.True(securityConnectors.IsAny());
 
-            compliances.ForEach(ValidateCompliance);
+            securityConnectors.ForEach(ValidateSecurityConnector);
         }
 
-        private void ValidateCompliance(Compliance compliance)
+        private void ValidateSecurityConnector(SecurityConnector securityConnector)
         {
-            Assert.NotNull(compliance);
+            Assert.NotNull(securityConnector);
         }
 
         #endregion

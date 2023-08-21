@@ -86,7 +86,7 @@ namespace SecurityCenter.Tests
                     AlertType = "TestType",
                     ExpirationDateUtc = DateTime.UtcNow + TimeSpan.FromDays(365),
                     State = RuleState.Enabled,
-                    Reason = "some reason for rule dismissal",
+                    Reason = "Other",
                     Comment = "free text",
                     SuppressionAlertsScope = new SuppressionAlertsScope()
                     {

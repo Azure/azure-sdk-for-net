@@ -140,11 +140,11 @@ namespace SecurityCenter.Tests
 
         #region Validations
 
-        private void ValidateAutomations(IPage<Automation> AutomationsPage)
+        private void ValidateAutomations(IPage<Automation> automationsPage)
         {
-            Assert.True(AutomationsPage.IsAny());
+            Assert.True(automationsPage.IsAny());
 
-            AutomationsPage.ForEach(ValidateAutomation);
+            automationsPage.ForEach(ValidateAutomation);
         }
 
         private void ValidateAutomation(Automation automation)
