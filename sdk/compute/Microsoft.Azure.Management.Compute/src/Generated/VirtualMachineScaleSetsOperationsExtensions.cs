@@ -74,9 +74,18 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='parameters'>
             /// The scale set object.
             /// </param>
-            public static VirtualMachineScaleSet CreateOrUpdate(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSet parameters)
+            /// <param name='ifMatch'>
+            /// The ETag of the transformation. Omit this value to always overwrite the
+            /// current resource. Specify the last-seen ETag value to prevent accidentally
+            /// overwriting concurrent changes.
+            /// </param>
+            /// <param name='ifNoneMatch'>
+            /// Set to '*' to allow a new record set to be created, but to prevent updating
+            /// an existing record set. Other values will be ignored.
+            /// </param>
+            public static VirtualMachineScaleSet CreateOrUpdate(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSet parameters, string ifMatch = default(string), string ifNoneMatch = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, vmScaleSetName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, vmScaleSetName, parameters, ifMatch, ifNoneMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -94,12 +103,21 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='parameters'>
             /// The scale set object.
             /// </param>
+            /// <param name='ifMatch'>
+            /// The ETag of the transformation. Omit this value to always overwrite the
+            /// current resource. Specify the last-seen ETag value to prevent accidentally
+            /// overwriting concurrent changes.
+            /// </param>
+            /// <param name='ifNoneMatch'>
+            /// Set to '*' to allow a new record set to be created, but to prevent updating
+            /// an existing record set. Other values will be ignored.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineScaleSet> CreateOrUpdateAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSet parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineScaleSet> CreateOrUpdateAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSet parameters, string ifMatch = default(string), string ifNoneMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, parameters, ifMatch, ifNoneMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -120,9 +138,18 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='parameters'>
             /// The scale set object.
             /// </param>
-            public static VirtualMachineScaleSet Update(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetUpdate parameters)
+            /// <param name='ifMatch'>
+            /// The ETag of the transformation. Omit this value to always overwrite the
+            /// current resource. Specify the last-seen ETag value to prevent accidentally
+            /// overwriting concurrent changes.
+            /// </param>
+            /// <param name='ifNoneMatch'>
+            /// Set to '*' to allow a new record set to be created, but to prevent updating
+            /// an existing record set. Other values will be ignored.
+            /// </param>
+            public static VirtualMachineScaleSet Update(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetUpdate parameters, string ifMatch = default(string), string ifNoneMatch = default(string))
             {
-                return operations.UpdateAsync(resourceGroupName, vmScaleSetName, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, vmScaleSetName, parameters, ifMatch, ifNoneMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -140,12 +167,21 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='parameters'>
             /// The scale set object.
             /// </param>
+            /// <param name='ifMatch'>
+            /// The ETag of the transformation. Omit this value to always overwrite the
+            /// current resource. Specify the last-seen ETag value to prevent accidentally
+            /// overwriting concurrent changes.
+            /// </param>
+            /// <param name='ifNoneMatch'>
+            /// Set to '*' to allow a new record set to be created, but to prevent updating
+            /// an existing record set. Other values will be ignored.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineScaleSet> UpdateAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineScaleSet> UpdateAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetUpdate parameters, string ifMatch = default(string), string ifNoneMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, parameters, ifMatch, ifNoneMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1157,9 +1193,18 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='parameters'>
             /// The scale set object.
             /// </param>
-            public static VirtualMachineScaleSet BeginCreateOrUpdate(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSet parameters)
+            /// <param name='ifMatch'>
+            /// The ETag of the transformation. Omit this value to always overwrite the
+            /// current resource. Specify the last-seen ETag value to prevent accidentally
+            /// overwriting concurrent changes.
+            /// </param>
+            /// <param name='ifNoneMatch'>
+            /// Set to '*' to allow a new record set to be created, but to prevent updating
+            /// an existing record set. Other values will be ignored.
+            /// </param>
+            public static VirtualMachineScaleSet BeginCreateOrUpdate(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSet parameters, string ifMatch = default(string), string ifNoneMatch = default(string))
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, vmScaleSetName, parameters).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, vmScaleSetName, parameters, ifMatch, ifNoneMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1177,12 +1222,21 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='parameters'>
             /// The scale set object.
             /// </param>
+            /// <param name='ifMatch'>
+            /// The ETag of the transformation. Omit this value to always overwrite the
+            /// current resource. Specify the last-seen ETag value to prevent accidentally
+            /// overwriting concurrent changes.
+            /// </param>
+            /// <param name='ifNoneMatch'>
+            /// Set to '*' to allow a new record set to be created, but to prevent updating
+            /// an existing record set. Other values will be ignored.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineScaleSet> BeginCreateOrUpdateAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSet parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineScaleSet> BeginCreateOrUpdateAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSet parameters, string ifMatch = default(string), string ifNoneMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, parameters, ifMatch, ifNoneMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1203,9 +1257,18 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='parameters'>
             /// The scale set object.
             /// </param>
-            public static VirtualMachineScaleSet BeginUpdate(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetUpdate parameters)
+            /// <param name='ifMatch'>
+            /// The ETag of the transformation. Omit this value to always overwrite the
+            /// current resource. Specify the last-seen ETag value to prevent accidentally
+            /// overwriting concurrent changes.
+            /// </param>
+            /// <param name='ifNoneMatch'>
+            /// Set to '*' to allow a new record set to be created, but to prevent updating
+            /// an existing record set. Other values will be ignored.
+            /// </param>
+            public static VirtualMachineScaleSet BeginUpdate(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetUpdate parameters, string ifMatch = default(string), string ifNoneMatch = default(string))
             {
-                return operations.BeginUpdateAsync(resourceGroupName, vmScaleSetName, parameters).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, vmScaleSetName, parameters, ifMatch, ifNoneMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1223,12 +1286,21 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='parameters'>
             /// The scale set object.
             /// </param>
+            /// <param name='ifMatch'>
+            /// The ETag of the transformation. Omit this value to always overwrite the
+            /// current resource. Specify the last-seen ETag value to prevent accidentally
+            /// overwriting concurrent changes.
+            /// </param>
+            /// <param name='ifNoneMatch'>
+            /// Set to '*' to allow a new record set to be created, but to prevent updating
+            /// an existing record set. Other values will be ignored.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineScaleSet> BeginUpdateAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineScaleSet> BeginUpdateAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetUpdate parameters, string ifMatch = default(string), string ifNoneMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, parameters, ifMatch, ifNoneMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
