@@ -11,7 +11,7 @@ namespace Azure.Core.Serialization
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 #pragma warning disable AZC0014 // STJ
-    public class MergePatchDictionary<T> : IDictionary<string, T>, IPatchModel, IModelJsonSerializable<MergePatchDictionary<T>>
+    public class MergePatchDictionary<T> : IDictionary<string, T>, IPatchModel //, IModelJsonSerializable<MergePatchDictionary<T>>
     {
         private bool _checkChanges;
         private bool _checkAllChanges;
@@ -216,6 +216,43 @@ namespace Azure.Core.Serialization
 
             return false;
         }
+
+        //public void IModelJsonSerializable<MergePatchDictionary<T>>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        //{
+        //    // TODO: PatchModelHelper.ValidateFormat(this, options.Format);
+
+        //    switch (options.Format.ToString())
+        //    {
+        //        case "J":
+        //        case "W":
+        //            SerializeFull(writer);
+        //            break;
+        //        case "P":
+        //            SerializePatch(writer);
+        //            break;
+        //        default:
+        //            // Exception was thrown by ValidateFormat.
+        //            break;
+        //    }
+        //}
+
+        //public BinaryData IModelSerializable<MergePatchDictionary<T>>.Serialize(ModelSerializerOptions options)
+        //{
+        //    // TODO: PatchModelHelper.ValidateFormat(this, options.Format);
+        //    return ModelSerializer.SerializeCore(this, options);
+        //}
+
+        //public MergePatchDictionary<T> IModelJsonSerializable<MergePatchDictionary<T>>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        //{
+        //    // TODO: PatchModelHelper.ValidateFormat(this, options.Format);
+        //    return Deserialize(ref reader, options);
+        //}
+
+        //public MergePatchDictionary<T> IModelSerializable<MergePatchDictionary<T>>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        //{
+        //    // TODO: PatchModelHelper.ValidateFormat(this, options.Format);
+        //    return Deserialize(data, options);
+        //}
     }
 #pragma warning restore AZC0014
 #pragma warning restore CS1591
