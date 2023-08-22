@@ -8,6 +8,7 @@
     <PackageTags>Azure LoadTestService</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>AZC0012;AZC0001</NoWarn>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->

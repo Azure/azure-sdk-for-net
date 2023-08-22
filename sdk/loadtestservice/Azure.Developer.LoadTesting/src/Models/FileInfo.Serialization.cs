@@ -19,7 +19,7 @@ namespace Azure.Developer.LoadTesting.Models
             {
                 return null;
             }
-            Optional<Uri> url = default;
+            Optional<string> url = default;
             Optional<string> fileName = default;
             Optional<FileType> fileType = default;
             Optional<DateTimeOffset> expireDateTime = default;
@@ -29,11 +29,7 @@ namespace Azure.Developer.LoadTesting.Models
             {
                 if (property.NameEquals("url"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    url = new Uri(property.Value.GetString());
+                    url = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fileName"u8))

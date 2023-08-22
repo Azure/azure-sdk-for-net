@@ -57,5 +57,38 @@ namespace Azure.Developer.LoadTesting.Models
             LastModifiedDateTime = lastModifiedDateTime;
             LastModifiedBy = lastModifiedBy;
         }
+
+        /// <summary> Pass fail criteria for a test. </summary>
+        public PassFailCriteria PassFailCriteria { get; set; }
+        /// <summary> Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE. </summary>
+        public IDictionary<string, Secret> Secrets { get; }
+        /// <summary> Certificates metadata. </summary>
+        public CertificateMetadata Certificate { get; set; }
+        /// <summary> Environment variables which are defined as a set of &lt;name,value&gt; pairs. </summary>
+        public IDictionary<string, string> EnvironmentVariables { get; }
+        /// <summary> The load test configuration. </summary>
+        public LoadTestConfiguration LoadTestConfiguration { get; set; }
+        /// <summary> The input artifacts for the test. </summary>
+        public TestInputArtifacts InputArtifacts { get; }
+        /// <summary> Unique test name as identifier. </summary>
+        public string TestId { get; }
+        /// <summary> The test description. </summary>
+        public string Description { get; set; }
+        /// <summary> Display name of a test. </summary>
+        public string DisplayName { get; set; }
+        /// <summary> Subnet ID on which the load test instances should run. </summary>
+        public string SubnetId { get; set; }
+        /// <summary> Type of the managed identity referencing the Key vault. </summary>
+        public string KeyvaultReferenceIdentityType { get; set; }
+        /// <summary> Resource Id of the managed identity referencing the Key vault. </summary>
+        public string KeyvaultReferenceIdentityId { get; set; }
+        /// <summary> The creation datetime(ISO 8601 literal format). </summary>
+        public DateTimeOffset? CreatedDateTime { get; }
+        /// <summary> The user that created. </summary>
+        public string CreatedBy { get; }
+        /// <summary> The last Modified datetime(ISO 8601 literal format). </summary>
+        public DateTimeOffset? LastModifiedDateTime { get; }
+        /// <summary> The user that last modified. </summary>
+        public string LastModifiedBy { get; }
     }
 }

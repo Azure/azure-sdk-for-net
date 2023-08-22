@@ -13,13 +13,18 @@ namespace Azure.Developer.LoadTesting.Models
     public partial class FileInfo
     {
         /// <summary> Initializes a new instance of FileInfo. </summary>
+        internal FileInfo()
+        {
+        }
+
+        /// <summary> Initializes a new instance of FileInfo. </summary>
         /// <param name="url"> File URL. </param>
         /// <param name="fileName"> Name of the file. </param>
         /// <param name="fileType"> File type. </param>
         /// <param name="expireDateTime"> Expiry time of the file (ISO 8601 literal format). </param>
         /// <param name="validationStatus"> Validation status of the file. </param>
         /// <param name="validationFailureDetails"> Validation failure error details. </param>
-        internal FileInfo(Uri url, string fileName, FileType? fileType, DateTimeOffset? expireDateTime, FileStatus? validationStatus, string validationFailureDetails)
+        internal FileInfo(string url, string fileName, FileType? fileType, DateTimeOffset? expireDateTime, FileStatus? validationStatus, string validationFailureDetails)
         {
             Url = url;
             FileName = fileName;
@@ -28,5 +33,18 @@ namespace Azure.Developer.LoadTesting.Models
             ValidationStatus = validationStatus;
             ValidationFailureDetails = validationFailureDetails;
         }
+
+        /// <summary> File URL. </summary>
+        public string Url { get; }
+        /// <summary> Name of the file. </summary>
+        public string FileName { get; }
+        /// <summary> File type. </summary>
+        public FileType? FileType { get; }
+        /// <summary> Expiry time of the file (ISO 8601 literal format). </summary>
+        public DateTimeOffset? ExpireDateTime { get; }
+        /// <summary> Validation status of the file. </summary>
+        public FileStatus? ValidationStatus { get; }
+        /// <summary> Validation failure error details. </summary>
+        public string ValidationFailureDetails { get; }
     }
 }

@@ -14,6 +14,12 @@ namespace Azure.Developer.LoadTesting.Models
     public partial class TestInputArtifacts
     {
         /// <summary> Initializes a new instance of TestInputArtifacts. </summary>
+        internal TestInputArtifacts()
+        {
+            AdditionalFileInfo = new ChangeTrackingList<FileInfo>();
+        }
+
+        /// <summary> Initializes a new instance of TestInputArtifacts. </summary>
         /// <param name="configFileInfo"> File info. </param>
         /// <param name="testScriptFileInfo"> File info. </param>
         /// <param name="userPropFileInfo"> File info. </param>
@@ -27,5 +33,16 @@ namespace Azure.Developer.LoadTesting.Models
             InputArtifactsZipFileInfo = inputArtifactsZipFileInfo;
             AdditionalFileInfo = additionalFileInfo;
         }
+
+        /// <summary> File info. </summary>
+        public FileInfo ConfigFileInfo { get; }
+        /// <summary> File info. </summary>
+        public FileInfo TestScriptFileInfo { get; }
+        /// <summary> File info. </summary>
+        public FileInfo UserPropFileInfo { get; }
+        /// <summary> File info. </summary>
+        public FileInfo InputArtifactsZipFileInfo { get; }
+        /// <summary> Additional supported files for the test run. </summary>
+        public IReadOnlyList<FileInfo> AdditionalFileInfo { get; }
     }
 }

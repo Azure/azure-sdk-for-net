@@ -11,6 +11,11 @@ namespace Azure.Developer.LoadTesting.Models
     public partial class CertificateMetadata
     {
         /// <summary> Initializes a new instance of CertificateMetadata. </summary>
+        public CertificateMetadata()
+        {
+        }
+
+        /// <summary> Initializes a new instance of CertificateMetadata. </summary>
         /// <param name="value"> The value of the certificate for respective type. </param>
         /// <param name="type"> Type of certificate. </param>
         /// <param name="name"> Name of the certificate. </param>
@@ -20,5 +25,12 @@ namespace Azure.Developer.LoadTesting.Models
             Type = type;
             Name = name;
         }
+
+        /// <summary> The value of the certificate for respective type. </summary>
+        public string Value { get; set; }
+        /// <summary> Type of certificate. </summary>
+        public CertificateType? Type { get; set; }
+        /// <summary> Name of the certificate. </summary>
+        public string Name { get; set; }
     }
 }

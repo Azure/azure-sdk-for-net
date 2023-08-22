@@ -11,6 +11,11 @@ namespace Azure.Developer.LoadTesting.Models
     public partial class Secret
     {
         /// <summary> Initializes a new instance of Secret. </summary>
+        public Secret()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Secret. </summary>
         /// <param name="value"> The value of the secret for the respective type. </param>
         /// <param name="type"> Type of secret. </param>
         internal Secret(string value, SecretType? type)
@@ -18,5 +23,10 @@ namespace Azure.Developer.LoadTesting.Models
             Value = value;
             Type = type;
         }
+
+        /// <summary> The value of the secret for the respective type. </summary>
+        public string Value { get; set; }
+        /// <summary> Type of secret. </summary>
+        public SecretType? Type { get; set; }
     }
 }

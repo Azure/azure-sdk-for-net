@@ -11,6 +11,11 @@ namespace Azure.Developer.LoadTesting.Models
     public partial class PassFailMetric
     {
         /// <summary> Initializes a new instance of PassFailMetric. </summary>
+        public PassFailMetric()
+        {
+        }
+
+        /// <summary> Initializes a new instance of PassFailMetric. </summary>
         /// <param name="clientMetric"> The client metric on which the criteria should be applied. </param>
         /// <param name="aggregate"> The aggregation function to be applied on the client metric. Allowed functions - ‘percentage’ - for error metric , ‘avg’, ‘p50’, ‘p90’, ‘p95’, ‘p99’, ‘min’, ‘max’ - for response_time_ms and latency metric, ‘avg’ - for requests_per_sec, ‘count’ - for requests. </param>
         /// <param name="condition"> The comparison operator. Supported types ‘&gt;’, ‘&lt;’. </param>
@@ -30,5 +35,22 @@ namespace Azure.Developer.LoadTesting.Models
             ActualValue = actualValue;
             Result = result;
         }
+
+        /// <summary> The client metric on which the criteria should be applied. </summary>
+        public PFMetrics? ClientMetric { get; set; }
+        /// <summary> The aggregation function to be applied on the client metric. Allowed functions - ‘percentage’ - for error metric , ‘avg’, ‘p50’, ‘p90’, ‘p95’, ‘p99’, ‘min’, ‘max’ - for response_time_ms and latency metric, ‘avg’ - for requests_per_sec, ‘count’ - for requests. </summary>
+        public PFAgFunc? Aggregate { get; set; }
+        /// <summary> The comparison operator. Supported types ‘&gt;’, ‘&lt;’. </summary>
+        public string Condition { get; set; }
+        /// <summary> Request name for which the Pass fail criteria has to be applied. </summary>
+        public string RequestName { get; set; }
+        /// <summary> The value to compare with the client metric. Allowed values - ‘error : [0.0 , 100.0] unit- % ’, response_time_ms and latency : any integer value unit- ms. </summary>
+        public double? Value { get; set; }
+        /// <summary> Action taken after the threshold is met. Default is ‘continue’. </summary>
+        public PFAction? Action { get; set; }
+        /// <summary> The actual value of the client metric for the test run. </summary>
+        public double? ActualValue { get; }
+        /// <summary> Outcome of the test run. </summary>
+        public PFResult? Result { get; }
     }
 }

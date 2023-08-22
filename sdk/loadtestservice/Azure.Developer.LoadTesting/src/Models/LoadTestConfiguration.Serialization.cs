@@ -83,7 +83,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    optionalLoadTestConfig = Models.OptionalLoadTestConfig.DeserializeOptionalLoadTestConfig(property.Value);
+                    optionalLoadTestConfig = OptionalLoadTestConfig.DeserializeOptionalLoadTestConfig(property.Value);
                     continue;
                 }
             }

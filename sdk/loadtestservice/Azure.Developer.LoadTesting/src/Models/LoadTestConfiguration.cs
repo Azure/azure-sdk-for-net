@@ -11,6 +11,11 @@ namespace Azure.Developer.LoadTesting.Models
     public partial class LoadTestConfiguration
     {
         /// <summary> Initializes a new instance of LoadTestConfiguration. </summary>
+        public LoadTestConfiguration()
+        {
+        }
+
+        /// <summary> Initializes a new instance of LoadTestConfiguration. </summary>
         /// <param name="engineInstances"> The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test. </param>
         /// <param name="splitAllCSVs"> If false, Azure Load Testing copies and processes your input files unmodified across all test engine instances. If true, Azure Load Testing splits the CSV input data evenly across all engine instances. If you provide multiple CSV files, each file will be split evenly. </param>
         /// <param name="quickStartTest"> If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload. </param>
@@ -22,5 +27,14 @@ namespace Azure.Developer.LoadTesting.Models
             QuickStartTest = quickStartTest;
             OptionalLoadTestConfig = optionalLoadTestConfig;
         }
+
+        /// <summary> The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test. </summary>
+        public int? EngineInstances { get; set; }
+        /// <summary> If false, Azure Load Testing copies and processes your input files unmodified across all test engine instances. If true, Azure Load Testing splits the CSV input data evenly across all engine instances. If you provide multiple CSV files, each file will be split evenly. </summary>
+        public bool? SplitAllCSVs { get; set; }
+        /// <summary> If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload. </summary>
+        public bool? QuickStartTest { get; set; }
+        /// <summary> Optional load test config. </summary>
+        public OptionalLoadTestConfig OptionalLoadTestConfig { get; set; }
     }
 }

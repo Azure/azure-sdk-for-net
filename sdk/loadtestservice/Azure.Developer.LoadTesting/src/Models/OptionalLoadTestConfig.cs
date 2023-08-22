@@ -5,24 +5,36 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Optional load test config. </summary>
     public partial class OptionalLoadTestConfig
     {
         /// <summary> Initializes a new instance of OptionalLoadTestConfig. </summary>
+        public OptionalLoadTestConfig()
+        {
+        }
+
+        /// <summary> Initializes a new instance of OptionalLoadTestConfig. </summary>
         /// <param name="endpointUrl"> Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login. </param>
         /// <param name="virtualUsers"> No of concurrent virtual users. </param>
         /// <param name="rampUpTime"> Ramp up time. </param>
         /// <param name="duration"> Test run duration. </param>
-        internal OptionalLoadTestConfig(Uri endpointUrl, int? virtualUsers, int? rampUpTime, int? duration)
+        internal OptionalLoadTestConfig(string endpointUrl, int? virtualUsers, int? rampUpTime, int? duration)
         {
             EndpointUrl = endpointUrl;
             VirtualUsers = virtualUsers;
             RampUpTime = rampUpTime;
             Duration = duration;
         }
+
+        /// <summary> Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login. </summary>
+        public string EndpointUrl { get; set; }
+        /// <summary> No of concurrent virtual users. </summary>
+        public int? VirtualUsers { get; set; }
+        /// <summary> Ramp up time. </summary>
+        public int? RampUpTime { get; set; }
+        /// <summary> Test run duration. </summary>
+        public int? Duration { get; set; }
     }
 }

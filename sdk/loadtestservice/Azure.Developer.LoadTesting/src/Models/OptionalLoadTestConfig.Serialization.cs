@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,7 +18,7 @@ namespace Azure.Developer.LoadTesting.Models
             if (Optional.IsDefined(EndpointUrl))
             {
                 writer.WritePropertyName("endpointUrl"u8);
-                writer.WriteStringValue(EndpointUrl.AbsoluteUri);
+                writer.WriteStringValue(EndpointUrl);
             }
             if (Optional.IsDefined(VirtualUsers))
             {
@@ -45,7 +44,7 @@ namespace Azure.Developer.LoadTesting.Models
             {
                 return null;
             }
-            Optional<Uri> endpointUrl = default;
+            Optional<string> endpointUrl = default;
             Optional<int> virtualUsers = default;
             Optional<int> rampUpTime = default;
             Optional<int> duration = default;
@@ -53,11 +52,7 @@ namespace Azure.Developer.LoadTesting.Models
             {
                 if (property.NameEquals("endpointUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    endpointUrl = new Uri(property.Value.GetString());
+                    endpointUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("virtualUsers"u8))

@@ -112,7 +112,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    passFailCriteria = Models.PassFailCriteria.DeserializePassFailCriteria(property.Value);
+                    passFailCriteria = PassFailCriteria.DeserializePassFailCriteria(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secrets"u8))
@@ -158,7 +158,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    loadTestConfiguration = Models.LoadTestConfiguration.DeserializeLoadTestConfiguration(property.Value);
+                    loadTestConfiguration = LoadTestConfiguration.DeserializeLoadTestConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("inputArtifacts"u8))

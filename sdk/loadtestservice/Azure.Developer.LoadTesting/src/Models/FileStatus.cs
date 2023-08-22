@@ -13,11 +13,48 @@ namespace Azure.Developer.LoadTesting.Models
     /// <summary> Validation status of the file. </summary>
     public readonly partial struct FileStatus : IEquatable<FileStatus>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="FileStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FileStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string NOTValidatedValue = "NOT_VALIDATED";
+        private const string ValidationSuccessValue = "VALIDATION_SUCCESS";
+        private const string ValidationFailureValue = "VALIDATION_FAILURE";
+        private const string ValidationInitiatedValue = "VALIDATION_INITIATED";
+        private const string ValidationNOTRequiredValue = "VALIDATION_NOT_REQUIRED";
+
+        /// <summary> File is not validated. </summary>
+        public static FileStatus NOTValidated { get; } = new FileStatus(NOTValidatedValue);
+        /// <summary> File is validated. </summary>
+        public static FileStatus ValidationSuccess { get; } = new FileStatus(ValidationSuccessValue);
+        /// <summary> File validation is failed. </summary>
+        public static FileStatus ValidationFailure { get; } = new FileStatus(ValidationFailureValue);
+        /// <summary> File validation is in progress. </summary>
+        public static FileStatus ValidationInitiated { get; } = new FileStatus(ValidationInitiatedValue);
+        /// <summary> Validation is not required. </summary>
+        public static FileStatus ValidationNOTRequired { get; } = new FileStatus(ValidationNOTRequiredValue);
         /// <summary> Determines if two <see cref="FileStatus"/> values are the same. </summary>
         public static bool operator ==(FileStatus left, FileStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FileStatus"/> values are not the same. </summary>
         public static bool operator !=(FileStatus left, FileStatus right) => !left.Equals(right);
         /// <summary> Converts a string to a <see cref="FileStatus"/>. </summary>
         public static implicit operator FileStatus(string value) => new FileStatus(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is FileStatus other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(FileStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }
