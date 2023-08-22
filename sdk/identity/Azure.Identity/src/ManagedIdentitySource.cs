@@ -67,6 +67,15 @@ namespace Azure.Identity
                 exception = e;
             }
 
+            if (response.Status == 403)
+            {
+                string message = response.Content.ToString();
+                if (message.Contains("A socket operation was attempted to an unreachable network"))
+                {
+                    throw new CredentialUnavailableException(UnexpectedResponse, new Exception(message));
+                }
+            }
+
             throw new RequestFailedException(response, exception);
         }
 
