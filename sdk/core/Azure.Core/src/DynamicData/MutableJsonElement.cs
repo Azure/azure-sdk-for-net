@@ -490,8 +490,7 @@ namespace Azure.Core.Json
                         return true;
                     case DateTimeOffset:
                     case string:
-                        SerializeToJsonElement(change.Value, _root.SerializerOptions).TryGetDateTime(out value);
-                        return true;
+                        return SerializeToJsonElement(change.Value, _root.SerializerOptions).TryGetDateTime(out value);
                     case JsonElement element:
                         return element.TryGetDateTime(out value);
                     case null:
@@ -530,8 +529,7 @@ namespace Azure.Core.Json
                         return true;
                     case DateTime:
                     case string:
-                        SerializeToJsonElement(change.Value, _root.SerializerOptions).TryGetDateTimeOffset(out value);
-                        return true;
+                        return SerializeToJsonElement(change.Value, _root.SerializerOptions).TryGetDateTimeOffset(out value);
                     case JsonElement element:
                         return element.TryGetDateTimeOffset(out value);
                     case null:
@@ -606,8 +604,7 @@ namespace Azure.Core.Json
                         value = g;
                         return true;
                     case string:
-                        SerializeToJsonElement(change.Value, _root.SerializerOptions).TryGetGuid(out value);
-                        return true;
+                        return SerializeToJsonElement(change.Value, _root.SerializerOptions).TryGetGuid(out value);
                     case JsonElement element:
                         return element.TryGetGuid(out value);
                     case null:
