@@ -2,9 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.Developer.LoadTesting.Models;
 
 namespace Azure.Developer.LoadTesting
 {
@@ -126,6 +130,63 @@ namespace Azure.Developer.LoadTesting
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTests", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="test"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<Test>> CreateOrUpdateTestAsync(Test test, CancellationToken cancellationToken = default)
+        {
+            if (test is not IJsonModelSerializable serializable)
+            {
+                throw new InvalidCastException("model is not serializable");
+            }
+
+            using Stream stream = new MemoryStream();
+            using (Utf8JsonWriter writer = new(stream))
+            {
+                serializable.Serialize(writer, new ModelSerializerOptions("P"));
+            }
+
+            stream.Position = 0;
+            RequestContent content = RequestContent.Create(stream);
+
+            // TODO: was there a good way to get RequestContext without creating it new?
+            RequestContext context = new() { CancellationToken = cancellationToken };
+
+            Response response = await CreateOrUpdateTestAsync(test.TestId, content, context).ConfigureAwait(false);
+
+            return Response.FromValue((Test)response, response);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="test"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<Test> CreateOrUpdateTest(Test test, CancellationToken cancellationToken = default)
+        {
+            if (test is not IJsonModelSerializable serializable)
+            {
+                throw new InvalidCastException("model is not serializable");
+            }
+
+            using Stream stream = new MemoryStream();
+            using (Utf8JsonWriter writer = new(stream))
+            {
+                serializable.Serialize(writer, new ModelSerializerOptions("P"));
+            }
+
+            stream.Position = 0;
+            RequestContent content = RequestContent.Create(stream);
+
+            RequestContext context = new() { CancellationToken = cancellationToken };
+
+            Response response = CreateOrUpdateTest(test.TestId, content, context);
+
+            return Response.FromValue((Test)response, response);
         }
     }
 }

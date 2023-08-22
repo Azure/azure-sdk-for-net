@@ -9,13 +9,12 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Core.TestFramework.Models;
-using Azure.Developer.LoadTesting.Tests.Helper;
+using Azure.Developer.LoadTesting.Models;
 using NUnit.Framework;
 
 namespace Azure.Developer.LoadTesting.Tests
 {
-    public class LoadTestAdministrationClientTest: LoadTestTestsBase
+    public class LoadTestAdministrationClientTest : LoadTestTestsBase
     {
         public LoadTestAdministrationClientTest(bool isAsync) : base(isAsync) { }
 
@@ -42,6 +41,61 @@ namespace Azure.Developer.LoadTesting.Tests
             {
                 await _loadTestAdministrationClient.DeleteTestAsync(_testId);
             }
+        }
+
+        [Test]
+        [Category(SKIP_SET_UP)]
+        [RecordedTest]
+        public async Task CreateOrUpdateTestConveninence()
+        {
+            Test test = new Test(_testId);
+            test.Description = "This test was created through loadtesting C# SDK";
+            test.DisplayName = "Dotnet Testing Framework Loadtest";
+            test.LoadTestConfiguration = new LoadTestConfiguration();
+            test.LoadTestConfiguration.EngineInstances = 1;
+            test.LoadTestConfiguration.SplitAllCSVs = false;
+            test.Secrets.Clear();
+            test.EnvironmentVariables.Clear();
+            test.PassFailCriteria = new PassFailCriteria();
+            test.PassFailCriteria.PassFailMetrics.Clear();
+
+            Response<Test> response = await _loadTestAdministrationClient.CreateOrUpdateTestAsync(test);
+            Assert.AreEqual(_testId, response.Value.TestId);
+        }
+
+        private Test GetTest()
+        {
+            Test test = new Test(_testId);
+            test.Description = "This test was created through loadtesting C# SDK";
+            test.DisplayName = "Dotnet Testing Framework Loadtest";
+            test.LoadTestConfiguration = new LoadTestConfiguration();
+            test.LoadTestConfiguration.EngineInstances = 1;
+            test.LoadTestConfiguration.SplitAllCSVs = false;
+            test.Secrets.Clear();
+            test.EnvironmentVariables.Clear();
+            test.PassFailCriteria = new PassFailCriteria();
+            test.PassFailCriteria.PassFailMetrics.Clear();
+            return test;
+        }
+
+        [Test]
+        [Category(SKIP_SET_UP)]
+        [RecordedTest]
+        public async Task RoundTripTestValueConvenience()
+        {
+            Test orig = GetTest();
+
+            // Retrieve the value from the service.
+            Test test = await _loadTestAdministrationClient.CreateOrUpdateTestAsync(orig);
+
+            // Change a value on the model.
+            test.EnvironmentVariables["NewEnvVar"] = "NewValue";
+
+            // Update the value on the service.
+            Test modified = await _loadTestAdministrationClient.CreateOrUpdateTestAsync(test);
+
+            // Confirm update.
+            Assert.AreEqual("NewValue", modified.EnvironmentVariables["NewEnvVar"]);
         }
 
         [Test]
@@ -115,13 +169,13 @@ namespace Azure.Developer.LoadTesting.Tests
             {
                 count++;
 
-               foreach (var value in page.Values)
-               {
+                foreach (var value in page.Values)
+                {
                     JsonDocument jsonDocument = JsonDocument.Parse(value.ToString());
                     Assert.NotNull(jsonDocument.RootElement.GetProperty("testId").ToString());
 
                     Console.WriteLine(value.ToString());
-               }
+                }
             }
 
             int i = 0;
@@ -129,7 +183,7 @@ namespace Azure.Developer.LoadTesting.Tests
             {
                 i++;
 
-                if (i<count)
+                if (i < count)
                 {
                     Assert.AreEqual(pageSizeHint, page.Values.Count);
                 }
