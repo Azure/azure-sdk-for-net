@@ -20,42 +20,31 @@ namespace Azure.Core.Tests.PatchModels
         /// <summary> Deserialization constructor. </summary>
         internal ChildPatchModel(string a, string b)
         {
-            _a = new Changed<string>(a);
-            _b = new Changed<string>(b);
+            _a = new MergePatchValue<string>(a);
+            _b = new MergePatchValue<string>(b);
         }
 
         // TODO: Should this be an interface, or no?
         public bool HasChanges => _a.HasChanged || _b.HasChanged;
 
-        private Changed<string> _a;
+        private MergePatchValue<string> _a;
         /// <summary>
         /// Optional string property corresponding to JSON """{"a": "aaa"}""".
         /// </summary>
         public string A
         {
             get => _a;
-            set
-            {
-                _a.Value = value;
-            }
+            set => _a.Value = value;
         }
 
-        private Changed<string> _b;
+        private MergePatchValue<string> _b;
         /// <summary>
         /// Optional string property corresponding to JSON """{"b": "bbb"}""".
         /// </summary>
         public string B
         {
             get => _b;
-            set
-            {
-                //if (_b == null)
-                //{
-                //    _b = new Changed<string>(value);
-                //}
-
-                _b.Value = value;
-            }
+            set => _b.Value = value;
         }
     }
 }

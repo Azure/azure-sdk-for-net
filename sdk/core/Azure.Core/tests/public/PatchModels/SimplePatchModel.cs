@@ -24,48 +24,39 @@ namespace Azure.Core.Tests.PatchModels
         /// <param name="element"></param>
         internal SimplePatchModel(string name, int count, DateTimeOffset updatedOn)
         {
-            _name = new Changed<string>(name);
-            _count = new Changed<int>(count);
-            _updatedOn = new Changed<DateTimeOffset>(updatedOn);
+            _name = new MergePatchValue<string>(name);
+            _count = new MergePatchValue<int>(count);
+            _updatedOn = new MergePatchValue<DateTimeOffset>(updatedOn);
         }
 
-        private Changed<string> _name;
+        private MergePatchValue<string> _name;
         /// <summary>
         /// Optional string property corresponding to JSON """{"name": "abc"}""".
         /// </summary>
         public string Name
         {
             get => _name;
-            set
-            {
-                _name.Value = value;
-            }
+            set => _name.Value = value;
         }
 
-        private Changed<int> _count;
+        private MergePatchValue<int> _count;
         /// <summary>
         /// Optional int property corresponding to JSON """{"count": 1}""".
         /// </summary>
         public int Count
         {
             get => _count;
-            set
-            {
-                _count.Value = value;
-            }
+            set => _count.Value = value;
         }
 
-        private Changed<DateTimeOffset> _updatedOn;
+        private MergePatchValue<DateTimeOffset> _updatedOn;
         /// <summary>
         /// Optional DateTimeOffset property corresponding to JSON """{"updatedOn": "2020-06-25T17:44:37.6830000Z"}""".
         /// </summary>
         public DateTimeOffset UpdatedOn
         {
             get => _updatedOn;
-            set
-            {
-                _updatedOn.Value = value;
-            }
+            set => _updatedOn.Value = value;
         }
     }
 }

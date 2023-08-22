@@ -22,24 +22,21 @@ namespace Azure.Core.Tests.PatchModels
         /// </summary>
         internal ParentPatchModel(string id, ChildPatchModel child)
         {
-            _id = new Changed<string>(id);
-            _child = new Changed<ChildPatchModel>(child);
+            _id = new MergePatchValue<string>(id);
+            _child = new MergePatchValue<ChildPatchModel>(child);
         }
 
-        private Changed<string> _id;
+        private MergePatchValue<string> _id;
         /// <summary>
         /// Optional string property corresponding to JSON """{"id": "abc"}""".
         /// </summary>
         public string Id
         {
             get => _id;
-            set
-            {
-                _id.Value = value;
-            }
+            set => _id.Value = value;
         }
 
-        private Changed<ChildPatchModel> _child;
+        private MergePatchValue<ChildPatchModel> _child;
         /// <summary>
         /// Optional ChildPatchModel property corresponding to JSON """{"child": {"a":"aa", "b": "bb"}}""".
         /// </summary>
@@ -49,15 +46,12 @@ namespace Azure.Core.Tests.PatchModels
             {
                 if (_child.Value == null && !_child.HasChanged)
                 {
-                    _child = new Changed<ChildPatchModel>(new ChildPatchModel());
+                    _child = new MergePatchValue<ChildPatchModel>(new ChildPatchModel());
                 }
 
                 return _child;
             }
-            set
-            {
-                _child.Value = value;
-            }
+            set => _child.Value = value;
         }
     }
 }

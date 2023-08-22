@@ -11,9 +11,12 @@ namespace Azure.Core.Serialization
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 #pragma warning disable AZC0014 // STJ
-
     public class MergePatchDictionary<T> : IDictionary<string, T>
     {
+        // TODO: Test cases
+        // - Dictionary of IModelSerializable
+        // - Dictionary of int
+
         public bool HasChanges { get; private set; }
 
         private readonly Dictionary<string, bool> _changed;
@@ -52,13 +55,13 @@ namespace Azure.Core.Serialization
                     {
                         writer.WritePropertyName(kvp.Key);
 
-                        if (_dictionary.ContainsKey(kvp.Key))
+                        if (!_dictionary.TryGetValue(kvp.Key, out T? value) || value == null)
                         {
-                            _writeValue(writer, _dictionary[kvp.Key]);
+                            writer.WriteNullValue();
                         }
                         else
                         {
-                            writer.WriteNullValue();
+                            _writeValue(writer, _dictionary[kvp.Key]);
                         }
                     }
                 }

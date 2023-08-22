@@ -23,11 +23,11 @@ namespace Azure.Core.Tests.PatchModels
         /// </summary>
         internal CollectionPatchModel(string id, MergePatchDictionary<string> values)
         {
-            _id = new Changed<string>(id);
+            _id = new MergePatchValue<string>(id);
             _variables = values;
         }
 
-        private Changed<string> _id;
+        private MergePatchValue<string> _id;
         /// <summary>
         /// Optional string property corresponding to JSON """{"id": "abc"}""".
         /// </summary>
@@ -43,7 +43,6 @@ namespace Azure.Core.Tests.PatchModels
         {
             get
             {
-                // TODO: can s be null?  How do we delete collection items?
                 _variables ??= new MergePatchDictionary<string>((w, s) => w.WriteStringValue(s));
                 return _variables;
             }
