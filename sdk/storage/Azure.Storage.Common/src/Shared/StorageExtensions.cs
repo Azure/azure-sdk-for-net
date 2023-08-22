@@ -87,7 +87,7 @@ namespace Azure.Storage.Shared
                 ClientSideEncryptionVersion.V1_0 => Constants.ClientSideEncryption.HttpMessagePropertyKeyV1,
 #pragma warning restore CS0618 // Type or member is obsolete
                 ClientSideEncryptionVersion.V2_0 => Constants.ClientSideEncryption.HttpMessagePropertyKeyV2,
-                _ => throw new ArgumentException("Unrecognized ClientSideEncryptionVersion"),
+                _ => throw Errors.ClientSideEncryption.UnrecognizedVersion(),
             };
             return HttpPipeline.CreateHttpMessagePropertiesScope(new Dictionary<string, object> { { key, true } });
         }
