@@ -12,8 +12,6 @@ namespace Azure.Core.Tests.PatchModels
     {
         internal static CollectionPatchModel Deserialize(JsonElement element)
         {
-            ChangeList changes = new();
-
             string id = default;
             Dictionary<string, string> variables = default;
 
@@ -35,8 +33,7 @@ namespace Azure.Core.Tests.PatchModels
                 }
             }
 
-            return new CollectionPatchModel(changes, id,
-                new ChangeListDictionary<string>(changes.RootElement.GetElement("variables"), variables));
+            return new CollectionPatchModel(id, new MergePatchDictionary<string>(variables));
         }
 
         CollectionPatchModel IModelJsonSerializable<CollectionPatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)

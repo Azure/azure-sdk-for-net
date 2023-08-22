@@ -11,50 +11,39 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class CollectionPatchModel
     {
-        private readonly ChangeList _rootChanges;
-        private ChangeListElement _changes => _rootChanges.RootElement;
-
         /// <summary>
         /// Public constructor.
         /// </summary>
         public CollectionPatchModel()
         {
-            _rootChanges = new ChangeList();
         }
 
         /// <summary>
         /// Serialization constructor.
         /// </summary>
-        /// <param name="element"></param>
-        internal CollectionPatchModel(ChangeList changes, string id, ChangeListDictionary<string> values)
+        internal CollectionPatchModel(string id, MergePatchDictionary<string> values)
         {
-            _id = id;
+            _id = new Changed<string>(id);
             _variables = values;
-
-            _rootChanges = changes;
         }
 
-        private string _id;
+        private Changed<string> _id;
         /// <summary>
         /// Optional string property corresponding to JSON """{"id": "abc"}""".
         /// </summary>
         public string Id
         {
             get => _id;
-            set
-            {
-                _id = value;
-                _changes.Set("id", value);
-            }
+            set => _id.Value = value;
         }
 
-        private ChangeListDictionary<string>? _variables;
+        private MergePatchDictionary<string> _variables;
         /// <summary> Environment variables which are defined as a set of &lt;name,value&gt; pairs. </summary>
         public IDictionary<string, string> Variables
         {
             get
             {
-                _variables ??= new ChangeListDictionary<string>(_changes.GetElement("variables"));
+                _variables ??= new MergePatchDictionary<string>();
                 return _variables;
             }
         }
