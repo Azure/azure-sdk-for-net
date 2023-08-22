@@ -5,97 +5,22 @@
 
 #nullable disable
 
-using System;
-using System.Text.Json;
-using System.Xml.Linq;
-using Azure.Core.Json;
-
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> The load test configuration. </summary>
     public partial class LoadTestConfiguration
     {
-        private MutableJsonElement _element;
-
         /// <summary> Initializes a new instance of LoadTestConfiguration. </summary>
-        public LoadTestConfiguration()
+        /// <param name="engineInstances"> The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test. </param>
+        /// <param name="splitAllCSVs"> If false, Azure Load Testing copies and processes your input files unmodified across all test engine instances. If true, Azure Load Testing splits the CSV input data evenly across all engine instances. If you provide multiple CSV files, each file will be split evenly. </param>
+        /// <param name="quickStartTest"> If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload. </param>
+        /// <param name="optionalLoadTestConfig"> Optional load test config. </param>
+        internal LoadTestConfiguration(int? engineInstances, bool? splitAllCSVs, bool? quickStartTest, OptionalLoadTestConfig optionalLoadTestConfig)
         {
-            _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
+            EngineInstances = engineInstances;
+            SplitAllCSVs = splitAllCSVs;
+            QuickStartTest = quickStartTest;
+            OptionalLoadTestConfig = optionalLoadTestConfig;
         }
-
-        internal LoadTestConfiguration(MutableJsonElement element)
-        {
-            _element = element;
-        }
-
-        /// <summary> The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test. </summary>
-        public int? EngineInstances
-        {
-            get
-            {
-                // TODO: encapsulate this boilerplate code for handling a nullable value type
-                if (!_element.TryGetProperty("engineInstances", out MutableJsonElement value))
-                {
-                    return null;
-                }
-
-                if (!value.TryGetInt32(out int i))
-                {
-                    return null;
-                }
-
-                return i;
-            }
-                
-            set => _element.SetProperty("engineInstances", value);
-        }
-
-        /// <summary> If false, Azure Load Testing copies and processes your input files unmodified across all test engine instances. If true, Azure Load Testing splits the CSV input data evenly across all engine instances. If you provide multiple CSV files, each file will be split evenly. </summary>
-        public bool? SplitAllCSVs
-        {
-            get
-            {
-                // TODO: encapsulate this boilerplate code for handling a nullable bool
-                if (!_element.TryGetProperty("splitAllCSVs", out MutableJsonElement value))
-                {
-                    return null;
-                }
-
-                return value.ValueKind switch
-                {
-                    JsonValueKind.True => true,
-                    JsonValueKind.False => false,
-                    JsonValueKind.Null => null,
-                    _ => throw new InvalidCastException("JsonElement at 'splitAllCSVs' is not a 'bool'.")
-                };
-            }
-
-            set => _element.SetProperty("splitAllCSVs", value);
-        }
-
-        /// <summary> If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload. </summary>
-        public bool? QuickStartTest
-        {
-            get
-            {
-                if (!_element.TryGetProperty("splitAllCSVs", out MutableJsonElement value))
-                {
-                    return null;
-                }
-
-                return value.ValueKind switch
-                {
-                    JsonValueKind.True => true,
-                    JsonValueKind.False => false,
-                    JsonValueKind.Null => null,
-                    _ => throw new InvalidCastException("JsonElement at 'splitAllCSVs' is not a 'bool'.")
-                };
-            }
-
-            set => _element.SetProperty("splitAllCSVs", value);
-        }
-
-        /// <summary> Optional load test config. </summary>
-        public OptionalLoadTestConfig OptionalLoadTestConfig { get; set; }
     }
 }

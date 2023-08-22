@@ -5,39 +5,18 @@
 
 #nullable disable
 
-using System;
-using Azure.Core.Json;
-
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Secret. </summary>
     public partial class Secret
     {
-        private MutableJsonElement _element;
-
         /// <summary> Initializes a new instance of Secret. </summary>
-        public Secret()
+        /// <param name="value"> The value of the secret for the respective type. </param>
+        /// <param name="type"> Type of secret. </param>
+        internal Secret(string value, SecretType? type)
         {
-            _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
-        }
-
-        internal Secret(MutableJsonElement element)
-        {
-            _element = element;
-        }
-
-        /// <summary> The value of the secret for the respective type. </summary>
-        public string Value
-        {
-            get => _element.GetProperty("value").GetString();
-            set => _element.SetProperty("value", value);
-        }
-
-        /// <summary> Type of secret. </summary>
-        public SecretType? Type
-        {
-            get => _element.GetProperty("type").GetString();
-            set => _element.SetProperty("type", value);
+            Value = value;
+            Type = type;
         }
     }
 }

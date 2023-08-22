@@ -7,258 +7,55 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
-using Azure.Core.Json;
+using Azure.Core;
 
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Load test model. </summary>
     public partial class Test
     {
-        private MutableJsonElement _element;
+        /// <summary> Initializes a new instance of Test. </summary>
+        public Test()
+        {
+            Secrets = new ChangeTrackingDictionary<string, Secret>();
+            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
+        }
 
         /// <summary> Initializes a new instance of Test. </summary>
-        public Test(string testId)
+        /// <param name="passFailCriteria"> Pass fail criteria for a test. </param>
+        /// <param name="secrets"> Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE. </param>
+        /// <param name="certificate"> Certificates metadata. </param>
+        /// <param name="environmentVariables"> Environment variables which are defined as a set of &lt;name,value&gt; pairs. </param>
+        /// <param name="loadTestConfiguration"> The load test configuration. </param>
+        /// <param name="inputArtifacts"> The input artifacts for the test. </param>
+        /// <param name="testId"> Unique test name as identifier. </param>
+        /// <param name="description"> The test description. </param>
+        /// <param name="displayName"> Display name of a test. </param>
+        /// <param name="subnetId"> Subnet ID on which the load test instances should run. </param>
+        /// <param name="keyvaultReferenceIdentityType"> Type of the managed identity referencing the Key vault. </param>
+        /// <param name="keyvaultReferenceIdentityId"> Resource Id of the managed identity referencing the Key vault. </param>
+        /// <param name="createdDateTime"> The creation datetime(ISO 8601 literal format). </param>
+        /// <param name="createdBy"> The user that created. </param>
+        /// <param name="lastModifiedDateTime"> The last Modified datetime(ISO 8601 literal format). </param>
+        /// <param name="lastModifiedBy"> The user that last modified. </param>
+        internal Test(PassFailCriteria passFailCriteria, IDictionary<string, Secret> secrets, CertificateMetadata certificate, IDictionary<string, string> environmentVariables, LoadTestConfiguration loadTestConfiguration, TestInputArtifacts inputArtifacts, string testId, string description, string displayName, string subnetId, string keyvaultReferenceIdentityType, string keyvaultReferenceIdentityId, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy)
         {
-            // testId is required for the client to create the request URI
-            // but it is not needed in the body of a PATCH request.
-
-            // Parse the initial element with this
-            BinaryData utf8Json;
-            using (MemoryStream stream = new())
-            {
-                using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-                writer.WriteStartObject();
-                writer.WritePropertyName("testId");
-                writer.WriteStringValue(testId.AsSpan());
-                writer.WriteEndObject();
-                writer.Flush();
-                stream.Position = 0;
-                utf8Json = BinaryData.FromStream(stream);
-            }
-
-            _element = MutableJsonDocument.Parse(utf8Json).RootElement;
-
-            // TODO: If we are suggesting a wholesale replacement of ChangeTrackingDictionary,
-            // we will need to confirm that MJD provides the complete set of features this type provides.
-        }
-
-        internal Test(MutableJsonElement element)
-        {
-            _element = element;
-
-            if (_element.TryGetProperty("passFailCriteria", out MutableJsonElement passFailCriteriaElement))
-            {
-                _passFailCriteria = new PassFailCriteria(passFailCriteriaElement);
-            }
-
-            if (_element.TryGetProperty("secrets", out MutableJsonElement secretsElement))
-            {
-                _secrets = new MutableJsonDictionary<Secret>(secretsElement);
-            }
-
-            if (_element.TryGetProperty("environmentVariables", out MutableJsonElement environmentVariablesElement))
-            {
-                _environmentVariables = new MutableJsonDictionary<string>(environmentVariablesElement);
-            }
-        }
-
-        private PassFailCriteria _passFailCriteria;
-        /// <summary> Pass fail criteria for a test. </summary>
-        public PassFailCriteria PassFailCriteria
-        {
-            get
-            {
-                if (_passFailCriteria == null)
-                {
-                    _element.SetProperty("passFailCriteria", new { });
-                    _passFailCriteria = new PassFailCriteria(_element.GetProperty("passFailCriteria"));
-                }
-
-                return _passFailCriteria;
-            }
-
-            // TODO: need to test what happens if caller sets this, how the interaction
-            // across MJEs in the MJD works.
-            set { _passFailCriteria = value; }
-        }
-
-        private IDictionary<string, Secret> _secrets;
-        /// <summary> Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE. </summary>
-        public IDictionary<string, Secret> Secrets
-        {
-            get
-            {
-                if (_secrets == null)
-                {
-                    _element.SetProperty("secrets", new { });
-                    _secrets = new MutableJsonDictionary<Secret>(_element.GetProperty("secrets"));
-                }
-
-                return _secrets;
-            }
-        }
-
-        /// <summary> Certificates metadata. </summary>
-        public CertificateMetadata Certificate { get; set; }
-
-        private IDictionary<string, string> _environmentVariables;
-        /// <summary> Environment variables which are defined as a set of &lt;name,value&gt; pairs. </summary>
-        public IDictionary<string, string> EnvironmentVariables
-        {
-            get
-            {
-                if (_environmentVariables == null)
-                {
-                    _element.SetProperty("environmentVariables", new { });
-                    _environmentVariables = new MutableJsonDictionary<string>(_element.GetProperty("environmentVariables"));
-                }
-
-                return _environmentVariables;
-            }
-        }
-
-        /// <summary> The load test configuration. </summary>
-        public LoadTestConfiguration LoadTestConfiguration { get; set; }
-
-        /// <summary> The input artifacts for the test. </summary>
-        public TestInputArtifacts InputArtifacts { get; }
-
-        /// <summary> Unique test name as identifier. </summary>
-        public string TestId
-        {
-            get
-            {
-                if (_element.TryGetProperty("testId", out MutableJsonElement value))
-                {
-                    return value.GetString();
-                }
-                return null;
-            }
-            set => _element.SetProperty("testId", value);
-        }
-
-        /// <summary> The test description. </summary>
-        public string Description
-        {
-            get
-            {
-                if (_element.TryGetProperty("description", out MutableJsonElement value))
-                {
-                    return value.GetString();
-                }
-                return null;
-            }
-            set => _element.SetProperty("description", value);
-        }
-
-        /// <summary> Display name of a test. </summary>
-        public string DisplayName
-        {
-            get
-            {
-                if (_element.TryGetProperty("displayName", out MutableJsonElement value))
-                {
-                    return value.GetString();
-                }
-                return null;
-            }
-            set => _element.SetProperty("displayName", value);
-        }
-
-        /// <summary> Subnet ID on which the load test instances should run. </summary>
-        public string SubnetId
-        {
-            get
-            {
-                if (_element.TryGetProperty("subnetId", out MutableJsonElement value))
-                {
-                    return value.GetString();
-                }
-                return null;
-            }
-            set => _element.SetProperty("subnetId", value);
-        }
-
-        /// <summary> Type of the managed identity referencing the Key vault. </summary>
-        public string KeyvaultReferenceIdentityType
-        {
-            get
-            {
-                if (_element.TryGetProperty("keyvaultReferenceIdentityType", out MutableJsonElement value))
-                {
-                    return value.GetString();
-                }
-                return null;
-            }
-            set => _element.SetProperty("keyvaultReferenceIdentityType", value);
-        }
-
-        /// <summary> Resource Id of the managed identity referencing the Key vault. </summary>
-        public string KeyvaultReferenceIdentityId
-        {
-            get
-            {
-                if (_element.TryGetProperty("keyvaultReferenceIdentityId", out MutableJsonElement value))
-                {
-                    return value.GetString();
-                }
-                return null;
-            }
-            set => _element.SetProperty("keyvaultReferenceIdentityId", value);
-        }
-
-        /// <summary> The creation datetime(ISO 8601 literal format). </summary>
-        public DateTimeOffset? CreatedDateTime
-        {
-            get
-            {
-                if (_element.TryGetProperty("createdDateTime", out MutableJsonElement value))
-                {
-                    return value.GetDateTimeOffset();
-                }
-                return null;
-            }
-        }
-
-        /// <summary> The user that created. </summary>
-        public string CreatedBy
-        {
-            get
-            {
-                if (_element.TryGetProperty("createdBy", out MutableJsonElement value))
-                {
-                    return value.GetString();
-                }
-                return null;
-            }
-        }
-
-        /// <summary> The last Modified datetime(ISO 8601 literal format). </summary>
-        public DateTimeOffset? LastModifiedDateTime
-        {
-            get
-            {
-                if (_element.TryGetProperty("lastModifiedDateTime", out MutableJsonElement value))
-                {
-                    return value.GetDateTimeOffset();
-                }
-                return null;
-            }
-        }
-
-        /// <summary> The user that last modified. </summary>
-        public string LastModifiedBy
-        {
-            get
-            {
-                if (_element.TryGetProperty("lastModifiedBy", out MutableJsonElement value))
-                {
-                    return value.GetString();
-                }
-                return null;
-            }
+            PassFailCriteria = passFailCriteria;
+            Secrets = secrets;
+            Certificate = certificate;
+            EnvironmentVariables = environmentVariables;
+            LoadTestConfiguration = loadTestConfiguration;
+            InputArtifacts = inputArtifacts;
+            TestId = testId;
+            Description = description;
+            DisplayName = displayName;
+            SubnetId = subnetId;
+            KeyvaultReferenceIdentityType = keyvaultReferenceIdentityType;
+            KeyvaultReferenceIdentityId = keyvaultReferenceIdentityId;
+            CreatedDateTime = createdDateTime;
+            CreatedBy = createdBy;
+            LastModifiedDateTime = lastModifiedDateTime;
+            LastModifiedBy = lastModifiedBy;
         }
     }
 }

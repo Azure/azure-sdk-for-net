@@ -13,60 +13,11 @@ namespace Azure.Developer.LoadTesting.Models
     /// <summary> The aggregation function to be applied on the client metric. Allowed functions - ‘percentage’ - for error metric , ‘avg’, ‘p50’, ‘p90’, ‘p95’, ‘p99’, ‘min’, ‘max’ - for response_time_ms and latency metric, ‘avg’ - for requests_per_sec, ‘count’ - for requests. </summary>
     public readonly partial struct PFAgFunc : IEquatable<PFAgFunc>
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PFAgFunc"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PFAgFunc(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string CountValue = "count";
-        private const string PercentageValue = "percentage";
-        private const string AvgValue = "avg";
-        private const string P50Value = "p50";
-        private const string P90Value = "p90";
-        private const string P95Value = "p95";
-        private const string P99Value = "p99";
-        private const string MinValue = "min";
-        private const string MaxValue = "max";
-
-        /// <summary> Criteria applies for count value. </summary>
-        public static PFAgFunc Count { get; } = new PFAgFunc(CountValue);
-        /// <summary> Criteria applies for given percentage value. </summary>
-        public static PFAgFunc Percentage { get; } = new PFAgFunc(PercentageValue);
-        /// <summary> Criteria applies for avg value. </summary>
-        public static PFAgFunc Avg { get; } = new PFAgFunc(AvgValue);
-        /// <summary> Criteria applies for 50th percentile value. </summary>
-        public static PFAgFunc P50 { get; } = new PFAgFunc(P50Value);
-        /// <summary> Criteria applies for 90th percentile value. </summary>
-        public static PFAgFunc P90 { get; } = new PFAgFunc(P90Value);
-        /// <summary> Criteria applies for 95th percentile value. </summary>
-        public static PFAgFunc P95 { get; } = new PFAgFunc(P95Value);
-        /// <summary> Criteria applies for 99th percentile value. </summary>
-        public static PFAgFunc P99 { get; } = new PFAgFunc(P99Value);
-        /// <summary> Criteria applies for minimum value. </summary>
-        public static PFAgFunc Min { get; } = new PFAgFunc(MinValue);
-        /// <summary> Criteria applies for maximum value. </summary>
-        public static PFAgFunc Max { get; } = new PFAgFunc(MaxValue);
         /// <summary> Determines if two <see cref="PFAgFunc"/> values are the same. </summary>
         public static bool operator ==(PFAgFunc left, PFAgFunc right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PFAgFunc"/> values are not the same. </summary>
         public static bool operator !=(PFAgFunc left, PFAgFunc right) => !left.Equals(right);
         /// <summary> Converts a string to a <see cref="PFAgFunc"/>. </summary>
         public static implicit operator PFAgFunc(string value) => new PFAgFunc(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PFAgFunc other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(PFAgFunc other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
     }
 }

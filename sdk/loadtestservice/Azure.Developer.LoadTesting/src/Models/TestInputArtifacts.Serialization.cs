@@ -5,45 +5,79 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Json;
-using Azure.Core.Serialization;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class TestInputArtifacts : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class TestInputArtifacts
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        internal static TestInputArtifacts DeserializeTestInputArtifacts(JsonElement element)
         {
-            throw new NotImplementedException();
-        }
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
-        {
-            if (options.Format == "P")
+            if (element.ValueKind == JsonValueKind.Null)
             {
-                _element.WriteTo(writer, 'P');
-                return;
+                return null;
             }
-
-            ((IUtf8JsonSerializable)this).Write(writer);
+            Optional<FileInfo> configFileInfo = default;
+            Optional<FileInfo> testScriptFileInfo = default;
+            Optional<FileInfo> userPropFileInfo = default;
+            Optional<FileInfo> inputArtifactsZipFileInfo = default;
+            Optional<IReadOnlyList<FileInfo>> additionalFileInfo = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("configFileInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    configFileInfo = FileInfo.DeserializeFileInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("testScriptFileInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    testScriptFileInfo = FileInfo.DeserializeFileInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("userPropFileInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    userPropFileInfo = FileInfo.DeserializeFileInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("inputArtifactsZipFileInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    inputArtifactsZipFileInfo = FileInfo.DeserializeFileInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("additionalFileInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FileInfo> array = new List<FileInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(FileInfo.DeserializeFileInfo(item));
+                    }
+                    additionalFileInfo = array;
+                    continue;
+                }
+            }
+            return new TestInputArtifacts(configFileInfo.Value, testScriptFileInfo.Value, userPropFileInfo.Value, inputArtifactsZipFileInfo.Value, Optional.ToList(additionalFileInfo));
         }
-
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            JsonDocument doc = JsonDocument.ParseValue(ref reader);
-            MutableJsonDocument mdoc = new MutableJsonDocument(doc, new JsonSerializerOptions());
-            return new TestInputArtifacts(mdoc.RootElement);
-        }
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            MutableJsonDocument jsonDocument = MutableJsonDocument.Parse(data);
-            return new TestInputArtifacts(jsonDocument.RootElement);
-        }
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => ModelSerializerHelper.SerializeToBinaryData(writer => ((IJsonModelSerializable)this).Serialize(writer, options));
     }
 }

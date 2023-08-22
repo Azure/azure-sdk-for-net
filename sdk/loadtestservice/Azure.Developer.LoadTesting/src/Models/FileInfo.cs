@@ -6,60 +6,27 @@
 #nullable disable
 
 using System;
-using Azure.Core.Json;
 
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> File info. </summary>
     public partial class FileInfo
     {
-        private MutableJsonElement _element;
-
         /// <summary> Initializes a new instance of FileInfo. </summary>
-        internal FileInfo()
+        /// <param name="url"> File URL. </param>
+        /// <param name="fileName"> Name of the file. </param>
+        /// <param name="fileType"> File type. </param>
+        /// <param name="expireDateTime"> Expiry time of the file (ISO 8601 literal format). </param>
+        /// <param name="validationStatus"> Validation status of the file. </param>
+        /// <param name="validationFailureDetails"> Validation failure error details. </param>
+        internal FileInfo(Uri url, string fileName, FileType? fileType, DateTimeOffset? expireDateTime, FileStatus? validationStatus, string validationFailureDetails)
         {
-            _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
-        }
-
-        internal FileInfo(MutableJsonElement element)
-        {
-            _element = element;
-        }
-
-        /// <summary> File URL. </summary>
-        public Uri Url
-        {
-            get => _element.GetProperty("url").ConvertTo<Uri>();
-        }
-
-        /// <summary> Name of the file. </summary>
-        public string FileName
-        {
-            get => _element.GetProperty("fileName").GetString();
-        }
-
-        /// <summary> File type. </summary>
-        public FileType? FileType
-        {
-            get => _element.GetProperty("fileType").GetString();
-        }
-
-        /// <summary> Expiry time of the file (ISO 8601 literal format). </summary>
-        public DateTimeOffset? ExpireDateTime
-        {
-            get => _element.GetProperty("expireDateTime").GetDateTimeOffset();
-        }
-
-        /// <summary> Validation status of the file. </summary>
-        public FileStatus? ValidationStatus
-        {
-            get => _element.GetProperty("validationStatus").GetString();
-        }
-
-        /// <summary> Validation failure error details. </summary>
-        public string ValidationFailureDetails
-        {
-            get => _element.GetProperty("validationFailureDetails").GetString();
+            Url = url;
+            FileName = fileName;
+            FileType = fileType;
+            ExpireDateTime = expireDateTime;
+            ValidationStatus = validationStatus;
+            ValidationFailureDetails = validationFailureDetails;
         }
     }
 }

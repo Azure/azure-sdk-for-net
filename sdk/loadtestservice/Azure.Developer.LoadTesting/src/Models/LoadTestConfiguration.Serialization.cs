@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Json;
-using Azure.Core.Serialization;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class LoadTestConfiguration : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class LoadTestConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -41,30 +38,56 @@ namespace Azure.Developer.LoadTesting.Models
             writer.WriteEndObject();
         }
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        internal static LoadTestConfiguration DeserializeLoadTestConfiguration(JsonElement element)
         {
-            if (options.Format == "P")
+            if (element.ValueKind == JsonValueKind.Null)
             {
-                _element.WriteTo(writer, 'P');
-                return;
+                return null;
             }
-
-            ((IUtf8JsonSerializable)this).Write(writer);
+            Optional<int> engineInstances = default;
+            Optional<bool> splitAllCSVs = default;
+            Optional<bool> quickStartTest = default;
+            Optional<OptionalLoadTestConfig> optionalLoadTestConfig = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("engineInstances"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    engineInstances = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("splitAllCSVs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    splitAllCSVs = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("quickStartTest"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    quickStartTest = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("optionalLoadTestConfig"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    optionalLoadTestConfig = Models.OptionalLoadTestConfig.DeserializeOptionalLoadTestConfig(property.Value);
+                    continue;
+                }
+            }
+            return new LoadTestConfiguration(Optional.ToNullable(engineInstances), Optional.ToNullable(splitAllCSVs), Optional.ToNullable(quickStartTest), optionalLoadTestConfig.Value);
         }
-
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            JsonDocument doc = JsonDocument.ParseValue(ref reader);
-            MutableJsonDocument mdoc = new MutableJsonDocument(doc, new JsonSerializerOptions());
-            return new LoadTestConfiguration(mdoc.RootElement);
-        }
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            MutableJsonDocument jsonDocument = MutableJsonDocument.Parse(data);
-            return new LoadTestConfiguration(jsonDocument.RootElement);
-        }
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => ModelSerializerHelper.SerializeToBinaryData(writer => ((IJsonModelSerializable)this).Serialize(writer, options));
     }
 }

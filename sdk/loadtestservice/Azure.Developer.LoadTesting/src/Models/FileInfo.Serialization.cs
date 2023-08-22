@@ -8,42 +8,73 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Json;
-using Azure.Core.Serialization;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class FileInfo : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class FileInfo
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        internal static FileInfo DeserializeFileInfo(JsonElement element)
         {
-            throw new NotImplementedException();
-        }
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
-        {
-            if (options.Format == "P")
+            if (element.ValueKind == JsonValueKind.Null)
             {
-                _element.WriteTo(writer, 'P');
-                return;
+                return null;
             }
-
-            ((IUtf8JsonSerializable)this).Write(writer);
+            Optional<Uri> url = default;
+            Optional<string> fileName = default;
+            Optional<FileType> fileType = default;
+            Optional<DateTimeOffset> expireDateTime = default;
+            Optional<FileStatus> validationStatus = default;
+            Optional<string> validationFailureDetails = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("url"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("fileName"u8))
+                {
+                    fileName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fileType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fileType = new FileType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("expireDateTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expireDateTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("validationStatus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    validationStatus = new FileStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("validationFailureDetails"u8))
+                {
+                    validationFailureDetails = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new FileInfo(url.Value, fileName.Value, Optional.ToNullable(fileType), Optional.ToNullable(expireDateTime), Optional.ToNullable(validationStatus), validationFailureDetails.Value);
         }
-
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            JsonDocument doc = JsonDocument.ParseValue(ref reader);
-            MutableJsonDocument mdoc = new MutableJsonDocument(doc, new JsonSerializerOptions());
-            return new FileInfo(mdoc.RootElement);
-        }
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            MutableJsonDocument jsonDocument = MutableJsonDocument.Parse(data);
-            return new FileInfo(jsonDocument.RootElement);
-        }
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => ModelSerializerHelper.SerializeToBinaryData(writer => ((IJsonModelSerializable)this).Serialize(writer, options));
     }
 }

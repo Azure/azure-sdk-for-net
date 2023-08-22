@@ -5,46 +5,20 @@
 
 #nullable disable
 
-using System;
-using Azure.Core.Json;
-
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Certificates metadata. </summary>
     public partial class CertificateMetadata
     {
-        private MutableJsonElement _element;
-
         /// <summary> Initializes a new instance of CertificateMetadata. </summary>
-        public CertificateMetadata()
+        /// <param name="value"> The value of the certificate for respective type. </param>
+        /// <param name="type"> Type of certificate. </param>
+        /// <param name="name"> Name of the certificate. </param>
+        internal CertificateMetadata(string value, CertificateType? type, string name)
         {
-            _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
-        }
-
-        internal CertificateMetadata(MutableJsonElement element)
-        {
-            _element = element;
-        }
-
-        /// <summary> The value of the certificate for respective type. </summary>
-        public string Value
-        {
-            get => _element.GetProperty("value").GetString();
-            set => _element.SetProperty("value", value);
-        }
-
-        /// <summary> Type of certificate. </summary>
-        public CertificateType? Type
-        {
-            get => _element.GetProperty("type").GetString();
-            set => _element.SetProperty("type", value);
-        }
-
-        /// <summary> Name of the certificate. </summary>
-        public string Name
-        {
-            get => _element.GetProperty("name").GetString();
-            set => _element.SetProperty("name", value);
+            Value = value;
+            Type = type;
+            Name = name;
         }
     }
 }

@@ -6,94 +6,23 @@
 #nullable disable
 
 using System;
-using Azure.Core.Json;
 
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Optional load test config. </summary>
     public partial class OptionalLoadTestConfig
     {
-        private MutableJsonElement _element;
-
         /// <summary> Initializes a new instance of OptionalLoadTestConfig. </summary>
-        public OptionalLoadTestConfig()
+        /// <param name="endpointUrl"> Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login. </param>
+        /// <param name="virtualUsers"> No of concurrent virtual users. </param>
+        /// <param name="rampUpTime"> Ramp up time. </param>
+        /// <param name="duration"> Test run duration. </param>
+        internal OptionalLoadTestConfig(Uri endpointUrl, int? virtualUsers, int? rampUpTime, int? duration)
         {
-            _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
-        }
-
-        internal OptionalLoadTestConfig(MutableJsonElement element)
-        {
-            _element = element;
-        }
-
-        /// <summary> Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login. </summary>
-        public Uri EndpointUrl
-        {
-            get => _element.GetProperty("endpointUrl").ConvertTo<Uri>();
-            set => _element.SetProperty("endpointUrl", value);
-        }
-
-        /// <summary> No of concurrent virtual users. </summary>
-        public int? VirtualUsers
-        {
-            get
-            {
-                if (!_element.TryGetProperty("virtualUsers", out MutableJsonElement value))
-                {
-                    return null;
-                }
-
-                if (!value.TryGetInt32(out int i))
-                {
-                    return null;
-                }
-
-                return i;
-            }
-
-            set => _element.SetProperty("virtualUsers", value);
-        }
-
-        /// <summary> Ramp up time. </summary>
-        public int? RampUpTime
-        {
-            get
-            {
-                if (!_element.TryGetProperty("rampUpTime", out MutableJsonElement value))
-                {
-                    return null;
-                }
-
-                if (!value.TryGetInt32(out int i))
-                {
-                    return null;
-                }
-
-                return i;
-            }
-
-            set => _element.SetProperty("rampUpTime", value);
-        }
-
-        /// <summary> Test run duration. </summary>
-        public int? Duration
-        {
-            get
-            {
-                if (!_element.TryGetProperty("duration", out MutableJsonElement value))
-                {
-                    return null;
-                }
-
-                if (!value.TryGetInt32(out int i))
-                {
-                    return null;
-                }
-
-                return i;
-            }
-
-            set => _element.SetProperty("duration", value);
+            EndpointUrl = endpointUrl;
+            VirtualUsers = virtualUsers;
+            RampUpTime = rampUpTime;
+            Duration = duration;
         }
     }
 }

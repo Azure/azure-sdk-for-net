@@ -8,12 +8,10 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Json;
-using Azure.Core.Serialization;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class OptionalLoadTestConfig : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class OptionalLoadTestConfig : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -41,30 +39,56 @@ namespace Azure.Developer.LoadTesting.Models
             writer.WriteEndObject();
         }
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        internal static OptionalLoadTestConfig DeserializeOptionalLoadTestConfig(JsonElement element)
         {
-            if (options.Format == "P")
+            if (element.ValueKind == JsonValueKind.Null)
             {
-                _element.WriteTo(writer, 'P');
-                return;
+                return null;
             }
-
-            ((IUtf8JsonSerializable)this).Write(writer);
+            Optional<Uri> endpointUrl = default;
+            Optional<int> virtualUsers = default;
+            Optional<int> rampUpTime = default;
+            Optional<int> duration = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("endpointUrl"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endpointUrl = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("virtualUsers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    virtualUsers = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("rampUpTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rampUpTime = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("duration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    duration = property.Value.GetInt32();
+                    continue;
+                }
+            }
+            return new OptionalLoadTestConfig(endpointUrl.Value, Optional.ToNullable(virtualUsers), Optional.ToNullable(rampUpTime), Optional.ToNullable(duration));
         }
-
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            JsonDocument doc = JsonDocument.ParseValue(ref reader);
-            MutableJsonDocument mdoc = new MutableJsonDocument(doc, new JsonSerializerOptions());
-            return new OptionalLoadTestConfig(mdoc.RootElement);
-        }
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            MutableJsonDocument jsonDocument = MutableJsonDocument.Parse(data);
-            return new OptionalLoadTestConfig(jsonDocument.RootElement);
-        }
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => ModelSerializerHelper.SerializeToBinaryData(writer => ((IJsonModelSerializable)this).Serialize(writer, options));
     }
 }

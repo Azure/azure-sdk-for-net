@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Json;
-using Azure.Core.Serialization;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class PassFailMetric : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class PassFailMetric : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -51,30 +48,88 @@ namespace Azure.Developer.LoadTesting.Models
             writer.WriteEndObject();
         }
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        internal static PassFailMetric DeserializePassFailMetric(JsonElement element)
         {
-            if (options.Format == "P")
+            if (element.ValueKind == JsonValueKind.Null)
             {
-                _element.WriteTo(writer, 'P');
-                return;
+                return null;
             }
-
-            ((IUtf8JsonSerializable)this).Write(writer);
+            Optional<PFMetrics> clientMetric = default;
+            Optional<PFAgFunc> aggregate = default;
+            Optional<string> condition = default;
+            Optional<string> requestName = default;
+            Optional<double> value = default;
+            Optional<PFAction> action = default;
+            Optional<double> actualValue = default;
+            Optional<PFResult> result = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("clientMetric"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientMetric = new PFMetrics(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("aggregate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aggregate = new PFAgFunc(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("condition"u8))
+                {
+                    condition = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("requestName"u8))
+                {
+                    requestName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("value"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    value = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("action"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    action = new PFAction(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("actualValue"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    actualValue = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("result"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    result = new PFResult(property.Value.GetString());
+                    continue;
+                }
+            }
+            return new PassFailMetric(Optional.ToNullable(clientMetric), Optional.ToNullable(aggregate), condition.Value, requestName.Value, Optional.ToNullable(value), Optional.ToNullable(action), Optional.ToNullable(actualValue), Optional.ToNullable(result));
         }
-
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            JsonDocument doc = JsonDocument.ParseValue(ref reader);
-            MutableJsonDocument mdoc = new MutableJsonDocument(doc, new JsonSerializerOptions());
-            return new PassFailMetric(mdoc.RootElement);
-        }
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            MutableJsonDocument jsonDocument = MutableJsonDocument.Parse(data);
-            return new PassFailMetric(jsonDocument.RootElement);
-        }
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => ModelSerializerHelper.SerializeToBinaryData(writer => ((IJsonModelSerializable)this).Serialize(writer, options));
     }
 }

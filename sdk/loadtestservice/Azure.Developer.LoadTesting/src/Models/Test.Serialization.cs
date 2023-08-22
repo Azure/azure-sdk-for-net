@@ -6,40 +6,14 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Json;
-using Azure.Core.Serialization;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class Test : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class Test : IUtf8JsonSerializable
     {
-        /// <summary>
-        /// </summary>
-        /// <param name="test"></param>
-        public static implicit operator RequestContent(Test test)
-        {
-            return new Utf8JsonDelayedRequestContent(test);
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="response"></param>
-        public static explicit operator Test(Response response)
-        {
-            MutableJsonDocument jsonDocument = MutableJsonDocument.Parse(response.Content);
-            return new Test(jsonDocument.RootElement);
-        }
-
-        // only used for public access to internal serialize
-        /// <summary>
-        /// </summary>
-        /// <param name="writer"></param>
-#pragma warning disable AZC0014 // don't use STJ types
-        public void Serialize(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer);
-#pragma warning restore AZC0014 // don't use STJ types
-
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
@@ -108,33 +82,154 @@ namespace Azure.Developer.LoadTesting.Models
             writer.WriteEndObject();
         }
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        internal static Test DeserializeTest(JsonElement element)
         {
-            // TODO: it would be nice to standardize on the type of Format.
-            if (options.Format == "P")
+            if (element.ValueKind == JsonValueKind.Null)
             {
-                _element.WriteTo(writer, 'P');
-                return;
+                return null;
             }
-
-            ((IUtf8JsonSerializable)this).Write(writer);
+            Optional<PassFailCriteria> passFailCriteria = default;
+            Optional<IDictionary<string, Secret>> secrets = default;
+            Optional<CertificateMetadata> certificate = default;
+            Optional<IDictionary<string, string>> environmentVariables = default;
+            Optional<LoadTestConfiguration> loadTestConfiguration = default;
+            Optional<TestInputArtifacts> inputArtifacts = default;
+            Optional<string> testId = default;
+            Optional<string> description = default;
+            Optional<string> displayName = default;
+            Optional<string> subnetId = default;
+            Optional<string> keyvaultReferenceIdentityType = default;
+            Optional<string> keyvaultReferenceIdentityId = default;
+            Optional<DateTimeOffset> createdDateTime = default;
+            Optional<string> createdBy = default;
+            Optional<DateTimeOffset> lastModifiedDateTime = default;
+            Optional<string> lastModifiedBy = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("passFailCriteria"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    passFailCriteria = Models.PassFailCriteria.DeserializePassFailCriteria(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("secrets"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, Secret> dictionary = new Dictionary<string, Secret>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, Secret.DeserializeSecret(property0.Value));
+                    }
+                    secrets = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("certificate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    certificate = CertificateMetadata.DeserializeCertificateMetadata(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("environmentVariables"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    environmentVariables = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("loadTestConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    loadTestConfiguration = Models.LoadTestConfiguration.DeserializeLoadTestConfiguration(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("inputArtifacts"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    inputArtifacts = TestInputArtifacts.DeserializeTestInputArtifacts(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("testId"u8))
+                {
+                    testId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("displayName"u8))
+                {
+                    displayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("subnetId"u8))
+                {
+                    subnetId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("keyvaultReferenceIdentityType"u8))
+                {
+                    keyvaultReferenceIdentityType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("keyvaultReferenceIdentityId"u8))
+                {
+                    keyvaultReferenceIdentityId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("createdDateTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdDateTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("createdBy"u8))
+                {
+                    createdBy = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("lastModifiedDateTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastModifiedDateTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("lastModifiedBy"u8))
+                {
+                    lastModifiedBy = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new Test(passFailCriteria.Value, Optional.ToDictionary(secrets), certificate.Value, Optional.ToDictionary(environmentVariables), loadTestConfiguration.Value, inputArtifacts.Value, testId.Value, description.Value, displayName.Value, subnetId.Value, keyvaultReferenceIdentityType.Value, keyvaultReferenceIdentityId.Value, Optional.ToNullable(createdDateTime), createdBy.Value, Optional.ToNullable(lastModifiedDateTime), lastModifiedBy.Value);
         }
-
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            JsonDocument doc = JsonDocument.ParseValue(ref reader);
-            MutableJsonDocument mdoc = new MutableJsonDocument(doc, new JsonSerializerOptions());
-            return new Test(mdoc.RootElement);
-        }
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            // TODO: Use options?
-
-            MutableJsonDocument jsonDocument = MutableJsonDocument.Parse(data);
-            return new Test(jsonDocument.RootElement);
-        }
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => ModelSerializerHelper.SerializeToBinaryData(writer => ((IJsonModelSerializable)this).Serialize(writer, options));
     }
 }

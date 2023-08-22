@@ -5,52 +5,27 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Core.Json;
+using Azure.Core;
 
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> The input artifacts for the test. </summary>
     public partial class TestInputArtifacts
     {
-        private MutableJsonElement _element;
-
         /// <summary> Initializes a new instance of TestInputArtifacts. </summary>
-        internal TestInputArtifacts()
+        /// <param name="configFileInfo"> File info. </param>
+        /// <param name="testScriptFileInfo"> File info. </param>
+        /// <param name="userPropFileInfo"> File info. </param>
+        /// <param name="inputArtifactsZipFileInfo"> File info. </param>
+        /// <param name="additionalFileInfo"> Additional supported files for the test run. </param>
+        internal TestInputArtifacts(FileInfo configFileInfo, FileInfo testScriptFileInfo, FileInfo userPropFileInfo, FileInfo inputArtifactsZipFileInfo, IReadOnlyList<FileInfo> additionalFileInfo)
         {
-            _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
-
-            AdditionalFileInfo = new MutableJsonReadOnlyList<FileInfo>(_element.GetProperty("additionalFileInfo"));
+            ConfigFileInfo = configFileInfo;
+            TestScriptFileInfo = testScriptFileInfo;
+            UserPropFileInfo = userPropFileInfo;
+            InputArtifactsZipFileInfo = inputArtifactsZipFileInfo;
+            AdditionalFileInfo = additionalFileInfo;
         }
-
-        internal TestInputArtifacts(MutableJsonElement element)
-        {
-            _element = element;
-
-            // TODO: TryGetProperty
-
-            ConfigFileInfo = new FileInfo(_element.GetProperty("configFileInfo"));
-            TestScriptFileInfo = new FileInfo(_element.GetProperty("testScriptFileInfo"));
-            UserPropFileInfo = new FileInfo(_element.GetProperty("userPropFileInfo"));
-            InputArtifactsZipFileInfo = new FileInfo(_element.GetProperty("inputArtifactsZipFileInfo"));
-
-            AdditionalFileInfo = new MutableJsonReadOnlyList<FileInfo>(_element.GetProperty("additionalFileInfo"));
-        }
-
-        /// <summary> File info. </summary>
-        public FileInfo ConfigFileInfo { get; }
-
-        /// <summary> File info. </summary>
-        public FileInfo TestScriptFileInfo { get; }
-
-        /// <summary> File info. </summary>
-        public FileInfo UserPropFileInfo { get; }
-
-        /// <summary> File info. </summary>
-        public FileInfo InputArtifactsZipFileInfo { get; }
-
-        /// <summary> Additional supported files for the test run. </summary>
-        public IReadOnlyList<FileInfo> AdditionalFileInfo { get; }
     }
 }

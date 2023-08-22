@@ -5,47 +5,19 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Core.Json;
+using Azure.Core;
 
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Pass fail criteria for a test. </summary>
     public partial class PassFailCriteria
     {
-        private MutableJsonElement _element;
-
         /// <summary> Initializes a new instance of PassFailCriteria. </summary>
-        public PassFailCriteria()
+        /// <param name="passFailMetrics"> Map of id and pass fail metrics { id  : pass fail metrics }. </param>
+        internal PassFailCriteria(IDictionary<string, PassFailMetric> passFailMetrics)
         {
-            _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
-        }
-
-        internal PassFailCriteria(MutableJsonElement element)
-        {
-            _element = element;
-
-            if (_element.TryGetProperty("passFailMetrics", out MutableJsonElement value))
-            {
-                _passFailMetrics = new MutableJsonDictionary<PassFailMetric>(value);
-            }            
-        }
-
-        private IDictionary<string, PassFailMetric> _passFailMetrics;
-        /// <summary> Map of id and pass fail metrics { id : pass fail metrics }. </summary>
-        public IDictionary<string, PassFailMetric> PassFailMetrics
-        {
-            get
-            {
-                if (_passFailMetrics == null)
-                {
-                    _element.SetProperty("passFailMetrics", new { });
-                    _passFailMetrics = new MutableJsonDictionary<PassFailMetric>(_element.GetProperty("passFailMetrics"));
-                }
-
-                return _passFailMetrics;
-            }
+            PassFailMetrics = passFailMetrics;
         }
     }
 }

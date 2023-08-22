@@ -5,159 +5,30 @@
 
 #nullable disable
 
-using Azure.Core.Json;
-using System;
-
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Pass fail metric. </summary>
     public partial class PassFailMetric
     {
-        private MutableJsonElement _element;
-
         /// <summary> Initializes a new instance of PassFailMetric. </summary>
-        public PassFailMetric()
+        /// <param name="clientMetric"> The client metric on which the criteria should be applied. </param>
+        /// <param name="aggregate"> The aggregation function to be applied on the client metric. Allowed functions - ‘percentage’ - for error metric , ‘avg’, ‘p50’, ‘p90’, ‘p95’, ‘p99’, ‘min’, ‘max’ - for response_time_ms and latency metric, ‘avg’ - for requests_per_sec, ‘count’ - for requests. </param>
+        /// <param name="condition"> The comparison operator. Supported types ‘&gt;’, ‘&lt;’. </param>
+        /// <param name="requestName"> Request name for which the Pass fail criteria has to be applied. </param>
+        /// <param name="value"> The value to compare with the client metric. Allowed values - ‘error : [0.0 , 100.0] unit- % ’, response_time_ms and latency : any integer value unit- ms. </param>
+        /// <param name="action"> Action taken after the threshold is met. Default is ‘continue’. </param>
+        /// <param name="actualValue"> The actual value of the client metric for the test run. </param>
+        /// <param name="result"> Outcome of the test run. </param>
+        internal PassFailMetric(PFMetrics? clientMetric, PFAgFunc? aggregate, string condition, string requestName, double? value, PFAction? action, double? actualValue, PFResult? result)
         {
-            _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
-        }
-
-        internal PassFailMetric(MutableJsonElement element)
-        {
-            _element = element;
-        }
-
-        /// <summary> The client metric on which the criteria should be applied. </summary>
-        public PFMetrics? ClientMetric
-        {
-            get
-            {
-                if (_element.TryGetProperty("clientMetric", out MutableJsonElement value))
-                {
-                    return value.GetString();
-                }
-
-                return null;
-            }
-
-            set => _element.SetProperty("clientMetric", value);
-        }
-
-        /// <summary> The aggregation function to be applied on the client metric. Allowed functions - ‘percentage’ - for error metric , ‘avg’, ‘p50’, ‘p90’, ‘p95’, ‘p99’, ‘min’, ‘max’ - for response_time_ms and latency metric, ‘avg’ - for requests_per_sec, ‘count’ - for requests. </summary>
-        public PFAgFunc? Aggregate
-        {
-            get
-            {
-                if (_element.TryGetProperty("aggregate", out MutableJsonElement value))
-                {
-                    return value.GetString();
-                }
-
-                return null;
-            }
-
-            set => _element.SetProperty("aggregate", value);
-        }
-
-        /// <summary> The comparison operator. Supported types ‘&gt;’, ‘&lt;’. </summary>
-        public string Condition
-        {
-            get
-            {
-                if (_element.TryGetProperty("condition", out MutableJsonElement value))
-                {
-                    return value.GetString();
-                }
-
-                return null;
-            }
-
-            set => _element.SetProperty("condition", value);
-        }
-
-        /// <summary> Request name for which the Pass fail criteria has to be applied. </summary>
-        public string RequestName
-        {
-            get
-            {
-                if (_element.TryGetProperty("requestName", out MutableJsonElement value))
-                {
-                    return value.GetString();
-                }
-
-                return null;
-            }
-
-            set => _element.SetProperty("requestName", value);
-        }
-
-        /// <summary> The value to compare with the client metric. Allowed values - ‘error : [0.0 , 100.0] unit- % ’, response_time_ms and latency : any integer value unit- ms. </summary>
-        public double? Value
-        {
-            get
-            {
-                if (!_element.TryGetProperty("value", out MutableJsonElement value))
-                {
-                    return null;
-                }
-
-                if (!value.TryGetDouble(out double d))
-                {
-                    return null;
-                }
-
-                return d;
-            }
-
-            set => _element.SetProperty("value", value);
-        }
-
-        /// <summary> Action taken after the threshold is met. Default is ‘continue’. </summary>
-        public PFAction? Action
-        {
-            get
-            {
-                if (_element.TryGetProperty("action", out MutableJsonElement value))
-                {
-                    return value.GetString();
-                }
-
-                return null;
-            }
-
-            set => _element.SetProperty("action", value);
-        }
-
-        /// <summary> The actual value of the client metric for the test run. </summary>
-        public double? ActualValue
-        {
-            get
-            {
-                if (!_element.TryGetProperty("actualValue", out MutableJsonElement value))
-                {
-                    return null;
-                }
-
-                if (!value.TryGetDouble(out double d))
-                {
-                    return null;
-                }
-
-                return d;
-            }
-        }
-
-        /// <summary> Outcome of the test run. </summary>
-        public PFResult? Result
-        {
-            get
-            {
-                if (_element.TryGetProperty("result", out MutableJsonElement value))
-                {
-                    return value.GetString();
-                }
-
-                return null;
-            }
+            ClientMetric = clientMetric;
+            Aggregate = aggregate;
+            Condition = condition;
+            RequestName = requestName;
+            Value = value;
+            Action = action;
+            ActualValue = actualValue;
+            Result = result;
         }
     }
 }
