@@ -175,7 +175,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="endingSequenceNumber">The sequence number of the last event in the batch.</param>
         /// <param name="durationSeconds">The total duration that the receive operation took to complete, in seconds.</param>
         ///
-        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'); Operation Id: '{3}'.  Service Retry Count: {4}; Event Count: {5}; Starting sequence number: '{6}', Ending sequence number: '{7}'; Duration: '{8:0.00}' seconds")]
+        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'); Operation Id: '{3}'.  Service Retry Count: {4}; Event Count: {5}; Starting sequence number: '{7}', Ending sequence number: '{8}'; Duration: '{6:0.00}' seconds")]
         public virtual void EventReceiveComplete(string eventHubName,
                                                  string consumerGroup,
                                                  string partitionId,
@@ -188,7 +188,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                EventReceiveCompleteCore(7, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, retryCount, eventCount, startingSequenceNumber ?? string.Empty, endingSequenceNumber ?? string.Empty, durationSeconds);
+                EventReceiveCompleteCore(7, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, retryCount, eventCount, durationSeconds, startingSequenceNumber ?? string.Empty, endingSequenceNumber ?? string.Empty);
             }
         }
 
@@ -2691,9 +2691,9 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="operationId">An artificial identifier for the publishing operation.</param>
         /// <param name="retryCount">The number of retries that were used for service communication.</param>
         /// <param name="eventCount">The number of events that were received in the batch.</param>
+        /// <param name="durationSeconds">The total duration that the receive operation took to complete, in seconds.</param>
         /// <param name="startingSequenceNumber">The sequence number of the first event in the batch.</param>
         /// <param name="endingSequenceNumber">The sequence number of the last event in the batch.</param>
-        /// <param name="durationSeconds">The total duration that the receive operation took to complete, in seconds.</param>
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2704,9 +2704,9 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                                                      string operationId,
                                                      int retryCount,
                                                      int eventCount,
+                                                     double durationSeconds,
                                                      string startingSequenceNumber,
-                                                     string endingSequenceNumber,
-                                                     double durationSeconds)
+                                                     string endingSequenceNumber)
         {
             fixed (char* eventHubNamePtr = eventHubName)
             fixed (char* consumerGroupPtr = consumerGroup)
@@ -2735,14 +2735,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[5].Size = Unsafe.SizeOf<int>();
                 eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref eventCount);
 
-                eventPayload[6].Size = (startingSequenceNumber.Length + 1) * sizeof(char);
-                eventPayload[6].DataPointer = (IntPtr)startingSequenceNumberPtr;
+                eventPayload[6].Size = Unsafe.SizeOf<double>();
+                eventPayload[6].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
 
-                eventPayload[7].Size = (endingSequenceNumber.Length + 1) * sizeof(char);
-                eventPayload[7].DataPointer = (IntPtr)endingSequenceNumberPtr;
+                eventPayload[7].Size = (startingSequenceNumber.Length + 1) * sizeof(char);
+                eventPayload[7].DataPointer = (IntPtr)startingSequenceNumberPtr;
 
-                eventPayload[8].Size = Unsafe.SizeOf<double>();
-                eventPayload[8].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
+                eventPayload[8].Size = (endingSequenceNumber.Length + 1) * sizeof(char);
+                eventPayload[8].DataPointer = (IntPtr)endingSequenceNumberPtr;
 
                 WriteEventCore(eventId, 9, eventPayload);
             }
