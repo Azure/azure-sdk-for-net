@@ -24,7 +24,7 @@ namespace Azure.Core.Pipeline
         private readonly ActivityAdapter? _activityAdapter;
         private readonly bool _suppressNestedClientActivities;
 
-#if !NET5_0
+#if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
         [RequiresUnreferencedCode("The diagnosticSourceArgs are used in a call to DiagnosticSource.Write, all necessary properties need to be preserved on the type being passed in using DynamicDependency attributes.")]
 #endif
 #if NETCOREAPP2_1
@@ -523,7 +523,7 @@ namespace Azure.Core.Pipeline
                     _currentActivity?.SetErrorStatus(exception?.ToString());
                 }
 #endif
-#if !NET5_0
+#if NET6_0_OR_GREATER // Set status is only defined in NET 6 or greater
                 _currentActivity?.SetStatus(ActivityStatusCode.Error, exception?.ToString());
 #endif
             }
