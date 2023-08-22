@@ -10,30 +10,23 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class ParentPatchModel
     {
-        private readonly ChangeList _rootChanges;
-        private ChangeListElement _changes => _rootChanges.RootElement;
-
         /// <summary>
         /// Public constructor.
         /// </summary>
         public ParentPatchModel()
         {
-            _rootChanges = new ChangeList();
         }
 
         /// <summary>
         /// Serialization constructor.
         /// </summary>
-        /// <param name="element"></param>
-        internal ParentPatchModel(ChangeList changes, string id, ChildPatchModel child)
+        internal ParentPatchModel(string id, ChildPatchModel child)
         {
-            _id = id;
-            _child = child;
-
-            _rootChanges = changes;
+            _id = new Changed<string>(id);
+            _child = new Changed<ChildPatchModel>(child);
         }
 
-        private string _id;
+        private Changed<string> _id;
         /// <summary>
         /// Optional string property corresponding to JSON """{"id": "abc"}""".
         /// </summary>
@@ -42,12 +35,11 @@ namespace Azure.Core.Tests.PatchModels
             get => _id;
             set
             {
-                _id = value;
-                _changes.Set("id", value);
+                _id.Value = value;
             }
         }
 
-        private ChildPatchModel _child;
+        private Changed<ChildPatchModel> _child;
         /// <summary>
         /// Optional ChildPatchModel property corresponding to JSON """{"child": {"a":"aa", "b": "bb"}}""".
         /// </summary>
@@ -55,18 +47,16 @@ namespace Azure.Core.Tests.PatchModels
         {
             get
             {
-                _child ??= new ChildPatchModel( _changes.GetElement("child"));
+                if (_child.Value == null)
+                {
+                    _child = new Changed<ChildPatchModel>(null);
+                }
+
                 return _child;
             }
             set
             {
-                _child = value;
-                _changes.Set("child", value);
-
-                // Note, we don't have to connect the child's changelist
-                // to the parent's changelist, because if we overwrite the child
-                // we will need to write the whole thing out anyway, and we
-                // don't have to worry about tracking changes in that case.
+                _child.Value = value;
             }
         }
     }

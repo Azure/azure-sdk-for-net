@@ -9,7 +9,7 @@ namespace Azure.Core.Tests.PatchModels
 {
     public partial class ChildPatchModel : IModelJsonSerializable<ChildPatchModel>, IUtf8JsonSerializable
     {
-        internal static ChildPatchModel Deserialize(ChangeListElement changes, JsonElement element)
+        internal static ChildPatchModel Deserialize(JsonElement element)
         {
             string a = default;
             string b = default;
@@ -29,23 +29,12 @@ namespace Azure.Core.Tests.PatchModels
                 }
             }
 
-            return new ChildPatchModel(changes, a, b);
-        }
-
-        internal static ChildPatchModel Deserialize(JsonElement element)
-        {
-            // If we deserialize outside the context of a parent model with a
-            // change list to connect to, we can assume the child model
-            // is not nested in a parent model, so it has an independent change
-            // tracking mechanism.
-
-            return Deserialize(new ChangeList().RootElement, element);
+            return new ChildPatchModel(a, b);
         }
 
         ChildPatchModel IModelJsonSerializable<ChildPatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             PatchModelHelper.ValidateFormat(this, options.Format);
-
             return Deserialize(ref reader, options);
         }
 
@@ -58,7 +47,6 @@ namespace Azure.Core.Tests.PatchModels
         ChildPatchModel IModelSerializable<ChildPatchModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             PatchModelHelper.ValidateFormat(this, options.Format);
-
             return Deserialize(data, options);
         }
 
@@ -83,7 +71,24 @@ namespace Azure.Core.Tests.PatchModels
 
         internal void SerializePatch(Utf8JsonWriter writer)
         {
-            throw new NotImplementedException();
+            if (HasChanges)
+            {
+                writer.WriteStartObject();
+
+                if (_a.HasChanged)
+                {
+                    writer.WritePropertyName("a");
+                    writer.WriteStringValue(A);
+                }
+
+                if (_b.HasChanged)
+                {
+                    writer.WritePropertyName("b");
+                    writer.WriteStringValue(B);
+                }
+
+                writer.WriteEndObject();
+            }
         }
 
         void IModelJsonSerializable<ChildPatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
@@ -108,7 +113,6 @@ namespace Azure.Core.Tests.PatchModels
         BinaryData IModelSerializable<ChildPatchModel>.Serialize(ModelSerializerOptions options)
         {
             PatchModelHelper.ValidateFormat(this, options.Format);
-
             return ModelSerializer.SerializeCore(this, options);
         }
 
@@ -118,7 +122,6 @@ namespace Azure.Core.Tests.PatchModels
         public static explicit operator ChildPatchModel(Response response)
         {
             Argument.AssertNotNull(response, nameof(response));
-
             return Deserialize(response.Content, ModelSerializerOptions.DefaultWireOptions);
         }
 

@@ -10,32 +10,24 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class ChildPatchModel
     {
-        private readonly ChangeListElement _changes;
-
-        internal ChildPatchModel(ChangeListElement changes)
-        {
-            _changes = changes;
-        }
-
         /// <summary>
         /// Serialization constructor.
         /// </summary>
         internal ChildPatchModel()
         {
-            // TODO: Make it so it throws if this is called and _changes is later accessed.
         }
 
         /// <summary> Deserialization constructor. </summary>
-        internal ChildPatchModel(ChangeListElement changes, string a, string b)
+        internal ChildPatchModel(string a, string b)
         {
-            _a = a;
-            _b = b;
-
-            // Connect the child's changes to the parent's changes.
-            _changes = changes;
+            _a = new Changed<string>(a);
+            _b = new Changed<string>(b);
         }
 
-        private string _a;
+        // TODO: Should this be an interface, or no?
+        public bool HasChanges => _a.HasChanged || _b.HasChanged;
+
+        private Changed<string> _a;
         /// <summary>
         /// Optional string property corresponding to JSON """{"a": "aaa"}""".
         /// </summary>
@@ -44,12 +36,11 @@ namespace Azure.Core.Tests.PatchModels
             get => _a;
             set
             {
-                _a = value;
-                _changes.Set("a", value);
+                _a.Value = value;
             }
         }
 
-        private string _b;
+        private Changed<string> _b;
         /// <summary>
         /// Optional string property corresponding to JSON """{"b": "bbb"}""".
         /// </summary>
@@ -58,8 +49,12 @@ namespace Azure.Core.Tests.PatchModels
             get => _b;
             set
             {
-                _b = value;
-                _changes.Set("b", value);
+                //if (_b == null)
+                //{
+                //    _b = new Changed<string>(value);
+                //}
+
+                _b.Value = value;
             }
         }
     }

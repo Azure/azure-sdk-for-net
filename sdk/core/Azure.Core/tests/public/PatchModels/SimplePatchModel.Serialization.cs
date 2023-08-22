@@ -42,7 +42,6 @@ namespace Azure.Core.Tests.PatchModels
         SimplePatchModel IModelJsonSerializable<SimplePatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             PatchModelHelper.ValidateFormat(this, options.Format);
-
             return Deserialize(ref reader, options);
         }
 
@@ -55,7 +54,6 @@ namespace Azure.Core.Tests.PatchModels
         SimplePatchModel IModelSerializable<SimplePatchModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             PatchModelHelper.ValidateFormat(this, options.Format);
-
             return Deserialize(data, options);
         }
 
@@ -128,7 +126,6 @@ namespace Azure.Core.Tests.PatchModels
         BinaryData IModelSerializable<SimplePatchModel>.Serialize(ModelSerializerOptions options)
         {
             PatchModelHelper.ValidateFormat(this, options.Format);
-
             return ModelSerializer.SerializeCore(this, options);
         }
 
@@ -138,7 +135,6 @@ namespace Azure.Core.Tests.PatchModels
         public static explicit operator SimplePatchModel(Response response)
         {
             Argument.AssertNotNull(response, nameof(response));
-
             return Deserialize(response.Content, ModelSerializerOptions.DefaultWireOptions);
         }
 
