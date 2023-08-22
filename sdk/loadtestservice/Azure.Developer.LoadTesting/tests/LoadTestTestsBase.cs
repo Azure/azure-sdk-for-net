@@ -21,6 +21,7 @@ namespace Azure.Developer.LoadTesting.Tests
         internal string _fileName;
         internal TestHelper _testHelper;
         internal LoadTestAdministrationClient _loadTestAdministrationClient;
+        internal LoadTestRunClient _loadTestRunClient;
         internal string _testRunId;
         internal string _resourceId;
         internal const string SKIP_SET_UP = "SkipSetUp";
@@ -28,6 +29,7 @@ namespace Azure.Developer.LoadTesting.Tests
         internal const string UPLOAD_TEST_FILE = "UploadTestFile";
         internal const string SKIP_TEST_RUN = "SkipTestRun";
         internal const string SKIP_DELETE_TEST_RUN = "SkipDeleteTestRun";
+        internal TestRunResultOperation _testRunOperation;
 
         internal bool CheckForSkipSetUp()
         {
@@ -77,6 +79,11 @@ namespace Azure.Developer.LoadTesting.Tests
         internal LoadTestAdministrationClient CreateAdministrationClient()
         {
             return InstrumentClient(new LoadTestAdministrationClient(new Uri("https://" + TestEnvironment.Endpoint), TestEnvironment.Credential, InstrumentClientOptions(new LoadTestingClientOptions())));
+        }
+
+        internal LoadTestRunClient CreateRunClient()
+        {
+            return InstrumentClient(new LoadTestRunClient(new Uri("https://" + TestEnvironment.Endpoint), TestEnvironment.Credential, InstrumentClientOptions(new LoadTestingClientOptions())));
         }
     }
 }
