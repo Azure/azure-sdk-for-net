@@ -117,7 +117,7 @@ namespace Azure.Core.Json
                         return false;
                     }
 
-                    value = new MutableJsonElement(_root, SerializeToJsonElement(change.Value), GetString(path, 0, pathLength), change.Index);
+                    value = new MutableJsonElement(_root, SerializeToJsonElement(change.Value, _root.SerializerOptions), GetString(path, 0, pathLength), change.Index);
                     return true;
                 }
 
@@ -172,7 +172,7 @@ namespace Azure.Core.Json
             string path = MutableJsonDocument.ChangeTracker.PushIndex(_path, index);
             if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
             {
-                return new MutableJsonElement(_root, SerializeToJsonElement(change.Value), path, change.Index);
+                return new MutableJsonElement(_root, SerializeToJsonElement(change.Value, _root.SerializerOptions), path, change.Index);
             }
 
             return new MutableJsonElement(_root, _element[index], path, _highWaterMark);
@@ -490,7 +490,7 @@ namespace Azure.Core.Json
                         return true;
                     case DateTimeOffset:
                     case string:
-                        SerializeToJsonElement(change.Value).TryGetDateTime(out value);
+                        SerializeToJsonElement(change.Value, _root.SerializerOptions).TryGetDateTime(out value);
                         return true;
                     case JsonElement element:
                         return element.TryGetDateTime(out value);
@@ -530,7 +530,7 @@ namespace Azure.Core.Json
                         return true;
                     case DateTime:
                     case string:
-                        SerializeToJsonElement(change.Value).TryGetDateTimeOffset(out value);
+                        SerializeToJsonElement(change.Value, _root.SerializerOptions).TryGetDateTimeOffset(out value);
                         return true;
                     case JsonElement element:
                         return element.TryGetDateTimeOffset(out value);
@@ -606,7 +606,7 @@ namespace Azure.Core.Json
                         value = g;
                         return true;
                     case string:
-                        SerializeToJsonElement(change.Value).TryGetGuid(out value);
+                        SerializeToJsonElement(change.Value, _root.SerializerOptions).TryGetGuid(out value);
                         return true;
                     case JsonElement element:
                         return element.TryGetGuid(out value);
@@ -1330,7 +1330,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return SerializeToJsonElement(change.Value);
+                return SerializeToJsonElement(change.Value, _root.SerializerOptions);
             }
 
             // Account for changes to descendants of this element as well
