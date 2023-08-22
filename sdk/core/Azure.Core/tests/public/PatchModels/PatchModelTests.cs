@@ -228,6 +228,26 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        public void CanPatchCollectionProperty_ClearItems()
+        {
+            BinaryData json = BinaryData.FromString("""
+                {
+                    "id": "abc",
+                    "variables":
+                    {
+                        "a": "aa",
+                        "b": "bb"
+                    }
+                }
+                """);
+
+            CollectionPatchModel model = ModelSerializer.Deserialize<CollectionPatchModel>(json);
+            model.Variables.Clear();
+
+            ValidatePatch("""{"variables": {"a": null, "b":null}}""", model);
+        }
+
+        [Test]
         public void CanRoundTripCollectionPatchModel()
         {
             BinaryData json = BinaryData.FromString("""

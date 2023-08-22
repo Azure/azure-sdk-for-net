@@ -39,7 +39,7 @@ namespace Azure.Core.Serialization
             _dictionary = dictionary;
         }
 
-        // TODO: implement IModel serializable...
+        // TODO: implement IModel serializable?
         public void SerializePatch(Utf8JsonWriter writer)
         {
             if (HasChanges)
@@ -108,9 +108,8 @@ namespace Azure.Core.Serialization
 
         void ICollection<KeyValuePair<string, T>>.Clear()
         {
-            // TODO: add test cases around this.
             HasChanges = true;
-            foreach (string key in _changed.Keys)
+            foreach (string key in _dictionary.Keys)
             {
                 _changed[key] = true;
             }
@@ -136,6 +135,7 @@ namespace Azure.Core.Serialization
         bool IDictionary<string, T>.Remove(string key)
         {
             HasChanges = true;
+            _changed[key] = true;
             return _dictionary.Remove(key);
         }
 
