@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<bool> available = default;
-            Core.Optional<SqlNameUnavailableReason> reason = default;
-            Core.Optional<string> message = default;
+            Optional<string> name = default;
+            Optional<bool> available = default;
+            Optional<SqlNameUnavailableReason> reason = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SqlNameAvailabilityResponse(name.Value, Core.Optional.ToNullable(available), Core.Optional.ToNullable(reason), message.Value);
+            return new SqlNameAvailabilityResponse(name.Value, Optional.ToNullable(available), Optional.ToNullable(reason), message.Value);
         }
     }
 }

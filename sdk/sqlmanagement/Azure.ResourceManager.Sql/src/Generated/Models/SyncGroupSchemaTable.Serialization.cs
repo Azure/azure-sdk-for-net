@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SyncGroupSchemaTable : Core.IUtf8JsonSerializable
+    public partial class SyncGroupSchemaTable : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Columns))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(QuotedName))
+            if (Optional.IsDefined(QuotedName))
             {
                 writer.WritePropertyName("quotedName"u8);
                 writer.WriteStringValue(QuotedName);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<IList<SyncGroupSchemaTableColumn>> columns = default;
-            Core.Optional<string> quotedName = default;
+            Optional<IList<SyncGroupSchemaTableColumn>> columns = default;
+            Optional<string> quotedName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("columns"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SyncGroupSchemaTable(Core.Optional.ToList(columns), quotedName.Value);
+            return new SyncGroupSchemaTable(Optional.ToList(columns), quotedName.Value);
         }
     }
 }

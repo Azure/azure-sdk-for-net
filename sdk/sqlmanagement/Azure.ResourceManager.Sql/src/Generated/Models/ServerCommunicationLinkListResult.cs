@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerCommunicationLinkListResult. </summary>
         internal ServerCommunicationLinkListResult()
         {
-            Value = new Core.ChangeTrackingList<SqlServerCommunicationLinkData>();
+            Value = new ChangeTrackingList<SqlServerCommunicationLinkData>();
         }
 
         /// <summary> Initializes a new instance of ServerCommunicationLinkListResult. </summary>

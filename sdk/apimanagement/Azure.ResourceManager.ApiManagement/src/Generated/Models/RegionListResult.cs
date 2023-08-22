@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of RegionListResult. </summary>
         internal RegionListResult()
         {
-            Value = new Core.ChangeTrackingList<RegionContract>();
+            Value = new ChangeTrackingList<RegionContract>();
         }
 
         /// <summary> Initializes a new instance of RegionListResult. </summary>

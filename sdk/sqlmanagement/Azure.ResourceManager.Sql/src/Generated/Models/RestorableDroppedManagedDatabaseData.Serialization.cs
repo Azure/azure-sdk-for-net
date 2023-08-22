@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class RestorableDroppedManagedDatabaseData : Core.IUtf8JsonSerializable
+    public partial class RestorableDroppedManagedDatabaseData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,16 +43,16 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> databaseName = default;
-            Core.Optional<DateTimeOffset> creationDate = default;
-            Core.Optional<DateTimeOffset> deletionDate = default;
-            Core.Optional<DateTimeOffset> earliestRestoreDate = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> databaseName = default;
+            Optional<DateTimeOffset> creationDate = default;
+            Optional<DateTimeOffset> deletionDate = default;
+            Optional<DateTimeOffset> earliestRestoreDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new RestorableDroppedManagedDatabaseData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, databaseName.Value, Core.Optional.ToNullable(creationDate), Core.Optional.ToNullable(deletionDate), Core.Optional.ToNullable(earliestRestoreDate));
+            return new RestorableDroppedManagedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, databaseName.Value, Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate));
         }
     }
 }

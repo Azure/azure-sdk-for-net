@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementDeletedServiceData : Core.IUtf8JsonSerializable
+    public partial class ApiManagementDeletedServiceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServiceId))
+            if (Optional.IsDefined(ServiceId))
             {
                 writer.WritePropertyName("serviceId"u8);
                 writer.WriteStringValue(ServiceId);
             }
-            if (Core.Optional.IsDefined(ScheduledPurgeOn))
+            if (Optional.IsDefined(ScheduledPurgeOn))
             {
                 writer.WritePropertyName("scheduledPurgeDate"u8);
                 writer.WriteStringValue(ScheduledPurgeOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(DeletedOn))
+            if (Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionDate"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> serviceId = default;
-            Core.Optional<DateTimeOffset> scheduledPurgeDate = default;
-            Core.Optional<DateTimeOffset> deletionDate = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> serviceId = default;
+            Optional<DateTimeOffset> scheduledPurgeDate = default;
+            Optional<DateTimeOffset> deletionDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementDeletedServiceData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), serviceId.Value, Core.Optional.ToNullable(scheduledPurgeDate), Core.Optional.ToNullable(deletionDate));
+            return new ApiManagementDeletedServiceData(id, name, type, systemData.Value, Optional.ToNullable(location), serviceId.Value, Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(deletionDate));
         }
     }
 }

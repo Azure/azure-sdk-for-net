@@ -12,19 +12,19 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlServerJobData : Core.IUtf8JsonSerializable
+    public partial class SqlServerJobData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(Schedule))
+            if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<int> version = default;
-            Core.Optional<SqlServerJobSchedule> schedule = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<int> version = default;
+            Optional<SqlServerJobSchedule> schedule = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlServerJobData(id, name, type, systemData.Value, description.Value, Core.Optional.ToNullable(version), schedule.Value);
+            return new SqlServerJobData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(version), schedule.Value);
         }
     }
 }

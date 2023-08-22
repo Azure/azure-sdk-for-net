@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of EndpointCertificateListResult. </summary>
         internal EndpointCertificateListResult()
         {
-            Value = new Core.ChangeTrackingList<EndpointCertificateData>();
+            Value = new ChangeTrackingList<EndpointCertificateData>();
         }
 
         /// <summary> Initializes a new instance of EndpointCertificateListResult. </summary>

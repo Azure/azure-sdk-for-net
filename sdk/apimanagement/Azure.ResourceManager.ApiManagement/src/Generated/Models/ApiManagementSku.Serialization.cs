@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> resourceType = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> tier = default;
-            Core.Optional<string> size = default;
-            Core.Optional<string> family = default;
-            Core.Optional<string> kind = default;
-            Core.Optional<ApiManagementSkuCapacity> capacity = default;
-            Core.Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Core.Optional<IReadOnlyList<ApiManagementSkuLocationInfo>> locationInfo = default;
-            Core.Optional<IReadOnlyList<string>> apiVersions = default;
-            Core.Optional<IReadOnlyList<ApiManagementSkuCosts>> costs = default;
-            Core.Optional<IReadOnlyList<ApiManagementSkuCapabilities>> capabilities = default;
-            Core.Optional<IReadOnlyList<ApiManagementSkuRestrictions>> restrictions = default;
+            Optional<string> resourceType = default;
+            Optional<string> name = default;
+            Optional<string> tier = default;
+            Optional<string> size = default;
+            Optional<string> family = default;
+            Optional<string> kind = default;
+            Optional<ApiManagementSkuCapacity> capacity = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
+            Optional<IReadOnlyList<ApiManagementSkuLocationInfo>> locationInfo = default;
+            Optional<IReadOnlyList<string>> apiVersions = default;
+            Optional<IReadOnlyList<ApiManagementSkuCosts>> costs = default;
+            Optional<IReadOnlyList<ApiManagementSkuCapabilities>> capabilities = default;
+            Optional<IReadOnlyList<ApiManagementSkuRestrictions>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiManagementSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, Core.Optional.ToList(locations), Core.Optional.ToList(locationInfo), Core.Optional.ToList(apiVersions), Core.Optional.ToList(costs), Core.Optional.ToList(capabilities), Core.Optional.ToList(restrictions));
+            return new ApiManagementSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(apiVersions), Optional.ToList(costs), Optional.ToList(capabilities), Optional.ToList(restrictions));
         }
     }
 }

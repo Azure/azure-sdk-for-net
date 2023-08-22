@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of NamedValueListResult. </summary>
         internal NamedValueListResult()
         {
-            Value = new Core.ChangeTrackingList<ApiManagementNamedValueData>();
+            Value = new ChangeTrackingList<ApiManagementNamedValueData>();
         }
 
         /// <summary> Initializes a new instance of NamedValueListResult. </summary>

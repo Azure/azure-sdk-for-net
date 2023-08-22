@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of StartStopManagedInstanceScheduleListResult. </summary>
         internal StartStopManagedInstanceScheduleListResult()
         {
-            Value = new Core.ChangeTrackingList<ManagedInstanceStartStopScheduleData>();
+            Value = new ChangeTrackingList<ManagedInstanceStartStopScheduleData>();
         }
 
         /// <summary> Initializes a new instance of StartStopManagedInstanceScheduleListResult. </summary>

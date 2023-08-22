@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class SubscriptionDelegationSettingProperties : Core.IUtf8JsonSerializable
+    internal partial class SubscriptionDelegationSettingProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsSubscriptionDelegationEnabled))
+            if (Optional.IsDefined(IsSubscriptionDelegationEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsSubscriptionDelegationEnabled.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
+            Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new SubscriptionDelegationSettingProperties(Core.Optional.ToNullable(enabled));
+            return new SubscriptionDelegationSettingProperties(Optional.ToNullable(enabled));
         }
     }
 }

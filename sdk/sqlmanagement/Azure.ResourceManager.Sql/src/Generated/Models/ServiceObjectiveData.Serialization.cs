@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ServiceObjectiveData : Core.IUtf8JsonSerializable
+    public partial class ServiceObjectiveData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> serviceObjectiveName = default;
-            Core.Optional<bool> isDefault = default;
-            Core.Optional<bool> isSystem = default;
-            Core.Optional<string> description = default;
-            Core.Optional<bool> enabled = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> serviceObjectiveName = default;
+            Optional<bool> isDefault = default;
+            Optional<bool> isSystem = default;
+            Optional<string> description = default;
+            Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ServiceObjectiveData(id, name, type, systemData.Value, serviceObjectiveName.Value, Core.Optional.ToNullable(isDefault), Core.Optional.ToNullable(isSystem), description.Value, Core.Optional.ToNullable(enabled));
+            return new ServiceObjectiveData(id, name, type, systemData.Value, serviceObjectiveName.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isSystem), description.Value, Optional.ToNullable(enabled));
         }
     }
 }

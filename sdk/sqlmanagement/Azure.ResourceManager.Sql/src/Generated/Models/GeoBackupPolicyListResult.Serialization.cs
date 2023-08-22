@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<GeoBackupPolicyData>> value = default;
+            Optional<IReadOnlyList<GeoBackupPolicyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new GeoBackupPolicyListResult(Core.Optional.ToList(value));
+            return new GeoBackupPolicyListResult(Optional.ToList(value));
         }
     }
 }

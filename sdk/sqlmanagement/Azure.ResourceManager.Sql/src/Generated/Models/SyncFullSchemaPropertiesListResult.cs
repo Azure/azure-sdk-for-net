@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SyncFullSchemaPropertiesListResult. </summary>
         internal SyncFullSchemaPropertiesListResult()
         {
-            Value = new Core.ChangeTrackingList<SyncFullSchemaProperties>();
+            Value = new ChangeTrackingList<SyncFullSchemaProperties>();
         }
 
         /// <summary> Initializes a new instance of SyncFullSchemaPropertiesListResult. </summary>

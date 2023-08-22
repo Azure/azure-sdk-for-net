@@ -11,14 +11,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceQuery : Core.IUtf8JsonSerializable
+    public partial class ManagedInstanceQuery : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(QueryText))
+            if (Optional.IsDefined(QueryText))
             {
                 writer.WritePropertyName("queryText"u8);
                 writer.WriteStringValue(QueryText);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> queryText = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> queryText = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

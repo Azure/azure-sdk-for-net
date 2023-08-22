@@ -11,39 +11,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class WorkloadClassifierData : Core.IUtf8JsonSerializable
+    public partial class WorkloadClassifierData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MemberName))
+            if (Optional.IsDefined(MemberName))
             {
                 writer.WritePropertyName("memberName"u8);
                 writer.WriteStringValue(MemberName);
             }
-            if (Core.Optional.IsDefined(Label))
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Core.Optional.IsDefined(Context))
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            if (Core.Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
-            if (Core.Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime);
             }
-            if (Core.Optional.IsDefined(Importance))
+            if (Optional.IsDefined(Importance))
             {
                 writer.WritePropertyName("importance"u8);
                 writer.WriteStringValue(Importance);
@@ -61,13 +61,13 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> memberName = default;
-            Core.Optional<string> label = default;
-            Core.Optional<string> context = default;
-            Core.Optional<string> startTime = default;
-            Core.Optional<string> endTime = default;
-            Core.Optional<string> importance = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> memberName = default;
+            Optional<string> label = default;
+            Optional<string> context = default;
+            Optional<string> startTime = default;
+            Optional<string> endTime = default;
+            Optional<string> importance = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

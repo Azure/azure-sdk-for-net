@@ -13,29 +13,29 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class InstanceFailoverGroupData : Core.IUtf8JsonSerializable
+    public partial class InstanceFailoverGroupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SecondaryType))
+            if (Optional.IsDefined(SecondaryType))
             {
                 writer.WritePropertyName("secondaryType"u8);
                 writer.WriteStringValue(SecondaryType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ReadWriteEndpoint))
+            if (Optional.IsDefined(ReadWriteEndpoint))
             {
                 writer.WritePropertyName("readWriteEndpoint"u8);
                 writer.WriteObjectValue(ReadWriteEndpoint);
             }
-            if (Core.Optional.IsDefined(ReadOnlyEndpoint))
+            if (Optional.IsDefined(ReadOnlyEndpoint))
             {
                 writer.WritePropertyName("readOnlyEndpoint"u8);
                 writer.WriteObjectValue(ReadOnlyEndpoint);
             }
-            if (Core.Optional.IsCollectionDefined(PartnerRegions))
+            if (Optional.IsCollectionDefined(PartnerRegions))
             {
                 writer.WritePropertyName("partnerRegions"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ManagedInstancePairs))
+            if (Optional.IsCollectionDefined(ManagedInstancePairs))
             {
                 writer.WritePropertyName("managedInstancePairs"u8);
                 writer.WriteStartArray();
@@ -68,14 +68,14 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<GeoSecondaryInstanceType> secondaryType = default;
-            Core.Optional<InstanceFailoverGroupReadWriteEndpoint> readWriteEndpoint = default;
-            Core.Optional<InstanceFailoverGroupReadOnlyEndpoint> readOnlyEndpoint = default;
-            Core.Optional<InstanceFailoverGroupReplicationRole> replicationRole = default;
-            Core.Optional<string> replicationState = default;
-            Core.Optional<IList<PartnerRegionInfo>> partnerRegions = default;
-            Core.Optional<IList<ManagedInstancePairInfo>> managedInstancePairs = default;
+            Optional<SystemData> systemData = default;
+            Optional<GeoSecondaryInstanceType> secondaryType = default;
+            Optional<InstanceFailoverGroupReadWriteEndpoint> readWriteEndpoint = default;
+            Optional<InstanceFailoverGroupReadOnlyEndpoint> readOnlyEndpoint = default;
+            Optional<InstanceFailoverGroupReplicationRole> replicationRole = default;
+            Optional<string> replicationState = default;
+            Optional<IList<PartnerRegionInfo>> partnerRegions = default;
+            Optional<IList<ManagedInstancePairInfo>> managedInstancePairs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new InstanceFailoverGroupData(id, name, type, systemData.Value, Core.Optional.ToNullable(secondaryType), readWriteEndpoint.Value, readOnlyEndpoint.Value, Core.Optional.ToNullable(replicationRole), replicationState.Value, Core.Optional.ToList(partnerRegions), Core.Optional.ToList(managedInstancePairs));
+            return new InstanceFailoverGroupData(id, name, type, systemData.Value, Optional.ToNullable(secondaryType), readWriteEndpoint.Value, readOnlyEndpoint.Value, Optional.ToNullable(replicationRole), replicationState.Value, Optional.ToList(partnerRegions), Optional.ToList(managedInstancePairs));
         }
     }
 }

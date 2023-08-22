@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> privateLinkServiceId = default;
-            Core.Optional<string> privateEndpointConnectionName = default;
-            Core.Optional<string> status = default;
+            Optional<ResourceIdentifier> privateLinkServiceId = default;
+            Optional<string> privateEndpointConnectionName = default;
+            Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateLinkServiceId"u8))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstanceAzureADOnlyAuthListResult. </summary>
         internal ManagedInstanceAzureADOnlyAuthListResult()
         {
-            Value = new Core.ChangeTrackingList<ManagedInstanceAzureADOnlyAuthenticationData>();
+            Value = new ChangeTrackingList<ManagedInstanceAzureADOnlyAuthenticationData>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceAzureADOnlyAuthListResult. </summary>

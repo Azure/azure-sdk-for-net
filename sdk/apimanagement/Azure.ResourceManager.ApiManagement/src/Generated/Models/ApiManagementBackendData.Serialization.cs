@@ -13,54 +13,54 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementBackendData : Core.IUtf8JsonSerializable
+    public partial class ApiManagementBackendData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Title))
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(ResourceUri))
+            if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Core.Optional.IsDefined(Credentials))
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            if (Core.Optional.IsDefined(Proxy))
+            if (Optional.IsDefined(Proxy))
             {
                 writer.WritePropertyName("proxy"u8);
                 writer.WriteObjectValue(Proxy);
             }
-            if (Core.Optional.IsDefined(Tls))
+            if (Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
                 writer.WriteObjectValue(Tls);
             }
-            if (Core.Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(Protocol))
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> title = default;
-            Core.Optional<string> description = default;
-            Core.Optional<Uri> resourceId = default;
-            Core.Optional<BackendProperties> properties = default;
-            Core.Optional<BackendCredentialsContract> credentials = default;
-            Core.Optional<BackendProxyContract> proxy = default;
-            Core.Optional<BackendTlsProperties> tls = default;
-            Core.Optional<Uri> uri = default;
-            Core.Optional<BackendProtocol> protocol = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> title = default;
+            Optional<string> description = default;
+            Optional<Uri> resourceId = default;
+            Optional<BackendProperties> properties = default;
+            Optional<BackendCredentialsContract> credentials = default;
+            Optional<BackendProxyContract> proxy = default;
+            Optional<BackendTlsProperties> tls = default;
+            Optional<Uri> uri = default;
+            Optional<BackendProtocol> protocol = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementBackendData(id, name, type, systemData.Value, title.Value, description.Value, resourceId.Value, properties.Value, credentials.Value, proxy.Value, tls.Value, uri.Value, Core.Optional.ToNullable(protocol));
+            return new ApiManagementBackendData(id, name, type, systemData.Value, title.Value, description.Value, resourceId.Value, properties.Value, credentials.Value, proxy.Value, tls.Value, uri.Value, Optional.ToNullable(protocol));
         }
     }
 }

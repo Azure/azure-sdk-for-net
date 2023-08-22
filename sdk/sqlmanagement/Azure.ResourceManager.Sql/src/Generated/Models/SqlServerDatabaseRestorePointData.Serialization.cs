@@ -13,9 +13,9 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlServerDatabaseRestorePointData : Core.IUtf8JsonSerializable
+    public partial class SqlServerDatabaseRestorePointData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<RestorePointType> restorePointType = default;
-            Core.Optional<DateTimeOffset> earliestRestoreDate = default;
-            Core.Optional<DateTimeOffset> restorePointCreationDate = default;
-            Core.Optional<string> restorePointLabel = default;
+            Optional<SystemData> systemData = default;
+            Optional<RestorePointType> restorePointType = default;
+            Optional<DateTimeOffset> earliestRestoreDate = default;
+            Optional<DateTimeOffset> restorePointCreationDate = default;
+            Optional<string> restorePointLabel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlServerDatabaseRestorePointData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(restorePointType), Core.Optional.ToNullable(earliestRestoreDate), Core.Optional.ToNullable(restorePointCreationDate), restorePointLabel.Value);
+            return new SqlServerDatabaseRestorePointData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(restorePointType), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(restorePointCreationDate), restorePointLabel.Value);
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<int> limit = default;
-            Core.Optional<MaxSizeUnit> unit = default;
+            Optional<int> limit = default;
+            Optional<MaxSizeUnit> unit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("limit"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new MaxSizeCapability(Core.Optional.ToNullable(limit), Core.Optional.ToNullable(unit));
+            return new MaxSizeCapability(Optional.ToNullable(limit), Optional.ToNullable(unit));
         }
     }
 }

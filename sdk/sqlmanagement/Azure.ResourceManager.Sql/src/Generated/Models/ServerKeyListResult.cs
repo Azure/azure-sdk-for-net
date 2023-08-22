@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerKeyListResult. </summary>
         internal ServerKeyListResult()
         {
-            Value = new Core.ChangeTrackingList<SqlServerKeyData>();
+            Value = new ChangeTrackingList<SqlServerKeyData>();
         }
 
         /// <summary> Initializes a new instance of ServerKeyListResult. </summary>

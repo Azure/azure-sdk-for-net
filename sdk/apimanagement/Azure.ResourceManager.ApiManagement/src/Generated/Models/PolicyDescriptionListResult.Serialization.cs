@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<PolicyDescriptionContractData>> value = default;
-            Core.Optional<long> count = default;
+            Optional<IReadOnlyList<PolicyDescriptionContractData>> value = default;
+            Optional<long> count = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new PolicyDescriptionListResult(Core.Optional.ToList(value), Core.Optional.ToNullable(count));
+            return new PolicyDescriptionListResult(Optional.ToList(value), Optional.ToNullable(count));
         }
     }
 }

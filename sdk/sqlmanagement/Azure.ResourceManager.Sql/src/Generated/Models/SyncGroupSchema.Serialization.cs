@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SyncGroupSchema : Core.IUtf8JsonSerializable
+    public partial class SyncGroupSchema : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tables))
+            if (Optional.IsCollectionDefined(Tables))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(MasterSyncMemberName))
+            if (Optional.IsDefined(MasterSyncMemberName))
             {
                 writer.WritePropertyName("masterSyncMemberName"u8);
                 writer.WriteStringValue(MasterSyncMemberName);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<IList<SyncGroupSchemaTable>> tables = default;
-            Core.Optional<string> masterSyncMemberName = default;
+            Optional<IList<SyncGroupSchemaTable>> tables = default;
+            Optional<string> masterSyncMemberName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tables"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SyncGroupSchema(Core.Optional.ToList(tables), masterSyncMemberName.Value);
+            return new SyncGroupSchema(Optional.ToList(tables), masterSyncMemberName.Value);
         }
     }
 }

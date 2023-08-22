@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of JobCredentialListResult. </summary>
         internal JobCredentialListResult()
         {
-            Value = new Core.ChangeTrackingList<SqlServerJobCredentialData>();
+            Value = new ChangeTrackingList<SqlServerJobCredentialData>();
         }
 
         /// <summary> Initializes a new instance of JobCredentialListResult. </summary>

@@ -14,29 +14,29 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ExtendedServerBlobAuditingPolicyData : Core.IUtf8JsonSerializable
+    public partial class ExtendedServerBlobAuditingPolicyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsDevopsAuditEnabled))
+            if (Optional.IsDefined(IsDevopsAuditEnabled))
             {
                 writer.WritePropertyName("isDevopsAuditEnabled"u8);
                 writer.WriteBooleanValue(IsDevopsAuditEnabled.Value);
             }
-            if (Core.Optional.IsDefined(PredicateExpression))
+            if (Optional.IsDefined(PredicateExpression))
             {
                 writer.WritePropertyName("predicateExpression"u8);
                 writer.WriteStringValue(PredicateExpression);
             }
-            if (Core.Optional.IsDefined(RetentionDays))
+            if (Optional.IsDefined(RetentionDays))
             {
                 writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
             }
-            if (Core.Optional.IsCollectionDefined(AuditActionsAndGroups))
+            if (Optional.IsCollectionDefined(AuditActionsAndGroups))
             {
                 writer.WritePropertyName("auditActionsAndGroups"u8);
                 writer.WriteStartArray();
@@ -46,42 +46,42 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsStorageSecondaryKeyInUse))
+            if (Optional.IsDefined(IsStorageSecondaryKeyInUse))
             {
                 writer.WritePropertyName("isStorageSecondaryKeyInUse"u8);
                 writer.WriteBooleanValue(IsStorageSecondaryKeyInUse.Value);
             }
-            if (Core.Optional.IsDefined(IsAzureMonitorTargetEnabled))
+            if (Optional.IsDefined(IsAzureMonitorTargetEnabled))
             {
                 writer.WritePropertyName("isAzureMonitorTargetEnabled"u8);
                 writer.WriteBooleanValue(IsAzureMonitorTargetEnabled.Value);
             }
-            if (Core.Optional.IsDefined(QueueDelayMs))
+            if (Optional.IsDefined(QueueDelayMs))
             {
                 writer.WritePropertyName("queueDelayMs"u8);
                 writer.WriteNumberValue(QueueDelayMs.Value);
             }
-            if (Core.Optional.IsDefined(IsManagedIdentityInUse))
+            if (Optional.IsDefined(IsManagedIdentityInUse))
             {
                 writer.WritePropertyName("isManagedIdentityInUse"u8);
                 writer.WriteBooleanValue(IsManagedIdentityInUse.Value);
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(StorageEndpoint))
+            if (Optional.IsDefined(StorageEndpoint))
             {
                 writer.WritePropertyName("storageEndpoint"u8);
                 writer.WriteStringValue(StorageEndpoint);
             }
-            if (Core.Optional.IsDefined(StorageAccountAccessKey))
+            if (Optional.IsDefined(StorageAccountAccessKey))
             {
                 writer.WritePropertyName("storageAccountAccessKey"u8);
                 writer.WriteStringValue(StorageAccountAccessKey);
             }
-            if (Core.Optional.IsDefined(StorageAccountSubscriptionId))
+            if (Optional.IsDefined(StorageAccountSubscriptionId))
             {
                 writer.WritePropertyName("storageAccountSubscriptionId"u8);
                 writer.WriteStringValue(StorageAccountSubscriptionId.Value);
@@ -99,19 +99,19 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<bool> isDevopsAuditEnabled = default;
-            Core.Optional<string> predicateExpression = default;
-            Core.Optional<int> retentionDays = default;
-            Core.Optional<IList<string>> auditActionsAndGroups = default;
-            Core.Optional<bool> isStorageSecondaryKeyInUse = default;
-            Core.Optional<bool> isAzureMonitorTargetEnabled = default;
-            Core.Optional<int> queueDelayMs = default;
-            Core.Optional<bool> isManagedIdentityInUse = default;
-            Core.Optional<BlobAuditingPolicyState> state = default;
-            Core.Optional<string> storageEndpoint = default;
-            Core.Optional<string> storageAccountAccessKey = default;
-            Core.Optional<Guid> storageAccountSubscriptionId = default;
+            Optional<SystemData> systemData = default;
+            Optional<bool> isDevopsAuditEnabled = default;
+            Optional<string> predicateExpression = default;
+            Optional<int> retentionDays = default;
+            Optional<IList<string>> auditActionsAndGroups = default;
+            Optional<bool> isStorageSecondaryKeyInUse = default;
+            Optional<bool> isAzureMonitorTargetEnabled = default;
+            Optional<int> queueDelayMs = default;
+            Optional<bool> isManagedIdentityInUse = default;
+            Optional<BlobAuditingPolicyState> state = default;
+            Optional<string> storageEndpoint = default;
+            Optional<string> storageAccountAccessKey = default;
+            Optional<Guid> storageAccountSubscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ExtendedServerBlobAuditingPolicyData(id, name, type, systemData.Value, Core.Optional.ToNullable(isDevopsAuditEnabled), predicateExpression.Value, Core.Optional.ToNullable(retentionDays), Core.Optional.ToList(auditActionsAndGroups), Core.Optional.ToNullable(isStorageSecondaryKeyInUse), Core.Optional.ToNullable(isAzureMonitorTargetEnabled), Core.Optional.ToNullable(queueDelayMs), Core.Optional.ToNullable(isManagedIdentityInUse), Core.Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Core.Optional.ToNullable(storageAccountSubscriptionId));
+            return new ExtendedServerBlobAuditingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(isDevopsAuditEnabled), predicateExpression.Value, Optional.ToNullable(retentionDays), Optional.ToList(auditActionsAndGroups), Optional.ToNullable(isStorageSecondaryKeyInUse), Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(queueDelayMs), Optional.ToNullable(isManagedIdentityInUse), Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(storageAccountSubscriptionId));
         }
     }
 }

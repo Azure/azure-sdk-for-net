@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<Uri> redirectUri = default;
+            Optional<Uri> redirectUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("redirectUri"u8))

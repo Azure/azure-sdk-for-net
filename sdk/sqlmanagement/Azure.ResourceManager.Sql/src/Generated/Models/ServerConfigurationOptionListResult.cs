@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerConfigurationOptionListResult. </summary>
         internal ServerConfigurationOptionListResult()
         {
-            Value = new Core.ChangeTrackingList<ManagedInstanceServerConfigurationOptionData>();
+            Value = new ChangeTrackingList<ManagedInstanceServerConfigurationOptionData>();
         }
 
         /// <summary> Initializes a new instance of ServerConfigurationOptionListResult. </summary>

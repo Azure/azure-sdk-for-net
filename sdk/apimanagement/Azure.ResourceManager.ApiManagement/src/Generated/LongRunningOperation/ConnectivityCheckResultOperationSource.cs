@@ -14,15 +14,15 @@ using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal class ConnectivityCheckResultOperationSource : Core.IOperationSource<ConnectivityCheckResult>
+    internal class ConnectivityCheckResultOperationSource : IOperationSource<ConnectivityCheckResult>
     {
-        ConnectivityCheckResult Core.IOperationSource<ConnectivityCheckResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        ConnectivityCheckResult IOperationSource<ConnectivityCheckResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ConnectivityCheckResult.DeserializeConnectivityCheckResult(document.RootElement);
         }
 
-        async ValueTask<ConnectivityCheckResult> Core.IOperationSource<ConnectivityCheckResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ConnectivityCheckResult> IOperationSource<ConnectivityCheckResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ConnectivityCheckResult.DeserializeConnectivityCheckResult(document.RootElement);

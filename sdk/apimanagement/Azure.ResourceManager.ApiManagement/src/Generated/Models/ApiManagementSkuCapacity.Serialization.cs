@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<int> minimum = default;
-            Core.Optional<int> maximum = default;
-            Core.Optional<int> @default = default;
-            Core.Optional<ApiManagementSkuCapacityScaleType> scaleType = default;
+            Optional<int> minimum = default;
+            Optional<int> maximum = default;
+            Optional<int> @default = default;
+            Optional<ApiManagementSkuCapacityScaleType> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiManagementSkuCapacity(Core.Optional.ToNullable(minimum), Core.Optional.ToNullable(maximum), Core.Optional.ToNullable(@default), Core.Optional.ToNullable(scaleType));
+            return new ApiManagementSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType));
         }
     }
 }

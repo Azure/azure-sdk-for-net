@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of DatabaseSecurityAlertListResult. </summary>
         internal DatabaseSecurityAlertListResult()
         {
-            Value = new Core.ChangeTrackingList<SqlDatabaseSecurityAlertPolicyData>();
+            Value = new ChangeTrackingList<SqlDatabaseSecurityAlertPolicyData>();
         }
 
         /// <summary> Initializes a new instance of DatabaseSecurityAlertListResult. </summary>

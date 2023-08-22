@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IReadOnlyList<EditionCapability>> supportedEditions = default;
-            Core.Optional<IReadOnlyList<ElasticPoolEditionCapability>> supportedElasticPoolEditions = default;
-            Core.Optional<SqlCapabilityStatus> status = default;
-            Core.Optional<string> reason = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<EditionCapability>> supportedEditions = default;
+            Optional<IReadOnlyList<ElasticPoolEditionCapability>> supportedElasticPoolEditions = default;
+            Optional<SqlCapabilityStatus> status = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SqlServerVersionCapability(name.Value, Core.Optional.ToList(supportedEditions), Core.Optional.ToList(supportedElasticPoolEditions), Core.Optional.ToNullable(status), reason.Value);
+            return new SqlServerVersionCapability(name.Value, Optional.ToList(supportedEditions), Optional.ToList(supportedElasticPoolEditions), Optional.ToNullable(status), reason.Value);
         }
     }
 }

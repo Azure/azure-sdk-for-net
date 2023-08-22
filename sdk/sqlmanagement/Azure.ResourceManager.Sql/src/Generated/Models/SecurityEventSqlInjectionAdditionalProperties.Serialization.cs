@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<string> threatId = default;
-            Core.Optional<string> statement = default;
-            Core.Optional<int> statementHighlightOffset = default;
-            Core.Optional<int> statementHighlightLength = default;
-            Core.Optional<int> errorCode = default;
-            Core.Optional<int> errorSeverity = default;
-            Core.Optional<string> errorMessage = default;
+            Optional<string> threatId = default;
+            Optional<string> statement = default;
+            Optional<int> statementHighlightOffset = default;
+            Optional<int> statementHighlightLength = default;
+            Optional<int> errorCode = default;
+            Optional<int> errorSeverity = default;
+            Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("threatId"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SecurityEventSqlInjectionAdditionalProperties(threatId.Value, statement.Value, Core.Optional.ToNullable(statementHighlightOffset), Core.Optional.ToNullable(statementHighlightLength), Core.Optional.ToNullable(errorCode), Core.Optional.ToNullable(errorSeverity), errorMessage.Value);
+            return new SecurityEventSqlInjectionAdditionalProperties(threatId.Value, statement.Value, Optional.ToNullable(statementHighlightOffset), Optional.ToNullable(statementHighlightLength), Optional.ToNullable(errorCode), Optional.ToNullable(errorSeverity), errorMessage.Value);
         }
     }
 }

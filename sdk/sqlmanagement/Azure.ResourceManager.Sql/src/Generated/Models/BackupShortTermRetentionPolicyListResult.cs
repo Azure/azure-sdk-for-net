@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of BackupShortTermRetentionPolicyListResult. </summary>
         internal BackupShortTermRetentionPolicyListResult()
         {
-            Value = new Core.ChangeTrackingList<BackupShortTermRetentionPolicyData>();
+            Value = new ChangeTrackingList<BackupShortTermRetentionPolicyData>();
         }
 
         /// <summary> Initializes a new instance of BackupShortTermRetentionPolicyListResult. </summary>

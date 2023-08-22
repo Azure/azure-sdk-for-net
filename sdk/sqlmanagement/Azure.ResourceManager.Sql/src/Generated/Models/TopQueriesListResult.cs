@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of TopQueriesListResult. </summary>
         internal TopQueriesListResult()
         {
-            Value = new Core.ChangeTrackingList<TopQueries>();
+            Value = new ChangeTrackingList<TopQueries>();
         }
 
         /// <summary> Initializes a new instance of TopQueriesListResult. </summary>

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class HttpMessageDiagnostic : Core.IUtf8JsonSerializable
+    public partial class HttpMessageDiagnostic : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Headers))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Body))
+            if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteObjectValue(Body);
             }
-            if (Core.Optional.IsDefined(DataMasking))
+            if (Optional.IsDefined(DataMasking))
             {
                 writer.WritePropertyName("dataMasking"u8);
                 writer.WriteObjectValue(DataMasking);
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> headers = default;
-            Core.Optional<BodyDiagnosticSettings> body = default;
-            Core.Optional<DataMasking> dataMasking = default;
+            Optional<IList<string>> headers = default;
+            Optional<BodyDiagnosticSettings> body = default;
+            Optional<DataMasking> dataMasking = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("headers"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new HttpMessageDiagnostic(Core.Optional.ToList(headers), body.Value, dataMasking.Value);
+            return new HttpMessageDiagnostic(Optional.ToList(headers), body.Value, dataMasking.Value);
         }
     }
 }

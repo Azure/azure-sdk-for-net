@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ImportExportExtensionsOperationListResult. </summary>
         internal ImportExportExtensionsOperationListResult()
         {
-            Value = new Core.ChangeTrackingList<ImportExportExtensionsOperationResult>();
+            Value = new ChangeTrackingList<ImportExportExtensionsOperationResult>();
         }
 
         /// <summary> Initializes a new instance of ImportExportExtensionsOperationListResult. </summary>

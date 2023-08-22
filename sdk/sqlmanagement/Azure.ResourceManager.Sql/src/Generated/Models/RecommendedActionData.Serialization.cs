@@ -14,14 +14,14 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class RecommendedActionData : Core.IUtf8JsonSerializable
+    public partial class RecommendedActionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteObjectValue(State);
@@ -36,35 +36,35 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
-            Core.Optional<AzureLocation> location = default;
+            Optional<string> kind = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> recommendationReason = default;
-            Core.Optional<DateTimeOffset> validSince = default;
-            Core.Optional<DateTimeOffset> lastRefresh = default;
-            Core.Optional<RecommendedActionStateInfo> state = default;
-            Core.Optional<bool> isExecutableAction = default;
-            Core.Optional<bool> isRevertableAction = default;
-            Core.Optional<bool> isArchivedAction = default;
-            Core.Optional<DateTimeOffset> executeActionStartTime = default;
-            Core.Optional<TimeSpan> executeActionDuration = default;
-            Core.Optional<DateTimeOffset> revertActionStartTime = default;
-            Core.Optional<TimeSpan> revertActionDuration = default;
-            Core.Optional<RecommendedActionInitiatedBy> executeActionInitiatedBy = default;
-            Core.Optional<DateTimeOffset> executeActionInitiatedTime = default;
-            Core.Optional<RecommendedActionInitiatedBy> revertActionInitiatedBy = default;
-            Core.Optional<DateTimeOffset> revertActionInitiatedTime = default;
-            Core.Optional<int> score = default;
-            Core.Optional<RecommendedActionImplementationInfo> implementationDetails = default;
-            Core.Optional<RecommendedActionErrorInfo> errorDetails = default;
-            Core.Optional<IReadOnlyList<RecommendedActionImpactRecord>> estimatedImpact = default;
-            Core.Optional<IReadOnlyList<RecommendedActionImpactRecord>> observedImpact = default;
-            Core.Optional<IReadOnlyList<RecommendedActionMetricInfo>> timeSeries = default;
-            Core.Optional<IReadOnlyList<string>> linkedObjects = default;
-            Core.Optional<IReadOnlyDictionary<string, BinaryData>> details = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> recommendationReason = default;
+            Optional<DateTimeOffset> validSince = default;
+            Optional<DateTimeOffset> lastRefresh = default;
+            Optional<RecommendedActionStateInfo> state = default;
+            Optional<bool> isExecutableAction = default;
+            Optional<bool> isRevertableAction = default;
+            Optional<bool> isArchivedAction = default;
+            Optional<DateTimeOffset> executeActionStartTime = default;
+            Optional<TimeSpan> executeActionDuration = default;
+            Optional<DateTimeOffset> revertActionStartTime = default;
+            Optional<TimeSpan> revertActionDuration = default;
+            Optional<RecommendedActionInitiatedBy> executeActionInitiatedBy = default;
+            Optional<DateTimeOffset> executeActionInitiatedTime = default;
+            Optional<RecommendedActionInitiatedBy> revertActionInitiatedBy = default;
+            Optional<DateTimeOffset> revertActionInitiatedTime = default;
+            Optional<int> score = default;
+            Optional<RecommendedActionImplementationInfo> implementationDetails = default;
+            Optional<RecommendedActionErrorInfo> errorDetails = default;
+            Optional<IReadOnlyList<RecommendedActionImpactRecord>> estimatedImpact = default;
+            Optional<IReadOnlyList<RecommendedActionImpactRecord>> observedImpact = default;
+            Optional<IReadOnlyList<RecommendedActionMetricInfo>> timeSeries = default;
+            Optional<IReadOnlyList<string>> linkedObjects = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new RecommendedActionData(id, name, type, systemData.Value, kind.Value, Core.Optional.ToNullable(location), recommendationReason.Value, Core.Optional.ToNullable(validSince), Core.Optional.ToNullable(lastRefresh), state.Value, Core.Optional.ToNullable(isExecutableAction), Core.Optional.ToNullable(isRevertableAction), Core.Optional.ToNullable(isArchivedAction), Core.Optional.ToNullable(executeActionStartTime), Core.Optional.ToNullable(executeActionDuration), Core.Optional.ToNullable(revertActionStartTime), Core.Optional.ToNullable(revertActionDuration), Core.Optional.ToNullable(executeActionInitiatedBy), Core.Optional.ToNullable(executeActionInitiatedTime), Core.Optional.ToNullable(revertActionInitiatedBy), Core.Optional.ToNullable(revertActionInitiatedTime), Core.Optional.ToNullable(score), implementationDetails.Value, errorDetails.Value, Core.Optional.ToList(estimatedImpact), Core.Optional.ToList(observedImpact), Core.Optional.ToList(timeSeries), Core.Optional.ToList(linkedObjects), Core.Optional.ToDictionary(details));
+            return new RecommendedActionData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), recommendationReason.Value, Optional.ToNullable(validSince), Optional.ToNullable(lastRefresh), state.Value, Optional.ToNullable(isExecutableAction), Optional.ToNullable(isRevertableAction), Optional.ToNullable(isArchivedAction), Optional.ToNullable(executeActionStartTime), Optional.ToNullable(executeActionDuration), Optional.ToNullable(revertActionStartTime), Optional.ToNullable(revertActionDuration), Optional.ToNullable(executeActionInitiatedBy), Optional.ToNullable(executeActionInitiatedTime), Optional.ToNullable(revertActionInitiatedBy), Optional.ToNullable(revertActionInitiatedTime), Optional.ToNullable(score), implementationDetails.Value, errorDetails.Value, Optional.ToList(estimatedImpact), Optional.ToList(observedImpact), Optional.ToList(timeSeries), Optional.ToList(linkedObjects), Optional.ToDictionary(details));
         }
     }
 }

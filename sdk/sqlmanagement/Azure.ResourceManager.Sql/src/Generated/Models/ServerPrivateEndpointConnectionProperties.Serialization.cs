@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<WritableSubResource> privateEndpoint = default;
-            Core.Optional<IReadOnlyList<string>> groupIds = default;
-            Core.Optional<SqlPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
-            Core.Optional<SqlPrivateEndpointProvisioningState> provisioningState = default;
+            Optional<WritableSubResource> privateEndpoint = default;
+            Optional<IReadOnlyList<string>> groupIds = default;
+            Optional<SqlPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
+            Optional<SqlPrivateEndpointProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateEndpoint"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ServerPrivateEndpointConnectionProperties(privateEndpoint, Core.Optional.ToList(groupIds), privateLinkServiceConnectionState.Value, Core.Optional.ToNullable(provisioningState));
+            return new ServerPrivateEndpointConnectionProperties(privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

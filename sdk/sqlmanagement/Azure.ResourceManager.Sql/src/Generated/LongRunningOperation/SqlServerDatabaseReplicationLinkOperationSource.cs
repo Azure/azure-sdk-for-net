@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SqlServerDatabaseReplicationLinkOperationSource : Core.IOperationSource<SqlServerDatabaseReplicationLinkResource>
+    internal class SqlServerDatabaseReplicationLinkOperationSource : IOperationSource<SqlServerDatabaseReplicationLinkResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        SqlServerDatabaseReplicationLinkResource Core.IOperationSource<SqlServerDatabaseReplicationLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SqlServerDatabaseReplicationLinkResource IOperationSource<SqlServerDatabaseReplicationLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(document.RootElement);
             return new SqlServerDatabaseReplicationLinkResource(_client, data);
         }
 
-        async ValueTask<SqlServerDatabaseReplicationLinkResource> Core.IOperationSource<SqlServerDatabaseReplicationLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SqlServerDatabaseReplicationLinkResource> IOperationSource<SqlServerDatabaseReplicationLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(document.RootElement);

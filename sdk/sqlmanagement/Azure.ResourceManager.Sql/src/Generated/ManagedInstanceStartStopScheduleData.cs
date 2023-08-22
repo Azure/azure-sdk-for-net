@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ManagedInstanceStartStopScheduleData. </summary>
         public ManagedInstanceStartStopScheduleData()
         {
-            ScheduleList = new Core.ChangeTrackingList<SqlScheduleItem>();
+            ScheduleList = new ChangeTrackingList<SqlScheduleItem>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceStartStopScheduleData. </summary>

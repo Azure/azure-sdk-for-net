@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             AssociatedTagProperties tag = default;
-            Core.Optional<AssociatedApiProperties> api = default;
-            Core.Optional<AssociatedOperationProperties> operation = default;
-            Core.Optional<AssociatedProductProperties> product = default;
+            Optional<AssociatedApiProperties> api = default;
+            Optional<AssociatedOperationProperties> operation = default;
+            Optional<AssociatedProductProperties> product = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tag"u8))

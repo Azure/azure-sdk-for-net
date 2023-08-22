@@ -14,15 +14,15 @@ using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal class GitOperationResultContractDataOperationSource : Core.IOperationSource<GitOperationResultContractData>
+    internal class GitOperationResultContractDataOperationSource : IOperationSource<GitOperationResultContractData>
     {
-        GitOperationResultContractData Core.IOperationSource<GitOperationResultContractData>.CreateResult(Response response, CancellationToken cancellationToken)
+        GitOperationResultContractData IOperationSource<GitOperationResultContractData>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return GitOperationResultContractData.DeserializeGitOperationResultContractData(document.RootElement);
         }
 
-        async ValueTask<GitOperationResultContractData> Core.IOperationSource<GitOperationResultContractData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GitOperationResultContractData> IOperationSource<GitOperationResultContractData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return GitOperationResultContractData.DeserializeGitOperationResultContractData(document.RootElement);

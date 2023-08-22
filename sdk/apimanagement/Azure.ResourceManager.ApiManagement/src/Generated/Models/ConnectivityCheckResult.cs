@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ConnectivityCheckResult. </summary>
         internal ConnectivityCheckResult()
         {
-            Hops = new Core.ChangeTrackingList<ConnectivityHop>();
+            Hops = new ChangeTrackingList<ConnectivityHop>();
         }
 
         /// <summary> Initializes a new instance of ConnectivityCheckResult. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionWrapper. </summary>
         public RemotePrivateEndpointConnectionWrapper()
         {
-            GroupIds = new Core.ChangeTrackingList<string>();
+            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionWrapper. </summary>

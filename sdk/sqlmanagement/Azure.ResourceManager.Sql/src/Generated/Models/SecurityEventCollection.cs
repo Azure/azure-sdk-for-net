@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SecurityEventCollection. </summary>
         internal SecurityEventCollection()
         {
-            Value = new Core.ChangeTrackingList<SecurityEvent>();
+            Value = new ChangeTrackingList<SecurityEvent>();
         }
 
         /// <summary> Initializes a new instance of SecurityEventCollection. </summary>

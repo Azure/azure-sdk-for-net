@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<int> maxNumberOfReplicas = default;
-            Core.Optional<SqlCapabilityStatus> status = default;
-            Core.Optional<string> reason = default;
+            Optional<int> maxNumberOfReplicas = default;
+            Optional<SqlCapabilityStatus> status = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxNumberOfReplicas"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ReadScaleCapability(Core.Optional.ToNullable(maxNumberOfReplicas), Core.Optional.ToNullable(status), reason.Value);
+            return new ReadScaleCapability(Optional.ToNullable(maxNumberOfReplicas), Optional.ToNullable(status), reason.Value);
         }
     }
 }

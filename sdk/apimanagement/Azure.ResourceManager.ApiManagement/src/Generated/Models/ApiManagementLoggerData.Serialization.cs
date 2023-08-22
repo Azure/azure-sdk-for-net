@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementLoggerData : Core.IUtf8JsonSerializable
+    public partial class ApiManagementLoggerData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LoggerType))
+            if (Optional.IsDefined(LoggerType))
             {
                 writer.WritePropertyName("loggerType"u8);
                 writer.WriteStringValue(LoggerType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(Credentials))
+            if (Optional.IsCollectionDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteStartObject();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(IsBuffered))
+            if (Optional.IsDefined(IsBuffered))
             {
                 writer.WritePropertyName("isBuffered"u8);
                 writer.WriteBooleanValue(IsBuffered.Value);
             }
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<LoggerType> loggerType = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IDictionary<string, string>> credentials = default;
-            Core.Optional<bool> isBuffered = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
+            Optional<SystemData> systemData = default;
+            Optional<LoggerType> loggerType = default;
+            Optional<string> description = default;
+            Optional<IDictionary<string, string>> credentials = default;
+            Optional<bool> isBuffered = default;
+            Optional<ResourceIdentifier> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementLoggerData(id, name, type, systemData.Value, Core.Optional.ToNullable(loggerType), description.Value, Core.Optional.ToDictionary(credentials), Core.Optional.ToNullable(isBuffered), resourceId.Value);
+            return new ApiManagementLoggerData(id, name, type, systemData.Value, Optional.ToNullable(loggerType), description.Value, Optional.ToDictionary(credentials), Optional.ToNullable(isBuffered), resourceId.Value);
         }
     }
 }

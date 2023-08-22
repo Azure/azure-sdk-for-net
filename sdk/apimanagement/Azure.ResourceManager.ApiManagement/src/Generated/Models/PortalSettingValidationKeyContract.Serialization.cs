@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> validationKey = default;
+            Optional<string> validationKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationKey"u8))

@@ -14,22 +14,22 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlDatabaseData : Core.IUtf8JsonSerializable
+    public partial class SqlDatabaseData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,127 +44,127 @@ namespace Azure.ResourceManager.Sql
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CreateMode))
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Collation))
+            if (Optional.IsDefined(Collation))
             {
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (Core.Optional.IsDefined(MaxSizeBytes))
+            if (Optional.IsDefined(MaxSizeBytes))
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
-            if (Core.Optional.IsDefined(SampleName))
+            if (Optional.IsDefined(SampleName))
             {
                 writer.WritePropertyName("sampleName"u8);
                 writer.WriteStringValue(SampleName.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ElasticPoolId))
+            if (Optional.IsDefined(ElasticPoolId))
             {
                 writer.WritePropertyName("elasticPoolId"u8);
                 writer.WriteStringValue(ElasticPoolId);
             }
-            if (Core.Optional.IsDefined(SourceDatabaseId))
+            if (Optional.IsDefined(SourceDatabaseId))
             {
                 writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (Core.Optional.IsDefined(RestorePointInTime))
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (Core.Optional.IsDefined(SourceDatabaseDeletedOn))
+            if (Optional.IsDefined(SourceDatabaseDeletedOn))
             {
                 writer.WritePropertyName("sourceDatabaseDeletionDate"u8);
                 writer.WriteStringValue(SourceDatabaseDeletedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(RecoveryServicesRecoveryPointId))
+            if (Optional.IsDefined(RecoveryServicesRecoveryPointId))
             {
                 writer.WritePropertyName("recoveryServicesRecoveryPointId"u8);
                 writer.WriteStringValue(RecoveryServicesRecoveryPointId);
             }
-            if (Core.Optional.IsDefined(LongTermRetentionBackupResourceId))
+            if (Optional.IsDefined(LongTermRetentionBackupResourceId))
             {
                 writer.WritePropertyName("longTermRetentionBackupResourceId"u8);
                 writer.WriteStringValue(LongTermRetentionBackupResourceId);
             }
-            if (Core.Optional.IsDefined(RecoverableDatabaseId))
+            if (Optional.IsDefined(RecoverableDatabaseId))
             {
                 writer.WritePropertyName("recoverableDatabaseId"u8);
                 writer.WriteStringValue(RecoverableDatabaseId);
             }
-            if (Core.Optional.IsDefined(RestorableDroppedDatabaseId))
+            if (Optional.IsDefined(RestorableDroppedDatabaseId))
             {
                 writer.WritePropertyName("restorableDroppedDatabaseId"u8);
                 writer.WriteStringValue(RestorableDroppedDatabaseId);
             }
-            if (Core.Optional.IsDefined(CatalogCollation))
+            if (Optional.IsDefined(CatalogCollation))
             {
                 writer.WritePropertyName("catalogCollation"u8);
                 writer.WriteStringValue(CatalogCollation.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IsZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (Core.Optional.IsDefined(LicenseType))
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ReadScale))
+            if (Optional.IsDefined(ReadScale))
             {
                 writer.WritePropertyName("readScale"u8);
                 writer.WriteStringValue(ReadScale.Value.ToString());
             }
-            if (Core.Optional.IsDefined(HighAvailabilityReplicaCount))
+            if (Optional.IsDefined(HighAvailabilityReplicaCount))
             {
                 writer.WritePropertyName("highAvailabilityReplicaCount"u8);
                 writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
             }
-            if (Core.Optional.IsDefined(SecondaryType))
+            if (Optional.IsDefined(SecondaryType))
             {
                 writer.WritePropertyName("secondaryType"u8);
                 writer.WriteStringValue(SecondaryType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AutoPauseDelay))
+            if (Optional.IsDefined(AutoPauseDelay))
             {
                 writer.WritePropertyName("autoPauseDelay"u8);
                 writer.WriteNumberValue(AutoPauseDelay.Value);
             }
-            if (Core.Optional.IsDefined(RequestedBackupStorageRedundancy))
+            if (Optional.IsDefined(RequestedBackupStorageRedundancy))
             {
                 writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
-            if (Core.Optional.IsDefined(MinCapacity))
+            if (Optional.IsDefined(MinCapacity))
             {
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
             }
-            if (Core.Optional.IsDefined(MaintenanceConfigurationId))
+            if (Optional.IsDefined(MaintenanceConfigurationId))
             {
                 writer.WritePropertyName("maintenanceConfigurationId"u8);
                 writer.WriteStringValue(MaintenanceConfigurationId);
             }
-            if (Core.Optional.IsDefined(IsLedgerOn))
+            if (Optional.IsDefined(IsLedgerOn))
             {
                 writer.WritePropertyName("isLedgerOn"u8);
                 writer.WriteBooleanValue(IsLedgerOn.Value);
             }
-            if (Core.Optional.IsDefined(FederatedClientId))
+            if (Optional.IsDefined(FederatedClientId))
             {
                 writer.WritePropertyName("federatedClientId"u8);
                 writer.WriteStringValue(FederatedClientId.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Keys))
+            if (Optional.IsCollectionDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartObject();
@@ -175,32 +175,32 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(EncryptionProtector))
+            if (Optional.IsDefined(EncryptionProtector))
             {
                 writer.WritePropertyName("encryptionProtector"u8);
                 writer.WriteStringValue(EncryptionProtector);
             }
-            if (Core.Optional.IsDefined(PreferredEnclaveType))
+            if (Optional.IsDefined(PreferredEnclaveType))
             {
                 writer.WritePropertyName("preferredEnclaveType"u8);
                 writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SourceResourceId))
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Core.Optional.IsDefined(ManualCutover))
+            if (Optional.IsDefined(ManualCutover))
             {
                 writer.WritePropertyName("manualCutover"u8);
                 writer.WriteBooleanValue(ManualCutover.Value);
             }
-            if (Core.Optional.IsDefined(PerformCutover))
+            if (Optional.IsDefined(PerformCutover))
             {
                 writer.WritePropertyName("performCutover"u8);
                 writer.WriteBooleanValue(PerformCutover.Value);
             }
-            if (Core.Optional.IsDefined(AvailabilityZone))
+            if (Optional.IsDefined(AvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone.Value.ToString());
@@ -215,61 +215,61 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Core.Optional<SqlSku> sku = default;
-            Core.Optional<string> kind = default;
-            Core.Optional<string> managedBy = default;
-            Core.Optional<DatabaseIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<SqlSku> sku = default;
+            Optional<string> kind = default;
+            Optional<string> managedBy = default;
+            Optional<DatabaseIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SqlDatabaseCreateMode> createMode = default;
-            Core.Optional<string> collation = default;
-            Core.Optional<long> maxSizeBytes = default;
-            Core.Optional<SampleSchemaName> sampleName = default;
-            Core.Optional<ResourceIdentifier> elasticPoolId = default;
-            Core.Optional<ResourceIdentifier> sourceDatabaseId = default;
-            Core.Optional<SqlDatabaseStatus> status = default;
-            Core.Optional<Guid> databaseId = default;
-            Core.Optional<DateTimeOffset> creationDate = default;
-            Core.Optional<string> currentServiceObjectiveName = default;
-            Core.Optional<string> requestedServiceObjectiveName = default;
-            Core.Optional<AzureLocation> defaultSecondaryLocation = default;
-            Core.Optional<ResourceIdentifier> failoverGroupId = default;
-            Core.Optional<DateTimeOffset> restorePointInTime = default;
-            Core.Optional<DateTimeOffset> sourceDatabaseDeletionDate = default;
-            Core.Optional<ResourceIdentifier> recoveryServicesRecoveryPointId = default;
-            Core.Optional<ResourceIdentifier> longTermRetentionBackupResourceId = default;
-            Core.Optional<ResourceIdentifier> recoverableDatabaseId = default;
-            Core.Optional<ResourceIdentifier> restorableDroppedDatabaseId = default;
-            Core.Optional<CatalogCollationType> catalogCollation = default;
-            Core.Optional<bool> zoneRedundant = default;
-            Core.Optional<DatabaseLicenseType> licenseType = default;
-            Core.Optional<long> maxLogSizeBytes = default;
-            Core.Optional<DateTimeOffset> earliestRestoreDate = default;
-            Core.Optional<DatabaseReadScale> readScale = default;
-            Core.Optional<int> highAvailabilityReplicaCount = default;
-            Core.Optional<SecondaryType> secondaryType = default;
-            Core.Optional<SqlSku> currentSku = default;
-            Core.Optional<int> autoPauseDelay = default;
-            Core.Optional<SqlBackupStorageRedundancy> currentBackupStorageRedundancy = default;
-            Core.Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
-            Core.Optional<double> minCapacity = default;
-            Core.Optional<DateTimeOffset> pausedDate = default;
-            Core.Optional<DateTimeOffset> resumedDate = default;
-            Core.Optional<ResourceIdentifier> maintenanceConfigurationId = default;
-            Core.Optional<bool> isLedgerOn = default;
-            Core.Optional<bool> isInfraEncryptionEnabled = default;
-            Core.Optional<Guid> federatedClientId = default;
-            Core.Optional<IDictionary<string, SqlDatabaseKey>> keys = default;
-            Core.Optional<string> encryptionProtector = default;
-            Core.Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
-            Core.Optional<ResourceIdentifier> sourceResourceId = default;
-            Core.Optional<bool> manualCutover = default;
-            Core.Optional<bool> performCutover = default;
-            Core.Optional<SqlAvailabilityZoneType> availabilityZone = default;
+            Optional<SystemData> systemData = default;
+            Optional<SqlDatabaseCreateMode> createMode = default;
+            Optional<string> collation = default;
+            Optional<long> maxSizeBytes = default;
+            Optional<SampleSchemaName> sampleName = default;
+            Optional<ResourceIdentifier> elasticPoolId = default;
+            Optional<ResourceIdentifier> sourceDatabaseId = default;
+            Optional<SqlDatabaseStatus> status = default;
+            Optional<Guid> databaseId = default;
+            Optional<DateTimeOffset> creationDate = default;
+            Optional<string> currentServiceObjectiveName = default;
+            Optional<string> requestedServiceObjectiveName = default;
+            Optional<AzureLocation> defaultSecondaryLocation = default;
+            Optional<ResourceIdentifier> failoverGroupId = default;
+            Optional<DateTimeOffset> restorePointInTime = default;
+            Optional<DateTimeOffset> sourceDatabaseDeletionDate = default;
+            Optional<ResourceIdentifier> recoveryServicesRecoveryPointId = default;
+            Optional<ResourceIdentifier> longTermRetentionBackupResourceId = default;
+            Optional<ResourceIdentifier> recoverableDatabaseId = default;
+            Optional<ResourceIdentifier> restorableDroppedDatabaseId = default;
+            Optional<CatalogCollationType> catalogCollation = default;
+            Optional<bool> zoneRedundant = default;
+            Optional<DatabaseLicenseType> licenseType = default;
+            Optional<long> maxLogSizeBytes = default;
+            Optional<DateTimeOffset> earliestRestoreDate = default;
+            Optional<DatabaseReadScale> readScale = default;
+            Optional<int> highAvailabilityReplicaCount = default;
+            Optional<SecondaryType> secondaryType = default;
+            Optional<SqlSku> currentSku = default;
+            Optional<int> autoPauseDelay = default;
+            Optional<SqlBackupStorageRedundancy> currentBackupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
+            Optional<double> minCapacity = default;
+            Optional<DateTimeOffset> pausedDate = default;
+            Optional<DateTimeOffset> resumedDate = default;
+            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
+            Optional<bool> isLedgerOn = default;
+            Optional<bool> isInfraEncryptionEnabled = default;
+            Optional<Guid> federatedClientId = default;
+            Optional<IDictionary<string, SqlDatabaseKey>> keys = default;
+            Optional<string> encryptionProtector = default;
+            Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<bool> manualCutover = default;
+            Optional<bool> performCutover = default;
+            Optional<SqlAvailabilityZoneType> availabilityZone = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlDatabaseData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, kind.Value, managedBy.Value, identity.Value, Core.Optional.ToNullable(createMode), collation.Value, Core.Optional.ToNullable(maxSizeBytes), Core.Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(databaseId), Core.Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, Core.Optional.ToNullable(defaultSecondaryLocation), failoverGroupId.Value, Core.Optional.ToNullable(restorePointInTime), Core.Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Core.Optional.ToNullable(catalogCollation), Core.Optional.ToNullable(zoneRedundant), Core.Optional.ToNullable(licenseType), Core.Optional.ToNullable(maxLogSizeBytes), Core.Optional.ToNullable(earliestRestoreDate), Core.Optional.ToNullable(readScale), Core.Optional.ToNullable(highAvailabilityReplicaCount), Core.Optional.ToNullable(secondaryType), currentSku.Value, Core.Optional.ToNullable(autoPauseDelay), Core.Optional.ToNullable(currentBackupStorageRedundancy), Core.Optional.ToNullable(requestedBackupStorageRedundancy), Core.Optional.ToNullable(minCapacity), Core.Optional.ToNullable(pausedDate), Core.Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Core.Optional.ToNullable(isLedgerOn), Core.Optional.ToNullable(isInfraEncryptionEnabled), Core.Optional.ToNullable(federatedClientId), Core.Optional.ToDictionary(keys), encryptionProtector.Value, Core.Optional.ToNullable(preferredEnclaveType), sourceResourceId.Value, Core.Optional.ToNullable(manualCutover), Core.Optional.ToNullable(performCutover), Core.Optional.ToNullable(availabilityZone));
+            return new SqlDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, managedBy.Value, identity.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, Optional.ToNullable(defaultSecondaryLocation), failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled), Optional.ToNullable(federatedClientId), Optional.ToDictionary(keys), encryptionProtector.Value, Optional.ToNullable(preferredEnclaveType), sourceResourceId.Value, Optional.ToNullable(manualCutover), Optional.ToNullable(performCutover), Optional.ToNullable(availabilityZone));
         }
     }
 }

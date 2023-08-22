@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SqlPrivateEndpointConnectionListResult. </summary>
         internal SqlPrivateEndpointConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<SqlPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<SqlPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of SqlPrivateEndpointConnectionListResult. </summary>

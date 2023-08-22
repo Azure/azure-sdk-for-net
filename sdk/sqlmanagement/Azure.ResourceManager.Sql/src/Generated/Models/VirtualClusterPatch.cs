@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of VirtualClusterPatch. </summary>
         public VirtualClusterPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            ChildResources = new Core.ChangeTrackingList<string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            ChildResources = new ChangeTrackingList<string>();
         }
 
         /// <summary> Resource tags. </summary>

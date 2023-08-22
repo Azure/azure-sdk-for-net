@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstanceAdministratorListResult. </summary>
         internal ManagedInstanceAdministratorListResult()
         {
-            Value = new Core.ChangeTrackingList<ManagedInstanceAdministratorData>();
+            Value = new ChangeTrackingList<ManagedInstanceAdministratorData>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceAdministratorListResult. </summary>

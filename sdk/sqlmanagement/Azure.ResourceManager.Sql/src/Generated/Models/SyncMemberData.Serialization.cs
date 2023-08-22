@@ -13,59 +13,59 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SyncMemberData : Core.IUtf8JsonSerializable
+    public partial class SyncMemberData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DatabaseType))
+            if (Optional.IsDefined(DatabaseType))
             {
                 writer.WritePropertyName("databaseType"u8);
                 writer.WriteStringValue(DatabaseType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SyncAgentId))
+            if (Optional.IsDefined(SyncAgentId))
             {
                 writer.WritePropertyName("syncAgentId"u8);
                 writer.WriteStringValue(SyncAgentId);
             }
-            if (Core.Optional.IsDefined(SqlServerDatabaseId))
+            if (Optional.IsDefined(SqlServerDatabaseId))
             {
                 writer.WritePropertyName("sqlServerDatabaseId"u8);
                 writer.WriteStringValue(SqlServerDatabaseId.Value);
             }
-            if (Core.Optional.IsDefined(SyncMemberAzureDatabaseResourceId))
+            if (Optional.IsDefined(SyncMemberAzureDatabaseResourceId))
             {
                 writer.WritePropertyName("syncMemberAzureDatabaseResourceId"u8);
                 writer.WriteStringValue(SyncMemberAzureDatabaseResourceId);
             }
-            if (Core.Optional.IsDefined(UsePrivateLinkConnection))
+            if (Optional.IsDefined(UsePrivateLinkConnection))
             {
                 writer.WritePropertyName("usePrivateLinkConnection"u8);
                 writer.WriteBooleanValue(UsePrivateLinkConnection.Value);
             }
-            if (Core.Optional.IsDefined(ServerName))
+            if (Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (Core.Optional.IsDefined(DatabaseName))
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Core.Optional.IsDefined(UserName))
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Core.Optional.IsDefined(SyncDirection))
+            if (Optional.IsDefined(SyncDirection))
             {
                 writer.WritePropertyName("syncDirection"u8);
                 writer.WriteStringValue(SyncDirection.Value.ToString());
@@ -83,19 +83,19 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SyncMemberDbType> databaseType = default;
-            Core.Optional<ResourceIdentifier> syncAgentId = default;
-            Core.Optional<Guid> sqlServerDatabaseId = default;
-            Core.Optional<ResourceIdentifier> syncMemberAzureDatabaseResourceId = default;
-            Core.Optional<bool> usePrivateLinkConnection = default;
-            Core.Optional<string> privateEndpointName = default;
-            Core.Optional<string> serverName = default;
-            Core.Optional<string> databaseName = default;
-            Core.Optional<string> userName = default;
-            Core.Optional<string> password = default;
-            Core.Optional<SyncDirection> syncDirection = default;
-            Core.Optional<SyncMemberState> syncState = default;
+            Optional<SystemData> systemData = default;
+            Optional<SyncMemberDbType> databaseType = default;
+            Optional<ResourceIdentifier> syncAgentId = default;
+            Optional<Guid> sqlServerDatabaseId = default;
+            Optional<ResourceIdentifier> syncMemberAzureDatabaseResourceId = default;
+            Optional<bool> usePrivateLinkConnection = default;
+            Optional<string> privateEndpointName = default;
+            Optional<string> serverName = default;
+            Optional<string> databaseName = default;
+            Optional<string> userName = default;
+            Optional<string> password = default;
+            Optional<SyncDirection> syncDirection = default;
+            Optional<SyncMemberState> syncState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SyncMemberData(id, name, type, systemData.Value, Core.Optional.ToNullable(databaseType), syncAgentId.Value, Core.Optional.ToNullable(sqlServerDatabaseId), syncMemberAzureDatabaseResourceId.Value, Core.Optional.ToNullable(usePrivateLinkConnection), privateEndpointName.Value, serverName.Value, databaseName.Value, userName.Value, password.Value, Core.Optional.ToNullable(syncDirection), Core.Optional.ToNullable(syncState));
+            return new SyncMemberData(id, name, type, systemData.Value, Optional.ToNullable(databaseType), syncAgentId.Value, Optional.ToNullable(sqlServerDatabaseId), syncMemberAzureDatabaseResourceId.Value, Optional.ToNullable(usePrivateLinkConnection), privateEndpointName.Value, serverName.Value, databaseName.Value, userName.Value, password.Value, Optional.ToNullable(syncDirection), Optional.ToNullable(syncState));
         }
     }
 }

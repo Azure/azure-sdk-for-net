@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of LedgerDigestUploadsListResult. </summary>
         internal LedgerDigestUploadsListResult()
         {
-            Value = new Core.ChangeTrackingList<LedgerDigestUploadData>();
+            Value = new ChangeTrackingList<LedgerDigestUploadData>();
         }
 
         /// <summary> Initializes a new instance of LedgerDigestUploadsListResult. </summary>

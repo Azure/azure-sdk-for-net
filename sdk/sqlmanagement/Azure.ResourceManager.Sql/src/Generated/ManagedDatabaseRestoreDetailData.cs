@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailData. </summary>
         public ManagedDatabaseRestoreDetailData()
         {
-            FullBackupSets = new Core.ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>();
-            DiffBackupSets = new Core.ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>();
-            LogBackupSets = new Core.ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>();
-            UnrestorableFileList = new Core.ChangeTrackingList<ManagedDatabaseRestoreDetailUnrestorableFileProperties>();
+            FullBackupSets = new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>();
+            DiffBackupSets = new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>();
+            LogBackupSets = new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>();
+            UnrestorableFileList = new ChangeTrackingList<ManagedDatabaseRestoreDetailUnrestorableFileProperties>();
         }
 
         /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailData. </summary>

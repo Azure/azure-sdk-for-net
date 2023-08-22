@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SyncGroupData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<SyncGroupData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SyncGroupListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new SyncGroupListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

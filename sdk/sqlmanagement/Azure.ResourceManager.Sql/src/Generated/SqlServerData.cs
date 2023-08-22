@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="location"> The location. </param>
         public SqlServerData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<SqlServerPrivateEndpointConnection>();
+            PrivateEndpointConnections = new ChangeTrackingList<SqlServerPrivateEndpointConnection>();
         }
 
         /// <summary> Initializes a new instance of SqlServerData. </summary>

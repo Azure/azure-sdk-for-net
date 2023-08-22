@@ -13,19 +13,19 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlDatabaseAutomaticTuningData : Core.IUtf8JsonSerializable
+    public partial class SqlDatabaseAutomaticTuningData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DesiredState))
+            if (Optional.IsDefined(DesiredState))
             {
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToSerialString());
             }
-            if (Core.Optional.IsCollectionDefined(Options))
+            if (Optional.IsCollectionDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteStartObject();
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<AutomaticTuningMode> desiredState = default;
-            Core.Optional<AutomaticTuningMode> actualState = default;
-            Core.Optional<IDictionary<string, AutomaticTuningOptions>> options = default;
+            Optional<SystemData> systemData = default;
+            Optional<AutomaticTuningMode> desiredState = default;
+            Optional<AutomaticTuningMode> actualState = default;
+            Optional<IDictionary<string, AutomaticTuningOptions>> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlDatabaseAutomaticTuningData(id, name, type, systemData.Value, Core.Optional.ToNullable(desiredState), Core.Optional.ToNullable(actualState), Core.Optional.ToDictionary(options));
+            return new SqlDatabaseAutomaticTuningData(id, name, type, systemData.Value, Optional.ToNullable(desiredState), Optional.ToNullable(actualState), Optional.ToDictionary(options));
         }
     }
 }

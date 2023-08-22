@@ -11,14 +11,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementGatewayCertificateAuthorityData : Core.IUtf8JsonSerializable
+    public partial class ApiManagementGatewayCertificateAuthorityData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsTrusted))
+            if (Optional.IsDefined(IsTrusted))
             {
                 writer.WritePropertyName("isTrusted"u8);
                 writer.WriteBooleanValue(IsTrusted.Value);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<bool> isTrusted = default;
+            Optional<SystemData> systemData = default;
+            Optional<bool> isTrusted = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementGatewayCertificateAuthorityData(id, name, type, systemData.Value, Core.Optional.ToNullable(isTrusted));
+            return new ApiManagementGatewayCertificateAuthorityData(id, name, type, systemData.Value, Optional.ToNullable(isTrusted));
         }
     }
 }

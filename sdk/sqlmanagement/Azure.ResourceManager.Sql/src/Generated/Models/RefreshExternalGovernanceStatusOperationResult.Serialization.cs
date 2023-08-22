@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class RefreshExternalGovernanceStatusOperationResult : Core.IUtf8JsonSerializable
+    public partial class RefreshExternalGovernanceStatusOperationResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> requestId = default;
-            Core.Optional<string> requestType = default;
-            Core.Optional<string> queuedTime = default;
-            Core.Optional<string> serverName = default;
-            Core.Optional<string> status = default;
-            Core.Optional<string> errorMessage = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> requestId = default;
+            Optional<string> requestType = default;
+            Optional<string> queuedTime = default;
+            Optional<string> serverName = default;
+            Optional<string> status = default;
+            Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new RefreshExternalGovernanceStatusOperationResult(id, name, type, systemData.Value, Core.Optional.ToNullable(requestId), requestType.Value, queuedTime.Value, serverName.Value, status.Value, errorMessage.Value);
+            return new RefreshExternalGovernanceStatusOperationResult(id, name, type, systemData.Value, Optional.ToNullable(requestId), requestType.Value, queuedTime.Value, serverName.Value, status.Value, errorMessage.Value);
         }
     }
 }

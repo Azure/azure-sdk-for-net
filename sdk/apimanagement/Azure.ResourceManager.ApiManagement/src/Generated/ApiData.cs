@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of ApiData. </summary>
         public ApiData()
         {
-            Protocols = new Core.ChangeTrackingList<ApiOperationInvokableProtocol>();
+            Protocols = new ChangeTrackingList<ApiOperationInvokableProtocol>();
         }
 
         /// <summary> Initializes a new instance of ApiData. </summary>

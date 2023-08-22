@@ -13,34 +13,34 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class DistributedAvailabilityGroupData : Core.IUtf8JsonSerializable
+    public partial class DistributedAvailabilityGroupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TargetDatabase))
+            if (Optional.IsDefined(TargetDatabase))
             {
                 writer.WritePropertyName("targetDatabase"u8);
                 writer.WriteStringValue(TargetDatabase);
             }
-            if (Core.Optional.IsDefined(SourceEndpoint))
+            if (Optional.IsDefined(SourceEndpoint))
             {
                 writer.WritePropertyName("sourceEndpoint"u8);
                 writer.WriteStringValue(SourceEndpoint);
             }
-            if (Core.Optional.IsDefined(PrimaryAvailabilityGroupName))
+            if (Optional.IsDefined(PrimaryAvailabilityGroupName))
             {
                 writer.WritePropertyName("primaryAvailabilityGroupName"u8);
                 writer.WriteStringValue(PrimaryAvailabilityGroupName);
             }
-            if (Core.Optional.IsDefined(SecondaryAvailabilityGroupName))
+            if (Optional.IsDefined(SecondaryAvailabilityGroupName))
             {
                 writer.WritePropertyName("secondaryAvailabilityGroupName"u8);
                 writer.WriteStringValue(SecondaryAvailabilityGroupName);
             }
-            if (Core.Optional.IsDefined(ReplicationMode))
+            if (Optional.IsDefined(ReplicationMode))
             {
                 writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode.Value.ToString());
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> targetDatabase = default;
-            Core.Optional<string> sourceEndpoint = default;
-            Core.Optional<string> primaryAvailabilityGroupName = default;
-            Core.Optional<string> secondaryAvailabilityGroupName = default;
-            Core.Optional<DistributedAvailabilityGroupReplicationMode> replicationMode = default;
-            Core.Optional<Guid> distributedAvailabilityGroupId = default;
-            Core.Optional<Guid> sourceReplicaId = default;
-            Core.Optional<Guid> targetReplicaId = default;
-            Core.Optional<string> linkState = default;
-            Core.Optional<string> lastHardenedLsn = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> targetDatabase = default;
+            Optional<string> sourceEndpoint = default;
+            Optional<string> primaryAvailabilityGroupName = default;
+            Optional<string> secondaryAvailabilityGroupName = default;
+            Optional<DistributedAvailabilityGroupReplicationMode> replicationMode = default;
+            Optional<Guid> distributedAvailabilityGroupId = default;
+            Optional<Guid> sourceReplicaId = default;
+            Optional<Guid> targetReplicaId = default;
+            Optional<string> linkState = default;
+            Optional<string> lastHardenedLsn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new DistributedAvailabilityGroupData(id, name, type, systemData.Value, targetDatabase.Value, sourceEndpoint.Value, primaryAvailabilityGroupName.Value, secondaryAvailabilityGroupName.Value, Core.Optional.ToNullable(replicationMode), Core.Optional.ToNullable(distributedAvailabilityGroupId), Core.Optional.ToNullable(sourceReplicaId), Core.Optional.ToNullable(targetReplicaId), linkState.Value, lastHardenedLsn.Value);
+            return new DistributedAvailabilityGroupData(id, name, type, systemData.Value, targetDatabase.Value, sourceEndpoint.Value, primaryAvailabilityGroupName.Value, secondaryAvailabilityGroupName.Value, Optional.ToNullable(replicationMode), Optional.ToNullable(distributedAvailabilityGroupId), Optional.ToNullable(sourceReplicaId), Optional.ToNullable(targetReplicaId), linkState.Value, lastHardenedLsn.Value);
         }
     }
 }

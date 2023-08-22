@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SyncGroupSchemaTableColumn : Core.IUtf8JsonSerializable
+    public partial class SyncGroupSchemaTableColumn : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(QuotedName))
+            if (Optional.IsDefined(QuotedName))
             {
                 writer.WritePropertyName("quotedName"u8);
                 writer.WriteStringValue(QuotedName);
             }
-            if (Core.Optional.IsDefined(DataSize))
+            if (Optional.IsDefined(DataSize))
             {
                 writer.WritePropertyName("dataSize"u8);
                 writer.WriteStringValue(DataSize);
             }
-            if (Core.Optional.IsDefined(DataType))
+            if (Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<string> quotedName = default;
-            Core.Optional<string> dataSize = default;
-            Core.Optional<string> dataType = default;
+            Optional<string> quotedName = default;
+            Optional<string> dataSize = default;
+            Optional<string> dataType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("quotedName"u8))

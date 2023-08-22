@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SqlSynapseLinkWorkspace>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<SqlSynapseLinkWorkspace>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SynapseLinkWorkspaceListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new SynapseLinkWorkspaceListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

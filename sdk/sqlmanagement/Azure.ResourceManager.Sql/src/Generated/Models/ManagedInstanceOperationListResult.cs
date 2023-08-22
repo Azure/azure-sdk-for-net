@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstanceOperationListResult. </summary>
         internal ManagedInstanceOperationListResult()
         {
-            Value = new Core.ChangeTrackingList<ManagedInstanceOperationData>();
+            Value = new ChangeTrackingList<ManagedInstanceOperationData>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceOperationListResult. </summary>

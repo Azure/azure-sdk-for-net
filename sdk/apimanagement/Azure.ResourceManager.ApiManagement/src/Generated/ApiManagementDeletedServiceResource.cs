@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementDeletedServiceDeletedServicesRestClient.PurgeAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation(_apiManagementDeletedServiceDeletedServicesClientDiagnostics, Pipeline, _apiManagementDeletedServiceDeletedServicesRestClient.CreatePurgeRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation(_apiManagementDeletedServiceDeletedServicesClientDiagnostics, Pipeline, _apiManagementDeletedServiceDeletedServicesRestClient.CreatePurgeRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementDeletedServiceDeletedServicesRestClient.Purge(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
-                var operation = new ApiManagementArmOperation(_apiManagementDeletedServiceDeletedServicesClientDiagnostics, Pipeline, _apiManagementDeletedServiceDeletedServicesRestClient.CreatePurgeRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation(_apiManagementDeletedServiceDeletedServicesClientDiagnostics, Pipeline, _apiManagementDeletedServiceDeletedServicesRestClient.CreatePurgeRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

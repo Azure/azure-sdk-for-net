@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of MaintenanceWindowOptionData. </summary>
         public MaintenanceWindowOptionData()
         {
-            MaintenanceWindowCycles = new Core.ChangeTrackingList<MaintenanceWindowTimeRange>();
+            MaintenanceWindowCycles = new ChangeTrackingList<MaintenanceWindowTimeRange>();
         }
 
         /// <summary> Initializes a new instance of MaintenanceWindowOptionData. </summary>

@@ -54,28 +54,28 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/columns", false);
-            if (schema != null && Core.Optional.IsCollectionDefined(schema))
+            if (schema != null && Optional.IsCollectionDefined(schema))
             {
                 foreach (var param in schema)
                 {
                     uri.AppendQuery("schema", param, true);
                 }
             }
-            if (table != null && Core.Optional.IsCollectionDefined(table))
+            if (table != null && Optional.IsCollectionDefined(table))
             {
                 foreach (var param in table)
                 {
                     uri.AppendQuery("table", param, true);
                 }
             }
-            if (column != null && Core.Optional.IsCollectionDefined(column))
+            if (column != null && Optional.IsCollectionDefined(column))
             {
                 foreach (var param in column)
                 {
                     uri.AppendQuery("column", param, true);
                 }
             }
-            if (orderBy != null && Core.Optional.IsCollectionDefined(orderBy))
+            if (orderBy != null && Optional.IsCollectionDefined(orderBy))
             {
                 foreach (var param in orderBy)
                 {

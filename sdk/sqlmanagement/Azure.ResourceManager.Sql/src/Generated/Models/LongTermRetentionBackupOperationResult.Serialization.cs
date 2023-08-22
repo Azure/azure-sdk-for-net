@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class LongTermRetentionBackupOperationResult : Core.IUtf8JsonSerializable
+    public partial class LongTermRetentionBackupOperationResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> requestId = default;
-            Core.Optional<string> operationType = default;
-            Core.Optional<ResourceIdentifier> fromBackupResourceId = default;
-            Core.Optional<ResourceIdentifier> toBackupResourceId = default;
-            Core.Optional<SqlBackupStorageRedundancy> targetBackupStorageRedundancy = default;
-            Core.Optional<string> status = default;
-            Core.Optional<string> message = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> requestId = default;
+            Optional<string> operationType = default;
+            Optional<ResourceIdentifier> fromBackupResourceId = default;
+            Optional<ResourceIdentifier> toBackupResourceId = default;
+            Optional<SqlBackupStorageRedundancy> targetBackupStorageRedundancy = default;
+            Optional<string> status = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new LongTermRetentionBackupOperationResult(id, name, type, systemData.Value, Core.Optional.ToNullable(requestId), operationType.Value, fromBackupResourceId.Value, toBackupResourceId.Value, Core.Optional.ToNullable(targetBackupStorageRedundancy), status.Value, message.Value);
+            return new LongTermRetentionBackupOperationResult(id, name, type, systemData.Value, Optional.ToNullable(requestId), operationType.Value, fromBackupResourceId.Value, toBackupResourceId.Value, Optional.ToNullable(targetBackupStorageRedundancy), status.Value, message.Value);
         }
     }
 }

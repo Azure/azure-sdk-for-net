@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedDatabaseSecurityAlertPolicyListResult. </summary>
         internal ManagedDatabaseSecurityAlertPolicyListResult()
         {
-            Value = new Core.ChangeTrackingList<ManagedDatabaseSecurityAlertPolicyData>();
+            Value = new ChangeTrackingList<ManagedDatabaseSecurityAlertPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ManagedDatabaseSecurityAlertPolicyListResult. </summary>

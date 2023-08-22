@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ElasticPoolListResult. </summary>
         internal ElasticPoolListResult()
         {
-            Value = new Core.ChangeTrackingList<ElasticPoolData>();
+            Value = new ChangeTrackingList<ElasticPoolData>();
         }
 
         /// <summary> Initializes a new instance of ElasticPoolListResult. </summary>

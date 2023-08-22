@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class InstanceFailoverGroupReadWriteEndpoint : Core.IUtf8JsonSerializable
+    public partial class InstanceFailoverGroupReadWriteEndpoint : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("failoverPolicy"u8);
             writer.WriteStringValue(FailoverPolicy.ToString());
-            if (Core.Optional.IsDefined(FailoverWithDataLossGracePeriodMinutes))
+            if (Optional.IsDefined(FailoverWithDataLossGracePeriodMinutes))
             {
                 writer.WritePropertyName("failoverWithDataLossGracePeriodMinutes"u8);
                 writer.WriteNumberValue(FailoverWithDataLossGracePeriodMinutes.Value);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             ReadWriteEndpointFailoverPolicy failoverPolicy = default;
-            Core.Optional<int> failoverWithDataLossGracePeriodMinutes = default;
+            Optional<int> failoverWithDataLossGracePeriodMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failoverPolicy"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new InstanceFailoverGroupReadWriteEndpoint(failoverPolicy, Core.Optional.ToNullable(failoverWithDataLossGracePeriodMinutes));
+            return new InstanceFailoverGroupReadWriteEndpoint(failoverPolicy, Optional.ToNullable(failoverWithDataLossGracePeriodMinutes));
         }
     }
 }

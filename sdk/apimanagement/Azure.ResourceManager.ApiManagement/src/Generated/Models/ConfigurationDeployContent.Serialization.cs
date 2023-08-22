@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ConfigurationDeployContent : Core.IUtf8JsonSerializable
+    public partial class ConfigurationDeployContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Branch))
+            if (Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Core.Optional.IsDefined(ForceDelete))
+            if (Optional.IsDefined(ForceDelete))
             {
                 writer.WritePropertyName("force"u8);
                 writer.WriteBooleanValue(ForceDelete.Value);

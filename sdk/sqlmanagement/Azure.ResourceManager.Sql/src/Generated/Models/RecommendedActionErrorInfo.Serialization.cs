@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<string> errorCode = default;
-            Core.Optional<ActionRetryableState> isRetryable = default;
+            Optional<string> errorCode = default;
+            Optional<ActionRetryableState> isRetryable = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new RecommendedActionErrorInfo(errorCode.Value, Core.Optional.ToNullable(isRetryable));
+            return new RecommendedActionErrorInfo(errorCode.Value, Optional.ToNullable(isRetryable));
         }
     }
 }

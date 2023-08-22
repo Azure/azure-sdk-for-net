@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceDtcSecuritySettings : Core.IUtf8JsonSerializable
+    public partial class ManagedInstanceDtcSecuritySettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TransactionManagerCommunicationSettings))
+            if (Optional.IsDefined(TransactionManagerCommunicationSettings))
             {
                 writer.WritePropertyName("transactionManagerCommunicationSettings"u8);
                 writer.WriteObjectValue(TransactionManagerCommunicationSettings);
             }
-            if (Core.Optional.IsDefined(IsXATransactionsEnabled))
+            if (Optional.IsDefined(IsXATransactionsEnabled))
             {
                 writer.WritePropertyName("xaTransactionsEnabled"u8);
                 writer.WriteBooleanValue(IsXATransactionsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(SnaLu6Point2TransactionsEnabled))
+            if (Optional.IsDefined(SnaLu6Point2TransactionsEnabled))
             {
                 writer.WritePropertyName("snaLu6point2TransactionsEnabled"u8);
                 writer.WriteBooleanValue(SnaLu6Point2TransactionsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(XATransactionsDefaultTimeoutInSeconds))
+            if (Optional.IsDefined(XATransactionsDefaultTimeoutInSeconds))
             {
                 writer.WritePropertyName("xaTransactionsDefaultTimeout"u8);
                 writer.WriteNumberValue(XATransactionsDefaultTimeoutInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(XATransactionsMaximumTimeoutInSeconds))
+            if (Optional.IsDefined(XATransactionsMaximumTimeoutInSeconds))
             {
                 writer.WritePropertyName("xaTransactionsMaximumTimeout"u8);
                 writer.WriteNumberValue(XATransactionsMaximumTimeoutInSeconds.Value);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<ManagedInstanceDtcTransactionManagerCommunicationSettings> transactionManagerCommunicationSettings = default;
-            Core.Optional<bool> xaTransactionsEnabled = default;
-            Core.Optional<bool> snaLu6point2TransactionsEnabled = default;
-            Core.Optional<int> xaTransactionsDefaultTimeout = default;
-            Core.Optional<int> xaTransactionsMaximumTimeout = default;
+            Optional<ManagedInstanceDtcTransactionManagerCommunicationSettings> transactionManagerCommunicationSettings = default;
+            Optional<bool> xaTransactionsEnabled = default;
+            Optional<bool> snaLu6point2TransactionsEnabled = default;
+            Optional<int> xaTransactionsDefaultTimeout = default;
+            Optional<int> xaTransactionsMaximumTimeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transactionManagerCommunicationSettings"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ManagedInstanceDtcSecuritySettings(transactionManagerCommunicationSettings.Value, Core.Optional.ToNullable(xaTransactionsEnabled), Core.Optional.ToNullable(snaLu6point2TransactionsEnabled), Core.Optional.ToNullable(xaTransactionsDefaultTimeout), Core.Optional.ToNullable(xaTransactionsMaximumTimeout));
+            return new ManagedInstanceDtcSecuritySettings(transactionManagerCommunicationSettings.Value, Optional.ToNullable(xaTransactionsEnabled), Optional.ToNullable(snaLu6point2TransactionsEnabled), Optional.ToNullable(xaTransactionsDefaultTimeout), Optional.ToNullable(xaTransactionsMaximumTimeout));
         }
     }
 }

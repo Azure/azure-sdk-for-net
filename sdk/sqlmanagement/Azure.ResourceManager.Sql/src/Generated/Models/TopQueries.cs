@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of TopQueries. </summary>
         internal TopQueries()
         {
-            Queries = new Core.ChangeTrackingList<QueryStatisticsProperties>();
+            Queries = new ChangeTrackingList<QueryStatisticsProperties>();
         }
 
         /// <summary> Initializes a new instance of TopQueries. </summary>

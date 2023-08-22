@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class QueryMetricInterval : Core.IUtf8JsonSerializable
+    public partial class QueryMetricInterval : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Metrics))
+            if (Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<string> intervalStartTime = default;
-            Core.Optional<QueryTimeGrainType> intervalType = default;
-            Core.Optional<long> executionCount = default;
-            Core.Optional<IList<QueryMetricProperties>> metrics = default;
+            Optional<string> intervalStartTime = default;
+            Optional<QueryTimeGrainType> intervalType = default;
+            Optional<long> executionCount = default;
+            Optional<IList<QueryMetricProperties>> metrics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("intervalStartTime"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new QueryMetricInterval(intervalStartTime.Value, Core.Optional.ToNullable(intervalType), Core.Optional.ToNullable(executionCount), Core.Optional.ToList(metrics));
+            return new QueryMetricInterval(intervalStartTime.Value, Optional.ToNullable(intervalType), Optional.ToNullable(executionCount), Optional.ToList(metrics));
         }
     }
 }

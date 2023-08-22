@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of AdministratorListResult. </summary>
         internal AdministratorListResult()
         {
-            Value = new Core.ChangeTrackingList<SqlServerAzureADAdministratorData>();
+            Value = new ChangeTrackingList<SqlServerAzureADAdministratorData>();
         }
 
         /// <summary> Initializes a new instance of AdministratorListResult. </summary>

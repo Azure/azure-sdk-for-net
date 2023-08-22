@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class RecipientsContractProperties : Core.IUtf8JsonSerializable
+    public partial class RecipientsContractProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Emails))
+            if (Optional.IsCollectionDefined(Emails))
             {
                 writer.WritePropertyName("emails"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Users))
+            if (Optional.IsCollectionDefined(Users))
             {
                 writer.WritePropertyName("users"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> emails = default;
-            Core.Optional<IList<string>> users = default;
+            Optional<IList<string>> emails = default;
+            Optional<IList<string>> users = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("emails"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new RecipientsContractProperties(Core.Optional.ToList(emails), Core.Optional.ToList(users));
+            return new RecipientsContractProperties(Optional.ToList(emails), Optional.ToList(users));
         }
     }
 }

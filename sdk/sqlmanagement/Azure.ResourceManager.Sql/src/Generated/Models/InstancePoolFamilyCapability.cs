@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of InstancePoolFamilyCapability. </summary>
         internal InstancePoolFamilyCapability()
         {
-            SupportedLicenseTypes = new Core.ChangeTrackingList<LicenseTypeCapability>();
-            SupportedVcoresValues = new Core.ChangeTrackingList<InstancePoolVcoresCapability>();
+            SupportedLicenseTypes = new ChangeTrackingList<LicenseTypeCapability>();
+            SupportedVcoresValues = new ChangeTrackingList<InstancePoolVcoresCapability>();
         }
 
         /// <summary> Initializes a new instance of InstancePoolFamilyCapability. </summary>

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ApiManagementContentItem>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ApiManagementContentItem>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ContentItemListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ContentItemListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

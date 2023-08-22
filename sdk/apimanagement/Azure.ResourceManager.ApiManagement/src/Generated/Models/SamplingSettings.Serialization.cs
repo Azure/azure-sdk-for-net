@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class SamplingSettings : Core.IUtf8JsonSerializable
+    public partial class SamplingSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SamplingType))
+            if (Optional.IsDefined(SamplingType))
             {
                 writer.WritePropertyName("samplingType"u8);
                 writer.WriteStringValue(SamplingType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Percentage))
+            if (Optional.IsDefined(Percentage))
             {
                 writer.WritePropertyName("percentage"u8);
                 writer.WriteNumberValue(Percentage.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<SamplingType> samplingType = default;
-            Core.Optional<double> percentage = default;
+            Optional<SamplingType> samplingType = default;
+            Optional<double> percentage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("samplingType"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new SamplingSettings(Core.Optional.ToNullable(samplingType), Core.Optional.ToNullable(percentage));
+            return new SamplingSettings(Optional.ToNullable(samplingType), Optional.ToNullable(percentage));
         }
     }
 }

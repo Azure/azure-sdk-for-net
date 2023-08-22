@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> apiName = default;
-            Core.Optional<string> apiRevision = default;
-            Core.Optional<string> apiVersion = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> method = default;
-            Core.Optional<string> uriTemplate = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> apiName = default;
+            Optional<string> apiRevision = default;
+            Optional<string> apiVersion = default;
+            Optional<string> description = default;
+            Optional<string> method = default;
+            Optional<string> uriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

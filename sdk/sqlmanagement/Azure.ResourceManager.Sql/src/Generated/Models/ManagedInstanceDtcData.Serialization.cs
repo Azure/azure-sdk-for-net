@@ -13,24 +13,24 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedInstanceDtcData : Core.IUtf8JsonSerializable
+    public partial class ManagedInstanceDtcData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DtcEnabled))
+            if (Optional.IsDefined(DtcEnabled))
             {
                 writer.WritePropertyName("dtcEnabled"u8);
                 writer.WriteBooleanValue(DtcEnabled.Value);
             }
-            if (Core.Optional.IsDefined(SecuritySettings))
+            if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings);
             }
-            if (Core.Optional.IsCollectionDefined(ExternalDnsSuffixSearchList))
+            if (Optional.IsCollectionDefined(ExternalDnsSuffixSearchList))
             {
                 writer.WritePropertyName("externalDnsSuffixSearchList"u8);
                 writer.WriteStartArray();
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<bool> dtcEnabled = default;
-            Core.Optional<ManagedInstanceDtcSecuritySettings> securitySettings = default;
-            Core.Optional<IList<string>> externalDnsSuffixSearchList = default;
-            Core.Optional<string> dtcHostNameDnsSuffix = default;
-            Core.Optional<JobExecutionProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<bool> dtcEnabled = default;
+            Optional<ManagedInstanceDtcSecuritySettings> securitySettings = default;
+            Optional<IList<string>> externalDnsSuffixSearchList = default;
+            Optional<string> dtcHostNameDnsSuffix = default;
+            Optional<JobExecutionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedInstanceDtcData(id, name, type, systemData.Value, Core.Optional.ToNullable(dtcEnabled), securitySettings.Value, Core.Optional.ToList(externalDnsSuffixSearchList), dtcHostNameDnsSuffix.Value, Core.Optional.ToNullable(provisioningState));
+            return new ManagedInstanceDtcData(id, name, type, systemData.Value, Optional.ToNullable(dtcEnabled), securitySettings.Value, Optional.ToList(externalDnsSuffixSearchList), dtcHostNameDnsSuffix.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

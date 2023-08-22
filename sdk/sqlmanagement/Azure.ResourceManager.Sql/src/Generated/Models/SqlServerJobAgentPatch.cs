@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SqlServerJobAgentPatch. </summary>
         public SqlServerJobAgentPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Resource tags. </summary>

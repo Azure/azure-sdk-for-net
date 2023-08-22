@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class BackendServiceFabricClusterProperties : Core.IUtf8JsonSerializable
+    public partial class BackendServiceFabricClusterProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ClientCertificateId))
+            if (Optional.IsDefined(ClientCertificateId))
             {
                 writer.WritePropertyName("clientCertificateId"u8);
                 writer.WriteStringValue(ClientCertificateId);
             }
-            if (Core.Optional.IsDefined(ClientCertificatethumbprint))
+            if (Optional.IsDefined(ClientCertificatethumbprint))
             {
                 writer.WritePropertyName("clientCertificatethumbprint"u8);
                 writer.WriteStringValue(ClientCertificatethumbprint);
             }
-            if (Core.Optional.IsDefined(MaxPartitionResolutionRetries))
+            if (Optional.IsDefined(MaxPartitionResolutionRetries))
             {
                 writer.WritePropertyName("maxPartitionResolutionRetries"u8);
                 writer.WriteNumberValue(MaxPartitionResolutionRetries.Value);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsCollectionDefined(ServerCertificateThumbprints))
+            if (Optional.IsCollectionDefined(ServerCertificateThumbprints))
             {
                 writer.WritePropertyName("serverCertificateThumbprints"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ServerX509Names))
+            if (Optional.IsCollectionDefined(ServerX509Names))
             {
                 writer.WritePropertyName("serverX509Names"u8);
                 writer.WriteStartArray();
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> clientCertificateId = default;
-            Core.Optional<string> clientCertificatethumbprint = default;
-            Core.Optional<int> maxPartitionResolutionRetries = default;
+            Optional<string> clientCertificateId = default;
+            Optional<string> clientCertificatethumbprint = default;
+            Optional<int> maxPartitionResolutionRetries = default;
             IList<string> managementEndpoints = default;
-            Core.Optional<IList<string>> serverCertificateThumbprints = default;
-            Core.Optional<IList<X509CertificateName>> serverX509Names = default;
+            Optional<IList<string>> serverCertificateThumbprints = default;
+            Optional<IList<X509CertificateName>> serverX509Names = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientCertificateId"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new BackendServiceFabricClusterProperties(clientCertificateId.Value, clientCertificatethumbprint.Value, Core.Optional.ToNullable(maxPartitionResolutionRetries), managementEndpoints, Core.Optional.ToList(serverCertificateThumbprints), Core.Optional.ToList(serverX509Names));
+            return new BackendServiceFabricClusterProperties(clientCertificateId.Value, clientCertificatethumbprint.Value, Optional.ToNullable(maxPartitionResolutionRetries), managementEndpoints, Optional.ToList(serverCertificateThumbprints), Optional.ToList(serverX509Names));
         }
     }
 }

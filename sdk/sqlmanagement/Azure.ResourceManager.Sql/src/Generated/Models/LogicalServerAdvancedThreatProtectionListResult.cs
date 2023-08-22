@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of LogicalServerAdvancedThreatProtectionListResult. </summary>
         internal LogicalServerAdvancedThreatProtectionListResult()
         {
-            Value = new Core.ChangeTrackingList<ServerAdvancedThreatProtectionData>();
+            Value = new ChangeTrackingList<ServerAdvancedThreatProtectionData>();
         }
 
         /// <summary> Initializes a new instance of LogicalServerAdvancedThreatProtectionListResult. </summary>

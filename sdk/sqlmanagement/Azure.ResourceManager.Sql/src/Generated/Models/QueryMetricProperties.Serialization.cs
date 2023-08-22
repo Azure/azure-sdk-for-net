@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class QueryMetricProperties : Core.IUtf8JsonSerializable
+    public partial class QueryMetricProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<QueryMetricUnitType> unit = default;
-            Core.Optional<double> value = default;
-            Core.Optional<double> min = default;
-            Core.Optional<double> max = default;
-            Core.Optional<double> avg = default;
-            Core.Optional<double> sum = default;
-            Core.Optional<double> stdev = default;
+            Optional<string> name = default;
+            Optional<string> displayName = default;
+            Optional<QueryMetricUnitType> unit = default;
+            Optional<double> value = default;
+            Optional<double> min = default;
+            Optional<double> max = default;
+            Optional<double> avg = default;
+            Optional<double> sum = default;
+            Optional<double> stdev = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new QueryMetricProperties(name.Value, displayName.Value, Core.Optional.ToNullable(unit), Core.Optional.ToNullable(value), Core.Optional.ToNullable(min), Core.Optional.ToNullable(max), Core.Optional.ToNullable(avg), Core.Optional.ToNullable(sum), Core.Optional.ToNullable(stdev));
+            return new QueryMetricProperties(name.Value, displayName.Value, Optional.ToNullable(unit), Optional.ToNullable(value), Optional.ToNullable(min), Optional.ToNullable(max), Optional.ToNullable(avg), Optional.ToNullable(sum), Optional.ToNullable(stdev));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of LogicalServerSecurityAlertPolicyListResult. </summary>
         internal LogicalServerSecurityAlertPolicyListResult()
         {
-            Value = new Core.ChangeTrackingList<SqlServerSecurityAlertPolicyData>();
+            Value = new ChangeTrackingList<SqlServerSecurityAlertPolicyData>();
         }
 
         /// <summary> Initializes a new instance of LogicalServerSecurityAlertPolicyListResult. </summary>

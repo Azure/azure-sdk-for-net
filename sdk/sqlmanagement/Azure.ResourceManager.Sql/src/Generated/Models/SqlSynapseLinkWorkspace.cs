@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SqlSynapseLinkWorkspace. </summary>
         public SqlSynapseLinkWorkspace()
         {
-            Workspaces = new Core.ChangeTrackingList<SqlSynapseLinkWorkspaceInfo>();
+            Workspaces = new ChangeTrackingList<SqlSynapseLinkWorkspaceInfo>();
         }
 
         /// <summary> Initializes a new instance of SqlSynapseLinkWorkspace. </summary>

@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IReadOnlyList<ElasticPoolPerformanceLevelCapability>> supportedElasticPoolPerformanceLevels = default;
-            Core.Optional<bool> zoneRedundant = default;
-            Core.Optional<SqlCapabilityStatus> status = default;
-            Core.Optional<string> reason = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<ElasticPoolPerformanceLevelCapability>> supportedElasticPoolPerformanceLevels = default;
+            Optional<bool> zoneRedundant = default;
+            Optional<SqlCapabilityStatus> status = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ElasticPoolEditionCapability(name.Value, Core.Optional.ToList(supportedElasticPoolPerformanceLevels), Core.Optional.ToNullable(zoneRedundant), Core.Optional.ToNullable(status), reason.Value);
+            return new ElasticPoolEditionCapability(name.Value, Optional.ToList(supportedElasticPoolPerformanceLevels), Optional.ToNullable(zoneRedundant), Optional.ToNullable(status), reason.Value);
         }
     }
 }

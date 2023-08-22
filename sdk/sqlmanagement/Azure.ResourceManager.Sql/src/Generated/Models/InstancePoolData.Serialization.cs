@@ -13,17 +13,17 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class InstancePoolData : Core.IUtf8JsonSerializable
+    public partial class InstancePoolData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.Sql
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SubnetId))
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Core.Optional.IsDefined(VCores))
+            if (Optional.IsDefined(VCores))
             {
                 writer.WritePropertyName("vCores"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (Core.Optional.IsDefined(LicenseType))
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
@@ -63,16 +63,16 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Core.Optional<SqlSku> sku = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<SqlSku> sku = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> subnetId = default;
-            Core.Optional<int> vCores = default;
-            Core.Optional<InstancePoolLicenseType> licenseType = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> subnetId = default;
+            Optional<int> vCores = default;
+            Optional<InstancePoolLicenseType> licenseType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new InstancePoolData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, subnetId.Value, Core.Optional.ToNullable(vCores), Core.Optional.ToNullable(licenseType));
+            return new InstancePoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, subnetId.Value, Optional.ToNullable(vCores), Optional.ToNullable(licenseType));
         }
     }
 }

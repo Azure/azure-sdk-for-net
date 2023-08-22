@@ -11,39 +11,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class WorkloadGroupData : Core.IUtf8JsonSerializable
+    public partial class WorkloadGroupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MinResourcePercent))
+            if (Optional.IsDefined(MinResourcePercent))
             {
                 writer.WritePropertyName("minResourcePercent"u8);
                 writer.WriteNumberValue(MinResourcePercent.Value);
             }
-            if (Core.Optional.IsDefined(MaxResourcePercent))
+            if (Optional.IsDefined(MaxResourcePercent))
             {
                 writer.WritePropertyName("maxResourcePercent"u8);
                 writer.WriteNumberValue(MaxResourcePercent.Value);
             }
-            if (Core.Optional.IsDefined(MinResourcePercentPerRequest))
+            if (Optional.IsDefined(MinResourcePercentPerRequest))
             {
                 writer.WritePropertyName("minResourcePercentPerRequest"u8);
                 writer.WriteNumberValue(MinResourcePercentPerRequest.Value);
             }
-            if (Core.Optional.IsDefined(MaxResourcePercentPerRequest))
+            if (Optional.IsDefined(MaxResourcePercentPerRequest))
             {
                 writer.WritePropertyName("maxResourcePercentPerRequest"u8);
                 writer.WriteNumberValue(MaxResourcePercentPerRequest.Value);
             }
-            if (Core.Optional.IsDefined(Importance))
+            if (Optional.IsDefined(Importance))
             {
                 writer.WritePropertyName("importance"u8);
                 writer.WriteStringValue(Importance);
             }
-            if (Core.Optional.IsDefined(QueryExecutionTimeout))
+            if (Optional.IsDefined(QueryExecutionTimeout))
             {
                 writer.WritePropertyName("queryExecutionTimeout"u8);
                 writer.WriteNumberValue(QueryExecutionTimeout.Value);
@@ -61,13 +61,13 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<int> minResourcePercent = default;
-            Core.Optional<int> maxResourcePercent = default;
-            Core.Optional<double> minResourcePercentPerRequest = default;
-            Core.Optional<double> maxResourcePercentPerRequest = default;
-            Core.Optional<string> importance = default;
-            Core.Optional<int> queryExecutionTimeout = default;
+            Optional<SystemData> systemData = default;
+            Optional<int> minResourcePercent = default;
+            Optional<int> maxResourcePercent = default;
+            Optional<double> minResourcePercentPerRequest = default;
+            Optional<double> maxResourcePercentPerRequest = default;
+            Optional<string> importance = default;
+            Optional<int> queryExecutionTimeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new WorkloadGroupData(id, name, type, systemData.Value, Core.Optional.ToNullable(minResourcePercent), Core.Optional.ToNullable(maxResourcePercent), Core.Optional.ToNullable(minResourcePercentPerRequest), Core.Optional.ToNullable(maxResourcePercentPerRequest), importance.Value, Core.Optional.ToNullable(queryExecutionTimeout));
+            return new WorkloadGroupData(id, name, type, systemData.Value, Optional.ToNullable(minResourcePercent), Optional.ToNullable(maxResourcePercent), Optional.ToNullable(minResourcePercentPerRequest), Optional.ToNullable(maxResourcePercentPerRequest), importance.Value, Optional.ToNullable(queryExecutionTimeout));
         }
     }
 }

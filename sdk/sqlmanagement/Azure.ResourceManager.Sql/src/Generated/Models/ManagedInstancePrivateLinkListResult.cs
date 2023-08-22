@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstancePrivateLinkListResult. </summary>
         internal ManagedInstancePrivateLinkListResult()
         {
-            Value = new Core.ChangeTrackingList<ManagedInstancePrivateLinkData>();
+            Value = new ChangeTrackingList<ManagedInstancePrivateLinkData>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstancePrivateLinkListResult. </summary>

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class JobStepAction : Core.IUtf8JsonSerializable
+    public partial class JobStepAction : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ActionType))
+            if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ActionType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Source))
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<JobStepActionType> type = default;
-            Core.Optional<JobStepActionSource> source = default;
+            Optional<JobStepActionType> type = default;
+            Optional<JobStepActionSource> source = default;
             string value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new JobStepAction(Core.Optional.ToNullable(type), Core.Optional.ToNullable(source), value);
+            return new JobStepAction(Optional.ToNullable(type), Optional.ToNullable(source), value);
         }
     }
 }

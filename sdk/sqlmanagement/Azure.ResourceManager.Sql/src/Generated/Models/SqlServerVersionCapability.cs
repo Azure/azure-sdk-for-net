@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SqlServerVersionCapability. </summary>
         internal SqlServerVersionCapability()
         {
-            SupportedEditions = new Core.ChangeTrackingList<EditionCapability>();
-            SupportedElasticPoolEditions = new Core.ChangeTrackingList<ElasticPoolEditionCapability>();
+            SupportedEditions = new ChangeTrackingList<EditionCapability>();
+            SupportedElasticPoolEditions = new ChangeTrackingList<ElasticPoolEditionCapability>();
         }
 
         /// <summary> Initializes a new instance of SqlServerVersionCapability. </summary>

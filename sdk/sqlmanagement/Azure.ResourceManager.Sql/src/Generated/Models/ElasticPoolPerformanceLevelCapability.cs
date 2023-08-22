@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ElasticPoolPerformanceLevelCapability. </summary>
         internal ElasticPoolPerformanceLevelCapability()
         {
-            SupportedLicenseTypes = new Core.ChangeTrackingList<LicenseTypeCapability>();
-            SupportedMaxSizes = new Core.ChangeTrackingList<MaxSizeRangeCapability>();
-            SupportedPerDatabaseMaxSizes = new Core.ChangeTrackingList<MaxSizeRangeCapability>();
-            SupportedPerDatabaseMaxPerformanceLevels = new Core.ChangeTrackingList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>();
-            SupportedMaintenanceConfigurations = new Core.ChangeTrackingList<MaintenanceConfigurationCapability>();
+            SupportedLicenseTypes = new ChangeTrackingList<LicenseTypeCapability>();
+            SupportedMaxSizes = new ChangeTrackingList<MaxSizeRangeCapability>();
+            SupportedPerDatabaseMaxSizes = new ChangeTrackingList<MaxSizeRangeCapability>();
+            SupportedPerDatabaseMaxPerformanceLevels = new ChangeTrackingList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>();
+            SupportedMaintenanceConfigurations = new ChangeTrackingList<MaintenanceConfigurationCapability>();
         }
 
         /// <summary> Initializes a new instance of ElasticPoolPerformanceLevelCapability. </summary>

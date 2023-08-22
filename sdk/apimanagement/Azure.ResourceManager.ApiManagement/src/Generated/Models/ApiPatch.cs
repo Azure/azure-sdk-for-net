@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiPatch. </summary>
         public ApiPatch()
         {
-            Protocols = new Core.ChangeTrackingList<ApiOperationInvokableProtocol>();
+            Protocols = new ChangeTrackingList<ApiOperationInvokableProtocol>();
         }
 
         /// <summary> Description of the API. May include HTML formatting tags. </summary>

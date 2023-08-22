@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SensitivityLabelUpdateList. </summary>
         public SensitivityLabelUpdateList()
         {
-            Operations = new Core.ChangeTrackingList<SensitivityLabelUpdate>();
+            Operations = new ChangeTrackingList<SensitivityLabelUpdate>();
         }
 
         /// <summary> Gets the operations. </summary>

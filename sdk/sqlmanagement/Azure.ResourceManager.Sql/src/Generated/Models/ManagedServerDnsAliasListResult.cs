@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedServerDnsAliasListResult. </summary>
         internal ManagedServerDnsAliasListResult()
         {
-            Value = new Core.ChangeTrackingList<ManagedServerDnsAliasData>();
+            Value = new ChangeTrackingList<ManagedServerDnsAliasData>();
         }
 
         /// <summary> Initializes a new instance of ManagedServerDnsAliasListResult. </summary>

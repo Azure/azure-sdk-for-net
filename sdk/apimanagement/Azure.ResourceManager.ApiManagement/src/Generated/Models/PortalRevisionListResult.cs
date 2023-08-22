@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of PortalRevisionListResult. </summary>
         internal PortalRevisionListResult()
         {
-            Value = new Core.ChangeTrackingList<ApiManagementPortalRevisionData>();
+            Value = new ChangeTrackingList<ApiManagementPortalRevisionData>();
         }
 
         /// <summary> Initializes a new instance of PortalRevisionListResult. </summary>

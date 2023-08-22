@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ManagedServerDnsAliasData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ManagedServerDnsAliasData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ManagedServerDnsAliasListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ManagedServerDnsAliasListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

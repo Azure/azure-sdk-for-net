@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> objectType = default;
-            Core.Optional<string> action = default;
-            Core.Optional<string> objectKey = default;
+            Optional<string> objectType = default;
+            Optional<string> action = default;
+            Optional<string> objectKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("objectType"u8))

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<StorageCapabilityStorageAccountType> storageAccountType = default;
-            Core.Optional<SqlCapabilityStatus> status = default;
-            Core.Optional<string> reason = default;
+            Optional<StorageCapabilityStorageAccountType> storageAccountType = default;
+            Optional<SqlCapabilityStatus> status = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountType"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new StorageCapability(Core.Optional.ToNullable(storageAccountType), Core.Optional.ToNullable(status), reason.Value);
+            return new StorageCapability(Optional.ToNullable(storageAccountType), Optional.ToNullable(status), reason.Value);
         }
     }
 }

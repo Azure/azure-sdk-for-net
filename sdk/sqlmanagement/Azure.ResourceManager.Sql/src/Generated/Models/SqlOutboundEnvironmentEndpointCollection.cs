@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SqlOutboundEnvironmentEndpointCollection. </summary>
         internal SqlOutboundEnvironmentEndpointCollection()
         {
-            Value = new Core.ChangeTrackingList<SqlOutboundEnvironmentEndpoint>();
+            Value = new ChangeTrackingList<SqlOutboundEnvironmentEndpoint>();
         }
 
         /// <summary> Initializes a new instance of SqlOutboundEnvironmentEndpointCollection. </summary>

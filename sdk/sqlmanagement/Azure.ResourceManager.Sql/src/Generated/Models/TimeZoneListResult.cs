@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of TimeZoneListResult. </summary>
         internal TimeZoneListResult()
         {
-            Value = new Core.ChangeTrackingList<SqlTimeZoneData>();
+            Value = new ChangeTrackingList<SqlTimeZoneData>();
         }
 
         /// <summary> Initializes a new instance of TimeZoneListResult. </summary>

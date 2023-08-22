@@ -13,59 +13,59 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SyncGroupData : Core.IUtf8JsonSerializable
+    public partial class SyncGroupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Interval))
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
-            if (Core.Optional.IsDefined(ConflictResolutionPolicy))
+            if (Optional.IsDefined(ConflictResolutionPolicy))
             {
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
                 writer.WriteStringValue(ConflictResolutionPolicy.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SyncDatabaseId))
+            if (Optional.IsDefined(SyncDatabaseId))
             {
                 writer.WritePropertyName("syncDatabaseId"u8);
                 writer.WriteStringValue(SyncDatabaseId);
             }
-            if (Core.Optional.IsDefined(HubDatabaseUserName))
+            if (Optional.IsDefined(HubDatabaseUserName))
             {
                 writer.WritePropertyName("hubDatabaseUserName"u8);
                 writer.WriteStringValue(HubDatabaseUserName);
             }
-            if (Core.Optional.IsDefined(HubDatabasePassword))
+            if (Optional.IsDefined(HubDatabasePassword))
             {
                 writer.WritePropertyName("hubDatabasePassword"u8);
                 writer.WriteStringValue(HubDatabasePassword);
             }
-            if (Core.Optional.IsDefined(Schema))
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
             }
-            if (Core.Optional.IsDefined(IsConflictLoggingEnabled))
+            if (Optional.IsDefined(IsConflictLoggingEnabled))
             {
                 writer.WritePropertyName("enableConflictLogging"u8);
                 writer.WriteBooleanValue(IsConflictLoggingEnabled.Value);
             }
-            if (Core.Optional.IsDefined(ConflictLoggingRetentionInDays))
+            if (Optional.IsDefined(ConflictLoggingRetentionInDays))
             {
                 writer.WritePropertyName("conflictLoggingRetentionInDays"u8);
                 writer.WriteNumberValue(ConflictLoggingRetentionInDays.Value);
             }
-            if (Core.Optional.IsDefined(UsePrivateLinkConnection))
+            if (Optional.IsDefined(UsePrivateLinkConnection))
             {
                 writer.WritePropertyName("usePrivateLinkConnection"u8);
                 writer.WriteBooleanValue(UsePrivateLinkConnection.Value);
@@ -80,23 +80,23 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Core.Optional<SqlSku> sku = default;
+            Optional<SqlSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<int> interval = default;
-            Core.Optional<DateTimeOffset> lastSyncTime = default;
-            Core.Optional<SyncConflictResolutionPolicy> conflictResolutionPolicy = default;
-            Core.Optional<ResourceIdentifier> syncDatabaseId = default;
-            Core.Optional<string> hubDatabaseUserName = default;
-            Core.Optional<string> hubDatabasePassword = default;
-            Core.Optional<SyncGroupState> syncState = default;
-            Core.Optional<SyncGroupSchema> schema = default;
-            Core.Optional<bool> enableConflictLogging = default;
-            Core.Optional<int> conflictLoggingRetentionInDays = default;
-            Core.Optional<bool> usePrivateLinkConnection = default;
-            Core.Optional<string> privateEndpointName = default;
+            Optional<SystemData> systemData = default;
+            Optional<int> interval = default;
+            Optional<DateTimeOffset> lastSyncTime = default;
+            Optional<SyncConflictResolutionPolicy> conflictResolutionPolicy = default;
+            Optional<ResourceIdentifier> syncDatabaseId = default;
+            Optional<string> hubDatabaseUserName = default;
+            Optional<string> hubDatabasePassword = default;
+            Optional<SyncGroupState> syncState = default;
+            Optional<SyncGroupSchema> schema = default;
+            Optional<bool> enableConflictLogging = default;
+            Optional<int> conflictLoggingRetentionInDays = default;
+            Optional<bool> usePrivateLinkConnection = default;
+            Optional<string> privateEndpointName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SyncGroupData(id, name, type, systemData.Value, sku.Value, Core.Optional.ToNullable(interval), Core.Optional.ToNullable(lastSyncTime), Core.Optional.ToNullable(conflictResolutionPolicy), syncDatabaseId.Value, hubDatabaseUserName.Value, hubDatabasePassword.Value, Core.Optional.ToNullable(syncState), schema.Value, Core.Optional.ToNullable(enableConflictLogging), Core.Optional.ToNullable(conflictLoggingRetentionInDays), Core.Optional.ToNullable(usePrivateLinkConnection), privateEndpointName.Value);
+            return new SyncGroupData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(interval), Optional.ToNullable(lastSyncTime), Optional.ToNullable(conflictResolutionPolicy), syncDatabaseId.Value, hubDatabaseUserName.Value, hubDatabasePassword.Value, Optional.ToNullable(syncState), schema.Value, Optional.ToNullable(enableConflictLogging), Optional.ToNullable(conflictLoggingRetentionInDays), Optional.ToNullable(usePrivateLinkConnection), privateEndpointName.Value);
         }
     }
 }

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<string> status = default;
-            Core.Optional<string> firstStripeName = default;
-            Core.Optional<int> numberOfStripes = default;
-            Core.Optional<int> backupSizeMB = default;
-            Core.Optional<DateTimeOffset> restoreStartedTimestampUtc = default;
-            Core.Optional<DateTimeOffset> restoreFinishedTimestampUtc = default;
+            Optional<string> status = default;
+            Optional<string> firstStripeName = default;
+            Optional<int> numberOfStripes = default;
+            Optional<int> backupSizeMB = default;
+            Optional<DateTimeOffset> restoreStartedTimestampUtc = default;
+            Optional<DateTimeOffset> restoreFinishedTimestampUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ManagedDatabaseRestoreDetailBackupSetProperties(status.Value, firstStripeName.Value, Core.Optional.ToNullable(numberOfStripes), Core.Optional.ToNullable(backupSizeMB), Core.Optional.ToNullable(restoreStartedTimestampUtc), Core.Optional.ToNullable(restoreFinishedTimestampUtc));
+            return new ManagedDatabaseRestoreDetailBackupSetProperties(status.Value, firstStripeName.Value, Optional.ToNullable(numberOfStripes), Optional.ToNullable(backupSizeMB), Optional.ToNullable(restoreStartedTimestampUtc), Optional.ToNullable(restoreFinishedTimestampUtc));
         }
     }
 }

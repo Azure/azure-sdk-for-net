@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SqlServerPatch. </summary>
         public SqlServerPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            PrivateEndpointConnections = new Core.ChangeTrackingList<SqlServerPrivateEndpointConnection>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            PrivateEndpointConnections = new ChangeTrackingList<SqlServerPrivateEndpointConnection>();
         }
 
         /// <summary> Server identity. </summary>

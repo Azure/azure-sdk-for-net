@@ -12,19 +12,19 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class DataMaskingPolicyData : Core.IUtf8JsonSerializable
+    public partial class DataMaskingPolicyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DataMaskingState))
+            if (Optional.IsDefined(DataMaskingState))
             {
                 writer.WritePropertyName("dataMaskingState"u8);
                 writer.WriteStringValue(DataMaskingState.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(ExemptPrincipals))
+            if (Optional.IsDefined(ExemptPrincipals))
             {
                 writer.WritePropertyName("exemptPrincipals"u8);
                 writer.WriteStringValue(ExemptPrincipals);
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<string> kind = default;
+            Optional<AzureLocation> location = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DataMaskingState> dataMaskingState = default;
-            Core.Optional<string> exemptPrincipals = default;
-            Core.Optional<string> applicationPrincipals = default;
-            Core.Optional<string> maskingLevel = default;
+            Optional<SystemData> systemData = default;
+            Optional<DataMaskingState> dataMaskingState = default;
+            Optional<string> exemptPrincipals = default;
+            Optional<string> applicationPrincipals = default;
+            Optional<string> maskingLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new DataMaskingPolicyData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), kind.Value, Core.Optional.ToNullable(dataMaskingState), exemptPrincipals.Value, applicationPrincipals.Value, maskingLevel.Value);
+            return new DataMaskingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, Optional.ToNullable(dataMaskingState), exemptPrincipals.Value, applicationPrincipals.Value, maskingLevel.Value);
         }
     }
 }

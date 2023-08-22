@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of UserIdentityListResult. </summary>
         internal UserIdentityListResult()
         {
-            Value = new Core.ChangeTrackingList<UserIdentityContract>();
+            Value = new ChangeTrackingList<UserIdentityContract>();
         }
 
         /// <summary> Initializes a new instance of UserIdentityListResult. </summary>

@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedServerDnsAliasData : Core.IUtf8JsonSerializable
+    public partial class ManagedServerDnsAliasData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> azureDnsRecord = default;
-            Core.Optional<string> publicAzureDnsRecord = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> azureDnsRecord = default;
+            Optional<string> publicAzureDnsRecord = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

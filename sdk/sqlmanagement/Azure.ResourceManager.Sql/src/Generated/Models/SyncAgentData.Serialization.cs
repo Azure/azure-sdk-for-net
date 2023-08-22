@@ -13,14 +13,14 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SyncAgentData : Core.IUtf8JsonSerializable
+    public partial class SyncAgentData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SyncDatabaseId))
+            if (Optional.IsDefined(SyncDatabaseId))
             {
                 writer.WritePropertyName("syncDatabaseId"u8);
                 writer.WriteStringValue(SyncDatabaseId);
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> syncDatabaseId = default;
-            Core.Optional<DateTimeOffset> lastAliveTime = default;
-            Core.Optional<SyncAgentState> state = default;
-            Core.Optional<bool> isUpToDate = default;
-            Core.Optional<DateTimeOffset> expiryTime = default;
-            Core.Optional<string> version = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> syncDatabaseId = default;
+            Optional<DateTimeOffset> lastAliveTime = default;
+            Optional<SyncAgentState> state = default;
+            Optional<bool> isUpToDate = default;
+            Optional<DateTimeOffset> expiryTime = default;
+            Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SyncAgentData(id, name, type, systemData.Value, syncDatabaseId.Value, Core.Optional.ToNullable(lastAliveTime), Core.Optional.ToNullable(state), Core.Optional.ToNullable(isUpToDate), Core.Optional.ToNullable(expiryTime), version.Value);
+            return new SyncAgentData(id, name, type, systemData.Value, syncDatabaseId.Value, Optional.ToNullable(lastAliveTime), Optional.ToNullable(state), Optional.ToNullable(isUpToDate), Optional.ToNullable(expiryTime), version.Value);
         }
     }
 }

@@ -13,9 +13,9 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedInstanceOperationData : Core.IUtf8JsonSerializable
+    public partial class ManagedInstanceOperationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -33,22 +33,22 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> managedInstanceName = default;
-            Core.Optional<string> operation = default;
-            Core.Optional<string> operationFriendlyName = default;
-            Core.Optional<int> percentComplete = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<ManagementOperationState> state = default;
-            Core.Optional<int> errorCode = default;
-            Core.Optional<string> errorDescription = default;
-            Core.Optional<int> errorSeverity = default;
-            Core.Optional<bool> isUserError = default;
-            Core.Optional<DateTimeOffset> estimatedCompletionTime = default;
-            Core.Optional<string> description = default;
-            Core.Optional<bool> isCancellable = default;
-            Core.Optional<ManagedInstanceOperationParametersPair> operationParameters = default;
-            Core.Optional<ManagedInstanceOperationSteps> operationSteps = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> managedInstanceName = default;
+            Optional<string> operation = default;
+            Optional<string> operationFriendlyName = default;
+            Optional<int> percentComplete = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<ManagementOperationState> state = default;
+            Optional<int> errorCode = default;
+            Optional<string> errorDescription = default;
+            Optional<int> errorSeverity = default;
+            Optional<bool> isUserError = default;
+            Optional<DateTimeOffset> estimatedCompletionTime = default;
+            Optional<string> description = default;
+            Optional<bool> isCancellable = default;
+            Optional<ManagedInstanceOperationParametersPair> operationParameters = default;
+            Optional<ManagedInstanceOperationSteps> operationSteps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedInstanceOperationData(id, name, type, systemData.Value, managedInstanceName.Value, operation.Value, operationFriendlyName.Value, Core.Optional.ToNullable(percentComplete), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(state), Core.Optional.ToNullable(errorCode), errorDescription.Value, Core.Optional.ToNullable(errorSeverity), Core.Optional.ToNullable(isUserError), Core.Optional.ToNullable(estimatedCompletionTime), description.Value, Core.Optional.ToNullable(isCancellable), operationParameters.Value, operationSteps.Value);
+            return new ManagedInstanceOperationData(id, name, type, systemData.Value, managedInstanceName.Value, operation.Value, operationFriendlyName.Value, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(state), Optional.ToNullable(errorCode), errorDescription.Value, Optional.ToNullable(errorSeverity), Optional.ToNullable(isUserError), Optional.ToNullable(estimatedCompletionTime), description.Value, Optional.ToNullable(isCancellable), operationParameters.Value, operationSteps.Value);
         }
     }
 }

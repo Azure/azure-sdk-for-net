@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerDevOpsAuditingSettingResource>(new SqlServerDevOpsAuditingSettingOperationSource(Client), _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics, Pipeline, _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SqlArmOperation<SqlServerDevOpsAuditingSettingResource>(new SqlServerDevOpsAuditingSettingOperationSource(Client), _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics, Pipeline, _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerDevOpsAuditingSettingResource>(new SqlServerDevOpsAuditingSettingOperationSource(Client), _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics, Pipeline, _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SqlArmOperation<SqlServerDevOpsAuditingSettingResource>(new SqlServerDevOpsAuditingSettingOperationSource(Client), _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics, Pipeline, _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

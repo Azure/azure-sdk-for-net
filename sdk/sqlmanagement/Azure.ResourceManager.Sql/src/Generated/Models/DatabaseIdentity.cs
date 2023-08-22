@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of DatabaseIdentity. </summary>
         public DatabaseIdentity()
         {
-            UserAssignedIdentities = new Core.ChangeTrackingDictionary<string, UserAssignedIdentity>();
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of DatabaseIdentity. </summary>

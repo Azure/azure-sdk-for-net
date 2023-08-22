@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<string> dimensionName = default;
-            Core.Optional<string> unit = default;
-            Core.Optional<double> absoluteValue = default;
-            Core.Optional<double> changeValueAbsolute = default;
-            Core.Optional<double> changeValueRelative = default;
+            Optional<string> dimensionName = default;
+            Optional<string> unit = default;
+            Optional<double> absoluteValue = default;
+            Optional<double> changeValueAbsolute = default;
+            Optional<double> changeValueRelative = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimensionName"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new RecommendedActionImpactRecord(dimensionName.Value, unit.Value, Core.Optional.ToNullable(absoluteValue), Core.Optional.ToNullable(changeValueAbsolute), Core.Optional.ToNullable(changeValueRelative));
+            return new RecommendedActionImpactRecord(dimensionName.Value, unit.Value, Optional.ToNullable(absoluteValue), Optional.ToNullable(changeValueAbsolute), Optional.ToNullable(changeValueRelative));
         }
     }
 }

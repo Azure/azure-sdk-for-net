@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstanceVcoresCapability. </summary>
         internal ManagedInstanceVcoresCapability()
         {
-            SupportedStorageSizes = new Core.ChangeTrackingList<MaxSizeRangeCapability>();
-            SupportedMaintenanceConfigurations = new Core.ChangeTrackingList<ManagedInstanceMaintenanceConfigurationCapability>();
+            SupportedStorageSizes = new ChangeTrackingList<MaxSizeRangeCapability>();
+            SupportedMaintenanceConfigurations = new ChangeTrackingList<ManagedInstanceMaintenanceConfigurationCapability>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceVcoresCapability. </summary>

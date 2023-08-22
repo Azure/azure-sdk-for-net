@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SyncFullSchemaTable>> tables = default;
-            Core.Optional<DateTimeOffset> lastUpdateTime = default;
+            Optional<IReadOnlyList<SyncFullSchemaTable>> tables = default;
+            Optional<DateTimeOffset> lastUpdateTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tables"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SyncFullSchemaProperties(Core.Optional.ToList(tables), Core.Optional.ToNullable(lastUpdateTime));
+            return new SyncFullSchemaProperties(Optional.ToList(tables), Optional.ToNullable(lastUpdateTime));
         }
     }
 }

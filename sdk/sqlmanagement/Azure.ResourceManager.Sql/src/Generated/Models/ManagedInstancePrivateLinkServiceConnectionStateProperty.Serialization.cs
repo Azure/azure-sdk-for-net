@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstancePrivateLinkServiceConnectionStateProperty : Core.IUtf8JsonSerializable
+    public partial class ManagedInstancePrivateLinkServiceConnectionStateProperty : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             string status = default;
             string description = default;
-            Core.Optional<string> actionsRequired = default;
+            Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))

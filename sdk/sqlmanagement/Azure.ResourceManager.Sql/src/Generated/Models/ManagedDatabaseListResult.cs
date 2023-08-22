@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedDatabaseListResult. </summary>
         internal ManagedDatabaseListResult()
         {
-            Value = new Core.ChangeTrackingList<ManagedDatabaseData>();
+            Value = new ChangeTrackingList<ManagedDatabaseData>();
         }
 
         /// <summary> Initializes a new instance of ManagedDatabaseListResult. </summary>

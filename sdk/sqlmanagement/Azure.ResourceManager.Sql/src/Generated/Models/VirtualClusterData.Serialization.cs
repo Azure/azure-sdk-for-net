@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class VirtualClusterData : Core.IUtf8JsonSerializable
+    public partial class VirtualClusterData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> subnetId = default;
-            Core.Optional<string> version = default;
-            Core.Optional<IReadOnlyList<string>> childResources = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> subnetId = default;
+            Optional<string> version = default;
+            Optional<IReadOnlyList<string>> childResources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new VirtualClusterData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, subnetId.Value, version.Value, Core.Optional.ToList(childResources));
+            return new VirtualClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, subnetId.Value, version.Value, Optional.ToList(childResources));
         }
     }
 }

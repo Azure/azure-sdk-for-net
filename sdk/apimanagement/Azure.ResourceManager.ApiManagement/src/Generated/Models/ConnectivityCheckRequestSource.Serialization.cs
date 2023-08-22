@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ConnectivityCheckRequestSource : Core.IUtf8JsonSerializable
+    public partial class ConnectivityCheckRequestSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("region"u8);
             writer.WriteStringValue(Region);
-            if (Core.Optional.IsDefined(Instance))
+            if (Optional.IsDefined(Instance))
             {
                 writer.WritePropertyName("instance"u8);
                 writer.WriteNumberValue(Instance.Value);

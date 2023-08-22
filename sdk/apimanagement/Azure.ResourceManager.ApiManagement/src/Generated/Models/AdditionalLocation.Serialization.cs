@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class AdditionalLocation : Core.IUtf8JsonSerializable
+    public partial class AdditionalLocation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Core.Optional.IsCollectionDefined(Zones))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(PublicIPAddressId))
+            if (Optional.IsDefined(PublicIPAddressId))
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
-            if (Core.Optional.IsDefined(VirtualNetworkConfiguration))
+            if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
                 writer.WriteObjectValue(VirtualNetworkConfiguration);
             }
-            if (Core.Optional.IsDefined(DisableGateway))
+            if (Optional.IsDefined(DisableGateway))
             {
                 writer.WritePropertyName("disableGateway"u8);
                 writer.WriteBooleanValue(DisableGateway.Value);
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             AzureLocation location = default;
             ApiManagementServiceSkuProperties sku = default;
-            Core.Optional<IList<string>> zones = default;
-            Core.Optional<IReadOnlyList<IPAddress>> publicIPAddresses = default;
-            Core.Optional<IReadOnlyList<IPAddress>> privateIPAddresses = default;
-            Core.Optional<ResourceIdentifier> publicIPAddressId = default;
-            Core.Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
-            Core.Optional<Uri> gatewayRegionalUri = default;
-            Core.Optional<bool> disableGateway = default;
-            Core.Optional<PlatformVersion> platformVersion = default;
+            Optional<IList<string>> zones = default;
+            Optional<IReadOnlyList<IPAddress>> publicIPAddresses = default;
+            Optional<IReadOnlyList<IPAddress>> privateIPAddresses = default;
+            Optional<ResourceIdentifier> publicIPAddressId = default;
+            Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
+            Optional<Uri> gatewayRegionalUri = default;
+            Optional<bool> disableGateway = default;
+            Optional<PlatformVersion> platformVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new AdditionalLocation(location, sku, Core.Optional.ToList(zones), Core.Optional.ToList(publicIPAddresses), Core.Optional.ToList(privateIPAddresses), publicIPAddressId.Value, virtualNetworkConfiguration.Value, gatewayRegionalUri.Value, Core.Optional.ToNullable(disableGateway), Core.Optional.ToNullable(platformVersion));
+            return new AdditionalLocation(location, sku, Optional.ToList(zones), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, virtualNetworkConfiguration.Value, gatewayRegionalUri.Value, Optional.ToNullable(disableGateway), Optional.ToNullable(platformVersion));
         }
     }
 }

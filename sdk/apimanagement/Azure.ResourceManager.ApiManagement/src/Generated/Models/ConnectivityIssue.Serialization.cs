@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<IssueOrigin> origin = default;
-            Core.Optional<IssueSeverity> severity = default;
-            Core.Optional<IssueType> type = default;
-            Core.Optional<IReadOnlyList<IDictionary<string, string>>> context = default;
+            Optional<IssueOrigin> origin = default;
+            Optional<IssueSeverity> severity = default;
+            Optional<IssueType> type = default;
+            Optional<IReadOnlyList<IDictionary<string, string>>> context = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("origin"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ConnectivityIssue(Core.Optional.ToNullable(origin), Core.Optional.ToNullable(severity), Core.Optional.ToNullable(type), Core.Optional.ToList(context));
+            return new ConnectivityIssue(Optional.ToNullable(origin), Optional.ToNullable(severity), Optional.ToNullable(type), Optional.ToList(context));
         }
     }
 }

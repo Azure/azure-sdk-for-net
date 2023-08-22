@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="location"> The location. </param>
         public RestorableDroppedDatabaseData(AzureLocation location) : base(location)
         {
-            Keys = new Core.ChangeTrackingDictionary<string, SqlDatabaseKey>();
+            Keys = new ChangeTrackingDictionary<string, SqlDatabaseKey>();
         }
 
         /// <summary> Initializes a new instance of RestorableDroppedDatabaseData. </summary>

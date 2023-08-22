@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<string> domainName = default;
-            Core.Optional<IReadOnlyList<ManagedInstanceEndpointDetail>> endpointDetails = default;
+            Optional<string> domainName = default;
+            Optional<IReadOnlyList<ManagedInstanceEndpointDetail>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ManagedInstanceEndpointDependency(domainName.Value, Core.Optional.ToList(endpointDetails));
+            return new ManagedInstanceEndpointDependency(domainName.Value, Optional.ToList(endpointDetails));
         }
     }
 }

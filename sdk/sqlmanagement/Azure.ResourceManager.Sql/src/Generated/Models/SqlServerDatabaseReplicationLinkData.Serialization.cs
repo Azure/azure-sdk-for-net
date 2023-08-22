@@ -13,9 +13,9 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlServerDatabaseReplicationLinkData : Core.IUtf8JsonSerializable
+    public partial class SqlServerDatabaseReplicationLinkData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -33,18 +33,18 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> partnerServer = default;
-            Core.Optional<string> partnerDatabase = default;
-            Core.Optional<AzureLocation> partnerLocation = default;
-            Core.Optional<SqlServerDatabaseReplicationRole> role = default;
-            Core.Optional<SqlServerDatabaseReplicationRole> partnerRole = default;
-            Core.Optional<string> replicationMode = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<int> percentComplete = default;
-            Core.Optional<ReplicationLinkState> replicationState = default;
-            Core.Optional<bool> isTerminationAllowed = default;
-            Core.Optional<ReplicationLinkType> linkType = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> partnerServer = default;
+            Optional<string> partnerDatabase = default;
+            Optional<AzureLocation> partnerLocation = default;
+            Optional<SqlServerDatabaseReplicationRole> role = default;
+            Optional<SqlServerDatabaseReplicationRole> partnerRole = default;
+            Optional<string> replicationMode = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<int> percentComplete = default;
+            Optional<ReplicationLinkState> replicationState = default;
+            Optional<bool> isTerminationAllowed = default;
+            Optional<ReplicationLinkType> linkType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlServerDatabaseReplicationLinkData(id, name, type, systemData.Value, partnerServer.Value, partnerDatabase.Value, Core.Optional.ToNullable(partnerLocation), Core.Optional.ToNullable(role), Core.Optional.ToNullable(partnerRole), replicationMode.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(percentComplete), Core.Optional.ToNullable(replicationState), Core.Optional.ToNullable(isTerminationAllowed), Core.Optional.ToNullable(linkType));
+            return new SqlServerDatabaseReplicationLinkData(id, name, type, systemData.Value, partnerServer.Value, partnerDatabase.Value, Optional.ToNullable(partnerLocation), Optional.ToNullable(role), Optional.ToNullable(partnerRole), replicationMode.Value, Optional.ToNullable(startTime), Optional.ToNullable(percentComplete), Optional.ToNullable(replicationState), Optional.ToNullable(isTerminationAllowed), Optional.ToNullable(linkType));
         }
     }
 }

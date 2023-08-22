@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ElasticPoolPerDatabaseSettings : Core.IUtf8JsonSerializable
+    public partial class ElasticPoolPerDatabaseSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MinCapacity))
+            if (Optional.IsDefined(MinCapacity))
             {
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
             }
-            if (Core.Optional.IsDefined(MaxCapacity))
+            if (Optional.IsDefined(MaxCapacity))
             {
                 writer.WritePropertyName("maxCapacity"u8);
                 writer.WriteNumberValue(MaxCapacity.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<double> minCapacity = default;
-            Core.Optional<double> maxCapacity = default;
+            Optional<double> minCapacity = default;
+            Optional<double> maxCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minCapacity"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ElasticPoolPerDatabaseSettings(Core.Optional.ToNullable(minCapacity), Core.Optional.ToNullable(maxCapacity));
+            return new ElasticPoolPerDatabaseSettings(Optional.ToNullable(minCapacity), Optional.ToNullable(maxCapacity));
         }
     }
 }

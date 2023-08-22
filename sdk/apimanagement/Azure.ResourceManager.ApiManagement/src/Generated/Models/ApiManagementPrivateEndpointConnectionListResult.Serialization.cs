@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ApiManagementPrivateEndpointConnectionData>> value = default;
+            Optional<IReadOnlyList<ApiManagementPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiManagementPrivateEndpointConnectionListResult(Core.Optional.ToList(value));
+            return new ApiManagementPrivateEndpointConnectionListResult(Optional.ToList(value));
         }
     }
 }

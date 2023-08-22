@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of FailoverGroupPatch. </summary>
         public FailoverGroupPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            Databases = new Core.ChangeTrackingList<string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Databases = new ChangeTrackingList<string>();
         }
 
         /// <summary> Resource tags. </summary>

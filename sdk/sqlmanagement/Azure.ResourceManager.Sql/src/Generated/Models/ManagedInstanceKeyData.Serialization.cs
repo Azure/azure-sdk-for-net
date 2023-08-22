@@ -13,19 +13,19 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedInstanceKeyData : Core.IUtf8JsonSerializable
+    public partial class ManagedInstanceKeyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServerKeyType))
+            if (Optional.IsDefined(ServerKeyType))
             {
                 writer.WritePropertyName("serverKeyType"u8);
                 writer.WriteStringValue(ServerKeyType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -40,16 +40,16 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SqlServerKeyType> serverKeyType = default;
-            Core.Optional<Uri> uri = default;
-            Core.Optional<string> thumbprint = default;
-            Core.Optional<DateTimeOffset> creationDate = default;
-            Core.Optional<bool> autoRotationEnabled = default;
+            Optional<SystemData> systemData = default;
+            Optional<SqlServerKeyType> serverKeyType = default;
+            Optional<Uri> uri = default;
+            Optional<string> thumbprint = default;
+            Optional<DateTimeOffset> creationDate = default;
+            Optional<bool> autoRotationEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedInstanceKeyData(id, name, type, systemData.Value, kind.Value, Core.Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Core.Optional.ToNullable(creationDate), Core.Optional.ToNullable(autoRotationEnabled));
+            return new ManagedInstanceKeyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(creationDate), Optional.ToNullable(autoRotationEnabled));
         }
     }
 }

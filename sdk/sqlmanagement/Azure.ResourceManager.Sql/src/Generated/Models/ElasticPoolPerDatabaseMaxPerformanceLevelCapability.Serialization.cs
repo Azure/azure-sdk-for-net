@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<double> limit = default;
-            Core.Optional<PerformanceLevelUnit> unit = default;
-            Core.Optional<IReadOnlyList<ElasticPoolPerDatabaseMinPerformanceLevelCapability>> supportedPerDatabaseMinPerformanceLevels = default;
-            Core.Optional<SqlCapabilityStatus> status = default;
-            Core.Optional<string> reason = default;
+            Optional<double> limit = default;
+            Optional<PerformanceLevelUnit> unit = default;
+            Optional<IReadOnlyList<ElasticPoolPerDatabaseMinPerformanceLevelCapability>> supportedPerDatabaseMinPerformanceLevels = default;
+            Optional<SqlCapabilityStatus> status = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("limit"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ElasticPoolPerDatabaseMaxPerformanceLevelCapability(Core.Optional.ToNullable(limit), Core.Optional.ToNullable(unit), Core.Optional.ToList(supportedPerDatabaseMinPerformanceLevels), Core.Optional.ToNullable(status), reason.Value);
+            return new ElasticPoolPerDatabaseMaxPerformanceLevelCapability(Optional.ToNullable(limit), Optional.ToNullable(unit), Optional.ToList(supportedPerDatabaseMinPerformanceLevels), Optional.ToNullable(status), reason.Value);
         }
     }
 }

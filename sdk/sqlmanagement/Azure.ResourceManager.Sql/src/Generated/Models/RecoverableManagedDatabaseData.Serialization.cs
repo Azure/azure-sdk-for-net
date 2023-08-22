@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class RecoverableManagedDatabaseData : Core.IUtf8JsonSerializable
+    public partial class RecoverableManagedDatabaseData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> lastAvailableBackupDate = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> lastAvailableBackupDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

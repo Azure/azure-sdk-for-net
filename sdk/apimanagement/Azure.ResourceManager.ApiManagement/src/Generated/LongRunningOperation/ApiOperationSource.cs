@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal class ApiOperationSource : Core.IOperationSource<ApiResource>
+    internal class ApiOperationSource : IOperationSource<ApiResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ApiManagement
             _client = client;
         }
 
-        ApiResource Core.IOperationSource<ApiResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ApiResource IOperationSource<ApiResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ApiData.DeserializeApiData(document.RootElement);
             return new ApiResource(_client, data);
         }
 
-        async ValueTask<ApiResource> Core.IOperationSource<ApiResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ApiResource> IOperationSource<ApiResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ApiData.DeserializeApiData(document.RootElement);

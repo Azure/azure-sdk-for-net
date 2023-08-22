@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<bool> isMasterRegion = default;
-            Core.Optional<bool> isDeleted = default;
+            Optional<string> name = default;
+            Optional<bool> isMasterRegion = default;
+            Optional<bool> isDeleted = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new RegionContract(name.Value, Core.Optional.ToNullable(isMasterRegion), Core.Optional.ToNullable(isDeleted));
+            return new RegionContract(name.Value, Optional.ToNullable(isMasterRegion), Optional.ToNullable(isDeleted));
         }
     }
 }

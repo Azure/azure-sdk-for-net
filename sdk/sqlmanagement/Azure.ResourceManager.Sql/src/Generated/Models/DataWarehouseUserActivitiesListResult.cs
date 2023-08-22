@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of DataWarehouseUserActivitiesListResult. </summary>
         internal DataWarehouseUserActivitiesListResult()
         {
-            Value = new Core.ChangeTrackingList<DataWarehouseUserActivityData>();
+            Value = new ChangeTrackingList<DataWarehouseUserActivityData>();
         }
 
         /// <summary> Initializes a new instance of DataWarehouseUserActivitiesListResult. </summary>

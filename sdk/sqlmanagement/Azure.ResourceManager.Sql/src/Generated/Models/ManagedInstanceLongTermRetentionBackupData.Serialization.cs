@@ -13,9 +13,9 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedInstanceLongTermRetentionBackupData : Core.IUtf8JsonSerializable
+    public partial class ManagedInstanceLongTermRetentionBackupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> managedInstanceName = default;
-            Core.Optional<DateTimeOffset> managedInstanceCreateTime = default;
-            Core.Optional<string> databaseName = default;
-            Core.Optional<DateTimeOffset> databaseDeletionTime = default;
-            Core.Optional<DateTimeOffset> backupTime = default;
-            Core.Optional<DateTimeOffset> backupExpirationTime = default;
-            Core.Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> managedInstanceName = default;
+            Optional<DateTimeOffset> managedInstanceCreateTime = default;
+            Optional<string> databaseName = default;
+            Optional<DateTimeOffset> databaseDeletionTime = default;
+            Optional<DateTimeOffset> backupTime = default;
+            Optional<DateTimeOffset> backupExpirationTime = default;
+            Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedInstanceLongTermRetentionBackupData(id, name, type, systemData.Value, managedInstanceName.Value, Core.Optional.ToNullable(managedInstanceCreateTime), databaseName.Value, Core.Optional.ToNullable(databaseDeletionTime), Core.Optional.ToNullable(backupTime), Core.Optional.ToNullable(backupExpirationTime), Core.Optional.ToNullable(backupStorageRedundancy));
+            return new ManagedInstanceLongTermRetentionBackupData(id, name, type, systemData.Value, managedInstanceName.Value, Optional.ToNullable(managedInstanceCreateTime), databaseName.Value, Optional.ToNullable(databaseDeletionTime), Optional.ToNullable(backupTime), Optional.ToNullable(backupExpirationTime), Optional.ToNullable(backupStorageRedundancy));
         }
     }
 }

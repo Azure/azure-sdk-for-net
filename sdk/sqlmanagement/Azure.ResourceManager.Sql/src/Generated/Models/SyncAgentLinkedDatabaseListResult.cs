@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SyncAgentLinkedDatabaseListResult. </summary>
         internal SyncAgentLinkedDatabaseListResult()
         {
-            Value = new Core.ChangeTrackingList<SyncAgentLinkedDatabase>();
+            Value = new ChangeTrackingList<SyncAgentLinkedDatabase>();
         }
 
         /// <summary> Initializes a new instance of SyncAgentLinkedDatabaseListResult. </summary>

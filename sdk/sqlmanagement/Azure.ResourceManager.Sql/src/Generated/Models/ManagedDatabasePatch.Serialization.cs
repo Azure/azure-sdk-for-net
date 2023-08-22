@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedDatabasePatch : Core.IUtf8JsonSerializable
+    public partial class ManagedDatabasePatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,87 +28,87 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Collation))
+            if (Optional.IsDefined(Collation))
             {
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (Core.Optional.IsDefined(RestorePointInTime))
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (Core.Optional.IsDefined(CatalogCollation))
+            if (Optional.IsDefined(CatalogCollation))
             {
                 writer.WritePropertyName("catalogCollation"u8);
                 writer.WriteStringValue(CatalogCollation.Value.ToString());
             }
-            if (Core.Optional.IsDefined(CreateMode))
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(StorageContainerUri))
+            if (Optional.IsDefined(StorageContainerUri))
             {
                 writer.WritePropertyName("storageContainerUri"u8);
                 writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(SourceDatabaseId))
+            if (Optional.IsDefined(SourceDatabaseId))
             {
                 writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (Core.Optional.IsDefined(CrossSubscriptionSourceDatabaseId))
+            if (Optional.IsDefined(CrossSubscriptionSourceDatabaseId))
             {
                 writer.WritePropertyName("crossSubscriptionSourceDatabaseId"u8);
                 writer.WriteStringValue(CrossSubscriptionSourceDatabaseId);
             }
-            if (Core.Optional.IsDefined(RestorableDroppedDatabaseId))
+            if (Optional.IsDefined(RestorableDroppedDatabaseId))
             {
                 writer.WritePropertyName("restorableDroppedDatabaseId"u8);
                 writer.WriteStringValue(RestorableDroppedDatabaseId);
             }
-            if (Core.Optional.IsDefined(CrossSubscriptionRestorableDroppedDatabaseId))
+            if (Optional.IsDefined(CrossSubscriptionRestorableDroppedDatabaseId))
             {
                 writer.WritePropertyName("crossSubscriptionRestorableDroppedDatabaseId"u8);
                 writer.WriteStringValue(CrossSubscriptionRestorableDroppedDatabaseId);
             }
-            if (Core.Optional.IsDefined(StorageContainerIdentity))
+            if (Optional.IsDefined(StorageContainerIdentity))
             {
                 writer.WritePropertyName("storageContainerIdentity"u8);
                 writer.WriteStringValue(StorageContainerIdentity);
             }
-            if (Core.Optional.IsDefined(StorageContainerSasToken))
+            if (Optional.IsDefined(StorageContainerSasToken))
             {
                 writer.WritePropertyName("storageContainerSasToken"u8);
                 writer.WriteStringValue(StorageContainerSasToken);
             }
-            if (Core.Optional.IsDefined(RecoverableDatabaseId))
+            if (Optional.IsDefined(RecoverableDatabaseId))
             {
                 writer.WritePropertyName("recoverableDatabaseId"u8);
                 writer.WriteStringValue(RecoverableDatabaseId);
             }
-            if (Core.Optional.IsDefined(LongTermRetentionBackupResourceId))
+            if (Optional.IsDefined(LongTermRetentionBackupResourceId))
             {
                 writer.WritePropertyName("longTermRetentionBackupResourceId"u8);
                 writer.WriteStringValue(LongTermRetentionBackupResourceId);
             }
-            if (Core.Optional.IsDefined(AllowAutoCompleteRestore))
+            if (Optional.IsDefined(AllowAutoCompleteRestore))
             {
                 writer.WritePropertyName("autoCompleteRestore"u8);
                 writer.WriteBooleanValue(AllowAutoCompleteRestore.Value);
             }
-            if (Core.Optional.IsDefined(LastBackupName))
+            if (Optional.IsDefined(LastBackupName))
             {
                 writer.WritePropertyName("lastBackupName"u8);
                 writer.WriteStringValue(LastBackupName);
             }
-            if (Core.Optional.IsDefined(CrossSubscriptionTargetManagedInstanceId))
+            if (Optional.IsDefined(CrossSubscriptionTargetManagedInstanceId))
             {
                 writer.WritePropertyName("crossSubscriptionTargetManagedInstanceId"u8);
                 writer.WriteStringValue(CrossSubscriptionTargetManagedInstanceId);
             }
-            if (Core.Optional.IsDefined(IsLedgerOn))
+            if (Optional.IsDefined(IsLedgerOn))
             {
                 writer.WritePropertyName("isLedgerOn"u8);
                 writer.WriteBooleanValue(IsLedgerOn.Value);

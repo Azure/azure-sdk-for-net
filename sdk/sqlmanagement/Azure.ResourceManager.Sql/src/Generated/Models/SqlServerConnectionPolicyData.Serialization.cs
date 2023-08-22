@@ -12,14 +12,14 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlServerConnectionPolicyData : Core.IUtf8JsonSerializable
+    public partial class SqlServerConnectionPolicyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ConnectionType))
+            if (Optional.IsDefined(ConnectionType))
             {
                 writer.WritePropertyName("connectionType"u8);
                 writer.WriteStringValue(ConnectionType.Value.ToString());
@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<string> kind = default;
+            Optional<AzureLocation> location = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ServerConnectionType> connectionType = default;
+            Optional<SystemData> systemData = default;
+            Optional<ServerConnectionType> connectionType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlServerConnectionPolicyData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), kind.Value, Core.Optional.ToNullable(connectionType));
+            return new SqlServerConnectionPolicyData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, Optional.ToNullable(connectionType));
         }
     }
 }

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> sku = default;
-            Core.Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
-            Core.Optional<IReadOnlyList<ManagedInstanceVcoresCapability>> supportedVcoresValues = default;
-            Core.Optional<SqlCapabilityStatus> status = default;
-            Core.Optional<string> reason = default;
+            Optional<string> name = default;
+            Optional<string> sku = default;
+            Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
+            Optional<IReadOnlyList<ManagedInstanceVcoresCapability>> supportedVcoresValues = default;
+            Optional<SqlCapabilityStatus> status = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ManagedInstanceFamilyCapability(name.Value, sku.Value, Core.Optional.ToList(supportedLicenseTypes), Core.Optional.ToList(supportedVcoresValues), Core.Optional.ToNullable(status), reason.Value);
+            return new ManagedInstanceFamilyCapability(name.Value, sku.Value, Optional.ToList(supportedLicenseTypes), Optional.ToList(supportedVcoresValues), Optional.ToNullable(status), reason.Value);
         }
     }
 }

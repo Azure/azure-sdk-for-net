@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SqlServerTrustGroupOperationSource : Core.IOperationSource<SqlServerTrustGroupResource>
+    internal class SqlServerTrustGroupOperationSource : IOperationSource<SqlServerTrustGroupResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        SqlServerTrustGroupResource Core.IOperationSource<SqlServerTrustGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SqlServerTrustGroupResource IOperationSource<SqlServerTrustGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(document.RootElement);
             return new SqlServerTrustGroupResource(_client, data);
         }
 
-        async ValueTask<SqlServerTrustGroupResource> Core.IOperationSource<SqlServerTrustGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SqlServerTrustGroupResource> IOperationSource<SqlServerTrustGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(document.RootElement);

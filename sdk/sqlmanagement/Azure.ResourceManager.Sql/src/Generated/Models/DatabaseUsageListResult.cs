@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of DatabaseUsageListResult. </summary>
         internal DatabaseUsageListResult()
         {
-            Value = new Core.ChangeTrackingList<DatabaseUsage>();
+            Value = new ChangeTrackingList<DatabaseUsage>();
         }
 
         /// <summary> Initializes a new instance of DatabaseUsageListResult. </summary>

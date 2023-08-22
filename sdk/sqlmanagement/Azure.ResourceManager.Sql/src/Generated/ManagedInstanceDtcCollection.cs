@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedInstanceDtcRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedInstanceDtcResource>(new ManagedInstanceDtcOperationSource(Client), _managedInstanceDtcClientDiagnostics, Pipeline, _managedInstanceDtcRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstanceDtcResource>(new ManagedInstanceDtcOperationSource(Client), _managedInstanceDtcClientDiagnostics, Pipeline, _managedInstanceDtcRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstanceDtcRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedInstanceDtcResource>(new ManagedInstanceDtcOperationSource(Client), _managedInstanceDtcClientDiagnostics, Pipeline, _managedInstanceDtcRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstanceDtcResource>(new ManagedInstanceDtcOperationSource(Client), _managedInstanceDtcClientDiagnostics, Pipeline, _managedInstanceDtcRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceDtcRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceDtcRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceDtcResource(Client, ManagedInstanceDtcData.DeserializeManagedInstanceDtcData(e)), _managedInstanceDtcClientDiagnostics, Pipeline, "ManagedInstanceDtcCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceDtcResource(Client, ManagedInstanceDtcData.DeserializeManagedInstanceDtcData(e)), _managedInstanceDtcClientDiagnostics, Pipeline, "ManagedInstanceDtcCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceDtcRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceDtcRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceDtcResource(Client, ManagedInstanceDtcData.DeserializeManagedInstanceDtcData(e)), _managedInstanceDtcClientDiagnostics, Pipeline, "ManagedInstanceDtcCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceDtcResource(Client, ManagedInstanceDtcData.DeserializeManagedInstanceDtcData(e)), _managedInstanceDtcClientDiagnostics, Pipeline, "ManagedInstanceDtcCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

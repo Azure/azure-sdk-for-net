@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<int> order = default;
-            Core.Optional<string> name = default;
-            Core.Optional<UpsertManagedServerOperationStepStatus> status = default;
+            Optional<int> order = default;
+            Optional<string> name = default;
+            Optional<UpsertManagedServerOperationStepStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("order"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new UpsertManagedServerOperationStep(Core.Optional.ToNullable(order), name.Value, Core.Optional.ToNullable(status));
+            return new UpsertManagedServerOperationStep(Optional.ToNullable(order), name.Value, Optional.ToNullable(status));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of CacheListResult. </summary>
         internal CacheListResult()
         {
-            Value = new Core.ChangeTrackingList<ApiManagementCacheData>();
+            Value = new ChangeTrackingList<ApiManagementCacheData>();
         }
 
         /// <summary> Initializes a new instance of CacheListResult. </summary>

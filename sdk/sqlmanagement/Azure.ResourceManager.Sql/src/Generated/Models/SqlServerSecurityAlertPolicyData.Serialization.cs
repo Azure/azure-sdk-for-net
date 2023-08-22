@@ -14,19 +14,19 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlServerSecurityAlertPolicyData : Core.IUtf8JsonSerializable
+    public partial class SqlServerSecurityAlertPolicyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Core.Optional.IsCollectionDefined(DisabledAlerts))
+            if (Optional.IsCollectionDefined(DisabledAlerts))
             {
                 writer.WritePropertyName("disabledAlerts"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(EmailAddresses))
+            if (Optional.IsCollectionDefined(EmailAddresses))
             {
                 writer.WritePropertyName("emailAddresses"u8);
                 writer.WriteStartArray();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SendToEmailAccountAdmins))
+            if (Optional.IsDefined(SendToEmailAccountAdmins))
             {
                 writer.WritePropertyName("emailAccountAdmins"u8);
                 writer.WriteBooleanValue(SendToEmailAccountAdmins.Value);
             }
-            if (Core.Optional.IsDefined(StorageEndpoint))
+            if (Optional.IsDefined(StorageEndpoint))
             {
                 writer.WritePropertyName("storageEndpoint"u8);
                 writer.WriteStringValue(StorageEndpoint);
             }
-            if (Core.Optional.IsDefined(StorageAccountAccessKey))
+            if (Optional.IsDefined(StorageAccountAccessKey))
             {
                 writer.WritePropertyName("storageAccountAccessKey"u8);
                 writer.WriteStringValue(StorageAccountAccessKey);
             }
-            if (Core.Optional.IsDefined(RetentionDays))
+            if (Optional.IsDefined(RetentionDays))
             {
                 writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SecurityAlertsPolicyState> state = default;
-            Core.Optional<IList<string>> disabledAlerts = default;
-            Core.Optional<IList<string>> emailAddresses = default;
-            Core.Optional<bool> emailAccountAdmins = default;
-            Core.Optional<string> storageEndpoint = default;
-            Core.Optional<string> storageAccountAccessKey = default;
-            Core.Optional<int> retentionDays = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
+            Optional<SystemData> systemData = default;
+            Optional<SecurityAlertsPolicyState> state = default;
+            Optional<IList<string>> disabledAlerts = default;
+            Optional<IList<string>> emailAddresses = default;
+            Optional<bool> emailAccountAdmins = default;
+            Optional<string> storageEndpoint = default;
+            Optional<string> storageAccountAccessKey = default;
+            Optional<int> retentionDays = default;
+            Optional<DateTimeOffset> creationTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlServerSecurityAlertPolicyData(id, name, type, systemData.Value, Core.Optional.ToNullable(state), Core.Optional.ToList(disabledAlerts), Core.Optional.ToList(emailAddresses), Core.Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Core.Optional.ToNullable(retentionDays), Core.Optional.ToNullable(creationTime));
+            return new SqlServerSecurityAlertPolicyData(id, name, type, systemData.Value, Optional.ToNullable(state), Optional.ToList(disabledAlerts), Optional.ToList(emailAddresses), Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToNullable(creationTime));
         }
     }
 }

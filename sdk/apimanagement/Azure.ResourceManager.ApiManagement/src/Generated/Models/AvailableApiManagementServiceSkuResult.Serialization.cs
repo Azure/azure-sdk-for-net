@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<ResourceType> resourceType = default;
-            Core.Optional<ResourceSku> sku = default;
-            Core.Optional<ApiManagementResourceSkuCapacity> capacity = default;
+            Optional<ResourceType> resourceType = default;
+            Optional<ResourceSku> sku = default;
+            Optional<ApiManagementResourceSkuCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new AvailableApiManagementServiceSkuResult(Core.Optional.ToNullable(resourceType), sku.Value, capacity.Value);
+            return new AvailableApiManagementServiceSkuResult(Optional.ToNullable(resourceType), sku.Value, capacity.Value);
         }
     }
 }

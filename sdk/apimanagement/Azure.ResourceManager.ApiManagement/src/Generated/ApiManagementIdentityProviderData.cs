@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of ApiManagementIdentityProviderData. </summary>
         public ApiManagementIdentityProviderData()
         {
-            AllowedTenants = new Core.ChangeTrackingList<string>();
+            AllowedTenants = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ApiManagementIdentityProviderData. </summary>

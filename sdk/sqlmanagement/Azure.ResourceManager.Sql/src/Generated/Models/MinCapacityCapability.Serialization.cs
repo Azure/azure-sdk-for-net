@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<double> value = default;
-            Core.Optional<SqlCapabilityStatus> status = default;
-            Core.Optional<string> reason = default;
+            Optional<double> value = default;
+            Optional<SqlCapabilityStatus> status = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new MinCapacityCapability(Core.Optional.ToNullable(value), Core.Optional.ToNullable(status), reason.Value);
+            return new MinCapacityCapability(Optional.ToNullable(value), Optional.ToNullable(status), reason.Value);
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ServerAdvancedThreatProtectionOperationSource : Core.IOperationSource<ServerAdvancedThreatProtectionResource>
+    internal class ServerAdvancedThreatProtectionOperationSource : IOperationSource<ServerAdvancedThreatProtectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ServerAdvancedThreatProtectionResource Core.IOperationSource<ServerAdvancedThreatProtectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServerAdvancedThreatProtectionResource IOperationSource<ServerAdvancedThreatProtectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(document.RootElement);
             return new ServerAdvancedThreatProtectionResource(_client, data);
         }
 
-        async ValueTask<ServerAdvancedThreatProtectionResource> Core.IOperationSource<ServerAdvancedThreatProtectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServerAdvancedThreatProtectionResource> IOperationSource<ServerAdvancedThreatProtectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(document.RootElement);

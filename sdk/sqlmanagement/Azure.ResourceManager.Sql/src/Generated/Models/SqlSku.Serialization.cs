@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SqlSku : Core.IUtf8JsonSerializable
+    public partial class SqlSku : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Tier))
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Core.Optional.IsDefined(Size))
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Core.Optional.IsDefined(Family))
+            if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Core.Optional.IsDefined(Capacity))
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             string name = default;
-            Core.Optional<string> tier = default;
-            Core.Optional<string> size = default;
-            Core.Optional<string> family = default;
-            Core.Optional<int> capacity = default;
+            Optional<string> tier = default;
+            Optional<string> size = default;
+            Optional<string> family = default;
+            Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SqlSku(name, tier.Value, size.Value, family.Value, Core.Optional.ToNullable(capacity));
+            return new SqlSku(name, tier.Value, size.Value, family.Value, Optional.ToNullable(capacity));
         }
     }
 }

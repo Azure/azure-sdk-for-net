@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class ConnectivityCheckRequestProtocolConfiguration : Core.IUtf8JsonSerializable
+    internal partial class ConnectivityCheckRequestProtocolConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HttpConfiguration))
+            if (Optional.IsDefined(HttpConfiguration))
             {
                 writer.WritePropertyName("HTTPConfiguration"u8);
                 writer.WriteObjectValue(HttpConfiguration);

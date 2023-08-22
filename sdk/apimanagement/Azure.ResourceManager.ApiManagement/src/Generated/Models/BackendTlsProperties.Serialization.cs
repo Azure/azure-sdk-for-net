@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class BackendTlsProperties : Core.IUtf8JsonSerializable
+    public partial class BackendTlsProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ShouldValidateCertificateChain))
+            if (Optional.IsDefined(ShouldValidateCertificateChain))
             {
                 writer.WritePropertyName("validateCertificateChain"u8);
                 writer.WriteBooleanValue(ShouldValidateCertificateChain.Value);
             }
-            if (Core.Optional.IsDefined(ShouldValidateCertificateName))
+            if (Optional.IsDefined(ShouldValidateCertificateName))
             {
                 writer.WritePropertyName("validateCertificateName"u8);
                 writer.WriteBooleanValue(ShouldValidateCertificateName.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<bool> validateCertificateChain = default;
-            Core.Optional<bool> validateCertificateName = default;
+            Optional<bool> validateCertificateChain = default;
+            Optional<bool> validateCertificateName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validateCertificateChain"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new BackendTlsProperties(Core.Optional.ToNullable(validateCertificateChain), Core.Optional.ToNullable(validateCertificateName));
+            return new BackendTlsProperties(Optional.ToNullable(validateCertificateChain), Optional.ToNullable(validateCertificateName));
         }
     }
 }

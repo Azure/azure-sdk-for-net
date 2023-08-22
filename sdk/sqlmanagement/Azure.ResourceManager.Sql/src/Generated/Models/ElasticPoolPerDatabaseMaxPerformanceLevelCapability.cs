@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ElasticPoolPerDatabaseMaxPerformanceLevelCapability. </summary>
         internal ElasticPoolPerDatabaseMaxPerformanceLevelCapability()
         {
-            SupportedPerDatabaseMinPerformanceLevels = new Core.ChangeTrackingList<ElasticPoolPerDatabaseMinPerformanceLevelCapability>();
+            SupportedPerDatabaseMinPerformanceLevels = new ChangeTrackingList<ElasticPoolPerDatabaseMinPerformanceLevelCapability>();
         }
 
         /// <summary> Initializes a new instance of ElasticPoolPerDatabaseMaxPerformanceLevelCapability. </summary>

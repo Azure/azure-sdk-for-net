@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IReadOnlyList<string>> zones = default;
-            Core.Optional<IReadOnlyList<ApiManagementSkuZoneDetails>> zoneDetails = default;
+            Optional<AzureLocation> location = default;
+            Optional<IReadOnlyList<string>> zones = default;
+            Optional<IReadOnlyList<ApiManagementSkuZoneDetails>> zoneDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiManagementSkuLocationInfo(Core.Optional.ToNullable(location), Core.Optional.ToList(zones), Core.Optional.ToList(zoneDetails));
+            return new ApiManagementSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(zoneDetails));
         }
     }
 }

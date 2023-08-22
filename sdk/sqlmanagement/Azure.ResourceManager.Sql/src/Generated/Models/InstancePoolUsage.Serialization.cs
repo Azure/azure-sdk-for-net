@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<InstancePoolUsageName> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<string> unit = default;
-            Core.Optional<int> currentValue = default;
-            Core.Optional<int> limit = default;
-            Core.Optional<int> requestedLimit = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<InstancePoolUsageName> name = default;
+            Optional<ResourceType> type = default;
+            Optional<string> unit = default;
+            Optional<int> currentValue = default;
+            Optional<int> limit = default;
+            Optional<int> requestedLimit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new InstancePoolUsage(id.Value, name.Value, Core.Optional.ToNullable(type), unit.Value, Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit), Core.Optional.ToNullable(requestedLimit));
+            return new InstancePoolUsage(id.Value, name.Value, Optional.ToNullable(type), unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(requestedLimit));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of WorkloadClassifierListResult. </summary>
         internal WorkloadClassifierListResult()
         {
-            Value = new Core.ChangeTrackingList<WorkloadClassifierData>();
+            Value = new ChangeTrackingList<WorkloadClassifierData>();
         }
 
         /// <summary> Initializes a new instance of WorkloadClassifierListResult. </summary>

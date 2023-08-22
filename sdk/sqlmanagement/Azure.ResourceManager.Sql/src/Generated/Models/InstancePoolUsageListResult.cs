@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of InstancePoolUsageListResult. </summary>
         internal InstancePoolUsageListResult()
         {
-            Value = new Core.ChangeTrackingList<InstancePoolUsage>();
+            Value = new ChangeTrackingList<InstancePoolUsage>();
         }
 
         /// <summary> Initializes a new instance of InstancePoolUsageListResult. </summary>

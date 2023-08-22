@@ -14,104 +14,104 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiData : Core.IUtf8JsonSerializable
+    public partial class ApiData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(AuthenticationSettings))
+            if (Optional.IsDefined(AuthenticationSettings))
             {
                 writer.WritePropertyName("authenticationSettings"u8);
                 writer.WriteObjectValue(AuthenticationSettings);
             }
-            if (Core.Optional.IsDefined(SubscriptionKeyParameterNames))
+            if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
                 writer.WritePropertyName("subscriptionKeyParameterNames"u8);
                 writer.WriteObjectValue(SubscriptionKeyParameterNames);
             }
-            if (Core.Optional.IsDefined(ApiType))
+            if (Optional.IsDefined(ApiType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ApiType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ApiRevision))
+            if (Optional.IsDefined(ApiRevision))
             {
                 writer.WritePropertyName("apiRevision"u8);
                 writer.WriteStringValue(ApiRevision);
             }
-            if (Core.Optional.IsDefined(ApiVersion))
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (Core.Optional.IsDefined(IsCurrent))
+            if (Optional.IsDefined(IsCurrent))
             {
                 writer.WritePropertyName("isCurrent"u8);
                 writer.WriteBooleanValue(IsCurrent.Value);
             }
-            if (Core.Optional.IsDefined(ApiRevisionDescription))
+            if (Optional.IsDefined(ApiRevisionDescription))
             {
                 writer.WritePropertyName("apiRevisionDescription"u8);
                 writer.WriteStringValue(ApiRevisionDescription);
             }
-            if (Core.Optional.IsDefined(ApiVersionDescription))
+            if (Optional.IsDefined(ApiVersionDescription))
             {
                 writer.WritePropertyName("apiVersionDescription"u8);
                 writer.WriteStringValue(ApiVersionDescription);
             }
-            if (Core.Optional.IsDefined(ApiVersionSetId))
+            if (Optional.IsDefined(ApiVersionSetId))
             {
                 writer.WritePropertyName("apiVersionSetId"u8);
                 writer.WriteStringValue(ApiVersionSetId);
             }
-            if (Core.Optional.IsDefined(IsSubscriptionRequired))
+            if (Optional.IsDefined(IsSubscriptionRequired))
             {
                 writer.WritePropertyName("subscriptionRequired"u8);
                 writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
-            if (Core.Optional.IsDefined(TermsOfServiceUri))
+            if (Optional.IsDefined(TermsOfServiceUri))
             {
                 writer.WritePropertyName("termsOfServiceUrl"u8);
                 writer.WriteStringValue(TermsOfServiceUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(Contact))
+            if (Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
                 writer.WriteObjectValue(Contact);
             }
-            if (Core.Optional.IsDefined(License))
+            if (Optional.IsDefined(License))
             {
                 writer.WritePropertyName("license"u8);
                 writer.WriteObjectValue(License);
             }
-            if (Core.Optional.IsDefined(SourceApiId))
+            if (Optional.IsDefined(SourceApiId))
             {
                 writer.WritePropertyName("sourceApiId"u8);
                 writer.WriteStringValue(SourceApiId);
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(ServiceUri))
+            if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUrl"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Core.Optional.IsCollectionDefined(Protocols))
+            if (Optional.IsCollectionDefined(Protocols))
             {
                 writer.WritePropertyName("protocols"u8);
                 writer.WriteStartArray();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ApiVersionSet))
+            if (Optional.IsDefined(ApiVersionSet))
             {
                 writer.WritePropertyName("apiVersionSet"u8);
                 writer.WriteObjectValue(ApiVersionSet);
@@ -139,28 +139,28 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<AuthenticationSettingsContract> authenticationSettings = default;
-            Core.Optional<SubscriptionKeyParameterNamesContract> subscriptionKeyParameterNames = default;
-            Core.Optional<ApiType> type0 = default;
-            Core.Optional<string> apiRevision = default;
-            Core.Optional<string> apiVersion = default;
-            Core.Optional<bool> isCurrent = default;
-            Core.Optional<bool> isOnline = default;
-            Core.Optional<string> apiRevisionDescription = default;
-            Core.Optional<string> apiVersionDescription = default;
-            Core.Optional<ResourceIdentifier> apiVersionSetId = default;
-            Core.Optional<bool> subscriptionRequired = default;
-            Core.Optional<Uri> termsOfServiceUri = default;
-            Core.Optional<ApiContactInformation> contact = default;
-            Core.Optional<ApiLicenseInformation> license = default;
-            Core.Optional<ResourceIdentifier> sourceApiId = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<Uri> serviceUri = default;
-            Core.Optional<string> path = default;
-            Core.Optional<IList<ApiOperationInvokableProtocol>> protocols = default;
-            Core.Optional<ApiVersionSetContractDetails> apiVersionSet = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<AuthenticationSettingsContract> authenticationSettings = default;
+            Optional<SubscriptionKeyParameterNamesContract> subscriptionKeyParameterNames = default;
+            Optional<ApiType> type0 = default;
+            Optional<string> apiRevision = default;
+            Optional<string> apiVersion = default;
+            Optional<bool> isCurrent = default;
+            Optional<bool> isOnline = default;
+            Optional<string> apiRevisionDescription = default;
+            Optional<string> apiVersionDescription = default;
+            Optional<ResourceIdentifier> apiVersionSetId = default;
+            Optional<bool> subscriptionRequired = default;
+            Optional<Uri> termsOfServiceUri = default;
+            Optional<ApiContactInformation> contact = default;
+            Optional<ApiLicenseInformation> license = default;
+            Optional<ResourceIdentifier> sourceApiId = default;
+            Optional<string> displayName = default;
+            Optional<Uri> serviceUri = default;
+            Optional<string> path = default;
+            Optional<IList<ApiOperationInvokableProtocol>> protocols = default;
+            Optional<ApiVersionSetContractDetails> apiVersionSet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiData(id, name, type, systemData.Value, description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Core.Optional.ToNullable(type0), apiRevision.Value, apiVersion.Value, Core.Optional.ToNullable(isCurrent), Core.Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Core.Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, sourceApiId.Value, displayName.Value, serviceUri.Value, path.Value, Core.Optional.ToList(protocols), apiVersionSet.Value);
+            return new ApiData(id, name, type, systemData.Value, description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type0), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, sourceApiId.Value, displayName.Value, serviceUri.Value, path.Value, Optional.ToList(protocols), apiVersionSet.Value);
         }
     }
 }

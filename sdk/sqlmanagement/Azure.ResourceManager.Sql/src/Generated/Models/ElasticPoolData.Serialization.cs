@@ -14,17 +14,17 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ElasticPoolData : Core.IUtf8JsonSerializable
+    public partial class ElasticPoolData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.Sql
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MaxSizeBytes))
+            if (Optional.IsDefined(MaxSizeBytes))
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
-            if (Core.Optional.IsDefined(MinCapacity))
+            if (Optional.IsDefined(MinCapacity))
             {
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
             }
-            if (Core.Optional.IsDefined(PerDatabaseSettings))
+            if (Optional.IsDefined(PerDatabaseSettings))
             {
                 writer.WritePropertyName("perDatabaseSettings"u8);
                 writer.WriteObjectValue(PerDatabaseSettings);
             }
-            if (Core.Optional.IsDefined(IsZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (Core.Optional.IsDefined(LicenseType))
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(MaintenanceConfigurationId))
+            if (Optional.IsDefined(MaintenanceConfigurationId))
             {
                 writer.WritePropertyName("maintenanceConfigurationId"u8);
                 writer.WriteStringValue(MaintenanceConfigurationId);
             }
-            if (Core.Optional.IsDefined(HighAvailabilityReplicaCount))
+            if (Optional.IsDefined(HighAvailabilityReplicaCount))
             {
                 writer.WritePropertyName("highAvailabilityReplicaCount"u8);
                 writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
             }
-            if (Core.Optional.IsDefined(PreferredEnclaveType))
+            if (Optional.IsDefined(PreferredEnclaveType))
             {
                 writer.WritePropertyName("preferredEnclaveType"u8);
                 writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AvailabilityZone))
+            if (Optional.IsDefined(AvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone.Value.ToString());
@@ -94,25 +94,25 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Core.Optional<SqlSku> sku = default;
-            Core.Optional<string> kind = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<SqlSku> sku = default;
+            Optional<string> kind = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ElasticPoolState> state = default;
-            Core.Optional<DateTimeOffset> creationDate = default;
-            Core.Optional<long> maxSizeBytes = default;
-            Core.Optional<double> minCapacity = default;
-            Core.Optional<ElasticPoolPerDatabaseSettings> perDatabaseSettings = default;
-            Core.Optional<bool> zoneRedundant = default;
-            Core.Optional<ElasticPoolLicenseType> licenseType = default;
-            Core.Optional<ResourceIdentifier> maintenanceConfigurationId = default;
-            Core.Optional<int> highAvailabilityReplicaCount = default;
-            Core.Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
-            Core.Optional<SqlAvailabilityZoneType> availabilityZone = default;
+            Optional<SystemData> systemData = default;
+            Optional<ElasticPoolState> state = default;
+            Optional<DateTimeOffset> creationDate = default;
+            Optional<long> maxSizeBytes = default;
+            Optional<double> minCapacity = default;
+            Optional<ElasticPoolPerDatabaseSettings> perDatabaseSettings = default;
+            Optional<bool> zoneRedundant = default;
+            Optional<ElasticPoolLicenseType> licenseType = default;
+            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
+            Optional<int> highAvailabilityReplicaCount = default;
+            Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
+            Optional<SqlAvailabilityZoneType> availabilityZone = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ElasticPoolData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, kind.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(creationDate), Core.Optional.ToNullable(maxSizeBytes), Core.Optional.ToNullable(minCapacity), perDatabaseSettings.Value, Core.Optional.ToNullable(zoneRedundant), Core.Optional.ToNullable(licenseType), maintenanceConfigurationId.Value, Core.Optional.ToNullable(highAvailabilityReplicaCount), Core.Optional.ToNullable(preferredEnclaveType), Core.Optional.ToNullable(availabilityZone));
+            return new ElasticPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, Optional.ToNullable(state), Optional.ToNullable(creationDate), Optional.ToNullable(maxSizeBytes), Optional.ToNullable(minCapacity), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), maintenanceConfigurationId.Value, Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(availabilityZone));
         }
     }
 }

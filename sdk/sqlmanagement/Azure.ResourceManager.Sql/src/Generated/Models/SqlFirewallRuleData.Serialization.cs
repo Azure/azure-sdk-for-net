@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlFirewallRuleData : Core.IUtf8JsonSerializable
+    public partial class SqlFirewallRuleData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StartIPAddress))
+            if (Optional.IsDefined(StartIPAddress))
             {
                 writer.WritePropertyName("startIpAddress"u8);
                 writer.WriteStringValue(StartIPAddress);
             }
-            if (Core.Optional.IsDefined(EndIPAddress))
+            if (Optional.IsDefined(EndIPAddress))
             {
                 writer.WritePropertyName("endIpAddress"u8);
                 writer.WriteStringValue(EndIPAddress);
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<string> startIPAddress = default;
-            Core.Optional<string> endIPAddress = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<string> startIPAddress = default;
+            Optional<string> endIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlFirewallRuleData(id.Value, name.Value, Core.Optional.ToNullable(type), startIPAddress.Value, endIPAddress.Value);
+            return new SqlFirewallRuleData(id.Value, name.Value, Optional.ToNullable(type), startIPAddress.Value, endIPAddress.Value);
         }
     }
 }

@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class JobStepOutput : Core.IUtf8JsonSerializable
+    public partial class JobStepOutput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(OutputType))
+            if (Optional.IsDefined(OutputType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SubscriptionId))
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId.Value);
             }
-            if (Core.Optional.IsDefined(ResourceGroupName))
+            if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStringValue(ServerName);
             writer.WritePropertyName("databaseName"u8);
             writer.WriteStringValue(DatabaseName);
-            if (Core.Optional.IsDefined(SchemaName))
+            if (Optional.IsDefined(SchemaName))
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<JobStepOutputType> type = default;
-            Core.Optional<Guid> subscriptionId = default;
-            Core.Optional<string> resourceGroupName = default;
+            Optional<JobStepOutputType> type = default;
+            Optional<Guid> subscriptionId = default;
+            Optional<string> resourceGroupName = default;
             string serverName = default;
             string databaseName = default;
-            Core.Optional<string> schemaName = default;
+            Optional<string> schemaName = default;
             string tableName = default;
             string credential = default;
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new JobStepOutput(Core.Optional.ToNullable(type), Core.Optional.ToNullable(subscriptionId), resourceGroupName.Value, serverName, databaseName, schemaName.Value, tableName, credential);
+            return new JobStepOutput(Optional.ToNullable(type), Optional.ToNullable(subscriptionId), resourceGroupName.Value, serverName, databaseName, schemaName.Value, tableName, credential);
         }
     }
 }

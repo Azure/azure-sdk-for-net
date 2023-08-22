@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of InstanceFailoverGroupListResult. </summary>
         internal InstanceFailoverGroupListResult()
         {
-            Value = new Core.ChangeTrackingList<InstanceFailoverGroupData>();
+            Value = new ChangeTrackingList<InstanceFailoverGroupData>();
         }
 
         /// <summary> Initializes a new instance of InstanceFailoverGroupListResult. </summary>

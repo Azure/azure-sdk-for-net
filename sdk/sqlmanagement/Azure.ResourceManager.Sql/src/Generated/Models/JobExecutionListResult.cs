@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of JobExecutionListResult. </summary>
         internal JobExecutionListResult()
         {
-            Value = new Core.ChangeTrackingList<SqlServerJobExecutionData>();
+            Value = new ChangeTrackingList<SqlServerJobExecutionData>();
         }
 
         /// <summary> Initializes a new instance of JobExecutionListResult. </summary>

@@ -14,9 +14,9 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedDatabaseRestoreDetailData : Core.IUtf8JsonSerializable
+    public partial class ManagedDatabaseRestoreDetailData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -34,29 +34,29 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> type0 = default;
-            Core.Optional<string> status = default;
-            Core.Optional<string> blockReason = default;
-            Core.Optional<string> lastUploadedFileName = default;
-            Core.Optional<DateTimeOffset> lastUploadedFileTime = default;
-            Core.Optional<string> lastRestoredFileName = default;
-            Core.Optional<DateTimeOffset> lastRestoredFileTime = default;
-            Core.Optional<int> percentCompleted = default;
-            Core.Optional<int> currentRestoredSizeMB = default;
-            Core.Optional<int> currentRestorePlanSizeMB = default;
-            Core.Optional<string> currentBackupType = default;
-            Core.Optional<string> currentRestoringFileName = default;
-            Core.Optional<int> numberOfFilesDetected = default;
-            Core.Optional<int> numberOfFilesQueued = default;
-            Core.Optional<int> numberOfFilesSkipped = default;
-            Core.Optional<int> numberOfFilesRestoring = default;
-            Core.Optional<int> numberOfFilesRestored = default;
-            Core.Optional<int> numberOfFilesUnrestorable = default;
-            Core.Optional<IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties>> fullBackupSets = default;
-            Core.Optional<IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties>> diffBackupSets = default;
-            Core.Optional<IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties>> logBackupSets = default;
-            Core.Optional<IReadOnlyList<ManagedDatabaseRestoreDetailUnrestorableFileProperties>> unrestorableFiles = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> type0 = default;
+            Optional<string> status = default;
+            Optional<string> blockReason = default;
+            Optional<string> lastUploadedFileName = default;
+            Optional<DateTimeOffset> lastUploadedFileTime = default;
+            Optional<string> lastRestoredFileName = default;
+            Optional<DateTimeOffset> lastRestoredFileTime = default;
+            Optional<int> percentCompleted = default;
+            Optional<int> currentRestoredSizeMB = default;
+            Optional<int> currentRestorePlanSizeMB = default;
+            Optional<string> currentBackupType = default;
+            Optional<string> currentRestoringFileName = default;
+            Optional<int> numberOfFilesDetected = default;
+            Optional<int> numberOfFilesQueued = default;
+            Optional<int> numberOfFilesSkipped = default;
+            Optional<int> numberOfFilesRestoring = default;
+            Optional<int> numberOfFilesRestored = default;
+            Optional<int> numberOfFilesUnrestorable = default;
+            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties>> fullBackupSets = default;
+            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties>> diffBackupSets = default;
+            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties>> logBackupSets = default;
+            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailUnrestorableFileProperties>> unrestorableFiles = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedDatabaseRestoreDetailData(id, name, type, systemData.Value, type0.Value, status.Value, blockReason.Value, lastUploadedFileName.Value, Core.Optional.ToNullable(lastUploadedFileTime), lastRestoredFileName.Value, Core.Optional.ToNullable(lastRestoredFileTime), Core.Optional.ToNullable(percentCompleted), Core.Optional.ToNullable(currentRestoredSizeMB), Core.Optional.ToNullable(currentRestorePlanSizeMB), currentBackupType.Value, currentRestoringFileName.Value, Core.Optional.ToNullable(numberOfFilesDetected), Core.Optional.ToNullable(numberOfFilesQueued), Core.Optional.ToNullable(numberOfFilesSkipped), Core.Optional.ToNullable(numberOfFilesRestoring), Core.Optional.ToNullable(numberOfFilesRestored), Core.Optional.ToNullable(numberOfFilesUnrestorable), Core.Optional.ToList(fullBackupSets), Core.Optional.ToList(diffBackupSets), Core.Optional.ToList(logBackupSets), Core.Optional.ToList(unrestorableFiles));
+            return new ManagedDatabaseRestoreDetailData(id, name, type, systemData.Value, type0.Value, status.Value, blockReason.Value, lastUploadedFileName.Value, Optional.ToNullable(lastUploadedFileTime), lastRestoredFileName.Value, Optional.ToNullable(lastRestoredFileTime), Optional.ToNullable(percentCompleted), Optional.ToNullable(currentRestoredSizeMB), Optional.ToNullable(currentRestorePlanSizeMB), currentBackupType.Value, currentRestoringFileName.Value, Optional.ToNullable(numberOfFilesDetected), Optional.ToNullable(numberOfFilesQueued), Optional.ToNullable(numberOfFilesSkipped), Optional.ToNullable(numberOfFilesRestoring), Optional.ToNullable(numberOfFilesRestored), Optional.ToNullable(numberOfFilesUnrestorable), Optional.ToList(fullBackupSets), Optional.ToList(diffBackupSets), Optional.ToList(logBackupSets), Optional.ToList(unrestorableFiles));
         }
     }
 }

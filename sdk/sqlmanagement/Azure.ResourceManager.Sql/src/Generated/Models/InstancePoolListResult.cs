@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of InstancePoolListResult. </summary>
         internal InstancePoolListResult()
         {
-            Value = new Core.ChangeTrackingList<InstancePoolData>();
+            Value = new ChangeTrackingList<InstancePoolData>();
         }
 
         /// <summary> Initializes a new instance of InstancePoolListResult. </summary>

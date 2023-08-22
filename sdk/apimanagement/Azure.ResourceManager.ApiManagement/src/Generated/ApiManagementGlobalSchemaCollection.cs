@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementGlobalSchemaResource>(new ApiManagementGlobalSchemaOperationSource(Client), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaId, data, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementGlobalSchemaResource>(new ApiManagementGlobalSchemaOperationSource(Client), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaId, data, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaId, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementGlobalSchemaResource>(new ApiManagementGlobalSchemaOperationSource(Client), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaId, data, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementGlobalSchemaResource>(new ApiManagementGlobalSchemaOperationSource(Client), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaId, data, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGlobalSchemaResource(Client, ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(e)), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, "ApiManagementGlobalSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGlobalSchemaResource(Client, ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(e)), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, "ApiManagementGlobalSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGlobalSchemaResource(Client, ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(e)), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, "ApiManagementGlobalSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGlobalSchemaResource(Client, ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(e)), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, "ApiManagementGlobalSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

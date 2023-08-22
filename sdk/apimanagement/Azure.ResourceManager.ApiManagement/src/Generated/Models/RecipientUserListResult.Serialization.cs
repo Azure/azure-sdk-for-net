@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<RecipientUserContract>> value = default;
-            Core.Optional<long> count = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<RecipientUserContract>> value = default;
+            Optional<long> count = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new RecipientUserListResult(Core.Optional.ToList(value), Core.Optional.ToNullable(count), nextLink.Value);
+            return new RecipientUserListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value);
         }
     }
 }

@@ -13,17 +13,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class DatabaseIdentity : Core.IUtf8JsonSerializable
+    public partial class DatabaseIdentity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IdentityType))
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<DatabaseIdentityType> type = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            Optional<DatabaseIdentityType> type = default;
+            Optional<Guid> tenantId = default;
+            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new DatabaseIdentity(Core.Optional.ToNullable(type), Core.Optional.ToNullable(tenantId), Core.Optional.ToDictionary(userAssignedIdentities));
+            return new DatabaseIdentity(Optional.ToNullable(type), Optional.ToNullable(tenantId), Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

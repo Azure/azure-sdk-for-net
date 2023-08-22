@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class DatabaseUsage : Core.IUtf8JsonSerializable
+    public partial class DatabaseUsage : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<double> currentValue = default;
-            Core.Optional<double> limit = default;
-            Core.Optional<string> unit = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<double> currentValue = default;
+            Optional<double> limit = default;
+            Optional<string> unit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new DatabaseUsage(id, name, type, systemData.Value, displayName.Value, Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit), unit.Value);
+            return new DatabaseUsage(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), unit.Value);
         }
     }
 }

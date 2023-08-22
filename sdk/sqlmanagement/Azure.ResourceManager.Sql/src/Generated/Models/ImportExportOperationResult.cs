@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ImportExportOperationResult. </summary>
         public ImportExportOperationResult()
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<PrivateEndpointConnectionRequestStatus>();
+            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionRequestStatus>();
         }
 
         /// <summary> Initializes a new instance of ImportExportOperationResult. </summary>

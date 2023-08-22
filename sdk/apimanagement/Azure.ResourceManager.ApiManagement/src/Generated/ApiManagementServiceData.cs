@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNull(publisherName, nameof(publisherName));
 
             Sku = sku;
-            Zones = new Core.ChangeTrackingList<string>();
-            HostnameConfigurations = new Core.ChangeTrackingList<HostnameConfiguration>();
-            PublicIPAddresses = new Core.ChangeTrackingList<IPAddress>();
-            PrivateIPAddresses = new Core.ChangeTrackingList<IPAddress>();
-            AdditionalLocations = new Core.ChangeTrackingList<AdditionalLocation>();
-            CustomProperties = new Core.ChangeTrackingDictionary<string, string>();
-            Certificates = new Core.ChangeTrackingList<CertificateConfiguration>();
-            PrivateEndpointConnections = new Core.ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>();
+            Zones = new ChangeTrackingList<string>();
+            HostnameConfigurations = new ChangeTrackingList<HostnameConfiguration>();
+            PublicIPAddresses = new ChangeTrackingList<IPAddress>();
+            PrivateIPAddresses = new ChangeTrackingList<IPAddress>();
+            AdditionalLocations = new ChangeTrackingList<AdditionalLocation>();
+            CustomProperties = new ChangeTrackingDictionary<string, string>();
+            Certificates = new ChangeTrackingList<CertificateConfiguration>();
+            PrivateEndpointConnections = new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>();
             PublisherEmail = publisherEmail;
             PublisherName = publisherName;
         }

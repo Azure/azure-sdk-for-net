@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementPrivateEndpointConnectionResource>(new ApiManagementPrivateEndpointConnectionOperationSource(Client), _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementPrivateEndpointConnectionResource>(new ApiManagementPrivateEndpointConnectionOperationSource(Client), _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, content, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementPrivateEndpointConnectionResource>(new ApiManagementPrivateEndpointConnectionOperationSource(Client), _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementPrivateEndpointConnectionResource>(new ApiManagementPrivateEndpointConnectionOperationSource(Client), _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual AsyncPageable<ApiManagementPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ApiManagementPrivateEndpointConnectionResource(Client, ApiManagementPrivateEndpointConnectionData.DeserializeApiManagementPrivateEndpointConnectionData(e)), _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, "ApiManagementPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ApiManagementPrivateEndpointConnectionResource(Client, ApiManagementPrivateEndpointConnectionData.DeserializeApiManagementPrivateEndpointConnectionData(e)), _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, "ApiManagementPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Pageable<ApiManagementPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ApiManagementPrivateEndpointConnectionResource(Client, ApiManagementPrivateEndpointConnectionData.DeserializeApiManagementPrivateEndpointConnectionData(e)), _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, "ApiManagementPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ApiManagementPrivateEndpointConnectionResource(Client, ApiManagementPrivateEndpointConnectionData.DeserializeApiManagementPrivateEndpointConnectionData(e)), _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, "ApiManagementPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

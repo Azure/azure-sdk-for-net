@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementPortalRevisionData : Core.IUtf8JsonSerializable
+    public partial class ApiManagementPortalRevisionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(IsCurrent))
+            if (Optional.IsDefined(IsCurrent))
             {
                 writer.WritePropertyName("isCurrent"u8);
                 writer.WriteBooleanValue(IsCurrent.Value);
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> statusDetails = default;
-            Core.Optional<PortalRevisionStatus> status = default;
-            Core.Optional<bool> isCurrent = default;
-            Core.Optional<DateTimeOffset> createdDateTime = default;
-            Core.Optional<DateTimeOffset> updatedDateTime = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<string> statusDetails = default;
+            Optional<PortalRevisionStatus> status = default;
+            Optional<bool> isCurrent = default;
+            Optional<DateTimeOffset> createdDateTime = default;
+            Optional<DateTimeOffset> updatedDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementPortalRevisionData(id, name, type, systemData.Value, description.Value, statusDetails.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(isCurrent), Core.Optional.ToNullable(createdDateTime), Core.Optional.ToNullable(updatedDateTime));
+            return new ApiManagementPortalRevisionData(id, name, type, systemData.Value, description.Value, statusDetails.Value, Optional.ToNullable(status), Optional.ToNullable(isCurrent), Optional.ToNullable(createdDateTime), Optional.ToNullable(updatedDateTime));
         }
     }
 }

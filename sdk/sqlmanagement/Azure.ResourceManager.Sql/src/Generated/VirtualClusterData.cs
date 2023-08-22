@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="location"> The location. </param>
         public VirtualClusterData(AzureLocation location) : base(location)
         {
-            ChildResources = new Core.ChangeTrackingList<string>();
+            ChildResources = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualClusterData. </summary>

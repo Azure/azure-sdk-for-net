@@ -13,14 +13,14 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlServerJobExecutionData : Core.IUtf8JsonSerializable
+    public partial class SqlServerJobExecutionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CurrentAttempts))
+            if (Optional.IsDefined(CurrentAttempts))
             {
                 writer.WritePropertyName("currentAttempts"u8);
                 writer.WriteNumberValue(CurrentAttempts.Value);
@@ -38,20 +38,20 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<int> jobVersion = default;
-            Core.Optional<string> stepName = default;
-            Core.Optional<int> stepId = default;
-            Core.Optional<Guid> jobExecutionId = default;
-            Core.Optional<JobExecutionLifecycle> lifecycle = default;
-            Core.Optional<JobExecutionProvisioningState> provisioningState = default;
-            Core.Optional<DateTimeOffset> createTime = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<int> currentAttempts = default;
-            Core.Optional<DateTimeOffset> currentAttemptStartTime = default;
-            Core.Optional<string> lastMessage = default;
-            Core.Optional<JobExecutionTarget> target = default;
+            Optional<SystemData> systemData = default;
+            Optional<int> jobVersion = default;
+            Optional<string> stepName = default;
+            Optional<int> stepId = default;
+            Optional<Guid> jobExecutionId = default;
+            Optional<JobExecutionLifecycle> lifecycle = default;
+            Optional<JobExecutionProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> createTime = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<int> currentAttempts = default;
+            Optional<DateTimeOffset> currentAttemptStartTime = default;
+            Optional<string> lastMessage = default;
+            Optional<JobExecutionTarget> target = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlServerJobExecutionData(id, name, type, systemData.Value, Core.Optional.ToNullable(jobVersion), stepName.Value, Core.Optional.ToNullable(stepId), Core.Optional.ToNullable(jobExecutionId), Core.Optional.ToNullable(lifecycle), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(createTime), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(currentAttempts), Core.Optional.ToNullable(currentAttemptStartTime), lastMessage.Value, target.Value);
+            return new SqlServerJobExecutionData(id, name, type, systemData.Value, Optional.ToNullable(jobVersion), stepName.Value, Optional.ToNullable(stepId), Optional.ToNullable(jobExecutionId), Optional.ToNullable(lifecycle), Optional.ToNullable(provisioningState), Optional.ToNullable(createTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(currentAttempts), Optional.ToNullable(currentAttemptStartTime), lastMessage.Value, target.Value);
         }
     }
 }

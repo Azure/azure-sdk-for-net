@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedServerDnsAliasRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedServerDnsAliasResource>(new ManagedServerDnsAliasOperationSource(Client), _managedServerDnsAliasClientDiagnostics, Pipeline, _managedServerDnsAliasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedServerDnsAliasResource>(new ManagedServerDnsAliasOperationSource(Client), _managedServerDnsAliasClientDiagnostics, Pipeline, _managedServerDnsAliasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedServerDnsAliasRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, content, cancellationToken);
-                var operation = new SqlArmOperation<ManagedServerDnsAliasResource>(new ManagedServerDnsAliasOperationSource(Client), _managedServerDnsAliasClientDiagnostics, Pipeline, _managedServerDnsAliasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedServerDnsAliasResource>(new ManagedServerDnsAliasOperationSource(Client), _managedServerDnsAliasClientDiagnostics, Pipeline, _managedServerDnsAliasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServerDnsAliasRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServerDnsAliasRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedServerDnsAliasResource(Client, ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(e)), _managedServerDnsAliasClientDiagnostics, Pipeline, "ManagedServerDnsAliasCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedServerDnsAliasResource(Client, ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(e)), _managedServerDnsAliasClientDiagnostics, Pipeline, "ManagedServerDnsAliasCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServerDnsAliasRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServerDnsAliasRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedServerDnsAliasResource(Client, ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(e)), _managedServerDnsAliasClientDiagnostics, Pipeline, "ManagedServerDnsAliasCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedServerDnsAliasResource(Client, ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(e)), _managedServerDnsAliasClientDiagnostics, Pipeline, "ManagedServerDnsAliasCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

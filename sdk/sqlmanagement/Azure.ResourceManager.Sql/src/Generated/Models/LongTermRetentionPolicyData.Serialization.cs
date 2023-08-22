@@ -11,29 +11,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class LongTermRetentionPolicyData : Core.IUtf8JsonSerializable
+    public partial class LongTermRetentionPolicyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(WeeklyRetention))
+            if (Optional.IsDefined(WeeklyRetention))
             {
                 writer.WritePropertyName("weeklyRetention"u8);
                 writer.WriteStringValue(WeeklyRetention);
             }
-            if (Core.Optional.IsDefined(MonthlyRetention))
+            if (Optional.IsDefined(MonthlyRetention))
             {
                 writer.WritePropertyName("monthlyRetention"u8);
                 writer.WriteStringValue(MonthlyRetention);
             }
-            if (Core.Optional.IsDefined(YearlyRetention))
+            if (Optional.IsDefined(YearlyRetention))
             {
                 writer.WritePropertyName("yearlyRetention"u8);
                 writer.WriteStringValue(YearlyRetention);
             }
-            if (Core.Optional.IsDefined(WeekOfYear))
+            if (Optional.IsDefined(WeekOfYear))
             {
                 writer.WritePropertyName("weekOfYear"u8);
                 writer.WriteNumberValue(WeekOfYear.Value);
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> weeklyRetention = default;
-            Core.Optional<string> monthlyRetention = default;
-            Core.Optional<string> yearlyRetention = default;
-            Core.Optional<int> weekOfYear = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> weeklyRetention = default;
+            Optional<string> monthlyRetention = default;
+            Optional<string> yearlyRetention = default;
+            Optional<int> weekOfYear = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new LongTermRetentionPolicyData(id, name, type, systemData.Value, weeklyRetention.Value, monthlyRetention.Value, yearlyRetention.Value, Core.Optional.ToNullable(weekOfYear));
+            return new LongTermRetentionPolicyData(id, name, type, systemData.Value, weeklyRetention.Value, monthlyRetention.Value, yearlyRetention.Value, Optional.ToNullable(weekOfYear));
         }
     }
 }

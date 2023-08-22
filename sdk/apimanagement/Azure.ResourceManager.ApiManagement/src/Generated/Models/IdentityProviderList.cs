@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of IdentityProviderList. </summary>
         internal IdentityProviderList()
         {
-            Value = new Core.ChangeTrackingList<ApiManagementIdentityProviderData>();
+            Value = new ChangeTrackingList<ApiManagementIdentityProviderData>();
         }
 
         /// <summary> Initializes a new instance of IdentityProviderList. </summary>

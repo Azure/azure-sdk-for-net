@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of LogicalDatabaseTransparentDataEncryptionListResult. </summary>
         internal LogicalDatabaseTransparentDataEncryptionListResult()
         {
-            Value = new Core.ChangeTrackingList<LogicalDatabaseTransparentDataEncryptionData>();
+            Value = new ChangeTrackingList<LogicalDatabaseTransparentDataEncryptionData>();
         }
 
         /// <summary> Initializes a new instance of LogicalDatabaseTransparentDataEncryptionListResult. </summary>

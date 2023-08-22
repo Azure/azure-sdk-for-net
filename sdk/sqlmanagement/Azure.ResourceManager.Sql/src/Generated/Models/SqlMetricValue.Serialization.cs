@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<int> count = default;
-            Core.Optional<double> average = default;
-            Core.Optional<double> maximum = default;
-            Core.Optional<double> minimum = default;
-            Core.Optional<DateTimeOffset> timestamp = default;
-            Core.Optional<double> total = default;
+            Optional<int> count = default;
+            Optional<double> average = default;
+            Optional<double> maximum = default;
+            Optional<double> minimum = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<double> total = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SqlMetricValue(Core.Optional.ToNullable(count), Core.Optional.ToNullable(average), Core.Optional.ToNullable(maximum), Core.Optional.ToNullable(minimum), Core.Optional.ToNullable(timestamp), Core.Optional.ToNullable(total));
+            return new SqlMetricValue(Optional.ToNullable(count), Optional.ToNullable(average), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(timestamp), Optional.ToNullable(total));
         }
     }
 }

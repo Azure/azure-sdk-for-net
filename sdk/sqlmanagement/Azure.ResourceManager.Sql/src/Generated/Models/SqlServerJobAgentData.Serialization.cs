@@ -13,17 +13,17 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlServerJobAgentData : Core.IUtf8JsonSerializable
+    public partial class SqlServerJobAgentData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DatabaseId))
+            if (Optional.IsDefined(DatabaseId))
             {
                 writer.WritePropertyName("databaseId"u8);
                 writer.WriteStringValue(DatabaseId);
@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Core.Optional<SqlSku> sku = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<SqlSku> sku = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> databaseId = default;
-            Core.Optional<JobAgentState> state = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> databaseId = default;
+            Optional<JobAgentState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlServerJobAgentData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, databaseId.Value, Core.Optional.ToNullable(state));
+            return new SqlServerJobAgentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, databaseId.Value, Optional.ToNullable(state));
         }
     }
 }

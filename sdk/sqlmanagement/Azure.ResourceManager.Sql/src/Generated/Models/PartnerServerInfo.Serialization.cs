@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class PartnerServerInfo : Core.IUtf8JsonSerializable
+    public partial class PartnerServerInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<FailoverGroupReplicationRole> replicationRole = default;
+            Optional<AzureLocation> location = default;
+            Optional<FailoverGroupReplicationRole> replicationRole = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new PartnerServerInfo(id, Core.Optional.ToNullable(location), Core.Optional.ToNullable(replicationRole));
+            return new PartnerServerInfo(id, Optional.ToNullable(location), Optional.ToNullable(replicationRole));
         }
     }
 }

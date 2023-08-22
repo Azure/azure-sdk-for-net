@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of SqlDatabaseSecurityAlertPolicyData. </summary>
         public SqlDatabaseSecurityAlertPolicyData()
         {
-            DisabledAlerts = new Core.ChangeTrackingList<string>();
-            EmailAddresses = new Core.ChangeTrackingList<string>();
+            DisabledAlerts = new ChangeTrackingList<string>();
+            EmailAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SqlDatabaseSecurityAlertPolicyData. </summary>

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of RecoverableDatabaseData. </summary>
         public RecoverableDatabaseData()
         {
-            Keys = new Core.ChangeTrackingDictionary<string, SqlDatabaseKey>();
+            Keys = new ChangeTrackingDictionary<string, SqlDatabaseKey>();
         }
 
         /// <summary> Initializes a new instance of RecoverableDatabaseData. </summary>

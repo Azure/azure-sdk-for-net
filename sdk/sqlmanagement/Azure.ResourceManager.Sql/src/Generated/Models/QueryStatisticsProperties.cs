@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of QueryStatisticsProperties. </summary>
         internal QueryStatisticsProperties()
         {
-            Intervals = new Core.ChangeTrackingList<QueryMetricInterval>();
+            Intervals = new ChangeTrackingList<QueryMetricInterval>();
         }
 
         /// <summary> Initializes a new instance of QueryStatisticsProperties. </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedLedgerDigestUploadOperationSource : Core.IOperationSource<ManagedLedgerDigestUploadResource>
+    internal class ManagedLedgerDigestUploadOperationSource : IOperationSource<ManagedLedgerDigestUploadResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ManagedLedgerDigestUploadResource Core.IOperationSource<ManagedLedgerDigestUploadResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedLedgerDigestUploadResource IOperationSource<ManagedLedgerDigestUploadResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedLedgerDigestUploadData.DeserializeManagedLedgerDigestUploadData(document.RootElement);
             return new ManagedLedgerDigestUploadResource(_client, data);
         }
 
-        async ValueTask<ManagedLedgerDigestUploadResource> Core.IOperationSource<ManagedLedgerDigestUploadResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedLedgerDigestUploadResource> IOperationSource<ManagedLedgerDigestUploadResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedLedgerDigestUploadData.DeserializeManagedLedgerDigestUploadData(document.RootElement);

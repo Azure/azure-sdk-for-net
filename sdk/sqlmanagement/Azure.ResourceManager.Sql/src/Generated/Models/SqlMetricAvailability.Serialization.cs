@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<string> retention = default;
-            Core.Optional<string> timeGrain = default;
+            Optional<string> retention = default;
+            Optional<string> timeGrain = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("retention"u8))

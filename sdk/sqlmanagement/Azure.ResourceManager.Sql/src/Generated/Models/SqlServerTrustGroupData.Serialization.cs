@@ -13,14 +13,14 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlServerTrustGroupData : Core.IUtf8JsonSerializable
+    public partial class SqlServerTrustGroupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(GroupMembers))
+            if (Optional.IsCollectionDefined(GroupMembers))
             {
                 writer.WritePropertyName("groupMembers"u8);
                 writer.WriteStartArray();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(TrustScopes))
+            if (Optional.IsCollectionDefined(TrustScopes))
             {
                 writer.WritePropertyName("trustScopes"u8);
                 writer.WriteStartArray();
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IList<ServerTrustGroupServerInfo>> groupMembers = default;
-            Core.Optional<IList<ServerTrustGroupPropertiesTrustScopesItem>> trustScopes = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<ServerTrustGroupServerInfo>> groupMembers = default;
+            Optional<IList<ServerTrustGroupPropertiesTrustScopesItem>> trustScopes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlServerTrustGroupData(id, name, type, systemData.Value, Core.Optional.ToList(groupMembers), Core.Optional.ToList(trustScopes));
+            return new SqlServerTrustGroupData(id, name, type, systemData.Value, Optional.ToList(groupMembers), Optional.ToList(trustScopes));
         }
     }
 }

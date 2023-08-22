@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class PipelineDiagnosticSettings : Core.IUtf8JsonSerializable
+    public partial class PipelineDiagnosticSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Request))
+            if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
                 writer.WriteObjectValue(Request);
             }
-            if (Core.Optional.IsDefined(Response))
+            if (Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
                 writer.WriteObjectValue(Response);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Core.Optional<HttpMessageDiagnostic> request = default;
-            Core.Optional<HttpMessageDiagnostic> response = default;
+            Optional<HttpMessageDiagnostic> request = default;
+            Optional<HttpMessageDiagnostic> response = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("request"u8))

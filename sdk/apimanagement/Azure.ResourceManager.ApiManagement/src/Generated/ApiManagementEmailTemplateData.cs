@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of ApiManagementEmailTemplateData. </summary>
         public ApiManagementEmailTemplateData()
         {
-            Parameters = new Core.ChangeTrackingList<EmailTemplateParametersContractProperties>();
+            Parameters = new ChangeTrackingList<EmailTemplateParametersContractProperties>();
         }
 
         /// <summary> Initializes a new instance of ApiManagementEmailTemplateData. </summary>

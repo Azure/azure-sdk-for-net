@@ -13,14 +13,14 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class LongTermRetentionBackupData : Core.IUtf8JsonSerializable
+    public partial class LongTermRetentionBackupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RequestedBackupStorageRedundancy))
+            if (Optional.IsDefined(RequestedBackupStorageRedundancy))
             {
                 writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> serverName = default;
-            Core.Optional<DateTimeOffset> serverCreateTime = default;
-            Core.Optional<string> databaseName = default;
-            Core.Optional<DateTimeOffset> databaseDeletionTime = default;
-            Core.Optional<DateTimeOffset> backupTime = default;
-            Core.Optional<DateTimeOffset> backupExpirationTime = default;
-            Core.Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
-            Core.Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> serverName = default;
+            Optional<DateTimeOffset> serverCreateTime = default;
+            Optional<string> databaseName = default;
+            Optional<DateTimeOffset> databaseDeletionTime = default;
+            Optional<DateTimeOffset> backupTime = default;
+            Optional<DateTimeOffset> backupExpirationTime = default;
+            Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new LongTermRetentionBackupData(id, name, type, systemData.Value, serverName.Value, Core.Optional.ToNullable(serverCreateTime), databaseName.Value, Core.Optional.ToNullable(databaseDeletionTime), Core.Optional.ToNullable(backupTime), Core.Optional.ToNullable(backupExpirationTime), Core.Optional.ToNullable(backupStorageRedundancy), Core.Optional.ToNullable(requestedBackupStorageRedundancy));
+            return new LongTermRetentionBackupData(id, name, type, systemData.Value, serverName.Value, Optional.ToNullable(serverCreateTime), databaseName.Value, Optional.ToNullable(databaseDeletionTime), Optional.ToNullable(backupTime), Optional.ToNullable(backupExpirationTime), Optional.ToNullable(backupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy));
         }
     }
 }

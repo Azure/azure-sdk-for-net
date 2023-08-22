@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class LogicalDatabaseTransparentDataEncryptionOperationSource : Core.IOperationSource<LogicalDatabaseTransparentDataEncryptionResource>
+    internal class LogicalDatabaseTransparentDataEncryptionOperationSource : IOperationSource<LogicalDatabaseTransparentDataEncryptionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        LogicalDatabaseTransparentDataEncryptionResource Core.IOperationSource<LogicalDatabaseTransparentDataEncryptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        LogicalDatabaseTransparentDataEncryptionResource IOperationSource<LogicalDatabaseTransparentDataEncryptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LogicalDatabaseTransparentDataEncryptionData.DeserializeLogicalDatabaseTransparentDataEncryptionData(document.RootElement);
             return new LogicalDatabaseTransparentDataEncryptionResource(_client, data);
         }
 
-        async ValueTask<LogicalDatabaseTransparentDataEncryptionResource> Core.IOperationSource<LogicalDatabaseTransparentDataEncryptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<LogicalDatabaseTransparentDataEncryptionResource> IOperationSource<LogicalDatabaseTransparentDataEncryptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LogicalDatabaseTransparentDataEncryptionData.DeserializeLogicalDatabaseTransparentDataEncryptionData(document.RootElement);

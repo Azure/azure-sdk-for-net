@@ -14,14 +14,14 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlAdvisorData : Core.IUtf8JsonSerializable
+    public partial class SqlAdvisorData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AutoExecuteStatus))
+            if (Optional.IsDefined(AutoExecuteStatus))
             {
                 writer.WritePropertyName("autoExecuteStatus"u8);
                 writer.WriteStringValue(AutoExecuteStatus.Value.ToSerialString());
@@ -36,18 +36,18 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
-            Core.Optional<AzureLocation> location = default;
+            Optional<string> kind = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SqlAdvisorStatus> advisorStatus = default;
-            Core.Optional<AutoExecuteStatus> autoExecuteStatus = default;
-            Core.Optional<AutoExecuteStatusInheritedFrom> autoExecuteStatusInheritedFrom = default;
-            Core.Optional<string> recommendationsStatus = default;
-            Core.Optional<DateTimeOffset> lastChecked = default;
-            Core.Optional<IReadOnlyList<RecommendedActionData>> recommendedActions = default;
+            Optional<SystemData> systemData = default;
+            Optional<SqlAdvisorStatus> advisorStatus = default;
+            Optional<AutoExecuteStatus> autoExecuteStatus = default;
+            Optional<AutoExecuteStatusInheritedFrom> autoExecuteStatusInheritedFrom = default;
+            Optional<string> recommendationsStatus = default;
+            Optional<DateTimeOffset> lastChecked = default;
+            Optional<IReadOnlyList<RecommendedActionData>> recommendedActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlAdvisorData(id, name, type, systemData.Value, kind.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(advisorStatus), Core.Optional.ToNullable(autoExecuteStatus), Core.Optional.ToNullable(autoExecuteStatusInheritedFrom), recommendationsStatus.Value, Core.Optional.ToNullable(lastChecked), Core.Optional.ToList(recommendedActions));
+            return new SqlAdvisorData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), Optional.ToNullable(advisorStatus), Optional.ToNullable(autoExecuteStatus), Optional.ToNullable(autoExecuteStatusInheritedFrom), recommendationsStatus.Value, Optional.ToNullable(lastChecked), Optional.ToList(recommendedActions));
         }
     }
 }

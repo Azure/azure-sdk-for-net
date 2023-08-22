@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Argument.AssertNotNull(managementEndpoints, nameof(managementEndpoints));
 
             ManagementEndpoints = managementEndpoints.ToList();
-            ServerCertificateThumbprints = new Core.ChangeTrackingList<string>();
-            ServerX509Names = new Core.ChangeTrackingList<X509CertificateName>();
+            ServerCertificateThumbprints = new ChangeTrackingList<string>();
+            ServerX509Names = new ChangeTrackingList<X509CertificateName>();
         }
 
         /// <summary> Initializes a new instance of BackendServiceFabricClusterProperties. </summary>

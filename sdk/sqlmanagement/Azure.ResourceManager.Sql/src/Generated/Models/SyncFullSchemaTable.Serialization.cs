@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SyncFullSchemaTableColumn>> columns = default;
-            Core.Optional<string> errorId = default;
-            Core.Optional<bool> hasError = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> quotedName = default;
+            Optional<IReadOnlyList<SyncFullSchemaTableColumn>> columns = default;
+            Optional<string> errorId = default;
+            Optional<bool> hasError = default;
+            Optional<string> name = default;
+            Optional<string> quotedName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("columns"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SyncFullSchemaTable(Core.Optional.ToList(columns), errorId.Value, Core.Optional.ToNullable(hasError), name.Value, quotedName.Value);
+            return new SyncFullSchemaTable(Optional.ToList(columns), errorId.Value, Optional.ToNullable(hasError), name.Value, quotedName.Value);
         }
     }
 }

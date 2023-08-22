@@ -11,19 +11,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class TdeCertificate : Core.IUtf8JsonSerializable
+    public partial class TdeCertificate : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateBlob))
+            if (Optional.IsDefined(PrivateBlob))
             {
                 writer.WritePropertyName("privateBlob"u8);
                 writer.WriteStringValue(PrivateBlob);
             }
-            if (Core.Optional.IsDefined(CertPassword))
+            if (Optional.IsDefined(CertPassword))
             {
                 writer.WritePropertyName("certPassword"u8);
                 writer.WriteStringValue(CertPassword);
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> privateBlob = default;
-            Core.Optional<string> certPassword = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> privateBlob = default;
+            Optional<string> certPassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
