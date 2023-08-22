@@ -280,6 +280,59 @@ namespace Azure.Core.Tests.Public
             ValidateSerialize("""{"id": "abc","variables":{"a": "a2"}}""", model);
             ValidatePatch("""{"variables": {"a":"a2", "b": null}}""", model);
         }
+
+        [Test]
+        public void CanRoundTripCollectionPatchModel_ChangeChildren()
+        {
+            BinaryData json = BinaryData.FromString("""
+                {
+                    "id": "abc",
+                    "variables":
+                    {
+                        "a": "aa",
+                        "b": "bb"
+                    },
+                    "children" :
+                    {
+                        "first":
+                        {
+                            "a": "a1",
+                            "b": "b1"
+                        },
+                        "second":
+                        {
+                            "a": "a2",
+                            "b": "b2"
+                        }
+                    }
+                }
+                """);
+
+            CollectionPatchModel model = ModelSerializer.Deserialize<CollectionPatchModel>(json);
+
+            Assert.AreEqual("abc", model.Id);
+            Assert.AreEqual("aa", model.Variables["a"]);
+            Assert.AreEqual("bb", model.Variables["b"]);
+
+            Assert.AreEqual("a1", model.Children["first"].A);
+            Assert.AreEqual("b1", model.Children["first"].B);
+
+            Assert.AreEqual("a2", model.Children["second"].A);
+            Assert.AreEqual("b2", model.Children["second"].B);
+
+            //ValidateSerialize("""{"id": "abc","variables":{"a": "aa","b": "bb"}}""", model);
+            ValidatePatch("{}", model);
+
+            model.Children["first"].A = "a11";
+
+            //ValidateSerialize("""{"id": "abc","variables":{"a": "a2","b": "bb"}}""", model);
+            ValidatePatch("""{"children": {"first":{"a":"a11"}}}""", model);
+
+            //model.Variables.Remove("b");
+
+            //ValidateSerialize("""{"id": "abc","variables":{"a": "a2"}}""", model);
+            //ValidatePatch("""{"variables": {"a":"a2", "b": null}}""", model);
+        }
         #endregion
 
         #region Helpers

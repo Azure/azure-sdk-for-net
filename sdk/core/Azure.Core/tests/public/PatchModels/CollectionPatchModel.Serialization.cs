@@ -14,6 +14,7 @@ namespace Azure.Core.Tests.PatchModels
         {
             string id = default;
             Dictionary<string, string> variables = default;
+            Dictionary<string, ChildPatchModel> children = default;
 
             foreach (JsonProperty property in element.EnumerateObject())
             {
@@ -31,9 +32,21 @@ namespace Azure.Core.Tests.PatchModels
                         variables.Add(value.Name, value.Value.GetString());
                     }
                 }
+
+                if (property.NameEquals("children"))
+                {
+                    children = new();
+                    foreach (JsonProperty value in property.Value.EnumerateObject())
+                    {
+                        ChildPatchModel child = ChildPatchModel.Deserialize(value.Value);
+                        children.Add(value.Name, child);
+                    }
+                }
             }
 
-            return new CollectionPatchModel(id, new MergePatchDictionary<string>(variables, (w, s) => w.WriteStringValue(s)));
+            return new CollectionPatchModel(id,
+                new MergePatchDictionary<string>(variables, (w, s) => w.WriteStringValue(s)),
+                new MergePatchDictionary<ChildPatchModel>(children, (w, m) => m.SerializePatch(w)));
         }
 
         CollectionPatchModel IModelJsonSerializable<CollectionPatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)

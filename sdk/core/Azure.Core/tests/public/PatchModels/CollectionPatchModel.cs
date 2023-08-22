@@ -21,10 +21,11 @@ namespace Azure.Core.Tests.PatchModels
         /// <summary>
         /// Serialization constructor.
         /// </summary>
-        internal CollectionPatchModel(string id, MergePatchDictionary<string> values)
+        internal CollectionPatchModel(string id, MergePatchDictionary<string> variables, MergePatchDictionary<ChildPatchModel> children)
         {
             _id = new MergePatchValue<string>(id);
-            _variables = values;
+            _variables = variables;
+            _children = children;
         }
 
         private MergePatchValue<string> _id;
@@ -45,6 +46,17 @@ namespace Azure.Core.Tests.PatchModels
             {
                 _variables ??= new MergePatchDictionary<string>((w, s) => w.WriteStringValue(s));
                 return _variables;
+            }
+        }
+
+        private MergePatchDictionary<ChildPatchModel> _children;
+        /// <summary>  </summary>
+        public IDictionary<string, ChildPatchModel> Children
+        {
+            get
+            {
+                _children ??= new MergePatchDictionary<ChildPatchModel>((w, m) => m.SerializePatch(w));
+                return _children;
             }
         }
     }
